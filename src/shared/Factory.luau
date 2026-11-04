@@ -1,4 +1,6 @@
 -- Deterministic, server-owned factory simulation. No Roblox services or clocks are used here.
+local runtimeScript = rawget(getfenv(), "script")
+local Familiars = require(runtimeScript and runtimeScript.Parent.Familiars or "./Familiars")
 local Factory = {}
 
 local function finite(value)
@@ -50,6 +52,7 @@ end
 function Factory.new(config)
 	assert(plain(config), "Factory.new requires a configuration table")
 	local engine = {}
+	local familiars = Familiars.new(config)
 	local itemIds = keys(config.items)
 	local skills = { "Farming", "Hauling", "Brewing" }
 	local rngModulus = 2147483647
@@ -105,8 +108,9 @@ function Factory.new(config)
 		return amount <= maximum
 	end
 
-	local function validate(profile, legacy)
-		if not plain(profile) or profile.schemaVersion ~= (legacy and 1 or config.schemaVersion) then
+	local function validate(profile, version)
+		local legacy = version == 1
+		if not plain(profile) or profile.schemaVersion ~= (version or config.schemaVersion) then
 			return false, "Unsupported profile schema"
 		end
 		if not integer(profile.userId, -9007199254740991, 9007199254740991)
@@ -134,6 +138,7 @@ function Factory.new(config)
 				or not plain(pet.stats) then
 				return false, "Invalid pet"
 			end
+			if version and pet.species ~= "farmer" and pet.species ~= "slime" and pet.species ~= "brewer" then return false, "Unknown legacy species" end
 			for _, skill in ipairs(skills) do
 				if not integer(pet.stats[skill], 0, config.maxBaseStat) then
 					return false, "Invalid pet stat"
@@ -144,6 +149,7 @@ function Factory.new(config)
 					return false, "Unknown pet stat"
 				end
 			end
+			if not version and not familiars.validatePet(pet) then return false, "Invalid familiar metadata or range" end
 		end
 		if petCount > config.maxPets then
 			return false, "Pet capacity exceeded"
@@ -347,10 +353,11 @@ function Factory.new(config)
 				end
 			end
 		end
+		if not version and not familiars.validateProgress(profile) then return false, "Invalid collection receipt or provenance" end
 		return true, nil
 	end
 
-	function engine.validate(profile) return validate(profile, false) end
+	function engine.validate(profile) return validate(profile, nil) end
 
 	local function copy(value)
 		if type(value) ~= "table" then return value end
@@ -365,19 +372,26 @@ function Factory.new(config)
 			local valid, reason = engine.validate(profile)
 			return valid and profile or nil, reason
 		end
-		local valid, reason = validate(profile, true)
+		if not plain(profile) or (profile.schemaVersion ~= 1 and profile.schemaVersion ~= 2) then return nil, "Unsupported profile schema" end
+		local version = profile.schemaVersion
+		local valid, reason = validate(profile, version)
 		if not valid then return nil, reason end
 		local migrated = copy(profile)
-		migrated.schemaVersion, migrated.pipeCursor = config.schemaVersion, 1
-		migrated.tutorial, migrated.telemetry = {}, { first = {}, stalls = {} }
-		for _, station in pairs(migrated.stations) do
-			station.essence, station.questQueue = 0, {}
-			if station.job and station.job.kind == "brew" then station.job.automatic = station.auto end
+		if version == 1 then
+			migrated.pipeCursor = 1
+			migrated.tutorial, migrated.telemetry = {}, { first = {}, stalls = {} }
+			for _, station in pairs(migrated.stations) do
+				station.essence, station.questQueue = 0, {}
+				if station.job and station.job.kind == "brew" then station.job.automatic = station.auto end
+			end
+			if migrated.discoveredRecipes.healing then migrated.tutorial.manual = true end
+			if migrated.pipes then migrated.tutorial.pipes = true end
+			if migrated.stations.crystal.level >= 2 then migrated.tutorial.upgrade = true end
+			if migrated.order then migrated.tutorial.orderAccepted = true end
 		end
-		if migrated.discoveredRecipes.healing then migrated.tutorial.manual = true end
-		if migrated.pipes then migrated.tutorial.pipes = true end
-		if migrated.stations.crystal.level >= 2 then migrated.tutorial.upgrade = true end
-		if migrated.order then migrated.tutorial.orderAccepted = true end
+		migrated.schemaVersion = config.schemaVersion
+		migrated.collection, migrated.currencyPaid = { sequence = 0 }, { gold = false, essence = false }
+		for _, pet in pairs(migrated.pets) do familiars.upgradeLegacy(pet) end
 		valid, reason = engine.validate(migrated)
 		return valid and migrated or nil, reason
 	end
@@ -391,15 +405,13 @@ function Factory.new(config)
 			rngState = math.abs(userId) % (rngModulus - 1) + 1, gold = 0, essence = 0,
 			pets = {}, nextPetSerial = 1, stations = {}, inventory = {}, questStock = {}, order = nil,
 			rebirths = 0, discoveredRecipes = {}, tutorialGranted = true, receipts = {}, entitlements = {},
+			collection = { sequence = 0 }, currencyPaid = { gold = false, essence = false },
 			pipeCursor = 1, tutorial = {}, telemetry = { first = {}, stalls = {} },
 			warehouseLevel = 0, pipes = false, manualReadyAt = { garden = now, mine = now }, slimeWorkSeconds = {},
 		}
 		for _, definition in ipairs(config.starterPets) do
 			local petId = string.format("%.0f", userId) .. ":" .. definition.id
-			profile.pets[petId] = {
-				id = petId, species = definition.species, name = definition.name, paidOrigin = false,
-				stats = { Farming = definition.stats.Farming, Hauling = definition.stats.Hauling, Brewing = definition.stats.Brewing },
-			}
+			profile.pets[petId] = familiars.create(petId, definition.species, definition.stats, "starter", false)
 		end
 		for _, stationId in ipairs(config.stationOrder) do
 			local definition = config.stations[stationId]
@@ -999,8 +1011,7 @@ function Factory.new(config)
 			if profile.pets[petId] then return false, "Familiar identity already exists" end
 			if profile.gold < definition.cost then return false, "Not enough gold" end
 			profile.gold = profile.gold - definition.cost
-			profile.pets[petId] = { id = petId, species = payload.speciesId, name = definition.name, paidOrigin = false,
-				stats = { Farming = definition.stats.Farming, Hauling = definition.stats.Hauling, Brewing = definition.stats.Brewing } }
+			profile.pets[petId] = familiars.create(petId, payload.speciesId, definition.stats, "hire", profile.currencyPaid.gold)
 			profile.nextPetSerial = profile.nextPetSerial + 1
 			return true, "Familiar hired"
 		elseif action == "buy" then

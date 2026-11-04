@@ -5,6 +5,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local player = Players.LocalPlayer
 local shared = ReplicatedStorage:WaitForChild("PotionTycoon"):WaitForChild("Shared")
 local Config = require(shared.Config)
+local collectionUI = require(script.Parent.CollectionUI).new(Config)
 local remotes = ReplicatedStorage.PotionTycoon:WaitForChild("Remotes")
 local Action, State, Notice, Focus = remotes:WaitForChild("Action"), remotes:WaitForChild("State"), remotes:WaitForChild("Notice"), remotes:WaitForChild("Focus")
 local Ready = remotes:WaitForChild("Ready")
@@ -17,6 +18,9 @@ gui.Parent = player:WaitForChild("PlayerGui")
 local BG, SURFACE, TEXT, ACCENT = Color3.fromRGB(22, 26, 34), Color3.fromRGB(42, 48, 61), Color3.fromRGB(237, 239, 246), Color3.fromRGB(119, 91, 195)
 local state, selected, petPicker, hasReport = nil, "crystal", false, false
 local bindings = {}
+local collectionPending = false
+local pendingGeneration = 0
+local collectionActions = { summon = true, shopFamiliar = true, hire = true, fuse = true, petLock = true }
 
 local function round(instance)
 	local corner = Instance.new("UICorner")
@@ -42,12 +46,19 @@ local function button(parent, text, callback)
 	return value
 end
 local function send(action, payload)
-	if not state or not state.writable then return end
+	if not state or not state.writable or collectionPending then return end
 	payload = payload or {}
 	if action == "buy" then
 		local id = payload.upgradeId
 		payload.expectedLevel = id == "pipes" and (state.pipes and 1 or 0)
 			or (id == "warehouse" and state.warehouseLevel or state.stations[id].level)
+	end
+	if collectionActions[action] then
+		payload.requestId = state.collection.sequence + 1
+		collectionPending = true
+		pendingGeneration += 1
+		local generation = pendingGeneration
+		task.delay(10, function() if generation == pendingGeneration then collectionPending = false end end)
 	end
 	Action:FireServer(action, payload)
 end
@@ -67,7 +78,7 @@ hud.BackgroundColor3, hud.Parent = BG, gui
 local balance = label(hud, "Загрузка профиля…", 36)
 balance.Position, balance.Size = UDim2.fromOffset(12, 0), UDim2.new(1, -130, 0, 36)
 balance.TextSize = 17
-local status = label(hud, "M1 · фабрика", 32)
+local status = label(hud, "M2 · фабрика и фамильяры", 32)
 status.Position, status.Size = UDim2.fromOffset(12, 38), UDim2.new(1, -24, 0, 32)
 status.TextSize = 11
 local toggle = button(hud, "Фабрика", function() end)
@@ -215,7 +226,15 @@ draw = function()
 		refresh()
 		return
 	end
-	if selected == "warehouse" then
+	if selected == "altar" then
+		title.Text = "Алтарь · коллекция"
+		collectionUI.draw({ state = state, text = function(value, height)
+			local object = text(value, height)
+			object.AutomaticSize = Enum.AutomaticSize.Y -- Long IDs/disclosures can wrap on narrow phones.
+			return object
+		end, action = action, redraw = draw, send = send,
+			mount = function(widget) order += 1; widget.LayoutOrder, widget.Parent = order, contents end })
+	elseif selected == "warehouse" then
 		title.Text = "Склад"
 		local inventory = text("", 100)
 		bindText(inventory, function()
@@ -349,7 +368,7 @@ refresh = function()
 	for _, update in ipairs(bindings) do update() end
 end
 
-for _, tab in ipairs({ {"crystal", "Кристалл"}, {"garden", "Грядка"}, {"mine", "Шахта"}, {"distillery", "Экстракт"}, {"cauldron", "Котёл"}, {"logistics", "Перевозчик"}, {"warehouse", "Склад"}, {"orders", "Заказы"} }) do
+for _, tab in ipairs({ {"crystal", "Кристалл"}, {"garden", "Грядка"}, {"mine", "Шахта"}, {"distillery", "Экстракт"}, {"cauldron", "Котёл"}, {"logistics", "Перевозчик"}, {"warehouse", "Склад"}, {"orders", "Заказы"}, {"altar", "Фамильяры"} }) do
 	local tabButton = button(tabs, tab[2], function() selected, petPicker = tab[1], false; draw() end)
 	tabButton.Size = UDim2.fromOffset(104, 44)
 end
@@ -364,18 +383,21 @@ end
 
 State.OnClientEvent:Connect(function(value)
 	local first = state == nil
+	local collectionChanged = state and collectionUI.signature(state) ~= collectionUI.signature(value)
+	if state and state.collection.sequence ~= value.collection.sequence then collectionPending = false end
 	state = value
-	if first then draw() else refresh() end
+	if first or (selected == "altar" and collectionChanged) then draw() else refresh() end
 	if not hasReport and value.offlineReport and value.offlineReport.processedSeconds > 5 then
 		hasReport = true
 		showToast("С возвращением! Учтено " .. value.offlineReport.processedSeconds .. " сек. работы. Gold: +" .. math.floor(value.offlineReport.goldEarned or 0) .. ". Уже сохранено.", 8)
 	end
 end)
 Notice.OnClientEvent:Connect(function(value)
+	collectionPending = false
 	showToast(value.text)
 end)
 Focus.OnClientEvent:Connect(function(stationId)
-	if Config.stations[stationId] or stationId == "warehouse" or stationId == "orders" then
+	if Config.stations[stationId] or stationId == "warehouse" or stationId == "orders" or stationId == "altar" then
 		selected, petPicker, panel.Visible = stationId, false, true
 		draw()
 	end

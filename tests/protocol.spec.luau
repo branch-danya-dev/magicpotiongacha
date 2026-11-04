@@ -18,7 +18,7 @@ return function(T: any)
 		{ "setAuto", { stationId = "cauldron", enabled = true } },
 		{ "setAuto", { stationId = "cauldron", enabled = false } },
 		{ "buy", { upgradeId = "warehouse", expectedLevel = 0 } },
-		{ "hire", { speciesId = "farmer" } },
+		{ "hire", { speciesId = "farmer", requestId = 1 } },
 		{ "discard", { itemId = "slime", amount = 10 } },
 		{ "acceptOrder", { orderId = "healing-order" } },
 		{ "claimOrder", {} },

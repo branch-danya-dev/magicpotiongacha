@@ -202,6 +202,7 @@ function ProfileStore:_guarded(key, operation)
 		local entry = self._entries[key]
 		if entry then
 			entry.readOnly = true
+			if entry.transactionPending then entry.lost, entry.transactionPending = true, false end
 		end
 		return false, "adapter_error"
 	end
@@ -336,7 +337,7 @@ end
 function ProfileStore:isWritable(userId)
 	local key = keyFor(userId)
 	local entry = key and self._entries[key]
-	if not entry or entry.readOnly or entry.lost or entry.closing or entry.invalidated then
+	if not entry or entry.readOnly or entry.lost or entry.closing or entry.invalidated or entry.transactionPending then
 		return false
 	end
 	local now = self:_now()
@@ -363,7 +364,7 @@ function ProfileStore:invalidate(userId)
 	return true
 end
 
-function ProfileStore:_saveLocked(key, releasing)
+function ProfileStore:_saveLocked(key, releasing, candidate)
 	local entry = self._entries[key]
 	if not entry then
 		if releasing then
@@ -395,7 +396,7 @@ function ProfileStore:_saveLocked(key, releasing)
 	end
 	-- Capture AFTER acquiring the per-key gate, so release cannot queue an older
 	-- snapshot behind an autosave while gameplay advances the in-memory profile.
-	local snapshot, reason = self:_snapshot(entry.profile, entry.userId)
+	local snapshot, reason = self:_snapshot(candidate or entry.profile, entry.userId)
 	if not snapshot then
 		entry.readOnly = true
 		return false, reason
@@ -467,7 +468,42 @@ function ProfileStore:_saveLocked(key, releasing)
 	entry.revision = result.revision
 	entry.leaseExpiresAt = result.lease.expiresAt
 	entry.readOnly = entry.invalidated
+	if candidate and not entry.invalidated then entry.profile = snapshot end
 	return true
+end
+
+-- Freeze an isolated candidate, commit with the same lease/revision fencing, and
+-- only then replace live state. transform must not yield or perform external I/O.
+function ProfileStore:transact(userId, transform)
+	local key = keyFor(userId)
+	if not key or type(transform) ~= "function" then return false, "invalid_transaction" end
+	local entered, success, result = self:_guarded(key, function()
+		if not self:isWritable(userId) then return false, "profile_read_only" end
+		local entry = self._entries[key]
+		local candidate, reason = self:_snapshot(entry.profile, userId)
+		if not candidate then return false, reason end
+		entry.transactionPending = true
+		local called, accepted, response, replayed = pcall(transform, candidate)
+		if not called or accepted ~= true then
+			entry.transactionPending = false
+			return false, called and response or "transaction_failed"
+		end
+		if replayed then
+			entry.transactionPending = false
+			return true, response -- A receipt from previously confirmed live state.
+		end
+		local saved, failure = self:_saveLocked(key, false, candidate)
+		entry.transactionPending = false
+		if not saved or entry.invalidated then
+			-- An unknown write outcome must never be followed by saving the old live
+			-- snapshot or generating another candidate. A new lease/load reconciles it.
+			entry.readOnly, entry.lost = true, true
+			return false, failure or "profile_invalidated"
+		end
+		return true, response
+	end)
+	if not entered then return false, success end
+	return success, result
 end
 
 function ProfileStore:save(userId)

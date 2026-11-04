@@ -2,6 +2,51 @@
 
 CLI/CI passing is necessary but does not mark any item below as completed.
 
+## M2 implementation record — 2026-11-04
+
+Scope: [Issue #6](https://github.com/branch-danya-dev/magicpotiongacha/issues/6).
+Branch `feat/m2-familiars-gacha-fuse` stacks on the actual open/unmerged Draft
+[PR #5](https://github.com/branch-danya-dev/magicpotiongacha/pull/5), HEAD
+`322f027465e8909902a79eaa9682c9017cf997c2`, rechecked before submission.
+M2 targets `feat/m1-production-onboarding`. No merge, Roblox publication or
+live-backend setting change is included. Overall live acceptance: **BLOCKED**.
+
+| Requirement | Actual status | Evidence / remaining limit |
+| --- | --- | --- |
+| All M0/M1 regression coverage | **PASS** | All 203 tests retained. Existing assertions now target current schema; migrated pets compare every old field plus Legacy metadata, high-stat preservation fixtures identify Legacy origin, and hire protocol includes requestId. No tests removed. |
+| Exact final species and stat probabilities | **PASS (portable)** | `collection.spec`: exhaustive 100000 rarity integers match ten exact weights and four tier totals; disclosed tuple counts/probabilities reconstruct 100%; all species endpoints, independent stat calls, invalid ranges/config/rolls tested. Standard UI discloses percentages/ranges/exact fractions before confirmation; actual rendering remains S1/M1. |
+| Unique instances, caps, inventory capacity, fixed shop | **PASS (portable)** | `collection.spec`/`m2.spec`: distinct IDs, serial/collision rejection, full/partial batch capacity before spend/RNG, exact ten fixed offers, capped effective skill with unchanged base stats. Search/sort/lock/free filter and six-card paging compile; live usability remains S1/M1. |
+| Deterministic Fuse and provenance | **PASS (portable)** | All six evolution recipes, every allowed integer improvement, duplicate/missing/mixed/locked/assigned/terminal/over-cap Legacy parents, stale/expired preview and explicit confirmation, one paid parent, paid currency, full-inventory net -4 and timer cleanup. |
+| Replay/concurrency/failure durability | **PASS (fake backend)** | `collection_store.spec`: hidden candidate until confirmation; CAS replay; lost response before/after commit; frozen old state; reconnect; concurrent identical/conflicting summons and concurrent Fuse; failed Fuse; leave/invalidation during commit; thrown RNG. No live DataStore claim. |
+| Policy unrestricted/restricted/failure | **PASS (portable)** | `policy.spec`: explicit permission only, TTL boundary, error/missing/malformed/timeout adapter result, revoked permission, cache and late-result fencing; guaranteed fallback works. Spoofed policy/price/stats/seed/IDs/time are rejected. Actual PolicyService/lookup timeout integration remains S1/D1. |
+| V1/V2 migration and working factory | **PASS (portable)** | Old V1 suite retained; authentic V2 fixture preserves every field, strong paid Legacy worker, jobs/tanks/queues/cargo; callback replay/lost reply, malformed/future metadata and paid laundering fail closed; complete online/offline equality and no repeated interval. |
+| F2P restricted and lookup failure through Rage/Fuse | **PASS (portable)** | `M2Scenario` starts at zero with valid intents; earned fixed hires only, full M1 tutorial/NPC, Golden Slime at 796 s, first Rage at 1347 s, seven automatic Rage sales in next 1200 s, no familiar RNG. Model timing is not observed player timing. See [rules/balance](M2_RULES.md). |
+| Local compile / analysis / build | **PASS** | Windows x64 / Node 24.22.1: **316/316 tests**, **31 Luau sources**, portable analysis, Rojo place and sourcemap. Local commands are exact package-script entry points (`node scripts/setup-tools.mjs`, `node scripts/check.mjs`) because npm is unavailable here. |
+| Final Windows + Ubuntu CI | **Recorded in M2 Draft PR** | PR contains exact head SHA and run/job evidence. Existing SHA-pinned actions/tools and explicit head checkout retained; artifacts include `verification.log`, place and sourcemap. |
+| Altar, disclosure UI, real policy, reconnect, mobile, 2–8 clients | **BLOCKED — S1/D1/M1/P1** | No Studio, private QA DataStore/PolicyService session, real phone or multiplayer performance run performed. Portable results do not close Issue #2. |
+
+### M2 live acceptance steps (all BLOCKED)
+
+- At the own rear altar, inspect all ten final probabilities, uniform stat ranges,
+  exact fractions and fixed shop outcomes before spending; verify wrapping/scroll
+  and 44-pixel touch controls in portrait/landscape and on a real phone.
+- For unrestricted/restricted/error policy cases, observe the actual server lookup
+  and UI fallback. Forge random requests directly: restriction/error must deny
+  without debit, while earned fixed purchases and production remain available.
+- Double-tap summon/Fuse, disconnect during saving, reconnect, and inspect a
+  backed-up QA key. There must be one complete operation or no operation, never
+  partial parents/payment or a success notification before durable confirmation.
+- Select five exact Legacy/new IDs, lock or assign one before confirming; server
+  must reject changed inputs. Repeat stale preview and previously committed intent.
+- Load V1/V2 QA fixtures with jobs/cargo; compare all old IDs/stats/paidOrigin,
+  assignments/tutorial and offline results after repeated joins. Never reset a
+  rejected future/malformed key or send full private profiles to clients/logs.
+- Play from empty clearing through Healing/NPC/Rage and fixed Fuse under a
+  restricted account, without admin grants. Record observed timings separately.
+- Fill collection to 128 and inspect paging/search/sort/caps. Run 2–8 clients;
+  verify own-plot authorization, respawn/leave cleanup and bounded deployed proxies.
+  Measure FPS, replication, tick and commit latency; no performance pass is claimed.
+
 ## M1 implementation record — 2026-11-04
 
 Scope: [Issue #4](https://github.com/branch-danya-dev/magicpotiongacha/issues/4).

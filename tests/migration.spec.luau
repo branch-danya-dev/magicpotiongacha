@@ -38,9 +38,13 @@ return function(T: any)
 		local store = session()
 		local p, reason = store:load(123, function() return engine.newProfile(123, NOW) end)
 		T.truthy(p, reason)
-		T.equal(p.schemaVersion, 2)
-		for _, field in ipairs({ "gold", "essence", "inventory", "questStock", "order", "pets", "nextPetSerial", "rngState", "lastSimulatedAt", "manualReadyAt", "slimeWorkSeconds", "discoveredRecipes", "receipts", "entitlements" }) do
+		T.equal(p.schemaVersion, Config.schemaVersion)
+		for _, field in ipairs({ "gold", "essence", "inventory", "questStock", "order", "nextPetSerial", "rngState", "lastSimulatedAt", "manualReadyAt", "slimeWorkSeconds", "discoveredRecipes", "receipts", "entitlements" }) do
 			T.same(p[field], legacy[field], field)
+		end
+		for id, pet in pairs(legacy.pets) do
+			for field, value in pairs(pet) do T.same(p.pets[id][field], value) end
+			T.equal(p.pets[id].rarity, "Legacy")
 		end
 		T.equal(p.stations.distillery.essence, 0)
 		T.equal(p.stations.distillery.job.automatic, false)
@@ -50,7 +54,7 @@ return function(T: any)
 		T.truthy(p.tutorial.manual)
 		T.same(p.telemetry.first, {})
 		T.equal(record().revision, 5)
-		T.equal(record().profile.schemaVersion, 2)
+		T.equal(record().profile.schemaVersion, Config.schemaVersion)
 		T.truthy(store:release(123))
 	end)
 

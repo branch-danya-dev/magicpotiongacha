@@ -1,4 +1,4 @@
-# M1 player persistence
+# M2 player persistence
 
 ## Scope and verification status
 
@@ -52,6 +52,7 @@ Methods use colon syntax:
 | `store:get(userId)` | Returns the live in-memory table or `nil`. This alone does **not** authorize mutation. |
 | `store:isWritable(userId)` | True only while the local session is usable and its confirmed lease has sufficient time remaining. |
 | `store:save(userId)` | Returns `true` after a confirmed snapshot write and lease renewal, otherwise `false, errorCode`. |
+| `store:transact(userId, transform)` | Runs a non-yielding trusted transform on an isolated candidate under the same gate. Confirms its atomic save before replacing live state. Returns `true, result` only after confirmation or a previously committed receipt replay. |
 | `store:release(userId)` | Freezes new gameplay, persists the latest safe snapshot, and clears its own lease. A duplicate successful release is a no-op. |
 | `store:invalidate(userId)` | Quarantines a potentially damaged in-memory profile without writing it. Future saves/releases are rejected. |
 
@@ -121,10 +122,14 @@ backend state over guessing whether a previous write succeeded.
   never activate the Studio in-memory backend.
 - Invalid/future envelope or profile schemas fail closed. Migration must be added
   explicitly and tested; there is no automatic reset to a new player. Only the
-  explicit gameplay V1→V2 migration is supported.
+  explicit gameplay V1/V2→V3 migration is supported.
 - Failed saves pause gameplay writes. A subsequent save can recover while the
   adapter can still prove ownership of an unexpired lease. Expired, lost, or
   conflicting leases cannot be reclaimed by saving a stale local snapshot.
+- Failed collection commits additionally fence the old live snapshot permanently
+  for that session: an unknown outcome may already contain a reward. Rejoin must
+  reconcile durable state after the old lease expires; do not retry by saving old
+  memory or rerolling inside a storage callback.
 - A failed release retains the local profile for retry and does not deliberately
   clear the stored lease. If recovery cannot complete, another server must wait for
   expiry. Quarantined sessions remain blocked on the current server.
@@ -138,11 +143,11 @@ backend state over guessing whether a previous write succeeded.
 - `receipts`/`entitlements` fields in a profile are reserved data. Their presence
   is not an implementation of Roblox purchase receipt validation or fulfilment.
 
-## Gameplay V1 → V2 migration
+## Historical V1 → V2 conversion, retained inside V1 → V3
 
 The DataStore **envelope remains version 1** and the namespace is unchanged, so
-existing keys are found. `Factory.validate` accepts only current V2 gameplay
-profiles. `Factory.migrate` first checks V1 with the previous shape/invariants,
+existing keys are found. `Factory.validate` accepts only current V3 gameplay
+profiles. For V1, `Factory.migrate` first checks the previous shape/invariants,
 then copies it and initializes empty machine Essence tanks/quest queues, a pipe
 cursor, tutorial facts and diagnostic tables. Existing balances, paid jobs,
 inventory, already-delivered quest stock, cargo, timers, assignments, RNG and
@@ -169,6 +174,38 @@ Offline simulation still follows lease acquisition and is saved before gameplay.
 V2 is not backward writable by M0 servers: deploy coherently to a private QA
 environment first and do not downgrade a migrated key by resetting it. Real
 DataStore migration/lease and multi-client rollout remain **BLOCKED (D1/S1)**.
+
+## Gameplay V2 → V3 and collection recovery
+
+The envelope/namespace and lease/revision rules remain unchanged. V2 is validated
+with its M1 shape before copying; `tests/fixtures/m1-profile.luau` was generated
+and validated using PR #5 at `322f027465e8909902a79eaa9682c9017cf997c2`.
+All existing fields are preserved, including high legacy base stats, paidOrigin,
+assignments, pending prepaid jobs, in-flight cargo, Essence buffers, quest queues,
+tutorial, diagnostics and RNG. Each old pet gets rarity `Legacy`, stage 0,
+unlocked, provenance source `legacy`, empty parent IDs, and paidDerived equal to
+its existing paidOrigin. No invented historical draw or entitlement is granted.
+
+V3 initializes collection sequence 0 and false paid-currency flags. M0/M1 have no
+paid currency purchase endpoint; the independent existing pet paidOrigin still
+survives. New pet sources are starter/hire/shop/gacha/fuse. Fuse records the five
+consumed IDs plus the OR of paid ancestry, avoiding recursive unbounded trees.
+New fixed/rolled stats must obey species ranges; legacy stats keep the old bound.
+
+A command uses sequence + 1, canonical intent fingerprint and latest durable
+receipt. Payment/parents/result/serial/receipt commit in one profile snapshot.
+The latest identical retry returns that receipt (even after reconnect and preview
+expiry); older sequence IDs fail without spending. A different intent cannot use
+an existing successful ID. Only one receipt is retained, so the ledger is bounded.
+Clients receive the latest result, never an unconfirmed candidate or RNG seed.
+
+On an ambiguous commit failure, wait for the prior lease to expire and load with
+a fresh session. If the operation committed, its currency and full output/removed
+inputs/receipt are present together; if it did not, the prior state remains. Never
+manually regrant a missing-looking pet before checking durable state. Invalid or
+future records remain untouched. V3 cannot be written by M1 servers: use a coherent
+private QA rollout and backed-up keys; do not downgrade by resetting migrated data.
+Real rollback/recovery and platform quotas/latency remain **BLOCKED (D1/S1)**.
 
 ## Studio and real-backend acceptance checklist
 

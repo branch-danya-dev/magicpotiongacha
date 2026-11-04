@@ -47,7 +47,13 @@ local SCHEMAS: { [string]: { [string]: string } } = {
 	setRecipe = { stationId = "id", recipeId = "id" },
 	setAuto = { stationId = "id", enabled = "boolean" },
 	buy = { upgradeId = "id", expectedLevel = "level" },
-	hire = { speciesId = "id" },
+	hire = { speciesId = "id", requestId = "sequence" },
+	summon = { poolId = "id", count = "count", requestId = "sequence" },
+	shopFamiliar = { offerId = "id", requestId = "sequence" },
+	petLock = { petId = "id", locked = "boolean", requestId = "sequence" },
+	previewFuse = { petIds = "five-ids" },
+	refreshPolicy = {},
+	fuse = { petIds = "five-ids", previewToken = "id", confirmed = "true", requestId = "sequence" },
 	discard = { itemId = "id", amount = "count" },
 	acceptOrder = { orderId = "id" },
 	claimOrder = {},
@@ -98,7 +104,21 @@ local function validatePayload(action: any, payload: any): (boolean, string)
 	end
 	for key, kind in pairs(schema) do
 		local value = payload[key]
-		if kind == "boolean" then
+		if kind == "five-ids" then
+			if type(value) ~= "table" or getmetatable(value) ~= nil or #value ~= 5 then return false, "invalid_payload" end
+			local seen: { [string]: boolean } = {}
+			local count = 0
+			for index, id in pairs(value) do
+				if type(index) ~= "number" or not finite(index) or index % 1 ~= 0 or index < 1 or index > 5
+					or type(id) ~= "string" or not validId(id, false) or seen[id] then return false, "invalid_payload" end
+				seen[id], count = true, count + 1
+			end
+			if count ~= 5 then return false, "invalid_payload" end
+		elseif kind == "sequence" then
+			if not finite(value) or value % 1 ~= 0 or value < 1 or value > 1000000000000 then return false, "invalid_payload" end
+		elseif kind == "true" then
+			if value ~= true then return false, "invalid_payload" end
+		elseif kind == "boolean" then
 			if type(value) ~= "boolean" then
 				return false, "invalid_payload"
 			end
@@ -192,5 +212,7 @@ end
 function Protocol.forget(self: Gate, userId: number)
 	self._buckets[userId] = nil
 end
+
+Protocol.validate = validatePayload
 
 return Protocol

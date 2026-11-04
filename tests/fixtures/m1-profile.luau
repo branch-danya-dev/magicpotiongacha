@@ -1,0 +1,189 @@
+-- Captured/validated with M1 Factory at PR #5 322f027; prepared fixture, not player data.
+return {
+	["discoveredRecipes"] = {
+		["healing"] = true,
+	},
+	["entitlements"] = {
+	},
+	["essence"] = 118,
+	["gold"] = 760,
+	["inventory"] = {
+	},
+	["lastSimulatedAt"] = 100023,
+	["manualReadyAt"] = {
+		["garden"] = 100000,
+		["mine"] = 100000,
+	},
+	["nextPetSerial"] = 1,
+	["order"] = {
+		["acceptedAt"] = 100000,
+		["count"] = 5,
+		["expiresAt"] = 100600,
+		["id"] = "healing_small",
+		["itemId"] = "healing",
+		["recipeId"] = "healing",
+		["rewardGold"] = 110,
+	},
+	["pets"] = {
+		["123:starter_brewer"] = {
+			["id"] = "123:starter_brewer",
+			["name"] = "Magic cat",
+			["paidOrigin"] = false,
+			["species"] = "brewer",
+			["stats"] = {
+				["Brewing"] = 25,
+				["Farming"] = 3,
+				["Hauling"] = 2,
+			},
+		},
+		["123:starter_farmer"] = {
+			["id"] = "123:starter_farmer",
+			["name"] = "Sprout owl",
+			["paidOrigin"] = true,
+			["species"] = "farmer",
+			["stats"] = {
+				["Brewing"] = 2,
+				["Farming"] = 500,
+				["Hauling"] = 2,
+			},
+		},
+		["123:starter_slime"] = {
+			["id"] = "123:starter_slime",
+			["name"] = "Green slime",
+			["paidOrigin"] = false,
+			["species"] = "slime",
+			["stats"] = {
+				["Brewing"] = 1,
+				["Farming"] = 2,
+				["Hauling"] = 10,
+			},
+		},
+	},
+	["pipeCursor"] = 1,
+	["pipes"] = false,
+	["questStock"] = {
+		["healing"] = 2,
+	},
+	["rebirths"] = 0,
+	["receipts"] = {
+	},
+	["rngState"] = 124,
+	["schemaVersion"] = 2,
+	["slimeWorkSeconds"] = {
+		["123:starter_slime"] = 23,
+	},
+	["stations"] = {
+		["cauldron"] = {
+			["auto"] = true,
+			["essence"] = 7,
+			["input"] = {
+				["mandrake"] = 1,
+			},
+			["level"] = 1,
+			["output"] = {
+			},
+			["progress"] = 0,
+			["questQueue"] = {
+				["healing"] = 2,
+			},
+			["recipeId"] = "healing",
+			["workerId"] = "123:starter_brewer",
+		},
+		["crystal"] = {
+			["auto"] = false,
+			["essence"] = 0,
+			["input"] = {
+			},
+			["level"] = 2,
+			["output"] = {
+			},
+			["progress"] = 0,
+			["questQueue"] = {
+			},
+		},
+		["distillery"] = {
+			["auto"] = false,
+			["essence"] = 9,
+			["input"] = {
+			},
+			["job"] = {
+				["automatic"] = false,
+				["doubleChance"] = 0,
+				["duration"] = 8,
+				["kind"] = "brew",
+				["recipeId"] = "fire_extract",
+			},
+			["level"] = 1,
+			["output"] = {
+			},
+			["progress"] = 0,
+			["questQueue"] = {
+			},
+			["recipeId"] = "fire_extract",
+		},
+		["garden"] = {
+			["auto"] = false,
+			["essence"] = 0,
+			["input"] = {
+			},
+			["level"] = 1,
+			["output"] = {
+				["mandrake"] = 1,
+			},
+			["progress"] = 5,
+			["questQueue"] = {
+			},
+			["workerId"] = "123:starter_farmer",
+		},
+		["logistics"] = {
+			["auto"] = false,
+			["essence"] = 0,
+			["input"] = {
+			},
+			["job"] = {
+				["amount"] = 2,
+				["destinationKind"] = "inventory",
+				["duration"] = 3.2,
+				["itemId"] = "fire_extract",
+				["kind"] = "haul",
+				["sourceKind"] = "output",
+				["sourceStationId"] = "distillery",
+			},
+			["level"] = 1,
+			["output"] = {
+			},
+			["progress"] = 1,
+			["questQueue"] = {
+			},
+			["routeCursor"] = 3,
+			["workerId"] = "123:starter_slime",
+		},
+		["mine"] = {
+			["auto"] = false,
+			["essence"] = 0,
+			["input"] = {
+			},
+			["level"] = 0,
+			["output"] = {
+			},
+			["progress"] = 0,
+			["questQueue"] = {
+			},
+		},
+	},
+	["telemetry"] = {
+		["first"] = {
+			["manual_brew"] = 100023,
+		},
+		["stalls"] = {
+		},
+	},
+	["tutorial"] = {
+		["manual"] = true,
+		["orderAccepted"] = true,
+		["upgrade"] = true,
+	},
+	["tutorialGranted"] = true,
+	["userId"] = 123,
+	["warehouseLevel"] = 0,
+}
