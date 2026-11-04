@@ -47,6 +47,11 @@ local SCHEMAS: { [string]: { [string]: string } } = {
 	setRecipe = { stationId = "id", recipeId = "id" },
 	setAuto = { stationId = "id", enabled = "boolean" },
 	buy = { upgradeId = "id", expectedLevel = "level" },
+	build = { upgradeId = "id", expectedLevel = "level", requestId = "sequence" },
+	advancePhase = { expectedPhase = "phase", requestId = "sequence" },
+	equipCauldron = { slotId = "id", cauldronId = "id-or-empty", requestId = "sequence" },
+	lockCauldron = { cauldronId = "id", locked = "boolean", requestId = "sequence" },
+	prioritize = { stationId = "id" },
 	hire = { speciesId = "id", requestId = "sequence" },
 	summon = { poolId = "id", count = "count", requestId = "sequence" },
 	shopFamiliar = { offerId = "id", requestId = "sequence" },
@@ -114,6 +119,8 @@ local function validatePayload(action: any, payload: any): (boolean, string)
 				seen[id], count = true, count + 1
 			end
 			if count ~= 5 then return false, "invalid_payload" end
+		elseif kind == "phase" then
+			if not finite(value) or value % 1 ~= 0 or value < 1 or value > 4 then return false, "invalid_payload" end
 		elseif kind == "sequence" then
 			if not finite(value) or value % 1 ~= 0 or value < 1 or value > 1000000000000 then return false, "invalid_payload" end
 		elseif kind == "true" then

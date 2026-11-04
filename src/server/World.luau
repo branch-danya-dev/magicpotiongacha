@@ -5,15 +5,8 @@ World.__index = World
 local Access = require(game:GetService("ReplicatedStorage").PotionTycoon.Shared.Access)
 
 local OFFSETS = {
-	crystal = Vector3.new(0, 3, -2),
-	garden = Vector3.new(-20, 1.5, 0),
-	mine = Vector3.new(-20, 1.5, -20),
-	distillery = Vector3.new(15, 2, -18),
-	cauldron = Vector3.new(20, 2, 0),
-	logistics = Vector3.new(0, 2, -27),
-	warehouse = Vector3.new(-8, 2, -30),
-	orders = Vector3.new(10, 2, -30),
-	altar = Vector3.new(27, 2, -32),
+	warehouse = Vector3.new(-8,2,-30), orders = Vector3.new(10,2,-30),
+	altar = Vector3.new(27,2,-32), blueprint = Vector3.new(0,2,10),
 }
 local COLORS = {
 	crystal = Color3.fromRGB(137, 95, 234),
@@ -24,7 +17,8 @@ local COLORS = {
 	logistics = Color3.fromRGB(106, 154, 161),
 	warehouse = Color3.fromRGB(129, 112, 86),
 	orders = Color3.fromRGB(173, 145, 88),
-	altar = Color3.fromRGB(125, 94, 179),
+	altar = Color3.fromRGB(125, 94, 179), blueprint = Color3.fromRGB(100,180,190),
+	press = Color3.fromRGB(154,118,163), centrifuge = Color3.fromRGB(112,193,203),
 }
 
 local function part(parent, name, size, position, color)
@@ -67,13 +61,14 @@ local function prompt(adornee, text, object, callback)
 end
 
 function World.new(config, count, callbacks)
+	for id,def in pairs(config.stations) do OFFSETS[id]=Vector3.new(table.unpack(def.offset)) end
 	local self = setmetatable({ config = config, plots = {}, owners = {}, callbacks = callbacks }, World)
 	local root = Instance.new("Folder")
 	root.Name, root.Parent = "PotionTycoonWorld", workspace
 	self.root = root
 	part(root, "ForestFloor", Vector3.new(420, 1, 250), Vector3.new(0, -1, 0), Color3.fromRGB(40, 51, 44))
 	local bazaar = part(root, "Bazaar", Vector3.new(350, 0.3, 24), Vector3.new(0, 0, 0), Color3.fromRGB(91, 87, 97))
-	billboard(bazaar, "МАГИЧЕСКИЙ БАЗАР · M1\nЗаказы и производство", Vector3.new(0, 8, 0))
+	billboard(bazaar, "МАГИЧЕСКИЙ БАЗАР · M3\nЧетыре фазы фабрики", Vector3.new(0, 8, 0))
 	for index = 1, count do
 		local column = (index - 1) % 4
 		local row = math.floor((index - 1) / 4)
@@ -90,14 +85,31 @@ function World.new(config, count, callbacks)
 		spawn.Position, spawn.Anchored, spawn.Neutral = origin + Vector3.new(0, 1, 20), true, true
 		spawn.Duration, spawn.Transparency, spawn.Parent = 0, 0.5, model
 		local plot = { index = index, model = model, origin = origin, spawn = spawn,
-			anchors = {}, labels = {}, pads = {}, padLabels = {}, ownerLabel = ownerLabel }
+			anchors = {}, labels = {}, pads = {}, padLabels = {}, architecture = {}, ownerLabel = ownerLabel }
 		self.plots[index] = plot
+		-- Replaceable non-colliding greybox modules; no economic state in geometry.
+		for phase=2,4 do
+			local color=phase==2 and Color3.fromRGB(115,92,69) or (phase==3 and Color3.fromRGB(128,133,141) or Color3.fromRGB(84,166,181))
+			for _,x in ipairs({-36,36}) do
+				local frame=part(model,"Phase"..phase.."Frame",Vector3.new(1,phase*3,58),origin+Vector3.new(x,phase*1.5,-10),color)
+				frame.CanCollide,frame.CanTouch,frame.CanQuery,frame.Transparency=false,false,false,1
+				frame.Material=phase==2 and Enum.Material.Wood or (phase==3 and Enum.Material.Concrete or Enum.Material.Neon)
+				table.insert(plot.architecture,{phase=phase,part=frame})
+			end
+			local canopy=part(model,"Phase"..phase.."Canopy",Vector3.new(72,0.4,12),origin+Vector3.new(0,phase*3,-37),color)
+			canopy.CanCollide,canopy.CanTouch,canopy.CanQuery,canopy.Transparency=false,false,false,1
+			table.insert(plot.architecture,{phase=phase,part=canopy})
+		end
 		for id, offset in pairs(OFFSETS) do
 			local station = config.stations[id]
-			local title = station and station.name or (id == "warehouse" and "Склад" or (id == "altar" and "Алтарь · фамильяры" or "Доска заказов"))
+			local title = station and station.name or (id == "warehouse" and "Склад" or (id == "altar" and "Алтарь · фамильяры" or (id == "blueprint" and "Развитие фабрики" or "Доска заказов")))
 			local size = id == "crystal" and Vector3.new(4, 6, 4) or Vector3.new(8, 3, 7)
-			local anchor = part(model, id, size, origin + offset, COLORS[id])
+			local anchor = part(model, id, size, origin + offset, COLORS[id] or COLORS[station and station.archetype] or Color3.fromRGB(140,140,150))
 			anchor:SetAttribute("StationId", id)
+			if station then
+				anchor:SetAttribute("InputWaypoint",origin+Vector3.new(table.unpack(station.waypoints.input)))
+				anchor:SetAttribute("OutputWaypoint",origin+Vector3.new(table.unpack(station.waypoints.output)))
+			end
 			if id == "crystal" then
 				anchor.Material = Enum.Material.Neon
 				anchor.CFrame *= CFrame.Angles(0, math.rad(45), math.rad(10))
@@ -109,7 +121,7 @@ function World.new(config, count, callbacks)
 				if id == "crystal" then callbacks.action(player, "click", {})
 				else callbacks.focus(player, id) end
 			end)
-			if station or id == "warehouse" then
+			if station or id == "warehouse" or id == "blueprint" then
 				local pad = part(model, "Buy_" .. id, Vector3.new(5, 0.25, 4), origin + offset + Vector3.new(0, -offset.Y + 0.8, 7), Color3.fromRGB(182, 157, 70))
 				pad.Material = Enum.Material.Neon
 				pad.CanCollide = false
@@ -118,8 +130,11 @@ function World.new(config, count, callbacks)
 				-- Spend Gold only after an explicit keyboard/gamepad/touch activation.
 				local purchasePrompt = prompt(pad, "Купить улучшение", title, function(player)
 					if plot.owner ~= player then return end
-					local level = pad:GetAttribute("ExpectedLevel")
-					if level ~= nil then callbacks.action(player, "buy", { upgradeId = id, expectedLevel = level }) end
+					local level, requestId = pad:GetAttribute("ExpectedLevel"), pad:GetAttribute("ExpectedRequestId")
+					if level ~= nil and requestId then
+						if id=="blueprint" then callbacks.action(player,"advancePhase",{expectedPhase=level,requestId=requestId})
+						else callbacks.action(player,"build",{upgradeId=id,expectedLevel=level,requestId=requestId}) end
+					end
 				end)
 				purchasePrompt.MaxActivationDistance = 8
 				purchasePrompt.HoldDuration = 0.5
@@ -162,7 +177,8 @@ function World:release(player)
 		anchor:SetAttribute("CargoItem", nil)
 		anchor:SetAttribute("QueuedCrates", nil)
 	end
-	for _, pad in pairs(plot.pads) do pad:SetAttribute("ExpectedLevel", nil) end
+	for _, pad in pairs(plot.pads) do pad:SetAttribute("ExpectedLevel", nil); pad:SetAttribute("ExpectedRequestId",nil) end
+	for _,module in ipairs(plot.architecture) do module.part.Transparency=1 end
 end
 
 function World:inRange(player, action, payload, maxDistance)
@@ -180,7 +196,13 @@ end
 function World:update(player, profile)
 	local plot = self.owners[player.UserId]
 	if not plot or plot.owner ~= player then return end
-	plot.ownerLabel.Text = player.DisplayName .. " · Rebirth " .. profile.rebirths
+	local phase=self.callbacks.phaseState(profile)
+	plot.ownerLabel.Text = player.DisplayName .. " · " .. phase.name .. "\n" .. phase.message
+	for _,module in ipairs(plot.architecture) do module.part.Transparency=module.phase==profile.phase and 0.35 or 1 end
+	for _,pad in pairs(plot.pads) do pad:SetAttribute("ExpectedRequestId",profile.progression.sequence+1) end
+	plot.pads.blueprint:SetAttribute("ExpectedLevel",profile.phase)
+	plot.padLabels.blueprint.Text=phase.cost and ("Фаза "..(profile.phase+1)..": "..phase.cost.." Gold\n"..table.concat(phase.reasons,"; ")) or phase.message
+	plot.labels.blueprint.Text=phase.name.."\n"..phase.message
 	local production = self.callbacks.production(profile)
 	for id, station in pairs(profile.stations) do
 		local anchor = plot.anchors[id]
@@ -188,6 +210,11 @@ function World:update(player, profile)
 			local definition = self.config.stations[id]
 			anchor.Transparency = station.level > 0 and 0 or 0.78
 			anchor:SetAttribute("Tier", station.level)
+			anchor:SetAttribute("CauldronId", station.cauldronId)
+			if definition.archetype=="cauldron" then
+				anchor.Material=station.level>=3 and Enum.Material.Metal or Enum.Material.SmoothPlastic
+				anchor.Color=station.level>=3 and Color3.fromRGB(115,192,204) or (station.level==2 and Color3.fromRGB(178,119,75) or COLORS.cauldron)
+			end
 			anchor:SetAttribute("WorkerId", station.workerId)
 			local pet = station.workerId and profile.pets[station.workerId]
 			anchor:SetAttribute("WorkerName", pet and pet.name)
@@ -206,8 +233,8 @@ function World:update(player, profile)
 						or (job.destinationKind == "inventory" and plot.anchors.warehouse or plot.anchors[job.destinationStationId])
 					anchor:SetAttribute("CargoAmount", job.amount)
 					anchor:SetAttribute("CargoItem", job.itemId)
-					anchor:SetAttribute("HaulFrom", from and from.Position)
-					anchor:SetAttribute("HaulTo", target and target.Position)
+					anchor:SetAttribute("HaulFrom", from and (from:GetAttribute("OutputWaypoint") or from.Position))
+					anchor:SetAttribute("HaulTo", target and (target:GetAttribute("InputWaypoint") or target.Position))
 					anchor:SetAttribute("HaulProgress", math.clamp(station.progress / job.duration, 0, 1))
 				else
 					anchor:SetAttribute("HaulFrom", nil)
@@ -219,8 +246,8 @@ function World:update(player, profile)
 			end
 			plot.labels[id].Text = definition.name .. " · ур. " .. station.level .. "\n" .. state.text
 			plot.pads[id]:SetAttribute("ExpectedLevel", station.level)
-			local cost = definition.upgradeCosts[station.level + 1]
-			plot.padLabels[id].Text = cost and ("Улучшить: " .. cost .. " Gold") or "Максимальный уровень"
+			local build=self.callbacks.buildState(profile,id)
+			plot.padLabels[id].Text = build.cost and ("Купить: " .. build.cost .. " Gold\n" .. build.reason) or "Максимальный уровень"
 		end
 	end
 	local warehouseCost = self.config.warehouse.upgradeCosts[(profile.warehouseLevel or 0) + 1]

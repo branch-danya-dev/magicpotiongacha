@@ -6,7 +6,7 @@ local legacy=require("./fixtures/m1-profile")
 return function(T: any)
 	T.test("M2 migration: genuine V2 preserves every existing field, cargo and paid job",function()
 		local h=H.new(); local before=H.copy(legacy); local p=h.engine.migrate(H.copy(legacy))
-		T.truthy(p); T.truthy(h.engine.validate(p)); T.equal(p.schemaVersion,3)
+		T.truthy(p); T.truthy(h.engine.validate(p)); T.equal(p.schemaVersion,Config.schemaVersion)
 		for key,value in pairs(legacy) do
 			if key=="pets" then
 				for id,pet in pairs(value) do
@@ -14,6 +14,8 @@ return function(T: any)
 					T.equal(p.pets[id].rarity,"Legacy"); T.equal(p.pets[id].provenance.source,"legacy")
 					T.equal(p.pets[id].provenance.paidDerived,pet.paidOrigin)
 				end
+			elseif key=="stations" or key=="manualReadyAt" then
+				for id, old in pairs(value) do T.same(p[key][id],old,key.."."..id) end
 			elseif key~="schemaVersion" then T.same(p[key],value,key) end
 		end
 		T.same(legacy,before); T.same(h.engine.migrate(H.copy(p)),p)
@@ -36,7 +38,7 @@ return function(T: any)
 	for _,defect in ipairs({"future","bad-old-tank","bad-old-pet","missing-origin","paid-laundering","out-of-range","wrong-stage","bad-receipt","bad-paid-currency"}) do
 		T.test("M2 migration: invalid saves preserved, never replaced / "..defect,function()
 			local h=H.new(); local p=h.engine.migrate(H.copy(legacy))
-			if defect=="future" then p.schemaVersion=4
+			if defect=="future" then p.schemaVersion=Config.schemaVersion+1
 			elseif defect=="bad-old-tank" then p=H.copy(legacy); p.stations.cauldron.essence=-1
 			elseif defect=="bad-old-pet" then p=H.copy(legacy); p.pets["123:starter_farmer"].stats.Farming=0/0
 			elseif defect=="missing-origin" then p.pets["123:starter_farmer"].provenance=nil

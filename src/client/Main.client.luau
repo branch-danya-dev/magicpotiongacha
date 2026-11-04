@@ -21,6 +21,7 @@ local bindings = {}
 local collectionPending = false
 local pendingGeneration = 0
 local collectionActions = { summon = true, shopFamiliar = true, hire = true, fuse = true, petLock = true }
+local progressionActions = { build=true, advancePhase=true, equipCauldron=true, lockCauldron=true }
 
 local function round(instance)
 	local corner = Instance.new("UICorner")
@@ -52,9 +53,10 @@ local function send(action, payload)
 		local id = payload.upgradeId
 		payload.expectedLevel = id == "pipes" and (state.pipes and 1 or 0)
 			or (id == "warehouse" and state.warehouseLevel or state.stations[id].level)
+		action = "build"
 	end
-	if collectionActions[action] then
-		payload.requestId = state.collection.sequence + 1
+	if collectionActions[action] or progressionActions[action] then
+		payload.requestId = (progressionActions[action] and state.progression.sequence or state.collection.sequence) + 1
 		collectionPending = true
 		pendingGeneration += 1
 		local generation = pendingGeneration
@@ -78,7 +80,7 @@ hud.BackgroundColor3, hud.Parent = BG, gui
 local balance = label(hud, "Загрузка профиля…", 36)
 balance.Position, balance.Size = UDim2.fromOffset(12, 0), UDim2.new(1, -130, 0, 36)
 balance.TextSize = 17
-local status = label(hud, "M2 · фабрика и фамильяры", 32)
+local status = label(hud, "M3 · четыре фазы фабрики", 32)
 status.Position, status.Size = UDim2.fromOffset(12, 38), UDim2.new(1, -24, 0, 32)
 status.TextSize = 11
 local toggle = button(hud, "Фабрика", function() end)
@@ -153,7 +155,7 @@ workspace:GetPropertyChangedSignal("CurrentCamera"):Connect(watchCamera)
 watchCamera()
 guide.Activated:Connect(function()
 	if not state then return end
-	selected, petPicker, panel.Visible = state.tutorial.target, false, true
+	selected, petPicker, panel.Visible = state.tutorial.complete and "blueprint" or state.tutorial.target, false, true
 	draw()
 end)
 local function bindText(widget, getter)
@@ -185,6 +187,7 @@ draw = function()
 		order += 1
 		local object = label(contents, value, height)
 		object.LayoutOrder = order
+		object.AutomaticSize = Enum.AutomaticSize.Y
 		return object
 	end
 	local function action(value, callback)
@@ -226,7 +229,30 @@ draw = function()
 		refresh()
 		return
 	end
-	if selected == "altar" then
+	if selected == "blueprint" then
+		title.Text = "Развитие · фаза "..state.phase.phase.."/4"
+		local phase=state.phase
+		text(phase.name.."\n"..phase.message,76)
+		if phase.cost then
+			local prerequisites=text("",150)
+			bindText(prerequisites,function()
+				local current=state.phase
+				return "Следующая: "..current.nextName.." · "..current.cost.." Gold\n"..(#current.reasons>0 and table.concat(current.reasons,"\n") or "Все технологические требования выполнены")
+			end)
+			action("Купить следующую фазу",function() send("advancePhase",{expectedPhase=phase.phase}) end)
+		end
+		text("Фазы открывают новые категории. Каждый слот покупается отдельно. Старые станции, рецепты и базовый алтарь сохраняются.",84)
+		for _,id in ipairs(Config.stationOrder) do
+			local build=state.builds[id]
+			text(Config.stations[id].name.." · tier "..state.stations[id].level.." · "..(build.cost and (build.cost.." Gold · "..build.reason) or "MAX"),60)
+			action("Открыть: "..Config.stations[id].name,function() selected=id; draw() end)
+		end
+		text("Редкие котлы · гарантированный подарок при покупке фазы 3. Установка — в меню котла. Защита — у алтаря.",84)
+		for id,item in pairs(state.cauldrons) do
+			text(Config.cauldronTypes[item.type].name.."\nID: "..id.."\nБонус x2: +"..(item.bonus*100).." п.п., общий предел "..(Config.maxDoubleChance*100).."% · "..(item.locked and "Защищён" or "Не защищён"),112)
+			action(item.locked and "Снять защиту котла" or "Защитить котёл",function() send("lockCauldron",{cauldronId=id,locked=not item.locked}) end)
+		end
+	elseif selected == "altar" then
 		title.Text = "Алтарь · коллекция"
 		collectionUI.draw({ state = state, text = function(value, height)
 			local object = text(value, height)
@@ -241,6 +267,7 @@ draw = function()
 			local s = state.storage
 			return "Сырьё: " .. s.raw .. "/" .. s.rawCapacity .. " · Полуфабрикаты: " .. s.intermediate .. "/" .. s.intermediateCapacity
 				.. "\nИнгредиенты: " .. names(state.inventory)
+				.. (s.rawTarget and ("\nПриём на каждый вид: сырьё "..s.rawTarget..", полуфабрикат "..s.intermediateTarget..". Старые запасы и грузы сохраняются.") or "")
 		end)
 		local quest = text("", 50)
 		bindText(quest, function() return "Квестовый склад: " .. state.orderProgress.delivered .. "/" .. state.orderProgress.capacity .. " · в пути: " .. state.orderProgress.travelling .. " · в лотках: " .. state.orderProgress.queued end)
@@ -256,7 +283,10 @@ draw = function()
 			end)
 		end
 		text("Освободить место · сырьё и полуфабрикаты", 32)
-		for _, itemId in ipairs({ "mandrake", "coal", "slime", "fire_extract" }) do
+		local ingredientIds={}
+		for itemId,item in pairs(Config.items) do if item.kind~="potion" then table.insert(ingredientIds,itemId) end end
+		table.sort(ingredientIds)
+		for _, itemId in ipairs(ingredientIds) do
 			local confirmation = false
 			local discardButton
 			discardButton = action("Утилизировать до 10: " .. Config.items[itemId].name, function()
@@ -282,12 +312,12 @@ draw = function()
 				.. "\nУ котла: " .. p.queued .. " · В пути: " .. p.travelling .. " · Доставлено: " .. p.delivered .. "/" .. state.order.count
 				.. "\nДо срока: " .. p.remainingSeconds .. " сек. · Резерв всего: " .. p.reserved
 		end)
-		local ids = {}
-		for id in pairs(Config.orders) do table.insert(ids, id) end
-		table.sort(ids)
-		for _, id in ipairs(ids) do
+		for _, id in ipairs(state.orderOffers) do
 			local contract = Config.orders[id]
 			action(contract.name .. " · " .. contract.count .. " шт. → " .. contract.rewardGold .. " Gold", function() send("acceptOrder", { orderId = id }) end)
+		end
+		for id,availability in pairs(state.orderAvailability) do
+			if not availability.available then text(Config.orders[id].name..": "..availability.reason,64) end
 		end
 		action("Сдать готовый заказ", function() send("claimOrder", {}) end)
 		text("Принятый заказ резервирует только нужное количество. Остальная продукция продаётся автоматически.", 60)
@@ -310,7 +340,7 @@ draw = function()
 		end)
 		if stationId == "crystal" then
 			action("Собрать эссенцию +" .. Config.manualClickEssence, function() send("click", {}) end)
-		elseif stationId == "garden" or stationId == "mine" then
+		elseif definition.outputItem then
 			local output = text("", 44)
 			bindText(output, function() return "У источника: " .. names(getStation().output) end)
 			action("Собрать вручную", function() send("harvest", { stationId = stationId }) end)
@@ -324,7 +354,7 @@ draw = function()
 				local target = job.destinationKind == "questStock" and "Квестовый склад" or (job.destinationStationId and Config.stations[job.destinationStationId].name or "Склад")
 				return Config.items[job.itemId].name .. " × " .. job.amount .. "\n" .. source .. " → " .. target .. "\nСнятие рабочего приостанавливает груз."
 			end)
-		elseif stationId == "cauldron" or stationId == "distillery" then
+		elseif definition.defaultRecipe then
 			local recipe = text("", 48)
 			bindText(recipe, function()
 				local station = getStation()
@@ -332,11 +362,10 @@ draw = function()
 				return def and (def.name .. " · " .. names(def.inputs) .. " · Essence: " .. def.essenceCost
 					.. " · Выпуск: " .. def.quantity .. " · Продажа: " .. def.goldValue .. " Gold") or "Рецепт не выбран"
 			end)
-			for _, recipeId in ipairs({ "healing", "fire_extract", "rage" }) do
-				local def = Config.recipes[recipeId]
-				if def.station == stationId then
-					action("Рецепт: " .. def.name, function() send("setRecipe", { stationId = stationId, recipeId = recipeId }) end)
-				end
+			local recipeIds={}; for id in pairs(state.recipes[stationId]) do table.insert(recipeIds,id) end; table.sort(recipeIds)
+			for _,recipeId in ipairs(recipeIds) do
+				local def,availability=Config.recipes[recipeId],state.recipes[stationId][recipeId]
+				action("Рецепт: "..def.name..(availability.available and "" or (" · "..availability.reason)),function() send("setRecipe",{stationId=stationId,recipeId=recipeId}) end)
 			end
 			action("Загрузить ингредиенты и Essence", function() send("load", { stationId = stationId }) end)
 			action("Сварить одну партию", function() send("brew", { stationId = stationId }) end)
@@ -352,9 +381,17 @@ draw = function()
 					.. "\nЯщики у котла: " .. state.production[stationId].queued .. "/" .. Config.questQueueCapacity
 			end)
 		end
+		if definition.archetype=="cauldron" then
+			text("Установленный редкий котёл: "..tostring(getStation().cauldronId or "базовый")..". Сначала заверши оплаченную партию.",76)
+			for id,item in pairs(state.cauldrons) do
+				action("Установить "..Config.cauldronTypes[item.type].name.." · "..id,function() send("equipCauldron",{slotId=stationId,cauldronId=id}) end)
+			end
+			action("Снять редкий котёл",function() send("equipCauldron",{slotId=stationId,cauldronId=""}) end)
+		end
+		action("Снабдить этот слот следующим",function() send("prioritize",{stationId=stationId}) end)
 		action("Назначить фамильяра", function() petPicker = true; draw() end)
 		local upgrade = action("", function() send("buy", { upgradeId = stationId }) end)
-		bindText(upgrade, function() return "Улучшить · " .. tostring(upgradePrice(stationId) or "MAX") .. " Gold" end)
+		bindText(upgrade, function() return "Улучшить · " .. tostring(upgradePrice(stationId) or "MAX") .. " Gold · " .. state.builds[stationId].reason end)
 		text("Действия доступны рядом с этим объектом на твоём участке. Питомца можно снять и назначить на другое место.", 58)
 	end
 	refresh()
@@ -364,11 +401,14 @@ refresh = function()
 	if not state then return end
 	balance.Text = "Gold: " .. math.floor(state.gold) .. "  |  Essence: " .. math.floor(state.essence)
 	status.Text = (state.mode == "STUDIO_MEMORY" and "STUDIO: прогресс НЕ сохраняется после Stop" or "DataStore: сохранение включено") .. (state.writable and "" or " · запись приостановлена")
-	guide.Text = state.tutorial.complete and "Обучение завершено · Заказы" or ("Шаг " .. state.tutorial.step .. "/" .. state.tutorial.total .. " · " .. (Config.stations[state.tutorial.target] and Config.stations[state.tutorial.target].name or state.tutorial.target) .. " · Подсказка")
+	guide.Text = state.tutorial.complete and ("Фаза "..state.phase.phase.."/4 · "..state.phase.message) or ("Шаг " .. state.tutorial.step .. "/" .. state.tutorial.total .. " · " .. (Config.stations[state.tutorial.target] and Config.stations[state.tutorial.target].name or state.tutorial.target) .. " · Подсказка")
 	for _, update in ipairs(bindings) do update() end
 end
 
-for _, tab in ipairs({ {"crystal", "Кристалл"}, {"garden", "Грядка"}, {"mine", "Шахта"}, {"distillery", "Экстракт"}, {"cauldron", "Котёл"}, {"logistics", "Перевозчик"}, {"warehouse", "Склад"}, {"orders", "Заказы"}, {"altar", "Фамильяры"} }) do
+local tabList={{"blueprint","Развитие"}}
+for _,id in ipairs(Config.stationOrder) do table.insert(tabList,{id,Config.stations[id].name}) end
+for _,tab in ipairs({{"warehouse","Склад"},{"orders","Заказы"},{"altar","Фамильяры"}}) do table.insert(tabList,tab) end
+for _, tab in ipairs(tabList) do
 	local tabButton = button(tabs, tab[2], function() selected, petPicker = tab[1], false; draw() end)
 	tabButton.Size = UDim2.fromOffset(104, 44)
 end
@@ -384,9 +424,11 @@ end
 State.OnClientEvent:Connect(function(value)
 	local first = state == nil
 	local collectionChanged = state and collectionUI.signature(state) ~= collectionUI.signature(value)
-	if state and state.collection.sequence ~= value.collection.sequence then collectionPending = false end
+	local progressionChanged = state and (state.progression.sequence~=value.progression.sequence or state.phase.complete~=value.phase.complete
+		or table.concat(state.orderOffers,"|")~=table.concat(value.orderOffers,"|"))
+	if state and (state.collection.sequence ~= value.collection.sequence or state.progression.sequence~=value.progression.sequence) then collectionPending = false end
 	state = value
-	if first or (selected == "altar" and collectionChanged) then draw() else refresh() end
+	if first or progressionChanged or (selected == "altar" and collectionChanged) then draw() else refresh() end
 	if not hasReport and value.offlineReport and value.offlineReport.processedSeconds > 5 then
 		hasReport = true
 		showToast("С возвращением! Учтено " .. value.offlineReport.processedSeconds .. " сек. работы. Gold: +" .. math.floor(value.offlineReport.goldEarned or 0) .. ". Уже сохранено.", 8)
@@ -397,7 +439,7 @@ Notice.OnClientEvent:Connect(function(value)
 	showToast(value.text)
 end)
 Focus.OnClientEvent:Connect(function(stationId)
-	if Config.stations[stationId] or stationId == "warehouse" or stationId == "orders" or stationId == "altar" then
+	if Config.stations[stationId] or stationId == "warehouse" or stationId == "orders" or stationId == "altar" or stationId == "blueprint" then
 		selected, petPicker, panel.Visible = stationId, false, true
 		draw()
 	end

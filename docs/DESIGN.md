@@ -9,7 +9,7 @@ Three layout zones: agriculture to the left of the crystal; processing in the ce
 ## Production and workers
 
 - Essence: manual crystal clicks, a worker specifically assigned to the crystal, and crystal upgrades. Other workers do not generate Essence merely by existing.
-- Mandrake and other future plants: farm workplaces. Coal: automated mining. Deployed slimes additionally generate byproduct slime on saved timed production rolls.
+- Mandrake, mushrooms and Fire Berries: farm workplaces. Coal: automated mining. Deployed slimes additionally generate byproduct slime on saved timed production rolls.
 - Three familiar stats: Farming, Hauling, Brewing. Crystal gathering and mining use Farming in M0, without adding a fourth stat.
 - Every familiar instance keeps its original stats. Effective skill is clamped by station tier; strong gifted pets are usable at capped effectiveness, not destroyed or forcibly removed.
 - One familiar can occupy only one workplace. Cosmetic followers do not create a second production contribution.
@@ -21,7 +21,26 @@ Three layout zones: agriculture to the left of the crystal; processing in the ce
 
 ## Orders
 
-Three offers on the board, one active contract in M0. Production matching an active contract reserves only the required quantity. Extra production exports normally. The player claims a completed contract once. On expiry, already reserved production is exported at normal price rather than silently destroyed. Later dynamic contracts must be feasible using unlocked recipes and must not require a paid rescue.
+Three eligible offers on the board, one active contract. M3 replaces lower-priority offers with discovered, reachable technology; the tutorial pins its first Healing contract. Production matching an active contract reserves only the required quantity across all compatible slots. Extra production exports normally. The player claims a completed contract once. On expiry, already reserved production is exported at normal price rather than silently destroyed. No paid rescue is required.
+
+## Construction and technology — M3
+
+Four functional phases are separate from equipment tiers and future Rebirth epochs.
+[M3_RULES.md](M3_RULES.md) records the graph, fixed slot coordinates/waypoints,
+prices, recipes and three measured portable routes. Original six IDs and early
+upgrades remain available; seven additional slots unlock by phase. All slots are
+individual purchases. Geometry only reflects confirmed server state.
+
+The final berry → essence → serum → Ascension route has three manufacturing steps,
+with a solid paste branch. Two cauldrons can produce simultaneously. Per-material
+saved turns share scarce solid/liquid inputs; phase-three intake targets prevent
+one idle material from taking every warehouse slot. Existing stock and cargo are
+conserved. Manual load/discard and one-turn supply priority remain available.
+
+Phase 3 grants one free unique resonant cauldron with ownership, provenance, lock
+and a capped bonus captured at batch start. Changing equipment requires an idle
+slot. This is preparation for future inventory transfers, with no trade endpoint.
+Phase 4 plus first manual Ascension displays completion only: no reset or grant.
 
 ## Collection and policy — M2
 
@@ -79,7 +98,7 @@ be measured by the portable early-game scenarios, not treated as retention data.
 ## Remaining prototype simplifications
 
 - Familiar collection uses ten greybox species and three evolution families. There are no quest pet rewards, general pet deletion, rerolls, luck/pity modifiers, trading or monetization handlers.
-- Single Mandrake plot, one coal mine, one distillery and one potion cauldron; three equipment levels rather than four fully modeled architectural phases.
+- Thirteen fixed workplaces, one carrier and six processing slots; four functional phases with replaceable greybox architecture. No free placement or physical bottle simulation.
 - Simple local worker spheres and greybox scenery; no art acceptance or mobile FPS claim.
 - Prices, rates and probabilities are provisional configuration, not a monetization forecast.
 
