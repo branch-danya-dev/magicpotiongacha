@@ -18,7 +18,7 @@ available. No live test below was executed. PR #1 must remain Draft and unmerged
 | First-player production in the portable model | **PASS** | `tests/acceptance.spec.luau`: zero starting resources, negative Studio identity, real Protocol intents, first manual Healing, worker assignments, earned crystal upgrade and 600 seconds of autonomous production. No currency or ingredients injected. |
 | Two-hour cap and immediate second login in the fake backend | **PASS** | Same suite: save/release, 10,800-second absence, exactly 7,200 seconds processed and 3,600 skipped, save/release/reload, zero repeated reward and unchanged complete profile. |
 | Baseline CI | **PASS (baseline only)** | [Run 41886239421](https://github.com/branch-danya-dev/magicpotiongacha/actions/runs/41886239421): Windows and Ubuntu passed for the original PR. |
-| Final fix CI | **PENDING at report commit** | Record the exact final source SHA and the Windows/Ubuntu push-run results in the linked fix PR. A baseline result does not satisfy this gate. |
+| Final fix CI | **PASS** | [Fix PR #3](https://github.com/branch-danya-dev/magicpotiongacha/pull/3) records the final source SHA and Windows/Ubuntu push-run evidence: 154 tests, 15 compiled Luau sources, analysis and Rojo build on each OS. |
 | All Studio greybox checks below | **BLOCKED — S1** | Roblox Studio unavailable. No Output log, 2-client run, prompt interaction or engine authorization evidence. |
 | All real save/catch-up checks below | **BLOCKED — D1** | No isolated private QA experience, QA namespace or real DataStore session. Fake-backend tests are separate evidence only. |
 | Emulator and real-phone interaction | **BLOCKED — M1** | Studio emulator and a connected phone test session unavailable. |
