@@ -27,9 +27,9 @@ for (const [name, tool] of Object.entries(manifest)) {
     await writeFile(archive, bytes);
   }
   if (process.platform === 'win32') {
-    const quote = value => `'${value.replaceAll("'", "''")}'`;
-    execFileSync('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command',
-      `Expand-Archive -LiteralPath ${quote(archive)} -DestinationPath ${quote(directory)} -Force`], { stdio: 'inherit' });
+    // Windows 10/11 ship bsdtar with ZIP support. Avoid loading a PowerShell
+    // script module, which fails under the default Restricted execution policy.
+    execFileSync('tar.exe', ['-xf', archive, '-C', directory], { stdio: 'inherit' });
   } else {
     execFileSync('unzip', ['-oq', archive, '-d', directory], { stdio: 'inherit' });
     const bins = name === 'luau' ? ['luau', 'luau-analyze', 'luau-compile'] : ['rojo'];
