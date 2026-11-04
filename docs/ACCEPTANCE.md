@@ -2,6 +2,59 @@
 
 CLI/CI passing is necessary but does not mark any item below as completed.
 
+## M3 implementation record — 2026-11-04
+
+Scope: [Issue #8](https://github.com/branch-danya-dev/magicpotiongacha/issues/8).
+Branch `feat/m3-four-phase-tycoon`, stacked on open/unmerged Draft
+[PR #7](https://github.com/branch-danya-dev/magicpotiongacha/pull/7), base branch
+`feat/m2-familiars-gacha-fuse`, HEAD
+`f9c34c8383bee2a0fdd1ef08167103725a924672`. No merge or Roblox publication.
+Overall live acceptance: **BLOCKED**. Earlier records below remain historical.
+
+| Requirement | Actual status | Evidence / remaining limit |
+| --- | --- | --- |
+| Preserve 316 M0–M2 tests | **PASS** | No tests removed. `m2.spec` uses current/future schema constants and compares every old station/cooldown field; `migration.spec` compares all original cooldowns while allowing new empty slots. All policy/gacha/shop/Fuse/lease regressions still run. |
+| Four phases, fixed builds and graph | **PASS (portable)** | `m3_progression.spec`: every phase purchase, all 21 new slot/tier purchases, insufficient funds/prerequisites, stale/conflicting IDs, exact costs, no final reset/payout. Config defines 13 IDs/archetypes/waypoints; World reflects committed state. Physical prompts/geometry remain S1. |
+| New sources, six recipes, three-operation final chain | **PASS (portable)** | `m3_factory.spec`: each recipe's exact prepaid inputs/Essence, discovery, phase/tier/archetype gates. `M3Scenario` manually discovers all technologies through real inputs, then staffs six processors and two cauldrons. |
+| Multiple routes, scarce supply and capacity | **PASS (portable)** | Two consumers share single-item solid and liquid streams across validated reloads; supply-next resumes rotation; intake targets preserve room; old cargo survives phase unlock; sources/pipes/solids remain separate. Original seven route indices retained; bounded O(slots × types) scan. |
+| Parallel NPC reserve/expiry/claim | **PASS (portable)** | Shared quota across two cauldrons, excess export, second queue's own delivery, carrier removal/expiry, no repeated sale/claim; three initial reachable offers, new phase/discovery/source-chain eligibility and one active contract. |
+| Rare-cauldron item | **PASS (portable)** | Unique free phase-three grant, ownership, incompatible/duplicate equip rejection, lock, idle-only swap, snapshotted bonus/cap, preserved strong base stats; current equipped/locked item and provenance roundtrip. No trade, gacha or deletion handler. |
+| Durable construction and economy protection | **PASS (fake backend / portable)** | `m3_store.spec`: build/phase/equip before/after-commit failures, lost responses, identical/conflicting concurrency, replay after rejoin and M2-shop/M3-phase shared gate. `m3_progression.spec` rejects client price/bonus/owner/phase/reward/completion fields and validates access targets. Runtime authorization still S1. |
+| V1/V2/V3 → V4 | **PASS (fake backend)** | Historical suites + genuine V3 fixture captured/validated with M2 HEAD; every old field preserved, new slots empty, no inferred phase grant; future/corrupt owner/bonus/technology/cursor/receipt fail closed; lease takeover and repeated catch-up tested. |
+| Three full free progression routes | **PASS (portable)** | `m3_acceptance.spec`/`M3Scenario`: zero balances, manual/early-auto/detour, restricted or unavailable policy, no familiar RNG/admin grants; final recipe and 1200-second parallel output. Cumulative time/click/income/spending tables in [M3_RULES](M3_RULES.md). |
+| Offline equality and synthetic scale | **PASS (portable)** | Complete 7200-second online/offline equality and zero repeat; 8 independent profiles × 13 slots × 7200 ticks, one recorded local run 1.925 CPU s. No Roblox FPS/replication/server latency claim. |
+| Local tools / compile / analyze / build | **PASS** | Windows x64 / Node 24.22.1: **404/404 tests**, **40 Luau sources**, portable analysis, Rojo place/sourcemap. Exact package entry points used because npm is absent locally. Tool/action SHA pins retained. |
+| Final Windows + Ubuntu CI | **Recorded in M3 Draft PR** | Exact final head SHA, run/job links and log results recorded there. Explicit PR-head checkout; each OS artifact includes verification.log/place/sourcemap. Local Windows results do not count as Ubuntu evidence. |
+| Studio, true persistence/policy, touch and scale | **BLOCKED — S1/D1/M1/P1** | No live Studio/QA DataStore/PolicyService/phone/2–8-client session. Code compilation, fake backend and synthetic workload do not close Issue #2. |
+
+### M3 live acceptance steps (all BLOCKED)
+
+- Play from empty clearing through all four phases without grants or summons,
+  including the saved M1 tutorial/NPC order. Repeat under actual restricted and
+  failed PolicyService results; record observed timings separately from model data.
+- Inspect agriculture left, processing centre/right and warehouse/altar rear.
+  Verify each fixed slot, waypoint, phase frame and local tier; no overlapping
+  prompts, obstructed movement or disappearing jobs/cargo during upgrades.
+- Walk over build pads: no debit. Hold the explicit prompt once: one durable
+  purchase and visual update. Double-tap, stale request, other plot, respawn and
+  disconnect during build/phase/equip must not bypass authorization or duplicate.
+- Run both cauldrons with shared scarce paste/liquids; change supply priority,
+  remove workers and fill stores. Check intake targets, cargo conservation, idle
+  reasons, recipe changes, quest reservations/delivery/expiry and exactly three
+  reachable board offers at each technology level.
+- Equip the guaranteed item on one idle cauldron, lock it, move it after a batch,
+  rejoin and inspect backed-up QA records. Active-job swaps and duplicate installs
+  must fail; milestone gift occurs once; no Rebirth/trading action exists.
+- In an isolated private QA namespace, migrate V1/V2/V3 fixtures with real cargo,
+  paid ancestry and receipts; test lease contention, failed/ambiguous saves and
+  two-hour catch-up. Do not reset a rejected record or downgrade a migrated key.
+- On portrait/landscape emulator and real phone, inspect the phase graph, long
+  prerequisite text, horizontal tabs, recipe/worker selection, rare-item controls,
+  44px actions and closed-menu movement/camera. Compile is not visual acceptance.
+- Run 2–8 clients with full factories; measure FPS, memory, replication, server
+  tick/catch-up and commit latency, then respawn/reconnect/leave. Record source SHA,
+  Studio version, QA namespace and device details before closing live blockers.
+
 ## M2 implementation record — 2026-11-04
 
 Scope: [Issue #6](https://github.com/branch-danya-dev/magicpotiongacha/issues/6).

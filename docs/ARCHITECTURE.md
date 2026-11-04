@@ -1,4 +1,4 @@
-# Architecture — M2
+# Architecture — M3
 
 ## Boundaries
 
@@ -6,6 +6,8 @@
 | --- | --- | --- |
 | `src/shared/Config.luau` | Recipes, costs, storage limits, station caps, fixed hires | Server reads canonical values |
 | `src/shared/Factory.luau` | Profile schema, commands, production and catch-up | Pure deterministic state transitions |
+| `src/shared/Progression.luau` | Phase/slot prerequisites, rare-cauldron equipment and durable progression receipt | Pure candidate transitions; server commits |
+| `src/shared/LegacyConfig.luau` | Frozen pre-M3 schema vocabulary/ranges | Historical V1/V2/V3 validation only |
 | `src/shared/Familiars.luau` | Species/range validation, exact outcome disclosure, evolution preview | Pure canonical model |
 | `src/shared/Collection.luau` | Summon/fixed purchase/lock/Fuse candidate and operation receipt | Server supplies policy, clock, preview and RNG |
 | `src/shared/Policy.luau` | Bounded permission cache, fail-closed access, late-result fencing | Server injects PolicyService lookup |
@@ -36,6 +38,22 @@ The saved PRNG is used only for prototype production events (slime and double ou
 
 V3 adds instance rarity/evolution/lock/provenance, `currencyPaid`, and a bounded last collection receipt. Old V1/V2 pets keep their IDs/stats/assignments and receive explicit `Legacy` metadata. See [PERSISTENCE.md](PERSISTENCE.md) for migration and recovery. No collection action occurs during offline simulation; evolved slime species retain the existing deployed-slime production behavior.
 
+V4 adds phase, seven unbuilt slots, a separate progression receipt, rare-cauldron
+instances/serial and per-material `inputCursors`. Config separates permanent slot
+ID from archetype; recipe compatibility uses archetype, while jobs, workers,
+queues and delivery destinations always use the actual slot ID. Local coordinates
+and input/output waypoints never participate in accounting. Build pads are fixed,
+explicit prompts; replacement phase frames are non-colliding presentation.
+
+The original seven route indices stay stable. Appended routes and a cached target
+per material keep solid routing O(slots × item types). Liquid input delivery visits
+each material/slot pair once, beginning at its saved turn. A one-unit stream cannot
+always favor the same consumer. `prioritize` changes the next delivery turn only.
+From phase 3 each material's new intake is capped at floor(category capacity /
+configured material types); existing over-target stock remains usable, and cargo
+already picked up respects global space rather than a newly activated share cap.
+Neither rule adds a separate offline scheduler.
+
 ## Command flow
 
 1. Protocol validates the exact payload and consumes request budgets.
@@ -46,11 +64,17 @@ V3 adds instance rarity/evolution/lock/provenance, `currencyPaid`, and a bounded
 
 The client never supplies a reward amount, price, drop, owner identity, clock, completion time or generated pet stats. `discard` is an explicit, confirmed ingredient-management action, not a general inventory deletion endpoint.
 
-`buy` includes `expectedLevel` (0/1 for pipes). A stale repeated request fails before payment instead of buying the next level. Protocol validates its exact shape; World pads supply the displayed server level and UI buttons supply the last received snapshot level. Ownership, range, Player/session identity and writable lease checks still precede all economic actions. The action result is validated before presentation; unexpected invalid results quarantine the session.
+Public construction uses `build(expectedLevel, requestId)` (0/1 level for pipes).
+`advancePhase` includes expectedPhase/requestId. World pads and UI supply observed
+server state, never prices or grants. Stale requests cannot buy the next level.
+Legacy pure Factory `buy` is an internal primitive used by Progression and retained
+regressions; Main explicitly rejects that remote action. Ownership, range, active
+Player identity, Protocol budget and writable lease remain mandatory. Unknown
+commit outcomes fence the session before presentation.
 
 Tutorial records facts when actions/production actually occur, including actions out of order. It grants no resources. Free harvest, click and manual refill remain available; recipe changes, missing assignments and excess raw stock have explicit recovery controls. The menu starts closed, uses 44-pixel action buttons, horizontal station navigation and orientation-dependent bounds reserving the lower screen. Server attributes place cosmetic crates at a queue or saved route position; visual movement never triggers delivery. Engine/device usability remains a manual gate.
 
-## Durable collection commands
+## Durable collection and progression commands
 
 Summon, fixed shop, legacy hire, lock and Fuse pass Protocol, own-object distance,
 active Player identity and lease checks. The runtime freezes factory actions/ticks
@@ -66,6 +90,15 @@ parents/output, serial and operation receipt are saved together under the same
 lease/revision. Only a confirmed write replaces live memory and produces a success
 notice. Unknown write outcomes freeze the session for reconciliation by a fresh
 lease/load; autosave cannot restore the older live snapshot over a reward.
+
+Build, phase, equip and cauldron-lock use this same gate and candidate transaction.
+They have an independent monotonic `progression.sequence`, but share the runtime
+pending guard with M2; concurrent shop/construction cannot overwrite each other.
+Entering phase 3 debits Gold and creates its unique milestone item in that same
+candidate. Equip checks ownership, compatible built slot, unique installation and
+absence of a prepaid job. Bonus is snapshotted into the next job under the normal
+production cap. Neither cauldron lock nor a platform trading permission activates
+trading. Guaranteed progression does not call the random-policy lookup.
 
 Client `requestId` must be the saved sequence + 1. Repeating the latest identical
 canonical intent returns its durable receipt without saving/drawing again; older
@@ -89,4 +122,4 @@ An unexpected simulation failure invalidates the profile before disconnecting th
 
 ## Deferred distributed operations
 
-There is no live trading endpoint and no Robux purchase handler in M2. Later trading requires durable escrow/journaling, unique operation IDs, crash recovery, both-party confirmation invalidation and item provenance. MemoryStore or an in-memory mutex alone is not a durable transaction. Monetization requires receipt idempotency and actual purchase QA in addition to M2's policy checks. These must not be enabled by adding a client button alone.
+There is no live trading endpoint, Rebirth reset or Robux purchase handler in M3. Later trading requires durable escrow/journaling, unique operation IDs, crash recovery, both-party confirmation invalidation and item provenance. MemoryStore or an in-memory mutex alone is not a durable transaction. Monetization requires receipt idempotency and actual purchase QA in addition to M2's policy checks. These must not be enabled by adding a client button alone.

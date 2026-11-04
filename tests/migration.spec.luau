@@ -39,9 +39,10 @@ return function(T: any)
 		local p, reason = store:load(123, function() return engine.newProfile(123, NOW) end)
 		T.truthy(p, reason)
 		T.equal(p.schemaVersion, Config.schemaVersion)
-		for _, field in ipairs({ "gold", "essence", "inventory", "questStock", "order", "nextPetSerial", "rngState", "lastSimulatedAt", "manualReadyAt", "slimeWorkSeconds", "discoveredRecipes", "receipts", "entitlements" }) do
+		for _, field in ipairs({ "gold", "essence", "inventory", "questStock", "order", "nextPetSerial", "rngState", "lastSimulatedAt", "slimeWorkSeconds", "discoveredRecipes", "receipts", "entitlements" }) do
 			T.same(p[field], legacy[field], field)
 		end
+		for id, value in pairs(legacy.manualReadyAt) do T.equal(p.manualReadyAt[id], value) end
 		for id, pet in pairs(legacy.pets) do
 			for field, value in pairs(pet) do T.same(p.pets[id][field], value) end
 			T.equal(p.pets[id].rarity, "Legacy")

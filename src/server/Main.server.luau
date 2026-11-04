@@ -11,6 +11,8 @@ local Factory = require(Shared.Factory).new(Config)
 local Protocol = require(Shared.Protocol).new()
 local CollectionModule = require(Shared.Collection)
 local Collection = CollectionModule.new(Config)
+local ProgressionModule = require(Shared.Progression)
+local Progression = ProgressionModule.new(Config)
 local Policy = require(Shared.Policy)
 local PolicyService = game:GetService("PolicyService")
 local summonRandom = Random.new() -- Separate server-only RNG; never seeded from production/profile/client.
@@ -89,6 +91,22 @@ end
 local function snapshot(player)
 	local profile = store:get(player.UserId)
 	if not active(player) or not profile or player.Parent ~= Players then return end
+	local builds, recipes = {}, {}
+	for _, id in ipairs(Config.stationOrder) do
+		builds[id] = Progression.buildState(profile, id)
+		if Config.stations[id].defaultRecipe then
+			recipes[id] = {}
+			for recipeId, recipe in pairs(Config.recipes) do
+				if recipe.station == Config.stations[id].archetype then recipes[id][recipeId] = Factory.recipeState(profile, id, recipeId) end
+			end
+		end
+	end
+	builds.warehouse, builds.pipes = Progression.buildState(profile,"warehouse"), Progression.buildState(profile,"pipes")
+	local orderAvailability = {}
+	for id in pairs(Config.orders) do
+		local available, reason = Factory.orderEligible(profile,id)
+		orderAvailability[id] = { available=available, reason=reason or "" }
+	end
 	-- Explicit allowlist: no PRNG state, receipts, session leases or future private metadata.
 	State:FireClient(player, {
 		gold = profile.gold, essence = profile.essence,
@@ -101,6 +119,8 @@ local function snapshot(player)
 		orderProgress = Factory.orderState(profile), serverTime = profile.lastSimulatedAt,
 		storage = Factory.storageState(profile),
 		collection = { sequence = profile.collection.sequence, lastResult = profile.collection.last and copy(profile.collection.last.result) },
+		progression = { sequence = profile.progression.sequence, lastResult = profile.progression.last and copy(profile.progression.last.result) },
+		phase = Progression.phaseState(profile), builds = builds, recipes = recipes, orderOffers = Factory.orderOffers(profile), orderAvailability=orderAvailability, cauldrons = copy(profile.cauldrons),
 		collectionPolicy = copy(policy.peek(player)), summonDetails = Collection.details("forest"), familiarShop = copy(Config.familiarShop),
 		fusePreview = copy(sessions[player.UserId].fusePreview),
 		offlineReport = offlineReports[player.UserId],
@@ -109,7 +129,7 @@ local function snapshot(player)
 	})
 end
 
-local function handleCollection(player, action, payload)
+local function handleDurable(player, action, payload)
 	local session = sessions[player.UserId]
 	session.collectionBusy = true
 	snapshot(player)
@@ -124,6 +144,7 @@ local function handleCollection(player, action, payload)
 			local now = os.time()
 			local report = Factory.advance(candidate, now, false)
 			assert(report.ok, report.error)
+			if ProgressionModule.isAction(action) then return Progression.apply(candidate,action,payload,Factory,now) end
 			return Collection.apply(candidate, action, payload, { now = now, policy = access, preview = session.fusePreview,
 				nextInteger = function(lo, hi) return summonRandom:NextInteger(lo, hi) end })
 		end)
@@ -133,7 +154,7 @@ local function handleCollection(player, action, payload)
 	if not ok or (not committed and not store:isWritable(player.UserId)) then
 		store:invalidate(player.UserId)
 		session.quarantined, session.phase = true, "blocked"
-		player:Kick("Не удалось подтвердить сохранение коллекции. Войдите снова: сохранённая операция будет восстановлена без повторной выдачи.")
+		player:Kick("Не удалось подтвердить сохранение операции. Войдите снова: сохранённая операция будет восстановлена без повторной выдачи.")
 		return
 	end
 	if committed then
@@ -150,6 +171,8 @@ local function handleAction(player, action, payload)
 		if reason ~= "rate_limited" then notice(player, "Запрос отклонён: " .. tostring(reason), "rejected") end
 		return
 	end
+	-- Legacy pure-domain buy remains for regression/migration fixtures only.
+	if action == "buy" then notice(player, "Обнови клиент: покупки требуют подтверждённого сохранения.", "obsolete_intent"); return end
 	if closing or not active(player) or not store:isWritable(player.UserId) then
 		notice(player, "Профиль загружается или ожидает безопасного сохранения.", "profile_locked")
 		return
@@ -159,7 +182,7 @@ local function handleAction(player, action, payload)
 		notice(player, "Подойди к нужному объекту на своём участке.", "out_of_range")
 		return
 	end
-	if CollectionModule.isAction(action) then handleCollection(player, action, payload); return end
+	if CollectionModule.isAction(action) or ProgressionModule.isAction(action) then handleDurable(player, action, payload); return end
 	if action == "refreshPolicy" then
 		local session = sessions[player.UserId]
 		if session.policyRefreshing then return end
@@ -208,6 +231,8 @@ end
 
 world = World.new(Config, Settings.PlotCount, {
 	production = Factory.productionState,
+	buildState = Progression.buildState,
+	phaseState = Progression.phaseState,
 	orderProgress = Factory.orderState,
 	action = handleAction,
 	focus = function(player, stationId)

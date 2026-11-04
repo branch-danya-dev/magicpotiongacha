@@ -1,12 +1,13 @@
 -- Pure data: all economy values are provisional and can be tuned without changing the engine.
-return {
-	schemaVersion = 3,
+local Config = {
+	schemaVersion = 4,
 	maxOfflineSeconds = 7200,
 	maxAdvanceSeconds = 7200,
 	maxBalance = 1000000000000,
 	maxCount = 1000000,
 	maxBaseStat = 10000,
 	maxPets = 128,
+	balancedStoragePhase = 3,
 	maxTimestamp = 1000000000000,
 	maxJobDuration = 3600,
 	sourceCapacity = 30,
@@ -155,3 +156,71 @@ return {
 		{ id = "starter_brewer", species = "brewer", name = "Magic cat", stats = { Farming = 3, Hauling = 2, Brewing = 25 } },
 	},
 }
+
+-- Fixed slot instances. Existing IDs and prices are deliberately unchanged.
+local additions = {
+	garden2 = { name="Second Mandrake garden", archetype="garden", phase=2, skill="Farming", initialLevel=0,
+		upgradeCosts={160,240,600}, statCaps={10,25,60}, outputItem="mandrake", growDuration=8 },
+	cauldron2 = { name="Second cauldron", archetype="cauldron", phase=2, skill="Brewing", initialLevel=0,
+		upgradeCosts={220,350,1000}, statCaps={15,35,75}, defaultRecipe="healing" },
+	distillery2 = { name="Second distillery", archetype="distillery", phase=2, skill="Brewing", initialLevel=0,
+		upgradeCosts={200,350,1000}, statCaps={10,25,60}, defaultRecipe="fire_extract" },
+	mushrooms = { name="Magic mushrooms", archetype="garden", phase=3, skill="Farming", initialLevel=0,
+		upgradeCosts={300,450,1000}, statCaps={10,25,60}, outputItem="mushroom", growDuration=10 },
+	berries = { name="Fire berries", archetype="garden", phase=3, skill="Farming", initialLevel=0,
+		upgradeCosts={350,500,1100}, statCaps={10,25,60}, outputItem="berry", growDuration=12 },
+	press = { name="Spore press", archetype="press", phase=3, skill="Brewing", initialLevel=0,
+		upgradeCosts={450,650,1400}, statCaps={10,25,60}, defaultRecipe="spore_paste" },
+	centrifuge = { name="Aether centrifuge", archetype="centrifuge", phase=4, skill="Brewing", initialLevel=0,
+		upgradeCosts={1200,1800,3000}, statCaps={15,35,75}, defaultRecipe="aether_serum" },
+}
+for id, def in pairs(Config.stations) do def.archetype, def.phase = id, 1 end
+for _, id in ipairs({"garden2","cauldron2","distillery2","mushrooms","berries","press","centrifuge"}) do
+	local def=additions[id]; Config.stations[id]=def; table.insert(Config.stationOrder,id)
+	def.tierPhases={def.phase,math.max(3,def.phase),4}
+	if def.defaultRecipe then table.insert(Config.machineOrder,id) end
+	if def.outputItem or def.defaultRecipe then table.insert(Config.sourceOrder,id) end
+end
+Config.routes = {
+	{kind="input",slot="distillery"},{kind="input",slot="cauldron"},
+	{kind="output",slot="garden"},{kind="output",slot="mine"},{kind="output",slot="distillery"},
+	{kind="questQueue",slot="distillery"},{kind="questQueue",slot="cauldron"},
+}
+for _,id in ipairs({"garden2","cauldron2","distillery2","mushrooms","berries","press","centrifuge"}) do
+	if additions[id].defaultRecipe then table.insert(Config.routes,{kind="input",slot=id}) end
+	table.insert(Config.routes,{kind="output",slot=id})
+	if additions[id].defaultRecipe then table.insert(Config.routes,{kind="questQueue",slot=id}) end
+end
+local offsets={crystal={0,3,-2},garden={-20,1.5,0},mine={-20,1.5,-20},distillery={15,2,-18},cauldron={20,2,0},logistics={0,2,-27},
+	garden2={-32,1.5,14},cauldron2={20,2,16},distillery2={32,2,-18},mushrooms={-32,1.5,-10},berries={-32,1.5,-32},press={8,2,16},centrifuge={32,2,4}}
+for id,offset in pairs(offsets) do
+	Config.stations[id].offset=offset
+	Config.stations[id].waypoints={input={offset[1]-3,offset[2],offset[3]},output={offset[1]+3,offset[2],offset[3]}}
+end
+Config.items.mushroom={name="Magic mushroom",kind="raw",fluid=false}
+Config.items.berry={name="Fire berry",kind="raw",fluid=false}
+Config.items.spore_paste={name="Spore paste",kind="intermediate",fluid=false}
+Config.items.berry_essence={name="Berry essence",kind="intermediate",fluid=true}
+Config.items.aether_serum={name="Aether serum",kind="intermediate",fluid=true}
+for _,id in ipairs({"focus","flare","ascension"}) do Config.items[id]={name=id,kind="potion",fluid=false} end
+Config.recipes.spore_paste={name="Spore paste",inputs={mushroom=2},essenceCost=4,duration=8,output="spore_paste",quantity=1,goldValue=0,station="press",requiredLevel=1,phase=3,kind="intermediate"}
+Config.recipes.berry_essence={name="Berry essence",inputs={berry=2},essenceCost=6,duration=10,output="berry_essence",quantity=1,goldValue=0,station="distillery",requiredLevel=1,phase=3,kind="intermediate"}
+Config.recipes.focus={name="Focus potion",inputs={spore_paste=1,mandrake=1},essenceCost=6,duration=10,output="focus",quantity=1,goldValue=95,station="cauldron",requiredLevel=1,phase=3,kind="potion"}
+Config.recipes.flare={name="Flare potion",inputs={berry_essence=1,coal=1},essenceCost=8,duration=12,output="flare",quantity=1,goldValue=130,station="cauldron",requiredLevel=2,phase=3,kind="potion"}
+Config.recipes.aether_serum={name="Aether serum",inputs={spore_paste=1,berry_essence=1},essenceCost=12,duration=14,output="aether_serum",quantity=1,goldValue=0,station="centrifuge",requiredLevel=1,phase=4,kind="intermediate"}
+Config.recipes.ascension={name="Ascension elixir",inputs={aether_serum=1,fire_extract=1,mandrake=1},essenceCost=20,duration=20,output="ascension",quantity=1,goldValue=360,station="cauldron",requiredLevel=3,phase=4,kind="potion"}
+Config.phases={
+	{ name="Лесная поляна",cost=0,recipes={},stations={} },
+	{ name="Хижина ведьмы",cost=400,recipes={"healing"},stations={crystal=2},pipes=true },
+	{ name="Каменная лаборатория",cost=1400,recipes={"rage"},stations={cauldron2=1,distillery=1} },
+	{ name="Кибер-алхимический комплекс",cost=4500,recipes={"focus","flare"},stations={press=1,distillery2=1},warehouse=1 },
+}
+Config.orders.focus_small={name="Scholar's focus",recipeId="focus",itemId="focus",count=4,rewardGold=500,duration=1800,phase=3}
+Config.orders.healing_quick={name="Forest first aid",recipeId="healing",itemId="healing",count=3,rewardGold=60,duration=480}
+Config.orders.healing_small.priority=30
+Config.orders.healing_large.priority=20
+Config.orders.healing_quick.priority=10
+Config.orders.flare_small={name="Lantern supply",recipeId="flare",itemId="flare",count=4,rewardGold=680,duration=1800,phase=3}
+Config.orders.ascension_small={name="Final experiment",recipeId="ascension",itemId="ascension",count=3,rewardGold=1500,duration=3600,phase=4}
+Config.cauldronTypes={resonant={name="Resonant copper cauldron",bonus=0.05}}
+return Config

@@ -1,4 +1,4 @@
-# M2 player persistence
+# M3 player persistence
 
 ## Scope and verification status
 
@@ -122,11 +122,11 @@ backend state over guessing whether a previous write succeeded.
   never activate the Studio in-memory backend.
 - Invalid/future envelope or profile schemas fail closed. Migration must be added
   explicitly and tested; there is no automatic reset to a new player. Only the
-  explicit gameplay V1/V2→V3 migration is supported.
+  explicit gameplay V1/V2/V3→V4 migration is supported.
 - Failed saves pause gameplay writes. A subsequent save can recover while the
   adapter can still prove ownership of an unexpired lease. Expired, lost, or
   conflicting leases cannot be reclaimed by saving a stale local snapshot.
-- Failed collection commits additionally fence the old live snapshot permanently
+- Failed collection or progression commits additionally fence the old live snapshot permanently
   for that session: an unknown outcome may already contain a reward. Rejoin must
   reconcile durable state after the old lease expires; do not retry by saving old
   memory or rerolling inside a storage callback.
@@ -143,10 +143,10 @@ backend state over guessing whether a previous write succeeded.
 - `receipts`/`entitlements` fields in a profile are reserved data. Their presence
   is not an implementation of Roblox purchase receipt validation or fulfilment.
 
-## Historical V1 → V2 conversion, retained inside V1 → V3
+## Historical V1 → V2 conversion, retained inside V1 → V4
 
 The DataStore **envelope remains version 1** and the namespace is unchanged, so
-existing keys are found. `Factory.validate` accepts only current V3 gameplay
+existing keys are found. `Factory.validate` accepts only current V4 gameplay
 profiles. For V1, `Factory.migrate` first checks the previous shape/invariants,
 then copies it and initializes empty machine Essence tanks/quest queues, a pipe
 cursor, tutorial facts and diagnostic tables. Existing balances, paid jobs,
@@ -175,7 +175,7 @@ V2 is not backward writable by M0 servers: deploy coherently to a private QA
 environment first and do not downgrade a migrated key by resetting it. Real
 DataStore migration/lease and multi-client rollout remain **BLOCKED (D1/S1)**.
 
-## Gameplay V2 → V3 and collection recovery
+## Historical V2 → V3 conversion and collection recovery
 
 The envelope/namespace and lease/revision rules remain unchanged. V2 is validated
 with its M1 shape before copying; `tests/fixtures/m1-profile.luau` was generated
@@ -206,6 +206,45 @@ manually regrant a missing-looking pet before checking durable state. Invalid or
 future records remain untouched. V3 cannot be written by M1 servers: use a coherent
 private QA rollout and backed-up keys; do not downgrade by resetting migrated data.
 Real rollback/recovery and platform quotas/latency remain **BLOCKED (D1/S1)**.
+
+## Gameplay V1/V2/V3 → V4 and progression recovery
+
+The envelope and namespace are unchanged. `LegacyConfig` freezes the M2 vocabulary
+so new slots/recipes/items cannot be smuggled into an old-version record. A captured
+V3 fixture was generated and validated with PR #7 at
+`f9c34c8383bee2a0fdd1ef08167103725a924672`. It contains rolled/locked Secret stats,
+paid Fuse ancestry, latest collection receipt, assignments, prepaid production,
+queues and in-flight cargo. The test compares every preexisting field after load.
+
+V4 retains those fields, all balances/timers/RNG/tutorial/discoveries and the old
+seven route indices. It adds phase 1, empty rare-cauldron inventory, serial 1,
+progression sequence 0, empty material-turn cursors and seven empty unbuilt slots.
+New source cooldowns start at the saved simulation timestamp. Migration does not
+infer historical phase purchases or grant milestone items. V1/V2 first receive
+their historical M1/M2 additions; V3 collection metadata/receipts are not rebuilt.
+Current V4 records validate without conversion. Unexpected progression fields in
+an old version, future schemas, out-of-range cursors and invalid technology/owner/
+bonus/equipment state fail closed without a default overwrite.
+
+Rare cauldrons persist unique ID, ownerId, type, canonical bonus, lock and source /
+paidDerived provenance. A slot stores only the installed item's ID; validation
+rejects duplicate installations and wrong owners/archetypes. Source is the free
+phase-three milestone. Persisted paid ancestry is retained for future protocols;
+M3 creates no paid item, transfer or purchase endpoint.
+
+Construction, phase advance, equip and lock use the existing `transact` gate and a
+separate bounded progression receipt. Payment, phase/slot changes, milestone item,
+serial and receipt commit together. M2 and M3 share one gate and live pending guard.
+The last identical retry is replayed after rejoin; conflicting/stale IDs do not
+spend. Failed/ambiguous writes permanently fence the old live candidate. Reload
+after lease expiry reconciles committed state; never manually rebuild a slot or
+regrant a milestone item based on a missing success notification.
+
+Tests cover before/after-commit loss, replay, identical/conflicting concurrency,
+M2-shop/M3-phase interleaving, current equipped/locked-item roundtrip, offline cap
+and stale lease rejection. These are fake-backend results. V4 cannot be downgraded
+to an M2 server: use coherent private QA deployment and backed-up keys. Real
+DataStore/PolicyService and multi-client recovery remain **BLOCKED (D1/S1)**.
 
 ## Studio and real-backend acceptance checklist
 

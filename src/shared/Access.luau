@@ -3,9 +3,13 @@
 local Access = {}
 
 function Access.target(action: string, payload: any): string?
+	if action == "advancePhase" then return "blueprint" end
+	if action == "equipCauldron" then return payload.slotId end
+	if action == "lockCauldron" then return "altar" end
+	if action == "prioritize" then return payload.stationId end
 	if action == "summon" or action == "shopFamiliar" or action == "petLock" or action == "previewFuse" or action == "fuse" or action == "refreshPolicy" then return "altar" end
 	if action == "click" then return "crystal" end
-	if action == "buy" then return payload.upgradeId == "pipes" and "warehouse" or payload.upgradeId end
+	if action == "buy" or action == "build" then return payload.upgradeId == "pipes" and "warehouse" or payload.upgradeId end
 	if action == "hire" or action == "discard" then return "warehouse" end
 	if action == "acceptOrder" or action == "claimOrder" then return "orders" end
 	if action == "assign" or action == "harvest" or action == "collect" or action == "load"
