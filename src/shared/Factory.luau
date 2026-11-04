@@ -4,6 +4,9 @@ local Familiars = require(runtimeScript and runtimeScript.Parent.Familiars or ".
 local LegacyConfig = require(runtimeScript and runtimeScript.Parent.LegacyConfig or "./LegacyConfig")
 local Progression = require(runtimeScript and runtimeScript.Parent.Progression or "./Progression")
 local Trading = require(runtimeScript and runtimeScript.Parent.Trading or "./Trading")
+local Epochs = require(runtimeScript and runtimeScript.Parent.Epochs or "./Epochs")
+local Dailies = require(runtimeScript and runtimeScript.Parent.Dailies or "./Dailies")
+local LongTerm = require(runtimeScript and runtimeScript.Parent.LongTerm or "./LongTerm")
 local Factory = {}
 local function compatible(rules, slotId, recipe)
 	local def = rules.stations[slotId]
@@ -61,6 +64,7 @@ function Factory.new(config)
 	local engine = {}
 	local familiars = Familiars.new(config)
 	local progression = Progression.new(config)
+	local longTerm = LongTerm.new(config)
 	local itemIds = keys(config.items)
 	local skills = { "Farming", "Hauling", "Brewing" }
 	local rngModulus = 2147483647
@@ -87,7 +91,7 @@ function Factory.new(config)
 		-- Laboratory intake leaves a share for every material. Existing stock/cargo
 		-- is never deleted or trapped by a newly activated share limit.
 		if not inFlight and profile.phase and profile.phase >= config.balancedStoragePhase then
-			local types = 0; for _, item in pairs(config.items) do if item.kind == kind then types += 1 end end
+			local types = 0; for _, item in pairs(config.items) do if item.kind == kind and Epochs.available(config,profile,item) then types += 1 end end
 			room = math.min(room, math.max(0, math.floor(capacity(profile,kind)/types) - quantity(profile.inventory,itemId)))
 		end
 		return room
@@ -142,7 +146,9 @@ function Factory.new(config)
 		local modern = not version or version >= 4
 		local cfg = not modern and LegacyConfig or config
 		local function checkCounts(value, predicate, maximum)
-			return countMap(value, function(item) return cfg.items[item] ~= nil and predicate(item) end, maximum)
+			return countMap(value, function(item)
+				return cfg.items[item] ~= nil and (version and not cfg.items[item].epoch or not version and Epochs.available(config,profile,cfg.items[item])) and predicate(item)
+			end, maximum)
 		end
 		if not plain(profile) or profile.schemaVersion ~= (version or cfg.schemaVersion) then
 			return false, "Unsupported profile schema"
@@ -215,7 +221,7 @@ function Factory.new(config)
 			end
 			if station.recipeId ~= nil then
 				local recipe = cfg.recipes[station.recipeId]
-				if not recipe or not compatible(cfg, stationId, recipe) or station.level < recipe.requiredLevel or (modern and profile.phase < (recipe.phase or 1)) then
+				if not recipe or (version and recipe.epoch) or (not version and not Epochs.available(config,profile,recipe)) or not compatible(cfg, stationId, recipe) or station.level < recipe.requiredLevel or (modern and profile.phase < (recipe.phase or 1)) then
 					return false, "Invalid station recipe"
 				end
 			end
@@ -262,6 +268,7 @@ function Factory.new(config)
 				elseif job.kind == "haul" then
 					if stationId ~= "logistics" or type(job.itemId) ~= "string"
 						or not cfg.items[job.itemId] or (legacy and cfg.items[job.itemId].kind == "potion")
+						or (version and cfg.items[job.itemId].epoch) or (not version and not Epochs.available(config,profile,cfg.items[job.itemId]))
 						or not integer(job.amount, 1, cfg.maxHaulCapacity) then
 						return false, "Invalid hauling cargo"
 					end
@@ -319,7 +326,7 @@ function Factory.new(config)
 		if profile.order ~= nil then
 			local order = profile.order
 			local definition = plain(order) and cfg.orders[order.id]
-			if not definition or order.recipeId ~= definition.recipeId or order.itemId ~= definition.itemId
+			if not definition or (version and definition.epoch) or (not version and not Epochs.available(config,profile,definition)) or order.recipeId ~= definition.recipeId or order.itemId ~= definition.itemId
 				or (modern and definition.phase and (profile.phase < definition.phase or not profile.discoveredRecipes[definition.recipeId]))
 				or order.count ~= definition.count or order.rewardGold ~= definition.rewardGold
 				or not integer(order.acceptedAt, 0, cfg.maxTimestamp)
@@ -353,7 +360,8 @@ function Factory.new(config)
 			end
 		end
 		for recipeId, discovered in pairs(profile.discoveredRecipes) do
-			if not cfg.recipes[recipeId] or discovered ~= true or (modern and profile.phase < (cfg.recipes[recipeId].phase or 1)) then
+			if not cfg.recipes[recipeId] or discovered ~= true or (version and cfg.recipes[recipeId].epoch)
+				or (modern and (version or profile.rebirths==0) and (profile.phase < (cfg.recipes[recipeId].phase or 1) or cfg.recipes[recipeId].epoch~=nil)) then
 				return false, "Invalid recipe collection"
 			end
 		end
@@ -394,11 +402,13 @@ function Factory.new(config)
 		if modern then
 			if not plain(profile.inputCursors) then return false, "Invalid input fairness cursors" end
 			for itemId,cursor in pairs(profile.inputCursors) do
-				if not cfg.items[itemId] or cfg.items[itemId].kind=="potion" or not integer(cursor,1,#cfg.machineOrder) then return false,"Invalid input fairness cursor" end
+				if not cfg.items[itemId] or cfg.items[itemId].kind=="potion" or (version and cfg.items[itemId].epoch)
+					or (not version and not Epochs.available(config,profile,cfg.items[itemId])) or not integer(cursor,1,#cfg.machineOrder) then return false,"Invalid input fairness cursor" end
 			end
 			if not progression.validate(profile) then return false, "Invalid phase/equipment state" end
 		end
-		if not version and not Trading.validateProfile(profile,config.maxBalance) then return false,"Invalid trade reservation/receipt" end
+		if (not version or version==5) and not Trading.validateProfile(profile,config.maxBalance) then return false,"Invalid trade reservation/receipt" end
+		if not version and not longTerm.validate(profile) then return false,"Invalid long-term progression" end
 		return true, nil
 	end
 
@@ -417,12 +427,15 @@ function Factory.new(config)
 			local valid, reason = engine.validate(profile)
 			return valid and profile or nil, reason
 		end
-		if not plain(profile) or (profile.schemaVersion ~= 1 and profile.schemaVersion ~= 2 and profile.schemaVersion ~= 3 and profile.schemaVersion ~= 4) then return nil, "Unsupported profile schema" end
+		if not plain(profile) or (profile.schemaVersion ~= 1 and profile.schemaVersion ~= 2 and profile.schemaVersion ~= 3 and profile.schemaVersion ~= 4 and profile.schemaVersion ~= 5) then return nil, "Unsupported profile schema" end
 		local version = profile.schemaVersion
-		if profile.trade~=nil then return nil,"Unexpected historical trading state" end
-		if version==4 then
-			local valid,reason=validate(profile,4); if not valid then return nil,reason end
-			local migrated=copy(profile); migrated.schemaVersion=config.schemaVersion; migrated.trade={sequence=0}
+		if profile.longTerm~=nil then return nil,"Unexpected historical long-term state" end
+		if version<5 and profile.trade~=nil then return nil,"Unexpected historical trading state" end
+		if version>=4 then
+			local valid,reason=validate(profile,version); if not valid then return nil,reason end
+			local migrated=copy(profile); migrated.schemaVersion=config.schemaVersion
+			if version<5 then migrated.trade={sequence=0} end
+			migrated.longTerm=longTerm.initial(migrated)
 			valid,reason=engine.validate(migrated); return valid and migrated or nil,reason
 		end
 		if profile.phase ~= nil or profile.progression ~= nil or profile.cauldrons ~= nil or profile.nextCauldronSerial ~= nil or profile.inputCursors ~= nil then return nil, "Unexpected future progression fields" end
@@ -455,6 +468,7 @@ function Factory.new(config)
 				if config.stations[id].outputItem then migrated.manualReadyAt[id] = migrated.lastSimulatedAt end
 			end
 		end
+		migrated.longTerm=longTerm.initial(migrated)
 		valid, reason = engine.validate(migrated)
 		return valid and migrated or nil, reason
 	end
@@ -488,6 +502,7 @@ function Factory.new(config)
 			}
 			if stationId == "logistics" then profile.stations[stationId].routeCursor = 1 end
 		end
+		profile.longTerm=longTerm.initial(profile)
 		return profile
 	end
 
@@ -527,7 +542,7 @@ function Factory.new(config)
 
 	local function sell(profile, recipe, count, summary)
 		if count > 0 then
-			earn(profile, "gold", count * recipe.goldValue, summary)
+			earn(profile, "gold", count * Epochs.sale(config,profile,recipe.goldValue), summary)
 			change(summary.sold, recipe.output, count)
 			if recipe.output == "healing" then profile.tutorial.sale = true end
 		end
@@ -569,7 +584,7 @@ function Factory.new(config)
 	local function startBrew(profile, stationId, automatic)
 		local station = profile.stations[stationId]
 		local recipe = station.recipeId and config.recipes[station.recipeId]
-		if not recipe or not compatible(config, stationId, recipe) or profile.phase < (recipe.phase or 1)
+		if not Epochs.available(config,profile,recipe) or not compatible(config, stationId, recipe) or profile.phase < (recipe.phase or 1)
 			or station.level < recipe.requiredLevel or station.job then
 			return false, "Machine unavailable"
 		end
@@ -591,7 +606,7 @@ function Factory.new(config)
 		local skill = effectiveSkill(profile, stationId)
 		local item = station.cauldronId and profile.cauldrons[station.cauldronId]
 		station.job = { kind = "brew", recipeId = station.recipeId, automatic = automatic == true,
-			duration = math.max(1, recipe.duration / (1 + skill * config.brewSpeedPerSkill)),
+			duration = math.max(1, Epochs.duration(config,profile,recipe.duration) / (1 + skill * config.brewSpeedPerSkill)),
 			doubleChance = math.min(config.maxDoubleChance, skill * config.doubleChancePerSkill + (item and item.bonus or 0)) }
 		station.progress = 0
 		return true, "Brewing started"
@@ -751,7 +766,7 @@ function Factory.new(config)
 			beginHaul(profile)
 			return
 		end
-		station.progress = math.min(job.duration, station.progress + 1 + effectiveSkill(profile, "logistics") * config.haulSpeedPerSkill)
+		station.progress = math.min(job.duration, station.progress + (1 + effectiveSkill(profile, "logistics") * config.haulSpeedPerSkill)*Epochs.work(profile))
 		if station.progress < job.duration then
 			return
 		end
@@ -822,7 +837,7 @@ function Factory.new(config)
 			if total(station.output) >= config.sourceCapacity then code = "queue_full"
 			elseif not station.workerId then code = "no_master" end
 		elseif stationId == "crystal" and not station.workerId and definition.passiveEssence[station.level] == 0 then code = "manual_mode" end
-		local duration = job and job.duration or (definition.growDuration and math.max(1, definition.growDuration / (1 + effectiveSkill(profile, stationId) * config.gatherSpeedPerSkill)))
+		local duration = job and job.duration or (definition.growDuration and math.max(1, Epochs.duration(config,profile,definition.growDuration) / (1 + effectiveSkill(profile, stationId) * config.gatherSpeedPerSkill)))
 		return { code = code, text = statusText[code], missingInputs = missing,
 			essence = station.essence, essenceRequired = recipe and recipe.essenceCost or 0,
 			progress = duration and math.min(1, station.progress / duration) or 0,
@@ -838,14 +853,15 @@ function Factory.new(config)
 	function engine.recipeState(profile, slotId, recipeId)
 		local recipe, station = config.recipes[recipeId], profile.stations[slotId]
 		local reason = not compatible(config, slotId, recipe) and "Wrong apparatus"
+			or (not Epochs.available(config,profile,recipe) and "Recipe belongs to another epoch")
 			or (profile.phase < (recipe.phase or 1) and ("Requires phase " .. recipe.phase))
 			or (station.level < recipe.requiredLevel and ("Requires tier " .. recipe.requiredLevel)) or ""
-		return { available = reason == "", reason = reason }
+		return { available = reason == "", reason = reason, saleValue=recipe and Epochs.sale(config,profile,recipe.goldValue) or 0 }
 	end
 
 	function engine.orderEligible(profile, orderId)
 		local order = config.orders[orderId]
-		if not order or profile.phase < (order.phase or 1) then return false, "Contract requires a later phase" end
+		if not order or not Epochs.available(config,profile,order) or profile.phase < (order.phase or 1) then return false, "Contract requires its epoch and phase" end
 		local recipe = config.recipes[order.recipeId]
 		local usable = false
 		for _, slot in ipairs(config.machineOrder) do if engine.recipeState(profile, slot, order.recipeId).available then usable = true; break end end
@@ -892,7 +908,7 @@ function Factory.new(config)
 
 	function engine.storageState(profile)
 		local types={raw=0,intermediate=0}
-		for _,item in pairs(config.items) do if types[item.kind] then types[item.kind]+=1 end end
+		for _,item in pairs(config.items) do if types[item.kind] and Epochs.available(config,profile,item) then types[item.kind]+=1 end end
 		return { raw = stored(profile, "raw"), rawCapacity = capacity(profile, "raw"),
 			intermediate = stored(profile, "intermediate"), intermediateCapacity = capacity(profile, "intermediate"),
 			rawTarget = profile.phase >= config.balancedStoragePhase and math.floor(capacity(profile,"raw")/types.raw) or nil,
@@ -927,11 +943,12 @@ function Factory.new(config)
 		return { step = #config.tutorialSteps, total = #config.tutorialSteps, id = "complete", target = "orders", text = "Обучение завершено: фабрика и доставка работают!", complete = true }
 	end
 
-	local function tick(profile, now, summary, petIds)
+	local function tick(profile, now, summary, petIds, isOffline)
 		expireOrder(profile, now, summary)
 		local crystal = profile.stations.crystal
 		if crystal.level > 0 then
 			local gain = config.stations.crystal.passiveEssence[crystal.level]
+			if gain>0 then gain+=Epochs.essence(profile) end
 			if crystal.workerId then
 				gain = gain + math.max(1, math.floor(effectiveSkill(profile, "crystal") / config.crystalSkillPerEssence))
 			end
@@ -945,7 +962,7 @@ function Factory.new(config)
 			end
 			local definition = config.stations[stationId]
 			if definition.outputItem and station.workerId and total(station.output) < config.sourceCapacity then
-				local duration = math.max(1, definition.growDuration / (1 + effectiveSkill(profile, stationId) * config.gatherSpeedPerSkill))
+				local duration = math.max(1, Epochs.duration(config,profile,definition.growDuration) / (1 + effectiveSkill(profile, stationId) * config.gatherSpeedPerSkill))
 				station.progress = station.progress + 1
 				if station.progress >= duration then
 					station.progress = 0
@@ -996,6 +1013,8 @@ function Factory.new(config)
 					end
 					change(summary.produced, recipe.output, produced)
 					profile.discoveredRecipes[job.recipeId] = true
+					if job.recipeId==Epochs.rules(config,profile).finalRecipe then profile.longTerm.cycle.finalProduced=true end
+					if not isOffline and not job.automatic and recipe.kind=="potion" then Dailies.record(config,profile,"brew",1,now) end
 					event(profile, job.automatic and "auto_brew" or "manual_brew", now)
 					if job.recipeId == "healing" then profile.tutorial[job.automatic and "automation" or "manual"] = true end
 					if recipe.kind == "potion" then
@@ -1044,7 +1063,7 @@ function Factory.new(config)
 		summary.elapsedSeconds, summary.processedSeconds, summary.skippedSeconds = elapsed, seconds, elapsed - seconds
 		local petIds = keys(profile.pets)
 		for offset = 1, seconds do
-			tick(profile, profile.lastSimulatedAt + offset, summary, petIds)
+			tick(profile, profile.lastSimulatedAt + offset, summary, petIds, isOffline)
 		end
 		-- The unprocessed tail is deliberately consumed; rejoining cannot reclaim a second cap.
 		profile.lastSimulatedAt = now
@@ -1117,8 +1136,9 @@ function Factory.new(config)
 			return true, "This slot receives the next supply turn; fair rotation then resumes"
 		elseif action == "click" then
 			if profile.essence >= config.maxBalance then return false, "Essence limit reached" end
-			local gained = math.min(config.manualClickEssence, config.maxBalance - profile.essence)
+			local gained = math.min(config.manualClickEssence+Epochs.essence(profile), config.maxBalance - profile.essence)
 			profile.essence += gained
+			Dailies.record(config,profile,"essence",gained,math.floor(now))
 			profile.tutorial.crystal = true
 			return true, "+" .. gained .. " essence"
 		elseif action == "assign" then
@@ -1205,6 +1225,7 @@ function Factory.new(config)
 			else
 				cost = config.stations[upgradeId].upgradeCosts[profile.stations[upgradeId].level + 1]
 			end
+			cost=Epochs.cost(config,profile,cost)
 			if not cost then return false, "Maximum upgrade reached" end
 			if profile.gold < cost then return false, "Not enough gold" end
 			profile.gold = profile.gold - cost
@@ -1239,6 +1260,7 @@ function Factory.new(config)
 			profile.gold = math.min(config.maxBalance, profile.gold + order.rewardGold)
 			profile.order = nil
 			profile.tutorial.orderClaimed = true
+			Dailies.record(config,profile,"orders",1,math.floor(now))
 			event(profile, "contract", math.floor(now))
 			updateTutorial(profile, math.floor(now))
 			return true, "Order delivered"

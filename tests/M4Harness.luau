@@ -29,11 +29,13 @@ function H.new(options)
 	function h.oracle()
 		local available,present={},{}
 		for _,record in pairs(h.records) do
-			assert(h.engine.validate(record.profile))
-			for _,inventory in ipairs({record.profile.pets,record.profile.cauldrons}) do
+			local profile=record.profile
+			if profile.schemaVersion~=Config.schemaVersion then profile=assert(h.engine.migrate(C.copy(profile))) end -- Validate old records through migration without changing the stored fixture.
+			assert(h.engine.validate(profile))
+			for _,inventory in ipairs({profile.pets,profile.cauldrons}) do
 				for id in pairs(inventory) do
 					present[id]=true
-					if not Trading.frozen(record.profile) then available[id]=(available[id] or 0)+1; assert(available[id]<=1,"Dual-use item: "..id) end
+					if not Trading.frozen(profile) then available[id]=(available[id] or 0)+1; assert(available[id]<=1,"Dual-use item: "..id) end
 				end
 			end
 		end

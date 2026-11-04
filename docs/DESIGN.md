@@ -25,7 +25,7 @@ Three eligible offers on the board, one active contract. M3 replaces lower-prior
 
 ## Construction and technology — M3
 
-Four functional phases are separate from equipment tiers and future Rebirth epochs.
+Four functional phases are separate from equipment tiers and Rebirth epochs.
 [M3_RULES.md](M3_RULES.md) records the graph, fixed slot coordinates/waypoints,
 prices, recipes and three measured portable routes. Original six IDs and early
 upgrades remain available; seven additional slots unlock by phase. All slots are
@@ -40,7 +40,8 @@ conserved. Manual load/discard and one-turn supply priority remain available.
 Phase 3 grants one free unique resonant cauldron with ownership, provenance, lock
 and a capped bonus captured at batch start. Changing equipment requires an idle
 slot. M4 can transfer the unequipped item without repeating the milestone grant.
-Phase 4 plus first manual Ascension displays completion only: no reset or grant.
+Phase 4 plus an actual final batch in the current cycle displays completion.
+Only a separate confirmed Rebirth transaction resets production or grants a shard.
 
 ## Collection and policy — M2
 
@@ -60,13 +61,34 @@ whole-profile reservation temporarily freezes actions until settlement; neither
 ordinary saves nor a timeout can undo a committed transfer. Public trading remains
 off until real backend, policy, mobile and multiplayer acceptance.
 
-## Rebirth — later milestone
+## Rebirth, epochs and daily progression — M5
 
-Four functional construction stages per cycle, with later themes changing their art/content. Keep the classic/steampunk/void-theme ambition, but first validate one greybox cycle.
+[M5_REBIRTH.md](M5_REBIRTH.md) is the reset/preserve contract recorded before
+migration/commands. A completed current-cycle final batch enables a separate
+two-step Rebirth confirmation. One durable profile transaction resets the factory,
+increments the cycle, grants exactly one Time Shard and stores its receipt.
+All pets, rare cauldrons, recipe archive, rights and operation histories survive;
+assignments/equipment clear. Any active trade negotiation or durable reservation
+blocks reset. Phase-three's rare-cauldron milestone remains one-time.
 
-Reset ordinary construction/upgrades, Gold/Essence, production buffers/cargo/jobs, ingredients/intermediates, active contracts and worker assignments. Preserve familiar and rare-cauldron inventory, cosmetic ownership, permanent entitlements, receipt history, permanent rebirth bonuses and discovered recipe collection. Discovered recipes require suitable rebuilt equipment.
+Count modulo three selects Classic, Steampunk or Void, each with four construction
+phases and the same 13 slots. Distinct recipe dependencies and bounded cost/sale/
+duration factors change the production routes. Counts >=3 repeat the themes with
+no exponential growth. Nine zero-admin traces cover manual, early automation and
+mistaken-purchase/restricted routes. Model time is not measured retention.
 
-Purchase preservation means permanent rights and the proper state of consumables; consumed products are never awarded again on Rebirth. The treatment of unspent Robux-purchased currency must be clearly disclosed before currency packs/Rebirth are enabled. Neither system is live in M0.
+Earned shards buy capped industry/Essence perks, a title or one of three exact
+fixed-stat familiars. M5 uses the explicitly permitted direct-choice-first altar;
+there is no random shard summon or paid-shard purchase. M2 gacha keeps its policy
+and disclosure gates. Positive potentially paid Gold/Essence blocks Rebirth until
+M6 defines carry/refund/disclosure; permanent rights and consumed receipts persist.
+
+Three daily goals use real manual Essence, manual online potion completions and
+NPC claims, with UTC day rotation and explicit durable rewards. Offline work and
+automatic batches do not progress those goals. The explicit seven-day calendar
+resets on a missed day and starts again after day seven. Its first special reward
+is a title plus a fixed Moon Cat entitlement; later series give fixed Gold.
+Full collection capacity delays pet delivery without losing or repeating the right.
 
 ## M1 routing and onboarding rules
 
@@ -107,7 +129,7 @@ be measured by the portable early-game scenarios, not treated as retention data.
 
 ## Remaining prototype simplifications
 
-- Familiar collection uses ten greybox species and three evolution families. There are no quest pet rewards, general pet deletion, rerolls, luck/pity modifiers or monetization handlers. Trading is private-QA-only until live acceptance.
+- Familiar collection uses ten greybox species and three evolution families, with a fixed calendar reward. There is no general pet deletion, reroll, luck/pity modifier or monetization handler. Trading is private-QA-only until live acceptance.
 - Thirteen fixed workplaces, one carrier and six processing slots; four functional phases with replaceable greybox architecture. No free placement or physical bottle simulation.
 - Simple local worker spheres and greybox scenery; no art acceptance or mobile FPS claim.
 - Prices, rates and probabilities are provisional configuration, not a monetization forecast.

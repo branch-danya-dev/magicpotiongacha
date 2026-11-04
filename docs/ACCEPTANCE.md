@@ -2,6 +2,66 @@
 
 CLI/CI passing is necessary but does not mark any item below as completed.
 
+## M5 implementation record — 2026-11-05
+
+Scope: [Issue #12](https://github.com/branch-danya-dev/magicpotiongacha/issues/12).
+Branch `feat/m5-rebirth-epochs-dailies`, stacked on open/unmerged Draft
+[PR #11](https://github.com/branch-danya-dev/magicpotiongacha/pull/11), branch
+`feat/m4-secure-p2p-trading`, base HEAD
+`8be6af541aa5aa2a82710db8f75044966047c22f`. No merge or Roblox publication.
+**TradingEnabled=false. Studio/real backend/phone/multiplayer acceptance BLOCKED.**
+Earlier milestone records remain historical. M5's rules were written before the
+schema/commands; exact final head and CI run/job evidence are recorded in its PR.
+
+| Issue #12 acceptance point | Portable evidence | Remaining limit |
+| --- | --- | --- |
+| Reset/preserve/recompute contract | `M5_REBIRTH.md`; explicit whitelist, complete preservation assertions in `m5_model.spec` | Two-stage on-device review S1/M1 |
+| Real phase-4 final gate, checkpoint, exactly one shard | `m5_model.spec`: actual batch, archived-only denial, stale cycle, no confirmation, paid-balance guard, reset timers/jobs/stock, no old offline replay | True DataStore acknowledgement/shutdown D1 |
+| Collection/cauldron/rights/history conservation | Full original metadata/locks/paid ancestry/serials/receipts/tutorial preserved; old M2/M3 receipts cannot regrant; milestone remains consumed after transfer | Real join and rendering S1/D1 |
+| Trade compatibility | `m5_trade.spec`: transfer before reset, reverse transfer after reset, invitation/negotiation/ready and yielding-policy denial, reset save blocks new invitation, all six commands blocked by persistent pending; M4 crash oracle retained | True crash/other-server recovery and both-player policy D1/P1 |
+| Atomic writes and stable operation identity | `m5_store.spec`: all six commands × before/after unknown writes, repeated callbacks and simultaneous identical requests; conflicting rewards, changed Player guard, lease takeover, unique day-seven uncertain claim | Roblox quota/latency/retry/shutdown D1 |
+| Three epochs, distinct dependencies and bounded factors | `Config.epochRules`, `m5_model.spec` high-count bounds, nine real routes in `m5_acceptance.spec`; generated intermediate/recipe IDs and active-epoch validation | Greybox theme readability S1/M1 |
+| Complete F2P route in each epoch | 3 strategies × 3 cycles, zero admin grants/RNG/trade/daily subsidy; actual final batch and two automatic lines, exact Gold accounting, original 12 earned pets/one cauldron retained; table/logs in `M5_REBIRTH.md` | Model time excludes travel/latency; retention unmeasured |
+| Offline parity, no automatic meta rewards | Complete-profile equality for each epoch at 7200 seconds; repeated catch-up gives nothing; actual third reset wraps to bounded Classic | Real leave/rejoin D1 |
+| Permanent perks and direct-choice special altar | Exact prices/stats, max/owned-title denial, no draw, capacity-before-debit, paid ancestry; 1.15 industry cap after stat caps | No random shard altar or paid shards implemented; M2 policy gates unchanged |
+| Three UTC daily goals | `m5_daily.spec`: real click/manual batch/NPC events, online/offline/auto distinction, all day rotations actually earned in phase 1, explicit claims and another-server replay denial, clock/day spoof/rollback | Device timezone and midnight UX M1 |
+| Seven-day calendar and inventory rights | Days 1/7/8, skipped/backwards/duplicate days, later-series replacement, day-seven uncertain writes; 128-slot reward right survives date change/Rebirth/reload and is delivered once after Fuse | Touch delivery/error copy M1 |
+| V1–V5 → V6 migration | All historical suites retained; authentic pre-M5 V5 pending-COMMIT fixture preserves every old field, recovers before payout; future/invalid metadata/shards/perks/cycle/epoch stock/claims/receipt never overwrites | Isolated real mixed-version recovery D1; no old-server downgrade |
+| UI has no reward authority | `m5_ui.spec`: two distinct taps, stable cycle/request, stale review invalidation, cancel/welcome/reopen/Continue send no grant | Compilation is not layout/joystick/camera acceptance; portrait/landscape BLOCKED |
+| Regression/toolchain | **696/696 tests: 581 retained + 115 M5**, 66 Luau sources; pinned Luau 0.745/Rojo 7.7.1; compile, portable analyze, Rojo place+sourcemap | npm absent locally: exact scripts `node scripts/setup-tools.mjs` then `node scripts/check.mjs`; exact-SHA Windows/Ubuntu run evidence in Draft PR |
+| Release scope | ServerSettings unchanged; TradingEnabled=false; no Robux/products/gamepasses, paid shards, global market, final art or publication | All Issue #2 live gates remain BLOCKED |
+
+The existing M3 completion fixture now sets current-cycle final production in
+addition to archived discovery; its assertion remains. The M4 conservation oracle
+validates a temporary migrated view of historical records, never mutating stored
+fixtures. No original test case was removed.
+
+### M5 live acceptance steps (all BLOCKED)
+
+- **S1 — Studio:** run each greybox theme and four phases with real controls;
+  inspect recipes, prices, both parallel lines and staff reuse. Produce the final
+  batch, inspect reset/preserve values, cancel once, then confirm once. Reopen
+  welcome/Continue and verify no additional shard or reset. Complete two further
+  cycles; check repeating Classic and no second milestone cauldron.
+- **D1 — isolated DataStore:** use separate private QA stores and coherent V6
+  servers. Test unknown before/after saves for reset, perk, pet and calendar day 7,
+  disconnect/close/rejoin, lease expiry and stale clients. Import representative
+  historical saves, including a pending M4 COMMIT; verify recovery precedes
+  catch-up. Inspect collection identities/provenance, claim flags and ledgers.
+- **P1 — policy/trade:** in the allowlisted private QA place only, test restricted,
+  allowed, failed and changing policy for both participants. The fixed shard altar
+  remains deterministic; existing random summons keep disclosure. Attempt Rebirth
+  during invite, ready, commit and recovery. Transfer before and after reset,
+  crash one side, then reconnect on another server. Restore TradingEnabled=false.
+- **M1 — phone:** portrait/landscape at small widths; scroll long reset text and
+  all reward cards; tap review/confirm without accidental reset, close panels and
+  check joystick/camera. Inspect shortage/full-inventory messages, title display,
+  UTC-midnight update, skipped-day and day-eight calendar. Change phone timezone;
+  verify server day/claim history does not change.
+- **P2 — 2–8 clients:** independent cycles, simultaneous claims and private test
+  trades; verify no cross-plot interaction, stale-session cleanup or shared state.
+  Measure actual device/server performance separately from portable traces.
+
 ## M4 implementation record — 2026-11-05
 
 Scope: [Issue #10](https://github.com/branch-danya-dev/magicpotiongacha/issues/10).

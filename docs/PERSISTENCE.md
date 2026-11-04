@@ -1,4 +1,4 @@
-# M4 player persistence
+# M5 player persistence
 
 ## Scope and verification status
 
@@ -126,7 +126,7 @@ backend state over guessing whether a previous write succeeded.
   never activate the Studio in-memory backend.
 - Invalid/future envelope or profile schemas fail closed. Migration must be added
   explicitly and tested; there is no automatic reset to a new player. Only the
-  explicit gameplay V1/V2/V3/V4→V5 migration is supported.
+  explicit gameplay V1/V2/V3/V4/V5→V6 migration is supported.
 - Failed saves pause gameplay writes. A subsequent save can recover while the
   adapter can still prove ownership of an unexpired lease. Expired, lost, or
   conflicting leases cannot be reclaimed by saving a stale local snapshot.
@@ -147,10 +147,10 @@ backend state over guessing whether a previous write succeeded.
 - `receipts`/`entitlements` fields in a profile are reserved data. Their presence
   is not an implementation of Roblox purchase receipt validation or fulfilment.
 
-## Historical V1 → V2 conversion, retained inside V1 → V5
+## Historical V1 → V2 conversion, retained inside V1 → V6
 
 The DataStore **envelope remains version 1** and the namespace is unchanged, so
-existing keys are found. `Factory.validate` accepts only current V5 gameplay
+existing keys are found. `Factory.validate` accepts only current V6 gameplay
 profiles. For V1, `Factory.migrate` first checks the previous shape/invariants,
 then copies it and initializes empty machine Essence tanks/quest queues, a pipe
 cursor, tutorial facts and diagnostic tables. Existing balances, paid jobs,
@@ -250,7 +250,7 @@ and stale lease rejection. These are fake-backend results. V4 cannot be downgrad
 to an M2 server: use coherent private QA deployment and backed-up keys. Real
 DataStore/PolicyService and multi-client recovery remain **BLOCKED (D1/S1)**.
 
-## Gameplay V1/V2/V3/V4 → V5 and trade recovery
+## Historical gameplay V1/V2/V3/V4 → V5 and trade recovery
 
 The envelope stays version 1 and existing player keys/namespaces stay unchanged.
 A genuine V4 fixture was captured and validated on M3 PR #9 at
@@ -302,6 +302,42 @@ absent recovery, policy/provenance, registry bounds/GC and V4 field equality.
 Real storage, shutdown/reconnect, PolicyService and mobile/multiplayer acceptance
 remain **BLOCKED**. V5 cannot be downgraded by older servers; deploy coherent
 versions only to the isolated private QA environment before any live acceptance.
+
+## Gameplay V1–V5 → V6 and M5 operations
+
+The envelope remains version 1; only gameplay becomes V6. Historical V1–V3 still
+use frozen LegacyConfig and the prior conversions; V4/V5 validate before conversion.
+New epoch stock in historical saves and unexpected historical longTerm data fail
+closed. V5's trade marker/sequence/receipt and every old field are preserved; the
+authentic pre-M5 pending-COMMIT fixture verifies recovery before any reset or payout.
+Only schemaVersion and new longTerm metadata change. No migration grants a shard,
+perk, reward, Rebirth or completion. An existing phase >=3 or advanced cauldron
+serial records the already-issued phase-three milestone. Older writers cannot
+downgrade V6; use coherent server versions in isolated QA.
+
+`longTerm` stores a monotonic sequence and bounded last action/fingerprint/result,
+earned/spent/balance shard ledger, bounded perk levels, current cycle ID/final flag,
+one-time milestone, daily day/progress/claims, and calendar lastDay/step/series plus
+unique/pending/delivered rights. Earned cannot exceed confirmed Rebirth count;
+balance + spent equals earned, and perk cost cannot exceed spent. Purchased title
+and calendar title rights must agree with their metadata. Recipe archive is
+preserved, while current machines/cargo/stock/contracts must belong to this epoch.
+
+Rebirth uses ordinary single-key `transact`, never `transactTrade`. It rejects an
+active negotiation/pending trade, revalidates the expected cycle and actual final
+production after simulating to server now, clears only the documented factory
+fields, then atomically saves count + one shard + receipt + timestamp. Paid positive
+Gold/Essence is blocked pending M6 rules. Exact latest replay grants nothing; older
+IDs stay stale even after the last receipt changes. M2/M3/M4 histories are untouched.
+
+All six M5 commands share this gate and unknown-write fencing. Before/after-write
+failures, repeated callbacks, concurrent identical/conflicting commands and fresh
+lease takeover are covered in `m5_store.spec`. Seventh-day calendar rights are
+tested across uncertain writes. Inventory-cap rejection does not consume rights
+or shard balances. Future/invalid state never falls back to a fresh profile.
+
+See [M5_REBIRTH.md](M5_REBIRTH.md) for the complete reset table and UTC/skip/day-eight
+rules; [ACCEPTANCE.md](ACCEPTANCE.md) separates portable evidence from live blockers.
 
 ## Studio and real-backend acceptance checklist
 

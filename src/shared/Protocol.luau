@@ -38,6 +38,12 @@ type GateData = {
 export type Gate = typeof(setmetatable({} :: GateData, Protocol))
 
 local SCHEMAS: { [string]: { [string]: string } } = {
+	rebirth = { expectedRebirthCount="level",confirmed="true",requestId="sequence" },
+	buyRebirthPerk = { perkId="id",expectedLevel="level",requestId="sequence" },
+	chooseRebirthPet = { offerId="id",confirmed="true",requestId="sequence" },
+	claimDaily = { questId="id",expectedDay="day",requestId="sequence" },
+	claimCalendar = { expectedDay="day",requestId="sequence" },
+	deliverCalendarPet = { requestId="sequence" },
 	tradeInvite = { targetToken="id" },
 	tradeAccept = { tradeId="id",version="sequence" },
 	tradeCancel = { tradeId="id",version="sequence" },
@@ -139,6 +145,8 @@ local function validatePayload(action: any, payload: any): (boolean, string)
 			if count ~= 5 then return false, "invalid_payload" end
 		elseif kind == "phase" then
 			if not finite(value) or value % 1 ~= 0 or value < 1 or value > 4 then return false, "invalid_payload" end
+		elseif kind == "day" then
+			if not finite(value) or value%1~=0 or value<0 or value>11574074 then return false,"invalid_payload" end
 		elseif kind == "sequence" then
 			if not finite(value) or value % 1 ~= 0 or value < 1 or value > 1000000000000 then return false, "invalid_payload" end
 		elseif kind == "true" then

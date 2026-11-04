@@ -7,7 +7,7 @@ function Familiars.provenanceKnown(pet)
 		and (origin.source~="fuse" or origin.tradeKnown==true)
 end
 local skills = { "Farming", "Hauling", "Brewing" }
-local sources = { starter = true, hire = true, shop = true, gacha = true, fuse = true, legacy = true }
+local sources = { starter = true, hire = true, shop = true, gacha = true, fuse = true, legacy = true, rebirth_shop=true, calendar=true }
 local function integer(value, lo, hi)
 	return type(value) == "number" and value == value and value % 1 == 0 and value >= lo and value <= hi
 end

@@ -112,6 +112,7 @@ function Runtime.new(options)
 		end,
 	})
 	function service.busy(userId) return manager.busy(userId) end
+	function service.activeTrade(userId) return manager.current(userId)~=nil end
 	function service.handle(player,action,payload)
 		if not enabled() then return false,"Торговля выключена до живой приёмки." end
 		if not options.active(player) or options.closing() then return false,"Player session unavailable" end

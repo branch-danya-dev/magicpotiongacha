@@ -3,6 +3,7 @@
 local Access = {}
 
 function Access.target(action: string, payload: any): string?
+	if action=="rebirth" or action=="buyRebirthPerk" or action=="chooseRebirthPet" or action=="claimDaily" or action=="claimCalendar" or action=="deliverCalendarPet" then return "blueprint" end
 	if action == "advancePhase" then return "blueprint" end
 	if action == "equipCauldron" then return payload.slotId end
 	if action == "lockCauldron" then return "altar" end

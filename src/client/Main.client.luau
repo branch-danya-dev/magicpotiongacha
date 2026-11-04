@@ -7,6 +7,9 @@ local shared = ReplicatedStorage:WaitForChild("PotionTycoon"):WaitForChild("Shar
 local Config = require(shared.Config)
 local collectionUI = require(script.Parent.CollectionUI).new(Config)
 local tradeUI = require(script.Parent.TradeUI).new(Config)
+local longTermUI = require(script.Parent.LongTermUI).new(Config)
+local LongTerm = require(shared.LongTerm)
+local Codec = require(shared.TradeCodec)
 local remotes = ReplicatedStorage.PotionTycoon:WaitForChild("Remotes")
 local Action, State, Notice, Focus = remotes:WaitForChild("Action"), remotes:WaitForChild("State"), remotes:WaitForChild("Notice"), remotes:WaitForChild("Focus")
 local Ready = remotes:WaitForChild("Ready")
@@ -59,8 +62,8 @@ local function send(action, payload)
 			or (id == "warehouse" and state.warehouseLevel or state.stations[id].level)
 		action = "build"
 	end
-	if collectionActions[action] or progressionActions[action] then
-		payload.requestId = (progressionActions[action] and state.progression.sequence or state.collection.sequence) + 1
+	if collectionActions[action] or progressionActions[action] or LongTerm.isAction(action) then
+		payload.requestId = payload.requestId or (LongTerm.isAction(action) and state.longTerm.requestId or (progressionActions[action] and state.progression.sequence or state.collection.sequence)+1)
 		collectionPending = true
 		pendingGeneration += 1
 		local generation = pendingGeneration
@@ -71,7 +74,8 @@ end
 local function names(items)
 	local parts = {}
 	for id, amount in pairs(items or {}) do
-		if amount > 0 then table.insert(parts, (Config.items[id] and Config.items[id].name or id) .. ": " .. amount) end
+		local epoch=state and state.longTerm and Config.epochRules[state.longTerm.epochId]
+		if amount > 0 then table.insert(parts, (epoch and epoch.resourceNames[id] or (Config.items[id] and Config.items[id].name or id)) .. ": " .. amount) end
 	end
 	table.sort(parts)
 	return #parts > 0 and table.concat(parts, "  ·  ") or "Пусто"
@@ -84,7 +88,7 @@ hud.BackgroundColor3, hud.Parent = BG, gui
 local balance = label(hud, "Загрузка профиля…", 36)
 balance.Position, balance.Size = UDim2.fromOffset(12, 0), UDim2.new(1, -130, 0, 36)
 balance.TextSize = 17
-local status = label(hud, "M4 · фабрика и магический базар", 32)
+local status = label(hud, "M5 · эпохи и постоянное развитие", 32)
 status.Position, status.Size = UDim2.fromOffset(12, 38), UDim2.new(1, -24, 0, 32)
 status.TextSize = 11
 local toggle = button(hud, "Фабрика", function() end)
@@ -170,9 +174,7 @@ local function getStation()
 end
 local function upgradePrice(id)
 	if not state then return "…" end
-	if id == "warehouse" then return Config.warehouse.upgradeCosts[(state.warehouseLevel or 0) + 1] end
-	local station = state.stations[id]
-	return station and Config.stations[id].upgradeCosts[station.level + 1]
+	return state.builds[id] and state.builds[id].cost
 end
 local function assignedTo(petId)
 	for id, station in pairs(state.stations) do
@@ -206,6 +208,10 @@ draw = function()
 		return
 	end
 	if not state then text("Ожидаем безопасную загрузку профиля…"); return end
+	if selected=="rebirth" or selected=="dailies" or selected=="shards" then
+		title.Text=selected=="rebirth" and "Rebirth · новая эпоха" or (selected=="dailies" and "Ежедневные награды" or "Time Shards · магазин")
+		longTermUI.draw({state=state,currentState=function() return state end,bindText=bindText,mode=selected,text=text,action=action,send=send,redraw=draw}); refresh(); return
+	end
 	local tutorial = text("", 96)
 	bindText(tutorial, function() return "Обучение " .. state.tutorial.step .. "/" .. state.tutorial.total .. " · " .. state.tutorial.text end)
 	if petPicker then
@@ -242,6 +248,9 @@ draw = function()
 		title.Text = "Развитие · фаза "..state.phase.phase.."/4"
 		local phase=state.phase
 		text(phase.name.."\n"..phase.message,76)
+		action("Эпохи / Rebirth",function() selected="rebirth"; draw() end)
+		action("Ежедневные задания и календарь",function() selected="dailies"; draw() end)
+		action("Постоянные улучшения / особый алтарь",function() selected="shards"; draw() end)
 		if phase.cost then
 			local prerequisites=text("",150)
 			bindText(prerequisites,function()
@@ -283,7 +292,7 @@ draw = function()
 		local upgrade = action("", function() send("buy", { upgradeId = "warehouse" }) end)
 		bindText(upgrade, function() return "Расширить склад · " .. tostring(upgradePrice("warehouse") or "MAX") .. " Gold" end)
 		local pipes = action("", function() send("buy", { upgradeId = "pipes" }) end)
-		bindText(pipes, function() return state.pipes and "Трубы установлены" or ("Жидкостные трубы · " .. Config.pipesCost .. " Gold") end)
+		bindText(pipes, function() return state.pipes and "Трубы установлены" or ("Жидкостные трубы · " .. state.builds.pipes.cost .. " Gold") end)
 		text("Магазин контрактов · гарантированный наём", 32)
 		for _, speciesId in ipairs({ "farmer", "slime", "brewer" }) do
 			local offer = Config.hires[speciesId]
@@ -348,7 +357,8 @@ draw = function()
 			return "Уровень: " .. station.level .. "\nРабочий: " .. work
 		end)
 		if stationId == "crystal" then
-			action("Собрать эссенцию +" .. Config.manualClickEssence, function() send("click", {}) end)
+			local click=action("",function() send("click",{}) end)
+			bindText(click,function() return "Собрать эссенцию +"..state.longTerm.manualClickEssence end)
 		elseif definition.outputItem then
 			local output = text("", 44)
 			bindText(output, function() return "У источника: " .. names(getStation().output) end)
@@ -369,7 +379,7 @@ draw = function()
 				local station = getStation()
 				local def = Config.recipes[station.recipeId]
 				return def and (def.name .. " · " .. names(def.inputs) .. " · Essence: " .. def.essenceCost
-					.. " · Выпуск: " .. def.quantity .. " · Продажа: " .. def.goldValue .. " Gold") or "Рецепт не выбран"
+					.. " · Выпуск: " .. def.quantity .. " · Продажа: " .. state.recipes[stationId][station.recipeId].saleValue .. " Gold") or "Рецепт не выбран"
 			end)
 			local recipeIds={}; for id in pairs(state.recipes[stationId]) do table.insert(recipeIds,id) end; table.sort(recipeIds)
 			for _,recipeId in ipairs(recipeIds) do
@@ -414,7 +424,7 @@ refresh = function()
 	for _, update in ipairs(bindings) do update() end
 end
 
-local tabList={{"blueprint","Развитие"},{"bazaar","Обмен"}}
+local tabList={{"blueprint","Развитие"},{"rebirth","Rebirth"},{"dailies","Daily"},{"shards","Осколки"},{"bazaar","Обмен"}}
 for _,id in ipairs(Config.stationOrder) do table.insert(tabList,{id,Config.stations[id].name}) end
 for _,tab in ipairs({{"warehouse","Склад"},{"orders","Заказы"},{"altar","Фамильяры"}}) do table.insert(tabList,tab) end
 for _, tab in ipairs(tabList) do
@@ -432,12 +442,16 @@ end
 
 State.OnClientEvent:Connect(function(value)
 	local first = state == nil
+	local longTermChanged=state and (state.longTerm.requestId~=value.longTerm.requestId or state.longTerm.day~=value.longTerm.day)
+	local longTermPanel=selected=="rebirth" or selected=="dailies" or selected=="shards"
+	local longTermViewChanged=longTermPanel and state and Codec.encode(state.longTerm)~=Codec.encode(value.longTerm)
+	if (state and state.rebirths~=value.rebirths) or (first and value.longTerm.last and value.longTerm.last.action=="rebirth") then selected,petPicker,panel.Visible="rebirth",false,true end
 	local collectionChanged = state and collectionUI.signature(state) ~= collectionUI.signature(value)
 	local progressionChanged = state and (state.progression.sequence~=value.progression.sequence or state.phase.complete~=value.phase.complete
 		or table.concat(state.orderOffers,"|")~=table.concat(value.orderOffers,"|"))
-	if state and (state.collection.sequence ~= value.collection.sequence or state.progression.sequence~=value.progression.sequence) then collectionPending = false end
+	if state and (state.collection.sequence ~= value.collection.sequence or state.progression.sequence~=value.progression.sequence or longTermChanged) then collectionPending = false end
 	state = value
-	if first or progressionChanged or (selected == "altar" and collectionChanged) then draw() else refresh() end
+	if first or progressionChanged or longTermChanged or longTermViewChanged or (selected == "altar" and collectionChanged) then draw() else refresh() end
 	if not hasReport and value.offlineReport and value.offlineReport.processedSeconds > 5 then
 		hasReport = true
 		showToast("С возвращением! Учтено " .. value.offlineReport.processedSeconds .. " сек. работы. Gold: +" .. math.floor(value.offlineReport.goldEarned or 0) .. ". Уже сохранено.", 8)

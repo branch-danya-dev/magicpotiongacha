@@ -1,6 +1,6 @@
 -- Pure data: all economy values are provisional and can be tuned without changing the engine.
 local Config = {
-	schemaVersion = 5,
+	schemaVersion = 6,
 	trading = { maxItems=6,maxCauldrons=16,prepareSeconds=120,inviteSeconds=30,negotiateSeconds=300,
 		inviteCooldown=15,retentionSeconds=604800,journalShards=16,journalCapacity=128,scanPerPass=1,recoverySeconds=30 },
 	maxOfflineSeconds = 7200,
@@ -225,4 +225,41 @@ Config.orders.healing_quick.priority=10
 Config.orders.flare_small={name="Lantern supply",recipeId="flare",itemId="flare",count=4,rewardGold=680,duration=1800,phase=3}
 Config.orders.ascension_small={name="Final experiment",recipeId="ascension",itemId="ascension",count=3,rewardGold=1500,duration=3600,phase=4}
 Config.cauldronTypes={resonant={name="Resonant copper cauldron",bonus=0.05}}
+Config.epochRules={
+	[0]={name="Классическая алхимия",color={94,153,100},cost=1,sale=1,duration=1,finalRecipe="ascension",
+		phaseRecipes={[2]={"healing"},[3]={"rage"},[4]={"focus","flare"}},resourceNames={}},
+	[1]={name="Стимпанк",color={187,139,66},cost=1.10,sale=1.20,duration=0.95,finalRecipe="steam_ascension",
+		phaseRecipes={[2]={"healing"},[3]={"steam_catalyst"},[4]={"gear_oil","steam_tonic"}},resourceNames={coal="Coke",berry="Oil berry",mushroom="Copper spore"}},
+	[2]={name="Кибер-алхимия Пустоты",color={126,89,205},cost=1.20,sale=1.40,duration=0.90,finalRecipe="void_ascension",
+		phaseRecipes={[2]={"healing"},[3]={"void_plasma"},[4]={"antimatter","void_tonic"}},resourceNames={coal="Dark carbon",berry="Void berry",mushroom="Quantum spore"}},
+}
+local epochRecipes={
+	steam_catalyst={name="Steam Catalyst",epoch=1,inputs={coal=2},essenceCost=5,duration=7,station="distillery",requiredLevel=1,phase=2,kind="intermediate",fluid=true},
+	gear_oil={name="Gear Oil",epoch=1,inputs={berry_essence=1,mushroom=1},essenceCost=5,duration=9,station="press",requiredLevel=1,phase=3,kind="intermediate",fluid=false},
+	steam_tonic={name="Steam Tonic",epoch=1,inputs={steam_catalyst=1,spore_paste=1},essenceCost=8,duration=11,station="cauldron",requiredLevel=2,phase=3,kind="potion",goldValue=180},
+	pressure_essence={name="Pressure Essence",epoch=1,inputs={steam_catalyst=1,gear_oil=1},essenceCost=12,duration=13,station="centrifuge",requiredLevel=1,phase=4,kind="intermediate",fluid=true},
+	steam_ascension={name="Steam Ascension",epoch=1,inputs={pressure_essence=1,coal=1,mandrake=2},essenceCost=20,duration=18,station="cauldron",requiredLevel=3,phase=4,kind="potion",goldValue=480},
+	void_plasma={name="Void Plasma",epoch=2,inputs={coal=1,mandrake=1},essenceCost=6,duration=8,station="distillery",requiredLevel=1,phase=2,kind="intermediate",fluid=true},
+	antimatter={name="Antimatter",epoch=2,inputs={coal=2,berry_essence=1},essenceCost=8,duration=10,station="press",requiredLevel=1,phase=3,kind="intermediate",fluid=false},
+	void_tonic={name="Void Tonic",epoch=2,inputs={void_plasma=1,spore_paste=1},essenceCost=10,duration=13,station="cauldron",requiredLevel=2,phase=3,kind="potion",goldValue=220},
+	chrono_serum={name="Chrono Serum",epoch=2,inputs={antimatter=1,void_plasma=1},essenceCost=14,duration=16,station="centrifuge",requiredLevel=1,phase=4,kind="intermediate",fluid=true},
+	void_ascension={name="Void Ascension",epoch=2,inputs={chrono_serum=1,berry_essence=1,mandrake=1},essenceCost=22,duration=22,station="cauldron",requiredLevel=3,phase=4,kind="potion",goldValue=600},
+}
+for id,recipe in pairs(epochRecipes) do
+	recipe.output=id; recipe.quantity=1; recipe.goldValue=recipe.goldValue or 0; Config.recipes[id]=recipe
+	Config.items[id]={name=recipe.name,kind=recipe.kind,fluid=recipe.fluid==true,epoch=recipe.epoch}
+	if recipe.kind=="potion" then Config.orders[id.."_small"]={name=recipe.name.." order",recipeId=id,itemId=id,count=3,rewardGold=recipe.goldValue*4,duration=2400,phase=recipe.phase,epoch=recipe.epoch} end
+end
+Config.longTerm={
+	perkOrder={"industry","essence","title"},perks={
+		industry={name="Производительность",cost=1,max=3,description="+5% скорости работы за уровень; пределы статов сохраняются"},
+		essence={name="Энергия времени",cost=1,max=3,description="+1 Essence за клик и +1/с у улучшенного пассивного кристалла за уровень"},
+		title={name="Титул: Хрононавт",cost=1,max=1,description="Постоянный титул"},
+	},
+	choiceOrder={"bloom_owl","golden_slime","moon_cat"},choiceCost=1,
+	daily={essence={name="Собери Essence вручную",targets={30,40,50},reward={gold=40}},brew={name="Заверши ручные варки зелий онлайн",targets={3,4,5},reward={gold=60}},orders={name="Выполни заказ NPC",targets={1,1,1},reward={gold=90}}},
+	dailyOrder={"essence","brew","orders"},
+	calendar={{gold=30},{essence=25},{gold=60},{essence=50},{gold=90},{essence=75},{gold=140}},
+	calendarPet="moon_cat",
+}
 return Config
