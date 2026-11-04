@@ -38,6 +38,10 @@ return function(T: any)
 	end
 
 	local function act(engine: any, profile: any, action: string, payload: any, now: number?)
+		if action == "buy" and payload.expectedLevel == nil then
+			payload.expectedLevel = payload.upgradeId == "pipes" and (profile.pipes and 1 or 0)
+				or (payload.upgradeId == "warehouse" and profile.warehouseLevel or profile.stations[payload.upgradeId].level)
+		end
 		local ok, reason = engine.act(profile, action, payload, now or profile.lastSimulatedAt)
 		T.truthy(ok, action .. ": " .. tostring(reason))
 		local valid, failure = engine.validate(profile)
@@ -62,6 +66,7 @@ return function(T: any)
 		-- Post-tutorial fixture; separate tests exercise the actual first-brew gate.
 		profile.discoveredRecipes.healing = true
 		act(engine, profile, "buy", { upgradeId = "crystal" })
+		act(engine, profile, "buy", { upgradeId = "pipes" })
 		assign(engine, profile, "garden", "farmer")
 		assign(engine, profile, "logistics", "slime")
 		assign(engine, profile, "cauldron", "brewer")
@@ -80,7 +85,7 @@ return function(T: any)
 	local function resourceTotal(profile: any, itemId: string): number
 		local amount = count(profile.inventory, itemId) + count(profile.questStock, itemId)
 		for _, station in pairs(profile.stations) do
-			amount += count(station.input, itemId) + count(station.output, itemId)
+			amount += count(station.input, itemId) + count(station.output, itemId) + count(station.questQueue, itemId)
 			if station.job and station.job.kind == "haul" and station.job.itemId == itemId then
 				amount += station.job.amount
 			end
@@ -91,7 +96,7 @@ return function(T: any)
 	T.test("factory: fresh profile validates with three fixed free starters", function()
 		local engine, profile = fresh()
 		T.truthy(engine.validate(profile))
-		T.equal(profile.schemaVersion, 1)
+		T.equal(profile.schemaVersion, Config.schemaVersion)
 		T.equal(size(profile.pets), 3)
 		T.equal(profile.gold, 0)
 		T.equal(profile.essence, 0)
@@ -362,6 +367,7 @@ return function(T: any)
 		profile.inventory.mandrake = Config.warehouse.rawCapacity[1]
 		profile.stations.cauldron.input.mandrake = 2
 		profile.essence = 100
+		act(engine, profile, "load", { stationId = "cauldron" })
 		act(engine, profile, "brew", { stationId = "cauldron" })
 		local result = advance(engine, profile, START + 10)
 		T.equal(profile.gold, Config.recipes.healing.goldValue)
@@ -506,6 +512,7 @@ return function(T: any)
 	T.test("factory: disposal can recover a line blocked by excess unused ingredients", function()
 		local engine, profile = fresh()
 		profile.essence = 100
+		profile.pipes = true
 		profile.inventory.slime = Config.warehouse.rawCapacity[1]
 		profile.discoveredRecipes.healing = true
 		assign(engine, profile, "garden", "farmer")
@@ -575,7 +582,8 @@ return function(T: any)
 		local engine, profile = fresh()
 		act(engine, profile, "acceptOrder", { orderId = "healing_small" })
 		for _ = 1, Config.orders.healing_small.count + 2 do manualHealing(engine, profile) end
-		T.equal(count(profile.questStock, "healing"), Config.orders.healing_small.count)
+		T.equal(count(profile.stations.cauldron.questQueue, "healing"), Config.orders.healing_small.count)
+		T.equal(count(profile.questStock, "healing"), 0)
 		T.equal(profile.gold, Config.recipes.healing.goldValue * 2)
 		T.equal(count(profile.inventory, "healing"), 0)
 	end)
@@ -585,6 +593,9 @@ return function(T: any)
 		act(engine, profile, "acceptOrder", { orderId = "healing_small" })
 		T.falsy(engine.act(profile, "claimOrder", {}, START))
 		for _ = 1, Config.orders.healing_small.count do manualHealing(engine, profile) end
+		T.falsy(engine.act(profile, "claimOrder", {}, profile.lastSimulatedAt))
+		assign(engine, profile, "logistics", "slime")
+		advance(engine, profile, profile.lastSimulatedAt + 30)
 		act(engine, profile, "claimOrder", {})
 		T.equal(profile.gold, Config.orders.healing_small.rewardGold)
 		T.equal(profile.order, nil)

@@ -33,7 +33,7 @@ local function label(parent, text, height)
 end
 local function button(parent, text, callback)
 	local value = Instance.new("TextButton")
-	value.Size = UDim2.new(1, -8, 0, 42)
+	value.Size = UDim2.new(1, -8, 0, 44)
 	value.BackgroundColor3, value.TextColor3 = SURFACE, TEXT
 	value.Font, value.TextSize, value.TextWrapped = Enum.Font.GothamMedium, 14, true
 	value.Text, value.Parent = text, parent
@@ -43,7 +43,13 @@ local function button(parent, text, callback)
 end
 local function send(action, payload)
 	if not state or not state.writable then return end
-	Action:FireServer(action, payload or {})
+	payload = payload or {}
+	if action == "buy" then
+		local id = payload.upgradeId
+		payload.expectedLevel = id == "pipes" and (state.pipes and 1 or 0)
+			or (id == "warehouse" and state.warehouseLevel or state.stations[id].level)
+	end
+	Action:FireServer(action, payload)
 end
 local function names(items)
 	local parts = {}
@@ -61,7 +67,7 @@ hud.BackgroundColor3, hud.Parent = BG, gui
 local balance = label(hud, "Загрузка профиля…", 36)
 balance.Position, balance.Size = UDim2.fromOffset(12, 0), UDim2.new(1, -130, 0, 36)
 balance.TextSize = 17
-local status = label(hud, "M0 · серверная фабрика", 32)
+local status = label(hud, "M1 · фабрика", 32)
 status.Position, status.Size = UDim2.fromOffset(12, 38), UDim2.new(1, -24, 0, 32)
 status.TextSize = 11
 local toggle = button(hud, "Фабрика", function() end)
@@ -74,31 +80,71 @@ toast.BackgroundColor3, toast.BackgroundTransparency = BG, 0.15
 round(toast)
 
 local panel = Instance.new("Frame")
-panel.AnchorPoint, panel.Position = Vector2.new(0.5, 1), UDim2.new(0.5, 0, 1, -12)
+panel.AnchorPoint, panel.Position = Vector2.new(0.5, 0), UDim2.new(0.5, 0, 0, 146)
+panel.Visible = false
 panel.Size, panel.BackgroundColor3 = UDim2.new(0.94, 0, 0.67, 0), BG
 panel.Parent = gui
 round(panel)
 local sizeLimit = Instance.new("UISizeConstraint")
-sizeLimit.MinSize, sizeLimit.MaxSize, sizeLimit.Parent = Vector2.new(280, 260), Vector2.new(560, 640), panel
+sizeLimit.MinSize, sizeLimit.MaxSize, sizeLimit.Parent = Vector2.new(0, 0), Vector2.new(560, 700), panel
 local title = label(panel, "Управление фабрикой", 34)
 title.Position = UDim2.fromOffset(12, 4)
+title.Size = UDim2.new(1, -64, 0, 34)
 local close = button(panel, "×", function() panel.Visible = false end)
-close.Size, close.Position = UDim2.fromOffset(32, 30), UDim2.new(1, -40, 0, 4)
+close.Size, close.Position = UDim2.fromOffset(44, 44), UDim2.new(1, -48, 0, 0)
 toggle.Activated:Connect(function() panel.Visible = not panel.Visible end)
 
-local tabs = Instance.new("Frame")
-tabs.BackgroundTransparency, tabs.Size = 1, UDim2.new(1, -16, 0, 80)
+local tabs = Instance.new("ScrollingFrame")
+tabs.BorderSizePixel, tabs.ScrollBarThickness = 0, 2
+tabs.AutomaticCanvasSize, tabs.CanvasSize = Enum.AutomaticSize.X, UDim2.new()
+tabs.ScrollingDirection = Enum.ScrollingDirection.X
+tabs.BackgroundTransparency, tabs.Size = 1, UDim2.new(1, -16, 0, 48)
 tabs.Position, tabs.Parent = UDim2.fromOffset(8, 42), panel
-local grid = Instance.new("UIGridLayout")
-grid.CellSize, grid.CellPadding, grid.Parent = UDim2.new(0.25, -4, 0, 34), UDim2.fromOffset(4, 4), tabs
+local grid = Instance.new("UIListLayout")
+grid.FillDirection, grid.Padding, grid.Parent = Enum.FillDirection.Horizontal, UDim.new(0, 4), tabs
 
 local contents = Instance.new("ScrollingFrame")
-contents.Position, contents.Size = UDim2.fromOffset(12, 126), UDim2.new(1, -24, 1, -138)
+contents.Position, contents.Size = UDim2.fromOffset(12, 94), UDim2.new(1, -24, 1, -106)
 contents.BackgroundTransparency, contents.BorderSizePixel, contents.ScrollBarThickness = 1, 0, 4
 contents.AutomaticCanvasSize, contents.CanvasSize = Enum.AutomaticSize.Y, UDim2.new()
 contents.Parent = panel
 
+local guide = button(gui, "Обучение · загрузка…", function() end)
+guide.BackgroundColor3 = ACCENT
 local draw, refresh
+
+local function resize()
+	local camera = workspace.CurrentCamera
+	if not camera then return end
+	local viewport = camera.ViewportSize
+	local landscape = viewport.X > viewport.Y
+	if landscape then
+		hud.Size, hud.Position = UDim2.new(0.44, -16, 0, 88), UDim2.fromOffset(8, 8)
+		guide.Position, guide.Size = UDim2.fromOffset(8, 100), UDim2.new(0.44, -16, 0, 44)
+		panel.AnchorPoint, panel.Position = Vector2.new(1, 0), UDim2.new(1, -8, 0, 8)
+		panel.Size = UDim2.new(0.55, 0, 0, math.max(180, viewport.Y - 150))
+	else
+		hud.Size, hud.Position = UDim2.new(1, -16, 0, 88), UDim2.fromOffset(8, 8)
+		guide.Position, guide.Size = UDim2.fromOffset(8, 100), UDim2.new(1, -16, 0, 44)
+		panel.AnchorPoint, panel.Position = Vector2.new(0.5, 0), UDim2.new(0.5, 0, 0, 152)
+		panel.Size = UDim2.new(1, -16, 0, math.max(180, viewport.Y - 342))
+	end
+	toast.Position, toast.Size = UDim2.new(0, 16, 0, 48), UDim2.new(landscape and 0.44 or 1, -32, 0, 44)
+	toast.Visible = false
+end
+local cameraConnection
+local function watchCamera()
+	if cameraConnection then cameraConnection:Disconnect() end
+	if workspace.CurrentCamera then cameraConnection = workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(resize) end
+	resize()
+end
+workspace:GetPropertyChangedSignal("CurrentCamera"):Connect(watchCamera)
+watchCamera()
+guide.Activated:Connect(function()
+	if not state then return end
+	selected, petPicker, panel.Visible = state.tutorial.target, false, true
+	draw()
+end)
 local function bindText(widget, getter)
 	table.insert(bindings, function() widget.Text = getter() end)
 end
@@ -137,6 +183,8 @@ draw = function()
 		return object
 	end
 	if not state then text("Ожидаем безопасную загрузку профиля…"); return end
+	local tutorial = text("", 96)
+	bindText(tutorial, function() return "Обучение " .. state.tutorial.step .. "/" .. state.tutorial.total .. " · " .. state.tutorial.text end)
 	if petPicker then
 		title.Text = "Назначить рабочего"
 		action("Назад", function() petPicker = false; draw() end)
@@ -164,14 +212,19 @@ draw = function()
 			petPicker = false
 			draw()
 		end)
+		refresh()
 		return
 	end
 	if selected == "warehouse" then
 		title.Text = "Склад"
-		local inventory = text("", 70)
-		bindText(inventory, function() return "Ингредиенты: " .. names(state.inventory) end)
+		local inventory = text("", 100)
+		bindText(inventory, function()
+			local s = state.storage
+			return "Сырьё: " .. s.raw .. "/" .. s.rawCapacity .. " · Полуфабрикаты: " .. s.intermediate .. "/" .. s.intermediateCapacity
+				.. "\nИнгредиенты: " .. names(state.inventory)
+		end)
 		local quest = text("", 50)
-		bindText(quest, function() return "Под заказы: " .. names(state.questStock) end)
+		bindText(quest, function() return "Квестовый склад: " .. state.orderProgress.delivered .. "/" .. state.orderProgress.capacity .. " · в пути: " .. state.orderProgress.travelling .. " · в лотках: " .. state.orderProgress.queued end)
 		local upgrade = action("", function() send("buy", { upgradeId = "warehouse" }) end)
 		bindText(upgrade, function() return "Расширить склад · " .. tostring(upgradePrice("warehouse") or "MAX") .. " Gold" end)
 		local pipes = action("", function() send("buy", { upgradeId = "pipes" }) end)
@@ -202,10 +255,13 @@ draw = function()
 		text("Обычные зелья сразу продаются. Для склада и заказов не требуется нажимать «Забрать офлайн-награду».", 65)
 	elseif selected == "orders" then
 		title.Text = "Заказы NPC"
-		local current = text("", 64)
+		local current = text("", 100)
 		bindText(current, function()
 			if not state.order then return "Нет активного заказа. Выбери один из доступных контрактов." end
-			return "Активный заказ: " .. tostring(state.order.id or state.order.orderId or "NPC") .. "\nРезерв: " .. names(state.questStock)
+			local p = state.orderProgress
+			return "Заказ: " .. state.order.id .. " · " .. state.order.rewardGold .. " Gold"
+				.. "\nУ котла: " .. p.queued .. " · В пути: " .. p.travelling .. " · Доставлено: " .. p.delivered .. "/" .. state.order.count
+				.. "\nДо срока: " .. p.remainingSeconds .. " сек. · Резерв всего: " .. p.reserved
 		end)
 		local ids = {}
 		for id in pairs(Config.orders) do table.insert(ids, id) end
@@ -220,6 +276,11 @@ draw = function()
 		local stationId = selected
 		local definition = Config.stations[stationId]
 		title.Text = definition.name
+		local production = text("", 76)
+		bindText(production, function()
+			local info = state.production[stationId]
+			return info.text .. "\nЦикл: " .. math.floor(info.progress * 100) .. "% · не хватает: " .. names(info.missingInputs)
+		end)
 		local info = text("", 70)
 		bindText(info, function()
 			local station = getStation()
@@ -229,16 +290,28 @@ draw = function()
 			return "Уровень: " .. station.level .. "\nРабочий: " .. work
 		end)
 		if stationId == "crystal" then
-			action("Собрать эссенцию +1", function() send("click", {}) end)
+			action("Собрать эссенцию +" .. Config.manualClickEssence, function() send("click", {}) end)
 		elseif stationId == "garden" or stationId == "mine" then
+			local output = text("", 44)
+			bindText(output, function() return "У источника: " .. names(getStation().output) end)
 			action("Собрать вручную", function() send("harvest", { stationId = stationId }) end)
 			action("Забрать выращенное / добытое", function() send("collect", { stationId = stationId }) end)
+		elseif stationId == "logistics" then
+			local cargo = text("", 76)
+			bindText(cargo, function()
+				local job = getStation().job
+				if not job then return "Груза нет. Перевозчик доставляет сырьё и квестовые ящики; жидкости идут по трубам." end
+				local source = job.sourceStationId and Config.stations[job.sourceStationId].name or "Склад"
+				local target = job.destinationKind == "questStock" and "Квестовый склад" or (job.destinationStationId and Config.stations[job.destinationStationId].name or "Склад")
+				return Config.items[job.itemId].name .. " × " .. job.amount .. "\n" .. source .. " → " .. target .. "\nСнятие рабочего приостанавливает груз."
+			end)
 		elseif stationId == "cauldron" or stationId == "distillery" then
 			local recipe = text("", 48)
 			bindText(recipe, function()
 				local station = getStation()
 				local def = Config.recipes[station.recipeId]
-				return def and (def.name .. " · " .. names(def.inputs) .. " · Essence: " .. def.essenceCost) or "Рецепт не выбран"
+				return def and (def.name .. " · " .. names(def.inputs) .. " · Essence: " .. def.essenceCost
+					.. " · Выпуск: " .. def.quantity .. " · Продажа: " .. def.goldValue .. " Gold") or "Рецепт не выбран"
 			end)
 			for _, recipeId in ipairs({ "healing", "fire_extract", "rage" }) do
 				local def = Config.recipes[recipeId]
@@ -246,16 +319,18 @@ draw = function()
 					action("Рецепт: " .. def.name, function() send("setRecipe", { stationId = stationId, recipeId = recipeId }) end)
 				end
 			end
-			action("Загрузить ингредиенты со склада", function() send("load", { stationId = stationId }) end)
+			action("Загрузить ингредиенты и Essence", function() send("load", { stationId = stationId }) end)
 			action("Сварить одну партию", function() send("brew", { stationId = stationId }) end)
 			local auto = action("", function() send("setAuto", { stationId = stationId, enabled = not getStation().auto }) end)
 			bindText(auto, function() return "Автоварка: " .. (getStation().auto and "ВКЛ" or "ВЫКЛ") end)
 			action("Забрать полуфабрикаты", function() send("collect", { stationId = stationId }) end)
-			local buffers = text("", 72)
+			local buffers = text("", 108)
 			bindText(buffers, function()
 				local station = getStation()
 				local progress = station.job and (" · работа: " .. math.floor(station.progress or 0) .. " / " .. tostring(station.job.duration)) or " · ожидание"
-				return "Вход: " .. names(station.input) .. "\nВыход: " .. names(station.output) .. progress
+				return "Бак Essence: " .. station.essence .. "/" .. Config.essenceBufferCapacity
+					.. "\nВход: " .. names(station.input) .. "\nВыход: " .. names(station.output) .. progress
+					.. "\nЯщики у котла: " .. state.production[stationId].queued .. "/" .. Config.questQueueCapacity
 			end)
 		end
 		action("Назначить фамильяра", function() petPicker = true; draw() end)
@@ -270,11 +345,21 @@ refresh = function()
 	if not state then return end
 	balance.Text = "Gold: " .. math.floor(state.gold) .. "  |  Essence: " .. math.floor(state.essence)
 	status.Text = (state.mode == "STUDIO_MEMORY" and "STUDIO: прогресс НЕ сохраняется после Stop" or "DataStore: сохранение включено") .. (state.writable and "" or " · запись приостановлена")
+	guide.Text = state.tutorial.complete and "Обучение завершено · Заказы" or ("Шаг " .. state.tutorial.step .. "/" .. state.tutorial.total .. " · " .. (Config.stations[state.tutorial.target] and Config.stations[state.tutorial.target].name or state.tutorial.target) .. " · Подсказка")
 	for _, update in ipairs(bindings) do update() end
 end
 
 for _, tab in ipairs({ {"crystal", "Кристалл"}, {"garden", "Грядка"}, {"mine", "Шахта"}, {"distillery", "Экстракт"}, {"cauldron", "Котёл"}, {"logistics", "Перевозчик"}, {"warehouse", "Склад"}, {"orders", "Заказы"} }) do
-	button(tabs, tab[2], function() selected, petPicker = tab[1], false; draw() end)
+	local tabButton = button(tabs, tab[2], function() selected, petPicker = tab[1], false; draw() end)
+	tabButton.Size = UDim2.fromOffset(104, 44)
+end
+
+local toastGeneration = 0
+local function showToast(message, duration)
+	toastGeneration += 1
+	local generation = toastGeneration
+	toast.Text, toast.Visible = message, true
+	task.delay(duration or 4, function() if generation == toastGeneration then toast.Visible = false end end)
 end
 
 State.OnClientEvent:Connect(function(value)
@@ -283,10 +368,12 @@ State.OnClientEvent:Connect(function(value)
 	if first then draw() else refresh() end
 	if not hasReport and value.offlineReport and value.offlineReport.processedSeconds > 5 then
 		hasReport = true
-		toast.Text = "С возвращением! Учтено " .. value.offlineReport.processedSeconds .. " сек. работы. Gold: +" .. math.floor(value.offlineReport.goldEarned or 0) .. ". Уже сохранено."
+		showToast("С возвращением! Учтено " .. value.offlineReport.processedSeconds .. " сек. работы. Gold: +" .. math.floor(value.offlineReport.goldEarned or 0) .. ". Уже сохранено.", 8)
 	end
 end)
-Notice.OnClientEvent:Connect(function(value) toast.Text = value.text end)
+Notice.OnClientEvent:Connect(function(value)
+	showToast(value.text)
+end)
 Focus.OnClientEvent:Connect(function(stationId)
 	if Config.stations[stationId] or stationId == "warehouse" or stationId == "orders" then
 		selected, petPicker, panel.Visible = stationId, false, true

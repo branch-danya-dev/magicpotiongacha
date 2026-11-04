@@ -2,6 +2,7 @@
 -- Greybox presentation only. Resource accounting never depends on physics or models.
 local World = {}
 World.__index = World
+local Access = require(game:GetService("ReplicatedStorage").PotionTycoon.Shared.Access)
 
 local OFFSETS = {
 	crystal = Vector3.new(0, 3, -2),
@@ -70,7 +71,7 @@ function World.new(config, count, callbacks)
 	self.root = root
 	part(root, "ForestFloor", Vector3.new(420, 1, 250), Vector3.new(0, -1, 0), Color3.fromRGB(40, 51, 44))
 	local bazaar = part(root, "Bazaar", Vector3.new(350, 0.3, 24), Vector3.new(0, 0, 0), Color3.fromRGB(91, 87, 97))
-	billboard(bazaar, "МАГИЧЕСКИЙ БАЗАР · M0\nТрейдинг ещё не включён", Vector3.new(0, 8, 0))
+	billboard(bazaar, "МАГИЧЕСКИЙ БАЗАР · M1\nЗаказы и производство", Vector3.new(0, 8, 0))
 	for index = 1, count do
 		local column = (index - 1) % 4
 		local row = math.floor((index - 1) / 4)
@@ -115,7 +116,8 @@ function World.new(config, count, callbacks)
 				-- Spend Gold only after an explicit keyboard/gamepad/touch activation.
 				local purchasePrompt = prompt(pad, "Купить улучшение", title, function(player)
 					if plot.owner ~= player then return end
-					callbacks.action(player, "buy", { upgradeId = id })
+					local level = pad:GetAttribute("ExpectedLevel")
+					if level ~= nil then callbacks.action(player, "buy", { upgradeId = id, expectedLevel = level }) end
 				end)
 				purchasePrompt.MaxActivationDistance = 8
 				purchasePrompt.HoldDuration = 0.5
@@ -150,7 +152,15 @@ function World:release(player)
 	for _, anchor in pairs(plot.anchors) do
 		anchor:SetAttribute("WorkerId", nil)
 		anchor:SetAttribute("WorkerName", nil)
+		anchor:SetAttribute("Working", false)
+		anchor:SetAttribute("HaulFrom", nil)
+		anchor:SetAttribute("HaulTo", nil)
+		anchor:SetAttribute("HaulProgress", nil)
+		anchor:SetAttribute("CargoAmount", nil)
+		anchor:SetAttribute("CargoItem", nil)
+		anchor:SetAttribute("QueuedCrates", nil)
 	end
+	for _, pad in pairs(plot.pads) do pad:SetAttribute("ExpectedLevel", nil) end
 end
 
 function World:inRange(player, action, payload, maxDistance)
@@ -160,19 +170,16 @@ function World:inRange(player, action, payload, maxDistance)
 	local hrp = character and character:FindFirstChild("HumanoidRootPart")
 	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
 	if not hrp or not humanoid or humanoid.Health <= 0 then return false end
-	local id = payload.stationId
-	if action == "click" then id = "crystal"
-	elseif action == "buy" then id = payload.upgradeId == "pipes" and "warehouse" or payload.upgradeId
-	elseif action == "hire" or action == "discard" then id = "warehouse"
-	elseif action == "acceptOrder" or action == "claimOrder" then id = "orders" end
+	local id = Access.target(action, payload)
 	local anchor = plot.anchors[id]
-	return anchor ~= nil and (hrp.Position - anchor.Position).Magnitude <= maxDistance
+	return anchor ~= nil and Access.allowed(plot.owner == player, humanoid.Health > 0, (hrp.Position - anchor.Position).Magnitude, maxDistance)
 end
 
 function World:update(player, profile)
 	local plot = self.owners[player.UserId]
 	if not plot or plot.owner ~= player then return end
 	plot.ownerLabel.Text = player.DisplayName .. " · Rebirth " .. profile.rebirths
+	local production = self.callbacks.production(profile)
 	for id, station in pairs(profile.stations) do
 		local anchor = plot.anchors[id]
 		if anchor then
@@ -183,12 +190,19 @@ function World:update(player, profile)
 			local pet = station.workerId and profile.pets[station.workerId]
 			anchor:SetAttribute("WorkerName", pet and pet.name)
 			anchor:SetAttribute("WorkerSpecies", pet and pet.species)
-			anchor:SetAttribute("Working", station.job ~= nil or pet ~= nil)
+			local state = production[id]
+			anchor:SetAttribute("Working", state.code == "working")
+			anchor:SetAttribute("ProductionStatus", state.code)
+			anchor:SetAttribute("Essence", station.essence)
+			anchor:SetAttribute("QueuedCrates", state.queued)
 			if id == "logistics" then
 				local job = station.job
 				if job and job.kind == "haul" then
 					local from = job.sourceKind == "inventory" and plot.anchors.warehouse or plot.anchors[job.sourceStationId]
-					local target = job.destinationKind == "inventory" and plot.anchors.warehouse or plot.anchors[job.destinationStationId]
+					local target = job.destinationKind == "questStock" and plot.anchors.orders
+						or (job.destinationKind == "inventory" and plot.anchors.warehouse or plot.anchors[job.destinationStationId])
+					anchor:SetAttribute("CargoAmount", job.amount)
+					anchor:SetAttribute("CargoItem", job.itemId)
 					anchor:SetAttribute("HaulFrom", from and from.Position)
 					anchor:SetAttribute("HaulTo", target and target.Position)
 					anchor:SetAttribute("HaulProgress", math.clamp(station.progress / job.duration, 0, 1))
@@ -196,15 +210,22 @@ function World:update(player, profile)
 					anchor:SetAttribute("HaulFrom", nil)
 					anchor:SetAttribute("HaulTo", nil)
 					anchor:SetAttribute("HaulProgress", nil)
+					anchor:SetAttribute("CargoAmount", nil)
+					anchor:SetAttribute("CargoItem", nil)
 				end
 			end
-			plot.labels[id].Text = definition.name .. " · ур. " .. station.level .. (pet and ("\n" .. pet.name) or "\nРабочее место свободно")
+			plot.labels[id].Text = definition.name .. " · ур. " .. station.level .. "\n" .. state.text
+			plot.pads[id]:SetAttribute("ExpectedLevel", station.level)
 			local cost = definition.upgradeCosts[station.level + 1]
 			plot.padLabels[id].Text = cost and ("Улучшить: " .. cost .. " Gold") or "Максимальный уровень"
 		end
 	end
 	local warehouseCost = self.config.warehouse.upgradeCosts[(profile.warehouseLevel or 0) + 1]
+	plot.pads.warehouse:SetAttribute("ExpectedLevel", profile.warehouseLevel)
 	plot.padLabels.warehouse.Text = warehouseCost and ("Склад: " .. warehouseCost .. " Gold") or "Склад MAX"
+	local order = self.callbacks.orderProgress(profile)
+	plot.labels.orders.Text = profile.order and ("Заказ NPC: " .. order.delivered .. "/" .. profile.order.count
+		.. "\nУ котла: " .. order.queued .. " · В пути: " .. order.travelling .. " · " .. order.remainingSeconds .. " сек.") or "Доска заказов · выбери контракт"
 end
 
 return World

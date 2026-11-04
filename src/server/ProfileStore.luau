@@ -72,6 +72,7 @@ function ProfileStore.new(options)
 	assert(type(options.now) == "function", "clock_required")
 	assert(type(options.sleep) == "function", "sleep_required")
 	assert(type(options.validate) == "function", "validator_required")
+	assert(options.migrate == nil or type(options.migrate) == "function", "invalid_migrator")
 	assert(type(options.owner) == "string" and #options.owner > 0 and #options.owner <= 256, "unique_owner_required")
 	local leaseSeconds = options.leaseSeconds or 120
 	local margin = options.safetyMarginSeconds or math.min(15, leaseSeconds / 4)
@@ -88,6 +89,7 @@ function ProfileStore.new(options)
 		_nowFunction = options.now,
 		_sleep = options.sleep,
 		_validate = options.validate,
+		_migrate = options.migrate,
 		_owner = options.owner,
 		_leaseSeconds = leaseSeconds,
 		_safetyMargin = margin,
@@ -108,7 +110,7 @@ function ProfileStore:_now()
 	return value
 end
 
-function ProfileStore:_snapshot(profile, expectedUserId)
+function ProfileStore:_snapshot(profile, expectedUserId, allowMigration)
 	if type(profile) ~= "table" then
 		return nil, "invalid_profile"
 	end
@@ -119,6 +121,12 @@ function ProfileStore:_snapshot(profile, expectedUserId)
 	if expectedUserId ~= nil and snapshot.userId ~= nil and snapshot.userId ~= expectedUserId then
 		return nil, "profile_user_mismatch"
 	end
+	if allowMigration and self._migrate then
+		local migrated, result = pcall(self._migrate, snapshot)
+		if not migrated or type(result) ~= "table" then return nil, "profile_migration_failed" end
+		-- Recheck serialization and identity after migration; never trust its output.
+		return self:_snapshot(result, expectedUserId, false)
+	end
 	local checked, valid, reason = pcall(self._validate, snapshot)
 	if not checked or valid ~= true then
 		return nil, "invalid_profile" .. (type(reason) == "string" and ":" .. reason or "")
@@ -126,7 +134,7 @@ function ProfileStore:_snapshot(profile, expectedUserId)
 	return snapshot
 end
 
-function ProfileStore:_recordValid(record, expectedUserId)
+function ProfileStore:_recordValid(record, expectedUserId, allowMigration)
 	if type(record) ~= "table" or record.schemaVersion ~= RECORD_VERSION then
 		return false, "unsupported_record_schema"
 	end
@@ -146,11 +154,11 @@ function ProfileStore:_recordValid(record, expectedUserId)
 	) then
 		return false, "invalid_record_lease"
 	end
-	local snapshot, reason = self:_snapshot(record.profile, expectedUserId)
+	local snapshot, reason = self:_snapshot(record.profile, expectedUserId, allowMigration)
 	if not snapshot then
 		return false, reason
 	end
-	return true
+	return true, nil, snapshot
 end
 
 function ProfileStore:_operationId(key, operation)
@@ -269,7 +277,7 @@ function ProfileStore:load(userId, createProfileFn)
 					lastOperationId = operationId,
 				}
 			end
-			local valid, recordReason = self:_recordValid(current, userId)
+			local valid, recordReason, migratedProfile = self:_recordValid(current, userId, true)
 			if not valid then
 				return nil, recordReason
 			end
@@ -282,7 +290,7 @@ function ProfileStore:load(userId, createProfileFn)
 			end
 			return {
 				schemaVersion = RECORD_VERSION,
-				profile = copy(current.profile),
+				profile = migratedProfile,
 				lease = { owner = self._owner, expiresAt = now + self._leaseSeconds },
 				revision = current.revision + 1,
 				lastOperationId = operationId,

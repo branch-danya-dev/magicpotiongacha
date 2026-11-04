@@ -25,6 +25,9 @@ return function(T)
 		end
 		local function intent(action, payload)
 			waitFor(1)
+			if action == "buy" then
+				payload.expectedLevel = payload.upgradeId == "pipes" and (profile.pipes and 1 or 0) or profile.stations[payload.upgradeId].level
+			end
 			local accepted, reason = gate:check(profile.userId, action, payload, now)
 			T.truthy(accepted, reason)
 			local ok, message = engine.act(profile, action, payload, now)
@@ -41,6 +44,15 @@ return function(T)
 		waitFor(Config.recipes.healing.duration)
 		T.equal(profile.gold, 14)
 		T.truthy(profile.discoveredRecipes.healing)
+		-- M1: earn the early pipes through a second manual sale; no seeded balance.
+		for _ = 1, 3 do intent("click", {}) end
+		intent("harvest", { stationId = "garden" })
+		waitFor(Config.manualHarvestCooldown)
+		intent("harvest", { stationId = "garden" })
+		intent("load", { stationId = "cauldron" })
+		intent("brew", { stationId = "cauldron" })
+		waitFor(Config.recipes.healing.duration)
+		intent("buy", { upgradeId = "pipes" })
 		for station, id in pairs({ garden = "starter_farmer", logistics = "starter_slime", cauldron = "starter_brewer" }) do
 			intent("assign", { stationId = station, petId = "-1:" .. id })
 		end

@@ -18,6 +18,8 @@ jobs:
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '22'
@@ -26,9 +28,11 @@ jobs:
       - name: Compile, analyze, test and build Roblox place
         run: npm test
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
         with:
-          name: PotionTycoon-${{ matrix.os }}-${{ github.sha }}
+          name: PotionTycoon-${{ matrix.os }}-${{ github.event.pull_request.head.sha || github.sha }}
           path: |
             build/PotionTycoon.rbxlx
             build/sourcemap.json
+            build/verification.log
           if-no-files-found: error
