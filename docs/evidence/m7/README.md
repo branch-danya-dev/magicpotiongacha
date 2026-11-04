@@ -14,21 +14,21 @@ same contextual billboard selection used by the actual environment controller.
 
 | State / view | Capture |
 | --- | --- |
-| Day / overview | [01](01-day-overview.png) |
-| Golden sunset / overview | [02](02-sunset-overview.png) |
-| Soft night / overview | [03](03-night-overview.png) |
-| Light rain / overview | [04](04-rain-overview.png) |
-| Dawn / overview | [05](05-dawn-overview.png) |
-| Day / spawn | [06](06-day-spawn.png) |
-| Day / Bazaar framing | [07](07-day-bazaar.png) |
-| Day / spawn / contextual annotations | [08](08-day-spawn-annotations-audit.png) |
-| Day / Bazaar / QA-closed notice | [09](09-day-bazaar-annotations-audit.png) |
-| Sunset / overview / contextual annotations | [10](10-sunset-labels.png) |
+| Day / overview | [01](01-day-overview.jpg) |
+| Golden sunset / overview | [02](02-sunset-overview.jpg) |
+| Soft night / overview | [03](03-night-overview.jpg) |
+| Light rain / overview | [04](04-rain-overview.jpg) |
+| Dawn / overview | [05](05-dawn-overview.jpg) |
+| Day / spawn | [06](06-day-spawn.jpg) |
+| Day / Bazaar framing | [07](07-day-bazaar.jpg) |
+| Day / spawn / contextual annotations | [08](08-day-spawn-annotations-audit.jpg) |
+| Day / Bazaar / QA-closed notice | [09](09-day-bazaar-annotations-audit.jpg) |
+| Sunset / overview / contextual annotations | [10](10-sunset-labels.jpg) |
 
-![Day](01-day-overview.png)
-![Sunset](02-sunset-overview.png)
-![Night](03-night-overview.png)
-![Rain](04-rain-overview.png)
+![Day](01-day-overview.jpg)
+![Sunset](02-sunset-overview.jpg)
+![Night](03-night-overview.jpg)
+![Rain](04-rain-overview.jpg)
 
 The isolated harness constructs the existing eight logical plots and paints only
 one. The server verified 358 decoration Parts, anchored/noncolliding/nontouchable/

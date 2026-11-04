@@ -17,15 +17,15 @@
     "src/server/World.luau": "4da92128dc9eaef3a0f1113694e8f9cdd1cbae859ee467a72d99a6e26602a79e"
   },
   "images": {
-    "01-day-overview.png": "1e45c46737cdb131bc969aeea80ff3a5ec751e347f38a183aa7f5a2a768689ba",
-    "02-sunset-overview.png": "3e57690a69e3bc457bd782e6ec5a9ead2536fdec68091b1701266447266ea3da",
-    "03-night-overview.png": "ce9639ed3b29f54bf0a04d1180ee3de6297a7180b9ada54cd69100ecde210bdf",
-    "04-rain-overview.png": "8552e56f77fb9a0722c488103b542c122abb57105b0ea8e3ca88bd52b55434fa",
-    "05-dawn-overview.png": "decd31ae098957371d8f48767052f5ddabbbce5ba45e19be401dc08e50a14035",
-    "06-day-spawn.png": "dbc8b378b78610cf7384b2265e3b2bfdf505f8a0f579e43e08ace18d2ed56a1f",
-    "07-day-bazaar.png": "8ee9ee520f515d8a1719ef36a2b5e056157ba084c38c6ea2b4c306d55598479c",
-    "08-day-spawn-annotations-audit.png": "e982f72e31ef66946705ec8523ca85c15388f48001a5780542f6192d97318d52",
-    "09-day-bazaar-annotations-audit.png": "38e2b4f643ce7254b3f1f67a8065d6e7aa4e3d9cd101c1899396660b934ce88f",
-    "10-sunset-labels.png": "3f657eb61d0ccf222cc42bc58508a074dd75e8bceffff59e706af3b2aa3bf166"
+    "01-day-overview.jpg": "1e45c46737cdb131bc969aeea80ff3a5ec751e347f38a183aa7f5a2a768689ba",
+    "02-sunset-overview.jpg": "3e57690a69e3bc457bd782e6ec5a9ead2536fdec68091b1701266447266ea3da",
+    "03-night-overview.jpg": "ce9639ed3b29f54bf0a04d1180ee3de6297a7180b9ada54cd69100ecde210bdf",
+    "04-rain-overview.jpg": "8552e56f77fb9a0722c488103b542c122abb57105b0ea8e3ca88bd52b55434fa",
+    "05-dawn-overview.jpg": "decd31ae098957371d8f48767052f5ddabbbce5ba45e19be401dc08e50a14035",
+    "06-day-spawn.jpg": "dbc8b378b78610cf7384b2265e3b2bfdf505f8a0f579e43e08ace18d2ed56a1f",
+    "07-day-bazaar.jpg": "8ee9ee520f515d8a1719ef36a2b5e056157ba084c38c6ea2b4c306d55598479c",
+    "08-day-spawn-annotations-audit.jpg": "e982f72e31ef66946705ec8523ca85c15388f48001a5780542f6192d97318d52",
+    "09-day-bazaar-annotations-audit.jpg": "38e2b4f643ce7254b3f1f67a8065d6e7aa4e3d9cd101c1899396660b934ce88f",
+    "10-sunset-labels.jpg": "3f657eb61d0ccf222cc42bc58508a074dd75e8bceffff59e706af3b2aa3bf166"
   }
 }
