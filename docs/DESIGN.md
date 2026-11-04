@@ -23,13 +23,13 @@ Three layout zones: agriculture to the left of the crystal; processing in the ce
 
 Three offers on the board, one active contract in M0. Production matching an active contract reserves only the required quantity. Extra production exports normally. The player claims a completed contract once. On expiry, already reserved production is exported at normal price rather than silently destroyed. Later dynamic contracts must be feasible using unlocked recipes and must not require a paid rescue.
 
-## Collection, policy and trading — later milestones
+## Collection and policy — M2
 
-Gacha familiars will have per-instance stat variation. Exact distributions, stat inheritance/Fuse arithmetic and economy pacing are balance work, not implied by illustrative numbers. Guaranteed shop alternatives must have a fully specified outcome, including stats; fixing only a species while selling hidden random stats is not the intended alternative.
+M2 implements per-instance uniform integer stat rolls, exact final-species weights, a fixed-stat shop, and deterministic five-parent evolution. [M2_RULES.md](M2_RULES.md) records the configuration, probability law, prices, inheritance formula, policy matrix and measured portable progression. These are provisional balance values. There are no Robux purchases, luck modifiers, paid rerolls or trading endpoints.
 
 Starter workers are granted once. Additional guaranteed workers can be earned without paid randomness. The restricted-user experience must remain a complete progression path. Paid randomness restrictions and paid-item trading permissions must be evaluated for each participant, with item provenance retained through fusion/transfers. Policy lookup failure must not enable a restricted feature.
 
-Initial trading scope: same-server direct familiar/rare-cauldron exchange. No Gold/Essence/raw-ingredient transfer, no player Robux marketplace in this milestone. Strong pets remain constrained by workplace caps. A public auction/plaza is later work, not an assumed feature of Developer Products.
+Future M4 trading scope: same-server direct familiar/rare-cauldron exchange. No Gold/Essence/raw-ingredient transfer or player Robux marketplace is enabled. Strong pets remain constrained by workplace caps. `IsPaidItemTradingAllowed` is recorded only as a platform permission; it does not activate trading.
 
 ## Rebirth — later milestone
 
@@ -70,7 +70,7 @@ be measured by the portable early-game scenarios, not treated as retention data.
   or grants. Out-of-order actions remain credited. Hints select the next missing
   milestone and explain recovery (refill, recipe selection, assignment, disposal).
   First manual Healing, first sale, pipes, passive crystal, first automatic Healing
-  and a claimed NPC order are all required. No M2 acquisition features are enabled.
+  and a claimed NPC order are all required. The M1 guide does not require M2 acquisitions.
 - V1 saves migrate atomically under the existing lease to V2. Prepaid jobs, stock,
   RNG, timers and cargo keep their meaning; old fluid cargo finishes its existing
   route once. No balance reset or repeated starter grants. Existing discovered
@@ -78,7 +78,7 @@ be measured by the portable early-game scenarios, not treated as retention data.
 
 ## Remaining prototype simplifications
 
-- Familiar acquisition is deterministic (starters and fixed Gold hires); no gacha/stat rerolls/Fuse/trading.
+- Familiar collection uses ten greybox species and three evolution families. There are no quest pet rewards, general pet deletion, rerolls, luck/pity modifiers, trading or monetization handlers.
 - Single Mandrake plot, one coal mine, one distillery and one potion cauldron; three equipment levels rather than four fully modeled architectural phases.
 - Simple local worker spheres and greybox scenery; no art acceptance or mobile FPS claim.
 - Prices, rates and probabilities are provisional configuration, not a monetization forecast.

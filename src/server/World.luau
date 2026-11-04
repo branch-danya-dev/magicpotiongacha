@@ -13,6 +13,7 @@ local OFFSETS = {
 	logistics = Vector3.new(0, 2, -27),
 	warehouse = Vector3.new(-8, 2, -30),
 	orders = Vector3.new(10, 2, -30),
+	altar = Vector3.new(27, 2, -32),
 }
 local COLORS = {
 	crystal = Color3.fromRGB(137, 95, 234),
@@ -23,6 +24,7 @@ local COLORS = {
 	logistics = Color3.fromRGB(106, 154, 161),
 	warehouse = Color3.fromRGB(129, 112, 86),
 	orders = Color3.fromRGB(173, 145, 88),
+	altar = Color3.fromRGB(125, 94, 179),
 }
 
 local function part(parent, name, size, position, color)
@@ -92,7 +94,7 @@ function World.new(config, count, callbacks)
 		self.plots[index] = plot
 		for id, offset in pairs(OFFSETS) do
 			local station = config.stations[id]
-			local title = station and station.name or (id == "warehouse" and "Склад" or "Доска заказов")
+			local title = station and station.name or (id == "warehouse" and "Склад" or (id == "altar" and "Алтарь · фамильяры" or "Доска заказов"))
 			local size = id == "crystal" and Vector3.new(4, 6, 4) or Vector3.new(8, 3, 7)
 			local anchor = part(model, id, size, origin + offset, COLORS[id])
 			anchor:SetAttribute("StationId", id)
@@ -190,6 +192,7 @@ function World:update(player, profile)
 			local pet = station.workerId and profile.pets[station.workerId]
 			anchor:SetAttribute("WorkerName", pet and pet.name)
 			anchor:SetAttribute("WorkerSpecies", pet and pet.species)
+			anchor:SetAttribute("WorkerRarity", pet and pet.rarity)
 			local state = production[id]
 			anchor:SetAttribute("Working", state.code == "working")
 			anchor:SetAttribute("ProductionStatus", state.code)

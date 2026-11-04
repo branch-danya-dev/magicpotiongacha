@@ -3,6 +3,7 @@
 local Access = {}
 
 function Access.target(action: string, payload: any): string?
+	if action == "summon" or action == "shopFamiliar" or action == "petLock" or action == "previewFuse" or action == "fuse" or action == "refreshPolicy" then return "altar" end
 	if action == "click" then return "crystal" end
 	if action == "buy" then return payload.upgradeId == "pipes" and "warehouse" or payload.upgradeId end
 	if action == "hire" or action == "discard" then return "warehouse" end

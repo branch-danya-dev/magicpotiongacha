@@ -9,6 +9,11 @@ local Shared = ReplicatedStorage:WaitForChild("PotionTycoon"):WaitForChild("Shar
 local Config = require(Shared.Config)
 local Factory = require(Shared.Factory).new(Config)
 local Protocol = require(Shared.Protocol).new()
+local CollectionModule = require(Shared.Collection)
+local Collection = CollectionModule.new(Config)
+local Policy = require(Shared.Policy)
+local PolicyService = game:GetService("PolicyService")
+local summonRandom = Random.new() -- Separate server-only RNG; never seeded from production/profile/client.
 local ProfileStore = require(script.Parent.ProfileStore)
 local Settings = require(script.Parent.ServerSettings)
 local World = require(script.Parent.World)
@@ -55,6 +60,18 @@ local store = ProfileStore.new({
 local sessions, offlineReports, readyAt, noticesAt = {}, {}, {}, {}
 local closing = false
 local world
+local policy = Policy.new({ now = os.time, ttl = Config.collection.policyTTL, lookup = function(player)
+	local finished, ok, result, abandoned = false, false, nil, false
+	task.spawn(function()
+		local success, value = pcall(PolicyService.GetPolicyInfoForPlayerAsync, PolicyService, player)
+		if not abandoned then ok, result, finished = success, value, true end
+	end)
+	local deadline = os.clock() + Config.collection.policyTimeout
+	while not finished and os.clock() < deadline do task.wait(0.05) end
+	abandoned = true
+	if not finished or not ok then error("policy_unavailable") end
+	return result
+end })
 
 local function active(player)
 	local session = sessions[player.UserId]
@@ -83,10 +100,48 @@ local function snapshot(player)
 		production = Factory.productionState(profile), tutorial = Factory.tutorialState(profile),
 		orderProgress = Factory.orderState(profile), serverTime = profile.lastSimulatedAt,
 		storage = Factory.storageState(profile),
+		collection = { sequence = profile.collection.sequence, lastResult = profile.collection.last and copy(profile.collection.last.result) },
+		collectionPolicy = copy(policy.peek(player)), summonDetails = Collection.details("forest"), familiarShop = copy(Config.familiarShop),
+		fusePreview = copy(sessions[player.UserId].fusePreview),
 		offlineReport = offlineReports[player.UserId],
-		writable = store:isWritable(player.UserId),
+		writable = store:isWritable(player.UserId) and not sessions[player.UserId].collectionBusy,
 		mode = memoryMode and "STUDIO_MEMORY" or "DATASTORE",
 	})
+end
+
+local function handleCollection(player, action, payload)
+	local session = sessions[player.UserId]
+	session.collectionBusy = true
+	snapshot(player)
+	local ok, committed, result = pcall(function()
+		local access = action == "summon" and policy.get(player) or policy.peek(player)
+		-- Policy and a queued save can yield. Recheck identity, position and session.
+		if sessions[player.UserId] ~= session or not active(player) or closing or not store:isWritable(player.UserId)
+			or not world:inRange(player, action, payload, Settings.InteractDistance) then return false, "Session or position changed" end
+		return store:transact(player.UserId, function(candidate)
+			if sessions[player.UserId] ~= session or not active(player) or closing
+				or not world:inRange(player, action, payload, Settings.InteractDistance) then return false, "Session or position changed" end
+			local now = os.time()
+			local report = Factory.advance(candidate, now, false)
+			assert(report.ok, report.error)
+			return Collection.apply(candidate, action, payload, { now = now, policy = access, preview = session.fusePreview,
+				nextInteger = function(lo, hi) return summonRandom:NextInteger(lo, hi) end })
+		end)
+	end)
+	session.collectionBusy = false
+	if sessions[player.UserId] ~= session or not active(player) then return end
+	if not ok or (not committed and not store:isWritable(player.UserId)) then
+		store:invalidate(player.UserId)
+		session.quarantined, session.phase = true, "blocked"
+		player:Kick("Не удалось подтвердить сохранение коллекции. Войдите снова: сохранённая операция будет восстановлена без повторной выдачи.")
+		return
+	end
+	if committed then
+		if action == "fuse" then session.fusePreview = nil end
+		notice(player, result.message, "collection_committed")
+		world:update(player, store:get(player.UserId))
+	else notice(player, tostring(result), "collection_rejected") end
+	snapshot(player)
 end
 
 local function handleAction(player, action, payload)
@@ -99,11 +154,34 @@ local function handleAction(player, action, payload)
 		notice(player, "Профиль загружается или ожидает безопасного сохранения.", "profile_locked")
 		return
 	end
+	if sessions[player.UserId].collectionBusy then notice(player, "Коллекция сохраняется. Дождись результата.", "collection_busy"); return end
 	if not world:inRange(player, action, payload, Settings.InteractDistance) then
 		notice(player, "Подойди к нужному объекту на своём участке.", "out_of_range")
 		return
 	end
+	if CollectionModule.isAction(action) then handleCollection(player, action, payload); return end
+	if action == "refreshPolicy" then
+		local session = sessions[player.UserId]
+		if session.policyRefreshing then return end
+		session.policyRefreshing = true
+		policy.get(player)
+		session.policyRefreshing = false
+		if sessions[player.UserId] == session and active(player) then snapshot(player) end
+		return
+	end
 	local profile = store:get(player.UserId)
+	if action == "previewFuse" then
+		local preview, reason = Collection.preview(profile, payload.petIds)
+		if preview then
+			preview.token, preview.expiresAt = HttpService:GenerateGUID(false), os.time() + Config.collection.policyTTL
+			sessions[player.UserId].fusePreview = preview
+		else
+			sessions[player.UserId].fusePreview = nil
+			notice(player, reason, "fuse_preview_rejected")
+		end
+		snapshot(player)
+		return
+	end
 	local ok, success, message = pcall(function()
 		local result = Factory.advance(profile, os.time(), false)
 		assert(result.ok ~= false, result.error or "simulation_failed")
@@ -155,6 +233,7 @@ end
 local function clearPresentation(session)
 	local player, userId = session.player, session.player.UserId
 	world:release(player)
+	policy.forget(player)
 	if sessions[userId] ~= session then return end
 	Protocol:forget(userId)
 	offlineReports[userId], readyAt[userId], noticesAt[userId] = nil, nil, nil
@@ -254,6 +333,10 @@ local function onPlayer(player)
 		return
 	end
 	session.phase = "active"
+	task.spawn(function()
+		policy.get(player)
+		if sessions[userId] == session and active(player) then snapshot(player) end
+	end)
 	offlineReports[player.UserId] = report
 	world:update(player, profile)
 	snapshot(player)
@@ -290,7 +373,7 @@ task.spawn(function()
 		task.wait(1)
 		for _, player in ipairs(Players:GetPlayers()) do
 			if active(player) then
-				if store:isWritable(player.UserId) then
+				if store:isWritable(player.UserId) and not sessions[player.UserId].collectionBusy then
 					local ok, result = pcall(Factory.advance, store:get(player.UserId), os.time(), false)
 					if not ok or result.ok == false then
 						store:invalidate(player.UserId)
