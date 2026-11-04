@@ -39,16 +39,26 @@ conserved. Manual load/discard and one-turn supply priority remain available.
 
 Phase 3 grants one free unique resonant cauldron with ownership, provenance, lock
 and a capped bonus captured at batch start. Changing equipment requires an idle
-slot. This is preparation for future inventory transfers, with no trade endpoint.
+slot. M4 can transfer the unequipped item without repeating the milestone grant.
 Phase 4 plus first manual Ascension displays completion only: no reset or grant.
 
 ## Collection and policy — M2
 
-M2 implements per-instance uniform integer stat rolls, exact final-species weights, a fixed-stat shop, and deterministic five-parent evolution. [M2_RULES.md](M2_RULES.md) records the configuration, probability law, prices, inheritance formula, policy matrix and measured portable progression. These are provisional balance values. There are no Robux purchases, luck modifiers, paid rerolls or trading endpoints.
+M2 implements per-instance uniform integer stat rolls, exact final-species weights, a fixed-stat shop, and deterministic five-parent evolution. [M2_RULES.md](M2_RULES.md) records the configuration, probability law, prices, inheritance formula, policy matrix and measured portable progression. These are provisional balance values. There are no Robux purchases, luck modifiers or paid rerolls.
 
 Starter workers are granted once. Additional guaranteed workers can be earned without paid randomness. The restricted-user experience must remain a complete progression path. Paid randomness restrictions and paid-item trading permissions must be evaluated for each participant, with item provenance retained through fusion/transfers. Policy lookup failure must not enable a restricted feature.
 
-Future M4 trading scope: same-server direct familiar/rare-cauldron exchange. No Gold/Essence/raw-ingredient transfer or player Robux marketplace is enabled. Strong pets remain constrained by workplace caps. `IsPaidItemTradingAllowed` is recorded only as a platform permission; it does not activate trading.
+M4 implements same-server direct familiar/rare-cauldron exchange behind a disabled
+server release switch. No Gold/Essence/raw-ingredient transfer or player Robux
+marketplace is enabled. Strong pets remain constrained by workplace caps. Both
+users need fresh explicit IsPaidItemTradingAllowed=true even for known-free items;
+the stricter all-item matrix is in [M4_TRADING.md](M4_TRADING.md). Protected starters
+cannot be gifted. Unknown Legacy/historical Fuse ancestry cannot be laundered by
+fusion: new outputs propagate known-origin proof with AND, paid ancestry with OR.
+Existing historical pets remain unchanged and usable in production. A durable
+whole-profile reservation temporarily freezes actions until settlement; neither
+ordinary saves nor a timeout can undo a committed transfer. Public trading remains
+off until real backend, policy, mobile and multiplayer acceptance.
 
 ## Rebirth — later milestone
 
@@ -97,7 +107,7 @@ be measured by the portable early-game scenarios, not treated as retention data.
 
 ## Remaining prototype simplifications
 
-- Familiar collection uses ten greybox species and three evolution families. There are no quest pet rewards, general pet deletion, rerolls, luck/pity modifiers, trading or monetization handlers.
+- Familiar collection uses ten greybox species and three evolution families. There are no quest pet rewards, general pet deletion, rerolls, luck/pity modifiers or monetization handlers. Trading is private-QA-only until live acceptance.
 - Thirteen fixed workplaces, one carrier and six processing slots; four functional phases with replaceable greybox architecture. No free placement or physical bottle simulation.
 - Simple local worker spheres and greybox scenery; no art acceptance or mobile FPS claim.
 - Prices, rates and probabilities are provisional configuration, not a monetization forecast.

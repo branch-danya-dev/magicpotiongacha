@@ -6,9 +6,11 @@ local player = Players.LocalPlayer
 local shared = ReplicatedStorage:WaitForChild("PotionTycoon"):WaitForChild("Shared")
 local Config = require(shared.Config)
 local collectionUI = require(script.Parent.CollectionUI).new(Config)
+local tradeUI = require(script.Parent.TradeUI).new(Config)
 local remotes = ReplicatedStorage.PotionTycoon:WaitForChild("Remotes")
 local Action, State, Notice, Focus = remotes:WaitForChild("Action"), remotes:WaitForChild("State"), remotes:WaitForChild("Notice"), remotes:WaitForChild("Focus")
 local Ready = remotes:WaitForChild("Ready")
+local TradeState = remotes:WaitForChild("TradeState")
 
 local gui = Instance.new("ScreenGui")
 gui.Name, gui.ResetOnSpawn = "PotionTycoonUI", false
@@ -17,6 +19,7 @@ gui.Parent = player:WaitForChild("PlayerGui")
 
 local BG, SURFACE, TEXT, ACCENT = Color3.fromRGB(22, 26, 34), Color3.fromRGB(42, 48, 61), Color3.fromRGB(237, 239, 246), Color3.fromRGB(119, 91, 195)
 local state, selected, petPicker, hasReport = nil, "crystal", false, false
+local tradeState
 local bindings = {}
 local collectionPending = false
 local pendingGeneration = 0
@@ -47,6 +50,7 @@ local function button(parent, text, callback)
 	return value
 end
 local function send(action, payload)
+	if string.sub(action,1,5)=="trade" then Action:FireServer(action,payload or {}); return end
 	if not state or not state.writable or collectionPending then return end
 	payload = payload or {}
 	if action == "buy" then
@@ -80,7 +84,7 @@ hud.BackgroundColor3, hud.Parent = BG, gui
 local balance = label(hud, "Загрузка профиля…", 36)
 balance.Position, balance.Size = UDim2.fromOffset(12, 0), UDim2.new(1, -130, 0, 36)
 balance.TextSize = 17
-local status = label(hud, "M3 · четыре фазы фабрики", 32)
+local status = label(hud, "M4 · фабрика и магический базар", 32)
 status.Position, status.Size = UDim2.fromOffset(12, 38), UDim2.new(1, -24, 0, 32)
 status.TextSize = 11
 local toggle = button(hud, "Фабрика", function() end)
@@ -195,6 +199,11 @@ draw = function()
 		local object = button(contents, value, callback)
 		object.LayoutOrder = order
 		return object
+	end
+	if selected=="bazaar" then
+		title.Text="Магический базар · обмен"
+		tradeUI.draw({value=tradeState,text=text,action=action,send=send,redraw=draw})
+		return
 	end
 	if not state then text("Ожидаем безопасную загрузку профиля…"); return end
 	local tutorial = text("", 96)
@@ -405,7 +414,7 @@ refresh = function()
 	for _, update in ipairs(bindings) do update() end
 end
 
-local tabList={{"blueprint","Развитие"}}
+local tabList={{"blueprint","Развитие"},{"bazaar","Обмен"}}
 for _,id in ipairs(Config.stationOrder) do table.insert(tabList,{id,Config.stations[id].name}) end
 for _,tab in ipairs({{"warehouse","Склад"},{"orders","Заказы"},{"altar","Фамильяры"}}) do table.insert(tabList,tab) end
 for _, tab in ipairs(tabList) do
@@ -434,12 +443,22 @@ State.OnClientEvent:Connect(function(value)
 		showToast("С возвращением! Учтено " .. value.offlineReport.processedSeconds .. " сек. работы. Gold: +" .. math.floor(value.offlineReport.goldEarned or 0) .. ". Уже сохранено.", 8)
 	end
 end)
+TradeState.OnClientEvent:Connect(function(value)
+	local previous=tradeState and tradeState.session
+	tradeState=value
+	local current=value.session
+	if current and (not previous or previous.id~=current.id or previous.state~=current.state) then
+		selected,petPicker,panel.Visible="bazaar",false,true
+	end
+	if value.blocked then selected,petPicker,panel.Visible="bazaar",false,true end
+	if selected=="bazaar" then draw() end
+end)
 Notice.OnClientEvent:Connect(function(value)
 	collectionPending = false
 	showToast(value.text)
 end)
 Focus.OnClientEvent:Connect(function(stationId)
-	if Config.stations[stationId] or stationId == "warehouse" or stationId == "orders" or stationId == "altar" or stationId == "blueprint" then
+	if Config.stations[stationId] or stationId == "warehouse" or stationId == "orders" or stationId == "altar" or stationId == "blueprint" or stationId=="bazaar" then
 		selected, petPicker, panel.Visible = stationId, false, true
 		draw()
 	end

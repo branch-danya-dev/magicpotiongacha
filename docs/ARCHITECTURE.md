@@ -1,4 +1,4 @@
-# Architecture — M3
+# Architecture — M4
 
 ## Boundaries
 
@@ -14,6 +14,10 @@
 | `src/shared/Protocol.luau` | Exact request shapes and per-player token buckets | Server only |
 | `src/shared/Access.luau` | Intent target and finite range checks, called with server-owned identity/position | Server only |
 | `src/server/ProfileStore.luau` | Session lease, validation, snapshot writes, retry fencing | One persistent player key |
+| `src/shared/TradeCodec.luau` / `Trading.luau` | Canonical snapshots/SHA-256, validated reserve/apply/clear transitions | Pure model; trusted server coordinator only |
+| `src/shared/TradeSession.luau` | Same-server invitations, exact offer review, both-party consent and post-yield checks | RAM negotiation never transfers ownership |
+| `src/server/TradeJournal.luau` / `TradeCoordinator.luau` | Bounded persistent registry, irreversible decision, two-profile recovery | Journal CAS plus normal profile leases/revisions |
+| `src/server/TradeRuntime.luau` | Player identity, Bazaar proximity, forced policy, admission switch, recovery worker | Roblox server adapter |
 | `src/server/Main.server.luau` | Player lifecycle, ownership/distance checks, simulation and save scheduling | Server |
 | `src/server/World.luau` | Greybox plots, pads, prompts, public visual attributes | Server presentation |
 | `src/client/` | Adaptive controls, notifications, cosmetic familiar proxies | No rewards or economic writes |
@@ -120,6 +124,43 @@ A local session is bound to the actual Player instance, not just its numeric ID.
 
 An unexpected simulation failure invalidates the profile before disconnecting the player. Quarantined memory is never written; the last valid save remains authoritative. A previous immutable snapshot already in flight may finish, but it cannot reopen the quarantined session. See PERSISTENCE.md for the storage adapter's limits.
 
-## Deferred distributed operations
+## Durable two-profile exchange — M4
 
-There is no live trading endpoint, Rebirth reset or Robux purchase handler in M3. Later trading requires durable escrow/journaling, unique operation IDs, crash recovery, both-party confirmation invalidation and item provenance. MemoryStore or an in-memory mutex alone is not a durable transaction. Monetization requires receipt idempotency and actual purchase QA in addition to M2's policy checks. These must not be enabled by adding a client button alone.
+The [ADR](M4_TRADING.md) defines the protocol and its limits. Negotiation follows
+invited → negotiating → both_ready → frozen/recovering → settled/aborted. Offer
+edits reset both users' readiness and explicit confirmations; the server validates
+the full canonical snapshot as well as the SHA-256/version review label.
+
+```mermaid
+stateDiagram-v2
+    [*] --> PREPARING: durable registry + journal
+    PREPARING --> COMMIT: both reserved + fresh final guard
+    PREPARING --> ABORT: coordinator cancellation or expired prepare
+    COMMIT --> SETTLED: both profiles applied
+    ABORT --> SETTLED: both abort barriers applied
+    SETTLED --> COMPLETE: both profiles cleared
+    COMPLETE --> [*]: audit retention + conditional cleanup
+```
+
+V5 adds trade sequence, bounded receipt and optional durable pending marker.
+Prepare freezes the whole profile. Main blocks ordinary actions/ticks; pure
+Factory/Collection/Progression and ordinary ProfileStore transactions also reject
+pending state. Pending recovery occurs before login catch-up or public inventory.
+Normal saves can renew/release an unchanged reservation but cannot erase it.
+`transactTrade` is a trusted internal adapter port, never a client-supplied transform.
+Lease time is checked again inside every UpdateAsync callback after any queue delay.
+
+After COMMIT, apply/clear are idempotent and cannot roll back. Journal snapshots
+retain the transfer data until both profiles are applied and cleared; only then
+are they compacted. An ABORT fences even a never-prepared side against late work.
+Original IDs/stats/ancestry remain; only rare-cauldron ownerId changes. Incoming
+capacity is checked net of outgoing objects. Strong items still use station caps.
+
+The permanent 16×128 registry bounds retained journals and enables background
+recovery without player activity. Normal profile leases protect absent players
+from competing live writers. A full shard stops admission, never evicts pending
+ownership data. Recovery persists when admission is disabled. All operations have
+bounded retries; live platform latency, hot-key throughput and failure acceptance
+remain BLOCKED. TradingEnabled is false by default; explicit activation additionally
+requires Studio or the allowlisted private QA place. Rebirth and Robux purchase
+handlers remain deferred.

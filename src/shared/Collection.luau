@@ -22,7 +22,7 @@ local function fingerprint(action, payload)
 end
 local function count(map) local n = 0; for _ in pairs(map) do n += 1 end; return n end
 local function samePreview(a, b)
-	if not a or not b or a.species ~= b.species or a.paidDerived ~= b.paidDerived then return false end
+	if not a or not b or a.species ~= b.species or a.paidDerived ~= b.paidDerived or a.tradeKnown~=b.tradeKnown then return false end
 	for index, id in ipairs(a.parentIds) do if b.parentIds[index] ~= id then return false end end
 	for skill, value in pairs(a.stats) do if b.stats[skill] ~= value then return false end end
 	return true
@@ -33,6 +33,7 @@ function Collection.new(config)
 	local model = Familiars.new(config)
 	local service = { preview = model.preview, details = model.details }
 	function service.apply(p, action, payload, context)
+		if p.trade and p.trade.pending then return false,"Trade recovery pending" end
 		local valid, reason = Protocol.validate(action, payload)
 		if not actions[action] or not valid then return false, reason or "Unknown collection action" end
 		local key = fingerprint(action, payload)
@@ -45,12 +46,12 @@ function Collection.new(config)
 		if progress.last and context.now - progress.last.at < config.collection.cooldownSeconds then return false, "Collection action is on cooldown" end
 		local pending, consumed, currency, cost = {}, {}, nil, 0
 		local message = "Collection updated"
-		local function create(species, stats, source, paid, parents)
+		local function create(species, stats, source, paid, parents, tradeKnown)
 			local serial = p.nextPetSerial + #pending
 			if serial >= config.maxCount then return false end
 			local id = string.format("%.0f", p.userId) .. ":pet:" .. serial
 			if p.pets[id] then return false end
-			table.insert(pending, model.create(id, species, stats, source, paid, parents))
+			table.insert(pending, model.create(id, species, stats, source, paid, parents, tradeKnown))
 			return true
 		end
 		if action == "summon" then
@@ -81,7 +82,7 @@ function Collection.new(config)
 			if not context.preview or context.preview.token ~= payload.previewToken or context.preview.expiresAt <= context.now
 				or not samePreview(preview, context.preview) then return false, "Preview changed; review the five inputs again" end
 			consumed = preview.parentIds
-			if not create(preview.species, preview.stats, "fuse", preview.paidDerived, consumed) then return false, "Familiar identity conflict" end
+			if not create(preview.species, preview.stats, "fuse", preview.paidDerived, consumed, preview.tradeKnown) then return false, "Familiar identity conflict" end
 			message = "Evolved into " .. preview.name
 		elseif action == "petLock" then
 			if not p.pets[payload.petId] then return false, "Unknown familiar" end

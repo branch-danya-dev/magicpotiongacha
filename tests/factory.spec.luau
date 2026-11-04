@@ -286,6 +286,7 @@ return function(T: any)
 		profile.pets[id].stats.Brewing = 500
 		-- Preserve a strong legacy instance, rather than invent an out-of-range new roll.
 		profile.pets[id].rarity, profile.pets[id].provenance.source = "Legacy", "legacy"
+		profile.pets[id].provenance.tradeKnown = false
 		profile.essence = 100
 		profile.inventory.mandrake = 2
 		assign(engine, profile, "cauldron", "brewer")
@@ -302,6 +303,7 @@ return function(T: any)
 		local id = petId(high, "farmer")
 		high.pets[id].stats.Farming = 500
 		high.pets[id].rarity, high.pets[id].provenance.source = "Legacy", "legacy"
+		high.pets[id].provenance.tradeKnown = false
 		capped.pets[id].stats.Farming = Config.stations.garden.statCaps[1]
 		assign(engine, high, "garden", "farmer")
 		assign(engine, capped, "garden", "farmer")

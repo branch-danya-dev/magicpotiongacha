@@ -2,6 +2,73 @@
 
 CLI/CI passing is necessary but does not mark any item below as completed.
 
+## M4 implementation record — 2026-11-05
+
+Scope: [Issue #10](https://github.com/branch-danya-dev/magicpotiongacha/issues/10).
+Branch `feat/m4-secure-p2p-trading`, stacked on the actual open/unmerged Draft
+[PR #9](https://github.com/branch-danya-dev/magicpotiongacha/pull/9), base branch
+`feat/m3-four-phase-tycoon`, HEAD
+`2d9e6eb6dbb3417ec4a5aa3438bf9d3b035b39e9`, rechecked before submission.
+No merge or Roblox publication. **TradingEnabled=false; live acceptance BLOCKED.**
+Earlier milestone records below remain historical, not current feature exclusions.
+
+| Issue #10 acceptance point | Actual status | Evidence / remaining limit |
+| --- | --- | --- |
+| ADR before Remotes; decision/ownership/dual-use argument | **PASS (design + fake backend)** | [M4_TRADING](M4_TRADING.md), `Trading`, `TradeJournal`, `TradeCoordinator`: persistent whole-profile reservations, immutable UUID/hash/snapshots, journal COMMIT CAS, ABORT barriers, both apply acknowledgments before clearance. CLI evidence does not prove the live backend. |
+| Bazaar, same-server identity/proximity, single negotiation, expiry/spam | **PASS (portable); runtime BLOCKED** | `trade_session.spec`: self/foreign-server token, wrong actual session, out of range, third player, busy value operation, post-policy-yield race, decline/cancel/expiry/cooldown; exact Protocol + shared control budget. World has central prompt; actual movement/prompt remains S1. |
+| Two columns, six items, exact version/hash, independent confirmations | **PASS (model/compile); visual BLOCKED** | Offer edits invalidate both ready/confirm states; stale hash/version and metadata changes reject. 1:1, 2:1, 3:2 and safe gifts in `trade_model.spec`. `TradeUI` displays IDs, rarity/evolution, raw/current-cap stats, ancestry, cauldron type/bonus and eligibility; two-step explicit review, Cancel, six-card pages. Phone readability and touches remain M1. |
+| Only pets/rare cauldrons; locks/use/ownership/capacity | **PASS (portable)** | `trade_model.spec`: wrong owner/type/bonus, foreign/missing/duplicate ID, locked/assigned/equipped item, protected starter, legacy/unknown origin, currency, over-six offer, net 128 pets/16 cauldrons, incoming collision. Existing idle-only equipment/prepaid-job tests retained. |
+| Persistent conflict protection and stable metadata | **PASS (fake backend)** | Pending denies Factory act/advance, collection/shop/summon/Fuse preview/lock, progression/equipment and ordinary transact. Ordinary save/release preserves exact reservation; forged removal fails. Original IDs/stats/parents/paid flags/timers retained, cauldron owner changes; workstation cap still applies to a 100-stat gift. M3 phase receipts still prevent repeated milestone issuance. |
+| All durable boundaries / unknown replies / duplicate callbacks | **PASS (fake backend)** | `trade_durable.spec`: 16 normal calls including registry admission; crash before AND after each, transient lost reply at each, 2–3 callback replays. Oracle after every backend write checks no dual-use and no original item absent from both profiles and escrow; final outcome matches the unique decision. Unknown COMMIT UI stays recovering; later cancellation cannot undo it. |
+| Partial apply, cross-server/reverse join, absent participant, stale lease | **PASS (fake backend)** | All apply/clear boundaries injected; recovery itself interrupted before/after all 17 absent-player lease/write/release calls. New-server loads in both orders, frozen gameplay until reconciliation, foreign lease rejection, missing profile/journal fail closed, old snapshots cannot save, delayed callback rejects expired lease. No test grants defaults as recovery. |
+| Concurrent overlapping trades / ABORT race | **PASS (fake backend)** | Second journal offering the same item cannot disturb the first reservation; ABORT also persists a sequence barrier for a never-prepared side; a delayed prepare and racing second-side reservation cannot escape it. |
+| Bounded registry, retention and budget | **PASS (fake backend)** | Fixed 16×128 registry; full shard denies before profile changes, round-robin discovery reaches later shards, lost registration response/orphan cleanup, delayed creation after cleanup, seven-day COMPLETE retention/compaction, lost delete reply and retry. Low admission budget clears confirmations without freezing. Unfinished records never evicted. Live quota/hot-key throughput remain D1/P1. |
+| Both-party PolicyService / paid and unknown ancestry | **PASS (portable); actual service BLOCKED** | `trade_model.spec` + `trade_session.spec`: allowed/restricted/missing/error/expired, fresh post-yield guard, revoked permission, superseded forced refresh, actual Fuse of paid/Legacy/historical parents. AND known-origin proof and OR paid ancestry; fixed shop and milestone items use the same conservative both-allowed gate. Unknown history never becomes free-tradeable. |
+| Exact intents and presentation failures | **PASS (portable/compile)** | Forged prices, owners, snapshots/stats, rewards, decisions, clocks and policy rejected at outer and item levels; duplicate requests do not reapply. A failed presentation callback cannot strand a frozen exchange before persistence. Server admission switch rejects even direct intents. Roblox remote routing remains S1. |
+| V1/V2/V3/V4 → V5, no historical rewrite | **PASS (fake backend)** | Retained historical migration suites plus authentic M3 fixture in `trade_migration.spec`: every old field, equipped locked cauldron, paid ancestry, receipt, job and fairness cursor preserved. Future/invalid sequence/hash/stage/receipt/old trade state cancel before overwrite. |
+| Retain 404 M0–M3 tests / F2P and offline | **PASS** | No tests removed; current-schema assertion updated, three high-stat fixtures explicitly mark Legacy origin proof false. All economy/production, RNG, offline equality/cap, policy, collection, construction, lease and quarantine regressions still run. |
+| Eight-user bounded synthetic workload | **PASS (fake backend)** | Eight distinct users in one manager/backend, four simultaneous negotiations per round, 20 exchanges and 1160 intents, including 1000 denied with trading disabled; one local run 0.344 CPU s. This excludes network latency and does not establish Roblox FPS/replication/throughput. |
+| Local tool integrity, compile, analyze, tests, place/sourcemap | **PASS** | Windows x64 / Node 24.22.1: **581/581 tests** (404 + 177), **54 Luau sources**. Pinned Luau 0.745/Rojo 7.7.1 verified. Exact package script entry points used (`node scripts/setup-tools.mjs`, `node scripts/check.mjs`) because npm is absent locally. |
+| Exact final SHA Windows + Ubuntu CI | **Recorded in M4 Draft PR** | PR body records final SHA, run/job links, source-SHA log lines, counts and artifacts after CI. Existing SHA-pinned actions/tools and explicit PR-head checkout retained. Local Windows run is not Ubuntu evidence. |
+| Public release, Studio, live backend/policy/phone/2–8 clients | **BLOCKED — S1/D1/M1/P1** | No live Studio, real QA DataStore crash/reconnect, actual policy, real phone or multiplayer performance session performed. Issue #2 remains open. Public trade is off; private QA also needs explicit server flag and Studio/allowlisted place. |
+
+### M4 live acceptance steps (all BLOCKED)
+
+1. Use a separate private QA experience and dedicated **both** player/journal
+   namespaces. Set TradingEnabled=true only in that QA build and TradingQAPlaceId
+   to its place; use UseMemoryInStudio=false for persistence evidence. Do not
+   alter production data or the existing registry shard count. Confirm the normal
+   build rejects every trade intent even if the UI is bypassed.
+2. With two clients, meet at the central Bazaar. Test invite/decline/expiry,
+   leaving the zone, same-user/rejoined Player identity, a third participant,
+   edits after ready and after one confirm, gifts and multiple objects. Compare
+   both visible columns/hash/version; no timeout or partner action confirms for
+   the other user. Check long IDs/parents, scrolling and 44px controls on portrait,
+   landscape emulator and a real phone.
+3. Obtain actual policy outcomes for both participants, including missing/error
+   and changed permission between invite and commit. Use backed-up QA fixtures
+   for paid and unknown historical origins. Forge the exact remote directly;
+   UI hiding must not be the only denial. Production/fixed purchases still work.
+4. Instrument the QA backend at the ADR's 16 boundaries: pause/stop before and
+   after registry, journal, each prepare/ack, COMMIT, each apply/ack and clearance.
+   Observe persisted records and reconnect in both orders/on another server.
+   Distinguish a rejected write from a committed write with a lost response.
+   At every stage count **available** copies; both profiles must converge to the
+   single journal decision. Never repair by manually duplicating a reward.
+5. Keep one or both participants absent; let another surviving QA server acquire
+   ordinary expired leases and scan the durable registry. Repeat with admission
+   disabled, a still-live foreign lease, low quota, a full registry shard, failed
+   deletion, a registration-only orphan and a missing/corrupt journal. Pending
+   remains inaccessible; no defaults or unfinished-transaction GC are allowed.
+6. Migrate backed-up V1/V2/V3/V4 records under real leases. Compare historical
+   money, items/IDs/ancestry, paid jobs, offline timestamp/RNG and receipts; repeat
+   login/catch-up and stale-server save. Never downgrade a migrated key.
+7. Run 2–8 clients with full factories and overlapping trades. Measure queue,
+   decision/recovery latency, DataStore budgets/throttling, server CPU/memory,
+   replication and phone FPS. Record exact build SHA, Studio/platform version,
+   device, private namespaces, scenario results and safe audit IDs/hashes before
+   changing any live acceptance status. No credentials or full profiles in logs.
+
 ## M3 implementation record — 2026-11-04
 
 Scope: [Issue #8](https://github.com/branch-danya-dev/magicpotiongacha/issues/8).

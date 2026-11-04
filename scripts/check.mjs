@@ -35,7 +35,7 @@ const all = [...await files('src'), ...await files('tests')];
 run(tool('luau', 'luau-compile'), ['--null', ...all]);
 // Roblox engine scripts require Studio's type environment. The portable domain and
 // persistence modules are checked here; the runtime scripts are compiled above.
-const portable = all.filter(file => file.startsWith('src/shared/') || file.startsWith('tests/') || file === 'src/server/ProfileStore.luau');
+const portable = all.filter(file => file.startsWith('src/shared/') || file.startsWith('tests/') || ['src/server/ProfileStore.luau', 'src/server/TradeJournal.luau', 'src/server/TradeCoordinator.luau'].includes(file));
 run(tool('luau', 'luau-analyze'), portable);
 run(tool('luau', 'luau'), ['tests/run.luau']);
 await mkdir(resolve(root, 'build'), { recursive: true });

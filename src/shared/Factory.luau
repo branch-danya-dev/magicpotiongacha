@@ -3,6 +3,7 @@ local runtimeScript = rawget(getfenv(), "script")
 local Familiars = require(runtimeScript and runtimeScript.Parent.Familiars or "./Familiars")
 local LegacyConfig = require(runtimeScript and runtimeScript.Parent.LegacyConfig or "./LegacyConfig")
 local Progression = require(runtimeScript and runtimeScript.Parent.Progression or "./Progression")
+local Trading = require(runtimeScript and runtimeScript.Parent.Trading or "./Trading")
 local Factory = {}
 local function compatible(rules, slotId, recipe)
 	local def = rules.stations[slotId]
@@ -138,14 +139,15 @@ function Factory.new(config)
 
 	local function validate(profile, version)
 		local legacy = version == 1
-		local cfg = version and LegacyConfig or config
+		local modern = not version or version >= 4
+		local cfg = not modern and LegacyConfig or config
 		local function checkCounts(value, predicate, maximum)
 			return countMap(value, function(item) return cfg.items[item] ~= nil and predicate(item) end, maximum)
 		end
 		if not plain(profile) or profile.schemaVersion ~= (version or cfg.schemaVersion) then
 			return false, "Unsupported profile schema"
 		end
-		if not version and not integer(profile.phase, 1, 4) then return false, "Invalid construction phase" end
+		if modern and not integer(profile.phase, 1, 4) then return false, "Invalid construction phase" end
 		if not integer(profile.userId, -9007199254740991, 9007199254740991)
 			or not integer(profile.lastSimulatedAt, 0, cfg.maxTimestamp)
 			or not integer(profile.rngState, 1, rngModulus - 1)
@@ -182,7 +184,7 @@ function Factory.new(config)
 					return false, "Unknown pet stat"
 				end
 			end
-			if (not version or version == 3) and not familiars.validatePet(pet) then return false, "Invalid familiar metadata or range" end
+			if (modern or version == 3) and not familiars.validatePet(pet) then return false, "Invalid familiar metadata or range" end
 		end
 		if petCount > cfg.maxPets then
 			return false, "Pet capacity exceeded"
@@ -201,7 +203,7 @@ function Factory.new(config)
 				or station.progress < 0 or station.progress > cfg.maxJobDuration then
 				return false, "Invalid station"
 			end
-			if stationId == "logistics" and not integer(station.routeCursor, 1, version and (legacy and 5 or 7) or routeCount) then
+			if stationId == "logistics" and not integer(station.routeCursor, 1, not modern and (legacy and 5 or 7) or routeCount) then
 				return false, "Invalid logistics route cursor"
 			end
 			if station.workerId ~= nil then
@@ -213,7 +215,7 @@ function Factory.new(config)
 			end
 			if station.recipeId ~= nil then
 				local recipe = cfg.recipes[station.recipeId]
-				if not recipe or not compatible(cfg, stationId, recipe) or station.level < recipe.requiredLevel or (not version and profile.phase < (recipe.phase or 1)) then
+				if not recipe or not compatible(cfg, stationId, recipe) or station.level < recipe.requiredLevel or (modern and profile.phase < (recipe.phase or 1)) then
 					return false, "Invalid station recipe"
 				end
 			end
@@ -318,7 +320,7 @@ function Factory.new(config)
 			local order = profile.order
 			local definition = plain(order) and cfg.orders[order.id]
 			if not definition or order.recipeId ~= definition.recipeId or order.itemId ~= definition.itemId
-				or (not version and definition.phase and (profile.phase < definition.phase or not profile.discoveredRecipes[definition.recipeId]))
+				or (modern and definition.phase and (profile.phase < definition.phase or not profile.discoveredRecipes[definition.recipeId]))
 				or order.count ~= definition.count or order.rewardGold ~= definition.rewardGold
 				or not integer(order.acceptedAt, 0, cfg.maxTimestamp)
 				or not integer(order.expiresAt, 0, cfg.maxTimestamp)
@@ -351,7 +353,7 @@ function Factory.new(config)
 			end
 		end
 		for recipeId, discovered in pairs(profile.discoveredRecipes) do
-			if not cfg.recipes[recipeId] or discovered ~= true or (not version and profile.phase < (cfg.recipes[recipeId].phase or 1)) then
+			if not cfg.recipes[recipeId] or discovered ~= true or (modern and profile.phase < (cfg.recipes[recipeId].phase or 1)) then
 				return false, "Invalid recipe collection"
 			end
 		end
@@ -388,14 +390,15 @@ function Factory.new(config)
 				end
 			end
 		end
-		if (not version or version == 3) and not familiars.validateProgress(profile) then return false, "Invalid collection receipt or provenance" end
-		if not version then
+		if (modern or version == 3) and not familiars.validateProgress(profile) then return false, "Invalid collection receipt or provenance" end
+		if modern then
 			if not plain(profile.inputCursors) then return false, "Invalid input fairness cursors" end
 			for itemId,cursor in pairs(profile.inputCursors) do
 				if not cfg.items[itemId] or cfg.items[itemId].kind=="potion" or not integer(cursor,1,#cfg.machineOrder) then return false,"Invalid input fairness cursor" end
 			end
 			if not progression.validate(profile) then return false, "Invalid phase/equipment state" end
 		end
+		if not version and not Trading.validateProfile(profile,config.maxBalance) then return false,"Invalid trade reservation/receipt" end
 		return true, nil
 	end
 
@@ -414,8 +417,14 @@ function Factory.new(config)
 			local valid, reason = engine.validate(profile)
 			return valid and profile or nil, reason
 		end
-		if not plain(profile) or (profile.schemaVersion ~= 1 and profile.schemaVersion ~= 2 and profile.schemaVersion ~= 3) then return nil, "Unsupported profile schema" end
+		if not plain(profile) or (profile.schemaVersion ~= 1 and profile.schemaVersion ~= 2 and profile.schemaVersion ~= 3 and profile.schemaVersion ~= 4) then return nil, "Unsupported profile schema" end
 		local version = profile.schemaVersion
+		if profile.trade~=nil then return nil,"Unexpected historical trading state" end
+		if version==4 then
+			local valid,reason=validate(profile,4); if not valid then return nil,reason end
+			local migrated=copy(profile); migrated.schemaVersion=config.schemaVersion; migrated.trade={sequence=0}
+			valid,reason=engine.validate(migrated); return valid and migrated or nil,reason
+		end
 		if profile.phase ~= nil or profile.progression ~= nil or profile.cauldrons ~= nil or profile.nextCauldronSerial ~= nil or profile.inputCursors ~= nil then return nil, "Unexpected future progression fields" end
 		local valid, reason = validate(profile, version)
 		if not valid then return nil, reason end
@@ -433,6 +442,7 @@ function Factory.new(config)
 			if migrated.order then migrated.tutorial.orderAccepted = true end
 		end
 		migrated.schemaVersion = config.schemaVersion
+		migrated.trade = {sequence=0}
 		if version < 3 then
 			migrated.collection, migrated.currencyPaid = { sequence = 0 }, { gold = false, essence = false }
 			for _, pet in pairs(migrated.pets) do familiars.upgradeLegacy(pet) end
@@ -459,6 +469,7 @@ function Factory.new(config)
 			pets = {}, nextPetSerial = 1, stations = {}, inventory = {}, questStock = {}, order = nil,
 			rebirths = 0, discoveredRecipes = {}, tutorialGranted = true, receipts = {}, entitlements = {},
 			collection = { sequence = 0 }, currencyPaid = { gold = false, essence = false },
+			trade = {sequence=0},
 			phase = 1, progression = {sequence=0}, cauldrons = {}, nextCauldronSerial = 1, inputCursors = {},
 			pipeCursor = 1, tutorial = {}, telemetry = { first = {}, stalls = {} },
 			warehouseLevel = 0, pipes = false, manualReadyAt = { garden = now, mine = now }, slimeWorkSeconds = {},
@@ -1013,6 +1024,7 @@ function Factory.new(config)
 
 	function engine.advance(profile, now, isOffline)
 		local summary = report()
+		if Trading.frozen(profile) then summary.ok=false; summary.error="Trade recovery pending"; return summary end
 		local valid, reason = engine.validate(profile)
 		if not valid or not finite(now) or now < 0 or now > config.maxTimestamp
 			or (isOffline ~= nil and type(isOffline) ~= "boolean") then
@@ -1080,6 +1092,7 @@ function Factory.new(config)
 	end
 
 	function engine.act(profile, action, payload, now)
+		if Trading.frozen(profile) then return false,"Trade recovery pending" end
 		if not checkPayload(action, payload) then
 			return false, "Invalid action payload"
 		end
