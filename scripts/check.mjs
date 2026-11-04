@@ -31,7 +31,8 @@ async function files(directory) {
   return found.sort();
 }
 JSON.parse(await readFile(resolve(root, 'default.project.json'), 'utf8'));
-const all = [...await files('src'), ...await files('tests')];
+const all = [...await files('src'), ...await files('tests'), ...await files('qa')];
+run(process.execPath, ['scripts/check-environment.mjs']);
 run(tool('luau', 'luau-compile'), ['--null', ...all]);
 // Roblox engine scripts require Studio's type environment. The portable domain and
 // persistence modules are checked here; the runtime scripts are compiled above.
@@ -41,5 +42,7 @@ run(tool('luau', 'luau'), ['tests/run.luau']);
 await mkdir(resolve(root, 'build'), { recursive: true });
 run(tool('rojo', 'rojo'), ['build', 'default.project.json', '-o', 'build/PotionTycoon.rbxlx']);
 run(tool('rojo', 'rojo'), ['sourcemap', 'default.project.json', '-o', 'build/sourcemap.json']);
+run(tool('rojo', 'rojo'), ['build', 'qa/environment.project.json', '-o', 'build/M7PilotReview.rbxlx']);
+run(tool('rojo', 'rojo'), ['sourcemap', 'qa/environment.project.json', '-o', 'build/environment-sourcemap.json']);
 console.log(`Verified ${all.length} Luau sources and built build/PotionTycoon.rbxlx`);
 appendFileSync(log, `PASS: ${all.length} Luau sources; compile, portable analysis, tests, Rojo build and sourcemap.\n`);

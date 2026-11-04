@@ -35,4 +35,7 @@ jobs:
             build/PotionTycoon.rbxlx
             build/sourcemap.json
             build/verification.log
+            build/M7PilotReview.rbxlx
+            build/environment-sourcemap.json
+            assets/environment/manifest.json
           if-no-files-found: error

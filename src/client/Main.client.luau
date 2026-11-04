@@ -13,6 +13,7 @@ local Codec = require(shared.TradeCodec)
 local Monetization = require(shared.Monetization)
 local shopUI = require(script.Parent.ShopUI).new()
 local shopPreview = require(script.Parent.ShopPreview)
+local environment = require(script.Parent.EnvironmentController)
 local MarketplaceService = game:GetService("MarketplaceService")
 local remotes = ReplicatedStorage.PotionTycoon:WaitForChild("Remotes")
 local Action, State, Notice, Focus = remotes:WaitForChild("Action"), remotes:WaitForChild("State"), remotes:WaitForChild("Notice"), remotes:WaitForChild("Focus")
@@ -228,6 +229,16 @@ draw = function()
 		return
 	end
 	if not state then text("Ожидаем безопасную загрузку профиля…"); return end
+	if selected=="quality" then
+		title.Text="Окружение · качество"
+		text("Настройки действуют только на этом устройстве. Рабочие места, кнопки и производство остаются доступны.",88)
+		for _,q in ipairs({{"full","Полное"},{"reduced","Умеренное"},{"minimal","Минимальное"}}) do
+			action((environment.quality==q[1] and "✓ " or "")..q[2],function() environment.setQuality(q[1]); draw() end)
+		end
+		action("Уменьшить движение: "..(environment.reduceMotion and "да" or "нет"),function() environment.setReduceMotion(not environment.reduceMotion); draw() end)
+		text("Минимальное качество и уменьшение движения отключают дождевые штрихи и покачивание листвы. Текущий выбор сохраняется до выхода.",100)
+		refresh(); return
+	end
 	if selected=="shop" then
 		title.Text="Событие / Магазин"
 		shopUI.draw({state=state,text=text,action=action,send=send,redraw=draw,price=shopPrice,
@@ -451,7 +462,7 @@ refresh = function()
 	for _, update in ipairs(bindings) do update() end
 end
 
-local tabList={{"blueprint","Развитие"},{"shop","Событие"},{"rebirth","Rebirth"},{"dailies","Daily"},{"shards","Осколки"},{"bazaar","Обмен"}}
+local tabList={{"blueprint","Развитие"},{"shop","Событие"},{"rebirth","Rebirth"},{"dailies","Daily"},{"shards","Осколки"},{"bazaar","Обмен"},{"quality","Качество"}}
 for _,id in ipairs(Config.stationOrder) do table.insert(tabList,{id,Config.stations[id].name}) end
 for _,tab in ipairs({{"warehouse","Склад"},{"orders","Заказы"},{"altar","Фамильяры"}}) do table.insert(tabList,tab) end
 for _, tab in ipairs(tabList) do

@@ -2,6 +2,22 @@
 
 CLI/CI passing is necessary but does not mark any item below as completed.
 
+## M7.1 Gate A technical pilot — 2026-11-05
+
+[Issue #16](https://github.com/branch-danya-dev/magicpotiongacha/issues/16), stacked
+on M6 PR #15 at `bbc8891d45e551b691363383d1cacf2d69354283`.
+841 CLI cases pass (all 810 original + 31 environment), source integrity and both
+Rojo builds included. Actual Studio screenshots cover five light/weather poses,
+spawn and Bazaar. [Evidence and requirement matrix](M7_ENVIRONMENT.md),
+[raw images](evidence/m7/README.md), [asset handoff](../assets/environment/README.md).
+
+**Gate A is not accepted:** native fallback is not finished Quaternius art; source
+download/package admission is BLOCKED. Contextual billboard selection resolves
+the overlap observed during review; real mobile acceptance is still outstanding. Human visual decision PENDING. **Gate B withheld.**
+`EnvironmentArtEnabled=false`, monetization/trading/SKUs unchanged. Studio visual
+rendering and noncollision property assertions do not pass gameplay traversal,
+real DataStore, PolicyService, payments, phone or multiplayer acceptance.
+
 ## M6 implementation record — 2026-11-05
 
 Scope: [Issue #14](https://github.com/branch-danya-dev/magicpotiongacha/issues/14).
