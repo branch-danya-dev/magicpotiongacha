@@ -5,7 +5,7 @@ local legacy=require("./fixtures/m2-profile")
 return function(T: any)
 	T.test("M3 migration: authentic V3 preserves rolls, locks, ancestry, receipts and active factory",function()
 		local h=M.new(); local before=M.copy(legacy); local migrated,reason=h.engine.migrate(M.copy(legacy))
-		T.truthy(migrated,reason); T.equal(migrated.schemaVersion,4)
+		T.truthy(migrated,reason); T.equal(migrated.schemaVersion,Config.schemaVersion)
 		for key,value in pairs(legacy) do
 			if key=="stations" or key=="manualReadyAt" then for id,old in pairs(value) do T.same(migrated[key][id],old,key.."."..id) end
 			elseif key~="schemaVersion" then T.same(migrated[key],value,key) end

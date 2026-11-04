@@ -1,6 +1,8 @@
 -- Pure data: all economy values are provisional and can be tuned without changing the engine.
 local Config = {
-	schemaVersion = 4,
+	schemaVersion = 5,
+	trading = { maxItems=6,maxCauldrons=16,prepareSeconds=120,inviteSeconds=30,negotiateSeconds=300,
+		inviteCooldown=15,retentionSeconds=604800,journalShards=16,journalCapacity=128,scanPerPass=1,recoverySeconds=30 },
 	maxOfflineSeconds = 7200,
 	maxAdvanceSeconds = 7200,
 	maxBalance = 1000000000000,

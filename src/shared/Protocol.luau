@@ -38,6 +38,12 @@ type GateData = {
 export type Gate = typeof(setmetatable({} :: GateData, Protocol))
 
 local SCHEMAS: { [string]: { [string]: string } } = {
+	tradeInvite = { targetToken="id" },
+	tradeAccept = { tradeId="id",version="sequence" },
+	tradeCancel = { tradeId="id",version="sequence" },
+	tradeOffer = { tradeId="id",version="sequence",items="trade-items" },
+	tradeReady = { tradeId="id",version="sequence",ready="boolean" },
+	tradeConfirm = { tradeId="id",version="sequence",offerHash="id" },
 	click = {},
 	assign = { stationId = "id", petId = "id-or-empty" },
 	harvest = { stationId = "id" },
@@ -109,7 +115,19 @@ local function validatePayload(action: any, payload: any): (boolean, string)
 	end
 	for key, kind in pairs(schema) do
 		local value = payload[key]
-		if kind == "five-ids" then
+		if kind == "trade-items" then
+			if type(value)~="table" or getmetatable(value)~=nil or #value>6 then return false,"invalid_payload" end
+			local seen: { [string]: boolean } = {}; local count=0
+			for index,entry in pairs(value) do
+				if type(index)~="number" or not finite(index) or index%1~=0 or index<1 or index>#value
+					or type(entry)~="table" or getmetatable(entry)~=nil then return false,"invalid_payload" end
+				for field in pairs(entry) do if field~="id" and field~="kind" then return false,"unexpected_field" end end
+				local offeredId: any = (entry :: any).id
+				if (entry.kind~="pet" and entry.kind~="cauldron") or type(offeredId)~="string" or not validId(offeredId,false) or seen[offeredId] then return false,"invalid_payload" end
+				seen[offeredId]=true; count+=1
+			end
+			if count~=#value then return false,"invalid_payload" end
+		elseif kind == "five-ids" then
 			if type(value) ~= "table" or getmetatable(value) ~= nil or #value ~= 5 then return false, "invalid_payload" end
 			local seen: { [string]: boolean } = {}
 			local count = 0

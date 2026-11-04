@@ -14,9 +14,9 @@ function Policy.new(options)
 		if current and current.expiresAt > options.now() then return current end
 		return { status = "unavailable", randomAllowed = false, tradingAllowed = false, expiresAt = 0 }
 	end
-	function service.get(key)
+	function service.get(key, force)
 		local cached = cache[key]
-		if cached and cached.expiresAt > options.now() then return cached end
+		if not force and cached and cached.expiresAt > options.now() then return cached end
 		nextGeneration += 1
 		local generation = nextGeneration
 		generations[key] = generation
@@ -26,8 +26,12 @@ function Policy.new(options)
 			state.status = result.ArePaidRandomItemsRestricted and "restricted" or "unrestricted"
 			state.randomAllowed = not result.ArePaidRandomItemsRestricted
 			state.tradingAllowed = result.IsPaidItemTradingAllowed == true
+			state.tradingKnown = type(result.IsPaidItemTradingAllowed)=="boolean"
 		end
-		if generations[key] ~= generation then return service.peek(key) end
+		if generations[key] ~= generation then
+			if force then return {status="unavailable",randomAllowed=false,tradingAllowed=false,expiresAt=0} end
+			return service.peek(key)
+		end
 		cache[key] = state
 		return state
 	end

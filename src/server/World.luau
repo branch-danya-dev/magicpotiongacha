@@ -68,7 +68,11 @@ function World.new(config, count, callbacks)
 	self.root = root
 	part(root, "ForestFloor", Vector3.new(420, 1, 250), Vector3.new(0, -1, 0), Color3.fromRGB(40, 51, 44))
 	local bazaar = part(root, "Bazaar", Vector3.new(350, 0.3, 24), Vector3.new(0, 0, 0), Color3.fromRGB(91, 87, 97))
-	billboard(bazaar, "МАГИЧЕСКИЙ БАЗАР · M3\nЧетыре фазы фабрики", Vector3.new(0, 8, 0))
+	billboard(bazaar, "МАГИЧЕСКИЙ БАЗАР · M4\nПрямой обмен · закрытая QA-проверка", Vector3.new(0, 8, 0))
+	self.tradePost=part(root,"TradePost",Vector3.new(5,2,5),Vector3.new(0,2,0),Color3.fromRGB(121,98,171))
+	prompt(self.tradePost,"Trade / Обмен","Магический базар",function(player)
+		if self:inBazaar(player) then callbacks.focus(player,"bazaar") end
+	end)
 	for index = 1, count do
 		local column = (index - 1) % 4
 		local row = math.floor((index - 1) / 4)
@@ -179,6 +183,14 @@ function World:release(player)
 	end
 	for _, pad in pairs(plot.pads) do pad:SetAttribute("ExpectedLevel", nil); pad:SetAttribute("ExpectedRequestId",nil) end
 	for _,module in ipairs(plot.architecture) do module.part.Transparency=1 end
+end
+
+function World:inBazaar(player)
+	local character=player.Character
+	local hrp=character and character:FindFirstChild("HumanoidRootPart")
+	local humanoid=character and character:FindFirstChildOfClass("Humanoid")
+	if not hrp or not humanoid then return false end
+	return math.abs(hrp.Position.Z)<=12 and Access.allowed(true,humanoid.Health>0,(hrp.Position-self.tradePost.Position).Magnitude,20)
 end
 
 function World:inRange(player, action, payload, maxDistance)

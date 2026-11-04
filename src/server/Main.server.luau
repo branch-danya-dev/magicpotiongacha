@@ -19,6 +19,8 @@ local summonRandom = Random.new() -- Separate server-only RNG; never seeded from
 local ProfileStore = require(script.Parent.ProfileStore)
 local Settings = require(script.Parent.ServerSettings)
 local World = require(script.Parent.World)
+local TradeRuntime = require(script.Parent.TradeRuntime)
+local TradeSession = require(Shared.TradeSession)
 
 local folder = Instance.new("Folder")
 folder.Name, folder.Parent = "Remotes", ReplicatedStorage.PotionTycoon
@@ -28,6 +30,7 @@ local function remote(name)
 	return value
 end
 local Action, State, Notice, Focus, Ready = remote("Action"), remote("State"), remote("Notice"), remote("Focus"), remote("Ready")
+local TradeState = remote("TradeState")
 local memoryMode = RunService:IsStudio() and Settings.UseMemoryInStudio
 
 local function copy(value)
@@ -46,6 +49,7 @@ if memoryMode then
 		if updated ~= nil then records[key] = copy(updated) end
 		return copy(updated)
 	end }
+	function dataStore:RemoveAsync(key) records[key]=nil end
 else
 	dataStore = DataStoreService:GetDataStore(Settings.DataStoreName)
 end
@@ -62,6 +66,7 @@ local store = ProfileStore.new({
 local sessions, offlineReports, readyAt, noticesAt = {}, {}, {}, {}
 local closing = false
 local world
+local trade
 local policy = Policy.new({ now = os.time, ttl = Config.collection.policyTTL, lookup = function(player)
 	local finished, ok, result, abandoned = false, false, nil, false
 	task.spawn(function()
@@ -91,6 +96,8 @@ end
 local function snapshot(player)
 	local profile = store:get(player.UserId)
 	if not active(player) or not profile or player.Parent ~= Players then return end
+	if trade then trade.send(player) end
+	if profile.trade.pending then return end -- Never expose a partially applied inventory.
 	local builds, recipes = {}, {}
 	for _, id in ipairs(Config.stationOrder) do
 		builds[id] = Progression.buildState(profile, id)
@@ -124,7 +131,7 @@ local function snapshot(player)
 		collectionPolicy = copy(policy.peek(player)), summonDetails = Collection.details("forest"), familiarShop = copy(Config.familiarShop),
 		fusePreview = copy(sessions[player.UserId].fusePreview),
 		offlineReport = offlineReports[player.UserId],
-		writable = store:isWritable(player.UserId) and not sessions[player.UserId].collectionBusy,
+		writable = store:isWritable(player.UserId) and not sessions[player.UserId].collectionBusy and not (trade and trade.busy(player.UserId)),
 		mode = memoryMode and "STUDIO_MEMORY" or "DATASTORE",
 	})
 end
@@ -173,11 +180,18 @@ local function handleAction(player, action, payload)
 	end
 	-- Legacy pure-domain buy remains for regression/migration fixtures only.
 	if action == "buy" then notice(player, "Обнови клиент: покупки требуют подтверждённого сохранения.", "obsolete_intent"); return end
+	if TradeSession.isAction(action) then
+		local ok,accepted,message=pcall(trade.handle,player,action,payload)
+		if not ok then notice(player,"Обмен ожидает безопасного восстановления.","trade_pending")
+		elseif not accepted then notice(player,tostring(message),"trade_rejected") end
+		return
+	end
 	if closing or not active(player) or not store:isWritable(player.UserId) then
 		notice(player, "Профиль загружается или ожидает безопасного сохранения.", "profile_locked")
 		return
 	end
 	if sessions[player.UserId].collectionBusy then notice(player, "Коллекция сохраняется. Дождись результата.", "collection_busy"); return end
+	if trade.busy(player.UserId) then notice(player,"Обмен сохраняется. Дождись результата.","trade_pending"); return end
 	if not world:inRange(player, action, payload, Settings.InteractDistance) then
 		notice(player, "Подойди к нужному объекту на своём участке.", "out_of_range")
 		return
@@ -239,6 +253,12 @@ world = World.new(Config, Settings.PlotCount, {
 		if active(player) then Focus:FireClient(player, stationId) end
 	end,
 })
+trade = TradeRuntime.new({config=Config,settings=Settings,store=store,backend=dataStore,engine=Factory,policy=policy,
+	memoryMode=memoryMode,remote=TradeState,active=active,closing=function() return closing end,
+	inBazaar=function(player) return world:inBazaar(player) end,
+	valueBusy=function(player) return sessions[player.UserId] and sessions[player.UserId].collectionBusy end,
+	updated=function(player) if active(player) then world:update(player,store:get(player.UserId)); snapshot(player) end end,
+})
 Action.OnServerEvent:Connect(handleAction)
 Ready.OnServerEvent:Connect(function(player)
 	local now = os.clock()
@@ -257,6 +277,7 @@ end
 
 local function clearPresentation(session)
 	local player, userId = session.player, session.player.UserId
+	trade.leave(player)
 	world:release(player)
 	policy.forget(player)
 	if sessions[userId] ~= session then return end
@@ -266,6 +287,7 @@ end
 
 local function closeSession(session)
 	if session.closeRunning then return end
+	trade.leave(session.player)
 	if session.phase == "loading" then
 		session.cancelled = true
 		return -- The in-flight load owns cleanup until it returns.
@@ -274,7 +296,7 @@ local function closeSession(session)
 	local player, userId = session.player, session.player.UserId
 	local wasActive = session.phase == "active"
 	session.phase = "closing"
-	if wasActive and store:isWritable(userId) then
+	if wasActive and store:isWritable(userId) and not trade.busy(userId) then
 		local ok, result = pcall(Factory.advance, store:get(userId), os.time(), false)
 		if not ok or result.ok == false then
 			session.quarantined = true
@@ -332,6 +354,15 @@ local function onPlayer(player)
 		session.phase = "closing"
 		closeSession(session)
 		return
+	end
+	if profile.trade.pending then
+		local recovered=trade.recoverPlayer(player)
+		profile=store:get(userId)
+		if not recovered or not profile or profile.trade.pending then
+			session.phase="closing"
+			player:Kick("Обмен ещё восстанавливается. Предметы сохранены в журнале; повторите вход позже.")
+			closeSession(session); return
+		end
 	end
 	local ok, report = pcall(Factory.advance, profile, os.time(), true)
 	if not ok or report.ok == false then
@@ -398,7 +429,7 @@ task.spawn(function()
 		task.wait(1)
 		for _, player in ipairs(Players:GetPlayers()) do
 			if active(player) then
-				if store:isWritable(player.UserId) and not sessions[player.UserId].collectionBusy then
+				if store:isWritable(player.UserId) and not sessions[player.UserId].collectionBusy and not trade.busy(player.UserId) then
 					local ok, result = pcall(Factory.advance, store:get(player.UserId), os.time(), false)
 					if not ok or result.ok == false then
 						store:invalidate(player.UserId)
@@ -430,6 +461,15 @@ task.spawn(function()
 				end)
 			end
 		end
+	end
+end)
+
+task.spawn(function()
+	task.wait(5 + math.random()*5)
+	while not closing do
+		local ok=pcall(trade.sweep)
+		if not ok then warn("Trade recovery pass deferred") end
+		task.wait(Config.trading.recoverySeconds + math.random()*3)
 	end
 end)
 

@@ -1,6 +1,11 @@
 --!nonstrict
 -- Pure collection data/model. No server RNG, clocks, service calls or rewards here.
 local Familiars = {}
+function Familiars.provenanceKnown(pet)
+	local origin=pet.provenance
+	return type(origin)=="table" and origin.source~="legacy" and origin.tradeKnown~=false
+		and (origin.source~="fuse" or origin.tradeKnown==true)
+end
 local skills = { "Farming", "Hauling", "Brewing" }
 local sources = { starter = true, hire = true, shop = true, gacha = true, fuse = true, legacy = true }
 local function integer(value, lo, hi)
@@ -52,11 +57,12 @@ function Familiars.new(config)
 		for _, skill in ipairs(skills) do assert(integer(offer.stats[skill], def.ranges[skill][1], def.ranges[skill][2]), "invalid_fixed_stats") end
 	end
 	local model = {}
-	function model.create(id, species, stats, source, paid, parents)
+	function model.create(id, species, stats, source, paid, parents, tradeKnown)
 		local def = config.petSpecies[species]
 		return { id = id, species = species, name = def.name, stats = copy(stats), paidOrigin = paid,
 			rarity = def.rarity, evolution = def.evolution, locked = false,
-			provenance = { source = source, paidDerived = paid, parents = copy(parents or {}) } }
+			provenance = { source = source, paidDerived = paid, parents = copy(parents or {}),
+				tradeKnown=source=="fuse" and tradeKnown==true or source~="fuse" and source~="legacy" } }
 	end
 	function model.upgradeLegacy(pet)
 		pet.rarity, pet.evolution, pet.locked = "Legacy", 0, false
@@ -68,6 +74,8 @@ function Familiars.new(config)
 		if not def or type(pet.locked) ~= "boolean" or not plain(origin) or not sources[origin.source]
 			or type(origin.paidDerived) ~= "boolean" or origin.paidDerived ~= pet.paidOrigin
 			or not ids(origin.parents, config.collection.fuseCount) then return false end
+		if origin.tradeKnown~=nil and type(origin.tradeKnown)~="boolean" then return false end
+		if origin.source=="legacy" and origin.tradeKnown==true then return false end
 		if origin.source == "legacy" then
 			return pet.rarity == "Legacy" and pet.evolution == 0
 				and (pet.species == "farmer" or pet.species == "slime" or pet.species == "brewer") and #origin.parents == 0
@@ -114,19 +122,21 @@ function Familiars.new(config)
 		return result
 	end
 	function model.preview(p, parentIds)
+		if p.trade and p.trade.pending then return nil,"Trade recovery pending" end
 		if not ids(parentIds, config.collection.fuseCount) or #parentIds ~= config.collection.fuseCount then return nil, "Choose five distinct familiars" end
 		local parents = copy(parentIds); table.sort(parents)
 		local first = p.pets[parents[1]]
 		local definition = first and config.petSpecies[first.species]
 		if not definition or not definition.fuseTo then return nil, "This form cannot evolve" end
 		local target = config.petSpecies[definition.fuseTo]
-		local stats, paid = { Farming = 0, Hauling = 0, Brewing = 0 }, false
+		local stats, paid, tradeKnown = { Farming = 0, Hauling = 0, Brewing = 0 }, false, true
 		for _, id in ipairs(parents) do
 			local pet = p.pets[id]
 			if not pet or pet.species ~= first.species or pet.evolution ~= first.evolution then return nil, "Five matching species and stages required" end
 			if pet.locked then return nil, "Unlock each selected familiar first" end
 			for _, station in pairs(p.stations) do if station.workerId == id then return nil, "Unassign every selected familiar first" end end
 			paid = paid or pet.paidOrigin or pet.provenance.paidDerived
+			tradeKnown = tradeKnown and Familiars.provenanceKnown(pet)
 			for _, skill in ipairs(skills) do
 				if pet.stats[skill] > target.ranges[skill][2] then return nil, "Legacy stat exceeds the next form; keep this familiar" end
 				stats[skill] = math.max(stats[skill], pet.stats[skill])
@@ -134,7 +144,7 @@ function Familiars.new(config)
 		end
 		for _, skill in ipairs(skills) do stats[skill] = math.clamp(stats[skill] + config.collection.fuseBonus, target.ranges[skill][1], target.ranges[skill][2]) end
 		return { parentIds = parents, species = definition.fuseTo, name = target.name, rarity = target.rarity,
-			evolution = target.evolution, stats = stats, paidDerived = paid }
+			evolution = target.evolution, stats = stats, paidDerived = paid, tradeKnown=tradeKnown }
 	end
 	function model.details(poolId)
 		local pool = config.summonPools[poolId]

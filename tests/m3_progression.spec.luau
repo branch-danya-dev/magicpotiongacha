@@ -95,7 +95,7 @@ return function(T: any)
 	T.test("M3: cauldron bonus cannot exceed production cap or alter active batch",function()
 		local h=M.new(); h.toPhase(3); local itemId=next(h.profile.cauldrons)
 		local station=h.profile.stations.cauldron; station.level=3; station.workerId="123:starter_brewer"
-		local pet=h.profile.pets[station.workerId]; pet.rarity="Legacy"; pet.provenance.source="legacy"; pet.stats.Brewing=500
+		local pet=h.profile.pets[station.workerId]; pet.rarity="Legacy"; pet.provenance.source="legacy"; pet.provenance.tradeKnown=false; pet.stats.Brewing=500
 		T.truthy(h.command("equipCauldron",{slotId="cauldron",cauldronId=itemId}))
 		station.input.mandrake=2; station.essence=3; h.act("brew",{stationId="cauldron"})
 		T.near(station.job.doubleChance,math.min(Config.maxDoubleChance,75*0.002+0.05)); T.equal(pet.stats.Brewing,500)

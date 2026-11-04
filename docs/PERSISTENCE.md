@@ -1,4 +1,4 @@
-# M3 player persistence
+# M4 player persistence
 
 ## Scope and verification status
 
@@ -12,9 +12,10 @@ failed loads, invalid profiles, and save/release concurrency. Passing these test
 does **not** verify Roblox Studio, real DataStore quotas/latency, or production
 shutdown behavior. The integration checklist below remains a release gate.
 
-This adapter is not a two-player trade transaction system. Trading, paid
-purchases and receipt processing are not implemented by it. M1 adds an optional,
-pure gameplay-profile migration hook; it does not change the lease protocol.
+This adapter remains a **single-profile** lease/revision boundary. M4 builds a
+separate durable journal/coordinator on top; two profile writes alone are not an
+atomic exchange. Paid purchases and platform receipt processing remain absent.
+The pure migration hook and ordinary lease protocol remain in use.
 
 ## Construction and public contract
 
@@ -50,7 +51,10 @@ Methods use colon syntax:
 | --- | --- |
 | `store:load(userId, createProfileFn)` | Returns the live profile or `nil, errorCode`. The zero-argument factory runs outside the DataStore callback. Its result initializes only a missing key. |
 | `store:get(userId)` | Returns the live in-memory table or `nil`. This alone does **not** authorize mutation. |
-| `store:isWritable(userId)` | True only while the local session is usable and its confirmed lease has sufficient time remaining. |
+| `store:isWritable(userId)` | True only while the local session is usable, its confirmed lease has sufficient time remaining, and no persistent trade is pending. |
+| `store:hasLease(userId)` | Internal recovery check: same lease/session fences, allowing persistent trade pending. Not permission for ordinary gameplay. |
+| `store:loadExisting(userId, placeholderFn)` | Recovery load under a new normal lease; missing keys fail closed, placeholder is never written. |
+| `store:transactTrade(userId, transform)` | Trusted server-only reserve/apply/clear port; same gate, validation, lease, revision and unknown-outcome fences as transact. Never expose a transform to clients. |
 | `store:save(userId)` | Returns `true` after a confirmed snapshot write and lease renewal, otherwise `false, errorCode`. |
 | `store:transact(userId, transform)` | Runs a non-yielding trusted transform on an isolated candidate under the same gate. Confirms its atomic save before replacing live state. Returns `true, result` only after confirmation or a previously committed receipt replay. |
 | `store:release(userId)` | Freezes new gameplay, persists the latest safe snapshot, and clears its own lease. A duplicate successful release is a no-op. |
@@ -122,7 +126,7 @@ backend state over guessing whether a previous write succeeded.
   never activate the Studio in-memory backend.
 - Invalid/future envelope or profile schemas fail closed. Migration must be added
   explicitly and tested; there is no automatic reset to a new player. Only the
-  explicit gameplay V1/V2/V3→V4 migration is supported.
+  explicit gameplay V1/V2/V3/V4→V5 migration is supported.
 - Failed saves pause gameplay writes. A subsequent save can recover while the
   adapter can still prove ownership of an unexpired lease. Expired, lost, or
   conflicting leases cannot be reclaimed by saving a stale local snapshot.
@@ -138,15 +142,15 @@ backend state over guessing whether a previous write succeeded.
   successful final network write. The runtime uses a bounded shutdown wait; an
   individual in-flight Roblox API call is not cancellable by this adapter.
 - No MemoryStore or server-RAM log substitutes for persistent ownership records.
-  Safe future P2P trading requires a separate durable transaction/escrow protocol;
+  M4 uses the separate [durable exchange protocol](M4_TRADING.md);
   two profile saves are not an atomic exchange.
 - `receipts`/`entitlements` fields in a profile are reserved data. Their presence
   is not an implementation of Roblox purchase receipt validation or fulfilment.
 
-## Historical V1 → V2 conversion, retained inside V1 → V4
+## Historical V1 → V2 conversion, retained inside V1 → V5
 
 The DataStore **envelope remains version 1** and the namespace is unchanged, so
-existing keys are found. `Factory.validate` accepts only current V4 gameplay
+existing keys are found. `Factory.validate` accepts only current V5 gameplay
 profiles. For V1, `Factory.migrate` first checks the previous shape/invariants,
 then copies it and initializes empty machine Essence tanks/quest queues, a pipe
 cursor, tutorial facts and diagnostic tables. Existing balances, paid jobs,
@@ -207,7 +211,7 @@ future records remain untouched. V3 cannot be written by M1 servers: use a coher
 private QA rollout and backed-up keys; do not downgrade by resetting migrated data.
 Real rollback/recovery and platform quotas/latency remain **BLOCKED (D1/S1)**.
 
-## Gameplay V1/V2/V3 → V4 and progression recovery
+## Historical V1/V2/V3 → V4 and progression recovery
 
 The envelope and namespace are unchanged. `LegacyConfig` freezes the M2 vocabulary
 so new slots/recipes/items cannot be smuggled into an old-version record. A captured
@@ -222,7 +226,7 @@ progression sequence 0, empty material-turn cursors and seven empty unbuilt slot
 New source cooldowns start at the saved simulation timestamp. Migration does not
 infer historical phase purchases or grant milestone items. V1/V2 first receive
 their historical M1/M2 additions; V3 collection metadata/receipts are not rebuilt.
-Current V4 records validate without conversion. Unexpected progression fields in
+V4 records validate before the subsequent V5 conversion. Unexpected progression fields in
 an old version, future schemas, out-of-range cursors and invalid technology/owner/
 bonus/equipment state fail closed without a default overwrite.
 
@@ -246,6 +250,59 @@ and stale lease rejection. These are fake-backend results. V4 cannot be downgrad
 to an M2 server: use coherent private QA deployment and backed-up keys. Real
 DataStore/PolicyService and multi-client recovery remain **BLOCKED (D1/S1)**.
 
+## Gameplay V1/V2/V3/V4 → V5 and trade recovery
+
+The envelope stays version 1 and existing player keys/namespaces stay unchanged.
+A genuine V4 fixture was captured and validated on M3 PR #9 at
+`2d9e6eb6dbb3417ec4a5aa3438bf9d3b035b39e9`. V4 validation uses the M3 vocabulary;
+V1/V2/V3 retain frozen LegacyConfig validation and their prior conversions. V5
+adds only `trade={sequence=0}` after old conversions. It does not rewrite V3/V4
+pets, rolls, paid ancestry, cauldrons, serials, receipts, factory buffers/jobs,
+fairness cursors, balances, tutorial, timestamps or RNG. Future versions or any
+unexpected historical trade state fail closed before a backend write.
+
+New trade state contains a monotonic sequence, one last decision receipt, and
+optional `{id,hash,sequence,stage}` pending marker. An applied pending marker must
+match its receipt. Reserve increments sequence and freezes the entire profile;
+ordinary transact and pure economic functions refuse it. Ordinary save/release
+can persist only an unchanged pending profile, preserving the reservation while
+renewing/releasing the lease. An unknown trade write fences the old memory exactly
+like an unknown collection commit. Callback-time clock checks prevent queued
+requests from using an expired dispatch-time lease.
+
+The journal is separate (`TradeJournalName`); configure it alongside the player
+namespace. A 16-shard, 128-entry-per-shard durable registry admits UUID/hash/deadline
+before journal creation. It bounds retained journals to 2048 and drives recovery
+independently of player activity. Full shards stop new admission; never evict
+unfinished records. The journal CAS decides COMMIT or ABORT once. Apply is
+idempotent; both profiles must acknowledge apply before either reservation is
+cleared. COMPLETE compacts snapshots, then retains audit metadata for seven days.
+Confirmed deletion precedes registry removal; expired registration-only orphans
+are removed only after a consistent missing-journal read. Full ordering, proof
+and request budgets are in [M4_TRADING.md](M4_TRADING.md).
+
+On login, pending recovery precedes inventory, offline simulation and gameplay.
+The server uses its own valid lease for local profiles and ordinary temporary
+recovery leases for absent users. Foreign live leases block recovery. It never
+creates a missing participant record or resets a bad journal/profile. A surviving
+server periodically resolves decided/expired journals even when both players
+never return and TradingEnabled is false. Availability waits for backend and lease
+recovery; timeout alone never rolls back a COMMIT. Simulation resumes with the
+same saved timestamp and existing catch-up rules after settlement.
+
+Historical Fuse metadata cannot prove that all consumed ancestors were known.
+Such pets and Legacy pets remain usable but untradeable, without changing their
+saved data. New Fuse carries `tradeKnown` as AND of parent proofs, independently
+of paidDerived OR; unknown ancestry cannot become tradeable by repeated fusion.
+All known items require fresh explicit trading permission for both users.
+
+Portable evidence: 404 retained + 177 M4 tests, faults before/after each of 16
+durable calls, lost replies/callback replay, old-server fencing, reverse login,
+absent recovery, policy/provenance, registry bounds/GC and V4 field equality.
+Real storage, shutdown/reconnect, PolicyService and mobile/multiplayer acceptance
+remain **BLOCKED**. V5 cannot be downgraded by older servers; deploy coherent
+versions only to the isolated private QA environment before any live acceptance.
+
 ## Studio and real-backend acceptance checklist
 
 Use a **separate private test experience and a dedicated QA DataStore name**.
@@ -264,7 +321,8 @@ With `UseMemoryInStudio = true`, run a local multi-client test and confirm:
 
 ### Isolated real DataStore mode
 
-Set `UseMemoryInStudio = false`, select a QA-only `DataStoreName`, and enable the
+Set `UseMemoryInStudio = false`, select QA-only `DataStoreName` and
+`TradeJournalName`, and enable the
 necessary Studio API access for that private test experience. Verify:
 
 - Earn currency, start a production job, make assignments, leave, and rejoin.

@@ -220,7 +220,11 @@ function ProfileStore:_update(key, transform)
 		local rejection = nil
 		local ok, result = pcall(function()
 			return self._dataStore:UpdateAsync(key, function(current)
-				local replacement, reason = transform(current, attemptNow)
+				-- The request may have waited in a platform queue or replayed its
+				-- callback. Check lease expiry at callback time, not dispatch time.
+				local callbackNow=self:_now()
+				if not callbackNow then rejection="invalid_clock"; return nil end
+				local replacement, reason = transform(current, callbackNow)
 				rejection = reason
 				return replacement
 			end)
@@ -242,7 +246,7 @@ function ProfileStore:_update(key, transform)
 	return nil, "data_store_unavailable"
 end
 
-function ProfileStore:load(userId, createProfileFn)
+function ProfileStore:load(userId, createProfileFn, existingOnly)
 	local key = keyFor(userId)
 	if not key then
 		return nil, "invalid_user_id"
@@ -270,6 +274,7 @@ function ProfileStore:load(userId, createProfileFn)
 		end
 		local result, updateReason = self:_update(key, function(current, now)
 			if current == nil then
+				if existingOnly then return nil,"record_missing" end
 				return {
 					schemaVersion = RECORD_VERSION,
 					profile = copy(defaultProfile),
@@ -334,7 +339,7 @@ function ProfileStore:get(userId)
 	return entry and entry.profile or nil
 end
 
-function ProfileStore:isWritable(userId)
+function ProfileStore:hasLease(userId)
 	local key = keyFor(userId)
 	local entry = key and self._entries[key]
 	if not entry or entry.readOnly or entry.lost or entry.closing or entry.invalidated or entry.transactionPending then
@@ -342,6 +347,17 @@ function ProfileStore:isWritable(userId)
 	end
 	local now = self:_now()
 	return now ~= nil and now < entry.leaseExpiresAt - self._safetyMargin
+end
+
+function ProfileStore:isWritable(userId)
+	local profile=self:get(userId)
+	return self:hasLease(userId) and not (profile and profile.trade and profile.trade.pending)
+end
+
+-- Recovery can acquire an existing profile but must never create a missing one.
+-- A valid placeholder is used only for adapter shape validation, never written.
+function ProfileStore:loadExisting(userId, placeholder)
+	return self:load(userId,placeholder,true)
 end
 
 -- Quarantine a possibly partially mutated profile after a simulation exception.
@@ -364,7 +380,15 @@ function ProfileStore:invalidate(userId)
 	return true
 end
 
-function ProfileStore:_saveLocked(key, releasing, candidate)
+local function equal(a,b)
+	if type(a)~=type(b) then return false end
+	if type(a)~="table" then return a==b end
+	for k,v in pairs(a) do if not equal(v,b[k]) then return false end end
+	for k in pairs(b) do if a[k]==nil then return false end end
+	return true
+end
+
+function ProfileStore:_saveLocked(key, releasing, candidate, tradeWrite)
 	local entry = self._entries[key]
 	if not entry then
 		if releasing then
@@ -428,6 +452,8 @@ function ProfileStore:_saveLocked(key, releasing, candidate)
 		if current.revision ~= expectedRevision then
 			return nil, "revision_conflict"
 		end
+		if not tradeWrite and ((current.profile.trade and current.profile.trade.pending) or (snapshot.trade and snapshot.trade.pending))
+			and not equal(snapshot,current.profile) then return nil,"trade_pending" end
 		return {
 			schemaVersion = RECORD_VERSION,
 			profile = copy(snapshot),
@@ -474,11 +500,11 @@ end
 
 -- Freeze an isolated candidate, commit with the same lease/revision fencing, and
 -- only then replace live state. transform must not yield or perform external I/O.
-function ProfileStore:transact(userId, transform)
+function ProfileStore:_transact(userId, transform, allowTrade)
 	local key = keyFor(userId)
 	if not key or type(transform) ~= "function" then return false, "invalid_transaction" end
 	local entered, success, result = self:_guarded(key, function()
-		if not self:isWritable(userId) then return false, "profile_read_only" end
+		if not (allowTrade and self:hasLease(userId) or not allowTrade and self:isWritable(userId)) then return false, "profile_read_only" end
 		local entry = self._entries[key]
 		local candidate, reason = self:_snapshot(entry.profile, userId)
 		if not candidate then return false, reason end
@@ -492,7 +518,7 @@ function ProfileStore:transact(userId, transform)
 			entry.transactionPending = false
 			return true, response -- A receipt from previously confirmed live state.
 		end
-		local saved, failure = self:_saveLocked(key, false, candidate)
+		local saved, failure = self:_saveLocked(key, false, candidate, allowTrade)
 		entry.transactionPending = false
 		if not saved or entry.invalidated then
 			-- An unknown write outcome must never be followed by saving the old live
@@ -504,6 +530,15 @@ function ProfileStore:transact(userId, transform)
 	end)
 	if not entered then return false, success end
 	return success, result
+end
+
+function ProfileStore:transact(userId, transform)
+	return self:_transact(userId,transform,false)
+end
+
+-- Server-only recovery port. Never exposed through a client transform/payload.
+function ProfileStore:transactTrade(userId, transform)
+	return self:_transact(userId,transform,true)
 end
 
 function ProfileStore:save(userId)

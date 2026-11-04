@@ -69,6 +69,7 @@ function Progression.new(config)
 		return true
 	end
 	function service.apply(p,action,payload,engine,now)
+		if p.trade and p.trade.pending then return false,"Trade recovery pending" end
 		if not actions[action] or not Protocol.validate(action,payload) then return false,"Invalid progression intent" end
 		local progress=p.progression; local key=fingerprint(action,payload)
 		if payload.requestId==progress.sequence and progress.last then
