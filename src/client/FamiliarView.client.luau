@@ -15,6 +15,9 @@ local function discover(anchor)
 	pet.Name, pet.Shape, pet.Size = "WorkerProxy", Enum.PartType.Ball, Vector3.new(2.4, 2.4, 2.4)
 	pet.Anchored, pet.CanCollide, pet.CanTouch, pet.CanQuery, pet.CastShadow = true, false, false, false, false
 	pet.Material, pet.Transparency, pet.Parent = Enum.Material.SmoothPlastic, 1, folder
+	local a,b=Instance.new("Attachment"),Instance.new("Attachment"); a.Position,b.Position=Vector3.new(0,0.6,0),Vector3.new(0,-0.6,0); a.Parent,b.Parent=pet,pet
+	local trail=Instance.new("Trail"); trail.Name="GhostTrail"; trail.Attachment0,trail.Attachment1=a,b; trail.Lifetime=0.6
+	trail.Color=ColorSequence.new(Color3.fromRGB(120,234,247),Color3.fromRGB(165,116,240)); trail.LightEmission=0.6; trail.Enabled=false; trail.Parent=pet
 	proxies[anchor] = pet
 	local crate = Instance.new("Part")
 	crate.Name, crate.Size = "QuestCrate", Vector3.new(2, 2, 2)
@@ -37,11 +40,14 @@ RunService.RenderStepped:Connect(function()
 		elseif anchor:GetAttribute("WorkerId") then
 			pet.Transparency = 0
 			pet.Color = colors[anchor:GetAttribute("WorkerSpecies")] or Color3.fromRGB(190, 190, 210)
+			local species=anchor:GetAttribute("WorkerSpecies"); local ghost=species=="ghost_wolf" or species=="ghost_alpha"
+			pet.GhostTrail.Enabled=ghost; pet.Material=ghost and Enum.Material.Neon or Enum.Material.SmoothPlastic
+			if ghost then pet.Color=Color3.fromRGB(120,234,247); pet.Transparency=0.2 end
 			local position = anchor.Position + Vector3.new(5, 1.5 + math.sin(time * 2) * 0.2, 0)
 			local from, destination, progress = anchor:GetAttribute("HaulFrom"), anchor:GetAttribute("HaulTo"), anchor:GetAttribute("HaulProgress")
 			if from and destination and progress then position = from:Lerp(destination, progress) + Vector3.new(0, 3, 0) end
 			pet.CFrame = pet.CFrame:Lerp(CFrame.new(position), 0.2)
-		else pet.Transparency = 1 end
+		else pet.Transparency = 1; pet.GhostTrail.Enabled=false end
 		local crate = crates[anchor]
 		if crate then
 			local item = anchor:GetAttribute("CargoItem")

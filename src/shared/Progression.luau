@@ -3,6 +3,7 @@
 local runtimeScript=rawget(getfenv(),"script")
 local Protocol=require(runtimeScript and runtimeScript.Parent.Protocol or "./Protocol")
 local Epochs=require(runtimeScript and runtimeScript.Parent.Epochs or "./Epochs")
+local Origin=require(runtimeScript and runtimeScript.Parent.ItemOrigin or "./ItemOrigin")
 local Progression={}
 local actions={build=true,advancePhase=true,equipCauldron=true,lockCauldron=true}
 local function integer(v,lo,hi) return type(v)=="number" and v==v and v%1==0 and v>=lo and v<=hi end
@@ -54,8 +55,7 @@ function Progression.new(config)
 		for key,item in pairs(p.cauldrons) do
 			count+=1; local def=plain(item) and config.cauldronTypes[item.type]
 			if not id(key) or not def or item.id~=key or item.ownerId~=p.userId or item.bonus~=def.bonus
-				or type(item.locked)~="boolean" or not plain(item.provenance) or item.provenance.source~="phase3"
-				or type(item.provenance.paidDerived)~="boolean" then return false end
+				or type(item.locked)~="boolean" or not Origin.cauldron(config,item) then return false end
 		end
 		if count>16 then return false end
 		local equipped={}

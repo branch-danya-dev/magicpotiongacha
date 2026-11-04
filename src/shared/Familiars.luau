@@ -1,13 +1,15 @@
 --!nonstrict
 -- Pure collection data/model. No server RNG, clocks, service calls or rewards here.
 local Familiars = {}
+local runtimeScript=rawget(getfenv(),"script")
+local Origin=require(runtimeScript and runtimeScript.Parent.ItemOrigin or "./ItemOrigin")
 function Familiars.provenanceKnown(pet)
 	local origin=pet.provenance
 	return type(origin)=="table" and origin.source~="legacy" and origin.tradeKnown~=false
 		and (origin.source~="fuse" or origin.tradeKnown==true)
 end
 local skills = { "Farming", "Hauling", "Brewing" }
-local sources = { starter = true, hire = true, shop = true, gacha = true, fuse = true, legacy = true, rebirth_shop=true, calendar=true }
+local sources = { starter = true, hire = true, shop = true, gacha = true, fuse = true, legacy = true, rebirth_shop=true, calendar=true,event_gold=true,developer_product=true }
 local function integer(value, lo, hi)
 	return type(value) == "number" and value == value and value % 1 == 0 and value >= lo and value <= hi
 end
@@ -81,6 +83,8 @@ function Familiars.new(config)
 				and (pet.species == "farmer" or pet.species == "slime" or pet.species == "brewer") and #origin.parents == 0
 		end
 		if pet.rarity ~= def.rarity or pet.evolution ~= def.evolution then return false end
+		if (origin.source=="event_gold" or origin.source=="developer_product") and not Origin.event(config,origin,"pet",pet.species) then return false end
+		if def.visual=="ghost" and origin.source~="fuse" and not Origin.event(config,origin,"pet",pet.species) then return false end
 		if #origin.parents ~= (origin.source == "fuse" and config.collection.fuseCount or 0) then return false end
 		for _, skill in ipairs(skills) do
 			local range = def.ranges[skill]

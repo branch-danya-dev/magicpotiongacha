@@ -149,7 +149,7 @@ return function(T: any)
 	end
 	T.test("M2: improving any parent stat cannot weaken Fuse across all allowed integers",function()
 		for species,def in pairs(Config.petSpecies) do
-			if def.fuseTo then
+			if def.fuseTo and Config.familiarShop[species] then -- M2 permanent-shop families; M6 seasonal Fuse has its own acquisition/provenance tests.
 				local h=H.new(); local ids=h.buyFive(species)
 				for skill,range in pairs(def.ranges) do
 					local last=-1

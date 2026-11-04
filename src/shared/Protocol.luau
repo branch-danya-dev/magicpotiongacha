@@ -38,6 +38,10 @@ type GateData = {
 export type Gate = typeof(setmetatable({} :: GateData, Protocol))
 
 local SCHEMAS: { [string]: { [string]: string } } = {
+	buyEventGold = { offerId="id",confirmed="true",requestId="sequence" },
+	deliverPurchases = { requestId="sequence" },
+	requestPurchase = { offerId="id" },
+	refreshPurchases = {},
 	rebirth = { expectedRebirthCount="level",confirmed="true",requestId="sequence" },
 	buyRebirthPerk = { perkId="id",expectedLevel="level",requestId="sequence" },
 	chooseRebirthPet = { offerId="id",confirmed="true",requestId="sequence" },

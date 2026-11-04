@@ -2,6 +2,72 @@
 
 CLI/CI passing is necessary but does not mark any item below as completed.
 
+## M6 implementation record — 2026-11-05
+
+Scope: [Issue #14](https://github.com/branch-danya-dev/magicpotiongacha/issues/14).
+Branch `feat/m6-collectible-monetization`, stacked on open/unmerged Draft
+[PR #13](https://github.com/branch-danya-dev/magicpotiongacha/pull/13), branch
+`feat/m5-rebirth-epochs-dailies`, base SHA
+`9da973f221ee162660184ae7da80953631c5b5b7`.
+Rules/protocol in M6_MONETIZATION were recorded before code changes. No merge,
+Roblox publication, real purchase or live acceptance was performed.
+**MonetizationEnabled=false, PurchaseQAApproved=false, all SKUs=0,
+TradingEnabled=false. All live gates remain BLOCKED.**
+
+| Issue #14 criterion | Portable implementation / evidence | Remaining live evidence |
+| --- | --- | --- |
+| Fixed catalogue, honest UTC windows and disabled SKU | `m6_model.spec`: before/start/inside/end/after, malformed config, default switches, exact shapes rejecting price/clock/owner/proof; server rechecks identity/proximity/availability | Real Dashboard IDs, actual price, native prompt and date approval |
+| Same earned/paid outcomes; no sold currency/resources/randomness | Exact pet/cauldron comparison, cosmetic changes only entitlement, no bonus balance, no chance modifier; server grant port never exposed through remotes | Product/pass settings and disclosure |
+| Three attainable F2P routes | `m6_acceptance.spec`: new, genuinely earned Rebirth veteran, restricted/no-gacha/no-trade; both seasonal items; exact income/spend/action traces in M6_MONETIZATION | Human pacing/retention unmeasured |
+| Measured bounded production effect | Tier 1/2/3 single-carrier delivery, capped stats, captured brew duration, same inputs/chance, no slot/recipe/input bypass; Gold/paid 7200-s parity | Real rendering, phone performance and full-load supply bottlenecks |
+| Four-boundary purchase recovery | `m6_receipt.spec`: each before/after crash, restart/new lease, transient lost replies, repeated callbacks, reentrant callbacks/two server coordinators, old writer fencing | Real DataStore budgets/timeouts/shutdown and Marketplace replay |
+| Exact purchase identity and archival grants | Wrong player/product/ID, unknown SKU, conflicting immutable grant, invalid future journal, separate genuine PurchaseIds, receipt after window/sales close, ack after player leave | Dashboard mapping review and real delayed callbacks |
+| Full-capacity delivery and no duplicate charge | 128 pets/16 cauldrons, durable queue/restart, actual Fuse releases space, Gold/delivery unknown-write retries, bounded history/queue with no eviction | Actual platform purchase with raced/full inventory, support UI |
+| Permanent pass ownership | True/false/error lookup, session change during yield, repeat positive ownership, each durable before/after fault; Gold gives same account cosmetic | Real ownership cache propagation and finished-event hint |
+| M2/M4 interoperability | Seasonal Fuse exact outcome, paid OR/known AND, paid pet/cauldron transfer then receipt replay, both-player policy denial, pending trade recovery and negotiation exclusion | Both actual policies, private transfer, disconnect/server switch |
+| M5 preservation and exclusion | Items, entitlements, paid provenance, queued rights and proofs survive real reset command; same value gate excludes receipt/reset race; original legacy-balance guard retained | Actual rejoin/Rebirth before/after payment and pending M4 |
+| V1–V6 → V7 | All original migration cases plus authentic V6 progressed/pending-COMMIT fixture; no old-field changes, no fabricated receipts; future save never reset | Disposable real old-schema keys and coherent V7 rollout |
+| Shop UI has no authority | `m6_ui.spec`: three previews, distinct Gold review, stable retry, native prompt intent only, missing-price denial, ended/full/queued display, cancel/refresh | Portrait/landscape, joystick/camera, loading/error states |
+| Regression and build | **810 tests = all 696 inherited + 2 new generic-species cases + 112 dedicated M6**; 81 Luau sources; compile, portable analyze, Rojo place/sourcemap | Exact final SHA and Windows/Ubuntu CI jobs/artifacts recorded in Draft PR |
+
+No original case was removed. M2's permanent-shop Fuse loop still covers all its
+original families; the new seasonal family has separate acquisition/Fuse tests.
+Current-schema/future-schema assertions were advanced in the M5 persistence suite.
+Native adapters compile and package; CLI tests do not execute Roblox services.
+
+### M6 live acceptance steps — all BLOCKED
+
+- **Owner preparation:** approve provisional 5–19 November 2026 UTC event and Gold
+  prices/bonus; supply immutable product/pass IDs and real Dashboard prices; close
+  external sales consistently with the window. Preserve released mapping archives.
+  Use separate QA profile/trade/receipt stores and a private allowlisted place.
+  No task here authorizes real spending or publication.
+- **S1 / Marketplace:** in an explicitly authorized QA session with real persistence,
+  review all three previews/Gold prices/native platform prices. Cancel a native
+  prompt, then separately approve a genuine product/pass test. Confirm no grant
+  from product-finished events; repeat receipt and rejoin; verify pass lookup.
+  Disable flags/API access and confirm Gold and normal production remain usable.
+- **D1 / durability:** force authorized QA disconnections/controlled store failures
+  around each recorded boundary; rejoin another server, inspect proof and original
+  instance identity. Test full inventories, queued recovery, event ending while
+  payment is pending, mapping conflict, unavailable player, server close and pass
+  query delay. Never edit/delete proofs to make a purchase appear successful.
+- **P1 / trading and Rebirth:** separately approve private M4 testing, check both
+  players' real policy before commit; transfer seasonal items, Fuse paid ancestry,
+  replay original receipt, then reset a completed factory. During negotiation or
+  recovery, new grants wait. Verify queue/rights survive reset and no legacy paid
+  balance disappears. Restore TradingEnabled=false after QA.
+- **M1 / phone:** small portrait and landscape, all three cards, review/confirm,
+  native prompt price, ended/owned/queued/delivered messages, repeated taps,
+  close/reopen, joystick/camera and ghost-trail/brewing-light readability.
+- **P2 / 2–8 clients:** concurrent callbacks, trades, resets, quit/rejoin and delayed
+  session cleanup; measure actual frame/server time, replication and datastore
+  budget. Record device, Studio/Roblox version, tested SHA and namespaces.
+
+Every unchecked live item remains a release gate. M7 art/audio/mobile optimization
+is the next roadmap stage and is not claimed complete here. Older records below
+are historical evidence for their own milestone.
+
 ## M5 implementation record — 2026-11-05
 
 Scope: [Issue #12](https://github.com/branch-danya-dev/magicpotiongacha/issues/12).

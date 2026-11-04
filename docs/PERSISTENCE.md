@@ -1,4 +1,4 @@
-# M5 player persistence
+# M6 player persistence
 
 ## Scope and verification status
 
@@ -14,7 +14,8 @@ shutdown behavior. The integration checklist below remains a release gate.
 
 This adapter remains a **single-profile** lease/revision boundary. M4 builds a
 separate durable journal/coordinator on top; two profile writes alone are not an
-atomic exchange. Paid purchases and platform receipt processing remain absent.
+atomic exchange. M6 adds a separate receipt journal and reconciliation coordinator;
+its journal/profile writes are likewise separate durability boundaries.
 The pure migration hook and ordinary lease protocol remain in use.
 
 ## Construction and public contract
@@ -126,7 +127,7 @@ backend state over guessing whether a previous write succeeded.
   never activate the Studio in-memory backend.
 - Invalid/future envelope or profile schemas fail closed. Migration must be added
   explicitly and tested; there is no automatic reset to a new player. Only the
-  explicit gameplay V1/V2/V3/V4/V5→V6 migration is supported.
+  explicit gameplay V1/V2/V3/V4/V5/V6→V7 migration is supported.
 - Failed saves pause gameplay writes. A subsequent save can recover while the
   adapter can still prove ownership of an unexpired lease. Expired, lost, or
   conflicting leases cannot be reclaimed by saving a stale local snapshot.
@@ -147,10 +148,10 @@ backend state over guessing whether a previous write succeeded.
 - `receipts`/`entitlements` fields in a profile are reserved data. Their presence
   is not an implementation of Roblox purchase receipt validation or fulfilment.
 
-## Historical V1 → V2 conversion, retained inside V1 → V6
+## Historical V1 → V2 conversion, retained inside V1 → V7
 
 The DataStore **envelope remains version 1** and the namespace is unchanged, so
-existing keys are found. `Factory.validate` accepts only current V6 gameplay
+existing keys are found. `Factory.validate` accepts only current V7 gameplay
 profiles. For V1, `Factory.migrate` first checks the previous shape/invariants,
 then copies it and initializes empty machine Essence tanks/quest queues, a pipe
 cursor, tutorial facts and diagnostic tables. Existing balances, paid jobs,
@@ -327,7 +328,7 @@ Rebirth uses ordinary single-key `transact`, never `transactTrade`. It rejects a
 active negotiation/pending trade, revalidates the expected cycle and actual final
 production after simulating to server now, clears only the documented factory
 fields, then atomically saves count + one shard + receipt + timestamp. Paid positive
-Gold/Essence is blocked pending M6 rules. Exact latest replay grants nothing; older
+Gold/Essence remains blocked for individual reconciliation under M6. Exact latest replay grants nothing; older
 IDs stay stale even after the last receipt changes. M2/M3/M4 histories are untouched.
 
 All six M5 commands share this gate and unknown-write fencing. Before/after-write
@@ -382,6 +383,55 @@ necessary Studio API access for that private test experience. Verify:
 
 Record the tested build SHA, Studio/platform version, test experience and namespace,
 scenarios, and observed results before enabling real players.
+
+## Gameplay V1–V6 → V7 and purchase durability — M6
+
+The envelope, lease and revision protocol remain unchanged. V7 adds only an empty
+`monetization={sequence=0,receipts={},passes={}}` to migrated data. V6 epoch stock,
+archive, daily/calendar history and pending M4 state are validated as V6, rather
+than against pre-epoch rules. `fixtures/m5-progression-pending.luau` was captured
+from the actual PR #13 base before changing Config; every old field is compared.
+New seasonal metadata smuggled into old schemas and future/invalid V7 saves fail
+closed. An old server must not downgrade/write V7: drain old QA writers and deploy
+a coherent V7 build, retaining backups and the same profile namespace.
+
+`ReceiptJournalName` is separate from both profile and trade stores. SKU keys bind
+platform kind/id to a fixed grant hash permanently. Receipt keys use `r:` plus
+48 SHA-256 hex characters (50-byte DataStore key); the full hash and original
+PurchaseId/PlayerId/ProductId are compared in the value, so a collision denies
+rather than merges transactions. Profile proofs use the full hash, grant hash,
+ProductId, offerId, accepted time, queued/delivered status and original instance ID.
+Proofs survive transfer/Fuse/reset; absence of that item is not permission to grant.
+
+| Durable boundary | Crash before write | Lost reply / crash after write |
+| --- | --- | --- |
+| SKU immutable bind | Retry known config, no grant | Compare existing binding; mismatch denies |
+| Receipt RECORDED | Retry receipt, no ack | Same full identity resumes; no profile change assumed |
+| Profile proof + item/queue | No confirmed right, NotProcessedYet | Fence old session; new lease/load checks proof and does not insert again |
+| Receipt APPLIED | Confirm profile proof on replay then finalize | Terminal journal evidence permits ack, including after transfer/Fuse |
+
+The profile write linearizes the right; all four confirmations precede the first
+PurchaseGranted. There is no multi-key atomicity, distributed RAM lock or TTL-based
+deduplication. UpdateAsync callbacks are pure; journal CAS finishes before profile
+gating. Retry budgets are bounded. MarketplaceService owns replay of unacknowledged
+receipts on rejoin/new purchase. Already acknowledged profile queues retry on join
+or explicit delivery; no global journal scan or periodic receipt guarantee exists.
+
+Full collections queue the paid right; active/pending trades leave the durable
+receipt RECORDED/NotProcessedYet until replay after settlement. Prompt admission
+checks capacity but cannot prevent all platform/race cases. Old proof is never
+evicted: 4096 profile receipts and 64 queued rights are the current support limits.
+An excess external payment remains in the journal without an acknowledgment until
+a reviewed storage migration permits delivery. Gold full-capacity rejection does
+not charge. Game Pass ownership is queried server-side and saved through the same
+profile gate; a completion event alone grants nothing. No account entitlement is
+tradable. Positive legacy paid balances keep M5's reset block.
+
+All purchase fault adapters live in tests. Memory-mode Roblox sessions return
+NotProcessedYet and never impersonate platform receipts. Real QA requires separate
+profile, trade and receipt namespaces together, immutable real SKU mappings,
+explicit authorized spending and the live checklist in ACCEPTANCE. Keep sales and
+trading disabled until those results are recorded.
 
 ## References
 

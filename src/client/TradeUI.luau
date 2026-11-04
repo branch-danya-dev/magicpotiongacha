@@ -12,7 +12,7 @@ function TradeUI.new(config)
 			text..="\n"..item.rarity.." · эволюция "..item.evolution
 			for _,skill in ipairs({"Farming","Hauling","Brewing"}) do text..="\n"..skill..": "..item.stats[skill].." → "..((entry.effective or {})[skill] or 0) end
 			text..="\nСправа — предел на твоих текущих станциях; назначение отдельно."
-		else text..="\nТип: "..item.type.." · x2 +"..(item.bonus*100).." п.п. (общий предел "..(config.maxDoubleChance*100).."%)" end
+		else text..="\nТип: "..item.type.." · скорость варки +"..((item.brewSpeedBonus or 0)*100).."% · x2 +"..(item.bonus*100).." п.п. (общий предел "..(config.maxDoubleChance*100).."%)" end
 		text..="\n"..(item.locked and "Защищён" or "Не защищён").." · источник: "..tostring(origin and origin.source or "неизвестен")
 		text..="\nПлатное происхождение: "..(origin and origin.paidDerived and "да" or "нет")
 		if origin and origin.parents and #origin.parents>0 then text..="\nFuse: "..table.concat(origin.parents,", ") end

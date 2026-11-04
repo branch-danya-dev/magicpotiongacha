@@ -211,6 +211,8 @@ function World:update(player, profile)
 	local phase=self.callbacks.phaseState(profile)
 	local epoch=self.config.epochRules[profile.rebirths%3]; local color=Color3.fromRGB(table.unpack(epoch.color))
 	plot.model.Floor.Color=color:Lerp(Color3.fromRGB(45,45,50),0.55)
+	plot.model.Floor.Material=profile.entitlements.aurora_theme and Enum.Material.Neon or Enum.Material.Grass
+	if profile.entitlements.aurora_theme then plot.model.Floor.Color=Color3.fromRGB(96,116,168) end
 	local title=profile.entitlements.chrononaut and " · Хрононавт" or (profile.entitlements.chronicler and " · Летописец" or "")
 	plot.ownerLabel.Text = player.DisplayName .. title.." · "..epoch.name.."\n"..phase.name.." · цикл "..profile.rebirths
 	for _,module in ipairs(plot.architecture) do module.part.Transparency=module.phase==profile.phase and 0.35 or 1; module.part.Color=color end
@@ -229,6 +231,11 @@ function World:update(player, profile)
 			if definition.archetype=="cauldron" then
 				anchor.Material=station.level>=3 and Enum.Material.Metal or Enum.Material.SmoothPlastic
 				anchor.Color=station.level>=3 and Color3.fromRGB(115,192,204) or (station.level==2 and Color3.fromRGB(178,119,75) or COLORS.cauldron)
+				local item=station.cauldronId and profile.cauldrons[station.cauldronId]
+				if item and item.type=="spectral" then anchor.Color=Color3.fromRGB(119,225,237); anchor.Material=Enum.Material.Neon end
+				local glow=anchor:FindFirstChild("SpectralGlow")
+				if not glow then glow=Instance.new("PointLight"); glow.Name="SpectralGlow"; glow.Color=Color3.fromRGB(119,225,237); glow.Range=8; glow.Brightness=1.2; glow.Parent=anchor end
+				glow.Enabled=item~=nil and item.type=="spectral" and station.job~=nil
 			end
 			anchor:SetAttribute("WorkerId", station.workerId)
 			local pet = station.workerId and profile.pets[station.workerId]

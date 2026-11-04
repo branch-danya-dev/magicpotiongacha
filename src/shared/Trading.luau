@@ -3,6 +3,7 @@
 local runtimeScript=rawget(getfenv(),"script")
 local C=require(runtimeScript and runtimeScript.Parent.TradeCodec or "./TradeCodec")
 local Familiars=require(runtimeScript and runtimeScript.Parent.Familiars or "./Familiars")
+local Origin=require(runtimeScript and runtimeScript.Parent.ItemOrigin or "./ItemOrigin")
 local Trading={}
 local function integer(n,lo,hi) return type(n)=="number" and n==n and n%1==0 and n>=lo and n<=hi end
 local function plain(v) return type(v)=="table" and getmetatable(v)==nil end
@@ -43,7 +44,7 @@ function Trading.new(config)
 			for _,s in pairs(p.stations) do if s.workerId==itemId then return nil,"Unassign this familiar first" end end
 		else
 			if kind~="cauldron" or item.ownerId~=p.userId or not config.cauldronTypes[item.type]
-				or item.bonus~=config.cauldronTypes[item.type].bonus then return nil,"Invalid cauldron owner/type" end
+				or not Origin.cauldron(config,item) then return nil,"Invalid cauldron owner/type" end
 			for _,s in pairs(p.stations) do if s.cauldronId==itemId then return nil,"Unequip this cauldron first" end end
 		end
 		return {kind=kind,id=itemId,data=C.copy(item),timer=kind=="pet" and p.slimeWorkSeconds[itemId] or nil}
@@ -107,8 +108,7 @@ function Trading.new(config)
 						if entry.timer~=nil and (not config.petSpecies[entry.data.species].slimeProducer or not integer(entry.timer,0,config.slimePeriod-1)) then return false end
 					elseif entry.kind=="cauldron" then
 						local item,def=entry.data,config.cauldronTypes[entry.data.type]
-						if not def or item.ownerId~=side.userId or item.bonus~=def.bonus or not plain(item.provenance)
-							or item.provenance.source~="phase3" or type(item.provenance.paidDerived)~="boolean" or entry.timer~=nil then return false end
+						if not def or item.ownerId~=side.userId or not Origin.cauldron(config,item) or entry.timer~=nil then return false end
 					else return false end
 				end
 			elseif side.items~=nil then return false end

@@ -2,7 +2,7 @@
 local Test = require("./Test")
 local selected = ...
 
-assert(selected == nil or selected == "protocol" or selected == "profile_store" or selected == "factory" or selected == "acceptance" or selected == "m1" or selected == "m2" or selected == "m3" or selected == "m4" or selected == "m5", "Unknown test suite")
+assert(selected == nil or selected == "protocol" or selected == "profile_store" or selected == "factory" or selected == "acceptance" or selected == "m1" or selected == "m2" or selected == "m3" or selected == "m4" or selected == "m5" or selected == "m6", "Unknown test suite")
 
 if selected == nil or selected == "protocol" then
 	require("./protocol.spec")(Test)
@@ -50,5 +50,12 @@ if selected==nil or selected=="m5" then
 	require("./m5_trade.spec")(Test)
 	require("./m5_ui.spec")(Test)
 	require("./m5_acceptance.spec")(Test)
+end
+if selected==nil or selected=="m6" then
+	require("./m6_receipt.spec")(Test)
+	require("./m6_model.spec")(Test)
+	require("./m6_interop.spec")(Test)
+	require("./m6_acceptance.spec")(Test)
+	require("./m6_ui.spec")(Test)
 end
 Test.finish()
