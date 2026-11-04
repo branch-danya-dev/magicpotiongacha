@@ -111,16 +111,15 @@ function World.new(config, count, callbacks)
 				pad.Material = Enum.Material.Neon
 				pad.CanCollide = false
 				plot.pads[id], plot.padLabels[id] = pad, billboard(pad, "Улучшить", Vector3.new(0, 2.5, 0))
-				local lastTouch = {}
-				pad.Touched:Connect(function(hit)
-					local character = hit:FindFirstAncestorOfClass("Model")
-					local player = character and game:GetService("Players"):GetPlayerFromCharacter(character)
-					if not player or plot.owner ~= player then return end
-					local now = os.clock()
-					if now - (lastTouch[player.UserId] or -10) < 3 then return end
-					lastTouch[player.UserId] = now
+				-- Body-part contacts can recur while a player stays on a pad.
+				-- Spend Gold only after an explicit keyboard/gamepad/touch activation.
+				local purchasePrompt = prompt(pad, "Купить улучшение", title, function(player)
+					if plot.owner ~= player then return end
 					callbacks.action(player, "buy", { upgradeId = id })
 				end)
+				purchasePrompt.MaxActivationDistance = 8
+				purchasePrompt.HoldDuration = 0.5
+				purchasePrompt.KeyboardKeyCode = Enum.KeyCode.F
 			end
 		end
 	end
