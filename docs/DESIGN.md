@@ -45,7 +45,7 @@ Only a separate confirmed Rebirth transaction resets production or grants a shar
 
 ## Collection and policy — M2
 
-M2 implements per-instance uniform integer stat rolls, exact final-species weights, a fixed-stat shop, and deterministic five-parent evolution. [M2_RULES.md](M2_RULES.md) records the configuration, probability law, prices, inheritance formula, policy matrix and measured portable progression. These are provisional balance values. There are no Robux purchases, luck modifiers or paid rerolls.
+M2 implements per-instance uniform integer stat rolls, exact final-species weights, a fixed-stat shop, and deterministic five-parent evolution. [M2_RULES.md](M2_RULES.md) records the configuration, probability law, prices, inheritance formula, policy matrix and measured portable progression. These are provisional balance values. M6 adds separate fixed purchases; M2 has no paid randomness, luck modifiers or paid rerolls.
 
 Starter workers are granted once. Additional guaranteed workers can be earned without paid randomness. The restricted-user experience must remain a complete progression path. Paid randomness restrictions and paid-item trading permissions must be evaluated for each participant, with item provenance retained through fusion/transfers. Policy lookup failure must not enable a restricted feature.
 
@@ -80,8 +80,9 @@ mistaken-purchase/restricted routes. Model time is not measured retention.
 Earned shards buy capped industry/Essence perks, a title or one of three exact
 fixed-stat familiars. M5 uses the explicitly permitted direct-choice-first altar;
 there is no random shard summon or paid-shard purchase. M2 gacha keeps its policy
-and disclosure gates. Positive potentially paid Gold/Essence blocks Rebirth until
-M6 defines carry/refund/disclosure; permanent rights and consumed receipts persist.
+and disclosure gates. Positive potentially paid Gold/Essence blocks Rebirth pending
+individual reconciliation. M6 retains this guard; it never sells these currencies,
+silently clears legacy paid balances or invents refunds. Permanent rights and consumed receipts persist.
 
 Three daily goals use real manual Essence, manual online potion completions and
 NPC claims, with UTC day rotation and explicit durable rewards. Offline work and
@@ -127,9 +128,30 @@ be measured by the portable early-game scenarios, not treated as retention data.
   route once. No balance reset or repeated starter grants. Existing discovered
   recipes count as prior manual learning; no unrecorded income is invented.
 
+## Fixed collectible monetization — M6
+
+[M6_MONETIZATION.md](M6_MONETIZATION.md) records the protocol and provisional economics
+before implementation. Three fixed offers cover a seasonal Hauling familiar, an
+equippable +5% brew-speed cauldron and a permanent account cosmetic. Gold and native
+Roblox acquisition share exact gameplay/visual definitions. No currency, resource,
+phase skip, shard, spin or random-production chance boost is sold.
+
+The real UTC interval closes sale admission, never ownership, bonus or a paid
+delivery right. IDs and released grant definitions are immutable archives. Gold
+works without configured SKUs, policy availability or paid switches. One existing
+carrier, station caps, constructed/idle equipment, recipe and input prerequisites
+remain. Fixed effects use the same simulation and survive Rebirth. Fuse preserves
+paid ancestry with OR and origin knowledge with AND; M4 still checks both users.
+
+Paid spending defaults off and needs an explicitly configured private QA place,
+real persistence, SKUs and live acceptance. A native prompt is the only spending
+confirmation; completion callbacks are not evidence. Durable per-purchase proof
+survives transfers/Fuse, and a full inventory retains a queued right. No countdown
+resets, invented stock limits or hardcoded Robux prices are used.
+
 ## Remaining prototype simplifications
 
-- Familiar collection uses ten greybox species and three evolution families, with a fixed calendar reward. There is no general pet deletion, reroll, luck/pity modifier or monetization handler. Trading is private-QA-only until live acceptance.
+- Familiar collection has ten original species plus two fixed seasonal forms, four evolution families and a fixed calendar reward. There is no general pet deletion, reroll or luck/pity modifier. Payment integration and trading remain disabled pending live acceptance.
 - Thirteen fixed workplaces, one carrier and six processing slots; four functional phases with replaceable greybox architecture. No free placement or physical bottle simulation.
 - Simple local worker spheres and greybox scenery; no art acceptance or mobile FPS claim.
 - Prices, rates and probabilities are provisional configuration, not a monetization forecast.

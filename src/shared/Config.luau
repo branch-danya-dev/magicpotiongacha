@@ -1,6 +1,6 @@
 -- Pure data: all economy values are provisional and can be tuned without changing the engine.
 local Config = {
-	schemaVersion = 6,
+	schemaVersion = 7,
 	trading = { maxItems=6,maxCauldrons=16,prepareSeconds=120,inviteSeconds=30,negotiateSeconds=300,
 		inviteCooldown=15,retentionSeconds=604800,journalShards=16,journalCapacity=128,scanPerPass=1,recoverySeconds=30 },
 	maxOfflineSeconds = 7200,
@@ -262,4 +262,19 @@ Config.longTerm={
 	calendar={{gold=30},{essence=25},{gold=60},{essence=50},{gold=90},{essence=75},{gold=140}},
 	calendarPet="moon_cat",
 }
+-- Released grant definitions are immutable archives: close offers, never reuse IDs or nerf owned instances.
+Config.petSpecies.ghost_wolf={name="Призрачный Волк",rarity="Rare",evolution=1,fuseTo="ghost_alpha",visual="ghost",
+	ranges={Farming={10,10},Hauling={28,28},Brewing={8,8}}}
+Config.petSpecies.ghost_alpha={name="Призрачный Вожак",rarity="Legendary",evolution=2,visual="ghost",
+	ranges={Farming={15,15},Hauling={34,34},Brewing={13,13}}}
+Config.cauldronTypes.spectral={name="Призрачный котёл",bonus=0,brewSpeedBonus=0.05,visual="spectral"}
+Config.events={spectral_2026={name="Призрачная коллекция",startAtUtc=1793836800,endAtUtc=1795046400}}
+Config.monetization={maxReceipts=4096,maxQueued=64,offerOrder={"ghost_wolf_v1","spectral_cauldron_v1","aurora_theme_v1"},offers={
+	ghost_wolf_v1={name="Призрачный Волк",version=1,kind="pet",species="ghost_wolf",stats={Farming=10,Hauling=28,Brewing=8},
+		eventId="spectral_2026",goldCost=1800,platformKind="product",enabled=true,supportedEpochs={true,true,true},effect="Hauling 28, ограничен уровнем логистики; один перевозчик",visual="ghost"},
+	spectral_cauldron_v1={name="Призрачный котёл",version=1,kind="cauldron",cauldronType="spectral",bonus=0,brewSpeedBonus=0.05,
+		eventId="spectral_2026",goldCost=2600,platformKind="product",enabled=true,supportedEpochs={true,true,true},effect="+5% скорости варки; без бонуса случайного выпуска; построенный слот и все ингредиенты обязательны",visual="spectral"},
+	aurora_theme_v1={name="Сияние Авроры",version=1,kind="cosmetic",entitlement="aurora_theme",eventId="permanent",goldCost=4500,
+		platformKind="pass",enabled=true,supportedEpochs={true,true,true},effect="Только свечение лаборатории; без влияния на производство",visual="aurora"},
+}}
 return Config

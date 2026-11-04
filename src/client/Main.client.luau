@@ -10,10 +10,15 @@ local tradeUI = require(script.Parent.TradeUI).new(Config)
 local longTermUI = require(script.Parent.LongTermUI).new(Config)
 local LongTerm = require(shared.LongTerm)
 local Codec = require(shared.TradeCodec)
+local Monetization = require(shared.Monetization)
+local shopUI = require(script.Parent.ShopUI).new()
+local shopPreview = require(script.Parent.ShopPreview)
+local MarketplaceService = game:GetService("MarketplaceService")
 local remotes = ReplicatedStorage.PotionTycoon:WaitForChild("Remotes")
 local Action, State, Notice, Focus = remotes:WaitForChild("Action"), remotes:WaitForChild("State"), remotes:WaitForChild("Notice"), remotes:WaitForChild("Focus")
 local Ready = remotes:WaitForChild("Ready")
 local TradeState = remotes:WaitForChild("TradeState")
+local PurchasePrompt = remotes:WaitForChild("PurchasePrompt")
 
 local gui = Instance.new("ScreenGui")
 gui.Name, gui.ResetOnSpawn = "PotionTycoonUI", false
@@ -62,8 +67,8 @@ local function send(action, payload)
 			or (id == "warehouse" and state.warehouseLevel or state.stations[id].level)
 		action = "build"
 	end
-	if collectionActions[action] or progressionActions[action] or LongTerm.isAction(action) then
-		payload.requestId = payload.requestId or (LongTerm.isAction(action) and state.longTerm.requestId or (progressionActions[action] and state.progression.sequence or state.collection.sequence)+1)
+	if collectionActions[action] or progressionActions[action] or LongTerm.isAction(action) or Monetization.isAction(action) then
+		payload.requestId = payload.requestId or (Monetization.isAction(action) and state.shop.sequence+1 or LongTerm.isAction(action) and state.longTerm.requestId or (progressionActions[action] and state.progression.sequence or state.collection.sequence)+1)
 		collectionPending = true
 		pendingGeneration += 1
 		local generation = pendingGeneration
@@ -133,6 +138,21 @@ contents.Parent = panel
 local guide = button(gui, "Обучение · загрузка…", function() end)
 guide.BackgroundColor3 = ACCENT
 local draw, refresh
+local prices={}
+local function shopPrice(card)
+	if not card.robuxAvailable or card.sku<=0 then return nil end
+	local cached=prices[card.offerId]; local now=os.clock()
+	if cached and cached.sku==card.sku and now<cached.untilTime then return cached.price end
+	local entry={sku=card.sku,untilTime=now+30}; prices[card.offerId]=entry
+	task.spawn(function()
+		local ok,info=pcall(MarketplaceService.GetProductInfoAsync,MarketplaceService,card.sku,card.platformKind=="product" and Enum.InfoType.Product or Enum.InfoType.GamePass)
+		if prices[card.offerId]~=entry then return end
+		if ok and info and info.IsForSale==true and type(info.PriceInRobux)=="number" and info.PriceInRobux>=0 then entry.price=info.PriceInRobux end
+		if selected=="shop" then draw() end
+		task.delay(31,function() if selected=="shop" and prices[card.offerId]==entry then draw() end end)
+	end)
+	return nil
+end
 
 local function resize()
 	local camera = workspace.CurrentCamera
@@ -208,6 +228,13 @@ draw = function()
 		return
 	end
 	if not state then text("Ожидаем безопасную загрузку профиля…"); return end
+	if selected=="shop" then
+		title.Text="Событие / Магазин"
+		shopUI.draw({state=state,text=text,action=action,send=send,redraw=draw,price=shopPrice,
+			utc=function(timestamp) return DateTime.fromUnixTimestamp(timestamp):FormatUniversalTime("DD.MM.YYYY HH:mm","ru-ru") end,
+			preview=function(style) order+=1; local view=shopPreview.create(contents,style); view.LayoutOrder=order end})
+		refresh(); return
+	end
 	if selected=="rebirth" or selected=="dailies" or selected=="shards" then
 		title.Text=selected=="rebirth" and "Rebirth · новая эпоха" or (selected=="dailies" and "Ежедневные награды" or "Time Shards · магазин")
 		longTermUI.draw({state=state,currentState=function() return state end,bindText=bindText,mode=selected,text=text,action=action,send=send,redraw=draw}); refresh(); return
@@ -424,7 +451,7 @@ refresh = function()
 	for _, update in ipairs(bindings) do update() end
 end
 
-local tabList={{"blueprint","Развитие"},{"rebirth","Rebirth"},{"dailies","Daily"},{"shards","Осколки"},{"bazaar","Обмен"}}
+local tabList={{"blueprint","Развитие"},{"shop","Событие"},{"rebirth","Rebirth"},{"dailies","Daily"},{"shards","Осколки"},{"bazaar","Обмен"}}
 for _,id in ipairs(Config.stationOrder) do table.insert(tabList,{id,Config.stations[id].name}) end
 for _,tab in ipairs({{"warehouse","Склад"},{"orders","Заказы"},{"altar","Фамильяры"}}) do table.insert(tabList,tab) end
 for _, tab in ipairs(tabList) do
@@ -442,6 +469,7 @@ end
 
 State.OnClientEvent:Connect(function(value)
 	local first = state == nil
+	local shopChanged=state and Codec.encode(state.shop)~=Codec.encode(value.shop)
 	local longTermChanged=state and (state.longTerm.requestId~=value.longTerm.requestId or state.longTerm.day~=value.longTerm.day)
 	local longTermPanel=selected=="rebirth" or selected=="dailies" or selected=="shards"
 	local longTermViewChanged=longTermPanel and state and Codec.encode(state.longTerm)~=Codec.encode(value.longTerm)
@@ -449,12 +477,25 @@ State.OnClientEvent:Connect(function(value)
 	local collectionChanged = state and collectionUI.signature(state) ~= collectionUI.signature(value)
 	local progressionChanged = state and (state.progression.sequence~=value.progression.sequence or state.phase.complete~=value.phase.complete
 		or table.concat(state.orderOffers,"|")~=table.concat(value.orderOffers,"|"))
-	if state and (state.collection.sequence ~= value.collection.sequence or state.progression.sequence~=value.progression.sequence or longTermChanged) then collectionPending = false end
+	if state and (state.collection.sequence ~= value.collection.sequence or state.progression.sequence~=value.progression.sequence or state.shop.sequence~=value.shop.sequence or longTermChanged) then collectionPending = false end
 	state = value
-	if first or progressionChanged or longTermChanged or longTermViewChanged or (selected == "altar" and collectionChanged) then draw() else refresh() end
+	if first or progressionChanged or longTermChanged or longTermViewChanged or (selected=="shop" and shopChanged) or (selected == "altar" and collectionChanged) then draw() else refresh() end
 	if not hasReport and value.offlineReport and value.offlineReport.processedSeconds > 5 then
 		hasReport = true
 		showToast("С возвращением! Учтено " .. value.offlineReport.processedSeconds .. " сек. работы. Gold: +" .. math.floor(value.offlineReport.goldEarned or 0) .. ". Уже сохранено.", 8)
+	end
+end)
+PurchasePrompt.OnClientEvent:Connect(function(value)
+	if not state then return end
+	for _,card in ipairs(state.shop.cards) do
+		if card.offerId==value.offerId and card.sku==value.sku and card.platformKind==value.kind and card.robuxAvailable then
+			local ok=pcall(function()
+				if value.kind=="product" then MarketplaceService:PromptProductPurchase(player,value.sku)
+				else MarketplaceService:PromptGamePassPurchase(player,value.sku) end
+			end)
+			if not ok then showToast("Окно Roblox недоступно. Покупка не подтверждена; повтори позже.",5) end
+			return
+		end
 	end
 end)
 TradeState.OnClientEvent:Connect(function(value)

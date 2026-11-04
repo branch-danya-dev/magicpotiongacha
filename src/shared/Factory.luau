@@ -7,6 +7,7 @@ local Trading = require(runtimeScript and runtimeScript.Parent.Trading or "./Tra
 local Epochs = require(runtimeScript and runtimeScript.Parent.Epochs or "./Epochs")
 local Dailies = require(runtimeScript and runtimeScript.Parent.Dailies or "./Dailies")
 local LongTerm = require(runtimeScript and runtimeScript.Parent.LongTerm or "./LongTerm")
+local Monetization = require(runtimeScript and runtimeScript.Parent.Monetization or "./Monetization")
 local Factory = {}
 local function compatible(rules, slotId, recipe)
 	local def = rules.stations[slotId]
@@ -65,6 +66,7 @@ function Factory.new(config)
 	local familiars = Familiars.new(config)
 	local progression = Progression.new(config)
 	local longTerm = LongTerm.new(config)
+	local monetization = Monetization.new(config)
 	local itemIds = keys(config.items)
 	local skills = { "Farming", "Hauling", "Brewing" }
 	local rngModulus = 2147483647
@@ -144,10 +146,11 @@ function Factory.new(config)
 	local function validate(profile, version)
 		local legacy = version == 1
 		local modern = not version or version >= 4
+		local beforeEpochs = version and version < 6
 		local cfg = not modern and LegacyConfig or config
 		local function checkCounts(value, predicate, maximum)
 			return countMap(value, function(item)
-				return cfg.items[item] ~= nil and (version and not cfg.items[item].epoch or not version and Epochs.available(config,profile,cfg.items[item])) and predicate(item)
+				return cfg.items[item] ~= nil and (beforeEpochs and not cfg.items[item].epoch or not beforeEpochs and Epochs.available(config,profile,cfg.items[item])) and predicate(item)
 			end, maximum)
 		end
 		if not plain(profile) or profile.schemaVersion ~= (version or cfg.schemaVersion) then
@@ -191,6 +194,7 @@ function Factory.new(config)
 				end
 			end
 			if (modern or version == 3) and not familiars.validatePet(pet) then return false, "Invalid familiar metadata or range" end
+			if version and (config.petSpecies[pet.species].visual=="ghost" or pet.provenance and (pet.provenance.source=="event_gold" or pet.provenance.source=="developer_product")) then return false,"Future historical familiar" end
 		end
 		if petCount > cfg.maxPets then
 			return false, "Pet capacity exceeded"
@@ -221,7 +225,7 @@ function Factory.new(config)
 			end
 			if station.recipeId ~= nil then
 				local recipe = cfg.recipes[station.recipeId]
-				if not recipe or (version and recipe.epoch) or (not version and not Epochs.available(config,profile,recipe)) or not compatible(cfg, stationId, recipe) or station.level < recipe.requiredLevel or (modern and profile.phase < (recipe.phase or 1)) then
+				if not recipe or (beforeEpochs and recipe.epoch) or (not beforeEpochs and not Epochs.available(config,profile,recipe)) or not compatible(cfg, stationId, recipe) or station.level < recipe.requiredLevel or (modern and profile.phase < (recipe.phase or 1)) then
 					return false, "Invalid station recipe"
 				end
 			end
@@ -268,7 +272,7 @@ function Factory.new(config)
 				elseif job.kind == "haul" then
 					if stationId ~= "logistics" or type(job.itemId) ~= "string"
 						or not cfg.items[job.itemId] or (legacy and cfg.items[job.itemId].kind == "potion")
-						or (version and cfg.items[job.itemId].epoch) or (not version and not Epochs.available(config,profile,cfg.items[job.itemId]))
+						or (beforeEpochs and cfg.items[job.itemId].epoch) or (not beforeEpochs and not Epochs.available(config,profile,cfg.items[job.itemId]))
 						or not integer(job.amount, 1, cfg.maxHaulCapacity) then
 						return false, "Invalid hauling cargo"
 					end
@@ -326,7 +330,7 @@ function Factory.new(config)
 		if profile.order ~= nil then
 			local order = profile.order
 			local definition = plain(order) and cfg.orders[order.id]
-			if not definition or (version and definition.epoch) or (not version and not Epochs.available(config,profile,definition)) or order.recipeId ~= definition.recipeId or order.itemId ~= definition.itemId
+			if not definition or (beforeEpochs and definition.epoch) or (not beforeEpochs and not Epochs.available(config,profile,definition)) or order.recipeId ~= definition.recipeId or order.itemId ~= definition.itemId
 				or (modern and definition.phase and (profile.phase < definition.phase or not profile.discoveredRecipes[definition.recipeId]))
 				or order.count ~= definition.count or order.rewardGold ~= definition.rewardGold
 				or not integer(order.acceptedAt, 0, cfg.maxTimestamp)
@@ -360,8 +364,8 @@ function Factory.new(config)
 			end
 		end
 		for recipeId, discovered in pairs(profile.discoveredRecipes) do
-			if not cfg.recipes[recipeId] or discovered ~= true or (version and cfg.recipes[recipeId].epoch)
-				or (modern and (version or profile.rebirths==0) and (profile.phase < (cfg.recipes[recipeId].phase or 1) or cfg.recipes[recipeId].epoch~=nil)) then
+			if not cfg.recipes[recipeId] or discovered ~= true or (beforeEpochs and cfg.recipes[recipeId].epoch)
+				or (modern and (beforeEpochs or profile.rebirths==0) and (profile.phase < (cfg.recipes[recipeId].phase or 1) or cfg.recipes[recipeId].epoch~=nil)) then
 				return false, "Invalid recipe collection"
 			end
 		end
@@ -402,13 +406,15 @@ function Factory.new(config)
 		if modern then
 			if not plain(profile.inputCursors) then return false, "Invalid input fairness cursors" end
 			for itemId,cursor in pairs(profile.inputCursors) do
-				if not cfg.items[itemId] or cfg.items[itemId].kind=="potion" or (version and cfg.items[itemId].epoch)
-					or (not version and not Epochs.available(config,profile,cfg.items[itemId])) or not integer(cursor,1,#cfg.machineOrder) then return false,"Invalid input fairness cursor" end
+				if not cfg.items[itemId] or cfg.items[itemId].kind=="potion" or (beforeEpochs and cfg.items[itemId].epoch)
+					or (not beforeEpochs and not Epochs.available(config,profile,cfg.items[itemId])) or not integer(cursor,1,#cfg.machineOrder) then return false,"Invalid input fairness cursor" end
 			end
 			if not progression.validate(profile) then return false, "Invalid phase/equipment state" end
+			if version then for _,item in pairs(profile.cauldrons) do if item.type~="resonant" then return false,"Future historical cauldron" end end end
 		end
-		if (not version or version==5) and not Trading.validateProfile(profile,config.maxBalance) then return false,"Invalid trade reservation/receipt" end
-		if not version and not longTerm.validate(profile) then return false,"Invalid long-term progression" end
+		if (not version or version>=5) and not Trading.validateProfile(profile,config.maxBalance) then return false,"Invalid trade reservation/receipt" end
+		if (not version or version>=6) and not longTerm.validate(profile) then return false,"Invalid long-term progression" end
+		if not version and not monetization.validate(profile) then return false,"Invalid monetization metadata" end
 		return true, nil
 	end
 
@@ -427,15 +433,17 @@ function Factory.new(config)
 			local valid, reason = engine.validate(profile)
 			return valid and profile or nil, reason
 		end
-		if not plain(profile) or (profile.schemaVersion ~= 1 and profile.schemaVersion ~= 2 and profile.schemaVersion ~= 3 and profile.schemaVersion ~= 4 and profile.schemaVersion ~= 5) then return nil, "Unsupported profile schema" end
+		if not plain(profile) or not integer(profile.schemaVersion,1,6) then return nil, "Unsupported profile schema" end
 		local version = profile.schemaVersion
-		if profile.longTerm~=nil then return nil,"Unexpected historical long-term state" end
+		if profile.monetization~=nil then return nil,"Unexpected historical monetization state" end
+		if version<6 and profile.longTerm~=nil then return nil,"Unexpected historical long-term state" end
 		if version<5 and profile.trade~=nil then return nil,"Unexpected historical trading state" end
 		if version>=4 then
 			local valid,reason=validate(profile,version); if not valid then return nil,reason end
 			local migrated=copy(profile); migrated.schemaVersion=config.schemaVersion
 			if version<5 then migrated.trade={sequence=0} end
-			migrated.longTerm=longTerm.initial(migrated)
+			if version<6 then migrated.longTerm=longTerm.initial(migrated) end
+			migrated.monetization=Monetization.initial()
 			valid,reason=engine.validate(migrated); return valid and migrated or nil,reason
 		end
 		if profile.phase ~= nil or profile.progression ~= nil or profile.cauldrons ~= nil or profile.nextCauldronSerial ~= nil or profile.inputCursors ~= nil then return nil, "Unexpected future progression fields" end
@@ -469,6 +477,7 @@ function Factory.new(config)
 			end
 		end
 		migrated.longTerm=longTerm.initial(migrated)
+		migrated.monetization=Monetization.initial()
 		valid, reason = engine.validate(migrated)
 		return valid and migrated or nil, reason
 	end
@@ -503,6 +512,7 @@ function Factory.new(config)
 			if stationId == "logistics" then profile.stations[stationId].routeCursor = 1 end
 		end
 		profile.longTerm=longTerm.initial(profile)
+		profile.monetization=Monetization.initial()
 		return profile
 	end
 
@@ -606,7 +616,7 @@ function Factory.new(config)
 		local skill = effectiveSkill(profile, stationId)
 		local item = station.cauldronId and profile.cauldrons[station.cauldronId]
 		station.job = { kind = "brew", recipeId = station.recipeId, automatic = automatic == true,
-			duration = math.max(1, Epochs.duration(config,profile,recipe.duration) / (1 + skill * config.brewSpeedPerSkill)),
+			duration = math.max(1, Epochs.duration(config,profile,recipe.duration) / (1 + skill * config.brewSpeedPerSkill) / (1 + (item and item.brewSpeedBonus or 0))),
 			doubleChance = math.min(config.maxDoubleChance, skill * config.doubleChancePerSkill + (item and item.bonus or 0)) }
 		station.progress = 0
 		return true, "Brewing started"

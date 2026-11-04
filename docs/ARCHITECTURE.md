@@ -1,4 +1,4 @@
-# Architecture — M5
+# Architecture — M6
 
 ## Boundaries
 
@@ -9,6 +9,9 @@
 | `src/shared/Progression.luau` | Phase/slot prerequisites, rare-cauldron equipment and durable progression receipt | Pure candidate transitions; server commits |
 | `src/shared/Epochs.luau` / `Dailies.luau` | Bounded epoch factors, UTC rotation and real-action progress | Pure server-driven rules; no claim rewards |
 | `src/shared/LongTerm.luau` | V6 metadata validation, Rebirth/perk/fixed-pet/daily/calendar candidates and monotonic receipt | Server supplies trusted time and trade/session guard; ProfileStore commits |
+| `src/shared/OfferCatalog.luau` / `ItemOrigin.luau` / `Monetization.luau` | Fixed grants, sale window, provenance, V7 proof/queue and Gold candidates | Pure rules; paid ports callable only by trusted server coordinator |
+| `src/server/ReceiptJournal.luau` / `PurchaseCoordinator.luau` | Immutable SKU CAS, receipt reconciliation and permanent ownership lookup | Separate journal/profile durability boundaries; no cross-key atomicity claim |
+| `src/server/PurchaseRuntime.luau` | Sole ProcessReceipt registration, real pass ownership, release gate and prompt authorization | MarketplaceService server adapter; no finished-prompt reward |
 | `src/shared/LegacyConfig.luau` | Frozen pre-M3 schema vocabulary/ranges | Historical V1/V2/V3 validation only |
 | `src/shared/Familiars.luau` | Species/range validation, exact outcome disclosure, evolution preview | Pure canonical model |
 | `src/shared/Collection.luau` | Summon/fixed purchase/lock/Fuse candidate and operation receipt | Server supplies policy, clock, preview and RNG |
@@ -28,7 +31,7 @@ Pure modules are shared source, not shared authority. Knowing a recipe or a pric
 
 ## State and time
 
-The profile stores `lastSimulatedAt`, balances, station jobs and buffers, cargo in transit, familiar instance IDs and base stats, ingredient/quest stock, active order, deterministic PRNG state and deployed-slime timers. Gameplay schema V6 adds long-term cycle completion, shards/perks, daily progress, calendar rights and a separate durable receipt; Robux purchase handling remains absent.
+The profile stores `lastSimulatedAt`, balances, station jobs and buffers, cargo in transit, familiar instance IDs and base stats, ingredient/quest stock, active order, deterministic PRNG state and deployed-slime timers. V6 long-term metadata remains; gameplay V7 adds purchase proofs, queued delivery, verified passes and the Gold/delivery intent sequence. Journal records are server-only; UI receives counts and fixed offer views, never raw PurchaseIds.
 
 One simulated tick is one integer second. Both online updates and join catch-up run this same function. Offline work is capped at 7200 seconds; the skipped tail is consumed by advancing the saved timestamp, not banked for a second login. Offline catch-up is durably saved before the player can interact or see its rewards. The welcome report is informational, not a reward-grant request.
 
@@ -164,8 +167,8 @@ from competing live writers. A full shard stops admission, never evicts pending
 ownership data. Recovery persists when admission is disabled. All operations have
 bounded retries; live platform latency, hot-key throughput and failure acceptance
 remain BLOCKED. TradingEnabled is false by default; explicit activation additionally
-requires Studio or the allowlisted private QA place. Robux purchase handlers
-remain deferred.
+requires Studio or the allowlisted private QA place. M6 paid purchases use the
+same profile lease/gate, a separate journal and independent disabled release gate.
 
 ## Atomic long-term progression — M5
 
@@ -198,3 +201,30 @@ Calendar day-seven entitlement and actual pet insertion are separate atomic
 operations so full inventories cannot lose a reward. `LongTermUI` sends intents
 only; confirmation is bound to cycle/request, and welcome/Continue sends none.
 Unchanged snapshots refresh labels without recreating confirmation controls.
+
+## Purchase reconciliation — M6
+
+The four durable writes are SKU binding → receipt RECORDED → profile proof plus
+instance/queued right → receipt APPLIED. The third write is the linearization of
+the player's right. Only the confirmed fourth permits PurchaseGranted. They are
+not a multi-key atomic transaction. Every retry verifies the full identity and
+grant fingerprint; APPLIED is terminal. A receipt replay after Fuse or transfer
+does not depend on the former owner's inventory.
+
+Journal UpdateAsync callbacks never enter a profile gate or call MarketplaceService.
+No journal mutex survives a CAS. The existing profile gate, lease and revision
+serialize value operations; collectionBusy also covers purchase grants. Trade
+negotiation/pending and Rebirth use the same exclusion. Unknown profile outcomes
+fence the old writer; new lease/load resolves the stored proof before retrying.
+
+Roblox replays an unacknowledged receipt on rejoin/new purchase. There is no claim
+of a periodic platform retry or global receipt scan. Profile-backed queued rights
+are retried on join or explicit delivery. Archive mappings remain available when
+sales close. History/queue limits stop admission without evicting old proof.
+See [M6_MONETIZATION.md](M6_MONETIZATION.md) for limits and the crash/recovery table.
+
+ShopUI emits four exact intents at the own-altar proximity gate. Only server
+authorization can request a native prompt; client price lookup has a short cache
+and fails unavailable. ProcessReceipt alone handles products; Game Pass finished
+events only trigger a fresh server ownership query. Real platform responses are
+never mocked in game code. Studio memory sessions cannot acknowledge receipts.

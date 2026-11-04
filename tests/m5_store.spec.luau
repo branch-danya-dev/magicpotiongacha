@@ -80,7 +80,7 @@ return function(T:any)
 		h.records["p:101"]={schemaVersion=1,revision=5,profile=H.copy(fixture.profile)}
 		h.records["p:202"]={schemaVersion=1,revision=5,profile=H.copy(fixture.other)}
 		h.journals["t:trade-uuid-1"]=H.copy(fixture.journal); h.now+=181
-		local p=h.load(101); local before=H.copy(p); T.equal(p.schemaVersion,6); T.same(p.trade,fixture.profile.trade)
+		local p=h.load(101); local before=H.copy(p); T.equal(p.schemaVersion,Config.schemaVersion); T.same(p.trade,fixture.profile.trade)
 		T.equal(p.longTerm.shards,0); T.falsy(p.longTerm.cycle.finalProduced)
 		T.falsy(h.stores[101]:transact(101,function(candidate) return LongTerm.new(Config).apply(candidate,"rebirth",{expectedRebirthCount=0,confirmed=true,requestId=1},h.engine,{now=h.now}) end))
 		T.same(h.profile(101),before); T.truthy(h.recover()); T.truthy(h.checkOutcome()); T.truthy(h.stores[101]:isWritable(101))
@@ -88,13 +88,13 @@ return function(T:any)
 	T.test("M5 migration: every V5 field is retained without invented history",function()
 		local h=H.new(); local old=H.copy(fixture.profile); local p=h.engine.migrate(H.copy(old)); T.truthy(p)
 		for key,value in pairs(old) do if key~="schemaVersion" then T.same(p[key],value,key) end end
-		T.equal(p.schemaVersion,6); T.equal(p.longTerm.sequence,0); T.equal(p.longTerm.earned,0); T.equal(p.longTerm.spent,0)
+		T.equal(p.schemaVersion,Config.schemaVersion); T.equal(p.longTerm.sequence,0); T.equal(p.longTerm.earned,0); T.equal(p.longTerm.spent,0)
 		T.equal(p.longTerm.daily.day,-1); T.equal(p.longTerm.calendar.lastDay,-1); T.same(h.engine.migrate(H.copy(p)),p)
 	end)
 	for _,defect in ipairs({"future","historical-state","shards","perk","free-perk","foreign-epoch-stock","cycle","completion","daily-day","daily-claim","calendar","pending-right","receipt"}) do
 		T.test("M5 persistence: invalid migration/current meta never overwrites / "..defect,function()
 			local h=H.new(); local p=H.copy(h.profile)
-			if defect=="future" then p.schemaVersion=7 elseif defect=="historical-state" then p=H.copy(fixture.profile); p.longTerm={}
+			if defect=="future" then p.schemaVersion=Config.schemaVersion+1 elseif defect=="historical-state" then p=H.copy(fixture.profile); p.longTerm={}
 			elseif defect=="shards" then p.longTerm.shards=1 elseif defect=="perk" then p.longTerm.perks.industry=99
 			elseif defect=="free-perk" then p.longTerm.perks.industry=1 elseif defect=="foreign-epoch-stock" then p.inventory.void_plasma=1
 			elseif defect=="cycle" then p.longTerm.cycle.id=1 elseif defect=="completion" then p.longTerm.cycle.finalProduced=true

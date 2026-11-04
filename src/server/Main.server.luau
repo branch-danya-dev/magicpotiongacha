@@ -15,6 +15,9 @@ local ProgressionModule = require(Shared.Progression)
 local Progression = ProgressionModule.new(Config)
 local LongTermModule = require(Shared.LongTerm)
 local LongTerm = LongTermModule.new(Config)
+local MonetizationModule = require(Shared.Monetization)
+local Monetization = MonetizationModule.new(Config)
+local PurchaseRuntime = require(script.Parent.PurchaseRuntime)
 local Policy = require(Shared.Policy)
 local PolicyService = game:GetService("PolicyService")
 local summonRandom = Random.new() -- Separate server-only RNG; never seeded from production/profile/client.
@@ -33,6 +36,7 @@ local function remote(name)
 end
 local Action, State, Notice, Focus, Ready = remote("Action"), remote("State"), remote("Notice"), remote("Focus"), remote("Ready")
 local TradeState = remote("TradeState")
+local PurchasePrompt = remote("PurchasePrompt")
 local memoryMode = RunService:IsStudio() and Settings.UseMemoryInStudio
 
 local function copy(value)
@@ -69,6 +73,7 @@ local sessions, offlineReports, readyAt, noticesAt = {}, {}, {}, {}
 local closing = false
 local world
 local trade
+local purchases
 local policy = Policy.new({ now = os.time, ttl = Config.collection.policyTTL, lookup = function(player)
 	local finished, ok, result, abandoned = false, false, nil, false
 	task.spawn(function()
@@ -125,6 +130,7 @@ local function snapshot(player)
 		inventory = copy(profile.inventory), questStock = copy(profile.questStock),
 		order = copy(profile.order), rebirths = profile.rebirths,
 		longTerm=longTerm,
+		shop=purchases.decorate(profile,Monetization.state(profile,os.time())),
 		discoveredRecipes = copy(profile.discoveredRecipes),
 		warehouseLevel = profile.warehouseLevel, pipes = profile.pipes,
 		production = Factory.productionState(profile), tutorial = Factory.tutorialState(profile),
@@ -154,6 +160,10 @@ local function handleDurable(player, action, payload)
 			if sessions[player.UserId] ~= session or not active(player) or closing
 				or not world:inRange(player, action, payload, Settings.InteractDistance) then return false, "Session or position changed" end
 			local now = os.time()
+			if MonetizationModule.isAction(action) then
+				return Monetization.apply(candidate,action,payload,Factory,{now=now,tradeActive=trade.activeTrade(player.UserId),
+					guard=function() return active(player) and not closing and not trade.activeTrade(player.UserId) and world:inRange(player,action,payload,Settings.InteractDistance) end})
+			end
 			if LongTermModule.isAction(action) then
 				return LongTerm.apply(candidate,action,payload,Factory,{now=now,tradeActive=trade.activeTrade(player.UserId),
 					guard=function() return active(player) and not closing and not trade.activeTrade(player.UserId) and world:inRange(player,action,payload,Settings.InteractDistance) end})
@@ -206,7 +216,16 @@ local function handleAction(player, action, payload)
 		notice(player, "Подойди к нужному объекту на своём участке.", "out_of_range")
 		return
 	end
-	if CollectionModule.isAction(action) or ProgressionModule.isAction(action) or LongTermModule.isAction(action) then handleDurable(player, action, payload); return end
+	if CollectionModule.isAction(action) or ProgressionModule.isAction(action) or LongTermModule.isAction(action) or MonetizationModule.isAction(action) then handleDurable(player, action, payload); return end
+	if action=="requestPurchase" then
+		local _,message=purchases.prompt(player,payload.offerId); notice(player,tostring(message),"purchase_prompt"); return
+	end
+	if action=="refreshPurchases" then
+		local session=sessions[player.UserId]; if session.purchaseRefreshing then return end
+		session.purchaseRefreshing=true; local ok=pcall(purchases.refresh,player); session.purchaseRefreshing=false
+		if not ok then notice(player,"Права пока не подтверждены; повтори позже.","purchase_pending") end
+		snapshot(player); return
+	end
 	if action == "refreshPolicy" then
 		local session = sessions[player.UserId]
 		if session.policyRefreshing then return end
@@ -253,6 +272,27 @@ local function handleAction(player, action, payload)
 	end
 end
 
+local function purchaseTransaction(userId,transform)
+	local session=sessions[userId]; local player=session and session.player
+	if not player or closing or not active(player) or session.collectionBusy or trade.activeTrade(userId) or not store:isWritable(userId) then return false,"Profile unavailable; paid right waits" end
+	session.collectionBusy=true
+	local ok,committed,result=pcall(function()
+		return store:transact(userId,function(candidate)
+			local function guard() return sessions[userId]==session and active(player) and not closing and not trade.activeTrade(userId) end
+			if not guard() then return false,"Player session changed" end
+			return transform(candidate,{now=os.time(),tradeActive=trade.activeTrade(userId),guard=guard})
+		end)
+	end)
+	session.collectionBusy=false
+	if not ok or (not committed and not store:isWritable(userId)) then
+		store:invalidate(userId); session.quarantined=true
+		if active(player) then player:Kick("Покупка ожидает подтверждения сохранения. Повтори вход; оплаченные права не выдаются повторно.") end
+		return false,"Profile purchase outcome unconfirmed"
+	end
+	if committed and active(player) then world:update(player,store:get(userId)); snapshot(player) end
+	return committed,result
+end
+
 world = World.new(Config, Settings.PlotCount, {
 	production = Factory.productionState,
 	buildState = Progression.buildState,
@@ -269,6 +309,12 @@ trade = TradeRuntime.new({config=Config,settings=Settings,store=store,backend=da
 	valueBusy=function(player) return sessions[player.UserId] and sessions[player.UserId].collectionBusy end,
 	updated=function(player) if active(player) then world:update(player,store:get(player.UserId)); snapshot(player) end end,
 })
+purchases = PurchaseRuntime.new({config=Config,settings=Settings,store=store,backend=dataStore,engine=Factory,model=Monetization,
+	memoryMode=memoryMode,active=active,profile=function(uid) return store:get(uid) end,
+	writable=function(uid) return store:isWritable(uid) end,
+	busy=function(uid) return closing or not sessions[uid] or sessions[uid].collectionBusy or trade.activeTrade(uid) end,
+	inRange=function(player) return world:inRange(player,"requestPurchase",{},Settings.InteractDistance) end,
+	transact=purchaseTransaction,promptRemote=PurchasePrompt})
 Action.OnServerEvent:Connect(handleAction)
 Ready.OnServerEvent:Connect(function(player)
 	local now = os.clock()
@@ -288,6 +334,7 @@ end
 local function clearPresentation(session)
 	local player, userId = session.player, session.player.UserId
 	trade.leave(player)
+	purchases.leave(player)
 	world:release(player)
 	policy.forget(player)
 	if sessions[userId] ~= session then return end
@@ -399,6 +446,7 @@ local function onPlayer(player)
 		return
 	end
 	session.phase = "active"
+	task.spawn(function() local ok=pcall(purchases.refresh,player); if not ok then warn("Purchase rights refresh pending",userId) end end)
 	task.spawn(function()
 		policy.get(player)
 		if sessions[userId] == session and active(player) then snapshot(player) end
