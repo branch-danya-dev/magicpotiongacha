@@ -1,4 +1,4 @@
-# Architecture — M4
+# Architecture — M5
 
 ## Boundaries
 
@@ -7,6 +7,8 @@
 | `src/shared/Config.luau` | Recipes, costs, storage limits, station caps, fixed hires | Server reads canonical values |
 | `src/shared/Factory.luau` | Profile schema, commands, production and catch-up | Pure deterministic state transitions |
 | `src/shared/Progression.luau` | Phase/slot prerequisites, rare-cauldron equipment and durable progression receipt | Pure candidate transitions; server commits |
+| `src/shared/Epochs.luau` / `Dailies.luau` | Bounded epoch factors, UTC rotation and real-action progress | Pure server-driven rules; no claim rewards |
+| `src/shared/LongTerm.luau` | V6 metadata validation, Rebirth/perk/fixed-pet/daily/calendar candidates and monotonic receipt | Server supplies trusted time and trade/session guard; ProfileStore commits |
 | `src/shared/LegacyConfig.luau` | Frozen pre-M3 schema vocabulary/ranges | Historical V1/V2/V3 validation only |
 | `src/shared/Familiars.luau` | Species/range validation, exact outcome disclosure, evolution preview | Pure canonical model |
 | `src/shared/Collection.luau` | Summon/fixed purchase/lock/Fuse candidate and operation receipt | Server supplies policy, clock, preview and RNG |
@@ -26,7 +28,7 @@ Pure modules are shared source, not shared authority. Knowing a recipe or a pric
 
 ## State and time
 
-The profile stores `lastSimulatedAt`, balances, station jobs and buffers, cargo in transit, familiar instance IDs and base stats, ingredient/quest stock, active order, deterministic PRNG state and deployed-slime timers. It has a versioned schema. Recipes, persistent purchase/receipt fields and rebirth count are present for later expansion, but later features are not enabled.
+The profile stores `lastSimulatedAt`, balances, station jobs and buffers, cargo in transit, familiar instance IDs and base stats, ingredient/quest stock, active order, deterministic PRNG state and deployed-slime timers. Gameplay schema V6 adds long-term cycle completion, shards/perks, daily progress, calendar rights and a separate durable receipt; Robux purchase handling remains absent.
 
 One simulated tick is one integer second. Both online updates and join catch-up run this same function. Offline work is capped at 7200 seconds; the skipped tail is consumed by advancing the saved timestamp, not banked for a second login. Offline catch-up is durably saved before the player can interact or see its rewards. The welcome report is informational, not a reward-grant request.
 
@@ -162,5 +164,37 @@ from competing live writers. A full shard stops admission, never evicts pending
 ownership data. Recovery persists when admission is disabled. All operations have
 bounded retries; live platform latency, hot-key throughput and failure acceptance
 remain BLOCKED. TradingEnabled is false by default; explicit activation additionally
-requires Studio or the allowlisted private QA place. Rebirth and Robux purchase
-handlers remain deferred.
+requires Studio or the allowlisted private QA place. Robux purchase handlers
+remain deferred.
+
+## Atomic long-term progression — M5
+
+`LongTerm.apply` runs on a copied profile inside the same `ProfileStore:transact`
+gate as collection and construction. It checks the exact intent, expected cycle/
+level/day, trusted time, active Player/proximity and active/persistent trade again
+after waiting. An exact latest receipt replay returns without advancing time;
+older or conflicting IDs fail. Before a new mutation the candidate advances the
+same factory simulation, then validates all postconditions. Publication occurs
+only after the immutable candidate's save is confirmed. Unknown outcomes fence
+the old session; no reward appears speculatively.
+
+`collectionBusy` also covers M5, preventing factory ticks and new trade admission
+while the candidate saves. `TradeRuntime.activeTrade` includes invitations and
+negotiation, not only the frozen commit stage. Persistent pending markers still
+freeze all ordinary writes; login resolves them before offline simulation. The
+M4 journal, coordinator, decision and ownership rules are unchanged.
+
+Rebirth resets an explicit factory-field whitelist; all other collections/rights/
+receipts survive. Epoch is derived from count modulo three. Recipe archive and
+current production eligibility are separate; only an actual current final batch
+sets completion. New material capacity shares count only the active epoch's types.
+Industry applies after skill caps, with a maximum 1.15 work multiplier; epoch
+factors do not compound. Prepaid job durations remain captured at batch start.
+
+Daily progress comes from trusted factory events. `Dailies.sync` rejects backwards
+days and rotates by UTC day modulo three; snapshots preview without mutating the
+profile. Claims combine day/target validation, reward and receipt in one save.
+Calendar day-seven entitlement and actual pet insertion are separate atomic
+operations so full inventories cannot lose a reward. `LongTermUI` sends intents
+only; confirmation is bound to cycle/request, and welcome/Continue sends none.
+Unchanged snapshots refresh labels without recreating confirmation controls.

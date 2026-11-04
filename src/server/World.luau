@@ -106,7 +106,7 @@ function World.new(config, count, callbacks)
 		end
 		for id, offset in pairs(OFFSETS) do
 			local station = config.stations[id]
-			local title = station and station.name or (id == "warehouse" and "Склад" or (id == "altar" and "Алтарь · фамильяры" or (id == "blueprint" and "Развитие фабрики" or "Доска заказов")))
+			local title = station and station.name or (id == "warehouse" and "Склад" or (id == "altar" and "Алтарь · фамильяры" or (id == "blueprint" and "Развитие / Rebirth / Daily" or "Доска заказов")))
 			local size = id == "crystal" and Vector3.new(4, 6, 4) or Vector3.new(8, 3, 7)
 			local anchor = part(model, id, size, origin + offset, COLORS[id] or COLORS[station and station.archetype] or Color3.fromRGB(140,140,150))
 			anchor:SetAttribute("StationId", id)
@@ -209,8 +209,11 @@ function World:update(player, profile)
 	local plot = self.owners[player.UserId]
 	if not plot or plot.owner ~= player then return end
 	local phase=self.callbacks.phaseState(profile)
-	plot.ownerLabel.Text = player.DisplayName .. " · " .. phase.name .. "\n" .. phase.message
-	for _,module in ipairs(plot.architecture) do module.part.Transparency=module.phase==profile.phase and 0.35 or 1 end
+	local epoch=self.config.epochRules[profile.rebirths%3]; local color=Color3.fromRGB(table.unpack(epoch.color))
+	plot.model.Floor.Color=color:Lerp(Color3.fromRGB(45,45,50),0.55)
+	local title=profile.entitlements.chrononaut and " · Хрононавт" or (profile.entitlements.chronicler and " · Летописец" or "")
+	plot.ownerLabel.Text = player.DisplayName .. title.." · "..epoch.name.."\n"..phase.name.." · цикл "..profile.rebirths
+	for _,module in ipairs(plot.architecture) do module.part.Transparency=module.phase==profile.phase and 0.35 or 1; module.part.Color=color end
 	for _,pad in pairs(plot.pads) do pad:SetAttribute("ExpectedRequestId",profile.progression.sequence+1) end
 	plot.pads.blueprint:SetAttribute("ExpectedLevel",profile.phase)
 	plot.padLabels.blueprint.Text=phase.cost and ("Фаза "..(profile.phase+1)..": "..phase.cost.." Gold\n"..table.concat(phase.reasons,"; ")) or phase.message
@@ -256,13 +259,14 @@ function World:update(player, profile)
 					anchor:SetAttribute("CargoItem", nil)
 				end
 			end
-			plot.labels[id].Text = definition.name .. " · ур. " .. station.level .. "\n" .. state.text
+			local name=definition.outputItem and epoch.resourceNames[definition.outputItem] or definition.name
+			plot.labels[id].Text = name .. " · ур. " .. station.level .. "\n" .. state.text
 			plot.pads[id]:SetAttribute("ExpectedLevel", station.level)
 			local build=self.callbacks.buildState(profile,id)
 			plot.padLabels[id].Text = build.cost and ("Купить: " .. build.cost .. " Gold\n" .. build.reason) or "Максимальный уровень"
 		end
 	end
-	local warehouseCost = self.config.warehouse.upgradeCosts[(profile.warehouseLevel or 0) + 1]
+	local warehouseCost = self.callbacks.buildState(profile,"warehouse").cost
 	plot.pads.warehouse:SetAttribute("ExpectedLevel", profile.warehouseLevel)
 	plot.padLabels.warehouse.Text = warehouseCost and ("Склад: " .. warehouseCost .. " Gold") or "Склад MAX"
 	local order = self.callbacks.orderProgress(profile)

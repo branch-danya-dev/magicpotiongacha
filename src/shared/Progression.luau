@@ -2,6 +2,7 @@
 -- Pure construction/equipment rules. Runtime commits this candidate before acknowledgement.
 local runtimeScript=rawget(getfenv(),"script")
 local Protocol=require(runtimeScript and runtimeScript.Parent.Protocol or "./Protocol")
+local Epochs=require(runtimeScript and runtimeScript.Parent.Epochs or "./Epochs")
 local Progression={}
 local actions={build=true,advancePhase=true,equipCauldron=true,lockCauldron=true}
 local function integer(v,lo,hi) return type(v)=="number" and v==v and v%1==0 and v>=lo and v<=hi end
@@ -16,29 +17,30 @@ function Progression.isAction(action) return actions[action]==true end
 function Progression.new(config)
 	local service={}
 	function service.buildState(p,slotId)
-		if slotId=="pipes" then return {available=not p.pipes,cost=config.pipesCost,reason=p.pipes and "Pipes already built" or "",level=p.pipes and 1 or 0} end
+		if slotId=="pipes" then return {available=not p.pipes,cost=Epochs.cost(config,p,config.pipesCost),reason=p.pipes and "Pipes already built" or "",level=p.pipes and 1 or 0} end
 		local def=slotId=="warehouse" and config.warehouse or config.stations[slotId]
 		if not def then return {available=false,reason="Unknown fixed slot"} end
 		local level=slotId=="warehouse" and p.warehouseLevel or p.stations[slotId].level
-		local cost=def.upgradeCosts[level+1]
+		local cost=Epochs.cost(config,p,def.upgradeCosts[level+1])
 		local phase=def.tierPhases and def.tierPhases[level+1] or def.phase or 1
 		local reason=not cost and "Maximum tier" or (p.phase<phase and ("Requires phase "..phase) or "")
 		return {available=reason=="",reason=reason,cost=cost,level=level,requiredPhase=phase}
 	end
 	function service.phaseState(p)
-		local nextPhase=config.phases[p.phase+1]; local reasons={}
+		local epoch=Epochs.rules(config,p); local nextPhase=config.phases[p.phase+1]; local reasons={}
+		local price=nextPhase and Epochs.cost(config,p,nextPhase.cost)
 		if nextPhase then
-			for _,recipe in ipairs(nextPhase.recipes) do if not p.discoveredRecipes[recipe] then table.insert(reasons,"Discover "..config.recipes[recipe].name) end end
+			for _,recipe in ipairs(epoch.phaseRecipes[p.phase+1]) do if not p.discoveredRecipes[recipe] then table.insert(reasons,"Discover "..config.recipes[recipe].name) end end
 			for station,level in pairs(nextPhase.stations) do if p.stations[station].level<level then table.insert(reasons,config.stations[station].name.." tier "..level) end end
 			if nextPhase.pipes and not p.pipes then table.insert(reasons,"Build pipes") end
 			if nextPhase.warehouse and p.warehouseLevel<nextPhase.warehouse then table.insert(reasons,"Warehouse level "..nextPhase.warehouse) end
-			if p.gold<nextPhase.cost then table.insert(reasons,"Need "..nextPhase.cost.." Gold") end
+			if p.gold<price then table.insert(reasons,"Need "..price.." Gold") end
 		end
 		table.sort(reasons)
-		local completed=p.phase==4 and p.discoveredRecipes.ascension==true
-		return {phase=p.phase,name=config.phases[p.phase].name,nextName=nextPhase and nextPhase.name,cost=nextPhase and nextPhase.cost,
+		local completed=p.phase==4 and (p.longTerm and p.longTerm.cycle.finalProduced or not p.longTerm and p.discoveredRecipes.ascension==true)
+		return {phase=p.phase,name=config.phases[p.phase].name,epoch=epoch.name,nextName=nextPhase and nextPhase.name,cost=price,
 			available=nextPhase~=nil and #reasons==0,reasons=reasons,complete=completed,
-			message=completed and "M3 завершён; Rebirth появится позже" or (p.phase==4 and "Изготовь Ascension: финальная технология M3" or "Открой следующую фазу")}
+			message=completed and "Цикл завершён: открой Rebirth для проверки условий" or (p.phase==4 and "Изготовь "..config.recipes[epoch.finalRecipe].name.." в этом цикле" or "Открой следующую фазу")}
 	end
 	function service.validate(p)
 		if not integer(p.phase,1,4) or not plain(p.progression) or not integer(p.progression.sequence,0,config.maxBalance)
@@ -91,13 +93,15 @@ function Progression.new(config)
 			if not state.available then return false,#state.reasons>0 and table.concat(state.reasons,"; ") or "Final phase already built" end
 			local nextPhase=p.phase+1
 			local item
-			if nextPhase==3 then
+			if nextPhase==3 and not (p.longTerm and p.longTerm.milestoneClaimed) then
 				local itemId=string.format("%.0f",p.userId)..":cauldron:"..p.nextCauldronSerial
+				local amount=0; for _ in pairs(p.cauldrons) do amount+=1 end
+				if amount>=16 then return false,"Cauldron inventory full" end
 				if p.nextCauldronSerial>=config.maxCount or p.cauldrons[itemId] then return false,"Cauldron identity conflict" end
 				item={id=itemId,ownerId=p.userId,type="resonant",bonus=config.cauldronTypes.resonant.bonus,locked=false,provenance={source="phase3",paidDerived=false}}
 			end
-			p.gold-=config.phases[nextPhase].cost; p.phase=nextPhase
-			if item then p.cauldrons[item.id]=item; p.nextCauldronSerial+=1; result.cauldronId=item.id end
+			p.gold-=state.cost; p.phase=nextPhase
+			if item then p.cauldrons[item.id]=item; p.nextCauldronSerial+=1; result.cauldronId=item.id; if p.longTerm then p.longTerm.milestoneClaimed=true end end
 			result.message="Opened "..config.phases[nextPhase].name
 		elseif action=="equipCauldron" then
 			local slot=p.stations[payload.slotId]

@@ -4,12 +4,15 @@ local Config=require("../src/shared/Config")
 local Collection=require("../src/shared/Collection")
 local Progression=require("../src/shared/Progression")
 local Protocol=require("../src/shared/Protocol")
+local Epochs=require("../src/shared/Epochs")
 local firstCycle=require("./Scenarios")
-return function(strategy)
-	local first=firstCycle(strategy=="manual" and "manual" or (strategy=="detour" and "detour" or "automation"))
+return function(strategy,initial)
+	local first=firstCycle(strategy=="manual" and "manual" or (strategy=="detour" and "detour" or "automation"),nil,initial)
 	local e,p,now=first.engine,first.profile,first.now
+	local epoch=Epochs.rules(Config,p); local epochId=Epochs.id(p)
 	local collection,progression,gate=Collection.new(Config),Progression.new(Config),Protocol.new()
-	local spent=168+(strategy=="detour" and 100 or 0)
+	local spent=Epochs.cost(Config,p,Config.pipesCost)+Epochs.cost(Config,p,Config.stations.crystal.upgradeCosts[2])
+		+(strategy=="detour" and Epochs.cost(Config,p,Config.stations.garden.upgradeCosts[2]) or 0)
 	local earned,clicks,harvests,discards=p.gold+spent,first.clicks,first.harvests,0
 	local phases={}; local start=first.start
 	local function waitFor(seconds)
@@ -60,7 +63,8 @@ return function(strategy)
 		if p.stations[slot].recipeId~=recipe then room(); intent("setRecipe",{stationId=slot,recipeId=recipe}) end
 	end
 	local craft
-	local producers={fire_extract="distillery",spore_paste="press",berry_essence="distillery2",aether_serum="centrifuge"}
+	local producers={fire_extract="distillery",spore_paste="press",berry_essence="distillery2",aether_serum="centrifuge",
+		steam_catalyst="distillery",gear_oil="press",pressure_essence="centrifuge",void_plasma="distillery",antimatter="press",chrono_serum="centrifuge"}
 	local function material(item,amount)
 		for _=1,100 do
 			if (p.inventory[item] or 0)>=amount then return end
@@ -116,11 +120,16 @@ return function(strategy)
 		durable("build",{upgradeId=id,expectedLevel=state.level})
 	end
 	local function phase()
-		income(Config.phases[p.phase+1].cost); durable("advancePhase",{expectedPhase=p.phase})
+		income(progression.phaseState(p).cost); durable("advancePhase",{expectedPhase=p.phase})
 		table.insert(phases,{phase=p.phase,seconds=now-start,clicks=clicks,harvests=harvests,income=earned,spent=spent,gold=p.gold})
 	end
 	local function worker(slot,species)
 		if p.stations[slot].workerId then return end
+		if initial then
+			local assigned={}; for _,station in pairs(p.stations) do if station.workerId then assigned[station.workerId]=true end end
+			local ids={}; for id,pet in pairs(p.pets) do if pet.species==species and not assigned[id] then table.insert(ids,id) end end
+			table.sort(ids); if ids[1] then intent("assign",{stationId=slot,petId=ids[1]}); return end
+		end
 		income(Config.familiarShop[species].cost)
 		local pet=durable("shopFamiliar",{offerId=species}).createdIds[1]
 		intent("assign",{stationId=slot,petId=pet})
@@ -137,22 +146,26 @@ return function(strategy)
 	end
 	phase(); build("garden2"); build("cauldron2"); build("distillery2")
 	build("mine"); build("distillery"); build("cauldron"); build("warehouse")
-	craft("fire_extract","distillery"); craft("rage","cauldron")
+	if epochId==0 then craft("fire_extract","distillery"); craft("rage","cauldron")
+	else craft(epoch.phaseRecipes[3][1],"distillery") end
 	phase(); build("mushrooms"); build("berries"); build("press"); build("cauldron2")
-	craft("focus","cauldron2"); craft("flare","cauldron2")
+	if epochId==0 then craft("focus","cauldron2"); craft("flare","cauldron2")
+	else craft(epoch.phaseRecipes[4][1],"press"); craft(epoch.phaseRecipes[4][2],"cauldron2") end
 	phase(); build("centrifuge"); build("cauldron2"); build("crystal"); build("logistics"); build("warehouse")
-	craft("ascension","cauldron2")
+	craft(epoch.finalRecipe,"cauldron2")
 	local completeAt=now-start; assert(progression.phaseState(p).complete)
 	-- Finish with multiple staffed lines, using exact fixed workers only.
 	for _,slot in ipairs({"mine","garden2","mushrooms","berries"}) do worker(slot,"farmer") end
 	for _,slot in ipairs({"distillery","distillery2","press","centrifuge","cauldron2"}) do worker(slot,"brewer") end
 	local recipes={distillery="fire_extract",distillery2="berry_essence",press="spore_paste",centrifuge="aether_serum",cauldron="focus",cauldron2="ascension"}
+	if epochId~=0 then recipes={distillery=epoch.phaseRecipes[3][1],distillery2="berry_essence",press=epoch.phaseRecipes[4][1],
+		centrifuge=epochId==1 and "pressure_essence" or "chrono_serum",cauldron="healing",cauldron2=epoch.finalRecipe} end
 	for _,slot in ipairs(Config.machineOrder) do
 		selectRecipe(slot,recipes[slot]); intent("setAuto",{stationId=slot,enabled=true})
 	end
 	room(); local setupAt=now-start; local report=waitFor(1200)
-	assert((report.sold.ascension or 0)>0 and (report.sold.focus or 0)>0,"Parallel late-game lines must sell")
+	assert((report.sold[epoch.finalRecipe] or 0)>0 and (report.sold[recipes.cauldron] or 0)>0,"Parallel late-game lines must sell")
 	assert(p.gold==earned-spent,"Gold accounting must reconcile exactly")
-	return {profile=p,engine=e,now=now,phases=phases,completeAt=completeAt,setupAt=setupAt,clicks=clicks,harvests=harvests,discards=discards,
+	return {profile=p,engine=e,now=now,epoch=epochId,phases=phases,completeAt=completeAt,setupAt=setupAt,clicks=clicks,harvests=harvests,discards=discards,
 		income=earned,spent=spent,finalSales=report.sold,seconds=now-start}
 end

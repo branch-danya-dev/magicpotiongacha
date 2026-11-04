@@ -4,11 +4,12 @@
 local Config = require("../src/shared/Config")
 local Factory = require("../src/shared/Factory")
 local Protocol = require("../src/shared/Protocol")
+local Epochs = require("../src/shared/Epochs")
 
-return function(strategy, observe)
-	local engine, gate = Factory.new(Config), Protocol.new()
-	local start, now = 100000, 100000
-	local profile = engine.newProfile(-1, now)
+return function(strategy, observe, initial)
+	local engine, gate = initial and initial.engine or Factory.new(Config), Protocol.new()
+	local start, now = initial and initial.now or 100000, initial and initial.now or 100000
+	local profile = initial and initial.profile or engine.newProfile(-1, now)
 	local actions, clicks, harvests = 0, 0, 0
 	local function waitFor(seconds)
 		now += seconds
@@ -62,20 +63,20 @@ return function(strategy, observe)
 	manual()
 	local firstSale = now - start
 	if strategy == "detour" then
-		while profile.gold < Config.stations.garden.upgradeCosts[2] do manual() end
+		while profile.gold < Epochs.cost(Config,profile,Config.stations.garden.upgradeCosts[2]) do manual() end
 		intent("buy", { upgradeId = "garden" })
 		-- An unnecessary early purchase must not lock the tutorial or its income.
 	end
-	while profile.gold < Config.pipesCost do manual() end
+	while profile.gold < Epochs.cost(Config,profile,Config.pipesCost) do manual() end
 	intent("buy", { upgradeId = "pipes" })
 	if strategy == "automation" then
 		intent("setAuto", { stationId = "cauldron", enabled = true })
 		for _ = 1, 1200 do
-			if profile.gold >= Config.stations.crystal.upgradeCosts[2] then break end
+			if profile.gold >= Epochs.cost(Config,profile,Config.stations.crystal.upgradeCosts[2]) then break end
 			intent("click")
 		end
 	else
-		while profile.gold < Config.stations.crystal.upgradeCosts[2] do manual() end
+		while profile.gold < Epochs.cost(Config,profile,Config.stations.crystal.upgradeCosts[2]) do manual() end
 	end
 	intent("buy", { upgradeId = "crystal" })
 	intent("setAuto", { stationId = "cauldron", enabled = true })

@@ -13,6 +13,8 @@ local CollectionModule = require(Shared.Collection)
 local Collection = CollectionModule.new(Config)
 local ProgressionModule = require(Shared.Progression)
 local Progression = ProgressionModule.new(Config)
+local LongTermModule = require(Shared.LongTerm)
+local LongTerm = LongTermModule.new(Config)
 local Policy = require(Shared.Policy)
 local PolicyService = game:GetService("PolicyService")
 local summonRandom = Random.new() -- Separate server-only RNG; never seeded from production/profile/client.
@@ -109,6 +111,8 @@ local function snapshot(player)
 		end
 	end
 	builds.warehouse, builds.pipes = Progression.buildState(profile,"warehouse"), Progression.buildState(profile,"pipes")
+	local longTerm=LongTerm.state(profile,os.time())
+	if trade.activeTrade(player.UserId) then longTerm.available=false; table.insert(longTerm.reasons,"Заверши активный обмен") end
 	local orderAvailability = {}
 	for id in pairs(Config.orders) do
 		local available, reason = Factory.orderEligible(profile,id)
@@ -120,6 +124,7 @@ local function snapshot(player)
 		pets = copy(profile.pets), stations = copy(profile.stations),
 		inventory = copy(profile.inventory), questStock = copy(profile.questStock),
 		order = copy(profile.order), rebirths = profile.rebirths,
+		longTerm=longTerm,
 		discoveredRecipes = copy(profile.discoveredRecipes),
 		warehouseLevel = profile.warehouseLevel, pipes = profile.pipes,
 		production = Factory.productionState(profile), tutorial = Factory.tutorialState(profile),
@@ -149,6 +154,10 @@ local function handleDurable(player, action, payload)
 			if sessions[player.UserId] ~= session or not active(player) or closing
 				or not world:inRange(player, action, payload, Settings.InteractDistance) then return false, "Session or position changed" end
 			local now = os.time()
+			if LongTermModule.isAction(action) then
+				return LongTerm.apply(candidate,action,payload,Factory,{now=now,tradeActive=trade.activeTrade(player.UserId),
+					guard=function() return active(player) and not closing and not trade.activeTrade(player.UserId) and world:inRange(player,action,payload,Settings.InteractDistance) end})
+			end
 			local report = Factory.advance(candidate, now, false)
 			assert(report.ok, report.error)
 			if ProgressionModule.isAction(action) then return Progression.apply(candidate,action,payload,Factory,now) end
@@ -166,6 +175,7 @@ local function handleDurable(player, action, payload)
 	end
 	if committed then
 		if action == "fuse" then session.fusePreview = nil end
+		if action == "rebirth" then session.fusePreview=nil; offlineReports[player.UserId]=nil end
 		notice(player, result.message, "collection_committed")
 		world:update(player, store:get(player.UserId))
 	else notice(player, tostring(result), "collection_rejected") end
@@ -196,7 +206,7 @@ local function handleAction(player, action, payload)
 		notice(player, "Подойди к нужному объекту на своём участке.", "out_of_range")
 		return
 	end
-	if CollectionModule.isAction(action) or ProgressionModule.isAction(action) then handleDurable(player, action, payload); return end
+	if CollectionModule.isAction(action) or ProgressionModule.isAction(action) or LongTermModule.isAction(action) then handleDurable(player, action, payload); return end
 	if action == "refreshPolicy" then
 		local session = sessions[player.UserId]
 		if session.policyRefreshing then return end
