@@ -1,4 +1,5 @@
 import { mkdir, readdir, readFile } from 'node:fs/promises';
+import { mkdirSync, writeFileSync, appendFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { resolve, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -6,9 +7,17 @@ import { fileURLToPath } from 'node:url';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const suffix = process.platform === 'win32' ? '.exe' : '';
 const tool = (group, name) => resolve(root, '.tools', group, name + suffix);
+mkdirSync(resolve(root, 'build'), { recursive: true });
+const log = resolve(root, 'build/verification.log');
+const sha = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' });
+writeFileSync(log, `Source SHA: ${sha.stdout?.trim() || 'unavailable'}\nPlatform: ${process.platform}\n`);
 function run(binary, args) {
-  console.log(`> ${relative(root, binary)} ${args.join(' ')}`);
-  const result = spawnSync(binary, args, { cwd: root, stdio: 'inherit' });
+  const command = `> ${relative(root, binary)} ${args.join(' ')}`;
+  console.log(command);
+  const result = spawnSync(binary, args, { cwd: root, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+  process.stdout.write(result.stdout || '');
+  process.stderr.write(result.stderr || '');
+  appendFileSync(log, command + '\n' + (result.stdout || '') + (result.stderr || ''));
   if (result.error) throw result.error;
   if (result.status !== 0) process.exit(result.status || 1);
 }
@@ -33,3 +42,4 @@ await mkdir(resolve(root, 'build'), { recursive: true });
 run(tool('rojo', 'rojo'), ['build', 'default.project.json', '-o', 'build/PotionTycoon.rbxlx']);
 run(tool('rojo', 'rojo'), ['sourcemap', 'default.project.json', '-o', 'build/sourcemap.json']);
 console.log(`Verified ${all.length} Luau sources and built build/PotionTycoon.rbxlx`);
+appendFileSync(log, `PASS: ${all.length} Luau sources; compile, portable analysis, tests, Rojo build and sourcemap.\n`);

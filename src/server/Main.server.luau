@@ -48,6 +48,7 @@ local store = ProfileStore.new({
 	now = os.time,
 	owner = game.JobId .. ":" .. HttpService:GenerateGUID(false),
 	validate = Factory.validate,
+	migrate = Factory.migrate,
 	sleep = task.wait,
 	leaseSeconds = Settings.LeaseSeconds,
 })
@@ -79,6 +80,9 @@ local function snapshot(player)
 		order = copy(profile.order), rebirths = profile.rebirths,
 		discoveredRecipes = copy(profile.discoveredRecipes),
 		warehouseLevel = profile.warehouseLevel, pipes = profile.pipes,
+		production = Factory.productionState(profile), tutorial = Factory.tutorialState(profile),
+		orderProgress = Factory.orderState(profile), serverTime = profile.lastSimulatedAt,
+		storage = Factory.storageState(profile),
 		offlineReport = offlineReports[player.UserId],
 		writable = store:isWritable(player.UserId),
 		mode = memoryMode and "STUDIO_MEMORY" or "DATASTORE",
@@ -103,7 +107,10 @@ local function handleAction(player, action, payload)
 	local ok, success, message = pcall(function()
 		local result = Factory.advance(profile, os.time(), false)
 		assert(result.ok ~= false, result.error or "simulation_failed")
-		return Factory.act(profile, action, payload, os.time())
+		local success, message = Factory.act(profile, action, payload, os.time())
+		local valid, reason = Factory.validate(profile)
+		assert(valid, reason or "invalid_action_result")
+		return success, message
 	end)
 	if not ok then
 		store:invalidate(player.UserId)
@@ -122,6 +129,8 @@ local function handleAction(player, action, payload)
 end
 
 world = World.new(Config, Settings.PlotCount, {
+	production = Factory.productionState,
+	orderProgress = Factory.orderState,
 	action = handleAction,
 	focus = function(player, stationId)
 		if active(player) then Focus:FireClient(player, stationId) end

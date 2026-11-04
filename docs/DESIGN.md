@@ -39,12 +39,47 @@ Reset ordinary construction/upgrades, Gold/Essence, production buffers/cargo/job
 
 Purchase preservation means permanent rights and the proper state of consumables; consumed products are never awarded again on Rebirth. The treatment of unspent Robux-purchased currency must be clearly disclosed before currency packs/Rebirth are enabled. Neither system is live in M0.
 
-## Explicit M0 simplifications
+## M1 routing and onboarding rules
+
+These rules are recorded before implementation. Values are provisional and must
+be measured by the portable early-game scenarios, not treated as retention data.
+
+- `essence` is the crystal reservoir. Every machine has a 24-unit Essence tank.
+  Manual **Load** transfers at most one recipe's missing Essence and ingredients
+  from storage; brewing consumes only the tank and machine inputs. Loading is
+  free, always available and does not require a familiar or purchased pipe.
+- Pipes cost **28 Gold** (two ordinary Healing sales), have no discovery/tier
+  prerequisite, and feed built machines at up to 2 Essence per machine per second,
+  rotating first priority. They also transfer liquid intermediates through the
+  separate intermediate store. Automatic haulers handle solids and quest crates;
+  manual collection/loading of liquids remains available before pipes.
+- The 140-Gold crystal upgrade enables passive Essence. The three fixed starters
+  can staff garden, logistics and cauldron. All spending detours can recover via
+  free clicking, harvesting, refilling and manual brewing; no tutorial reward,
+  hire or random drop is necessary to unlock Healing income.
+- Matching potion output enters a separate 6-crate machine queue. The quota counts
+  queued + travelling + delivered crates. A full queue pauses batch completion
+  without rerolling or losing output. Other potions and quota excess export at once,
+  regardless of raw warehouse capacity. A single hauler rotates all solid and crate
+  routes; delivery moves only what fits. Unassignment freezes the saved cargo.
+- At expiry all completed matching crates, including paused cargo, export exactly
+  once at ordinary value. An unfinished batch is still a batch and completes as
+  ordinary output. Only explicit claim of fully delivered stock gives the order
+  payment. Changing recipe cannot redirect a crate already in transit.
+- Tutorial milestones are server-observed, saved facts, not client acknowledgments
+  or grants. Out-of-order actions remain credited. Hints select the next missing
+  milestone and explain recovery (refill, recipe selection, assignment, disposal).
+  First manual Healing, first sale, pipes, passive crystal, first automatic Healing
+  and a claimed NPC order are all required. No M2 acquisition features are enabled.
+- V1 saves migrate atomically under the existing lease to V2. Prepaid jobs, stock,
+  RNG, timers and cargo keep their meaning; old fluid cargo finishes its existing
+  route once. No balance reset or repeated starter grants. Existing discovered
+  recipes count as prior manual learning; no unrecorded income is invented.
+
+## Remaining prototype simplifications
 
 - Familiar acquisition is deterministic (starters and fixed Gold hires); no gacha/stat rerolls/Fuse/trading.
 - Single Mandrake plot, one coal mine, one distillery and one potion cauldron; three equipment levels rather than four fully modeled architectural phases.
-- Essence is deducted centrally when a batch starts. No per-pipe Essence buffer yet.
-- Quest crates are reserved immediately; physical heavy-crate delivery will be added in the next logistics expansion. Solid ingredients and bottled intermediates already use timed hauling.
 - Simple local worker spheres and greybox scenery; no art acceptance or mobile FPS claim.
 - Prices, rates and probabilities are provisional configuration, not a monetization forecast.
 

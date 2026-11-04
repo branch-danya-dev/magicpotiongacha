@@ -17,7 +17,7 @@ return function(T: any)
 		{ "setRecipe", { stationId = "distillery", recipeId = "fire_extract" } },
 		{ "setAuto", { stationId = "cauldron", enabled = true } },
 		{ "setAuto", { stationId = "cauldron", enabled = false } },
-		{ "buy", { upgradeId = "warehouse" } },
+		{ "buy", { upgradeId = "warehouse", expectedLevel = 0 } },
 		{ "hire", { speciesId = "farmer" } },
 		{ "discard", { itemId = "slime", amount = 10 } },
 		{ "acceptOrder", { orderId = "healing-order" } },
@@ -91,7 +91,7 @@ return function(T: any)
 	end)
 
 	T.test("protocol: identifiers are bounded and nonblank", function()
-		T.truthy(check("buy", { upgradeId = string.rep("a", 64) }))
+		T.truthy(check("buy", { upgradeId = string.rep("a", 64), expectedLevel = 0 }))
 		T.falsy(check("buy", { upgradeId = string.rep("a", 65) }))
 		T.falsy(check("buy", { upgradeId = "" }))
 		T.falsy(check("buy", { upgradeId = " " }))

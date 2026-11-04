@@ -5,6 +5,7 @@ local world = workspace:WaitForChild("PotionTycoonWorld")
 local folder = Instance.new("Folder")
 folder.Name, folder.Parent = "LocalFamiliarVisuals", workspace
 local proxies = {}
+local crates = {}
 local colors = { slime = Color3.fromRGB(112, 222, 149), brewer = Color3.fromRGB(200, 151, 239), farmer = Color3.fromRGB(235, 203, 141) }
 
 local function discover(anchor)
@@ -15,6 +16,12 @@ local function discover(anchor)
 	pet.Anchored, pet.CanCollide, pet.CanTouch, pet.CanQuery, pet.CastShadow = true, false, false, false, false
 	pet.Material, pet.Transparency, pet.Parent = Enum.Material.SmoothPlastic, 1, folder
 	proxies[anchor] = pet
+	local crate = Instance.new("Part")
+	crate.Name, crate.Size = "QuestCrate", Vector3.new(2, 2, 2)
+	crate.Anchored, crate.CanCollide, crate.CanTouch, crate.CanQuery = true, false, false, false
+	crate.Color, crate.Material = Color3.fromRGB(173, 128, 72), Enum.Material.Wood
+	crate.Transparency, crate.Parent = 1, folder
+	crates[anchor] = crate
 end
 for _, descendant in ipairs(world:GetDescendants()) do discover(descendant) end
 world.DescendantAdded:Connect(discover)
@@ -24,6 +31,8 @@ RunService.RenderStepped:Connect(function()
 	for anchor, pet in pairs(proxies) do
 		if not anchor.Parent then
 			pet:Destroy()
+			crates[anchor]:Destroy()
+			crates[anchor] = nil
 			proxies[anchor] = nil
 		elseif anchor:GetAttribute("WorkerId") then
 			pet.Transparency = 0
@@ -33,5 +42,20 @@ RunService.RenderStepped:Connect(function()
 			if from and destination and progress then position = from:Lerp(destination, progress) + Vector3.new(0, 3, 0) end
 			pet.CFrame = pet.CFrame:Lerp(CFrame.new(position), 0.2)
 		else pet.Transparency = 1 end
+		local crate = crates[anchor]
+		if crate then
+			local item = anchor:GetAttribute("CargoItem")
+			local cargo = anchor:GetAttribute("CargoAmount") or 0
+			local queued = anchor:GetAttribute("QueuedCrates") or 0
+			if cargo > 0 and (item == "healing" or item == "rage") then
+				local from, target = anchor:GetAttribute("HaulFrom"), anchor:GetAttribute("HaulTo")
+				-- Replicated attributes may arrive separately within a frame.
+				crate.Transparency = from and target and 0 or 1
+				if from and target then crate.Position = from:Lerp(target, anchor:GetAttribute("HaulProgress") or 0) + Vector3.new(0, 5, 0) end
+			elseif queued > 0 then
+				crate.Transparency = 0
+				crate.Position = anchor.Position + Vector3.new(-5, 1, 0)
+			else crate.Transparency = 1 end
+		end
 	end
 end)

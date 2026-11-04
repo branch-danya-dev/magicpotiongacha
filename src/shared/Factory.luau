@@ -53,7 +53,7 @@ function Factory.new(config)
 	local itemIds = keys(config.items)
 	local skills = { "Farming", "Hauling", "Brewing" }
 	local rngModulus = 2147483647
-	local routeCount = #config.machineOrder + #config.sourceOrder
+	local routeCount = #config.machineOrder + #config.sourceOrder + #config.machineOrder
 
 	local function capacity(profile, kind)
 		local field = kind == "raw" and "rawCapacity" or "intermediateCapacity"
@@ -105,8 +105,8 @@ function Factory.new(config)
 		return amount <= maximum
 	end
 
-	function engine.validate(profile)
-		if not plain(profile) or profile.schemaVersion ~= config.schemaVersion then
+	local function validate(profile, legacy)
+		if not plain(profile) or profile.schemaVersion ~= (legacy and 1 or config.schemaVersion) then
 			return false, "Unsupported profile schema"
 		end
 		if not integer(profile.userId, -9007199254740991, 9007199254740991)
@@ -162,7 +162,7 @@ function Factory.new(config)
 				or station.progress < 0 or station.progress > config.maxJobDuration then
 				return false, "Invalid station"
 			end
-			if stationId == "logistics" and not integer(station.routeCursor, 1, routeCount) then
+			if stationId == "logistics" and not integer(station.routeCursor, 1, legacy and (#config.machineOrder + #config.sourceOrder) or routeCount) then
 				return false, "Invalid logistics route cursor"
 			end
 			if station.workerId ~= nil then
@@ -198,6 +198,12 @@ function Factory.new(config)
 				or station.auto or station.progress ~= 0 or total(station.input) > 0 or total(station.output) > 0) then
 				return false, "Unbuilt station has active state"
 			end
+			if not legacy then
+				local essenceLimit = definition.defaultRecipe and station.level > 0 and config.essenceBufferCapacity or 0
+				if not integer(station.essence, 0, essenceLimit) or not countMap(station.questQueue, function(itemId)
+					return config.items[itemId].kind == "potion" and config.recipes[itemId] ~= nil and config.recipes[itemId].station == stationId
+				end, station.level > 0 and config.questQueueCapacity or 0) then return false, "Invalid machine tank or crate queue" end
+			end
 			local job = station.job
 			if job ~= nil then
 				if not plain(job) or not finite(job.duration) or job.duration < 1
@@ -207,16 +213,22 @@ function Factory.new(config)
 				if job.kind == "brew" then
 					local recipe = config.recipes[job.recipeId]
 					if not recipe or recipe.station ~= stationId or station.recipeId ~= job.recipeId
-						or not finite(job.doubleChance) or job.doubleChance < 0 or job.doubleChance > 0.25 then
+						or not finite(job.doubleChance) or job.doubleChance < 0 or job.doubleChance > (legacy and 0.25 or config.maxDoubleChance)
+						or (not legacy and type(job.automatic) ~= "boolean") then
 						return false, "Invalid brewing job"
 					end
 				elseif job.kind == "haul" then
 					if stationId ~= "logistics" or type(job.itemId) ~= "string"
-						or not config.items[job.itemId] or config.items[job.itemId].kind == "potion"
-						or not integer(job.amount, 1, 16) then
+						or not config.items[job.itemId] or (legacy and config.items[job.itemId].kind == "potion")
+						or not integer(job.amount, 1, config.maxHaulCapacity) then
 						return false, "Invalid hauling cargo"
 					end
-					if job.sourceKind == "output" then
+					if not legacy and config.items[job.itemId].kind == "potion" then
+						if job.sourceKind ~= "questQueue" or job.destinationKind ~= "questStock"
+							or not config.stations[job.sourceStationId] or not config.stations[job.sourceStationId].defaultRecipe
+							or not config.recipes[job.itemId] or config.recipes[job.itemId].station ~= job.sourceStationId
+							or profile.stations[job.sourceStationId].level == 0 then return false, "Invalid crate route" end
+					elseif job.sourceKind == "output" then
 						if not config.stations[job.sourceStationId]
 							or profile.stations[job.sourceStationId].level == 0
 							or job.destinationKind ~= "inventory" then
@@ -225,7 +237,9 @@ function Factory.new(config)
 					elseif job.sourceKind ~= "inventory" then
 						return false, "Invalid hauling source"
 					end
-					if job.destinationKind == "input" then
+					if not legacy and job.destinationKind == "questStock" then
+						if config.items[job.itemId].kind ~= "potion" then return false, "Invalid crate item" end
+					elseif job.destinationKind == "input" then
 						local target = config.stations[job.destinationStationId]
 						if not target or not target.defaultRecipe
 							or profile.stations[job.destinationStationId].level == 0
@@ -251,6 +265,15 @@ function Factory.new(config)
 		end, config.warehouse.questCapacity[profile.warehouseLevel + 1]) then
 			return false, "Invalid order stock"
 		end
+		local reserved = {}
+		for itemId, count in pairs(profile.questStock) do change(reserved, itemId, count) end
+		if not legacy then
+			for _, station in pairs(profile.stations) do
+				for itemId, count in pairs(station.questQueue) do change(reserved, itemId, count) end
+			end
+			local cargo = profile.stations.logistics.job
+			if cargo and cargo.destinationKind == "questStock" then change(reserved, cargo.itemId, cargo.amount) end
+		end
 		if profile.order ~= nil then
 			local order = profile.order
 			local definition = plain(order) and config.orders[order.id]
@@ -259,15 +282,15 @@ function Factory.new(config)
 				or not integer(order.acceptedAt, 0, config.maxTimestamp)
 				or not integer(order.expiresAt, 0, config.maxTimestamp)
 				or order.expiresAt - order.acceptedAt ~= definition.duration
-				or quantity(profile.questStock, order.itemId) > order.count then
+				or quantity(reserved, order.itemId) > order.count then
 				return false, "Invalid order"
 			end
-			for itemId, count in pairs(profile.questStock) do
+			for itemId, count in pairs(reserved) do
 				if count > 0 and itemId ~= order.itemId then
 					return false, "Unexpected reserved order item"
 				end
 			end
-		elseif total(profile.questStock) ~= 0 then
+		elseif total(reserved) ~= 0 then
 			return false, "Order stock without an order"
 		end
 		for _, stationId in ipairs({ "garden", "mine" }) do
@@ -301,7 +324,62 @@ function Factory.new(config)
 				return false, "Invalid entitlement"
 			end
 		end
+		if not legacy then
+			if not integer(profile.pipeCursor, 1, #config.machineOrder) or not plain(profile.tutorial)
+				or not plain(profile.telemetry) or not plain(profile.telemetry.first)
+				or not plain(profile.telemetry.stalls) then return false, "Invalid M1 progress" end
+			local milestones = {}
+			for _, id in ipairs(config.tutorialSteps) do milestones[id] = true end
+			for id, done in pairs(profile.tutorial) do
+				if not milestones[id] or done ~= true then return false, "Invalid tutorial milestone" end
+			end
+			for id, time in pairs(profile.telemetry.first) do
+				if not ({ manual_brew = true, auto_brew = true, upgrade = true, contract = true, tutorial = true })[id]
+					or not integer(time, 0, config.maxTimestamp) then return false, "Invalid diagnostic event" end
+			end
+			for stationId, reasons in pairs(profile.telemetry.stalls) do
+				if not config.stations[stationId] or not plain(reasons) then return false, "Invalid stall station" end
+				for reason, seconds in pairs(reasons) do
+					if not ({ unbuilt = true, no_master = true, no_hauler = true, waiting_essence = true,
+						waiting_ingredient = true, queue_full = true, manual_first = true,
+						recipe_unavailable = true, no_path = true, manual_mode = true, idle = true })[reason]
+						or not integer(seconds, 0, config.maxBalance) then return false, "Invalid stall counter" end
+				end
+			end
+		end
 		return true, nil
+	end
+
+	function engine.validate(profile) return validate(profile, false) end
+
+	local function copy(value)
+		if type(value) ~= "table" then return value end
+		local result = {}
+		for key, child in pairs(value) do result[key] = copy(child) end
+		return result
+	end
+
+	-- ProfileStore supplies a serializable isolated copy; this migration is pure.
+	function engine.migrate(profile)
+		if plain(profile) and profile.schemaVersion == config.schemaVersion then
+			local valid, reason = engine.validate(profile)
+			return valid and profile or nil, reason
+		end
+		local valid, reason = validate(profile, true)
+		if not valid then return nil, reason end
+		local migrated = copy(profile)
+		migrated.schemaVersion, migrated.pipeCursor = config.schemaVersion, 1
+		migrated.tutorial, migrated.telemetry = {}, { first = {}, stalls = {} }
+		for _, station in pairs(migrated.stations) do
+			station.essence, station.questQueue = 0, {}
+			if station.job and station.job.kind == "brew" then station.job.automatic = station.auto end
+		end
+		if migrated.discoveredRecipes.healing then migrated.tutorial.manual = true end
+		if migrated.pipes then migrated.tutorial.pipes = true end
+		if migrated.stations.crystal.level >= 2 then migrated.tutorial.upgrade = true end
+		if migrated.order then migrated.tutorial.orderAccepted = true end
+		valid, reason = engine.validate(migrated)
+		return valid and migrated or nil, reason
 	end
 
 	function engine.newProfile(userId, now)
@@ -313,6 +391,7 @@ function Factory.new(config)
 			rngState = math.abs(userId) % (rngModulus - 1) + 1, gold = 0, essence = 0,
 			pets = {}, nextPetSerial = 1, stations = {}, inventory = {}, questStock = {}, order = nil,
 			rebirths = 0, discoveredRecipes = {}, tutorialGranted = true, receipts = {}, entitlements = {},
+			pipeCursor = 1, tutorial = {}, telemetry = { first = {}, stalls = {} },
 			warehouseLevel = 0, pipes = false, manualReadyAt = { garden = now, mine = now }, slimeWorkSeconds = {},
 		}
 		for _, definition in ipairs(config.starterPets) do
@@ -327,7 +406,7 @@ function Factory.new(config)
 			profile.stations[stationId] = {
 				level = definition.initialLevel, workerId = nil,
 				recipeId = definition.initialLevel > 0 and definition.defaultRecipe or nil,
-				auto = false, input = {}, output = {}, progress = 0, job = nil,
+				auto = false, input = {}, output = {}, essence = 0, questQueue = {}, progress = 0, job = nil,
 			}
 			if stationId == "logistics" then profile.stations[stationId].routeCursor = 1 end
 		end
@@ -345,10 +424,34 @@ function Factory.new(config)
 		summary[field .. "Earned"] = summary[field .. "Earned"] + actual
 	end
 
+	local function event(profile, id, now)
+		if not profile.telemetry.first[id] then profile.telemetry.first[id] = now end
+	end
+
+	local function updateTutorial(profile, now)
+		local t = profile.tutorial
+		if profile.stations.garden.workerId and profile.stations.logistics.workerId and profile.stations.cauldron.workerId then t.workers = true end
+		if profile.pipes then t.pipes = true end
+		if profile.stations.crystal.level >= 2 then t.upgrade = true end
+		for _, id in ipairs(config.tutorialSteps) do if not t[id] then return end end
+		event(profile, "tutorial", now)
+	end
+
+	function engine.orderState(profile)
+		local queued, travelling, delivered = 0, 0, total(profile.questStock)
+		for _, id in ipairs(config.machineOrder) do queued += total(profile.stations[id].questQueue) end
+		local job = profile.stations.logistics.job
+		if job and job.destinationKind == "questStock" then travelling = job.amount end
+		return { queued = queued, travelling = travelling, delivered = delivered, reserved = queued + travelling + delivered,
+			remainingSeconds = profile.order and math.max(0, profile.order.expiresAt - profile.lastSimulatedAt) or 0,
+			capacity = config.warehouse.questCapacity[profile.warehouseLevel + 1] }
+	end
+
 	local function sell(profile, recipe, count, summary)
 		if count > 0 then
 			earn(profile, "gold", count * recipe.goldValue, summary)
 			change(summary.sold, recipe.output, count)
+			if recipe.output == "healing" then profile.tutorial.sale = true end
 		end
 	end
 
@@ -356,10 +459,10 @@ function Factory.new(config)
 		local reserved = 0
 		local order = profile.order
 		if order and order.itemId == recipe.output then
-			reserved = math.min(count, order.count - quantity(profile.questStock, recipe.output),
-				config.warehouse.questCapacity[profile.warehouseLevel + 1] - total(profile.questStock))
+			reserved = math.min(count, order.count - engine.orderState(profile).reserved,
+				config.questQueueCapacity - total(profile.stations[recipe.station].questQueue))
 			if reserved > 0 then
-				change(profile.questStock, recipe.output, reserved)
+				change(profile.stations[recipe.station].questQueue, recipe.output, reserved)
 				change(summary.orderReserved, recipe.output, reserved)
 			end
 		end
@@ -369,22 +472,32 @@ function Factory.new(config)
 	local function expireOrder(profile, now, summary)
 		if profile.order and profile.order.expiresAt <= now then
 			local recipe = config.recipes[profile.order.recipeId]
-			sell(profile, recipe, quantity(profile.questStock, profile.order.itemId), summary)
+			sell(profile, recipe, engine.orderState(profile).reserved, summary)
+			for _, id in ipairs(config.machineOrder) do profile.stations[id].questQueue = {} end
+			local logistics = profile.stations.logistics
+			if logistics.job and logistics.job.destinationKind == "questStock" then logistics.job, logistics.progress = nil, 0 end
 			profile.questStock = {}
 			profile.order = nil
 		end
 	end
 
-	local function startBrew(profile, stationId)
+	local function outputBlocked(profile, station, recipe)
+		if recipe.kind == "intermediate" then return total(station.output) + recipe.quantity * 2 > config.machineOutputCapacity end
+		local order = profile.order
+		local reserve = order and order.itemId == recipe.output and math.min(recipe.quantity * 2, order.count - engine.orderState(profile).reserved) or 0
+		return total(station.questQueue) + reserve > config.questQueueCapacity
+	end
+
+	local function startBrew(profile, stationId, automatic)
 		local station = profile.stations[stationId]
 		local recipe = station.recipeId and config.recipes[station.recipeId]
 		if not recipe or station.level < recipe.requiredLevel or station.job then
 			return false, "Machine unavailable"
 		end
-		if profile.essence < recipe.essenceCost then
+		if station.essence < recipe.essenceCost then
 			return false, "Not enough essence"
 		end
-		if recipe.kind == "intermediate" and total(station.output) + recipe.quantity * 2 > config.machineOutputCapacity then
+		if outputBlocked(profile, station, recipe) then
 			return false, "Output tray is full"
 		end
 		for itemId, count in pairs(recipe.inputs) do
@@ -395,13 +508,23 @@ function Factory.new(config)
 		for itemId, count in pairs(recipe.inputs) do
 			change(station.input, itemId, -count)
 		end
-		profile.essence = profile.essence - recipe.essenceCost
+		station.essence = station.essence - recipe.essenceCost
 		local skill = effectiveSkill(profile, stationId)
-		station.job = { kind = "brew", recipeId = station.recipeId,
-			duration = math.max(1, recipe.duration / (1 + skill * 0.035)),
-			doubleChance = math.min(0.25, skill * 0.002) }
+		station.job = { kind = "brew", recipeId = station.recipeId, automatic = automatic == true,
+			duration = math.max(1, recipe.duration / (1 + skill * config.brewSpeedPerSkill)),
+			doubleChance = math.min(config.maxDoubleChance, skill * config.doubleChancePerSkill) }
 		station.progress = 0
 		return true, "Brewing started"
+	end
+
+	local function refill(profile, stationId, limit)
+		local station = profile.stations[stationId]
+		if station.level == 0 or not station.recipeId then return 0 end
+		local target = limit and config.essenceBufferCapacity or config.recipes[station.recipeId].essenceCost
+		local amount = math.min(profile.essence, math.max(0, target - station.essence), limit or config.essenceBufferCapacity)
+		profile.essence -= amount
+		station.essence += amount
+		return amount
 	end
 
 	local function loadInputs(profile, stationId, fluidOnly)
@@ -447,8 +570,8 @@ function Factory.new(config)
 	local function beginHaul(profile)
 		local station = profile.stations.logistics
 		local skill = effectiveSkill(profile, "logistics")
-		local limit = math.min(16, 1 + math.floor(skill / 5))
-		local duration = math.max(1, config.baseHaulDuration / (1 + skill * 0.025))
+		local limit = math.min(config.maxHaulCapacity, 1 + math.floor(skill / config.haulSkillPerSlot))
+		local duration = config.baseHaulDuration
 		for offset = 0, routeCount - 1 do
 			local routeIndex = (station.routeCursor - 1 + offset) % routeCount + 1
 			if routeIndex <= #config.machineOrder then
@@ -458,7 +581,7 @@ function Factory.new(config)
 				if recipe and target.level > 0 then
 					for _, itemId in ipairs(itemIds) do
 						local needed = (recipe.inputs[itemId] or 0) - quantity(target.input, itemId)
-						if needed > 0 and not (profile.pipes and config.items[itemId].fluid) then
+						if needed > 0 and not config.items[itemId].fluid then
 							local amount = math.min(limit, needed, quantity(profile.inventory, itemId), config.machineInputCapacity - total(target.input))
 							if amount > 0 then
 								change(profile.inventory, itemId, -amount)
@@ -471,11 +594,11 @@ function Factory.new(config)
 						end
 					end
 				end
-			else
+			elseif routeIndex <= #config.machineOrder + #config.sourceOrder then
 				local sourceId = config.sourceOrder[routeIndex - #config.machineOrder]
 				local source = profile.stations[sourceId]
 				for _, itemId in ipairs(itemIds) do
-					if not (profile.pipes and config.items[itemId].fluid) then
+					if not config.items[itemId].fluid then
 						local amount = math.min(limit, quantity(source.output, itemId), inventoryRoom(profile, itemId))
 						if amount > 0 then
 							change(source.output, itemId, -amount)
@@ -485,6 +608,19 @@ function Factory.new(config)
 							station.routeCursor = routeIndex % routeCount + 1
 							return
 						end
+					end
+				end
+			else
+				local sourceId = config.machineOrder[routeIndex - #config.machineOrder - #config.sourceOrder]
+				local source = profile.stations[sourceId]
+				for _, itemId in ipairs(itemIds) do
+					local amount = math.min(limit, quantity(source.questQueue, itemId), config.warehouse.questCapacity[profile.warehouseLevel + 1] - total(profile.questStock))
+					if amount > 0 then
+						change(source.questQueue, itemId, -amount)
+						station.job = { kind = "haul", itemId = itemId, amount = amount, sourceKind = "questQueue", sourceStationId = sourceId,
+							destinationKind = "questStock", duration = duration }
+						station.progress, station.routeCursor = 0, routeIndex % routeCount + 1
+						return
 					end
 				end
 			end
@@ -501,12 +637,15 @@ function Factory.new(config)
 			beginHaul(profile)
 			return
 		end
-		station.progress = math.min(job.duration, station.progress + 1)
+		station.progress = math.min(job.duration, station.progress + 1 + effectiveSkill(profile, "logistics") * config.haulSpeedPerSkill)
 		if station.progress < job.duration then
 			return
 		end
 		local destination, room
-		if job.destinationKind == "inventory" then
+		if job.destinationKind == "questStock" then
+			destination = profile.questStock
+			room = config.warehouse.questCapacity[profile.warehouseLevel + 1] - total(destination)
+		elseif job.destinationKind == "inventory" then
 			destination = profile.inventory
 			room = inventoryRoom(profile, job.itemId)
 		else
@@ -524,13 +663,104 @@ function Factory.new(config)
 		end
 	end
 
+	local statusText = {
+		working = "Работает", unbuilt = "Построй объект", no_master = "Нет мастера — назначь фамильяра",
+		no_hauler = "Нет перевозчика — назначь рабочего на логистику",
+		waiting_essence = "Ждёт Essence — заправь бак или подключи трубы",
+		waiting_ingredient = "Ждёт ингредиенты — собери и загрузи сырьё",
+		queue_full = "Очередь заполнена — освободи склад или включи доставку",
+		manual_first = "Нужна первая ручная варка этого рецепта",
+		recipe_unavailable = "Рецепт недоступен", no_path = "Нет пути — купи трубы или загрузи вручную",
+		manual_mode = "Ручной режим — запусти партию или включи автоварку", idle = "Нет груза для доставки",
+	}
+
+	function engine.stationState(profile, stationId)
+		local station, definition = profile.stations[stationId], config.stations[stationId]
+		local recipe, job = config.recipes[station.recipeId], station.job
+		local code, missing = "working", {}
+		if recipe then
+			for itemId, amount in pairs(recipe.inputs) do
+				if quantity(station.input, itemId) < amount then missing[itemId] = amount - quantity(station.input, itemId) end
+			end
+		end
+		if station.level == 0 then code = "unbuilt"
+		elseif stationId == "logistics" then
+			if not station.workerId then code = "no_hauler"
+			elseif not job then code = "idle"
+			elseif station.progress >= job.duration then code = "queue_full" end
+		elseif definition.defaultRecipe then
+			if not recipe then code = "recipe_unavailable"
+			elseif job then
+				if job.automatic and not station.workerId then code = "no_master"
+				elseif station.progress >= job.duration and outputBlocked(profile, station, recipe) then code = "queue_full" end
+			elseif outputBlocked(profile, station, recipe) then code = "queue_full"
+			elseif station.auto and not station.workerId then code = "no_master"
+			elseif station.essence < recipe.essenceCost then code = profile.essence > 0 and not profile.pipes and "no_path" or "waiting_essence"
+			elseif total(missing) > 0 then
+				code = "waiting_ingredient"
+				for itemId in pairs(missing) do
+					if config.items[itemId].fluid and not profile.pipes then code = "no_path"; break end
+					if not config.items[itemId].fluid and not profile.stations.logistics.workerId then code = "no_hauler" end
+				end
+			elseif not profile.discoveredRecipes[station.recipeId] then code = "manual_first"
+			elseif not station.auto then code = "manual_mode" end
+		elseif definition.outputItem then
+			if total(station.output) >= config.sourceCapacity then code = "queue_full"
+			elseif not station.workerId then code = "no_master" end
+		elseif stationId == "crystal" and not station.workerId and definition.passiveEssence[station.level] == 0 then code = "manual_mode" end
+		local duration = job and job.duration or (definition.growDuration and math.max(1, definition.growDuration / (1 + effectiveSkill(profile, stationId) * config.gatherSpeedPerSkill)))
+		return { code = code, text = statusText[code], missingInputs = missing,
+			essence = station.essence, essenceRequired = recipe and recipe.essenceCost or 0,
+			progress = duration and math.min(1, station.progress / duration) or 0,
+			effectiveSkill = effectiveSkill(profile, stationId), queued = total(station.questQueue) }
+	end
+
+	function engine.productionState(profile)
+		local result = {}
+		for _, id in ipairs(config.stationOrder) do result[id] = engine.stationState(profile, id) end
+		return result
+	end
+
+	function engine.storageState(profile)
+		return { raw = stored(profile, "raw"), rawCapacity = capacity(profile, "raw"),
+			intermediate = stored(profile, "intermediate"), intermediateCapacity = capacity(profile, "intermediate") }
+	end
+
+	function engine.tutorialState(profile)
+		local hints = {
+			crystal = { "crystal", "Подойди к кристаллу и собери Essence. Для Healing нужно 3." },
+			ingredients = { "garden", "На грядке собери 2 Mandrake. Ручной сбор бесплатный." },
+			workers = { "garden", "Назначь сову на грядку, слайма на логистику, кота на котёл. Все трое уже твои." },
+			manual = { "cauldron", "Выбери Healing → загрузи ингредиенты и Essence → свари вручную. При нехватке вернись к кристаллу или грядке." },
+			sale = { "cauldron", "Свари Healing для автопродажи за 14 Gold. Активный заказ сначала забирает свою квоту." },
+			pipes = { "warehouse", "Накопи 28 Gold ручной варкой и купи трубы на складе: они заправляют котлы автоматически." },
+			upgrade = { "crystal", "Накопи 140 Gold и улучши кристалл для пассивной Essence. До покупки клики остаются бесплатными." },
+			automation = { "cauldron", "Выбери Healing, назначь кота и включи автоварку. Сова и слайм обеспечат ингредиенты. Дождись готовой партии." },
+			orderAccepted = { "orders", "У доски NPC прими Healer's request: изготовь и доставь 5 Healing." },
+			orderClaimed = { "orders", "Слайм везёт ящики от котла на квестовый склад. Когда доставлено 5/5, сдай заказ у доски. Истёкший заказ можно принять снова." },
+		}
+		for index, id in ipairs(config.tutorialSteps) do
+			if not profile.tutorial[id] then
+				local hint = hints[id]
+				local target = hint[1]
+				if id == "workers" then
+					for _, stationId in ipairs({ "garden", "logistics", "cauldron" }) do
+						if not profile.stations[stationId].workerId then target = stationId; break end
+					end
+				end
+				return { step = index, total = #config.tutorialSteps, id = id, target = target, text = hint[2], complete = false }
+			end
+		end
+		return { step = #config.tutorialSteps, total = #config.tutorialSteps, id = "complete", target = "orders", text = "Обучение завершено: фабрика и доставка работают!", complete = true }
+	end
+
 	local function tick(profile, now, summary, petIds)
 		expireOrder(profile, now, summary)
 		local crystal = profile.stations.crystal
 		if crystal.level > 0 then
 			local gain = config.stations.crystal.passiveEssence[crystal.level]
 			if crystal.workerId then
-				gain = gain + math.max(1, math.floor(effectiveSkill(profile, "crystal") / 5))
+				gain = gain + math.max(1, math.floor(effectiveSkill(profile, "crystal") / config.crystalSkillPerEssence))
 			end
 			earn(profile, "essence", gain, summary)
 		end
@@ -542,7 +772,7 @@ function Factory.new(config)
 			end
 			local definition = config.stations[stationId]
 			if definition.outputItem and station.workerId and total(station.output) < config.sourceCapacity then
-				local duration = math.max(1, definition.growDuration / (1 + effectiveSkill(profile, stationId) * 0.04))
+				local duration = math.max(1, definition.growDuration / (1 + effectiveSkill(profile, stationId) * config.gatherSpeedPerSkill))
 				station.progress = station.progress + 1
 				if station.progress >= duration then
 					station.progress = 0
@@ -565,6 +795,11 @@ function Factory.new(config)
 			end
 		end
 		if profile.pipes then
+			for offset = 0, #config.machineOrder - 1 do
+				local index = (profile.pipeCursor - 1 + offset) % #config.machineOrder + 1
+				refill(profile, config.machineOrder[index], config.pipeEssencePerSecond)
+			end
+			profile.pipeCursor = profile.pipeCursor % #config.machineOrder + 1
 			for _, stationId in ipairs(config.machineOrder) do
 				collectOutput(profile, stationId, true)
 			end
@@ -576,9 +811,9 @@ function Factory.new(config)
 		for _, stationId in ipairs(config.machineOrder) do
 			local station = profile.stations[stationId]
 			local job = station.job
-			if job then
+			if job and (not job.automatic or station.workerId) then
 				station.progress = math.min(job.duration, station.progress + 1)
-				if station.progress >= job.duration then
+				if station.progress >= job.duration and not outputBlocked(profile, station, config.recipes[job.recipeId]) then
 					local recipe = config.recipes[job.recipeId]
 					local produced = recipe.quantity
 					if nextRandom(profile) < job.doubleChance then
@@ -586,6 +821,8 @@ function Factory.new(config)
 					end
 					change(summary.produced, recipe.output, produced)
 					profile.discoveredRecipes[job.recipeId] = true
+					event(profile, job.automatic and "auto_brew" or "manual_brew", now)
+					if job.recipeId == "healing" then profile.tutorial[job.automatic and "automation" or "manual"] = true end
 					if recipe.kind == "potion" then
 						dispatch(profile, recipe, produced, summary)
 					else
@@ -596,7 +833,16 @@ function Factory.new(config)
 				end
 			end
 			if not station.job and station.auto and station.workerId then
-				startBrew(profile, stationId)
+				startBrew(profile, stationId, true)
+			end
+		end
+		updateTutorial(profile, now)
+		for _, stationId in ipairs(config.stationOrder) do
+			local status = engine.stationState(profile, stationId).code
+			if status ~= "working" then
+				local stalls = profile.telemetry.stalls
+				stalls[stationId] = stalls[stationId] or {}
+				stalls[stationId][status] = math.min(config.maxBalance, (stalls[stationId][status] or 0) + 1)
 			end
 		end
 	end
@@ -634,7 +880,7 @@ function Factory.new(config)
 		click = {}, assign = { stationId = true, petId = true }, harvest = { stationId = true },
 		collect = { stationId = true }, load = { stationId = true }, brew = { stationId = true },
 		setRecipe = { stationId = true, recipeId = true }, setAuto = { stationId = true, enabled = true },
-		buy = { upgradeId = true }, hire = { speciesId = true }, acceptOrder = { orderId = true }, claimOrder = {},
+		buy = { upgradeId = true, expectedLevel = true }, hire = { speciesId = true }, acceptOrder = { orderId = true }, claimOrder = {},
 		discard = { itemId = true, amount = true },
 	}
 
@@ -651,6 +897,8 @@ function Factory.new(config)
 		for key in pairs(fields) do
 			if key == "enabled" then
 				if type(payload[key]) ~= "boolean" then return false end
+			elseif key == "expectedLevel" then
+				if not integer(payload[key], 0, config.maxCount) then return false end
 			elseif key == "amount" then
 				if not integer(payload[key], 1, config.maxCount) then return false end
 			elseif type(payload[key]) ~= "string" or #payload[key] > 80 then
@@ -683,8 +931,10 @@ function Factory.new(config)
 		if station and station.level == 0 then return false, "Build this station first" end
 		if action == "click" then
 			if profile.essence >= config.maxBalance then return false, "Essence limit reached" end
-			profile.essence = profile.essence + 1
-			return true, "+1 essence"
+			local gained = math.min(config.manualClickEssence, config.maxBalance - profile.essence)
+			profile.essence += gained
+			profile.tutorial.crystal = true
+			return true, "+" .. gained .. " essence"
 		elseif action == "assign" then
 			if payload.petId ~= "" then
 				for otherId, other in pairs(profile.stations) do
@@ -694,6 +944,7 @@ function Factory.new(config)
 				end
 			end
 			station.workerId = payload.petId ~= "" and payload.petId or nil
+			updateTutorial(profile, math.floor(now))
 			return true, "Assignment updated"
 		elseif action == "harvest" then
 			local itemId = config.stations[stationId].outputItem
@@ -703,14 +954,16 @@ function Factory.new(config)
 			if timestamp < profile.manualReadyAt[stationId] then return false, "Gathering is on cooldown" end
 			if inventoryRoom(profile, itemId) < 1 then return false, "Raw storage is full" end
 			change(profile.inventory, itemId, 1)
+			if itemId == "mandrake" then profile.tutorial.ingredients = true end
 			profile.manualReadyAt[stationId] = timestamp + config.manualHarvestCooldown
 			return true, "Ingredient gathered"
 		elseif action == "collect" then
 			if collectOutput(profile, stationId, false) == 0 then return false, "Nothing to collect or storage is full" end
 			return true, "Output collected"
 		elseif action == "load" then
-			if loadInputs(profile, stationId, false) == 0 then return false, "No ingredients to load" end
-			return true, "Ingredients loaded"
+			local moved = loadInputs(profile, stationId, false) + refill(profile, stationId, nil)
+			if moved == 0 then return false, "No ingredients or Essence to load" end
+			return true, "Ingredients and Essence loaded"
 		elseif action == "brew" then
 			return startBrew(profile, stationId)
 		elseif action == "setRecipe" then
@@ -752,6 +1005,9 @@ function Factory.new(config)
 			return true, "Familiar hired"
 		elseif action == "buy" then
 			local upgradeId, cost = payload.upgradeId, nil
+			local level = upgradeId == "pipes" and (profile.pipes and 1 or 0)
+				or (upgradeId == "warehouse" and profile.warehouseLevel or profile.stations[upgradeId].level)
+			if payload.expectedLevel ~= level then return false, "Upgrade already changed; refresh first" end
 			if upgradeId == "pipes" then
 				if profile.pipes then return false, "Pipes already purchased" end
 				cost = config.pipesCost
@@ -772,6 +1028,8 @@ function Factory.new(config)
 				target.level = target.level + 1
 				if not target.recipeId then target.recipeId = config.stations[upgradeId].defaultRecipe end
 			end
+			event(profile, "upgrade", math.floor(now))
+			updateTutorial(profile, math.floor(now))
 			return true, "Upgrade purchased"
 		elseif action == "acceptOrder" then
 			if profile.order then return false, "An order is already active" end
@@ -783,6 +1041,7 @@ function Factory.new(config)
 			profile.order = { id = payload.orderId, recipeId = definition.recipeId, itemId = definition.itemId,
 				count = definition.count, rewardGold = definition.rewardGold,
 				acceptedAt = math.floor(now), expiresAt = math.floor(now) + definition.duration }
+			profile.tutorial.orderAccepted = true
 			return true, "Order accepted"
 		elseif action == "claimOrder" then
 			local order = profile.order
@@ -790,6 +1049,9 @@ function Factory.new(config)
 			change(profile.questStock, order.itemId, -order.count)
 			profile.gold = math.min(config.maxBalance, profile.gold + order.rewardGold)
 			profile.order = nil
+			profile.tutorial.orderClaimed = true
+			event(profile, "contract", math.floor(now))
+			updateTutorial(profile, math.floor(now))
 			return true, "Order delivered"
 		end
 		return false, "Unknown action"

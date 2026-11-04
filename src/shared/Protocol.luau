@@ -46,7 +46,7 @@ local SCHEMAS: { [string]: { [string]: string } } = {
 	brew = { stationId = "id" },
 	setRecipe = { stationId = "id", recipeId = "id" },
 	setAuto = { stationId = "id", enabled = "boolean" },
-	buy = { upgradeId = "id" },
+	buy = { upgradeId = "id", expectedLevel = "level" },
 	hire = { speciesId = "id" },
 	discard = { itemId = "id", amount = "count" },
 	acceptOrder = { orderId = "id" },
@@ -102,8 +102,8 @@ local function validatePayload(action: any, payload: any): (boolean, string)
 			if type(value) ~= "boolean" then
 				return false, "invalid_payload"
 			end
-		elseif kind == "count" then
-			if not finite(value) or value % 1 ~= 0 or value < 1 or value > 1000000 then
+		elseif kind == "count" or kind == "level" then
+			if not finite(value) or value % 1 ~= 0 or value < (kind == "level" and 0 or 1) or value > 1000000 then
 				return false, "invalid_payload"
 			end
 		elseif not validId(value, kind == "id-or-empty") then

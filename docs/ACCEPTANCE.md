@@ -2,6 +2,56 @@
 
 CLI/CI passing is necessary but does not mark any item below as completed.
 
+## M1 implementation record — 2026-11-04
+
+Scope: [Issue #4](https://github.com/branch-danya-dev/magicpotiongacha/issues/4).
+Branch `feat/m1-production-onboarding`, based on the actual
+[PR #3](https://github.com/branch-danya-dev/magicpotiongacha/pull/3) HEAD
+`a72ef9ecd61ed2e29b9c686174e057a3e94e1603`. PR #3 is still Draft/unmerged, so the
+M1 Draft targets `fix/m0-1-acceptance`. Do not bypass that dependency or close
+Issue #2's manual gates. Overall live acceptance is **BLOCKED**.
+
+| Requirement / check | Actual status | Reproducible evidence / limit |
+| --- | --- | --- |
+| Essence source → machine tank; manual → pipes | **PASS (portable)** | `m1.spec`: no reservoir debit at brew, explicit refill, tank capacity/conservation, rotating scarce supply; `factory.spec`: paid batch consumes once. |
+| Liquid intermediates versus solid/crate carriers | **PASS (portable)** | `m1.spec`: no new fluid hauls; `factory.spec`: actual manually discovered Fire Extract → Rage and hired workers; two-machine two-hour equivalence. |
+| Queued / travelling / delivered crates | **PASS (portable)** | `m1.spec`: disjoint accounting, capped pickup, slower replacement worker, partial delivery, full queue, saved cargo, recipe switch, expiry boundary and repeated claim. |
+| No loss/duplication across mixed transitions | **PASS (portable)** | 500 deterministic production/order/assignment/expiry transitions check produced = sold + claimed + reserved after every transition. |
+| Complete onboarding with no injected resources | **PASS (portable)** | `Scenarios.luau`: manual, early automation, 100-Gold spending detour; every tutorial fact and 5-Healing order completed, followed by 600 autonomous seconds. See `M1_BALANCE.md`. |
+| Tutorial persistence / out-of-order completion | **PASS (fake backend)** | Every recorded milestone plus an in-progress first manual brew survives save/release/reload; facts, pets and complete profile compare exactly. |
+| Two-hour cap, repeat join and chain equivalence | **PASS (portable/fake backend)** | Both Healing and Fire Extract → Rage chains match one-second online state over 7200 seconds. A 10800-second absence consumes the skipped tail; immediate rejoin grants nothing. |
+| V1 → V2 profile migration | **PASS (fake backend)** | Captured V1 fixture, prepaid brew, old fluid cargo, historical quest stock, callback replay, lost reply, competing lease, invalid/future schema and broken migrator cases. |
+| Schemas, rates, ownership/range, stale purchases | **PASS (portable only)** | Original Protocol/lease regression suites; new forged Essence/cargo/time/tutorial payloads, foreign pet, rate limits, pure Access checks and `expectedLevel` purchase replay. Engine authorization still S1. |
+| Previous regression coverage | **PASS** | All 154 tests retained. Adaptations: V2 schema assertion, exact `buy.expectedLevel`, early pipes/refill in fixtures, quota assertion now checks source queue, claim scenario performs actual hauling first. No test removed. |
+| Local compile / analysis / build | **PASS** | Windows x64, Node 24.22.1: **203/203 tests**, all **20 Luau sources** compiled, portable analysis and Rojo build/sourcemap passed. `build/verification.log` records the source SHA and results. |
+| Windows + Ubuntu CI on final source | **Recorded in Draft PR** | The PR gives exact SHA, run/job links and final PASS/FAIL. Checkout explicitly uses PR head SHA; each artifact contains `verification.log`, place and sourcemap. Local results are not claimed as Ubuntu execution. |
+| Work/status/crate UI and portrait/landscape layout | **BLOCKED — S1/M1** | Engine scripts compile; no Studio/device session was run. Verify 44px controls, horizontal tabs, closed-menu movement/camera, guided focus, server status text and crate route visuals. |
+| Real DataStore migration / lease / offline saves | **BLOCKED — D1** | No isolated private QA backend session; fake backend does not establish platform behavior. |
+| 2–8 clients, respawn/reconnect, performance | **BLOCKED — S1/P1** | No live multi-client run, mobile device or measured FPS/tick/replication data. |
+
+Local validation uses `node scripts/setup-tools.mjs` and `node scripts/check.mjs`,
+the exact package-script entry points, because this workstation has no npm.
+CI runs the documented `npm run tools` and `npm test` on both OSes. Tool archives
+and CI actions retain their SHA pins. No external analytics, marketplace code,
+M2 mechanics, public Roblox publication or merge into main is included.
+
+### Additional M1 live steps (all BLOCKED pending S1/D1/M1/P1)
+
+- New QA profile: follow the saved guide from zero resources through manual Healing,
+  ordinary sale, pipes, passive crystal, automatic Healing and delivered NPC order.
+- Save/respawn/reconnect during first manual brew and with partially delivered cargo;
+  compare progress, single workplace assignments, stocks and diagnostic events.
+- Remove the carrier while carrying crates, replace with a weaker worker, fill
+  storage, switch the active recipe and cross the order deadline while disconnected.
+- Confirm real prompts and forged remotes from a second player's plot cannot refill,
+  buy, assign or claim on someone else's behalf; repeat a stale purchase payload.
+- Run portrait and landscape on emulator and real phone; inspect text wrapping,
+  scrolling, touch targets, closed-menu joystick/camera, toast and offline report.
+- Exercise V1 migration in a backed-up QA key, repeat join and simulate normal
+  lease contention; record the build SHA, Studio version, QA namespace and logs.
+- Measure eight clients, server tick/catch-up cost, FPS and replication. Close the
+  existing Issue #2 gates only after actual observations; CLI does not close them.
+
 ## M0.1 execution record — 2026-11-04
 
 Scope: [Issue #2](https://github.com/branch-danya-dev/magicpotiongacha/issues/2),

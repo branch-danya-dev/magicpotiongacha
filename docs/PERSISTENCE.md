@@ -1,4 +1,4 @@
-# M0 player persistence
+# M1 player persistence
 
 ## Scope and verification status
 
@@ -13,7 +13,8 @@ does **not** verify Roblox Studio, real DataStore quotas/latency, or production
 shutdown behavior. The integration checklist below remains a release gate.
 
 This adapter is not a two-player trade transaction system. Trading, paid
-purchases, receipt processing, and schema migration are not implemented by it.
+purchases and receipt processing are not implemented by it. M1 adds an optional,
+pure gameplay-profile migration hook; it does not change the lease protocol.
 
 ## Construction and public contract
 
@@ -23,6 +24,7 @@ local store = ProfileStore.new({
     now = os.time,
     owner = game.JobId .. ":" .. HttpService:GenerateGUID(false),
     validate = Factory.validate,
+    migrate = Factory.migrate,
     sleep = task.wait,
     leaseSeconds = 120,
 })
@@ -34,6 +36,7 @@ local store = ProfileStore.new({
 | `now` | Trusted server epoch seconds. Never a client timestamp. |
 | `owner` | Nonempty, unique identifier for this live adapter/server session. Never reuse a prior server's identifier. |
 | `validate` | Pure, non-yielding `validate(profile) -> boolean, reason?`. |
+| `migrate` | Optional pure, non-yielding `migrate(isolatedProfile) -> profile?`; used only when loading an existing record. |
 | `sleep` | Yielding wait function used for retries and the local write gate. |
 | `leaseSeconds` | `120`; the runtime autosaves every `30` seconds. |
 | `safetyMarginSeconds` | `15` for the default lease; freezes gameplay before lease expiry. |
@@ -117,7 +120,8 @@ backend state over guessing whether a previous write succeeded.
 - A failed or rejected load has no writable local default profile. Backend errors
   never activate the Studio in-memory backend.
 - Invalid/future envelope or profile schemas fail closed. Migration must be added
-  explicitly and tested; there is no automatic reset to a new player.
+  explicitly and tested; there is no automatic reset to a new player. Only the
+  explicit gameplay V1→V2 migration is supported.
 - Failed saves pause gameplay writes. A subsequent save can recover while the
   adapter can still prove ownership of an unexpired lease. Expired, lost, or
   conflicting leases cannot be reclaimed by saving a stale local snapshot.
@@ -133,6 +137,38 @@ backend state over guessing whether a previous write succeeded.
   two profile saves are not an atomic exchange.
 - `receipts`/`entitlements` fields in a profile are reserved data. Their presence
   is not an implementation of Roblox purchase receipt validation or fulfilment.
+
+## Gameplay V1 → V2 migration
+
+The DataStore **envelope remains version 1** and the namespace is unchanged, so
+existing keys are found. `Factory.validate` accepts only current V2 gameplay
+profiles. `Factory.migrate` first checks V1 with the previous shape/invariants,
+then copies it and initializes empty machine Essence tanks/quest queues, a pipe
+cursor, tutorial facts and diagnostic tables. Existing balances, paid jobs,
+inventory, already-delivered quest stock, cargo, timers, assignments, RNG and
+timestamp are retained. A captured V1 fixture was validated with PR #3's Factory.
+
+An old brewing job is already paid; it gains an `automatic` flag from its saved
+station mode and finishes without another Essence debit. Old liquid hauling jobs
+retain their item/amount/destination/progress and finish; new routes never pick
+up liquids. Existing recipe discoveries count as prior manual learning. First
+diagnostic timestamps are not invented. No starter, tutorial currency or pipe
+grant occurs. An old automated factory without pipes needs the newly affordable
+28-Gold pipes or manual refilling; its reservoir remains intact.
+
+The adapter clones/serialization-checks an existing profile, invokes migration
+under `pcall`, then checks serialization, identity and current validation again.
+The migrated profile is committed **with the load lease/revision in the same
+UpdateAsync**, only after the normal envelope and competing-lease checks pass.
+Callback replay and a lost response cannot apply grants or acquire a second
+revision for the same operation. An exception, nil, cycle, identity change,
+invalid old data or future schema cancels the write. Save/release paths never
+migrate or weaken validation; quarantine and revision fencing are unchanged.
+
+Offline simulation still follows lease acquisition and is saved before gameplay.
+V2 is not backward writable by M0 servers: deploy coherently to a private QA
+environment first and do not downgrade a migrated key by resetting it. Real
+DataStore migration/lease and multi-client rollout remain **BLOCKED (D1/S1)**.
 
 ## Studio and real-backend acceptance checklist
 

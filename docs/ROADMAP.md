@@ -2,8 +2,8 @@
 
 | Stage | Scope | Exit gate |
 | --- | --- | --- |
-| M0 (current) | Repository/toolchain, deterministic core, validated requests, safe profile adapter, greybox playable chain | CLI tests/build + explicit manual acceptance |
-| M1 | Complete first factory loop, tutorial, actual quest-crate/Essence routing, richer failure/status UI, initial balancing | Real device/session tests, telemetry, no resource softlocks |
+| M0 / M0.1 (dependency) | Repository/toolchain, deterministic core, validated requests, safe profile adapter, greybox playable chain | CLI/CI passed; Issue #2 live gates still BLOCKED |
+| M1 (implemented, Draft / live acceptance BLOCKED) | Complete first factory loop, saved tutorial, quest-crate/Essence routing, failure/status UI, provisional balance traces | Portable coverage and exact-SHA Windows/Ubuntu CI; Studio, real DataStore, mobile and scale gates still required |
 | M2 | Familiar collection, instance stat distributions, guaranteed alternatives, deterministic Fuse rules | Disclosure/policy matrix, inventory limits, probability and provenance tests |
 | M3 | Full four-stage tycoon progression and production content | First-cycle playtest and economy checks |
 | M4 | Same-server P2P trades for familiars/rare cauldrons | Durable transaction/recovery protocol, disconnect/crash/duplicate tests, per-player permissions |
