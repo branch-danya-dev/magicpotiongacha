@@ -1,0 +1,15 @@
+{
+  "name": "PotionTycoon",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "PotionTycoon": { "$className": "Folder", "Shared": { "$path": "src/shared" } }
+    },
+    "ServerScriptService": { "PotionTycoon": { "$path": "src/server" } },
+    "StarterPlayer": {
+      "StarterPlayerScripts": { "PotionTycoon": { "$path": "src/client" } }
+    },
+    "Workspace": { "$properties": { "Gravity": 196.2 } },
+    "Lighting": { "$properties": { "ClockTime": 18, "Brightness": 2 } }
+  }
+}

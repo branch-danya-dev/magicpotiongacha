@@ -1,0 +1,114 @@
+-- Pure data: all economy values are provisional and can be tuned without changing the engine.
+return {
+	schemaVersion = 1,
+	maxOfflineSeconds = 7200,
+	maxAdvanceSeconds = 7200,
+	maxBalance = 1000000000000,
+	maxCount = 1000000,
+	maxBaseStat = 10000,
+	maxPets = 128,
+	maxTimestamp = 1000000000000,
+	maxJobDuration = 3600,
+	sourceCapacity = 30,
+	machineInputCapacity = 20,
+	machineOutputCapacity = 20,
+	manualHarvestCooldown = 4,
+	slimePeriod = 60,
+	slimeChance = 0.35,
+	baseHaulDuration = 4,
+	pipesCost = 650,
+	stationOrder = { "crystal", "garden", "mine", "distillery", "cauldron", "logistics" },
+	machineOrder = { "distillery", "cauldron" },
+	sourceOrder = { "garden", "mine", "distillery" },
+	items = {
+		mandrake = { name = "Mandrake", kind = "raw", fluid = false },
+		coal = { name = "Magic coal", kind = "raw", fluid = false },
+		slime = { name = "Slime", kind = "raw", fluid = false },
+		fire_extract = { name = "Fire extract", kind = "intermediate", fluid = true },
+		healing = { name = "Healing potion", kind = "potion", fluid = false },
+		rage = { name = "Rage elixir", kind = "potion", fluid = false },
+	},
+	stations = {
+		crystal = {
+			name = "Magic crystal", skill = "Farming", initialLevel = 1,
+			upgradeCosts = { 0, 140, 700 }, statCaps = { 10, 25, 60 },
+			passiveEssence = { 0, 1, 3 },
+		},
+		garden = {
+			name = "Mandrake garden", skill = "Farming", initialLevel = 1,
+			upgradeCosts = { 0, 100, 450 }, statCaps = { 10, 25, 60 },
+			outputItem = "mandrake", growDuration = 8,
+		},
+		mine = {
+			name = "Coal mine", skill = "Farming", initialLevel = 0,
+			upgradeCosts = { 60, 150, 600 }, statCaps = { 10, 25, 60 },
+			outputItem = "coal", growDuration = 10,
+		},
+		distillery = {
+			name = "Distillery", skill = "Brewing", initialLevel = 0,
+			upgradeCosts = { 100, 250, 900 }, statCaps = { 10, 25, 60 },
+			defaultRecipe = "fire_extract",
+		},
+		cauldron = {
+			name = "Cauldron", skill = "Brewing", initialLevel = 1,
+			upgradeCosts = { 0, 180, 750 }, statCaps = { 15, 35, 75 },
+			defaultRecipe = "healing",
+		},
+		logistics = {
+			name = "Hauling station", skill = "Hauling", initialLevel = 1,
+			upgradeCosts = { 0, 120, 500 }, statCaps = { 10, 25, 60 },
+		},
+	},
+	warehouse = {
+		upgradeCosts = { 180, 650, 1800 },
+		rawCapacity = { 50, 100, 200, 400 },
+		intermediateCapacity = { 20, 40, 80, 160 },
+		questCapacity = { 100, 150, 250, 400 },
+	},
+	recipes = {
+		healing = {
+			name = "Healing potion", inputs = { mandrake = 2 }, essenceCost = 3,
+			duration = 6, output = "healing", quantity = 1, goldValue = 14,
+			station = "cauldron", requiredLevel = 1, kind = "potion",
+		},
+		fire_extract = {
+			name = "Fire extract", inputs = { coal = 2 }, essenceCost = 5,
+			duration = 8, output = "fire_extract", quantity = 1, goldValue = 0,
+			station = "distillery", requiredLevel = 1, kind = "intermediate",
+		},
+		rage = {
+			name = "Rage elixir", inputs = { mandrake = 2, fire_extract = 1, slime = 1 },
+			essenceCost = 8, duration = 12, output = "rage", quantity = 1, goldValue = 70,
+			station = "cauldron", requiredLevel = 2, kind = "potion",
+		},
+	},
+	orders = {
+		healing_small = {
+			name = "Healer's request", recipeId = "healing", itemId = "healing",
+			count = 5, rewardGold = 110, duration = 600,
+		},
+		healing_large = {
+			name = "Clinic supplies", recipeId = "healing", itemId = "healing",
+			count = 12, rewardGold = 280, duration = 1200,
+		},
+		rage_small = {
+			name = "Knight's request", recipeId = "rage", itemId = "rage",
+			count = 4, rewardGold = 420, duration = 1200,
+		},
+	},
+	petSpecies = {
+		farmer = { name = "Sprout owl" },
+		slime = { name = "Green slime", slimeProducer = true },
+		brewer = { name = "Magic cat" },
+	},
+	hires = {
+		farmer = { cost = 120, name = "Sprout owl", stats = { Farming = 12, Hauling = 2, Brewing = 2 } },
+		slime = { cost = 120, name = "Green slime", stats = { Farming = 2, Hauling = 10, Brewing = 1 } },
+		brewer = { cost = 180, name = "Magic cat", stats = { Farming = 3, Hauling = 2, Brewing = 25 } },
+	},
+	starterPets = {
+		{ id = "starter_farmer", species = "farmer", name = "Sprout owl", stats = { Farming = 12, Hauling = 2, Brewing = 2 } },
+		{ id = "starter_slime", species = "slime", name = "Green slime", stats = { Farming = 2, Hauling = 10, Brewing = 1 } },
+		{ id = "starter_brewer", species = "brewer", name = "Magic cat", stats = { Farming = 3, Hauling = 2, Brewing = 25 } },
+	},
+}
