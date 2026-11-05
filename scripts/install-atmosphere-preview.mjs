@@ -10,10 +10,10 @@ assert(basename(version).startsWith('version-') && existsSync(resolve(version,'R
 const content=realpathSync(resolve(version,'content'));
 assert(content.startsWith(version+'\\') || content.startsWith(version+'/'),'Content path escapes selected Studio');
 const pack=process.argv[3] || 'atmosphere';
-assert(['atmosphere','polish'].includes(pack),'Unknown local asset pack');
+assert(['atmosphere','polish','fantasy'].includes(pack),'Unknown local asset pack');
 const src=resolve(root,'assets/environment',pack);
 const receipt=JSON.parse(readFileSync(resolve(src,'receipt.json')));
-assert.match(receipt.local_prefix,/^rbxasset:\/\/m7a2[bc]-v[0-9]+\/$/);
+assert.match(receipt.local_prefix,/^rbxasset:\/\/(?:m7a2[bc]|m7task06)-v[0-9]+\/$/);
 const dest=resolve(content,receipt.local_prefix.slice(11,-1));
 const hash=p=>createHash('sha256').update(readFileSync(p)).digest('hex');
 for(const [name,expected] of Object.entries(receipt.files)) {

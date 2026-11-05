@@ -2,16 +2,17 @@
 
 CLI/CI passing is necessary but does not mark any item below as completed.
 
-## Current: Task 05 / #19d — forest code/build delivery
+## Current: Task 06 / #19e — fantasy atmosphere code/build delivery
 
 The owner removed frames/screenshots/video from the workflow on 2026-11-05.
-[Task 04 grass](M7_TASK04.md) and [task 05 forest](M7_TASK05.md) are delivered as
-code/builds. Task 05 adds 28 layered tree assemblies, fern/boulder/log pockets,
-protected glades and distance/quality LOD. 964 tests cover 949 inherited cases
-and 15 new cases. No live appearance or device result is claimed; Studio use
+[Task 04 grass](M7_TASK04.md), [task 05 forest](M7_TASK05.md) and
+[task 06 atmosphere](M7_TASK06.md) are delivered as code/builds. Task 06 adds
+an original cloud/horizon sky, Reduced shadows, local sun/pollen accents and
+common gusts for weather/grass/grouped crowns. 979 tests retain 964 inherited
+cases and add 15 atmosphere cases. No live appearance/device result is claimed; Studio use
 was deferred, and no media is required for continuation. Physical smartphones,
 experience asset permissions and multiplayer load stay BLOCKED. PR #17 remains
-Draft; no merge/publishing. Tasks 06–08 are not started, and 08 still needs final
+Draft; no merge/publishing. Tasks 07–08 are not started, and 08 still needs final
 pilot APPROVED. Historical evidence sections below describe their own builds.
 
 ## Historical: Task 02 / #19a — island landscape, visual review pending

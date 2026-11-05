@@ -220,7 +220,14 @@ for(const [path,hash] of Object.entries(a2c.sources)) {
       .replace('d.forest and forestGround or ground','ground').replace('tostring(d.template or d.forest)','d.template')
       .replace('if d.template or d.forest then','if d.template then')
       .replace(/if d.forest then\n[^]*?\t\telseif d.template then/,'if d.template then');
-    assert.equal(sha(current),sha(approved),`Approved atmosphere changed outside task 01 fence / tasks 02-03 ground / tasks 04-05 vegetation seams: ${path}`);
+    // Task 06 adds one pure styling call to the existing state and enables
+    // Reduced directional shadows/rays. Historical curve values stay protected.
+    if(path==='src/shared/EnvironmentState.luau') current=current
+      .replace('local runtimeScript=rawget(getfenv(),"script")\n','').replace(/^local Style=require.*\n/m,'')
+      .replace('return Style.apply(r)','return r').replace(/-- TASK06_STYLE_BEGIN[^]*?-- TASK06_STYLE_END\n/,'');
+    if(path==='src/shared/EnvironmentConfig.luau') current=current
+      .replace('motes=9,shadows=true,bloom=.012,rays=.008','motes=9,shadows=false,bloom=.012,rays=0');
+    assert.equal(sha(current),sha(approved),`Approved atmosphere changed outside task 01 fence / tasks 02-03 ground / tasks 04-06 nature/style seams: ${path}`);
   }
 }
 for(const [name,entry] of Object.entries(a2c.images)) {

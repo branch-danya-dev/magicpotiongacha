@@ -18,8 +18,12 @@ for _,p in ipairs(world.root.EnvironmentArt:GetDescendants()) do
 	assert(not p:FindFirstChildWhichIsA("ProximityPrompt",true),"Art contains a prompt")
 	count+=1
 end
-assert(#world.plots==8 and count<=650,"Pilot topology/budget violated")
-local path=world.root.EnvironmentArt.Decor_16:FindFirstChildWhichIsA("BasePart",true)
+assert(#world.plots==8 and count<=require(Shared.EnvironmentConfig).budgets.parts,"Pilot topology/budget violated")
+local path
+for _,p in ipairs(world.root.EnvironmentArt:GetDescendants()) do
+	if p:IsA("MeshPart") and string.find(p.Name,"RockPath") then path=p; break end
+end
+assert(path,"Pilot path missing")
 print("M7_PATH",path.Position,path.Size)
 assert(path.Size.X>5 and path.Size.Y<.4,"Path scale/flattening failed")
 for _,p in ipairs(world.root.EnvironmentArt:GetDescendants()) do
@@ -40,7 +44,7 @@ print("M7_VISUAL_HARNESS parts="..count.." plots=8 decorated=1 collisionGuards=P
 local floor=world.plots[1].model.Floor
 local grass=PhysicalProperties.new(Enum.Material.Grass)
 assert(floor.CustomPhysicalProperties.Friction==grass.Friction,"Meadow changed ground physics")
-assert(floor.Material==Enum.Material.SmoothPlastic and floor.M7Meadow:IsA("Texture"),"Quiet meadow missing")
-assert(floor.Transparency==0 and floor.Reflectance==0,"Ground alpha/reflectance regression")
+assert(floor.Material==Enum.Material.Grass and floor.M7Meadow:IsA("Texture") and floor.M7Meadow.Transparency==1,"Hidden floor texture regression")
+assert(floor.Transparency==1 and floor.CanCollide and floor.Reflectance==0,"Hidden collision floor regression")
 assert(floor.Position.Y-floor.Size.Y/2>=world.root.ForestFloor.Position.Y+world.root.ForestFloor.Size.Y/2,"Overlapping floor planes")
-print("M7_A2C_GROUND PASS opaque matte top texture, original Grass friction, separated floor planes")
+print("M7_19E_GROUND PASS hidden collision floor, original Grass friction, separated floor planes")

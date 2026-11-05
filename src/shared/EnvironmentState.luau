@@ -1,4 +1,6 @@
 --!nonstrict
+local runtimeScript=rawget(getfenv(),"script")
+local Style=require(runtimeScript and runtimeScript.Parent.AtmosphereStyle or "./AtmosphereStyle")
 local State={}
 local function smooth(x) x=math.clamp(x,0,1); return x*x*(3-2*x) end
 local function lerp(a:any,b:any,t:number):any
@@ -46,7 +48,7 @@ function State.at(config:any,phase:number,rain:number,weather:any?):any
 	r.wind=.25+.5*r.cloud+.25*rain
 	-- Eligibility only: renderer also checks actual sun elevation/view direction.
 	r.rainbow=r.afterRain*(1-r.night)*(1-r.cloud)
-	return r
+	return Style.apply(r)
 end
 -- Art-directed celestial path, deliberately lower than the engine's zenith moon.
 -- World-oriented, never locked to camera rotation. Smooth/periodic at the cycle seam.
@@ -91,6 +93,12 @@ function State.mote(index,time,night,rain)
 		z=z+math.cos(time*.23+index)*1.1,firefly=firefly,
 		alpha=(firefly and night*.65 or (1-night)*.24)*(1-rain*.9)*(.85+.15*math.sin(time*.55+index))}
 end
+-- TASK06_STYLE_BEGIN: all consumers share this state; Style has no owner/clock.
+State.wind=Style.wind
+State.pollen=Style.pollen
+State.sunSlots=Style.sunSlots
+State.sunVisibility=Style.sunVisibility
+-- TASK06_STYLE_END
 function State.surface(config,rebirths,aurora)
 	if aurora then return {color={96,116,168},material="Neon"} end -- Existing M6 entitlement semantics.
 	local colors={config.palette.grass,{148,153,108},{113,146,131}}

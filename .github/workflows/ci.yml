@@ -43,5 +43,6 @@ jobs:
             assets/environment/manifest.json
             assets/environment/atmosphere/
             assets/environment/polish/
+            assets/environment/fantasy/
             scripts/install-atmosphere-preview.mjs
           if-no-files-found: error

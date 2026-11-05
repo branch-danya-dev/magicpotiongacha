@@ -6,6 +6,7 @@ local ContentProvider=game:GetService("ContentProvider")
 local Shared=game:GetService("ReplicatedStorage").PotionTycoon.Shared
 local Config=require(Shared.EnvironmentConfig)
 local State=require(Shared.EnvironmentState)
+local Style=require(Shared.AtmosphereStyle)
 local Transition=require(Shared.EnvironmentTransition)
 local Labels=require(Shared.EnvironmentLabels)
 local ForestLOD=require(Shared.ForestLOD)
@@ -33,7 +34,7 @@ function View.start(root,settings)
 	local sky=effect("Sky","M7Sky",nil)
 	local assets={}
 	for property,face in pairs({SkyboxBk="bk",SkyboxDn="dn",SkyboxFt="ft",SkyboxLf="lf",SkyboxRt="rt",SkyboxUp="up"}) do
-		local uri=Config.skyPrefix..face..".png"; sky[property]=uri; table.insert(assets,uri)
+		local uri=Style.skyPrefix..face..".png"; sky[property]=uri; table.insert(assets,uri)
 	end
 	sky.SunTextureId=Config.skyPrefix.."sun.png"; sky.MoonTextureId=Config.skyPrefix.."moon.png"
 	for _,name in ipairs({"sun","moon","mist","rainbow"}) do table.insert(assets,Config.skyPrefix..name..".png") end
@@ -49,7 +50,7 @@ function View.start(root,settings)
 			if status~=Enum.AssetFetchStatus.Success then self.assetFailures+=1 end
 		end) end)
 		if not ok then self.assetFailures+=1 end
-		if active==self and RunService:IsStudio() then print("M7_A2C_ASSETS failures="..self.assetFailures.." source=original-CC0-local permissions=LOCAL_ONLY") end
+		if active==self and RunService:IsStudio() then print("M7_19E_ASSETS failures="..self.assetFailures.." source=original-CC0-local permissions=LOCAL_ONLY") end
 	end)
 	local clouds=effect("Clouds","M7Clouds",workspace.Terrain)
 	local correction=effect("ColorCorrectionEffect","M7Color",Lighting)
@@ -80,9 +81,19 @@ function View.start(root,settings)
 	local glints={}
 	for i=1,Config.budgets.glints do
 		local x=-142.5+(i%2==0 and -1 or 1)*(14+i*2); local z=-46-i*9
-		local p=localPart("DewAndGlow_"..i,Vector3.new(.3,.04,.18)); p.Shape=Enum.PartType.Ball; p.Material=Enum.Material.Neon
+		local p=localPart("DewAndGlow_"..i,Vector3.new(.3,.04,.18)); local mesh=effect("SpecialMesh","GlintShape",p); mesh.MeshType=Enum.MeshType.Sphere; mesh.Scale=Vector3.one; p.Material=Enum.Material.Neon
 		p.Position=Vector3.new(x,surface(x,z)+.2,z); p.Color=Color3.fromRGB(129,218,224); glints[i]=p
 	end
+	-- Two local sun accents share the existing active-light ceiling with lanterns.
+	local sunPools={}
+	for i,pos in ipairs(Style.sunPools) do
+		local p=localPart("SunPool_"..i,Vector3.new(.1,.1,.1)); p.Position=Vector3.new(pos[1],surface(pos[1],pos[2])+14,pos[2])
+		local light=effect("SpotLight","CanopySun",p); light.Face=Enum.NormalId.Bottom
+		light.Angle=75; light.Range=22; light.Shadows=false; light.Brightness=0; light.Enabled=false
+		light.Color=Color3.fromRGB(255,223,168); sunPools[i]=light
+	end
+	local pollenGround={}
+	for i,pos in ipairs(Style.pollenAnchors) do pollenGround[i]=surface(pos[1],pos[2]) end
 	local rainbow=sprite("AfterRainArc","rainbow",Vector2.new(95,48),Vector3.new(-140,50,-160))
 	-- One non-rendering anchor, no per-star Parts/lights/emitters. The rig follows
 	-- camera translation only so celestial bearings remain fixed in the world.
@@ -99,7 +110,7 @@ function View.start(root,settings)
 	for i=1,Config.celestial.stars do
 		local d=State.star(i); stars[i]=celestialSprite("Star_"..i,Config.polishPrefix.."star.png",d.size,Vector3.new(d.x,d.y,d.z)); stars[i].alpha=d.alpha
 	end
-	local lights={}; local wind={}; local registered={}; local wetSurfaces={}
+	local lights={}; local wind={}; local canopyGroups={}; local registered={}; local wetSurfaces={}
 	local meadowWind={}; local meadowParts={}; local forestParts={}; local forestByPart={}
 	local labels={}; local annotations=true; local labelsDirty=0
 	local function registerLabel(gui)
@@ -114,7 +125,7 @@ function View.start(root,settings)
 			table.insert(self.parts,p)
 			if string.find(p.Name,"RockPath") then table.insert(wetSurfaces,{part=p,color=p.Color,wet=Color3.new(p.Color.R*.70,p.Color.G*.75,p.Color.B*.78)}) end
 			if p:GetAttribute("EnvironmentLight") then
-				local l=effect("PointLight","M7LocalLantern",p); l.Color=color(Config.palette.amber); l.Range=14; l.Shadows=false; table.insert(lights,l)
+				local l=effect("PointLight","M7LocalLantern",p); l.Enabled=false; l.Color=color(Config.palette.amber); l.Range=14; l.Shadows=false; table.insert(lights,l)
 			end
 			-- Reviewed templates name leaf meshes *_2 and trunks *_1. Reading
 			-- SurfaceAppearance maps requires Plugin capability, unavailable here.
@@ -124,6 +135,15 @@ function View.start(root,settings)
 			if forestRole then
 				local entry={part=p,role=forestRole,anchor=p:GetAttribute("ForestAnchor"),alpha=1,target=1,saved=p.LocalTransparencyModifier}
 				table.insert(forestParts,entry); forestByPart[p]=entry; p.LocalTransparencyModifier=1
+				if string.match(p.Name,"^ForestCrown_") then
+					local group=canopyGroups[p.Parent]
+					if not group then
+						local pivot=p.Parent:GetPivot()
+						group={part=p,base=pivot,pivot=pivot,items={},cost=0,visible=false,canopy=true}
+						canopyGroups[p.Parent]=group; table.insert(wind,group)
+					end
+					table.insert(group.items,{part=p,base=p.CFrame}); group.cost+=1
+				end
 			end
 			if p:GetAttribute("Meadow") then
 				table.insert(meadowParts,p); p.LocalTransparencyModifier=1; p:SetAttribute("MeadowTargetAlpha",1)
@@ -131,7 +151,7 @@ function View.start(root,settings)
 					local pivot=CFrame.new(0,p:GetAttribute("MeadowGroundY")-p.Position.Y,0)*p.CFrame
 					table.insert(meadowWind,{part=p,base=p.CFrame,pivot=pivot,offset=pivot:ToObjectSpace(p.CFrame),visible=false})
 				end
-			elseif plant and not forestRole then table.insert(wind,{part=p,base=p.CFrame,pivot=p.CFrame*CFrame.new(0,-p.Size.Y/2,0),height=p.Size.Y}) end
+			elseif plant and not forestRole then table.insert(wind,{part=p,base=p.CFrame,pivot=p.CFrame*CFrame.new(0,-p.Size.Y/2,0),height=p.Size.Y,cost=1,items={{part=p,base=p.CFrame}},visible=false}) end
 		end
 	end
 	-- Children can replicate after the enable attribute. Do not miss late lanterns.
@@ -144,21 +164,21 @@ function View.start(root,settings)
 	end
 	local motes={}
 	for i=1,Config.budgets.motes do
-		local p=effect("Part","AmbientMote_"..i,folder); p.Shape=Enum.PartType.Ball; p.Size=Vector3.new(.15,.15,.15)
+		local p=effect("Part","AmbientMote_"..i,folder); p.Shape=Enum.PartType.Ball; p.Size=Vector3.new(.11,.11,.11)
 		p.Anchored,p.CanCollide,p.CanTouch,p.CanQuery,p.CastShadow=true,false,false,false,false
 		p.Material=i%3~=0 and Enum.Material.Neon or Enum.Material.SmoothPlastic
 		p.Color=i%3~=0 and Color3.fromRGB(238,226,140) or Color3.fromRGB(242,222,184); p.Transparency=1; motes[i]=p
 	end
-	local function apply(sample,q)
+	local function apply(sample,q,flow)
 		Lighting.ClockTime=sample.clock; Lighting.Brightness=sample.brightness; Lighting.Ambient=color(sample.ambient)
 		Lighting.OutdoorAmbient=color(sample.outdoor); Lighting.GlobalShadows=q.shadows; Lighting.ExposureCompensation=sample.exposure
-		Lighting.GeographicLatitude=26; Lighting.ShadowSoftness=.7
+		Lighting.GeographicLatitude=26; Lighting.ShadowSoftness=sample.shadowSoftness
 		Lighting.ColorShift_Top=color(sample.sun):Lerp(Color3.new(),.65); Lighting.ColorShift_Bottom=Color3.fromRGB(8,12,22)
-		Lighting.EnvironmentDiffuseScale=.35; Lighting.EnvironmentSpecularScale=.1
+		Lighting.EnvironmentDiffuseScale=sample.diffuse; Lighting.EnvironmentSpecularScale=sample.specular
 		atmosphere.Color=color(sample.sky); atmosphere.Decay=color(sample.decay); atmosphere.Density=sample.density; atmosphere.Haze=sample.haze*q.haze; atmosphere.Glare=.08*(1-sample.rain); atmosphere.Offset=.15
 		clouds.Cover=sample.cover; clouds.Density=sample.cloudDensity; clouds.Color=color(sample.cloudColor)
-		correction.TintColor=color(sample.tint); correction.Saturation=.04-.12*sample.cloud; correction.Contrast=.025
-		workspace.GlobalWind=self.reduceMotion and Vector3.zero or Vector3.new(4+sample.wind*8,0,2+sample.wind*3)
+		correction.TintColor=color(sample.tint); correction.Saturation=sample.saturation; correction.Contrast=.025
+		workspace.GlobalWind=Vector3.new(flow.x,0,flow.z)
 		bloom.Intensity=q.bloom; bloom.Enabled=q.bloom>0
 		rays.Intensity=q.rays*(1-sample.rain)*(1-sample.night); rays.Enabled=q.rays>0
 	end
@@ -177,9 +197,10 @@ function View.start(root,settings)
 	function self.stats()
 		local counts={lights=0,rain=0,motes=0,wind=0,emitters=0,fog=0,glints=0,rainbow=0,stars=0,moon=0,assetFailures=self.assetFailures}
 		for _,l in ipairs(lights) do if l.Enabled then counts.lights+=1 end end
+		for _,l in ipairs(sunPools) do if l.Enabled then counts.lights+=1 end end
 		for _,p in ipairs(self.rain) do if p.Transparency<1 then counts.rain+=1 end end
 		for _,p in ipairs(motes) do if p.Transparency<1 then counts.motes+=1 end end
-		for _,w in ipairs(wind) do if w.moving then counts.wind+=1 end end
+		for _,w in ipairs(wind) do if w.moving then counts.wind+=w.cost end end
 		counts.meadow=#meadowParts; counts.meadowMoving=0; counts.meadowVisible=0
 		for _,w in ipairs(meadowWind) do if (w.weight or 0)>0 then counts.meadowMoving+=1 end end
 		for _,p in ipairs(meadowParts) do if p.LocalTransparencyModifier<.99 then counts.meadowVisible+=1 end end
@@ -199,7 +220,9 @@ function View.start(root,settings)
 		local time=workspace:GetServerTimeNow(); local now=os.clock()
 		local target=self.previewStart and State.preview(Config,now-self.previewStart) or State.sample(Config,time,self.pose)
 		local sample=transition.sample(target,now); local q=State.quality(Config,self.quality,self.reduceMotion)
-		apply(sample,q)
+		local flow=State.wind(sample,time,self.reduceMotion)
+		apply(sample,q,flow)
+		local sun=Lighting:GetSunDirection(); local sunlight=State.sunVisibility(sample,sun.Y)
 		celestialAnchor.Position=camera.CFrame.Position
 		moon.attachment.Position=Vector3.new(table.unpack(State.moon(sample.phase)))*Config.celestial.distance
 		moon.image.ImageTransparency=1-sample.celestial*.94
@@ -239,7 +262,7 @@ function View.start(root,settings)
 				else p.LocalTransparencyModifier=hidden and 1 or 0 end
 			end
 			table.sort(lights,function(a,b) return (a.Parent.Position-camera.CFrame.Position).Magnitude<(b.Parent.Position-camera.CFrame.Position).Magnitude end)
-			for i,l in ipairs(lights) do l.Enabled=i<=q.lights and (l.Parent.Position-camera.CFrame.Position).Magnitude<q.distance end
+			for i,l in ipairs(lights) do l.Enabled=i<=math.max(0,q.lights-State.sunSlots(self.quality)) and (l.Parent.Position-camera.CFrame.Position).Magnitude<q.distance end
 			table.sort(wind,function(a,b) return (a.base.Position-camera.CFrame.Position).Magnitude<(b.base.Position-camera.CFrame.Position).Magnitude end)
 			for _,w in ipairs(meadowWind) do
 				local screen,onScreen=camera:WorldToViewportPoint(w.base.Position)
@@ -254,7 +277,11 @@ function View.start(root,settings)
 				p:SetAttribute("GroundY",surface(x,z)); p:SetAttribute("RainX",x); p:SetAttribute("RainZ",z)
 			end
 		end
-		for _,l in ipairs(lights) do l.Brightness=.18+sample.night*1.45 end
+		for _,l in ipairs(lights) do l.Brightness=.10+sample.night*1.53 end
+		for i,l in ipairs(sunPools) do
+			l.Enabled=i<=State.sunSlots(self.quality) and (l.Parent.Position-camera.CFrame.Position).Magnitude<q.distance
+			l.Brightness=.42*sunlight
+		end
 		for _,p in ipairs(meadowParts) do
 			local target=p:GetAttribute("MeadowTargetAlpha") or 0; local alpha=p.LocalTransparencyModifier
 			if alpha~=target then p.LocalTransparencyModifier=alpha+math.clamp(target-alpha,-elapsed*2,elapsed*2) end
@@ -265,31 +292,26 @@ function View.start(root,settings)
 		MeadowMotion.step(meadowWind,self.reduceMotion and 0 or (Meadow.maxMoving[self.quality] or Meadow.maxMoving.reduced),elapsed)
 		for _,w in ipairs(meadowWind) do
 			if w.weight>0 then
-				local a=Meadow.angle(time,w.base.Position.X,w.base.Position.Z,sample.wind)*w.weight
+				local a=Meadow.angle(time,w.base.Position.X,w.base.Position.Z,flow.strength)*w.weight
 				w.part.CFrame=w.pivot*CFrame.Angles(a*.38,0,a)*w.offset
 			elseif w.wasMoving then w.part.CFrame=w.base end
 			w.wasMoving=w.weight>0
 		end
-		-- Fading OUT still consumes a slot. New nearby foliage waits for a free
-		-- slot, so camera movement cannot double the motion budget during fades.
-		local occupied=0
-		for i,w in ipairs(wind) do
-			w.wanted=i<=q.motion and w.part.LocalTransparencyModifier==0 and (w.base.Position-camera.CFrame.Position).Magnitude<q.distance
-			w.weight=w.weight or 0
-			if w.weight>0 then
-				if occupied>=q.motion then w.weight=0
-				elseif w.wanted then w.weight=math.min(1,w.weight+elapsed*1.5)
-				else w.weight=math.max(0,w.weight-elapsed*1.5) end
-				if w.weight>0 then occupied+=1 end
-			end
-		end
+		-- Canopy lobes move as one group; all four cost slots, even while fading.
 		for _,w in ipairs(wind) do
-			if w.wanted and w.weight==0 and occupied<q.motion then w.weight=math.min(1,elapsed*1.5); occupied+=1 end
+			w.visible=w.part.LocalTransparencyModifier<.99 and (w.base.Position-camera.CFrame.Position).Magnitude<q.distance
+		end
+		MeadowMotion.step(wind,q.motion,elapsed)
+		for _,w in ipairs(wind) do
+			if w.weight>0 then
+				local a=Meadow.angle(time,w.base.Position.X,w.base.Position.Z,flow.strength)*.075*w.weight
+				local transform=w.pivot*CFrame.Angles(a*.3,0,a)*w.pivot:Inverse()
+				for _,item in ipairs(w.items) do item.part.CFrame=transform*item.base end
+			elseif w.moving then for _,item in ipairs(w.items) do item.part.CFrame=item.base end end
 			w.moving=w.weight>0
-			w.part.CFrame=w.pivot*CFrame.Angles(0,0,math.sin(time*.65+w.base.Position.X)*(.007+.007*sample.wind)*w.weight)*CFrame.new(0,w.height/2,0)
 		end
 		for i,p in ipairs(motes) do
-			local m=State.mote(i,time,sample.night,sample.rain); local position=Vector3.new(m.x,m.y,m.z)
+			local m=State.pollen(i,time,sample,flow); local position=Vector3.new(m.x,pollenGround[m.anchor]+m.y,m.z)
 			local visible=i<=q.motes and (position-camera.CFrame.Position).Magnitude<q.distance
 			p.Transparency=visible and 1-m.alpha or 1; if visible then p.Position=position end
 			p.Color=m.firefly and color({168+70*sample.warm,224,181-50*sample.warm}) or color({235,229-33*sample.warm,213-55*sample.warm})
@@ -306,7 +328,7 @@ function View.start(root,settings)
 					local radius=.08+(fall-.91)*3; p.Size=Vector3.new(radius,.025,radius)
 					p.CFrame=CFrame.new(x,y+.06,z); p.Transparency=1-sample.rain*.38*(1-(fall-.91)/.09)
 				else
-					p.Size=Vector3.new(.045,.85,.045); p.CFrame=CFrame.new(x+(1-fall)*1.8,y+.2+(1-fall)*24,z)*CFrame.Angles(0,0,-.09)
+					p.Size=Vector3.new(.045,.85,.045); p.CFrame=CFrame.new(x+(1-fall)*flow.x*.18,y+.2+(1-fall)*24,z+(1-fall)*flow.z*.18)*CFrame.Angles(math.atan(flow.z*.007),0,-math.atan(flow.x*.007))
 				end
 			end
 		end
@@ -319,9 +341,9 @@ function View.start(root,settings)
 		for i,p in ipairs(glints) do
 			local distance=(p.Position-camera.CFrame.Position).Magnitude; local fade=math.clamp((q.distance-distance)/20,0,1)
 			p.Transparency=1-(i<=q.glints and math.max(sample.night*.6,sample.glint*.65)*fade or 0)
-			p.Color=color({195-66*sample.night,231-13*sample.night,219+5*sample.night})
+			p.Color=color({228-99*sample.night,232-14*sample.night,190+34*sample.night})
 		end
-		local sun=Lighting:GetSunDirection(); local horizontal=Vector3.new(-sun.X,0,-sun.Z)
+		local horizontal=Vector3.new(-sun.X,0,-sun.Z)
 		local eligible=sun.Y>.08 and sun.Y<.88 and horizontal.Magnitude>.01
 		local arc=eligible and sample.rainbow*.45 or 0
 		if eligible then
@@ -344,7 +366,7 @@ function View.start(root,settings)
 		workspace.GlobalWind=savedWind
 		for _,p in ipairs(self.parts) do p.LocalTransparencyModifier=0 end
 		for _,f in ipairs(forestParts) do f.part.LocalTransparencyModifier=f.saved end
-		for _,w in ipairs(wind) do w.part.CFrame=w.base end
+		for _,w in ipairs(wind) do for _,item in ipairs(w.items) do item.part.CFrame=item.base end end
 		for _,w in ipairs(meadowWind) do w.part.CFrame=w.base end
 		for _,v in ipairs(wetSurfaces) do v.part.Color=v.color end
 		for _,l in ipairs(lights) do l:Destroy() end

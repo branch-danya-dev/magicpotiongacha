@@ -14,7 +14,7 @@ that unperformed Studio, artistic or real-device checks passed.
 | 03 / #19b | Farm integration | Remove green plot plate; thin yellow ground boundary; local soft green build affordance; natural paths and approaches. | Implemented; [first visual checkpoint pending](evidence/m7-19b/README.md) |
 | 04 / #19c | Grass and flowers | Volumetric varied grass, visible wind, flowers/clover; clear station/path zones; quality-tier checks. | [Code/build delivered; media requirement waived](M7_TASK04.md) |
 | 05 / #19d | Forest | Expressive stylized trees, deep edge forest, understory, rocks, fallen logs and clearings; distant vegetation optimization. | [Implemented; code/build checks, no media requested](M7_TASK05.md) |
-| 06 / #19e | Fantasy atmosphere | Artistic sky/horizon; spatial light and haze; restrained pollen/glints; unified weather/wind/vegetation cycle; convincing Reduced Play. | Not started |
+| 06 / #19e | Fantasy atmosphere | Artistic sky/horizon; spatial light and haze; restrained pollen/glints; unified weather/wind/vegetation cycle; convincing Reduced Play. | [Implemented in code/build; Studio appearance unverified, media waived](M7_TASK06.md) |
 | 07 / #19f | Gameplay props | Replace pilot station blocks, crystal, lanterns and nearby bazaar; coherent construction/upgrade states; preserve mechanics/economy. | Not started |
 | 08 / #19g | Whole-island rollout | Dress remaining seven farms and bazaar; coherent variation; routes/collisions/interactions; regression and available performance checks. | Blocked by final pilot APPROVED |
 

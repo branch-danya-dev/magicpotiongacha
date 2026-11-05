@@ -11,7 +11,7 @@ return {
 		stone={186,166,138},wood={153,114,77},bark={103,82,61},cream={239,215,170},
 		flower={188,159,198},blue={145,189,191},amber={247,197,116},earth={114,115,80}},
 	quality={full={distance=240,detail=3,lights=6,rain=60,motion=12,motes=24,shadows=true,bloom=.04,rays=.02,haze=1,fog=3,glints=6,rainbow=1,stars=48},
-		reduced={distance=145,detail=2,lights=3,rain=24,motion=4,motes=9,shadows=false,bloom=.012,rays=0,haze=1,fog=2,glints=3,rainbow=1,stars=24},
+		reduced={distance=145,detail=2,lights=3,rain=24,motion=4,motes=9,shadows=true,bloom=.012,rays=.008,haze=1,fog=2,glints=3,rainbow=1,stars=24},
 		minimal={distance=95,detail=1,lights=0,rain=0,motion=0,motes=0,shadows=false,bloom=0,rays=0,haze=1,fog=0,glints=0,rainbow=0,stars=12}},
 	keys={
 		{phase=0,clock=13.2,brightness=2.6,ambient={122,153,161},outdoor={153,178,182},tint={248,255,247},sky={168,219,218},decay={103,166,181},sun={255,229,183},density=.23,haze=.8,exposure=.05,night=0,dawn=0,warm=0},

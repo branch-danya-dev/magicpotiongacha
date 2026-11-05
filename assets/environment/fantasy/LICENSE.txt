@@ -1,0 +1,8 @@
+Original task-06 fantasy sky textures — CC0-1.0
+
+Original mathematical art authored in scripts/create-fantasy-sky.py for this
+project. No external imagery, copyrighted game assets, provider output or
+screenshots are incorporated. To the extent copyright applies, these six PNGs
+and their generator are dedicated to the public domain under CC0 1.0:
+https://creativecommons.org/publicdomain/zero/1.0/
+This dedication does not cover Quaternius assets or the rest of the game.

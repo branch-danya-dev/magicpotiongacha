@@ -12,6 +12,10 @@ local lighting=game:GetService("Lighting")
 local original={}
 local originalWind=workspace.GlobalWind
 local originalPathColors={}
+local originalForest={}
+for _,p in ipairs(root.EnvironmentArt:GetDescendants()) do
+	if p:IsA("BasePart") and p:GetAttribute("ForestRole") then originalForest[p]={cf=p.CFrame,alpha=p.LocalTransparencyModifier} end
+end
 for _,p in ipairs(root.EnvironmentArt:GetDescendants()) do if p:IsA("BasePart") and string.find(p.Name,"RockPath") then originalPathColors[p]=p.Color end end
 for _,key in ipairs({"ClockTime","Brightness","Ambient","OutdoorAmbient","GlobalShadows","ExposureCompensation","GeographicLatitude","ColorShift_Top","ColorShift_Bottom","EnvironmentDiffuseScale","EnvironmentSpecularScale","ShadowSoftness"}) do original[key]=lighting[key] end
 local sentinel=Instance.new("ColorCorrectionEffect"); sentinel.Name="M7AuditSentinel"; sentinel.Parent=lighting
@@ -35,13 +39,14 @@ for _,tier in ipairs({"full","reduced","minimal"}) do
 	assert(s.fog<=q.fog and s.glints<=q.glints and s.rainbow<=q.rainbow and s.stars<=q.stars,"Local prop cap exceeded")
 	print("M7_A2_AUDIT "..tier.." lights="..s.lights.." rain="..s.rain.." motes="..s.motes.." wind="..s.wind.." emitters="..s.emitters)
 	audit.setReduceMotion(true); audit.update(1); s=audit.stats()
-	assert(s.rain==0 and s.motes==0 and s.wind==0,"Reduce Motion still animates")
+	assert(s.rain==0 and s.motes==0 and s.wind==0 and s.meadowMoving==0,"Reduce Motion still animates")
+	for p,v in pairs(originalForest) do assert(p.CFrame==v.cf,"Reduce Motion did not restore crown") end
 	for pose in pairs(Config.poses) do
 		audit.setPose(pose); audit.setReduceMotion(false)
 		for frame=1,40 do
 			workspace.CurrentCamera.CFrame=CFrame.new(-175+(frame%2)*60,9,-65)
 			audit.update(1/30); local actual=audit.stats()
-			assert(actual.wind<=q.motion and actual.fog<=q.fog and actual.glints<=q.glints and actual.rainbow<=q.rainbow and actual.stars<=q.stars,"Transition cap exceeded")
+			assert(actual.lights<=q.lights and actual.wind<=q.motion and actual.fog<=q.fog and actual.glints<=q.glints and actual.rainbow<=q.rainbow and actual.stars<=q.stars,"Transition cap exceeded")
 		end
 		assert(lighting.M7Sky==ownedSky and workspace.Terrain.M7Clouds==ownedClouds,"Sky/cloud owner replaced")
 		for key,value in pairs(fixedFaces) do assert(ownedSky[key]==value,"Runtime sky texture churn") end
@@ -55,6 +60,8 @@ for k,v in pairs(original) do assert(lighting[k]==v,"Lighting not restored: "..k
 assert(sentinel.Parent==lighting and not workspace:FindFirstChild("M7ClientWeather"),"Effect lifecycle leak")
 assert(workspace.GlobalWind==originalWind,"Wind not restored")
 for p,c in pairs(originalPathColors) do assert(p.Color==c,"Wet stone color not restored") end
+for p,v in pairs(originalForest) do assert(p.CFrame==v.cf and p.LocalTransparencyModifier==v.alpha,"Forest transform/visibility not restored") end
+for _,p in ipairs(root.EnvironmentArt:GetDescendants()) do assert(p.Name~="M7LocalLantern","Owned light leaked") end
 assert(sentinelSky.Parent==lighting and sentinelClouds.Parent==workspace.Terrain,"Sky/cloud identity not restored")
 assert(sentinelGrading.Parent==lighting,"Grading not restored")
 sentinel:Destroy(); sentinelSky:Destroy(); sentinelClouds:Destroy(); sentinelGrading:Destroy()
