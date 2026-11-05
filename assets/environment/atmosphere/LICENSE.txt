@@ -1,0 +1,9 @@
+Original A.2b atmosphere textures — CC0-1.0
+
+These textures are authored entirely by the mathematical functions in
+scripts/create-atmosphere-assets.py for this project. No Zelda, Nintendo,
+marketplace, photographic, downloaded or generated-provider source is used.
+To the extent copyright applies, the project contribution is dedicated to the
+public domain under CC0 1.0: https://creativecommons.org/publicdomain/zero/1.0/
+No warranties. This dedication covers these PNGs and their generator only,
+not Quaternius assets, Roblox code or the rest of the game.

@@ -5,30 +5,62 @@ local function lerp(a:any,b:any,t:number):any
 	if type(a)=="table" then return {a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t,a[3]+(b[3]-a[3])*t} end
 	return a+(b-a)*t
 end
-function State.at(config:any,phase:number,rain:number):any
+-- Independent weather envelope. Each overlay has zero slope at stage boundaries.
+-- Stages: clear, buildup, rain, clearing, after-rain, clear. Labels are diagnostic
+-- only; the renderer consumes continuous channels, never switches on a stage.
+function State.weather(config,time)
+	local w=config.weather; local t=time%config.weatherSeconds
+	local buildup=w.buildup or 0; local clearing=w.clearing or 0; local after=w.afterRain or 0
+	local endRain=w.finish+w.fall; local endClear=endRain+clearing
+	local rain=smooth((t-w.start)/w.rise)*(1-smooth((t-w.finish)/w.fall))
+	local cloud=(buildup>0 and smooth((t-w.start+buildup)/buildup) or rain)
+		*(clearing>0 and (1-smooth((t-endRain)/clearing)) or (1-smooth((t-w.finish)/w.fall)))
+	local wet=smooth((t-w.start)/w.rise)*(1-smooth((t-endRain)/math.max(1,clearing+after)))
+	local afterRain=clearing>0 and smooth((t-endRain)/clearing)*(1-smooth((t-endClear)/math.max(1,after))) or 0
+	return {rain=rain,cloud=cloud,wet=wet,afterRain=afterRain}
+end
+function State.weatherStage(config,time)
+	local w=config.weather; local t=time%config.weatherSeconds
+	if t<w.start-(w.buildup or 0) then return "clear" end
+	if t<w.start then return "buildup" end
+	if t<w.finish+w.fall then return "rain" end
+	if t<w.finish+w.fall+(w.clearing or 0) then return "clearing" end
+	if t<w.finish+w.fall+(w.clearing or 0)+(w.afterRain or 0) then return "after-rain" end
+	return "clear"
+end
+function State.at(config:any,phase:number,rain:number,weather:any?):any
 	assert(phase==phase and rain==rain and phase>=0 and phase<1 and rain>=0 and rain<=1,"Invalid environment sample")
 	local a,b=config.keys[1],config.keys[2]
 	for i=1,#config.keys-1 do if phase>=config.keys[i].phase and phase<config.keys[i+1].phase then a,b=config.keys[i],config.keys[i+1]; break end end
 	local t=smooth((phase-a.phase)/(b.phase-a.phase)); local r:any={phase=phase,rain=rain}
 	for key,value in pairs(a) do if key~="phase" then r[key]=lerp(value,b[key],t) end end
-	r.clock%=24; r.brightness*=1-.32*rain; r.density+=.07*rain; r.haze+=.6*rain
-	r.cover=.18+.68*rain; r.cloudDensity=.28+.43*rain; r.tint=lerp(r.tint,{225,237,246},rain*.35)
-	r.sky=lerp(r.sky,{177,197,212},rain*.7); r.sun=lerp(r.sun,{182,199,215},rain*.85)
-	r.cloudColor=lerp({238,238,240},{168,184,201},rain)
+	local w=weather or {cloud=rain,wet=rain,afterRain=0}
+	r.cloud=w.cloud or rain; r.wet=w.wet or rain; r.afterRain=w.afterRain or 0
+	r.clock%=24; r.brightness*=1-.16*r.cloud-.16*rain; r.density+=.045*rain-.025*r.afterRain; r.haze+=.45*rain-.25*r.afterRain
+	r.cover=.12+.72*r.cloud; r.cloudDensity=.22+.5*r.cloud
+	r.tint=lerp(r.tint,{218,235,246},r.cloud*.32); r.sky=lerp(r.sky,{163,186,204},r.cloud*.6)
+	r.sun=lerp(r.sun,{182,199,215},r.cloud*.82); r.cloudColor=lerp({240,237,229},{145,167,189},r.cloud)
+	r.fog=math.max(r.dawn*.7,rain*.22); r.glint=math.max(r.dawn*.5,r.wet*(1-rain))*(1-r.night)
+	r.wind=.25+.5*r.cloud+.25*rain
+	-- Eligibility only: renderer also checks actual sun elevation/view direction.
+	r.rainbow=r.afterRain*(1-r.night)*(1-r.cloud)
 	return r
 end
 function State.sample(config:any,serverSeconds:number,pose:string?):any
 	assert(type(serverSeconds)=="number" and serverSeconds==serverSeconds and math.abs(serverSeconds)<1e13,"Invalid environment clock")
 	local preview=pose and config.poses[pose]
 	local phase=preview and preview.phase or (serverSeconds%config.cycleSeconds)/config.cycleSeconds
-	local weather=serverSeconds%config.weatherSeconds; local w=config.weather
-	local rain=preview and preview.rain or smooth((weather-w.start)/w.rise)*(1-smooth((weather-w.finish)/w.fall))
-	return State.at(config,phase,rain)
+	local w=preview and {rain=preview.rain,cloud=preview.cloud or preview.rain,wet=preview.wet or preview.rain,afterRain=preview.afterRain or 0} or State.weather(config,serverSeconds)
+	return State.at(config,phase,w.rain,w)
 end
 function State.preview(config,elapsed)
 	assert(elapsed==elapsed and math.abs(elapsed)<1e13,"Invalid preview time")
 	local phase=(elapsed%config.previewSeconds)/config.previewSeconds
-	return State.at(config,phase,smooth((phase-.72)/.06)*(1-smooth((phase-.90)/.07)))
+	local rain=smooth((phase-.72)/.06)*(1-smooth((phase-.87)/.04))
+	local cloud=smooth((phase-.65)/.07)*(1-smooth((phase-.89)/.06))
+	local wet=smooth((phase-.72)/.06)*(1-smooth((phase-.96)/.04))
+	local afterRain=smooth((phase-.91)/.04)*(1-smooth((phase-.97)/.03))
+	return State.at(config,phase,rain,{cloud=cloud,wet=wet,afterRain=afterRain})
 end
 function State.quality(config,name,reduceMotion)
 	local q=config.quality[name] or config.quality.reduced; local result={}

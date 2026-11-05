@@ -12,6 +12,6 @@
       "EnvironmentView": {"$path": "../src/client/EnvironmentView.luau"}}}},
     "ServerStorage": {"M7NatureTemplates": {"$path": "../assets/environment/megakit/M7NatureTemplates.rbxmx"}},
     "Workspace": {"$properties": {"Gravity": 196.2}},
-    "Lighting": {"$properties": {"ClockTime": 12, "Brightness": 2.5, "Technology": "Future"}}
+    "Lighting": {"$properties": {"ClockTime": 12, "Brightness": 2.5, "Technology": "Future", "LightingStyle": "Realistic", "PrioritizeLightingQuality": true}}
   }
 }

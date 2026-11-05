@@ -2,6 +2,7 @@
 -- One owner of environment lighting while enabled. No remotes or profile mutation.
 local Lighting=game:GetService("Lighting")
 local RunService=game:GetService("RunService")
+local ContentProvider=game:GetService("ContentProvider")
 local Shared=game:GetService("ReplicatedStorage").PotionTycoon.Shared
 local Config=require(Shared.EnvironmentConfig)
 local State=require(Shared.EnvironmentState)
@@ -13,11 +14,11 @@ function View.start(root,settings)
 	assert(not active,"Environment lighting already has an owner")
 	local self={quality=settings and settings.quality or "reduced",reduceMotion=false,pose=settings and settings.pose,root=root,parts={},rain={}}
 	active=self
-	local saved={}
+	local saved={}; local savedWind=workspace.GlobalWind
 	for _,key in ipairs({"ClockTime","Brightness","Ambient","OutdoorAmbient","GlobalShadows","ExposureCompensation","GeographicLatitude","ColorShift_Top","ColorShift_Bottom","EnvironmentDiffuseScale","EnvironmentSpecularScale","ShadowSoftness"}) do saved[key]=Lighting[key] end
 	local displaced={}
 	for _,parent in ipairs({Lighting,workspace.Terrain}) do for _,v in ipairs(parent:GetChildren()) do
-		if v:IsA("Sky") or v:IsA("Atmosphere") or v:IsA("Clouds") or v:IsA("ColorCorrectionEffect") or v:IsA("BloomEffect") or v:IsA("SunRaysEffect") then
+		if v:IsA("Sky") or v:IsA("Atmosphere") or v:IsA("Clouds") or v:IsA("ColorCorrectionEffect") or v:IsA("ColorGradingEffect") or v:IsA("BloomEffect") or v:IsA("SunRaysEffect") then
 			table.insert(displaced,{object=v,parent=parent}); v.Parent=nil
 		end
 	end end
@@ -25,13 +26,57 @@ function View.start(root,settings)
 		local v=Instance.new(class); v.Name=name; v.Parent=parent; return v
 	end
 	local atmosphere=effect("Atmosphere","M7Atmosphere",Lighting)
-	local sky=effect("Sky","M7Sky",Lighting) -- Engine-bundled sky, sun and moon; no marketplace IDs.
-	sky.StarCount=350; sky.SunAngularSize=8; sky.MoonAngularSize=11
+	local sky=effect("Sky","M7Sky",nil)
+	local assets={}
+	for property,face in pairs({SkyboxBk="bk",SkyboxDn="dn",SkyboxFt="ft",SkyboxLf="lf",SkyboxRt="rt",SkyboxUp="up"}) do
+		local uri=Config.skyPrefix..face..".png"; sky[property]=uri; table.insert(assets,uri)
+	end
+	sky.SunTextureId=Config.skyPrefix.."sun.png"; sky.MoonTextureId=Config.skyPrefix.."moon.png"
+	for _,name in ipairs({"sun","moon","mist","rainbow"}) do table.insert(assets,Config.skyPrefix..name..".png") end
+	sky.StarCount=900; sky.SunAngularSize=7; sky.MoonAngularSize=9
+	-- A single asset set for the entire session. No texture swaps at time/weather keys.
+	sky.Parent=Lighting
+	self.assetFailures=0
+	task.spawn(function()
+		local ok=pcall(function() ContentProvider:PreloadAsync(assets,function(_,status)
+			if status~=Enum.AssetFetchStatus.Success then self.assetFailures+=1 end
+		end) end)
+		if not ok then self.assetFailures+=1 end
+		if active==self and RunService:IsStudio() then print("M7_A2B_ASSETS failures="..self.assetFailures.." source=original-CC0-local permissions=LOCAL_ONLY") end
+	end)
 	local clouds=effect("Clouds","M7Clouds",workspace.Terrain)
 	local correction=effect("ColorCorrectionEffect","M7Color",Lighting)
 	local bloom=effect("BloomEffect","M7Bloom",Lighting); bloom.Size=18; bloom.Threshold=2.3
 	local rays=effect("SunRaysEffect","M7SunRays",Lighting); rays.Spread=.35
 	local folder=effect("Folder","M7ClientWeather",workspace)
+	local function localPart(name,size)
+		local p=effect("Part",name,folder); p.Size=size
+		p.Anchored,p.CanCollide,p.CanTouch,p.CanQuery,p.CastShadow=true,false,false,false,false
+		p.Transparency=1; return p
+	end
+	local ground=RaycastParams.new(); ground.FilterType=Enum.RaycastFilterType.Include
+	ground.FilterDescendantsInstances={workspace.Terrain,root.ForestFloor,root.Plot_1.Floor}
+	local function surface(x,z)
+		local hit=workspace:Raycast(Vector3.new(x,70,z),Vector3.new(0,-120,0),ground)
+		return hit and hit.Position.Y or .5
+	end
+	local function sprite(name,texture,size,position)
+		local p=localPart(name,Vector3.new(.1,.1,.1)); p.Position=position
+		local gui=effect("BillboardGui",name.."Sprite",p); gui.Size=UDim2.fromScale(size.X,size.Y); gui.LightInfluence=0; gui.AlwaysOnTop=false
+		local img=effect("ImageLabel","Image",gui); img.BackgroundTransparency=1; img.Size=UDim2.fromScale(1,1); img.Image=Config.skyPrefix..texture..".png"; img.ImageTransparency=1
+		return {part=p,gui=gui,image=img}
+	end
+	local fog={}
+	for i,pos in ipairs({{-185,-113},{-103,-103},{-187,-58}}) do
+		fog[i]=sprite("GroundMist_"..i,"mist",Vector2.new(24,5),Vector3.new(pos[1],surface(pos[1],pos[2])+1.3,pos[2]))
+	end
+	local glints={}
+	for i=1,Config.budgets.glints do
+		local x=i%2==0 and -183 or -103; local z=-46-i*9
+		local p=localPart("DewAndGlow_"..i,Vector3.new(.38,.14,.6)); p.Material=Enum.Material.Neon
+		p.Position=Vector3.new(x,surface(x,z)+.2,z); p.Color=Color3.fromRGB(129,218,224); glints[i]=p
+	end
+	local rainbow=sprite("AfterRainArc","rainbow",Vector2.new(95,48),Vector3.new(-140,50,-160))
 	local lights={}; local wind={}; local registered={}
 	local labels={}; local annotations=true; local labelsDirty=0
 	local function registerLabel(gui)
@@ -72,12 +117,13 @@ function View.start(root,settings)
 	local function apply(sample,q)
 		Lighting.ClockTime=sample.clock; Lighting.Brightness=sample.brightness; Lighting.Ambient=color(sample.ambient)
 		Lighting.OutdoorAmbient=color(sample.outdoor); Lighting.GlobalShadows=q.shadows; Lighting.ExposureCompensation=sample.exposure
-		Lighting.GeographicLatitude=26; Lighting.ShadowSoftness=.5
+		Lighting.GeographicLatitude=26; Lighting.ShadowSoftness=.7
 		Lighting.ColorShift_Top=color(sample.sun):Lerp(Color3.new(),.65); Lighting.ColorShift_Bottom=Color3.fromRGB(8,12,22)
-		Lighting.EnvironmentDiffuseScale=.45; Lighting.EnvironmentSpecularScale=.12
+		Lighting.EnvironmentDiffuseScale=.35; Lighting.EnvironmentSpecularScale=.1
 		atmosphere.Color=color(sample.sky); atmosphere.Decay=color(sample.decay); atmosphere.Density=sample.density; atmosphere.Haze=sample.haze*q.haze; atmosphere.Glare=.08*(1-sample.rain); atmosphere.Offset=.15
 		clouds.Cover=sample.cover; clouds.Density=sample.cloudDensity; clouds.Color=color(sample.cloudColor)
-		correction.TintColor=color(sample.tint); correction.Saturation=-.04-.10*sample.rain; correction.Contrast=.015
+		correction.TintColor=color(sample.tint); correction.Saturation=.04-.12*sample.cloud; correction.Contrast=.025
+		workspace.GlobalWind=self.reduceMotion and Vector3.zero or Vector3.new(4+sample.wind*8,0,2+sample.wind*3)
 		bloom.Intensity=q.bloom; bloom.Enabled=q.bloom>0
 		rays.Intensity=q.rays*(1-sample.rain)*(1-sample.night); rays.Enabled=q.rays>0
 	end
@@ -87,16 +133,19 @@ function View.start(root,settings)
 	function self.setPose(name) if RunService:IsStudio() and (name==nil or Config.poses[name]) then self.pose=name end end
 	function self.setPreview(enabled) if RunService:IsStudio() then self.previewStart=enabled and os.clock() or nil end end
 	function self.stats()
-		local counts={lights=0,rain=0,motes=0,wind=0,emitters=0}
+		local counts={lights=0,rain=0,motes=0,wind=0,emitters=0,fog=0,glints=0,rainbow=0,assetFailures=self.assetFailures}
 		for _,l in ipairs(lights) do if l.Enabled then counts.lights+=1 end end
 		for _,p in ipairs(self.rain) do if p.Transparency<1 then counts.rain+=1 end end
 		for _,p in ipairs(motes) do if p.Transparency<1 then counts.motes+=1 end end
 		for _,w in ipairs(wind) do if w.moving then counts.wind+=1 end end
+		for _,v in ipairs(fog) do if v.image.ImageTransparency<1 then counts.fog+=1 end end
+		for _,p in ipairs(glints) do if p.Transparency<1 then counts.glints+=1 end end
+		counts.rainbow=rainbow.image.ImageTransparency<1 and 1 or 0
 		return counts
 	end
 	function self.setAnnotationsEnabled(enabled) annotations=enabled~=false; labelsDirty=1 end
 	function self.update(dt)
-		step+=dt; lod+=dt; labelsDirty+=dt; if step<1/30 then return end; step=0
+		step+=dt; lod+=dt; labelsDirty+=dt; if step<1/30 then return end; local elapsed=step; step=0
 		local camera=workspace.CurrentCamera; if not camera then return end
 		local time=workspace:GetServerTimeNow(); local sample=self.previewStart and State.preview(Config,os.clock()-self.previewStart) or State.sample(Config,time,self.pose); local q=State.quality(Config,self.quality,self.reduceMotion)
 		apply(sample,q)
@@ -126,25 +175,72 @@ function View.start(root,settings)
 			table.sort(lights,function(a,b) return (a.Parent.Position-camera.CFrame.Position).Magnitude<(b.Parent.Position-camera.CFrame.Position).Magnitude end)
 			for i,l in ipairs(lights) do l.Enabled=i<=q.lights and (l.Parent.Position-camera.CFrame.Position).Magnitude<q.distance end
 			table.sort(wind,function(a,b) return (a.base.Position-camera.CFrame.Position).Magnitude<(b.base.Position-camera.CFrame.Position).Magnitude end)
+			local center=camera.CFrame.Position
+			for i,p in ipairs(self.rain) do
+				local x=math.clamp(center.X,-181,-104)+(i*17%47)-23; local z=math.clamp(center.Z,-109,-36)+(i*29%43)-21
+				p:SetAttribute("GroundY",surface(x,z)); p:SetAttribute("RainX",x); p:SetAttribute("RainZ",z)
+			end
 		end
 		for _,l in ipairs(lights) do l.Brightness=.18+sample.night*1.45 end
+		-- Fading OUT still consumes a slot. New nearby foliage waits for a free
+		-- slot, so camera movement cannot double the motion budget during fades.
+		local occupied=0
 		for i,w in ipairs(wind) do
-			w.moving=i<=q.motion and w.part.LocalTransparencyModifier==0 and (w.base.Position-camera.CFrame.Position).Magnitude<q.distance
-			w.part.CFrame=w.moving and w.pivot*CFrame.Angles(0,0,math.sin(time*.65+w.base.Position.X)*.009)*CFrame.new(0,w.height/2,0) or w.base
+			w.wanted=i<=q.motion and w.part.LocalTransparencyModifier==0 and (w.base.Position-camera.CFrame.Position).Magnitude<q.distance
+			w.weight=w.weight or 0
+			if w.weight>0 then
+				if occupied>=q.motion then w.weight=0
+				elseif w.wanted then w.weight=math.min(1,w.weight+elapsed*1.5)
+				else w.weight=math.max(0,w.weight-elapsed*1.5) end
+				if w.weight>0 then occupied+=1 end
+			end
+		end
+		for _,w in ipairs(wind) do
+			if w.wanted and w.weight==0 and occupied<q.motion then w.weight=math.min(1,elapsed*1.5); occupied+=1 end
+			w.moving=w.weight>0
+			w.part.CFrame=w.pivot*CFrame.Angles(0,0,math.sin(time*.65+w.base.Position.X)*(.007+.007*sample.wind)*w.weight)*CFrame.new(0,w.height/2,0)
 		end
 		for i,p in ipairs(motes) do
 			local m=State.mote(i,time,sample.night,sample.rain); local position=Vector3.new(m.x,m.y,m.z)
 			local visible=i<=q.motes and (position-camera.CFrame.Position).Magnitude<q.distance
 			p.Transparency=visible and 1-m.alpha or 1; if visible then p.Position=position end
+			p.Color=m.firefly and color({168+70*sample.warm,224,181-50*sample.warm}) or color({235,229-33*sample.warm,213-55*sample.warm})
 		end
 		for i,p in ipairs(self.rain) do
-			local visible=i<=q.rain and sample.rain>.01
-			p.Transparency=visible and (1-sample.rain*.3) or 1
+			local pilotDistance=(camera.CFrame.Position-Vector3.new(-142.5,5,-65)).Magnitude
+			local visible=i<=q.rain and sample.rain>0 and pilotDistance<q.distance
+			p.Transparency=visible and (1-sample.rain*.52) or 1
 			if visible then
-				local center=camera.CFrame.Position; local x=(i*17%47)-23; local z=(i*29%43)-21
-				p.CFrame=CFrame.new(center+Vector3.new(x,14-((time*15+i*1.7)%25),z))*CFrame.Angles(0,0,-.09)
+				local fall=(time*1.15+i*.173)%1; local y=p:GetAttribute("GroundY") or .5
+				local x,z=p:GetAttribute("RainX") or -142.5,p:GetAttribute("RainZ") or -65
+				-- Splashes reuse the same rain slots; no emitters or additional pool.
+				if fall>.91 then
+					local radius=.08+(fall-.91)*3; p.Size=Vector3.new(radius,.025,radius)
+					p.CFrame=CFrame.new(x,y+.06,z); p.Transparency=1-sample.rain*.38*(1-(fall-.91)/.09)
+				else
+					p.Size=Vector3.new(.045,.85,.045); p.CFrame=CFrame.new(x+(1-fall)*1.8,y+.2+(1-fall)*24,z)*CFrame.Angles(0,0,-.09)
+				end
 			end
 		end
+		for i,v in ipairs(fog) do
+			local distance=(v.part.Position-camera.CFrame.Position).Magnitude
+			local fade=math.clamp((q.distance-distance)/20,0,1)
+			v.image.ImageTransparency=1-(i<=q.fog and sample.fog*.6*fade or 0)
+		end
+		for i,p in ipairs(glints) do
+			local distance=(p.Position-camera.CFrame.Position).Magnitude; local fade=math.clamp((q.distance-distance)/20,0,1)
+			p.Transparency=1-(i<=q.glints and math.max(sample.night*.68,sample.glint*.45)*fade or 0)
+		end
+		local sun=Lighting:GetSunDirection(); local horizontal=Vector3.new(-sun.X,0,-sun.Z)
+		local eligible=sun.Y>.08 and sun.Y<.88 and horizontal.Magnitude>.01
+		local arc=eligible and sample.rainbow*.45 or 0
+		if eligible then
+			local direction=horizontal.Unit; local facing=math.clamp((camera.CFrame.LookVector:Dot(direction)-.1)/.4,0,1)
+			local elevation=math.clamp((sun.Y-.08)/.08,0,1)*math.clamp((.88-sun.Y)/.08,0,1)
+			arc*=facing*elevation; rainbow.part.Position=Vector3.new(-142.5,23,-65)+direction*105
+		end
+		local nearPilot=(camera.CFrame.Position-Vector3.new(-142.5,5,-65)).Magnitude<q.distance
+		rainbow.image.ImageTransparency=1-(q.rainbow>0 and nearPilot and arc or 0)
 	end
 	function self.stop()
 		if active~=self then return end; active=nil
@@ -153,6 +249,7 @@ function View.start(root,settings)
 		labelAdded:Disconnect()
 		for _,l in ipairs(labels) do l.gui.Enabled=l.enabled end
 		for k,v in pairs(saved) do Lighting[k]=v end
+		workspace.GlobalWind=savedWind
 		for _,p in ipairs(self.parts) do p.LocalTransparencyModifier=0 end
 		for _,w in ipairs(wind) do w.part.CFrame=w.base end
 		for _,l in ipairs(lights) do l:Destroy() end

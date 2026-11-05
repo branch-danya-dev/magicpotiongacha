@@ -18,6 +18,8 @@ project.tree.StarterPlayer.StarterPlayerScripts.A2VisualReview={
 };
 project.name='PotionTycoon-M7-LocalPreview';
 project.tree.Lighting.$properties.Technology='Future';
+project.tree.Lighting.$properties.LightingStyle='Realistic';
+project.tree.Lighting.$properties.PrioritizeLightingQuality=true;
 mkdirSync(resolve(root,'build'),{recursive:true});
 const input=resolve(root,'build/local-preview.project.json');
 const output=resolve(root,'build/PotionTycoon-M7-LocalPreview.rbxlx');

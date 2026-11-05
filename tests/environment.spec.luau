@@ -152,4 +152,46 @@ return function(T:any)
 		end end
 		T.same(Config,before)
 	end)
+	T.test("M7 A2b: weather stages advance independently of sun and return to clear",function()
+		for _,entry in ipairs({{0,"clear"},{700,"buildup"},{1100,"rain"},{1600,"clearing"},{1800,"after-rain"},{2050,"clear"}}) do
+			T.equal(State.weatherStage(Config,entry[1]),entry[2])
+		end
+		local buildup=State.weather(Config,780); T.truthy(buildup.cloud>0); T.equal(buildup.rain,0)
+		local clearing=State.weather(Config,1630); T.equal(clearing.rain,0); T.truthy(clearing.cloud>0 and clearing.wet>0)
+		local after=State.weather(Config,1800); T.equal(after.cloud,0); T.truthy(after.afterRain>0 and after.wet>0)
+	end)
+	T.test("M7 A2b: weather overlay preserves time, night and dawn identities",function()
+		for _,p in ipairs({0,.3,.39,.51,.79,.999}) do
+			local clear,wet=State.at(Config,p,0),State.at(Config,p,1,{cloud=1,wet=1,afterRain=0})
+			for _,k in ipairs({"clock","night","dawn","warm"}) do T.equal(clear[k],wet[k]) end
+			T.truthy(wet.brightness<clear.brightness); T.truthy(wet.cover>clear.cover); T.truthy(wet.haze>clear.haze)
+		end
+	end)
+	T.test("M7 A2b: every weather channel is bounded and continuous across two cycles",function()
+		for time=0,4200 do
+			local a,b=State.weather(Config,time-.001),State.weather(Config,time+.001)
+			for k,v in pairs(a) do T.truthy(v>=0 and v<=1,k); T.truthy(math.abs(v-b[k])<.001,k) end
+		end
+	end)
+	T.test("M7 A2b: all preview fields close at the seam without a texture switch",function()
+		local a,b=State.preview(Config,45-.00001),State.preview(Config,.00001)
+		for k,v in pairs(a) do if k~="phase" then
+			if type(v)=="table" then for i,c in ipairs(v) do T.truthy(math.abs(c-b[k][i])<.001,k) end
+			else T.truthy(math.abs(v-b[k])<.001,k) end
+		end end
+	end)
+	T.test("M7 A2b: six review states, intermediate dusk, and actual sunset target",function()
+		local after=State.sample(Config,0,"afterrain"); T.equal(after.rain,0); T.truthy(after.wet>.5 and after.rainbow>0)
+		local dusk=State.sample(Config,0,"dusk"); T.truthy(dusk.night>.3 and dusk.night<1)
+		local sunset=State.sample(Config,0,"sunset"); T.truthy(sunset.clock>=17.6 and sunset.clock<=18.5)
+		T.truthy(State.sample(Config,0,"dawn").fog>State.sample(Config,0,"day").fog)
+	end)
+	for _,tier in ipairs({"full","reduced","minimal"}) do
+		T.test("M7 A2b: pooled local effects remain capped with motion disabled / "..tier,function()
+			local q=State.quality(Config,tier,true)
+			for _,k in ipairs({"fog","glints","rainbow","rain","motes","motion","lights"}) do T.truthy(q[k]<=Config.budgets[k],k) end
+			T.equal(q.haze,1) -- Core atmosphere/weather identity is not culled by quality.
+			T.equal(q.rain,0); T.equal(q.motion,0); T.equal(q.motes,0)
+		end)
+	end
 end

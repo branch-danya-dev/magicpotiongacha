@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
+import { inflateSync } from 'node:zlib';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const read = p => readFileSync(resolve(root, p), 'utf8').replaceAll('\r\n', '\n');
 const sha = text => createHash('sha256').update(text).digest('hex');
@@ -68,10 +69,11 @@ for (const name of ['day-overview','sunset-overview','night-overview','rain-over
   assert.equal(createHash('sha256').update(readFileSync(resolve(root, 'docs/evidence/m7-revision', name+'.jpg'))).digest('hex'), current.images[name+'.jpg'], `Current capture integrity: ${name}`);
 }
 const a2=JSON.parse(read('docs/evidence/m7-a2/captures.json'));
+const a2Snapshot=JSON.parse(read('docs/evidence/m7-a2/source-snapshot.json'));
 assert.equal(a2.status,'OWNER_REVIEW_PENDING');
 assert.equal(a2.parentCommit,'f343966580e91b20db4f1516741bae1d0e8ee291');
 for (const [path,hash] of Object.entries(a2.sources)) {
-  assert.equal(sha(read(path)),hash,`A.2 captured source changed: ${path}`);
+  assert.equal(sha(a2Snapshot[path]),hash,`Historical A.2 captured source changed: ${path}`);
 }
 for (const [name,entry] of Object.entries(a2.images)) {
   assert(a2.builds[entry.build],`Unknown capture build: ${name}`);
@@ -86,4 +88,35 @@ for (const setting of ['auto','low5']) for (const pose of ['day','night']) {
   assert.equal(a2.images[`after-${setting}-${pose}.jpg`].build,'final');
 }
 for (const pose of ['day','night']) assert.equal(a2.images[`gameplay-${pose}.jpg`].build,'gameplay');
+const skyReceipt=JSON.parse(read('assets/environment/atmosphere/receipt.json'));
+assert.equal(skyReceipt.license,'CC0-1.0');
+assert.equal(skyReceipt.max_edge_rgba_error,0);
+assert.equal(sha(read(skyReceipt.generator)),skyReceipt.generator_sha256);
+for(const [name,hash] of Object.entries(skyReceipt.files)) {
+  assert.equal(createHash('sha256').update(readFileSync(resolve(root,'assets/environment/atmosphere',name))).digest('hex'),hash,`Atmosphere art integrity: ${name}`);
+}
+assert(receipt.texture_rgba8_mips_bytes+skyReceipt.rgba8_mips_bytes<=32*1024*1024,'Combined texture budget');
+// Independently decode the delivered PNG bytes, not the generator's receipt.
+// Every shared ray on the six cube boundaries must have identical RGBA texels.
+const edgePixels=new Map(); let shared=0;
+for(const face of ['ft','bk','lf','rt','up','dn']) {
+  const png=readFileSync(resolve(root,'assets/environment/atmosphere',face+'.png'));
+  assert.equal(png.subarray(0,8).toString('hex'),'89504e470d0a1a0a');
+  assert.equal(png.readUInt32BE(16),256); assert.equal(png.readUInt32BE(20),256);
+  assert.equal(png[24],8); assert.equal(png[25],6); assert.equal(png[28],0);
+  const chunks=[];
+  for(let p=8;p<png.length;) { const n=png.readUInt32BE(p); if(png.toString('ascii',p+4,p+8)==='IDAT') chunks.push(png.subarray(p+8,p+8+n)); p+=12+n; }
+  const raw=inflateSync(Buffer.concat(chunks)), stride=1025;
+  assert.equal(raw.length,256*stride);
+  for(let y=0;y<256;y++) assert.equal(raw[y*stride],0,'Expected unfiltered authored RGBA PNG');
+  for(let y=0;y<256;y++) for(let x=0;x<256;x++) if(x===0||y===0||x===255||y===255) {
+    const u=x*2-255,v=y*2-255;
+    const key=({ft:[u,-v,-255],bk:[-u,-v,255],lf:[-255,-v,-u],rt:[255,-v,u],up:[u,255,v],dn:[u,-255,-v]})[face].join(',');
+    const pixel=raw.subarray(y*stride+1+x*4,y*stride+5+x*4).toString('hex');
+    if(edgePixels.has(key)) { assert.equal(pixel,edgePixels.get(key),`Sky seam: ${face} ${x},${y}`); shared++; }
+    else edgePixels.set(key,pixel);
+  }
+}
+assert.equal(edgePixels.size,3056); assert.equal(shared,3064);
+console.log('A.2b cubemap PASS: decoded all six PNG faces; 3056 shared edge rays, zero RGBA discontinuities');
 console.log(`M7 integrity PASS: ${Object.keys(baseline.unchanged).length} unchanged M6 files, gameplay World, release flags, art source hashes, A.2 capture provenance and isolated harness`);
