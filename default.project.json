@@ -10,6 +10,7 @@
     "StarterPlayer": {
       "StarterPlayerScripts": { "PotionTycoon": { "$path": "src/client" } }
     },
+    "StarterGui": { "$properties": { "ScreenOrientation": "Sensor" } },
     "Workspace": { "$properties": { "Gravity": 196.2 } },
     "Lighting": { "$properties": { "ClockTime": 18, "Brightness": 2 } }
   }
