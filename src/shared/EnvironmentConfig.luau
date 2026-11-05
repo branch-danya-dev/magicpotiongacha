@@ -4,7 +4,7 @@ return {
 	version=4,pilotPlot=1,cycleSeconds=1500,weatherSeconds=2100,
 	weather={start=900,rise=90,finish=1470,fall=90,buildup=240,clearing=180,afterRain=210},previewSeconds=45,
 	-- Original CC0 faces, assigned once; local draft only until experience permissions are verified.
-	skyPrefix="rbxasset://m7a2b-v2/",
+	skyPrefix="rbxasset://m7a2b-v4/",
 	palette={grass={141,166,107},sage={99,135,119},leaf={56,92,80},leafLight={153,180,113},
 		stone={186,166,138},wood={153,114,77},bark={103,82,61},cream={239,215,170},
 		flower={188,159,198},blue={145,189,191},amber={247,197,116},earth={114,115,80}},
@@ -15,7 +15,7 @@ return {
 		{phase=0,clock=13.2,brightness=2.6,ambient={122,153,161},outdoor={153,178,182},tint={248,255,247},sky={168,219,218},decay={103,166,181},sun={255,229,183},density=.23,haze=.8,exposure=.05,night=0,dawn=0,warm=0},
 		{phase=.30,clock=17.65,brightness=3,ambient={153,140,170},outdoor={195,171,170},tint={255,242,235},sky={255,184,198},decay={232,151,130},sun={255,188,123},density=.28,haze=1.2,exposure=.2,night=.08,dawn=0,warm=1},
 		{phase=.39,clock=18.65,brightness=1.9,ambient={111,121,159},outdoor={145,143,186},tint={242,225,255},sky={176,145,203},decay={101,110,161},sun={243,156,182},density=.29,haze=1.0,exposure=.18,night=.6,dawn=0,warm=.35},
-		{phase=.51,clock=22.5,brightness=1.45,ambient={97,120,163},outdoor={113,143,183},tint={213,230,255},sky={77,118,169},decay={47,69,120},sun={137,173,236},density=.25,haze=.65,exposure=.2,night=1,dawn=0,warm=0},
+		{phase=.51,clock=22.5,brightness=1.45,ambient={97,120,163},outdoor={113,143,183},tint={213,230,255},sky={77,118,169},decay={47,69,120},sun={137,173,236},density=.14,haze=.05,exposure=.2,night=1,dawn=0,warm=0},
 		{phase=.70,clock=28.6,brightness=1.5,ambient={100,124,153},outdoor={126,147,172},tint={224,234,255},sky={134,158,193},decay={89,113,156},sun={179,188,231},density=.27,haze=.9,exposure=.2,night=.8,dawn=.25,warm=0},
 		{phase=.79,clock=30.15,brightness=2.25,ambient={131,165,153},outdoor={167,189,178},tint={255,235,229},sky={250,201,191},decay={170,191,180},sun={255,208,171},density=.26,haze=1.15,exposure=.15,night=.06,dawn=1,warm=.4},
 		{phase=1,clock=37.2,brightness=2.6,ambient={122,153,161},outdoor={153,178,182},tint={248,255,247},sky={168,219,218},decay={103,166,181},sun={255,229,183},density=.23,haze=.8,exposure=.05,night=0,dawn=0,warm=0},

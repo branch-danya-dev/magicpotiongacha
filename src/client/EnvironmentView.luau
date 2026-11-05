@@ -33,7 +33,7 @@ function View.start(root,settings)
 	end
 	sky.SunTextureId=Config.skyPrefix.."sun.png"; sky.MoonTextureId=Config.skyPrefix.."moon.png"
 	for _,name in ipairs({"sun","moon","mist","rainbow"}) do table.insert(assets,Config.skyPrefix..name..".png") end
-	sky.StarCount=900; sky.SunAngularSize=7; sky.MoonAngularSize=9
+	sky.CelestialBodiesShown=true; sky.StarCount=900; sky.SunAngularSize=7; sky.MoonAngularSize=9
 	-- A single asset set for the entire session. No texture swaps at time/weather keys.
 	sky.Parent=Lighting
 	self.assetFailures=0

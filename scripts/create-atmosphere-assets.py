@@ -21,8 +21,9 @@ def clamp(x): return max(0, min(1, x))
 def smooth(x): x=clamp(x); return x*x*(3-2*x)
 def blend(a,b,t): return tuple(round(x+(y-x)*t) for x,y in zip(a,b))
 def direction(face,u,v):
-    # Right-handed Roblox cube, top-left image origin; opposite edges share rays.
-    xyz={'ft':(u,-v,-1),'bk':(-u,-v,1),'lf':(-1,-v,-u),'rt':(1,-v,u),'up':(u,1,v),'dn':(u,-1,-v)}[face]
+    # Roblox uses 90 CW for Up and 90 CCW for Down relative to standard
+    # cubemap faces (Roblox Staff, Custom Skyboxes 101). Top-left image origin.
+    xyz={'ft':(u,-v,-1),'bk':(-u,-v,1),'lf':(-1,-v,-u),'rt':(1,-v,u),'up':(v,1,-u),'dn':(-v,-1,-u)}[face]
     norm=math.sqrt(sum(x*x for x in xyz)); return tuple(x/norm for x in xyz)
 
 def sky(d):
@@ -32,7 +33,9 @@ def sky(d):
     base=blend((232,235,241),(137,161,187),smooth(max(0,y)**.65))
     # Quiet brush-like high wisps, continuous over all six faces. Weather clouds
     # are authored by the engine Clouds layer, never baked storm silhouettes.
-    ribbon=math.sin(13*y+1.2*math.sin(3*x)+.6*math.cos(4*z))
+    # Keep this quiet foundation invariant under cube-axis reflection/rotation;
+    # directional cloud silhouettes belong to the dynamic Clouds layer.
+    ribbon=math.sin(13*y+3*x*x*z*z)
     wisps=smooth((ribbon-.78)/.22)*smooth((y-.12)/.18)*(1-smooth((y-.7)/.25))*.2
     return (*blend(base,(227,241,235),wisps),255)
 
@@ -75,11 +78,11 @@ not Quaternius assets, Roblox code or the rest of the game.
 '''
 (OUT/'LICENSE.txt').write_text(license_text,encoding='utf-8')
 roster={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(OUT.iterdir()) if p.suffix=='.png' or p.name=='LICENSE.txt'}
-receipt={'name':'original-cozy-atmosphere','version':2,'license':'CC0-1.0','authoring':'deterministic project-native mathematical art; no external sources',
+receipt={'name':'original-cozy-atmosphere','version':4,'license':'CC0-1.0','authoring':'deterministic project-native mathematical art; no external sources',
     'generator':'scripts/create-atmosphere-assets.py','generator_sha256':hashlib.sha256(Path(__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest(),
     'files':roster,'cube_size':N,'matched_edge_rays':len(edges),'max_edge_rgba_error':0,
     'rgba8_mips_bytes':math.ceil((6*N*N+3*128*128+256*128)*4*4/3),
     'roblox_asset_ids':None,'permissions':'LOCAL_STUDIO_ONLY; no upload/publication performed; experience access remains BLOCKED',
-    'local_prefix':'rbxasset://m7a2b-v2/'}
+    'local_prefix':'rbxasset://m7a2b-v4/'}
 (OUT/'receipt.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8')
 print(f'Original cubemap: {len(edges)} identical edge rays; {receipt["rgba8_mips_bytes"]/1024**2:.3f} MiB RGBA8+mips; closed SHA-256 roster')

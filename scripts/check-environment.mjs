@@ -109,9 +109,16 @@ for(const face of ['ft','bk','lf','rt','up','dn']) {
   const raw=inflateSync(Buffer.concat(chunks)), stride=1025;
   assert.equal(raw.length,256*stride);
   for(let y=0;y<256;y++) assert.equal(raw[y*stride],0,'Expected unfiltered authored RGBA PNG');
+  // Up/down must also survive the engine's quarter-turn/reflection convention.
+  // This checks delivered pixels independently of our face-to-ray assumption.
+  if(face==='up'||face==='dn') for(let y=0;y<256;y++) for(let x=0;x<256;x++) {
+    const pixel=(a,b)=>raw.subarray(b*stride+1+a*4,b*stride+5+a*4).toString('hex');
+    assert.equal(pixel(x,y),pixel(255-y,x),'Polar face quarter-turn discontinuity');
+    assert.equal(pixel(x,y),pixel(255-x,y),'Polar face reflection discontinuity');
+  }
   for(let y=0;y<256;y++) for(let x=0;x<256;x++) if(x===0||y===0||x===255||y===255) {
     const u=x*2-255,v=y*2-255;
-    const key=({ft:[u,-v,-255],bk:[-u,-v,255],lf:[-255,-v,-u],rt:[255,-v,u],up:[u,255,v],dn:[u,-255,-v]})[face].join(',');
+    const key=({ft:[u,-v,-255],bk:[-u,-v,255],lf:[-255,-v,-u],rt:[255,-v,u],up:[v,255,-u],dn:[-v,-255,-u]})[face].join(',');
     const pixel=raw.subarray(y*stride+1+x*4,y*stride+5+x*4).toString('hex');
     if(edgePixels.has(key)) { assert.equal(pixel,edgePixels.get(key),`Sky seam: ${face} ${x},${y}`); shared++; }
     else edgePixels.set(key,pixel);

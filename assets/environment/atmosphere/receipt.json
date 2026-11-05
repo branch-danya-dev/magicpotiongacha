@@ -1,22 +1,22 @@
 {
   "name": "original-cozy-atmosphere",
-  "version": 2,
+  "version": 4,
   "license": "CC0-1.0",
   "authoring": "deterministic project-native mathematical art; no external sources",
   "generator": "scripts/create-atmosphere-assets.py",
-  "generator_sha256": "7a326f6ab914e962870d95d2d936e85f96f6368a45d8ec0313b99ea5292424fc",
+  "generator_sha256": "b74db99ac6094e02736dab34ada0706660abadc607b7023bbb470c4f66a83c61",
   "files": {
-    "bk.png": "e992c04eb36357ae8796948f75fc302b814f641506d33778773ec3729bff8417",
+    "bk.png": "15419745739f193771010adc0b8b564e4b92d35d98753d85c0eef1cf6a0ed17f",
     "dn.png": "4fcbf4f459f7beca375393ac7f09275c760efd52c2e6951800b813edaaacef69",
-    "ft.png": "f6f4d81674c1eeb7325d72b5e362e516ad3ee363e33a04a76545312ff5ca884c",
-    "lf.png": "f9a278519e8e26bd8d0c0281d72c8ce07f49d91857e894b4d12cb73287709355",
+    "ft.png": "15419745739f193771010adc0b8b564e4b92d35d98753d85c0eef1cf6a0ed17f",
+    "lf.png": "15419745739f193771010adc0b8b564e4b92d35d98753d85c0eef1cf6a0ed17f",
     "LICENSE.txt": "851cb8c5d20f4df66e1858007aa5b356ebf23b7faa56fb050ff6743c8e7ce12a",
     "mist.png": "585839ad1177b7cfbcbacca3d684018a981ac4618346e90f8415222b4b09aa76",
     "moon.png": "2256701b5acc81ac6ed67326fd069e9362e2396cae27418b140c0a4c6fe86ea2",
     "rainbow.png": "73800f9fefefd0f5280304bb5887be836fbcf53f38cf47c1305e3dcdd8125136",
-    "rt.png": "f3c25ecd7775458f706fb1d7bc438510fc72c61788f74da186fafb1c17fe1fea",
+    "rt.png": "15419745739f193771010adc0b8b564e4b92d35d98753d85c0eef1cf6a0ed17f",
     "sun.png": "9c834ecb7e3b579e49f4464922f357f7a3a2dbb292819a8d2450fd9616100ee8",
-    "up.png": "cbd2f71ec53bc34fa59e5a320c3a4855f0f093e2c66d3a40ad76f39ed3fea2a4"
+    "up.png": "4adc30fb6f359f4f9043e41056825eb96be606895571a8005225f08b4c3fb4a3"
   },
   "cube_size": 256,
   "matched_edge_rays": 3056,
@@ -24,5 +24,5 @@
   "rgba8_mips_bytes": 2534059,
   "roblox_asset_ids": null,
   "permissions": "LOCAL_STUDIO_ONLY; no upload/publication performed; experience access remains BLOCKED",
-  "local_prefix": "rbxasset://m7a2b-v2/"
+  "local_prefix": "rbxasset://m7a2b-v4/"
 }
