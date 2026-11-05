@@ -15,7 +15,7 @@ that unperformed Studio, artistic or real-device checks passed.
 | 04 / #19c | Grass and flowers | Volumetric varied grass, visible wind, flowers/clover; clear station/path zones; quality-tier checks. | [Code/build delivered; media requirement waived](M7_TASK04.md) |
 | 05 / #19d | Forest | Expressive stylized trees, deep edge forest, understory, rocks, fallen logs and clearings; distant vegetation optimization. | [Implemented; code/build checks, no media requested](M7_TASK05.md) |
 | 06 / #19e | Fantasy atmosphere | Artistic sky/horizon; spatial light and haze; restrained pollen/glints; unified weather/wind/vegetation cycle; convincing Reduced Play. | [Implemented in code/build; Studio appearance unverified, media waived](M7_TASK06.md) |
-| 07 / #19f | Gameplay props | Replace pilot station blocks, crystal, lanterns and nearby bazaar; coherent construction/upgrade states; preserve mechanics/economy. | Not started |
+| 07 / #19f | Gameplay props | Replace pilot station blocks, crystal, lanterns and nearby bazaar; coherent construction/upgrade states; preserve mechanics/economy. | [Implemented in code/build; final pilot artistic approval pending](M7_TASK07.md) |
 | 08 / #19g | Whole-island rollout | Dress remaining seven farms and bazaar; coherent variation; routes/collisions/interactions; regression and available performance checks. | Blocked by final pilot APPROVED |
 
 After 03: first visual checkpoint — island/farm no longer read as rectangular

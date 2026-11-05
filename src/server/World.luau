@@ -4,6 +4,7 @@ local World = {}
 World.__index = World
 local Access = require(game:GetService("ReplicatedStorage").PotionTycoon.Shared.Access)
 local EnvironmentArt = require(script.Parent.EnvironmentArt)
+local PropArt = require(script.Parent.PropArt)
 
 local OFFSETS = {
 	warehouse = Vector3.new(-8,2,-30), orders = Vector3.new(10,2,-30),
@@ -150,6 +151,7 @@ function World.new(config, count, callbacks, environmentArtEnabled)
 		end
 	end
 	if self.environmentArtEnabled then EnvironmentArt.attach(self) end
+	if self.environmentArtEnabled then PropArt.attach(self) end
 	return self
 end
 
@@ -187,6 +189,7 @@ function World:release(player)
 	end
 	for _, pad in pairs(plot.pads) do pad:SetAttribute("ExpectedLevel", nil); pad:SetAttribute("ExpectedRequestId",nil) end
 	for _,module in ipairs(plot.architecture) do module.part.Transparency=1 end
+	if self.environmentArtEnabled then PropArt.release(plot) end
 end
 
 function World:inBazaar(player)
@@ -284,6 +287,7 @@ function World:update(player, profile)
 	plot.labels.orders.Text = profile.order and ("Заказ NPC: " .. order.delivered .. "/" .. profile.order.count
 		.. "\nУ котла: " .. order.queued .. " · В пути: " .. order.travelling .. " · " .. order.remainingSeconds .. " сек.") or "Доска заказов · выбери контракт"
 	if self.environmentArtEnabled then EnvironmentArt.update(plot,profile.rebirths,profile.entitlements.aurora_theme==true) end
+	if self.environmentArtEnabled then PropArt.update(plot,profile,production) end
 end
 
 return World

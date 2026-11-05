@@ -102,6 +102,12 @@ function Context.start(onChanged,isPanelOpen,blockedRects,currentState)
 		local integrated=root:GetAttribute("FarmGroundVersion")==1
 		for pad,record in pairs(pads) do if pad.Parent then pad.LocalTransparencyModifier=integrated and 1 or record.transparency end end
 		highlight.Adornee=current and not (integrated and current.upgrade) and current.anchor or nil
+		-- Task 07: highlight the visible authored model; retain the original
+		-- invisible anchor for distance, raycast, ownership and native prompts.
+		if highlight.Adornee then
+			local presentation=highlight.Adornee:FindFirstChild("PresentationModel")
+			if presentation and presentation.Value then highlight.Adornee=presentation.Value end
+		end
 		affordance.update(current,currentState and currentState(),hrp and hrp.Position)
 		onChanged(current,#candidates,region)
 	end

@@ -14,6 +14,15 @@ for (const [path, expected] of Object.entries(baseline.unchanged)) {
 // Remove only the explicit presentation seams; everything else, including every
 // anchor, prompt, callback, owner check and update branch must match the M6 World.
 let world = read('src/server/World.luau');
+// Task 07 adds inert model creation/state projection only. Strip exactly these
+// calls, then retain the full original anchor/prompt/authority hash check.
+for (const line of ['local PropArt = require(script.Parent.PropArt)\n',
+  '\tif self.environmentArtEnabled then PropArt.attach(self) end\n',
+  '\tif self.environmentArtEnabled then PropArt.release(plot) end\n',
+  '\tif self.environmentArtEnabled then PropArt.update(plot,profile,production) end\n']) {
+  assert.equal(world.split(line).length,2,'Task 07 presentation seam missing/duplicated');
+  world=world.replace(line,'');
+}
 for (const line of baseline.worldPresentationLines) {
   assert.equal(world.split(line).length, 2, `Missing/duplicated World seam: ${line}`);
   world = world.replace(line, '');
