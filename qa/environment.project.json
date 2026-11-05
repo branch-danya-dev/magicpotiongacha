@@ -1,0 +1,23 @@
+{
+  "name": "M7PilotReview",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {"PotionTycoon": {"$className": "Folder", "Shared": {"$path": "../src/shared"}}},
+    "ServerScriptService": {"M7Review": {"$className": "Folder",
+      "Review": {"$path": "environment/Review.server.luau"},
+      "World": {"$path": "../src/server/World.luau"},
+      "PropArt": {"$path": "../src/server/PropArt.luau"},
+      "IslandLandscape": {"$path": "../src/server/IslandLandscape.luau"},
+      "FarmLandscape": {"$path": "../src/server/FarmLandscape.luau"},
+      "FenceBarriers": {"$path": "../src/server/FenceBarriers.luau"},
+      "RidgeBarriers": {"$path": "../src/server/RidgeBarriers.luau"},
+      "ForestArt": {"$path": "../src/server/ForestArt.luau"},
+      "EnvironmentArt": {"$path": "../src/server/EnvironmentArt.luau"}}},
+    "StarterPlayer": {"StarterPlayerScripts": {"M7Review": {"$className": "Folder",
+      "Review": {"$path": "environment/Review.client.luau"},
+      "EnvironmentView": {"$path": "../src/client/EnvironmentView.luau"}}}},
+    "ServerStorage": {"M7NatureTemplates": {"$path": "../assets/environment/woodland/M7NatureTemplates.rbxmx"}},
+    "Workspace": {"$properties": {"Gravity": 196.2}},
+    "Lighting": {"$properties": {"ClockTime": 12, "Brightness": 2.5, "Technology": "Future", "LightingStyle": "Realistic", "PrioritizeLightingQuality": true}}
+  }
+}

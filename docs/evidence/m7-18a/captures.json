@@ -1,0 +1,281 @@
+{
+  "status": "TASK_01_REVIEW_PENDING",
+  "artGate": "Earlier Gate A only APPROVED; task 01 and final pilot not approved",
+  "runtimeSourceCommit": "c0c1912185ea19bfbae5755d717e2da8fdec2b93",
+  "recordedPhysicsTimeCommit": "3b89acb7f8ad507fa9db570bec5e3056e710b529",
+  "baselineRuntimeCommit": "d6c836f5ea96269e20259b26fb7d173b2e8aa1f7",
+  "studioVersion": "0.746.0.7461264",
+  "platform": "Windows Studio, one local player; mobile emulator only",
+  "build": {
+    "file": "M7-18a-Play.rbxlx",
+    "sha256": "309cf3b131f8df60b8a019c090d6137dbf95e01eb70e031cf71548a21ef7f9c4",
+    "bytes": 464348,
+    "runtimeSourceCommit": "c0c1912185ea19bfbae5755d717e2da8fdec2b93",
+    "serializedSourcesVerified": 50,
+    "qa": false
+  },
+  "recordedBuild": {
+    "file": "M7-18a-candidate-v3.rbxlx",
+    "sha256": "63ea58997c79f65097a712ef2d4a4cc6a880469897a1434c1f8cd04ebf6776c2",
+    "bytes": 467996,
+    "runtimeSourceCommit": "3b89acb7f8ad507fa9db570bec5e3056e710b529",
+    "serializedSourcesVerified": 50,
+    "qa": true
+  },
+  "serializedSourceComparison": "Every src Luau source matched the named commit; only ServerSettings art flag replaced for Studio preview",
+  "recordedToFinalRuntimeChanges": [
+    "src/client/Main.client.luau",
+    "src/shared/ContextUI.luau"
+  ],
+  "sourcesNormalizedLF": {
+    "src/client/CollectionUI.luau": "acceb33e4124b3d880057beefcfa966c8c80e80f273ce820ac208c199059dd9b",
+    "src/client/Environment.client.luau": "dac2d5da264c52817fe5a7c2034d12e949e0ead855a4aa64c848a50a738e87c7",
+    "src/client/EnvironmentController.luau": "99f4a31c6d0fe3b1d31575866b233c3859f292a28991ff8f1e7e8e73785f20c5",
+    "src/client/EnvironmentView.luau": "77822dfa89a41ef390f241348dedcb84593b1882cd09af1c112eb1a31932363a",
+    "src/client/FamiliarView.client.luau": "4cfe692770e7bb7e9487e8e1a76224589290ec7ecd63b4599cc56dc77c346822",
+    "src/client/LongTermUI.luau": "f2eca16d223632130d8707421cd109113726e3114f72e10cb78754f94c48a221",
+    "src/client/Main.client.luau": "15ef74a79ef7154c7694e7b451f4c77f0456f4bca80cf7f612164b18d4382e60",
+    "src/client/ShopPreview.luau": "53ec8273dd71d2029ba49d6faacb8fee9878ef9e6acf224536dcd895c0df39db",
+    "src/client/ShopUI.luau": "09c4c88d52e9bbaa0868f3ae57faa15f56d2dff058100b80d4497f56038f5c52",
+    "src/client/TradeUI.luau": "aa0f12598abba82a38fa374d7d91e183cea0ef5c170d23883e95bb0c4eac36eb",
+    "src/client/WorldContext.luau": "e4c8f3663d822335add9a77df158e5e5af7b2971ae0cb8cc84b7967cb0d07511",
+    "src/server/CharacterSafety.server.luau": "4048eb65601e389475662f45bf81314eff0391f0b71eb8108666f25ab75e212d",
+    "src/server/EnvironmentArt.luau": "e27337ce2746e44d3ec2670b0c307b40628f104f1381b5bc2ff7e610897de208",
+    "src/server/FenceBarriers.luau": "b3b6efa14d8129eb6adf63e2394ddff0ddb94681c98c7db64781e2c63389037a",
+    "src/server/Main.server.luau": "7c5efe4e04bf12da46096a0f4622b484a69e9960c52a7ae17d83c5cfe629eaac",
+    "src/server/ProfileStore.luau": "ba31529c80b258b7e962782a1c171f6361417bd2ae51c605a48eda666d814a24",
+    "src/server/PurchaseCoordinator.luau": "04c5b7d68f577ed3174f441741c46e45f5851aea500b3bfd3a7e2962d63f3f46",
+    "src/server/PurchaseRuntime.luau": "6e23550f3f289e7ebf55011bcf2c11bda1e1e7181544147b77f079266e9afb8c",
+    "src/server/ReceiptJournal.luau": "327541f1f17c94fac331ed10e310e5f8b869d9b5f94befe67818304a7c9feefe",
+    "src/server/ServerSettings.luau": "8cb7c67daae4784d93898534366aab8319362cd6fe7bdd02aae5e9074d0db918",
+    "src/server/TradeCoordinator.luau": "fc0de6978bd0d733cbe2a21b8d61b4050188c7b02c2a950b17200800c6670449",
+    "src/server/TradeJournal.luau": "c55200ca5659c23928117987b4e71c873458f0d37da6bd71bb0a413e7a735ad2",
+    "src/server/TradeRuntime.luau": "5cc0aff34d0b43c06d4c4bc95033ba5204c90c1cd4bd85586ec9a5041e37451d",
+    "src/server/World.luau": "4da92128dc9eaef3a0f1113694e8f9cdd1cbae859ee467a72d99a6e26602a79e",
+    "src/shared/Access.luau": "31a1a65e6c4aad547dd708cd6d22f888c4b4216d5df0ad89ec115f838f49a89e",
+    "src/shared/CharacterRecovery.luau": "394cebbb15271bcbbed5cd111b43d80369ac82d555630f361429877ca5354a56",
+    "src/shared/Collection.luau": "c8142338ff575b791efa6f81b786956e2764c362d1a3126254009aac00fac6b7",
+    "src/shared/Config.luau": "ac9c32175e1fc2d639051b15e8ae7556df8bf2c78927d299d3e781c44d706ca7",
+    "src/shared/ContextUI.luau": "47cacee033eeba9c99ab3f6a6d25c23059c15c6c41571e7dd4bf6d8c0e2bd33b",
+    "src/shared/Dailies.luau": "5f99bc048e5c11499850ba337b544ad49623909ce542de816b2126c495e46558",
+    "src/shared/EnvironmentConfig.luau": "99912299208220c99581d2e3de95ecb0a5172e27f7588155f6460e39ca7c0d33",
+    "src/shared/EnvironmentLabels.luau": "59e09b901589c602d11eecef0cb9d287e71e1d7a9257580f606d2eebe1768d1e",
+    "src/shared/EnvironmentPlan.luau": "adf9d1640c6bd08877a3160b897d52e2b76224ad266c68075c963817b7fbe6d1",
+    "src/shared/EnvironmentState.luau": "7d687ca34bba5a758e88551f3e70ea06e760f253f8012bd92bc80173176facbe",
+    "src/shared/EnvironmentTerrain.luau": "da446b95f9b91a725b790f754031f39897f712b9d39c526260f6fc42b9de971a",
+    "src/shared/EnvironmentTransition.luau": "9063f3f3512cb08d1bcfcb53241b1616fe7d1bd8e3e3b351f1213dc05b5a0c96",
+    "src/shared/Epochs.luau": "d970ab148feaaf86e097f9cfca26d8f9349fd213c418f409ae5dfc611051f8fe",
+    "src/shared/Factory.luau": "76ea151efdc19389a1cf12f46484fa969a643602bb503b42a348b7d704785a72",
+    "src/shared/Familiars.luau": "00ecb837d732c7973b79a4b13e5f3b4a192da031c08cb66d15c8d1673d622c8a",
+    "src/shared/ItemOrigin.luau": "2a162db30c3a9fd87439ff8ab4a396328a79305aade8a1f93030fda8282f94f3",
+    "src/shared/LegacyConfig.luau": "84adb79239db028b04b06f27169248f544bc8b8c9e45b1c58ccbf7c88842fd35",
+    "src/shared/LongTerm.luau": "4513314fb32ded4536b76e85d22f63c01da7ecfc35bcccb0ecad2ebafb5fb470",
+    "src/shared/Monetization.luau": "0633baa7c3aec59b84ea44ab96083d04fc509dbed02c4fcc5a607825cf46958f",
+    "src/shared/OfferCatalog.luau": "b506881e7827107a60b4b21aa7e276a2480fb8ca1ad314abcc9408843fcde732",
+    "src/shared/Policy.luau": "41dbe1b342ffec86b144d3257a95bcf40e52d92ee05d97344c6f8e5edd025927",
+    "src/shared/Progression.luau": "6163218d077eac501cf7c6fde1e8bddb2ee16ffdde84b7cf11ad0bdb402dd1fe",
+    "src/shared/Protocol.luau": "71fd037255d1acdb6ec4ebcdf5033341d29075662f1d0c358cf35bfb87377902",
+    "src/shared/TradeCodec.luau": "4fbf16139ed3a8a073fed043cd28c74789adc402842c66caf2ee4ef38fd1a1d2",
+    "src/shared/TradeSession.luau": "b9bcf9bbeadc5be42ec43f1a6eede6600cadac617ae06a5f1e2a8437476cbbf3",
+    "src/shared/Trading.luau": "7be62697771c67301d78ed15aa6339a6c075bdedd6a34a047ede1d3b00c9c26e"
+  },
+  "captures": [
+    {
+      "file": "before-settings5.jpg",
+      "runtimeSourceCommit": "d6c836f5ea96269e20259b26fb7d173b2e8aa1f7",
+      "graphics": 5,
+      "mode": "full-game Play, Reduced",
+      "matchedCamera": false
+    },
+    {
+      "file": "before-day-g5.jpg",
+      "runtimeSourceCommit": "d6c836f5ea96269e20259b26fb7d173b2e8aa1f7",
+      "graphics": 5,
+      "mode": "full-game Play, Reduced",
+      "matchedCamera": true
+    },
+    {
+      "file": "before-night-g5.jpg",
+      "runtimeSourceCommit": "d6c836f5ea96269e20259b26fb7d173b2e8aa1f7",
+      "graphics": 5,
+      "mode": "full-game Play, Reduced",
+      "matchedCamera": true
+    },
+    {
+      "file": "before-settings10.jpg",
+      "runtimeSourceCommit": "d6c836f5ea96269e20259b26fb7d173b2e8aa1f7",
+      "graphics": 10,
+      "mode": "full-game Play, Reduced",
+      "matchedCamera": false
+    },
+    {
+      "file": "before-day-g10.jpg",
+      "runtimeSourceCommit": "d6c836f5ea96269e20259b26fb7d173b2e8aa1f7",
+      "graphics": 10,
+      "mode": "full-game Play, Reduced",
+      "matchedCamera": true
+    },
+    {
+      "file": "before-fence-g5.jpg",
+      "runtimeSourceCommit": "d6c836f5ea96269e20259b26fb7d173b2e8aa1f7",
+      "graphics": 5,
+      "mode": "full-game Play, Reduced",
+      "matchedCamera": false
+    },
+    {
+      "file": "before-landscape-g10.jpg",
+      "runtimeSourceCommit": "d6c836f5ea96269e20259b26fb7d173b2e8aa1f7",
+      "graphics": 10,
+      "mode": "full-game Play, Reduced",
+      "matchedCamera": false
+    },
+    {
+      "file": "before-portrait-g10.jpg",
+      "runtimeSourceCommit": "d6c836f5ea96269e20259b26fb7d173b2e8aa1f7",
+      "graphics": 10,
+      "mode": "full-game Play, Reduced",
+      "matchedCamera": false
+    },
+    {
+      "file": "after-settings5.jpg",
+      "runtimeSourceCommit": "3b89acb7f8ad507fa9db570bec5e3056e710b529",
+      "graphics": 5,
+      "mode": "full-game Play, Reduced",
+      "matchedCamera": false
+    },
+    {
+      "file": "after-day-g5.jpg",
+      "runtimeSourceCommit": "3b89acb7f8ad507fa9db570bec5e3056e710b529",
+      "graphics": 5,
+      "mode": "full-game Play, Reduced",
+      "matchedCamera": true
+    },
+    {
+      "file": "after-night-g5.jpg",
+      "runtimeSourceCommit": "3b89acb7f8ad507fa9db570bec5e3056e710b529",
+      "graphics": 5,
+      "mode": "full-game Play, Reduced",
+      "matchedCamera": true
+    },
+    {
+      "file": "after-fence-g5.jpg",
+      "runtimeSourceCommit": "3b89acb7f8ad507fa9db570bec5e3056e710b529",
+      "graphics": 5,
+      "mode": "full-game Play, Reduced",
+      "matchedCamera": false
+    },
+    {
+      "file": "after-fall-g5.jpg",
+      "runtimeSourceCommit": "3b89acb7f8ad507fa9db570bec5e3056e710b529",
+      "graphics": 5,
+      "mode": "full-game Play, Reduced",
+      "matchedCamera": false
+    },
+    {
+      "file": "after-settings10.jpg",
+      "runtimeSourceCommit": "3b89acb7f8ad507fa9db570bec5e3056e710b529",
+      "graphics": 10,
+      "mode": "full-game Play, Reduced",
+      "matchedCamera": false
+    },
+    {
+      "file": "after-day-g10.jpg",
+      "runtimeSourceCommit": "3b89acb7f8ad507fa9db570bec5e3056e710b529",
+      "graphics": 10,
+      "mode": "full-game Play, Reduced",
+      "matchedCamera": true
+    },
+    {
+      "file": "final-landscape-closed.jpg",
+      "runtimeSourceCommit": "c0c1912185ea19bfbae5755d717e2da8fdec2b93",
+      "graphics": "not separately verified for final mobile pass",
+      "mode": "full-game Play, Reduced",
+      "matchedCamera": false
+    },
+    {
+      "file": "final-landscape-open.jpg",
+      "runtimeSourceCommit": "c0c1912185ea19bfbae5755d717e2da8fdec2b93",
+      "graphics": "not separately verified for final mobile pass",
+      "mode": "full-game Play, Reduced",
+      "matchedCamera": false
+    },
+    {
+      "file": "final-portrait-closed.jpg",
+      "runtimeSourceCommit": "c0c1912185ea19bfbae5755d717e2da8fdec2b93",
+      "graphics": "not separately verified for final mobile pass",
+      "mode": "full-game Play, Reduced",
+      "matchedCamera": false
+    },
+    {
+      "file": "final-portrait-open.jpg",
+      "runtimeSourceCommit": "c0c1912185ea19bfbae5755d717e2da8fdec2b93",
+      "graphics": "not separately verified for final mobile pass",
+      "mode": "full-game Play, Reduced",
+      "matchedCamera": false
+    },
+    {
+      "file": "plain-play-desktop.jpg",
+      "runtimeSourceCommit": "c0c1912185ea19bfbae5755d717e2da8fdec2b93",
+      "graphics": "not separately verified for final mobile pass",
+      "mode": "full-game Play, Reduced",
+      "matchedCamera": false
+    }
+  ],
+  "videos": [
+    {
+      "file": "18a-continuous-play.mp4",
+      "runtimeSourceCommit": "3b89acb7f8ad507fa9db570bec5e3056e710b529",
+      "nativeFile": "Roblox-2026-11-05T15_17_49.861Z.mp4",
+      "nativeSHA256": "adf735f4d41ad750e9b98b43adc87a18555e8d7f9fbf13fb34a7b84f0007ab89",
+      "processing": "H.264 recompression; audio/metadata removed; no cuts, speed changes or generated frames; desktop resized to 1280x670, mobile at native resolution"
+    },
+    {
+      "file": "18a-mobile-landscape.mp4",
+      "runtimeSourceCommit": "c0c1912185ea19bfbae5755d717e2da8fdec2b93",
+      "nativeFile": "Roblox-2026-11-05T15_41_44.158Z.mp4",
+      "nativeSHA256": "66475287b0042513f4b47462fed81c2374928ab855a3fb3c01172ee6f17ada63",
+      "processing": "H.264 recompression; audio/metadata removed; no cuts, speed changes or generated frames; desktop resized to 1280x670, mobile at native resolution"
+    },
+    {
+      "file": "18a-mobile-portrait.mp4",
+      "runtimeSourceCommit": "c0c1912185ea19bfbae5755d717e2da8fdec2b93",
+      "nativeFile": "Roblox-2026-11-05T15_44_02.887Z.mp4",
+      "nativeSHA256": "71a504997ca6924d0a13a885bc5d93a12d31cd390845d4e11d15a8755866dbff",
+      "processing": "H.264 recompression; audio/metadata removed; no cuts, speed changes or generated frames; desktop resized to 1280x670, mobile at native resolution"
+    }
+  ],
+  "blocked": [
+    "Physical smartphones",
+    "Experience asset permissions",
+    "Multiplayer load"
+  ],
+  "files": {
+    "18a-continuous-play.mp4": "4041ce569646224400d27913354f14689892d1f53b189123baeb264b21047b24",
+    "18a-mobile-landscape.mp4": "317f383b3744288fea43f1282d395d4240b34e7fb9a034e14cb369d987fc3d7c",
+    "18a-mobile-portrait.mp4": "062a79ea52121bb965234c8855924c988962e1881058c48dfbc8b75263188d49",
+    "after-day-g10.jpg": "26f3e9a4f146a55c289cac24d97ed2d632e92f88a40b83705eb0844ef1ceab9e",
+    "after-day-g5.jpg": "c737ccc93efb1dbb2561c8d5069fb0ebd9cc3ed8e6e520508cd36f6862cc98f7",
+    "after-fall-g5.jpg": "8ad0373008c6e2ab9c5aab821f1ba079380ddd87d8a88cd01a30f608759a2f2e",
+    "after-fence-g5.jpg": "ac0a0be2a0ecd9f6eab0352c2101d2a6998b60767cc39ce6104e2dd030107a1e",
+    "after-night-g5.jpg": "90b6739c4329b15871b6c86cf1df52b20e7bf7c44867597217707d73ccf1b9f8",
+    "after-settings10.jpg": "bfb874d530f350ebba7c66c5a1b01e46761097ec96c515bc439f6ae3bf17a60c",
+    "after-settings5.jpg": "5c3c0928132a53d9f1d314dcd8042804a4b557b5849110a19d9b28f9d1da4512",
+    "before-day-g10.jpg": "44652d84b5ec4c22796b5a392c8c0d36af0f5512ea0b824e522afede0c5aece6",
+    "before-day-g5.jpg": "025ac9e4ea5d8a3ceb5f16eb50c8e5a87c4ed77b9a6f06959a0d8d4fd3989612",
+    "before-fence-g5.jpg": "56959c141014be8d0ede96bd4364778b6fdd92b5b3430f03d1542ec7b07d3114",
+    "before-landscape-g10.jpg": "4d67324049ffed5fcb5777b50dcb2a97cb6505f16447e476b8a736203498c467",
+    "before-night-g5.jpg": "303d222c0d2638e7a25d1280b9263f113362cd7c4c674a661ae38e37ff5be63a",
+    "before-portrait-g10.jpg": "275204d410ad75954d12851aaf64906770aa95d91dff1584b8423fdce1985b78",
+    "before-settings10.jpg": "d32d648d29d9fc1e5536c20c5cc1b2a151d2abb0fe08ff75a50621c763c1669c",
+    "before-settings5.jpg": "4ed7a649acf908add75a040750eb412bdeb438d6ad896936f81db505fdaabc1f",
+    "final-landscape-closed.jpg": "ca353df00e54b609896a504c2cee9fe55427961fb92cccdbd90a82ecb335e75a",
+    "final-landscape-open.jpg": "28f961933864baab7cba797df01b419e26b4aca3407badf934b8dc04bde42f60",
+    "final-portrait-closed.jpg": "e4274cb508f5faeff5b6dca0ea4c53fec4cea21d4f6da0bd9d542347059d0b9f",
+    "final-portrait-open.jpg": "0b37c5ff12dc7ab7e8b163521e5032693344cf466db2c8625f127b787425874a",
+    "plain-play-desktop.jpg": "aff9c90e4f4c7ccf6c86bf32c0776f6855db2326e479b4a7cb8e6b1da7c7cbc4",
+    "recorded-to-final.diff": "ffa520958131db185fb766ed150a4178089c5ce75fdd08010ad77d011bb06da2",
+    "source-snapshot.json": "551102ce96ac0ba11cd6a21bc7ab9334372dcd6d9b00d04858bf2a1f93db858a",
+    "studio-audit.txt": "9951717af2215f229e01a58d3204e1d72041a2a2360519b6d4f07597f6699e41",
+    "verification.log": "4121be046c11fef771c946a77ded9a73576349065c6dfa469521b380ac3d6655"
+  }
+}

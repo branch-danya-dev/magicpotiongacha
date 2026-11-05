@@ -1,0 +1,5 @@
+2026-11-05T07:37:19.928Z,66.928055,7294,6,Info [FLog::CreatorOutput] M7_VISUAL_HARNESS parts=432 plots=8 decorated=1 collisionGuards=PASS; no gameplay/backend acceptance
+2026-11-05T07:37:20.076Z,67.076744,46dc,6,Info [FLog::CreatorOutput] M7_A2_AUDIT full lights=6 rain=60 motes=24 wind=12 emitters=0
+2026-11-05T07:37:20.081Z,67.081764,46dc,6,Info [FLog::CreatorOutput] M7_A2_AUDIT reduced lights=3 rain=24 motes=9 wind=1 emitters=0
+2026-11-05T07:37:20.085Z,67.085777,46dc,6,Info [FLog::CreatorOutput] M7_A2_AUDIT minimal lights=0 rain=0 motes=0 wind=0 emitters=0
+2026-11-05T07:37:20.089Z,67.089790,46dc,6,Info [FLog::CreatorOutput] M7_A2_LIFECYCLE PASS duplicate owner, all tiers, Reduce Motion, stop twice, lighting restoration

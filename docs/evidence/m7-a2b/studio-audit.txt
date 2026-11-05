@@ -1,0 +1,14 @@
+2026-11-05T09:39:19.313Z,39.313011,54fc,6,Info [FLog::CreatorOutput] M7_A2_AUDIT full lights=6 rain=60 motes=24 wind=12 emitters=0
+2026-11-05T09:39:19.483Z,39.483974,54fc,6,Info [FLog::CreatorOutput] M7_A2_AUDIT reduced lights=3 rain=24 motes=9 wind=2 emitters=0
+2026-11-05T09:39:19.614Z,39.614910,9618,6,Info [FLog::CreatorOutput] M7_A2_AUDIT minimal lights=0 rain=0 motes=0 wind=0 emitters=0
+2026-11-05T09:39:19.727Z,39.727600,9618,6,Info [FLog::CreatorOutput] M7_A2B_LIFECYCLE PASS original sky/cloud identity, immutable textures, all-pose camera transitions within caps, GlobalWind restored
+2026-11-05T09:39:19.727Z,39.727600,9618,6,Info [FLog::CreatorOutput] M7_A2_LIFECYCLE PASS duplicate owner, all tiers, Reduce Motion, stop twice, lighting restoration
+2026-11-05T09:39:21.828Z,41.828026,3d4c,6,Info [FLog::CreatorOutput] M7_A2B_ASSETS failures=0 source=original-CC0-local permissions=LOCAL_ONLY
+2026-11-05T09:44:27.597Z,347.597748,84ac,6,Info [FLog::CreatorOutput] M7_A2_BUDGET quality=full reduceMotion=false lights=6 rain=0 motes=24 wind=12 emitters=0
+2026-11-05T09:44:27.597Z,347.597748,84ac,6,Info [FLog::CreatorOutput] M7_A2B_FRAME pose=dawn style=Realistic clock=6.150000095367432 sun=0.9982777833938599, 0.03922262042760849, 0.043623391538858414 exposure=0.15000000596046448 fog=3 glints=6 rainbow=0 assetFailures=0
+2026-11-05T09:44:27.597Z,347.597748,84ac,6,Info [FLog::CreatorOutput] M7_A2B_GRAPHICS QualityLevel5 lightingPriority=true
+2026-11-05T09:54:28.049Z,40.049397,1b18,6,Info [FLog::CreatorOutput] M7_A2B_ASSETS failures=0 source=original-CC0-local permissions=LOCAL_ONLY
+2026-11-05T09:54:55.574Z,67.574524,81a0,6,Info [FLog::CreatorOutput] M7_A2B_GAMEPLAY pose=day quality=reduced style=Realistic
+2026-11-05T09:55:06.891Z,78.891411,81a0,6,Info [FLog::CreatorOutput] M7_A2B_GAMEPLAY pose=night quality=reduced style=Realistic
+2026-11-05T09:55:18.356Z,90.356430,81a0,6,Info [FLog::CreatorOutput] M7_A2B_GAMEPLAY pose=rain quality=reduced style=Realistic
+2026-11-05T09:55:31.672Z,103.672165,81a0,6,Info [FLog::CreatorOutput] M7_A2B_GAMEPLAY quality=full

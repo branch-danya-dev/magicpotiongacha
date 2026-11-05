@@ -1,0 +1,33 @@
+{
+  "type": "actual Roblox Studio unedited window capture",
+  "studio": "0.745.462.7451125",
+  "dateMoscow": "2026-11-05",
+  "quality": "full",
+  "buildSha256": "b8fd4f81cb6896dcf935bfa58d0335bfe90bd3795a32f1b2a5fe23be3b8120e6",
+  "sources": {
+    "src/shared/EnvironmentConfig.luau": "5969f0c05451af6f2eefe4552c9fc571d6f9cb6a55e102f9b0254905043ee152",
+    "src/shared/EnvironmentPlan.luau": "6b282b86e02649b9232210760fda092562e6f0bdfb47785a7c46b229e5b85df6",
+    "src/shared/EnvironmentState.luau": "255f2aab9a243d41f65152bbc5a3caac2bfd4dacadde9b33d629f3b2da94c4a8",
+    "src/server/EnvironmentArt.luau": "70455d40e1b4201593942973c89b2b3ea524f54b09d0aee4599c7899ad5185d5",
+    "src/client/EnvironmentView.luau": "ceba877871c77bc09bdcf4c05caba28967b98c3af527237df90664779e7ea6cf",
+    "qa/environment.project.json": "06574ccd29231603b1eb82be912bd7e32fe4568c57fced70eb045abeab1ea468",
+    "qa/environment/Review.client.luau": "f2a054e071cca6fb609c5c1d49199d9750a85746ca4434dc9cace6fa4c76fc05",
+    "qa/environment/Review.server.luau": "6d8ebaf6f0188baa5d16dd18a6a87a3f407a2d0bf02aa942515b444e4de67a5a",
+    "src/shared/EnvironmentLabels.luau": "59e09b901589c602d11eecef0cb9d287e71e1d7a9257580f606d2eebe1768d1e",
+    "src/server/World.luau": "4da92128dc9eaef3a0f1113694e8f9cdd1cbae859ee467a72d99a6e26602a79e"
+  },
+  "images": {
+    "01-day-overview.jpg": "1e45c46737cdb131bc969aeea80ff3a5ec751e347f38a183aa7f5a2a768689ba",
+    "02-sunset-overview.jpg": "3e57690a69e3bc457bd782e6ec5a9ead2536fdec68091b1701266447266ea3da",
+    "03-night-overview.jpg": "ce9639ed3b29f54bf0a04d1180ee3de6297a7180b9ada54cd69100ecde210bdf",
+    "04-rain-overview.jpg": "8552e56f77fb9a0722c488103b542c122abb57105b0ea8e3ca88bd52b55434fa",
+    "05-dawn-overview.jpg": "decd31ae098957371d8f48767052f5ddabbbce5ba45e19be401dc08e50a14035",
+    "06-day-spawn.jpg": "dbc8b378b78610cf7384b2265e3b2bfdf505f8a0f579e43e08ace18d2ed56a1f",
+    "07-day-bazaar.jpg": "8ee9ee520f515d8a1719ef36a2b5e056157ba084c38c6ea2b4c306d55598479c",
+    "08-day-spawn-annotations-audit.jpg": "e982f72e31ef66946705ec8523ca85c15388f48001a5780542f6192d97318d52",
+    "09-day-bazaar-annotations-audit.jpg": "38e2b4f643ce7254b3f1f67a8065d6e7aa4e3d9cd101c1899396660b934ce88f",
+    "10-sunset-labels.jpg": "3f657eb61d0ccf222cc42bc58508a074dd75e8bceffff59e706af3b2aa3bf166"
+  },
+  "sourceSnapshotRoot": "docs/evidence/m7/rejected-source",
+  "status": "Historical primitive pilot: ART REJECTED; these images do not show the mesh revision"
+}

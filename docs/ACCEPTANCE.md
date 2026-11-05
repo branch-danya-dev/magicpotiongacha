@@ -2,6 +2,142 @@
 
 CLI/CI passing is necessary but does not mark any item below as completed.
 
+## Current: 07C / #21 — composed pilot, 07D pending
+
+The owner explicitly requested 07C on 2026-11-06. [Composition result](M7_07C_COMPOSITION.md):
+outer rock ridges, seven distant canopy silhouettes, two original offshore towers,
+a ruined gate, local effect anchors and the enlarged existing moon. One ordinary
+full-game Play build; no required screenshots/video. 1062 tests preserve all 1045
+inherited cases; exact-source CI, build hashes and logs accompany delivery.
+New native composition, foliage/Low graphics, grounding and ridge-camera behavior
+are NOT VERIFIED. **07D owner APPROVED is pending**, then UX, then 08. Phone,
+experience-permission and multiplayer gates remain BLOCKED. PR Draft; no merge,
+publishing or eight-farm art rollout.
+
+## Historical delivery: 07B / #21 — woodland build, native art review pending
+
+On 2026-11-06 the owner accepted 07A `04d3aea` in chat and explicitly authorized
+the next asset/content stage. This is owner-reported technical acceptance, not an
+agent-measured device result. Phone/permission/load blockers remain in force.
+
+[07B result](M7_07B_WOODLAND.md): 29 complete Quaternius trees, mixed undergrowth,
+mesh fallen wood and refined meadow replace the rejected sphere forest. Original
+CC0 geometry/maps/IDs are retained; a sealed derivative changes only the bounded
+foliage render settings. New ordinary Play appearance/Low graphics are NOT VERIFIED.
+07C, 07D, UX and 08 are subsequent stages; PR Draft, no merge/publishing.
+
+## Historical delivery: 07A / #21 — integrated A1–A8 candidate
+
+The following records the state at delivery, before the owner's acceptance above.
+
+[Integrated batch result](M7_07A_BATCH_RESULT.md): A1–A8 code/asset changes are
+implemented; native rendering and ordinary Play remain NOT VERIFIED. A corrected
+sky pack now passes independent native-topology checks, with the old pack failing
+as a negative control. Camera initial overlap, physical boundaries/fences, lamp
+bodies, coherent time/weather and quality costs have been addressed as one package.
+1037 tests preserve all 1012 previous cases. One final build is handed over for one
+comprehensive owner pass; no intermediate owner Play or media requests. No 07B/07C,
+UX or 08. Phone/permission/load gates remain BLOCKED, PR Draft, no merge/publishing.
+
+## Historical: 07A / #21 — partial candidate, gate OPEN
+
+[07A report](M7_TASK07A.md): avatar-based bounded light slots, continuous cyclic
+retargeting, an ordinary-camera collision guard and eight outer-ridge colliders.
+1012 tests preserve all 995 inherited cases. Sky seams are still unresolved;
+ordinary Play/native camera/light/terrain checks were not completed because app
+control failed. No visual acceptance or device performance is claimed. The new
+sequence is 07A → 07B → 07C → owner 07D APPROVED → UX → 08 FINAL.
+The new Studio version's local atmosphere packs were installed and hash-verified,
+without uploading assets. PR #17 remains Draft. No merge or publication.
+
+## Historical: Task 07 / #19f — gameplay props code/build delivery
+
+The owner removed frames/screenshots/video from the workflow on 2026-11-05.
+[Task 04 grass](M7_TASK04.md), [task 05 forest](M7_TASK05.md),
+[task 06 atmosphere](M7_TASK06.md) and [task 07 props](M7_TASK07.md) are delivered
+as code/builds. Task 07 replaces pilot station blocks with 17 authored compound
+models and dresses existing lanterns/market samples. Actual profile levels drive
+construction, upgrades and pavilion phases. 995 tests retain 979 inherited cases
+and add 16 prop cases. No live appearance/device result is claimed; Studio use
+was deferred, and no media is required for continuation. Physical smartphones,
+experience asset permissions and multiplayer load stay BLOCKED. PR #17 remains
+Draft; no merge/publishing. Task 08 is not started and still needs final
+pilot APPROVED. Historical evidence sections below describe their own builds.
+
+## Historical: Task 02 / #19a — island landscape, visual review pending
+
+One continuous native Terrain island now surrounds the eight unchanged farm plots
+and central bazaar. The common rectangular base is hidden; hills, slopes, coast and
+water are visible in full-game Play. Individual farm plates remain for task 03.
+[Actual evidence, exact builds and limitations](evidence/m7-19a/README.md):
+graphics 5/10 comparisons, 80-second native walk recording, plain one-Play file.
+922 tests pass; Windows/Ubuntu CI pass. Studio checked 2888 Terrain clearance rays
+over all eight plots; all 15 walking segments reached their destination alive.
+The distant finite water edge remains visible at extreme zoom. Physical phones,
+experience permissions and multiplayer load remain BLOCKED. PR stays Draft;
+no merge or publishing. Tasks 03–07 not started; 08 needs final pilot APPROVED.
+
+## Task 01 / #18a — critical Play fixes, visual review pending
+
+Owner explicitly **APPROVED artistic Gate A** on 2026-11-05. This approves the
+A.2c atmosphere only. PR #17 remains Draft; no merge or publishing authorized.
+The [new eight-task sequence](M7_REWORK_PLAN.md) starts with smooth time changes,
+physical fences, server fall recovery and mobile Factory entry. Task 01 has a plain
+Play build, [20 actual Studio captures and three recordings](evidence/m7-18a/README.md).
+907 automated tests pass; visual acceptance remains pending. Factory overlap was
+fixed and exercised with the native player list open in both phone orientations.
+Broader resource/guide overlap and unperformed regression cases remain documented.
+Physical phones, experience asset permissions and multiplayer load stay BLOCKED.
+Task 02 followed by the owner's request; task 08 requires final pilot APPROVED after 07.
+
+## Historical: M7.1 A.2c — delivered for Gate A
+
+**ART PENDING.** A.2b direction accepted; explicit owner APPROVED is still required.
+Only A.2c was implemented. [Actual before/after Studio evidence](evidence/m7-a2c/README.md)
+contains five states at graphics 5/10, full-game UI and a native 45-second recording.
+[Implementation, diagnosis and budgets](M7_A2C_ATMOSPHERE.md).
+867 tests preserve all 859 inherited cases. Studio verifies owner restoration,
+all-tier caps, Reduce Motion and asset loading. The flat floor is quieter at 5;
+fine foliage edges, Terrain grain and thin path artifacts remain open.
+Physical phones, experience permissions and multiplayer load remain BLOCKED.
+UI #18 waits for Gate A; island #19 waits for art and later UX approval. Draft,
+no merge/publish. Earlier sections below are historical milestone records.
+
+## M7.1 Gate A.2 — Issue #20
+
+**ART PENDING; low-quality stippling OPEN; live/device gates BLOCKED.**
+[Implementation, caps and diagnostic limits](M7_A2_ATMOSPHERE.md),
+[raw Studio evidence and reproducible preview](evidence/m7-a2/README.md).
+851 portable tests preserve all 844 inherited cases. Studio verifies the effect
+lifecycle and caps, plus the five visual presets and ordinary UI day/night views.
+A 45-second reproducible Studio preview is supplied; recorded video is not.
+This does not pass owner visual approval, #18 UX, real-phone performance,
+multiplayer or backend acceptance. Do not start #19 or merge/publish.
+
+## M7.1 revised one-farm Gate A — 2026-11-05
+
+[Issue #16](https://github.com/branch-danya-dev/magicpotiongacha/issues/16), stacked
+on M6 PR #15 at `bbc8891d45e551b691363383d1cacf2d69354283`.
+844 CLI cases (all 810 original + 34 environment), source integrity and both
+Rojo builds are required. Actual Studio screenshots cover five light/weather poses,
+spawn, foliage, Bazaar and ordinary gameplay UI. [Evidence and limits](M7_ENVIRONMENT.md),
+[current raw images](evidence/m7-revision/README.md), [asset provenance](../assets/environment/README.md).
+
+**The earlier primitive pilot is ART REJECTED; the replacement is OWNER REVIEW
+PENDING.** The owner approved direct preparation/import despite missing game-dev.
+Fourteen inspected CC0 MegaKit Standard models are imported and render in Studio;
+the receipt pins the actual mesh/texture IDs. The new one-farm composition uses
+bounded Terrain, 432 decor Parts and 116,626 authored triangles excluding Terrain.
+Studio collision guards passed. Beauty captures pin Roblox Manual quality 10;
+dark stippling at Automatic/lower quality remains an open renderer/device check.
+The ordinary full-game capture uses Automatic quality and memory-only progress.
+The existing contextual billboard filter does not resolve the normal gameplay UI
+acceptance: issue #18 remains an explicit UX gate on PC and phone. **Gate B / #19
+is withheld until ART APPROVED and the UX check.** See the revised art direction.
+`EnvironmentArtEnabled=false`, monetization/trading/SKUs unchanged. Studio visual
+rendering and noncollision property assertions do not pass gameplay traversal,
+real DataStore, PolicyService, payments, phone or multiplayer acceptance.
+
 ## M6 implementation record — 2026-11-05
 
 Scope: [Issue #14](https://github.com/branch-danya-dev/magicpotiongacha/issues/14).

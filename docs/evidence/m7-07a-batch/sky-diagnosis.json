@@ -1,0 +1,165 @@
+{
+  "method": "Independent minimum absolute edge error across every face/edge/reversal in installed vendor DDS",
+  "studioVersion": "version-67c8b1dedbb74fed",
+  "vendorFilesSHA256": {
+    "ft": "714c08b0dde8049a501eb81dc2f5e720ef785770970929934e58a575548f92d8",
+    "bk": "eae298532fcc04ac380d78d7cf64a26d37984b8e8af56f34ae6c18cfb2439418",
+    "lf": "46dd4ba796c65d23ca6b4cc4d8ae48f6535f2f888a3bcfbc581d5f767a3b747f",
+    "rt": "8719aac7d496b20e4198b5407b64c5571e3f241309edc9480a41806efb046560",
+    "up": "672375765f9c10387d204bc319dc98537a0e077a8ef395824f0f2dcde6de0f0e",
+    "dn": "97b98273a4261e4d36829a4aae4892837ca27c70bd22251bd7799c50516d605e"
+  },
+  "size": [
+    1024,
+    1024
+  ],
+  "edges": {
+    "ftL": {
+      "neighbor": "rtR",
+      "reverse": false,
+      "meanRGBError": 0.6015625,
+      "nextBestError": 5.334309895833333
+    },
+    "ftR": {
+      "neighbor": "lfL",
+      "reverse": false,
+      "meanRGBError": 0.4850260416666667,
+      "nextBestError": 5.1689453125
+    },
+    "ftT": {
+      "neighbor": "upR",
+      "reverse": true,
+      "meanRGBError": 0.7639973958333334,
+      "nextBestError": 7.675455729166667
+    },
+    "ftB": {
+      "neighbor": "dnR",
+      "reverse": false,
+      "meanRGBError": 0.4778645833333333,
+      "nextBestError": 6.125
+    },
+    "bkL": {
+      "neighbor": "lfR",
+      "reverse": false,
+      "meanRGBError": 0.6162109375,
+      "nextBestError": 17.415690104166668
+    },
+    "bkR": {
+      "neighbor": "rtL",
+      "reverse": false,
+      "meanRGBError": 0.3180338541666667,
+      "nextBestError": 5.748372395833333
+    },
+    "bkT": {
+      "neighbor": "upL",
+      "reverse": false,
+      "meanRGBError": 0.8955078125,
+      "nextBestError": 6.064778645833333
+    },
+    "bkB": {
+      "neighbor": "dnL",
+      "reverse": true,
+      "meanRGBError": 0.3583984375,
+      "nextBestError": 5.064453125
+    },
+    "lfL": {
+      "neighbor": "ftR",
+      "reverse": false,
+      "meanRGBError": 0.4850260416666667,
+      "nextBestError": 5.2607421875
+    },
+    "lfR": {
+      "neighbor": "bkL",
+      "reverse": false,
+      "meanRGBError": 0.6162109375,
+      "nextBestError": 17.415690104166668
+    },
+    "lfT": {
+      "neighbor": "upT",
+      "reverse": true,
+      "meanRGBError": 0.9602864583333334,
+      "nextBestError": 6.324544270833333
+    },
+    "lfB": {
+      "neighbor": "dnB",
+      "reverse": true,
+      "meanRGBError": 0.4534505208333333,
+      "nextBestError": 5.007161458333333
+    },
+    "rtL": {
+      "neighbor": "bkR",
+      "reverse": false,
+      "meanRGBError": 0.3180338541666667,
+      "nextBestError": 5.751302083333333
+    },
+    "rtR": {
+      "neighbor": "ftL",
+      "reverse": false,
+      "meanRGBError": 0.6015625,
+      "nextBestError": 5.1689453125
+    },
+    "rtT": {
+      "neighbor": "upB",
+      "reverse": false,
+      "meanRGBError": 1.0442708333333333,
+      "nextBestError": 7.848958333333333
+    },
+    "rtB": {
+      "neighbor": "dnT",
+      "reverse": false,
+      "meanRGBError": 0.4514973958333333,
+      "nextBestError": 7.709309895833333
+    },
+    "upL": {
+      "neighbor": "bkT",
+      "reverse": false,
+      "meanRGBError": 0.8955078125,
+      "nextBestError": 6.565755208333333
+    },
+    "upR": {
+      "neighbor": "ftT",
+      "reverse": true,
+      "meanRGBError": 0.7639973958333334,
+      "nextBestError": 7.675455729166667
+    },
+    "upT": {
+      "neighbor": "lfT",
+      "reverse": true,
+      "meanRGBError": 0.9602864583333334,
+      "nextBestError": 6.064778645833333
+    },
+    "upB": {
+      "neighbor": "rtT",
+      "reverse": false,
+      "meanRGBError": 1.0442708333333333,
+      "nextBestError": 7.85546875
+    },
+    "dnL": {
+      "neighbor": "bkB",
+      "reverse": true,
+      "meanRGBError": 0.3583984375,
+      "nextBestError": 5.007161458333333
+    },
+    "dnR": {
+      "neighbor": "ftB",
+      "reverse": false,
+      "meanRGBError": 0.4778645833333333,
+      "nextBestError": 6.125
+    },
+    "dnT": {
+      "neighbor": "rtB",
+      "reverse": false,
+      "meanRGBError": 0.4514973958333333,
+      "nextBestError": 7.733723958333333
+    },
+    "dnB": {
+      "neighbor": "lfB",
+      "reverse": true,
+      "meanRGBError": 0.4534505208333333,
+      "nextBestError": 5.064453125
+    }
+  },
+  "nativePlay": "NOT_PERFORMED",
+  "vendorPixelsRedistributed": false,
+  "conclusion": "Native lateral order ft -> lf -> bk -> rt differs from historical task06 assumptions. Regenerate project-owned CC0 faces; do not reuse vendor imagery."
+}

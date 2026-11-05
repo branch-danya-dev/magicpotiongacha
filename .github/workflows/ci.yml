@@ -27,12 +27,24 @@ jobs:
         run: npm run tools
       - name: Compile, analyze, test and build Roblox place
         run: npm test
+      - name: Build plain Studio preview without diagnostic controls
+        run: node scripts/build-local-preview.mjs
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
           name: PotionTycoon-${{ matrix.os }}-${{ github.event.pull_request.head.sha || github.sha }}
           path: |
             build/PotionTycoon.rbxlx
+            build/PotionTycoon-M7-LocalPreview.rbxlx
             build/sourcemap.json
             build/verification.log
+            build/M7PilotReview.rbxlx
+            build/environment-sourcemap.json
+            assets/environment/manifest.json
+            assets/environment/atmosphere/
+            assets/environment/polish/
+            assets/environment/fantasy/
+            assets/environment/stability-sky/
+            assets/environment/woodland/
+            scripts/install-atmosphere-preview.mjs
           if-no-files-found: error

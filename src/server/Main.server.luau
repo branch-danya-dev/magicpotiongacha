@@ -302,7 +302,7 @@ world = World.new(Config, Settings.PlotCount, {
 	focus = function(player, stationId)
 		if active(player) then Focus:FireClient(player, stationId) end
 	end,
-})
+}, Settings.EnvironmentArtEnabled)
 trade = TradeRuntime.new({config=Config,settings=Settings,store=store,backend=dataStore,engine=Factory,policy=policy,
 	memoryMode=memoryMode,remote=TradeState,active=active,closing=function() return closing end,
 	inBazaar=function(player) return world:inBazaar(player) end,

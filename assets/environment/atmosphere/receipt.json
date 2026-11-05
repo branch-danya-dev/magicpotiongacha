@@ -1,0 +1,28 @@
+{
+  "name": "original-cozy-atmosphere",
+  "version": 4,
+  "license": "CC0-1.0",
+  "authoring": "deterministic project-native mathematical art; no external sources",
+  "generator": "scripts/create-atmosphere-assets.py",
+  "generator_sha256": "b74db99ac6094e02736dab34ada0706660abadc607b7023bbb470c4f66a83c61",
+  "files": {
+    "bk.png": "15419745739f193771010adc0b8b564e4b92d35d98753d85c0eef1cf6a0ed17f",
+    "dn.png": "4fcbf4f459f7beca375393ac7f09275c760efd52c2e6951800b813edaaacef69",
+    "ft.png": "15419745739f193771010adc0b8b564e4b92d35d98753d85c0eef1cf6a0ed17f",
+    "lf.png": "15419745739f193771010adc0b8b564e4b92d35d98753d85c0eef1cf6a0ed17f",
+    "LICENSE.txt": "851cb8c5d20f4df66e1858007aa5b356ebf23b7faa56fb050ff6743c8e7ce12a",
+    "mist.png": "585839ad1177b7cfbcbacca3d684018a981ac4618346e90f8415222b4b09aa76",
+    "moon.png": "2256701b5acc81ac6ed67326fd069e9362e2396cae27418b140c0a4c6fe86ea2",
+    "rainbow.png": "73800f9fefefd0f5280304bb5887be836fbcf53f38cf47c1305e3dcdd8125136",
+    "rt.png": "15419745739f193771010adc0b8b564e4b92d35d98753d85c0eef1cf6a0ed17f",
+    "sun.png": "9c834ecb7e3b579e49f4464922f357f7a3a2dbb292819a8d2450fd9616100ee8",
+    "up.png": "4adc30fb6f359f4f9043e41056825eb96be606895571a8005225f08b4c3fb4a3"
+  },
+  "cube_size": 256,
+  "matched_edge_rays": 3056,
+  "max_edge_rgba_error": 0,
+  "rgba8_mips_bytes": 2534059,
+  "roblox_asset_ids": null,
+  "permissions": "LOCAL_STUDIO_ONLY; no upload/publication performed; experience access remains BLOCKED",
+  "local_prefix": "rbxasset://m7a2b-v4/"
+}

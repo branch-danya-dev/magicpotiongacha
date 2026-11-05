@@ -1,0 +1,402 @@
+{
+  "status": "ART_PENDING",
+  "runtimeSourceCommit": "39788eafaf93de4c21f7817f0aff4cb4e38ffd35",
+  "studioVersion": "0.746.0.7461264",
+  "platform": "Windows desktop",
+  "capturedDateUTC": "2026-11-05",
+  "builds": {
+    "final": {
+      "file": "M7A2b-NightAudit.rbxlx",
+      "sha256": "d1db8c61071e6f40b0fd2465c26455be81210c913f31e4c1beb3c123ef9e95a1",
+      "bytes": 300079,
+      "sourceCommit": "39788eafaf93de4c21f7817f0aff4cb4e38ffd35"
+    },
+    "gameplay": {
+      "file": "PotionTycoon-M7-LocalPreview.rbxlx",
+      "sha256": "61f41efb8230bd2b282e4172c975c49b55140cd14c52ad1fdd31674e8852d16e",
+      "bytes": 439861,
+      "sourceCommit": "39788eafaf93de4c21f7817f0aff4cb4e38ffd35"
+    },
+    "baseline": {
+      "file": "M7A2-RegressionBaseline.rbxlx",
+      "sha256": "29508ba916d6168434a6dce06eb50b5ccdcb7dcfc89d665d4b1bf0b04448a805",
+      "bytes": 288608,
+      "sourceCommit": null
+    },
+    "seamAudit": {
+      "file": "M7A2b-SeamAudit.rbxlx",
+      "sha256": "e6e1ae8aedb9dc09cbb753731e517959bbdc8a212b086b25ceea38ddffe47ca5",
+      "bytes": 300048,
+      "sourceCommit": null
+    },
+    "historical": {
+      "file": null,
+      "sha256": null,
+      "sourceCommit": null,
+      "note": "Earlier calibration screenshots only. Exact original binary was overwritten; not evidence of the final runtime. Named style/graphics are visible in the captures."
+    }
+  },
+  "sources": {
+    "default.project.json": "7b18b78f05bbdd8261ccf0e5ba4b06bad02c2d6ae22ab7a505632bc911d949e8",
+    "qa/environment.project.json": "0ae05976977e9b96086a179fc1d043fcb059d6f89d2f6203c058d8ba9bb647af",
+    "qa/environment/GameplayReview.client.luau": "b48d9cf7cce9f83de854f9990d5d4bd47457bf7aebf2d4e11a9af5388104a2f7",
+    "qa/environment/Review.client.luau": "043ea3b8022bf9d2d978929c89aa67fe6980bda40da657190cf9e4f1511f7c12",
+    "qa/environment/Review.server.luau": "a34562074042f582bbbfc332d49c96e0dcecd9b01df1a3ef9bf0b08c4fa4c740",
+    "scripts/build-atmosphere-comparison.mjs": "c945c5661088bfb82e3f7f22a97630c404bf04eaddd3a951c924c8b7fd3c76a7",
+    "scripts/build-local-preview.mjs": "2c4bdb08f4b6d21bbc513056ce80f12f6e7e077f209f37bd5a2a4c56632d6497",
+    "src/client/CollectionUI.luau": "acceb33e4124b3d880057beefcfa966c8c80e80f273ce820ac208c199059dd9b",
+    "src/client/Environment.client.luau": "dac2d5da264c52817fe5a7c2034d12e949e0ead855a4aa64c848a50a738e87c7",
+    "src/client/EnvironmentController.luau": "99f4a31c6d0fe3b1d31575866b233c3859f292a28991ff8f1e7e8e73785f20c5",
+    "src/client/EnvironmentView.luau": "c6df946ad5846b18d6307042b92063cf3b9dc9ee8e96c3dfac020d71b333c94a",
+    "src/client/FamiliarView.client.luau": "4cfe692770e7bb7e9487e8e1a76224589290ec7ecd63b4599cc56dc77c346822",
+    "src/client/LongTermUI.luau": "f2eca16d223632130d8707421cd109113726e3114f72e10cb78754f94c48a221",
+    "src/client/Main.client.luau": "d5656a3980a47516276114496b5a95692b599e1a3a95f27de743393966dfd587",
+    "src/client/ShopPreview.luau": "53ec8273dd71d2029ba49d6faacb8fee9878ef9e6acf224536dcd895c0df39db",
+    "src/client/ShopUI.luau": "09c4c88d52e9bbaa0868f3ae57faa15f56d2dff058100b80d4497f56038f5c52",
+    "src/client/TradeUI.luau": "aa0f12598abba82a38fa374d7d91e183cea0ef5c170d23883e95bb0c4eac36eb",
+    "src/server/EnvironmentArt.luau": "c27e6f405b2163590a0d048bb09b22a21bdbbc12f1fee15d16664b9d76dde381",
+    "src/server/Main.server.luau": "7c5efe4e04bf12da46096a0f4622b484a69e9960c52a7ae17d83c5cfe629eaac",
+    "src/server/ProfileStore.luau": "ba31529c80b258b7e962782a1c171f6361417bd2ae51c605a48eda666d814a24",
+    "src/server/PurchaseCoordinator.luau": "04c5b7d68f577ed3174f441741c46e45f5851aea500b3bfd3a7e2962d63f3f46",
+    "src/server/PurchaseRuntime.luau": "6e23550f3f289e7ebf55011bcf2c11bda1e1e7181544147b77f079266e9afb8c",
+    "src/server/ReceiptJournal.luau": "327541f1f17c94fac331ed10e310e5f8b869d9b5f94befe67818304a7c9feefe",
+    "src/server/ServerSettings.luau": "8cb7c67daae4784d93898534366aab8319362cd6fe7bdd02aae5e9074d0db918",
+    "src/server/TradeCoordinator.luau": "fc0de6978bd0d733cbe2a21b8d61b4050188c7b02c2a950b17200800c6670449",
+    "src/server/TradeJournal.luau": "c55200ca5659c23928117987b4e71c873458f0d37da6bd71bb0a413e7a735ad2",
+    "src/server/TradeRuntime.luau": "5cc0aff34d0b43c06d4c4bc95033ba5204c90c1cd4bd85586ec9a5041e37451d",
+    "src/server/World.luau": "4da92128dc9eaef3a0f1113694e8f9cdd1cbae859ee467a72d99a6e26602a79e",
+    "src/shared/Access.luau": "31a1a65e6c4aad547dd708cd6d22f888c4b4216d5df0ad89ec115f838f49a89e",
+    "src/shared/Collection.luau": "c8142338ff575b791efa6f81b786956e2764c362d1a3126254009aac00fac6b7",
+    "src/shared/Config.luau": "ac9c32175e1fc2d639051b15e8ae7556df8bf2c78927d299d3e781c44d706ca7",
+    "src/shared/Dailies.luau": "5f99bc048e5c11499850ba337b544ad49623909ce542de816b2126c495e46558",
+    "src/shared/EnvironmentConfig.luau": "ae9c9e5b88c4c1beda27083b2a7bcdd1c3b2bf675888be50c61acc579b3d7b48",
+    "src/shared/EnvironmentLabels.luau": "59e09b901589c602d11eecef0cb9d287e71e1d7a9257580f606d2eebe1768d1e",
+    "src/shared/EnvironmentPlan.luau": "0c9874e84eba8d272da70714a16e254ee1ad4c34ae6884647a58aac0b267473c",
+    "src/shared/EnvironmentState.luau": "f3ad34e7e0391c13b9e3619be982f7a23856b85d4050b0395b1797980631b10c",
+    "src/shared/EnvironmentTerrain.luau": "da446b95f9b91a725b790f754031f39897f712b9d39c526260f6fc42b9de971a",
+    "src/shared/Epochs.luau": "d970ab148feaaf86e097f9cfca26d8f9349fd213c418f409ae5dfc611051f8fe",
+    "src/shared/Factory.luau": "76ea151efdc19389a1cf12f46484fa969a643602bb503b42a348b7d704785a72",
+    "src/shared/Familiars.luau": "00ecb837d732c7973b79a4b13e5f3b4a192da031c08cb66d15c8d1673d622c8a",
+    "src/shared/ItemOrigin.luau": "2a162db30c3a9fd87439ff8ab4a396328a79305aade8a1f93030fda8282f94f3",
+    "src/shared/LegacyConfig.luau": "84adb79239db028b04b06f27169248f544bc8b8c9e45b1c58ccbf7c88842fd35",
+    "src/shared/LongTerm.luau": "4513314fb32ded4536b76e85d22f63c01da7ecfc35bcccb0ecad2ebafb5fb470",
+    "src/shared/Monetization.luau": "0633baa7c3aec59b84ea44ab96083d04fc509dbed02c4fcc5a607825cf46958f",
+    "src/shared/OfferCatalog.luau": "b506881e7827107a60b4b21aa7e276a2480fb8ca1ad314abcc9408843fcde732",
+    "src/shared/Policy.luau": "41dbe1b342ffec86b144d3257a95bcf40e52d92ee05d97344c6f8e5edd025927",
+    "src/shared/Progression.luau": "6163218d077eac501cf7c6fde1e8bddb2ee16ffdde84b7cf11ad0bdb402dd1fe",
+    "src/shared/Protocol.luau": "71fd037255d1acdb6ec4ebcdf5033341d29075662f1d0c358cf35bfb87377902",
+    "src/shared/TradeCodec.luau": "4fbf16139ed3a8a073fed043cd28c74789adc402842c66caf2ee4ef38fd1a1d2",
+    "src/shared/TradeSession.luau": "b9bcf9bbeadc5be42ec43f1a6eede6600cadac617ae06a5f1e2a8437476cbbf3",
+    "src/shared/Trading.luau": "7be62697771c67301d78ed15aa6339a6c075bdedd6a34a047ede1d3b00c9c26e"
+  },
+  "images": {
+    "afterrain-rainbow.jpg": {
+      "sha256": "8e899f7637f91f14eb24f90236860c66746894362cdb8233e43a1675d9263963",
+      "build": "historical",
+      "graphics": "Manual 10",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:20:29.392Z"
+    },
+    "baseline-graphics5.jpg": {
+      "sha256": "b8c70a4e34794917d37556de37f5482777370a48248c90dc1b20619d4e061ecc",
+      "build": "baseline",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T10:02:33.118Z"
+    },
+    "baseline-overview-day.jpg": {
+      "sha256": "caf2eac3f7790a2127c2a5242776ec0ef1e41ff6b9e13efdd9644437221e4763",
+      "build": "baseline",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:59:21.725Z"
+    },
+    "baseline-spawn-day.jpg": {
+      "sha256": "6c3c087d3200dbaf4aa37707998c1dbbda072e05c2d15b561565b3eccd225850",
+      "build": "baseline",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:59:43.033Z"
+    },
+    "baseline-spawn-night.jpg": {
+      "sha256": "407c4db88c9597376bb983152f6518c53a3a1e2560f8110e5541a8bf37b5470a",
+      "build": "baseline",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T10:00:05.294Z"
+    },
+    "diagnostic-sky-seam.jpg": {
+      "sha256": "9aa4fb754788a828ab3bd5e5fff7540e811adb845bc17b9296471b34c11b6171",
+      "build": "historical",
+      "graphics": "Manual 10",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:20:45.089Z"
+    },
+    "final-overview-afterrain.jpg": {
+      "sha256": "26ef9dfee6690de6d62ca835aed465184974941b5e5d738c5c37958b4bbffea1",
+      "build": "final",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:42:15.217Z"
+    },
+    "final-overview-dawn.jpg": {
+      "sha256": "bff59598a0e07832e4371aadcfa788a11919b9aaf456ddd320dda9c3deff6604",
+      "build": "final",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:41:58.444Z"
+    },
+    "final-overview-day.jpg": {
+      "sha256": "f85cf3afbba8e84e8ec735d026b5694c57081024d8ff97c2d14db8a7f2c01495",
+      "build": "final",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:41:18.191Z"
+    },
+    "final-overview-night.jpg": {
+      "sha256": "5dfca6b2ff19138914627bf00d83a64a4c3fcd2cfcec3e5a63ee260d8d86bd96",
+      "build": "final",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:41:02.796Z"
+    },
+    "final-overview-rain.jpg": {
+      "sha256": "bc3d2362ab0a7891278bfe6b84bb5ba650a39f311a485d9708640d1b04eaaf17",
+      "build": "final",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:41:43.586Z"
+    },
+    "final-overview-sunset.jpg": {
+      "sha256": "74efbce7b9be2d0d37dc3a6a3760cc30726f21a6f5f2e7c2530cb3ae40dd8770",
+      "build": "final",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:41:30.661Z"
+    },
+    "final-spawn-afterrain.jpg": {
+      "sha256": "e28afb29282b51f8306d9d8792027d9fb120dabb2c2167025f0a2b5ab233af0e",
+      "build": "final",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:42:30.175Z"
+    },
+    "final-spawn-dawn.jpg": {
+      "sha256": "a6676bfd17bfda252eb1a45c7e2fdd7f109d626470cff959d2018d40adc921ac",
+      "build": "final",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:44:27.903Z"
+    },
+    "final-spawn-day.jpg": {
+      "sha256": "22683ad3b7240b0dc7ee8f4eee0bb2a7f4dafb12dc3395cd9ad63e82cb2dd7ec",
+      "build": "final",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:42:46.132Z"
+    },
+    "final-spawn-night.jpg": {
+      "sha256": "97f8349d4c243d83a8173d7f21132ec7b2ef66526c8ffac164340bed50d7e129",
+      "build": "final",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:43:23.777Z"
+    },
+    "final-spawn-rain.jpg": {
+      "sha256": "cf51bf79c6ad75dca23825335e8ddcc7b5abda6a30c41936397542f7ef57f398",
+      "build": "final",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:43:55.804Z"
+    },
+    "final-spawn-sunset.jpg": {
+      "sha256": "70202ce0ca3ceab9f2027bb7bd95df6bf800b6284ac9c7c94d83b958eca18a68",
+      "build": "final",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:43:02.184Z"
+    },
+    "gameplay-full-rain.jpg": {
+      "sha256": "f6a280e8fe34dc15afc2da8bcdf39ed3d28cbb79832f7afbab6777737e89aa69",
+      "build": "gameplay",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:55:45.956Z"
+    },
+    "gameplay-graphics5.jpg": {
+      "sha256": "d12718ce5e815892c684ba105a6de5c9d274855ddfb03567e4692966fba4f5d2",
+      "build": "gameplay",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:56:41.747Z"
+    },
+    "gameplay-reduced-day.jpg": {
+      "sha256": "3ad8a433944315907a7785f40d35de99eb268e84d43e180e6a4958d23f228330",
+      "build": "gameplay",
+      "graphics": "Manual 5",
+      "quality": "reduced",
+      "capturedUTC": "2026-11-05T09:55:07.292Z"
+    },
+    "gameplay-reduced-entry.jpg": {
+      "sha256": "294e1d4245c5c9fc003404a99e6830ebe91309dc54126d5ac7c405c8b293ae1e",
+      "build": "gameplay",
+      "graphics": "Manual 5",
+      "quality": "reduced",
+      "capturedUTC": "2026-11-05T09:54:55.968Z"
+    },
+    "gameplay-reduced-night.jpg": {
+      "sha256": "72ea501ea054692050276db0328b9c91f55ce53ff7728685f886f8aef82d6b93",
+      "build": "gameplay",
+      "graphics": "Manual 5",
+      "quality": "reduced",
+      "capturedUTC": "2026-11-05T09:55:18.755Z"
+    },
+    "gameplay-reduced-rain.jpg": {
+      "sha256": "8e87e2f53b979f7800ace4f4c54e32dcd228a5665362ca11ffd7bfef705fbbf4",
+      "build": "gameplay",
+      "graphics": "Manual 5",
+      "quality": "reduced",
+      "capturedUTC": "2026-11-05T09:55:32.076Z"
+    },
+    "realistic-day-low5.jpg": {
+      "sha256": "f189eacb8c15cccc82f4721ffd4b66a8deb730fd712f0c4f87a4943e249490d9",
+      "build": "historical",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:07:32.432Z"
+    },
+    "realistic-graphics10.jpg": {
+      "sha256": "187cba1e35d03966ab0c32ef08fd1f0903d86f8c96fd216624a91ed53f169544",
+      "build": "historical",
+      "graphics": "Manual 10",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:10:36.921Z"
+    },
+    "realistic-graphics5.jpg": {
+      "sha256": "1938c36563a842ceefc6d949b62d971679273c5eff5327bea2263997b5f136e1",
+      "build": "historical",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:10:11.763Z"
+    },
+    "realistic-sunset-low5.jpg": {
+      "sha256": "461e2d5ef70a755de4b1140f1939507dbd46c465a4557e9c89afe32db0f1cb8c",
+      "build": "historical",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:07:51.941Z"
+    },
+    "soft-day.jpg": {
+      "sha256": "a8402af043fd065667eb29891050d4047a47dd47d3f6ad36ddf6dc4ec5d8d737",
+      "build": "historical",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:02:25.313Z"
+    },
+    "soft-graphics5.jpg": {
+      "sha256": "f225be68b0b74822175cde1fa1b22b38bb7b5363cf33c67d4f78250162d2ae95",
+      "build": "historical",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:04:35.061Z"
+    },
+    "soft-sunset.jpg": {
+      "sha256": "f38691f9f9e90677476b9988ec8053632b6ae8297e010689e1cb5153e8f41acf",
+      "build": "historical",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:02:51.841Z"
+    },
+    "sunset-sun-position.jpg": {
+      "sha256": "0e4e14827a40138543709e4ab05adb86e9042413c109f6d79069a2913be0b79b",
+      "build": "historical",
+      "graphics": "Manual 10",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:19:52.423Z"
+    },
+    "v4-seam-day-low5.jpg": {
+      "sha256": "23d18a7b54542506b4f492e9c7d3138da80f62a9fbd25aa9603a76384053a984",
+      "build": "seamAudit",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:35:16.771Z"
+    },
+    "v4-sky-night-low5.jpg": {
+      "sha256": "cca6f1cee21219823e0795b4f52bd3c4d42fb4cfdea1f848dccb83d16cb21506",
+      "build": "seamAudit",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "capturedUTC": "2026-11-05T09:35:32.168Z"
+    }
+  },
+  "cameras": {
+    "fov": 53,
+    "overview": {
+      "position": [
+        -175,
+        39,
+        -7
+      ],
+      "target": [
+        -145,
+        9,
+        -83
+      ]
+    },
+    "spawn": {
+      "position": [
+        -141,
+        9,
+        -36
+      ],
+      "target": [
+        -143,
+        7,
+        -96
+      ]
+    }
+  },
+  "video": {
+    "file": "final-studio-cycle-45s.mp4",
+    "sha256": "e485fab852d77662663f76dcd3fbcf60eba44eeaa9b40cc68d09d19e6cd44941",
+    "bytes": 9082548,
+    "build": "final",
+    "camera": "spawn",
+    "quality": "full",
+    "graphics": "Manual 5",
+    "durationSeconds": 45,
+    "width": 2112,
+    "height": 1104,
+    "decodedFrames": 1350,
+    "nativeSource": "Roblox-2026-11-05T09_48_12.238Z.mp4",
+    "nativeSourceSha256": "c384af29d66beb171142d94ab3b5473feeb2e4886c6cff0bf4a995ef55c1d9e6",
+    "nativeSourceBytes": 350045228,
+    "edit": "Continuous excerpt at 80 seconds for 45 seconds, H.264 CRF24; no retiming, recoloring or compositing",
+    "temporalAudit": {
+      "sampledEverySeconds": 3,
+      "downsample": [
+        160,
+        84
+      ],
+      "maxAdjacentMeanLumaDelta": 2.207738095238095,
+      "p99": 1.34,
+      "limit": "Detects large full-frame cuts/flashes only; does not certify fine shimmer or mobile performance"
+    }
+  },
+  "studioAuditSha256": "20b04ca68036ed72e79f6448a25ef11f9a06fa1489ca0b897543d4b7bfd96896",
+  "unresolved": [
+    "Night stars/moon not convincingly visible in inspected views",
+    "Inherited pale fern/path edges and low-quality surface noise",
+    "Subtle ground mist/dew require visual review",
+    "Legacy yellow pads and overlapping world labels",
+    "Experience permissions not validated: Studio-local content only",
+    "Real-device performance BLOCKED"
+  ],
+  "gates": {
+    "art": "PENDING",
+    "experiencePermissions": "BLOCKED",
+    "physicalMobile": "BLOCKED",
+    "publish": "NOT_AUTHORIZED",
+    "issues18and19": "WAIT_FOR_VISUAL_GATE"
+  }
+}

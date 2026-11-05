@@ -1,0 +1,25 @@
+{
+  "name": "task06-fantasy-sky",
+  "version": 1,
+  "license": "CC0-1.0",
+  "authoring": "Original project mathematical art; no external inputs",
+  "generator": "scripts/create-fantasy-sky.py",
+  "generator_sha256": "38251fd0fec3c54714137c72e427c461e5d8ca20c1ab5415a38879f79df8fb2d",
+  "files": {
+    "bk.png": "3fbe2900abae1e541e0809a02386cf4234660daafdb24218f9ab2cfd73fc76a8",
+    "dn.png": "01bb83558a069651b4f736ece6aff21d07810714db7e7710f9d5bd8a58d3ecc6",
+    "ft.png": "b3332bb508e1b4694fdfb00fb31bdb1858f31205e551efc61c696ae15da9fb6c",
+    "lf.png": "8bd5e51849b5de314439809ad9a6c6695a015bed8f8ec81451c2d886c34fcb97",
+    "LICENSE.txt": "7f682b7f182fa6fae41a419f5c55ac456842fd236f6963646c2fa301c3b4371a",
+    "rt.png": "843776e922610593fbfe25ed1f2dd0f56ebefacb45646043dd61fdaaf3593f11",
+    "up.png": "73a9acf9083403032bf224f670752e569e1b9137c70e7cc107954248f09df213"
+  },
+  "cube_size": 256,
+  "matched_edge_rays": 3056,
+  "max_edge_rgba_error": 0,
+  "rgba8_mips_bytes": 2097152,
+  "replaces": "six sky faces only; sun/moon/mist/rainbow keep their historical sprite prefix",
+  "roblox_asset_ids": null,
+  "local_prefix": "rbxasset://m7task06-v1/",
+  "permissions": "LOCAL_STUDIO_ONLY; no upload/publication; experience access remains BLOCKED"
+}

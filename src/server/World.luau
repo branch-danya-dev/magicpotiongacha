@@ -3,6 +3,8 @@
 local World = {}
 World.__index = World
 local Access = require(game:GetService("ReplicatedStorage").PotionTycoon.Shared.Access)
+local EnvironmentArt = require(script.Parent.EnvironmentArt)
+local PropArt = require(script.Parent.PropArt)
 
 local OFFSETS = {
 	warehouse = Vector3.new(-8,2,-30), orders = Vector3.new(10,2,-30),
@@ -60,12 +62,14 @@ local function prompt(adornee, text, object, callback)
 	return p
 end
 
-function World.new(config, count, callbacks)
+function World.new(config, count, callbacks, environmentArtEnabled)
 	for id,def in pairs(config.stations) do OFFSETS[id]=Vector3.new(table.unpack(def.offset)) end
 	local self = setmetatable({ config = config, plots = {}, owners = {}, callbacks = callbacks }, World)
 	local root = Instance.new("Folder")
 	root.Name, root.Parent = "PotionTycoonWorld", workspace
 	self.root = root
+	self.environmentArtEnabled=environmentArtEnabled==true
+	root:SetAttribute("EnvironmentArtEnabled",false)
 	part(root, "ForestFloor", Vector3.new(420, 1, 250), Vector3.new(0, -1, 0), Color3.fromRGB(40, 51, 44))
 	local bazaar = part(root, "Bazaar", Vector3.new(350, 0.3, 24), Vector3.new(0, 0, 0), Color3.fromRGB(91, 87, 97))
 	billboard(bazaar, "МАГИЧЕСКИЙ БАЗАР · M4\nПрямой обмен · закрытая QA-проверка", Vector3.new(0, 8, 0))
@@ -146,6 +150,8 @@ function World.new(config, count, callbacks)
 			end
 		end
 	end
+	if self.environmentArtEnabled then EnvironmentArt.attach(self) end
+	if self.environmentArtEnabled then PropArt.attach(self) end
 	return self
 end
 
@@ -183,6 +189,7 @@ function World:release(player)
 	end
 	for _, pad in pairs(plot.pads) do pad:SetAttribute("ExpectedLevel", nil); pad:SetAttribute("ExpectedRequestId",nil) end
 	for _,module in ipairs(plot.architecture) do module.part.Transparency=1 end
+	if self.environmentArtEnabled then PropArt.release(plot) end
 end
 
 function World:inBazaar(player)
@@ -279,6 +286,8 @@ function World:update(player, profile)
 	local order = self.callbacks.orderProgress(profile)
 	plot.labels.orders.Text = profile.order and ("Заказ NPC: " .. order.delivered .. "/" .. profile.order.count
 		.. "\nУ котла: " .. order.queued .. " · В пути: " .. order.travelling .. " · " .. order.remainingSeconds .. " сек.") or "Доска заказов · выбери контракт"
+	if self.environmentArtEnabled then EnvironmentArt.update(plot,profile.rebirths,profile.entitlements.aurora_theme==true) end
+	if self.environmentArtEnabled then PropArt.update(plot,profile,production) end
 end
 
 return World

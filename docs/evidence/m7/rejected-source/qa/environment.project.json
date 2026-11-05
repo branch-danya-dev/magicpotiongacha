@@ -1,0 +1,16 @@
+{
+  "name": "M7PilotReview",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {"PotionTycoon": {"$className": "Folder", "Shared": {"$path": "../src/shared"}}},
+    "ServerScriptService": {"M7Review": {"$className": "Folder",
+      "Review": {"$path": "environment/Review.server.luau"},
+      "World": {"$path": "../src/server/World.luau"},
+      "EnvironmentArt": {"$path": "../src/server/EnvironmentArt.luau"}}},
+    "StarterPlayer": {"StarterPlayerScripts": {"M7Review": {"$className": "Folder",
+      "Review": {"$path": "environment/Review.client.luau"},
+      "EnvironmentView": {"$path": "../src/client/EnvironmentView.luau"}}}},
+    "Workspace": {"$properties": {"Gravity": 196.2}},
+    "Lighting": {"$properties": {"ClockTime": 12, "Brightness": 2.5}}
+  }
+}

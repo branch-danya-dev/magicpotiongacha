@@ -1,0 +1,4 @@
+Original A.2c mathematical material and star art. CC0-1.0 dedication.
+No downloaded, Nintendo/Zelda, marketplace or provider imagery.
+Generator: scripts/create-polish-assets.py
+https://creativecommons.org/publicdomain/zero/1.0/

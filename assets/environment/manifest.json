@@ -1,0 +1,131 @@
+{
+  "version": 2,
+  "gate": "A / replacement candidate awaiting visual acceptance; #18 UX before #19 rollout",
+  "quaternius": {
+    "status": "BLOCKED",
+    "pack": "Ultimate Stylized Nature",
+    "author": "Quaternius",
+    "source": "https://quaternius.com/packs/ultimatestylizednature.html",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "officialDownload": "https://drive.google.com/drive/folders/1IV3bXHzkNvuNWFHPi4KPx-G4ghuxIuT-?usp=sharing",
+    "blockers": [
+      "Official public download returned Google Drive Quota exceeded HTML, not OBJ; rejected before import.",
+      "game-dev CLI unavailable: canonical package verification/admission cannot run."
+    ],
+    "selected": [
+      {
+        "name": "BirchTree_1.obj",
+        "source": "https://drive.google.com/file/d/197r4XD_yIsW4DcwnKFf2ZkXuFcBTMHvD/view",
+        "sha256": null,
+        "robloxAssetId": null,
+        "admitted": false
+      },
+      {
+        "name": "BirchTree_1.mtl",
+        "source": "https://drive.google.com/file/d/1rsyPZkj2W95MHOZdvnclojSFEpy6Cl39/view",
+        "sha256": null,
+        "robloxAssetId": null,
+        "admitted": false
+      },
+      {
+        "name": "Bush_Flowers.obj",
+        "source": "https://drive.google.com/file/d/1mRNqedxOmVDWrypbT9kAE7mLF3mL1E0T/view",
+        "sha256": null,
+        "robloxAssetId": null,
+        "admitted": false
+      },
+      {
+        "name": "Bush_Flowers.mtl",
+        "source": "https://drive.google.com/file/d/1jDf4XxeoVFQy-IuDDPZSG-npIw6Lat79/view",
+        "sha256": null,
+        "robloxAssetId": null,
+        "admitted": false
+      },
+      {
+        "name": "Flower_1_Clump.obj",
+        "source": "https://drive.google.com/file/d/1AfeKpWwY7L-Juxvh2EkU3x3NMPGAnO0i/view",
+        "sha256": null,
+        "robloxAssetId": null,
+        "admitted": false
+      },
+      {
+        "name": "Flower_1_Clump.mtl",
+        "source": "https://drive.google.com/file/d/1GTZroVsHD-Gc-I0f5JuDBxslSVc1dcyk/view",
+        "sha256": null,
+        "robloxAssetId": null,
+        "admitted": false
+      }
+    ],
+    "historical": true
+  },
+  "nativeFallback": {
+    "author": "Original project implementation",
+    "derivedFromQuaternius": false,
+    "description": "Versioned Roblox primitives; no external textures or mesh IDs. This is not completion of CC0 asset import.",
+    "sources": {
+      "src/shared/EnvironmentConfig.luau": "5969f0c05451af6f2eefe4552c9fc571d6f9cb6a55e102f9b0254905043ee152",
+      "src/shared/EnvironmentPlan.luau": "6b282b86e02649b9232210760fda092562e6f0bdfb47785a7c46b229e5b85df6",
+      "src/shared/EnvironmentState.luau": "255f2aab9a243d41f65152bbc5a3caac2bfd4dacadde9b33d629f3b2da94c4a8",
+      "src/server/EnvironmentArt.luau": "70455d40e1b4201593942973c89b2b3ea524f54b09d0aee4599c7899ad5185d5",
+      "src/client/EnvironmentView.luau": "ceba877871c77bc09bdcf4c05caba28967b98c3af527237df90664779e7ea6cf",
+      "qa/environment.project.json": "06574ccd29231603b1eb82be912bd7e32fe4568c57fced70eb045abeab1ea468",
+      "qa/environment/Review.client.luau": "f2a054e071cca6fb609c5c1d49199d9750a85746ca4434dc9cace6fa4c76fc05",
+      "qa/environment/Review.server.luau": "6d8ebaf6f0188baa5d16dd18a6a87a3f407a2d0bf02aa942515b444e4de67a5a",
+      "src/shared/EnvironmentLabels.luau": "59e09b901589c602d11eecef0cb9d287e71e1d7a9257580f606d2eebe1768d1e"
+    },
+    "sourceSnapshotRoot": "docs/evidence/m7/rejected-source",
+    "status": "HISTORICAL_ART_REJECTED"
+  },
+  "megakitCandidate": {
+    "admitted": true,
+    "blockers": [
+      "Visual acceptance of the revised farm, actual mobile performance and published-experience asset permission checks remain pending."
+    ],
+    "robloxAssetIds": [
+      "rbxassetid://102348628758318",
+      "rbxassetid://104223482629283",
+      "rbxassetid://107335968123994",
+      "rbxassetid://109075223234587",
+      "rbxassetid://110724520977986",
+      "rbxassetid://112432630564594",
+      "rbxassetid://113857411980935",
+      "rbxassetid://115569212714828",
+      "rbxassetid://117898133185832",
+      "rbxassetid://118034762489808",
+      "rbxassetid://118085961837111",
+      "rbxassetid://124076969727675",
+      "rbxassetid://127695594791239",
+      "rbxassetid://127929432830190",
+      "rbxassetid://129375472066299",
+      "rbxassetid://130436974229635",
+      "rbxassetid://131695601044976",
+      "rbxassetid://132501475885875",
+      "rbxassetid://136298981634226",
+      "rbxassetid://138974421613690",
+      "rbxassetid://71265164108637",
+      "rbxassetid://73285867832875",
+      "rbxassetid://73853474724005",
+      "rbxassetid://74191690609816",
+      "rbxassetid://76334757545348",
+      "rbxassetid://77393985107765",
+      "rbxassetid://82289699597708",
+      "rbxassetid://83669120491249",
+      "rbxassetid://89937554932811",
+      "rbxassetid://92249803120756",
+      "rbxassetid://96411665869378",
+      "rbxassetid://98116798389884",
+      "rbxassetid://98275526325211"
+    ],
+    "audit": "assets/environment/megakit-source-audit.json",
+    "sha256": "298f6732b872e4cf7b30e6e7abf9641c7f6dc6b326df37ac089533ed7e3d58c9",
+    "license": "CC0-1.0 in the acquired 2024 Standard archive",
+    "rawAssetsInRepository": false,
+    "pack": "Stylized Nature MegaKit Standard",
+    "status": "DIRECT_IMPORT_LOCAL_STUDIO_VALIDATION",
+    "source": "https://quaternius.itch.io/stylized-nature-megakit",
+    "authorization": "Owner approved direct inspection/optimization/Studio import on 2026-11-05; missing game-dev is no longer a blocker.",
+    "receipt": "assets/environment/megakit/receipt.json",
+    "preparedAssetsInRepository": true
+  }
+}

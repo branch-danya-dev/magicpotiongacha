@@ -1,0 +1,46 @@
+=== baseline ===
+2026-11-05T18:05:19.226Z M7_19A_TERRAIN cells=1082880 written=675289 preserved=0 startupSeconds=4.307 plots=8 decorated=1
+2026-11-05T18:05:19.364Z M7_19B_CLEARANCE plots=8 samples=2888 highest=-0.4062538146972656 lowest=-0.4062538146972656 anchors=PASS integrated=false
+2026-11-05T18:09:48.249Z M7_19B_FRAME view=spawn graphics=QualityLevel10 quality=reduced camera=-133.5, 11, -33, 0.800000012, -0.253731251, 0.543709874, 0, 0.906183124, 0.422885448, -0.599999964, -0.338308364, 0.724946499 integrated=nil pool=0 border=0 glow=0 station=nil gold=0
+2026-11-05T18:10:00.031Z M7_19B_FRAME view=farm graphics=QualityLevel10 quality=reduced camera=-110, 27, -24, 0.813733518, -0.237806588, 0.530363917, 0, 0.912472606, 0.409137875, -0.58123827, -0.332929194, 0.742509484 integrated=nil pool=0 border=0 glow=0 station=nil gold=0
+2026-11-05T18:10:05.914Z M7_19B_FRAME view=bazaar graphics=QualityLevel10 quality=reduced camera=12, 15, 28, 0.919145048, -0.154613465, 0.362308025, 0, 0.919751883, 0.392500341, -0.393919319, -0.360764742, 0.845385373 integrated=nil pool=0 border=0 glow=0 station=nil gold=0
+2026-11-05T18:10:13.581Z M7_19B_FRAME view=build graphics=QualityLevel10 quality=reduced camera=-151, 12, -66, 0.721988261, -0.381862849, 0.57698679, 0, 0.833910048, 0.551900387, -0.691905379, -0.398465604, 0.602073193 integrated=nil pool=0 border=0 glow=0 station=nil gold=0
+2026-11-05T18:11:14.248Z M7_19B_FRAME view=build graphics=QualityLevel5 quality=reduced camera=-151, 12, -66, 0.721988261, -0.381862849, 0.57698679, 0, 0.833910048, 0.551900387, -0.691905379, -0.398465604, 0.602073193 integrated=nil pool=0 border=0 glow=0 station=nil gold=0
+2026-11-05T18:11:21.145Z M7_19B_FRAME view=spawn graphics=QualityLevel5 quality=reduced camera=-133.5, 11, -33, 0.800000012, -0.253731251, 0.543709874, 0, 0.906183124, 0.422885448, -0.599999964, -0.338308364, 0.724946499 integrated=nil pool=0 border=0 glow=0 station=nil gold=0
+2026-11-05T18:11:28.694Z M7_19B_FRAME view=farm graphics=QualityLevel5 quality=reduced camera=-110, 27, -24, 0.813733518, -0.237806588, 0.530363917, 0, 0.912472606, 0.409137875, -0.58123827, -0.332929194, 0.742509484 integrated=nil pool=0 border=0 glow=0 station=nil gold=0
+2026-11-05T18:11:35.145Z M7_19B_FRAME view=bazaar graphics=QualityLevel5 quality=reduced camera=12, 15, 28, 0.919145048, -0.154613465, 0.362308025, 0, 0.919751883, 0.392500341, -0.393919319, -0.360764742, 0.845385373 integrated=nil pool=0 border=0 glow=0 station=nil gold=0
+=== candidate ===
+2026-11-05T17:56:24.801Z M7_19A_TERRAIN cells=1082880 written=675287 preserved=0 startupSeconds=4.364 plots=8 decorated=1
+2026-11-05T17:56:24.886Z M7_19B_CLEARANCE plots=8 samples=2888 highest=0.40625 lowest=0.4052734375 anchors=PASS integrated=true
+2026-11-05T17:56:46.617Z M7_19B_FRAME view=spawn graphics=QualityLevel10 quality=reduced camera=-133.5, 11, -33, 0.800000012, -0.253731251, 0.543709874, 0, 0.906183124, 0.422885448, -0.599999964, -0.338308364, 0.724946499 integrated=1 pool=23 border=20 glow=0 station=nil gold=0
+2026-11-05T17:57:11.732Z M7_19B_FRAME view=farm graphics=QualityLevel10 quality=reduced camera=-110, 27, -24, 0.813733518, -0.237806588, 0.530363917, 0, 0.912472606, 0.409137875, -0.58123827, -0.332929194, 0.742509484 integrated=1 pool=23 border=20 glow=0 station=nil gold=0
+2026-11-05T17:57:23.649Z M7_19B_FRAME view=bazaar graphics=QualityLevel10 quality=reduced camera=12, 15, 28, 0.919145048, -0.154613465, 0.362308025, 0, 0.919751883, 0.392500341, -0.393919319, -0.360764742, 0.845385373 integrated=1 pool=23 border=0 glow=0 station=nil gold=0
+2026-11-05T17:57:30.714Z M7_19B_FRAME view=build graphics=QualityLevel10 quality=reduced camera=-151, 12, -66, 0.721988261, -0.381862849, 0.57698679, 0, 0.833910048, 0.551900387, -0.691905379, -0.398465604, 0.602073193 integrated=1 pool=23 border=20 glow=0 station=nil gold=0
+2026-11-05T17:58:38.480Z M7_19B_FRAME view=build graphics=QualityLevel5 quality=reduced camera=-151, 12, -66, 0.721988261, -0.381862849, 0.57698679, 0, 0.833910048, 0.551900387, -0.691905379, -0.398465604, 0.602073193 integrated=1 pool=23 border=20 glow=0 station=nil gold=0
+2026-11-05T17:58:45.762Z M7_19B_FRAME view=spawn graphics=QualityLevel5 quality=reduced camera=-133.5, 11, -33, 0.800000012, -0.253731251, 0.543709874, 0, 0.906183124, 0.422885448, -0.599999964, -0.338308364, 0.724946499 integrated=1 pool=23 border=20 glow=0 station=nil gold=0
+2026-11-05T17:59:18.894Z M7_19B_FRAME view=farm graphics=QualityLevel5 quality=reduced camera=-110, 27, -24, 0.813733518, -0.237806588, 0.530363917, 0, 0.912472606, 0.409137875, -0.58123827, -0.332929194, 0.742509484 integrated=1 pool=23 border=20 glow=0 station=nil gold=0
+2026-11-05T17:59:27.460Z M7_19B_FRAME view=bazaar graphics=QualityLevel5 quality=reduced camera=12, 15, 28, 0.919145048, -0.154613465, 0.362308025, 0, 0.919751883, 0.392500341, -0.393919319, -0.360764742, 0.845385373 integrated=1 pool=23 border=0 glow=0 station=nil gold=0
+2026-11-05T17:59:54.276Z M7_19B_EARN batch=1 gold=14
+2026-11-05T18:00:10.558Z M7_19B_EARN batch=2 gold=28
+2026-11-05T18:00:26.858Z M7_19B_EARN batch=3 gold=42
+2026-11-05T18:00:43.190Z M7_19B_EARN batch=4 gold=56
+2026-11-05T18:00:59.475Z M7_19B_EARN batch=5 gold=70
+2026-11-05T18:01:00.489Z M7_19B_FRAME view=build graphics=QualityLevel5 quality=reduced camera=-151, 12, -66, 0.721988261, -0.381862849, 0.57698679, 0, 0.833910048, 0.551900387, -0.691905379, -0.398465604, 0.602073193 integrated=1 pool=23 border=20 glow=3 station=mine gold=70
+2026-11-05T18:01:37.555Z M7_19B_FRAME view=build graphics=QualityLevel5 quality=full camera=-151, 12, -66, 0.721988261, -0.381862849, 0.57698679, 0, 0.833910048, 0.551900387, -0.691905379, -0.398465604, 0.602073193 integrated=1 pool=23 border=20 glow=3 station=mine gold=70
+2026-11-05T18:01:51.805Z M7_19B_FRAME view=build graphics=QualityLevel5 quality=minimal camera=-151, 12, -66, 0.721988261, -0.381862849, 0.57698679, 0, 0.833910048, 0.551900387, -0.691905379, -0.398465604, 0.602073193 integrated=1 pool=23 border=20 glow=3 station=mine gold=70
+2026-11-05T18:02:11.088Z M7_19B_FRAME view=build graphics=QualityLevel5 quality=reduced camera=-151, 12, -66, 0.721988261, -0.381862849, 0.57698679, 0, 0.833910048, 0.551900387, -0.691905379, -0.398465604, 0.602073193 integrated=1 pool=23 border=20 glow=3 station=mine gold=70
+2026-11-05T18:02:34.453Z M7_19B_FRAME view=spawn graphics=QualityLevel5 quality=reduced camera=-133.5, 11, -33, 0.800000012, -0.253731251, 0.543709874, 0, 0.906183124, 0.422885448, -0.599999964, -0.338308364, 0.724946499 integrated=1 pool=23 border=20 glow=0 station=nil gold=70
+2026-11-05T18:02:35.485Z M7_19B_WALK step=1 reached=true alive=true
+2026-11-05T18:02:36.352Z M7_19B_WALK step=2 reached=true alive=true
+2026-11-05T18:02:36.919Z M7_19B_WALK step=3 reached=true alive=true
+2026-11-05T18:02:38.652Z M7_19B_WALK step=4 reached=true alive=true
+2026-11-05T18:02:39.303Z M7_19B_WALK step=5 reached=true alive=true
+2026-11-05T18:02:39.919Z M7_19B_WALK step=6 reached=true alive=true
+2026-11-05T18:02:41.652Z M7_19B_WALK step=7 reached=true alive=true
+2026-11-05T18:02:42.219Z M7_19B_WALK step=8 reached=true alive=true
+2026-11-05T18:02:43.136Z M7_19B_WALK step=9 reached=true alive=true
+2026-11-05T18:02:44.902Z M7_19B_WALK step=10 reached=true alive=true
+2026-11-05T18:02:49.403Z M7_19B_WALK step=11 reached=true alive=true
+2026-11-05T18:02:53.818Z M7_19B_WALK step=12 reached=true alive=true
+=== plain-delivery ===
+2026-11-05T18:13:33.461Z M7_19A_TERRAIN cells=1082880 written=675287 preserved=0 startupSeconds=4.291 plots=8 decorated=1

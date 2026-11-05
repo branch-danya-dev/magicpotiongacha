@@ -2,7 +2,7 @@
 local Test = require("./Test")
 local selected = ...
 
-assert(selected == nil or selected == "protocol" or selected == "profile_store" or selected == "factory" or selected == "acceptance" or selected == "m1" or selected == "m2" or selected == "m3" or selected == "m4" or selected == "m5" or selected == "m6", "Unknown test suite")
+assert(selected == nil or selected == "protocol" or selected == "profile_store" or selected == "factory" or selected == "acceptance" or selected == "m1" or selected == "m2" or selected == "m3" or selected == "m4" or selected == "m5" or selected == "m6" or selected == "m7", "Unknown test suite")
 
 if selected == nil or selected == "protocol" then
 	require("./protocol.spec")(Test)
@@ -57,5 +57,20 @@ if selected==nil or selected=="m6" then
 	require("./m6_interop.spec")(Test)
 	require("./m6_acceptance.spec")(Test)
 	require("./m6_ui.spec")(Test)
+end
+if selected==nil or selected=="m7" then
+	require("./environment.spec")(Test)
+	require("./context_ui.spec")(Test)
+	require("./safety18a.spec")(Test)
+	require("./island19a.spec")(Test)
+	require("./farm19b.spec")(Test)
+	require("./meadow19c.spec")(Test)
+	require("./forest19d.spec")(Test)
+	require("./atmosphere19e.spec")(Test)
+	require("./props19f.spec")(Test)
+	require("./stability07a.spec")(Test)
+	require("./batch07a.spec")(Test)
+	require("./woodland07b.spec")(Test)
+	require("./composition07c.spec")(Test)
 end
 Test.finish()

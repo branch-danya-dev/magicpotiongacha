@@ -1,0 +1,240 @@
+{
+  "status": "UI_REVIEW_PENDING",
+  "artGate": "APPROVED by owner 2026-11-05; artistic Gate A only",
+  "runtimeSourceCommit": "d6c836f5ea96269e20259b26fb7d173b2e8aa1f7",
+  "studioVersion": "0.746.0.7461264",
+  "platform": "Windows desktop Studio, one local player",
+  "build": {
+    "file": "M7-UI18-d6c836f.rbxlx",
+    "sha256": "ef883f6a94fa867411745058ed20cca2413c7622095d811eee1aceb7c513a8f9",
+    "bytes": 462037
+  },
+  "sourcesNormalizedLF": {
+    "src/client/CollectionUI.luau": "acceb33e4124b3d880057beefcfa966c8c80e80f273ce820ac208c199059dd9b",
+    "src/client/Environment.client.luau": "dac2d5da264c52817fe5a7c2034d12e949e0ead855a4aa64c848a50a738e87c7",
+    "src/client/EnvironmentController.luau": "99f4a31c6d0fe3b1d31575866b233c3859f292a28991ff8f1e7e8e73785f20c5",
+    "src/client/EnvironmentView.luau": "338f010d39a266abf9a1d273a35305c6855aa41409bf9f51e405d1ac724ffd6f",
+    "src/client/FamiliarView.client.luau": "4cfe692770e7bb7e9487e8e1a76224589290ec7ecd63b4599cc56dc77c346822",
+    "src/client/LongTermUI.luau": "f2eca16d223632130d8707421cd109113726e3114f72e10cb78754f94c48a221",
+    "src/client/Main.client.luau": "d2449cdd19f958d221e0491c9b29578dc887354750c07b45c07d57b821bb9346",
+    "src/client/ShopPreview.luau": "53ec8273dd71d2029ba49d6faacb8fee9878ef9e6acf224536dcd895c0df39db",
+    "src/client/ShopUI.luau": "09c4c88d52e9bbaa0868f3ae57faa15f56d2dff058100b80d4497f56038f5c52",
+    "src/client/TradeUI.luau": "aa0f12598abba82a38fa374d7d91e183cea0ef5c170d23883e95bb0c4eac36eb",
+    "src/client/WorldContext.luau": "e4c8f3663d822335add9a77df158e5e5af7b2971ae0cb8cc84b7967cb0d07511",
+    "src/server/EnvironmentArt.luau": "30b513982bded34ffe9183752c73336fee963af6645855c99890639aa8c924ea",
+    "src/server/Main.server.luau": "7c5efe4e04bf12da46096a0f4622b484a69e9960c52a7ae17d83c5cfe629eaac",
+    "src/server/ProfileStore.luau": "ba31529c80b258b7e962782a1c171f6361417bd2ae51c605a48eda666d814a24",
+    "src/server/PurchaseCoordinator.luau": "04c5b7d68f577ed3174f441741c46e45f5851aea500b3bfd3a7e2962d63f3f46",
+    "src/server/PurchaseRuntime.luau": "6e23550f3f289e7ebf55011bcf2c11bda1e1e7181544147b77f079266e9afb8c",
+    "src/server/ReceiptJournal.luau": "327541f1f17c94fac331ed10e310e5f8b869d9b5f94befe67818304a7c9feefe",
+    "src/server/ServerSettings.luau": "8cb7c67daae4784d93898534366aab8319362cd6fe7bdd02aae5e9074d0db918",
+    "src/server/TradeCoordinator.luau": "fc0de6978bd0d733cbe2a21b8d61b4050188c7b02c2a950b17200800c6670449",
+    "src/server/TradeJournal.luau": "c55200ca5659c23928117987b4e71c873458f0d37da6bd71bb0a413e7a735ad2",
+    "src/server/TradeRuntime.luau": "5cc0aff34d0b43c06d4c4bc95033ba5204c90c1cd4bd85586ec9a5041e37451d",
+    "src/server/World.luau": "4da92128dc9eaef3a0f1113694e8f9cdd1cbae859ee467a72d99a6e26602a79e",
+    "src/shared/Access.luau": "31a1a65e6c4aad547dd708cd6d22f888c4b4216d5df0ad89ec115f838f49a89e",
+    "src/shared/Collection.luau": "c8142338ff575b791efa6f81b786956e2764c362d1a3126254009aac00fac6b7",
+    "src/shared/Config.luau": "ac9c32175e1fc2d639051b15e8ae7556df8bf2c78927d299d3e781c44d706ca7",
+    "src/shared/ContextUI.luau": "9de097f9640fc291218b80202b5b83c4b89c95b9ca7071485ff0b5a88d0642ac",
+    "src/shared/Dailies.luau": "5f99bc048e5c11499850ba337b544ad49623909ce542de816b2126c495e46558",
+    "src/shared/EnvironmentConfig.luau": "99912299208220c99581d2e3de95ecb0a5172e27f7588155f6460e39ca7c0d33",
+    "src/shared/EnvironmentLabels.luau": "59e09b901589c602d11eecef0cb9d287e71e1d7a9257580f606d2eebe1768d1e",
+    "src/shared/EnvironmentPlan.luau": "0c9874e84eba8d272da70714a16e254ee1ad4c34ae6884647a58aac0b267473c",
+    "src/shared/EnvironmentState.luau": "7d687ca34bba5a758e88551f3e70ea06e760f253f8012bd92bc80173176facbe",
+    "src/shared/EnvironmentTerrain.luau": "da446b95f9b91a725b790f754031f39897f712b9d39c526260f6fc42b9de971a",
+    "src/shared/Epochs.luau": "d970ab148feaaf86e097f9cfca26d8f9349fd213c418f409ae5dfc611051f8fe",
+    "src/shared/Factory.luau": "76ea151efdc19389a1cf12f46484fa969a643602bb503b42a348b7d704785a72",
+    "src/shared/Familiars.luau": "00ecb837d732c7973b79a4b13e5f3b4a192da031c08cb66d15c8d1673d622c8a",
+    "src/shared/ItemOrigin.luau": "2a162db30c3a9fd87439ff8ab4a396328a79305aade8a1f93030fda8282f94f3",
+    "src/shared/LegacyConfig.luau": "84adb79239db028b04b06f27169248f544bc8b8c9e45b1c58ccbf7c88842fd35",
+    "src/shared/LongTerm.luau": "4513314fb32ded4536b76e85d22f63c01da7ecfc35bcccb0ecad2ebafb5fb470",
+    "src/shared/Monetization.luau": "0633baa7c3aec59b84ea44ab96083d04fc509dbed02c4fcc5a607825cf46958f",
+    "src/shared/OfferCatalog.luau": "b506881e7827107a60b4b21aa7e276a2480fb8ca1ad314abcc9408843fcde732",
+    "src/shared/Policy.luau": "41dbe1b342ffec86b144d3257a95bcf40e52d92ee05d97344c6f8e5edd025927",
+    "src/shared/Progression.luau": "6163218d077eac501cf7c6fde1e8bddb2ee16ffdde84b7cf11ad0bdb402dd1fe",
+    "src/shared/Protocol.luau": "71fd037255d1acdb6ec4ebcdf5033341d29075662f1d0c358cf35bfb87377902",
+    "src/shared/TradeCodec.luau": "4fbf16139ed3a8a073fed043cd28c74789adc402842c66caf2ee4ef38fd1a1d2",
+    "src/shared/TradeSession.luau": "b9bcf9bbeadc5be42ec43f1a6eede6600cadac617ae06a5f1e2a8437476cbbf3",
+    "src/shared/Trading.luau": "7be62697771c67301d78ed15aa6339a6c075bdedd6a34a047ede1d3b00c9c26e",
+    "qa/environment/GameplayReview.client.luau": "dc4ad0cb869cddf3a75592771069f036ca79c9cba707e11970f1c8f64e119f46",
+    "qa/environment/Review.client.luau": "0ca6c20fcba3bc8d8cc6c10d16a26d263e8e19282a5e85a544425e37b1b4c7d8",
+    "qa/environment/Review.server.luau": "7f359670587d40f18f0dbfb61f4a3fd509657f22606c4b781a69589e90629505",
+    "qa/environment/UIReview.client.luau": "9da14b4d0f96b117d028396f9f8bc6b9404a3878c799a2f51521d5728f920535",
+    "default.project.json": "b29b9eaeb65f36759a77582b78b6ee013af093b203343f12497265ada9830332",
+    "scripts/build-local-preview.mjs": "22b37534d32b369e131c16cbae6b016dbd038ad2681d12093c32d711ac62bfc0",
+    "qa/environment.project.json": "0ae05976977e9b96086a179fc1d043fcb059d6f89d2f6203c058d8ba9bb647af"
+  },
+  "files": {
+    "checks-892.log": "6d1956aed7d5fc2243548e2dc3ad25de383ac6bcf3084a88f97f891a291f0c0a",
+    "final-desktop-1366-night-g5.jpg": "45fcb8c915a4043c0c327384afb60d281c88501f5fad799ac851f734716b29aa",
+    "final-desktop-1920-day-g5.jpg": "0063adc2104c5e6094df952b73531f7bf7fb0a73003e3ae20d6419e19bf393a8",
+    "final-desktop-1920-night-g5.jpg": "156d6c83968e952b2fda57e4fb8330598f1d829f9b21219116bbbc5e802183d2",
+    "final-desktop-1920-sunset-g5.jpg": "230dfba7607ee1e858ab8ea3a9fc230cf8bcd248675ff1f93cbf5f7133ec2d68",
+    "final-desktop-bazaar.jpg": "df73a98dec79a98bc9ebae33415cb78b62f13ebfe5b0aa6af6fab7738820786f",
+    "final-desktop-chat-close-success.jpg": "73c62bb410255535ec07d7a114ebb8ddafad83c76037e143bfd73b6f293ca625",
+    "final-desktop-chat-panel.jpg": "4d26002f7ac63d71f221ccb3b9c5e088f7fa83b2dff1f5b259472e3b39a87d06",
+    "final-desktop-crystal-action.jpg": "9d4b59d12cc8ad89eb92d1d38247cafc2316838820bb86ab7d6c3f9611678779",
+    "final-desktop-free-plot.jpg": "267be6a027712ae8de0e4f93008511939bf7adc1600c3a9d35de7b3e9bf17aa0",
+    "final-desktop-gather-action.jpg": "93ffb878ff4ebfc5314f8b627c8969b982c6b21f8eda94d21049a4a5df45f736",
+    "final-desktop-night-panel.jpg": "548b58ce2eef85bd08412df83a680c1adfe919be282998241ec25ae93c6781f6",
+    "final-desktop-upgrade-price.jpg": "69c3076926a50b790ad2110733edf6add2ebae5c59909f19dc0acbfddb2472c1",
+    "final-mobile-chat-open.jpg": "92f093a0e4e42cd379db7a73a8c97fcfe289e9ee8b8c789e05d003b906608daf",
+    "final-mobile-chat-restored.jpg": "ce3e1f4f7c01e7e8264281bb01e533df2cbe042974f49b1bb093aa79dce46328",
+    "final-mobile-landscape-panel.jpg": "bd5726ca9f5a07daa43b3590441e12696d819152868253d19183231736d6b2b4",
+    "final-mobile-landscape-spawn.jpg": "9fa425f6ad8d8b2479fc26563ba57cb816ac50d794c032e15f92beff3d950b90",
+    "final-mobile-portrait-crystal-action.jpg": "0c68445c97ac52d5e70ed95cf0b8cdffdd09a36915b3f422c71e48c6daaa52a2",
+    "final-mobile-portrait-panel.jpg": "8403c1d610d70fe09552a3a91fe8fe8743c810d77526804e8221d85170ab2a23",
+    "final-mobile-portrait-playerlist-overlap.jpg": "ef57fb307468972ad3571a4a6c40c86f552684b81706b156804551aeec480a76",
+    "final-mobile-portrait-spawn.jpg": "4f7ffc006d658bfe969dc144f5a2c0073992f8d4fa560c4d1c5b2762df5f5e81",
+    "final-settings-graphics5.jpg": "8792294236d05eb90bb8d982a9d717e1c65873a08450789d483aa529ed413517",
+    "source-snapshot.json": "ff31a3eaba5e26d417b84c6f4b3a5ce5b29b634311bc02c995919756299f199e",
+    "studio-audit.txt": "d5c9e3eb539950903352938ea7a7a9b067be55e3e3fe667d3869dc2c619e378a",
+    "studio-route-review.mp4": "61d0f1f0bd58f748f1789336496b54ad3c45e3b351729aac074944aeeb1fd1e8"
+  },
+  "captures": [
+    {
+      "file": "final-desktop-1920-day-g5.jpg",
+      "caption": "День · 1920×1080 · Reduced / графика 5",
+      "origin": "exact JPEG bytes returned by Windows Computer Use; no retouch/crop"
+    },
+    {
+      "file": "final-desktop-1920-sunset-g5.jpg",
+      "caption": "Закат · та же камера · Reduced / графика 5",
+      "origin": "exact JPEG bytes returned by Windows Computer Use; no retouch/crop"
+    },
+    {
+      "file": "final-desktop-1920-night-g5.jpg",
+      "caption": "Ночь · та же камера · Reduced / графика 5",
+      "origin": "exact JPEG bytes returned by Windows Computer Use; no retouch/crop"
+    },
+    {
+      "file": "final-desktop-1366-night-g5.jpg",
+      "caption": "Ночь · 1366×768 · обычный Play",
+      "origin": "exact JPEG bytes returned by Windows Computer Use; no retouch/crop"
+    },
+    {
+      "file": "final-desktop-night-panel.jpg",
+      "caption": "Панель станка ночью",
+      "origin": "exact JPEG bytes returned by Windows Computer Use; no retouch/crop"
+    },
+    {
+      "file": "final-desktop-chat-panel.jpg",
+      "caption": "Открытый чат: панель сдвинута вправо · графика 10",
+      "origin": "exact JPEG bytes returned by Windows Computer Use; no retouch/crop"
+    },
+    {
+      "file": "final-desktop-chat-close-success.jpg",
+      "caption": "Закрытие панели при открытом чате · графика 10",
+      "origin": "exact JPEG bytes returned by Windows Computer Use; no retouch/crop"
+    },
+    {
+      "file": "final-desktop-crystal-action.jpg",
+      "caption": "Клавиатура: Essence 0 → 1",
+      "origin": "exact JPEG bytes returned by Windows Computer Use; no retouch/crop"
+    },
+    {
+      "file": "final-desktop-gather-action.jpg",
+      "caption": "Сбор вручную: обучение 2 → 3",
+      "origin": "exact JPEG bytes returned by Windows Computer Use; no retouch/crop"
+    },
+    {
+      "file": "final-desktop-upgrade-price.jpg",
+      "caption": "Цена улучшения и недостающие 100 Gold",
+      "origin": "exact JPEG bytes returned by Windows Computer Use; no retouch/crop"
+    },
+    {
+      "file": "final-desktop-bazaar.jpg",
+      "caption": "Базар: публичная торговля остаётся выключенной",
+      "origin": "exact JPEG bytes returned by Windows Computer Use; no retouch/crop"
+    },
+    {
+      "file": "final-desktop-free-plot.jpg",
+      "caption": "Свободный соседний участок: нет доступных действий",
+      "origin": "exact JPEG bytes returned by Windows Computer Use; no retouch/crop"
+    },
+    {
+      "file": "final-mobile-landscape-spawn.jpg",
+      "caption": "Эмулятор телефона · горизонтально · Reduced / 5",
+      "origin": "exact JPEG bytes returned by Windows Computer Use; no retouch/crop"
+    },
+    {
+      "file": "final-mobile-landscape-panel.jpg",
+      "caption": "Горизонтальная панель оставляет место управлению",
+      "origin": "exact JPEG bytes returned by Windows Computer Use; no retouch/crop"
+    },
+    {
+      "file": "final-mobile-chat-open.jpg",
+      "caption": "Открытый чат: интерфейс игры временно уступает место",
+      "origin": "exact JPEG bytes returned by Windows Computer Use; no retouch/crop"
+    },
+    {
+      "file": "final-mobile-chat-restored.jpg",
+      "caption": "После закрытия чата восстановлена прежняя панель",
+      "origin": "exact JPEG bytes returned by Windows Computer Use; no retouch/crop"
+    },
+    {
+      "file": "final-mobile-portrait-panel.jpg",
+      "caption": "Портретная панель после поворота · список игроков закрыт вручную",
+      "origin": "exact JPEG bytes returned by Windows Computer Use; no retouch/crop"
+    },
+    {
+      "file": "final-mobile-portrait-spawn.jpg",
+      "caption": "Портретный экран без панели",
+      "origin": "exact JPEG bytes returned by Windows Computer Use; no retouch/crop"
+    },
+    {
+      "file": "final-mobile-portrait-crystal-action.jpg",
+      "caption": "Сенсорная кнопка: Essence 1 → 2",
+      "origin": "exact JPEG bytes returned by Windows Computer Use; no retouch/crop"
+    },
+    {
+      "file": "final-mobile-portrait-playerlist-overlap.jpg",
+      "caption": "OPEN: перенесённый с ПК список игроков перекрывает «Фабрика»",
+      "origin": "exact JPEG bytes returned by Windows Computer Use; no retouch/crop"
+    },
+    {
+      "file": "final-settings-graphics5.jpg",
+      "caption": "Фактически выбранная ручная графика 5",
+      "origin": "exact JPEG bytes returned by Windows Computer Use; no retouch/crop"
+    }
+  ],
+  "viewports": {
+    "desktop": [
+      "1920x1080",
+      "1366x768"
+    ],
+    "phoneDeviceCanvas": [
+      "874x402",
+      "402x874"
+    ],
+    "phoneCameraViewport": [
+      "750x382",
+      "402x778"
+    ],
+    "phoneCoreSafeUI": [
+      "750x324",
+      "402x720"
+    ]
+  },
+  "video": {
+    "file": "studio-route-review.mp4",
+    "nativeSHA256": "75afa14fff5425ee997222a1497424b03fa4aabc590bc8f806b8826b3e4dc608",
+    "durationSeconds": 412.4,
+    "nativeEncodedSize": "1360x768",
+    "studioViewport": "1366x768",
+    "processing": "Full native F12 recording; H264 CRF29; audio and device metadata removed. No cuts, speed changes, color changes or synthetic frames. Long idle interval remains.",
+    "verification": "Nine decoded samples inspected; not a frame-by-frame flicker certification."
+  },
+  "ci": "https://github.com/branch-danya-dev/magicpotiongacha/actions/runs/42034015882",
+  "blocked": [
+    "physical phones",
+    "experience asset permissions",
+    "multiplayer load / foreign-owned farm / reconnect"
+  ],
+  "open": [
+    "portrait native player-list overlap when carried from desktop",
+    "mixed-language labels",
+    "greybox stations and non-pilot plots",
+    "complete M1-M6 live regression / physical gamepad not run"
+  ]
+}

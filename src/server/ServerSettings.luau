@@ -1,6 +1,7 @@
 --!strict
 -- Never switch a published server to an in-memory fallback after a load failure.
 return {
+	EnvironmentArtEnabled = false, -- Gate A pilot only; owner visual acceptance precedes rollout.
 	MonetizationEnabled = false,
 	PurchaseQAApproved = false,
 	PurchaseQAPlaceId = 0,

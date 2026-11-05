@@ -1,0 +1,28 @@
+{
+  "name": "M7 07B Quaternius woodland presentation",
+  "version": 1,
+  "license": "CC0-1.0 / License_Standard.txt",
+  "source": "https://quaternius.itch.io/stylized-nature-megakit",
+  "tier": "Standard free / 14 already admitted models",
+  "source_archive_sha256": "298f6732b872e4cf7b30e6e7abf9641c7f6dc6b326df37ac089533ed7e3d58c9",
+  "parent_receipt_sha256": "29f6610f4715fa1f6218ab34b60e67f7d82074770eea197c8aa7147390e470de",
+  "parent_templates_sha256": "8c9e349e083e7dc012c80fe10dde6c95bc664b2ab1ea5528b0df8744448d3d8b",
+  "generator": "scripts/prepare-woodland.py",
+  "generator_sha256": "280e3a7f0228ea77516cb4f6702a53d70f6ae7c72344dbd356d30ca9662c0864",
+  "geometry": "src/shared/NatureGeometry.luau",
+  "geometry_sha256": "abd6ab9b4a2278817f542bb257a541297bd67ec9aede10345f9d353d5089e196",
+  "workflow": "Existing owner-authorized direct subset; derived presentation only, no new provider admission or import; not a game-dev receipt",
+  "changes": [
+    "Only cutout foliage: Transparency .02, CastShadow false, RenderFidelity Precise",
+    "All geometry, UVs, asset IDs, textures, AlphaMode and licenses unchanged"
+  ],
+  "roblox_reference": "https://create.roblox.com/docs/art/modeling/surface-appearance",
+  "nativeLowAutomatic": "NOT VERIFIED; smooth-alpha sorting/overdraw and foliage readability require ordinary Play",
+  "experience_permissions": "BLOCKED",
+  "newTextureBytes": 0,
+  "newMeshAssets": 0,
+  "files": {
+    "inspection.json": "346175d914488278132cfe0ec291209c44e1486a765ce08159fe360f62596b3a",
+    "M7NatureTemplates.rbxmx": "803ae25b3aacb215699f378dad60451e2fb1e025ac1fc40df7f8e6435735f5f5"
+  }
+}
