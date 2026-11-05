@@ -1,0 +1,487 @@
+{
+  "status": "ART_PENDING",
+  "gate": "A: explicit owner APPROVED required before #18; #19 after subsequent UX gate",
+  "runtimeSourceCommit": "18d36466f86f4a0bf9b4d3723482dac5b313c751",
+  "baselineRuntimeSourceCommit": "39788eafaf93de4c21f7817f0aff4cb4e38ffd35",
+  "basePrHeadAtStart": "4b372174088c6e5f6a5440846d233f1bd9d31ce4",
+  "studioVersion": "0.746.0.7461264",
+  "platform": "Windows desktop",
+  "capturedDateUTC": "2026-11-05",
+  "builds": {
+    "baseline": {
+      "file": "A2b-baseline.rbxlx",
+      "sha256": "d1db8c61071e6f40b0fd2465c26455be81210c913f31e4c1beb3c123ef9e95a1",
+      "bytes": 300079,
+      "sourceCommit": "39788eafaf93de4c21f7817f0aff4cb4e38ffd35"
+    },
+    "final": {
+      "file": "M7A2c-Captured.rbxlx",
+      "sha256": "53ef5c3cd55303646134328a14da0f042af509d0a30a4ad50fff10b1b2a7d1a9",
+      "bytes": 305915,
+      "sourceCommit": "18d36466f86f4a0bf9b4d3723482dac5b313c751"
+    },
+    "gameplay": {
+      "file": "M7A2c-Gameplay.rbxlx",
+      "sha256": "56b31d07e79cfc47a72a7a4f10abc2e6521015b4777836d684f748e7b2201609",
+      "bytes": 444656,
+      "sourceCommit": "18d36466f86f4a0bf9b4d3723482dac5b313c751"
+    },
+    "diagnostic": {
+      "file": null,
+      "sha256": null,
+      "sourceCommit": null,
+      "note": "A.2b-based disposable probe; interventions described in report, not attributed to the final runtime SHA."
+    }
+  },
+  "sources": {
+    "default.project.json": "7b18b78f05bbdd8261ccf0e5ba4b06bad02c2d6ae22ab7a505632bc911d949e8",
+    "qa/environment.project.json": "0ae05976977e9b96086a179fc1d043fcb059d6f89d2f6203c058d8ba9bb647af",
+    "qa/environment/GameplayReview.client.luau": "dc4ad0cb869cddf3a75592771069f036ca79c9cba707e11970f1c8f64e119f46",
+    "qa/environment/Review.client.luau": "0ca6c20fcba3bc8d8cc6c10d16a26d263e8e19282a5e85a544425e37b1b4c7d8",
+    "qa/environment/Review.server.luau": "7f359670587d40f18f0dbfb61f4a3fd509657f22606c4b781a69589e90629505",
+    "scripts/build-atmosphere-comparison.mjs": "95822701d1af9610f62320c7d221314f5e30427f439aeff221808d006c60fa70",
+    "scripts/build-local-preview.mjs": "2c4bdb08f4b6d21bbc513056ce80f12f6e7e077f209f37bd5a2a4c56632d6497",
+    "src/client/CollectionUI.luau": "acceb33e4124b3d880057beefcfa966c8c80e80f273ce820ac208c199059dd9b",
+    "src/client/Environment.client.luau": "dac2d5da264c52817fe5a7c2034d12e949e0ead855a4aa64c848a50a738e87c7",
+    "src/client/EnvironmentController.luau": "99f4a31c6d0fe3b1d31575866b233c3859f292a28991ff8f1e7e8e73785f20c5",
+    "src/client/EnvironmentView.luau": "ea26d12311f287e7482f9d8eea6713d5c65cdfec0eaa391d8a1c8b6580ea2486",
+    "src/client/FamiliarView.client.luau": "4cfe692770e7bb7e9487e8e1a76224589290ec7ecd63b4599cc56dc77c346822",
+    "src/client/LongTermUI.luau": "f2eca16d223632130d8707421cd109113726e3114f72e10cb78754f94c48a221",
+    "src/client/Main.client.luau": "d5656a3980a47516276114496b5a95692b599e1a3a95f27de743393966dfd587",
+    "src/client/ShopPreview.luau": "53ec8273dd71d2029ba49d6faacb8fee9878ef9e6acf224536dcd895c0df39db",
+    "src/client/ShopUI.luau": "09c4c88d52e9bbaa0868f3ae57faa15f56d2dff058100b80d4497f56038f5c52",
+    "src/client/TradeUI.luau": "aa0f12598abba82a38fa374d7d91e183cea0ef5c170d23883e95bb0c4eac36eb",
+    "src/server/EnvironmentArt.luau": "30b513982bded34ffe9183752c73336fee963af6645855c99890639aa8c924ea",
+    "src/server/Main.server.luau": "7c5efe4e04bf12da46096a0f4622b484a69e9960c52a7ae17d83c5cfe629eaac",
+    "src/server/ProfileStore.luau": "ba31529c80b258b7e962782a1c171f6361417bd2ae51c605a48eda666d814a24",
+    "src/server/PurchaseCoordinator.luau": "04c5b7d68f577ed3174f441741c46e45f5851aea500b3bfd3a7e2962d63f3f46",
+    "src/server/PurchaseRuntime.luau": "6e23550f3f289e7ebf55011bcf2c11bda1e1e7181544147b77f079266e9afb8c",
+    "src/server/ReceiptJournal.luau": "327541f1f17c94fac331ed10e310e5f8b869d9b5f94befe67818304a7c9feefe",
+    "src/server/ServerSettings.luau": "8cb7c67daae4784d93898534366aab8319362cd6fe7bdd02aae5e9074d0db918",
+    "src/server/TradeCoordinator.luau": "fc0de6978bd0d733cbe2a21b8d61b4050188c7b02c2a950b17200800c6670449",
+    "src/server/TradeJournal.luau": "c55200ca5659c23928117987b4e71c873458f0d37da6bd71bb0a413e7a735ad2",
+    "src/server/TradeRuntime.luau": "5cc0aff34d0b43c06d4c4bc95033ba5204c90c1cd4bd85586ec9a5041e37451d",
+    "src/server/World.luau": "4da92128dc9eaef3a0f1113694e8f9cdd1cbae859ee467a72d99a6e26602a79e",
+    "src/shared/Access.luau": "31a1a65e6c4aad547dd708cd6d22f888c4b4216d5df0ad89ec115f838f49a89e",
+    "src/shared/Collection.luau": "c8142338ff575b791efa6f81b786956e2764c362d1a3126254009aac00fac6b7",
+    "src/shared/Config.luau": "ac9c32175e1fc2d639051b15e8ae7556df8bf2c78927d299d3e781c44d706ca7",
+    "src/shared/Dailies.luau": "5f99bc048e5c11499850ba337b544ad49623909ce542de816b2126c495e46558",
+    "src/shared/EnvironmentConfig.luau": "99912299208220c99581d2e3de95ecb0a5172e27f7588155f6460e39ca7c0d33",
+    "src/shared/EnvironmentLabels.luau": "59e09b901589c602d11eecef0cb9d287e71e1d7a9257580f606d2eebe1768d1e",
+    "src/shared/EnvironmentPlan.luau": "0c9874e84eba8d272da70714a16e254ee1ad4c34ae6884647a58aac0b267473c",
+    "src/shared/EnvironmentState.luau": "7d687ca34bba5a758e88551f3e70ea06e760f253f8012bd92bc80173176facbe",
+    "src/shared/EnvironmentTerrain.luau": "da446b95f9b91a725b790f754031f39897f712b9d39c526260f6fc42b9de971a",
+    "src/shared/Epochs.luau": "d970ab148feaaf86e097f9cfca26d8f9349fd213c418f409ae5dfc611051f8fe",
+    "src/shared/Factory.luau": "76ea151efdc19389a1cf12f46484fa969a643602bb503b42a348b7d704785a72",
+    "src/shared/Familiars.luau": "00ecb837d732c7973b79a4b13e5f3b4a192da031c08cb66d15c8d1673d622c8a",
+    "src/shared/ItemOrigin.luau": "2a162db30c3a9fd87439ff8ab4a396328a79305aade8a1f93030fda8282f94f3",
+    "src/shared/LegacyConfig.luau": "84adb79239db028b04b06f27169248f544bc8b8c9e45b1c58ccbf7c88842fd35",
+    "src/shared/LongTerm.luau": "4513314fb32ded4536b76e85d22f63c01da7ecfc35bcccb0ecad2ebafb5fb470",
+    "src/shared/Monetization.luau": "0633baa7c3aec59b84ea44ab96083d04fc509dbed02c4fcc5a607825cf46958f",
+    "src/shared/OfferCatalog.luau": "b506881e7827107a60b4b21aa7e276a2480fb8ca1ad314abcc9408843fcde732",
+    "src/shared/Policy.luau": "41dbe1b342ffec86b144d3257a95bcf40e52d92ee05d97344c6f8e5edd025927",
+    "src/shared/Progression.luau": "6163218d077eac501cf7c6fde1e8bddb2ee16ffdde84b7cf11ad0bdb402dd1fe",
+    "src/shared/Protocol.luau": "71fd037255d1acdb6ec4ebcdf5033341d29075662f1d0c358cf35bfb87377902",
+    "src/shared/TradeCodec.luau": "4fbf16139ed3a8a073fed043cd28c74789adc402842c66caf2ee4ef38fd1a1d2",
+    "src/shared/TradeSession.luau": "b9bcf9bbeadc5be42ec43f1a6eede6600cadac617ae06a5f1e2a8437476cbbf3",
+    "src/shared/Trading.luau": "7be62697771c67301d78ed15aa6339a6c075bdedd6a34a047ede1d3b00c9c26e"
+  },
+  "images": {
+    "before-5-dawn.jpg": {
+      "build": "baseline",
+      "pose": "dawn",
+      "camera": "spawn",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "role": "matched comparison",
+      "sha256": "af702a1ac7b21229623823022897b420609a2ce3d8b46d5e50158a8c367fd725",
+      "bytes": 407989
+    },
+    "before-5-sunset.jpg": {
+      "build": "baseline",
+      "pose": "sunset",
+      "camera": "spawn",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "role": "matched comparison",
+      "sha256": "97de37528178633118277ba0991e361c6e465421e07d2b503002fcb379c959f2",
+      "bytes": 410044
+    },
+    "before-5-night.jpg": {
+      "build": "baseline",
+      "pose": "night",
+      "camera": "spawn",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "role": "matched comparison",
+      "sha256": "cbbc9ca28254222b976d7a91bfb9d0fbdea2b79ac8f89b55de0fb9cd5c7a697d",
+      "bytes": 336250
+    },
+    "before-5-rain.jpg": {
+      "build": "baseline",
+      "pose": "rain",
+      "camera": "spawn",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "role": "matched comparison",
+      "sha256": "82e25bf873f72f89884bd7f9e6988f975a8bd6db0b949ac484cdf7c30217f401",
+      "bytes": 451540
+    },
+    "before-5-afterrain.jpg": {
+      "build": "baseline",
+      "pose": "afterrain",
+      "camera": "spawn",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "role": "matched comparison",
+      "sha256": "f5adbde0db3c868933d75f0262538272b5737a5a0df6f7b8dbc16a21b797730d",
+      "bytes": 479752
+    },
+    "before-settings-5.jpg": {
+      "build": "baseline",
+      "graphics": "Manual 5",
+      "role": "settings proof",
+      "sha256": "1fe4c8c142daa09cce7ee271c938eafedf854d8ea4248e909e6fc95e5bb8638a",
+      "bytes": 352511
+    },
+    "before-10-dawn.jpg": {
+      "build": "baseline",
+      "pose": "dawn",
+      "camera": "spawn",
+      "graphics": "Manual 10",
+      "quality": "full",
+      "role": "matched comparison",
+      "sha256": "390b2bf76f2f8eec43e5361071349516e8f7724235b4aa3feea43b789b4334c2",
+      "bytes": 431126
+    },
+    "before-10-sunset.jpg": {
+      "build": "baseline",
+      "pose": "sunset",
+      "camera": "spawn",
+      "graphics": "Manual 10",
+      "quality": "full",
+      "role": "matched comparison",
+      "sha256": "c1aa9247b0a196c1a3a0155cfa169b05104f47d463e184a61a9729f1540f5122",
+      "bytes": 429223
+    },
+    "before-10-night.jpg": {
+      "build": "baseline",
+      "pose": "night",
+      "camera": "spawn",
+      "graphics": "Manual 10",
+      "quality": "full",
+      "role": "matched comparison",
+      "sha256": "996dbc0d4d9e93bdb2b8f205471317e40d4b9cb5d5142853f9c4b534bab69343",
+      "bytes": 344940
+    },
+    "before-10-rain.jpg": {
+      "build": "baseline",
+      "pose": "rain",
+      "camera": "spawn",
+      "graphics": "Manual 10",
+      "quality": "full",
+      "role": "matched comparison",
+      "sha256": "2aa050ac2ec38c26904aa5c0a517136a514c766d2f22011856c3a5b23fa53df8",
+      "bytes": 459969
+    },
+    "before-10-afterrain.jpg": {
+      "build": "baseline",
+      "pose": "afterrain",
+      "camera": "spawn",
+      "graphics": "Manual 10",
+      "quality": "full",
+      "role": "matched comparison",
+      "sha256": "54cf69ace311ad5f0aab8df115d2f2ed0e8148d92b8dafef6233146ac786dc6d",
+      "bytes": 481156
+    },
+    "before-settings-10.jpg": {
+      "build": "baseline",
+      "graphics": "Manual 10",
+      "role": "settings proof",
+      "sha256": "9a590cbb89863f3b57c02b97908493be64ee32bb029a249b812564826f31b016",
+      "bytes": 364005
+    },
+    "after-5-dawn.jpg": {
+      "build": "final",
+      "pose": "dawn",
+      "camera": "spawn",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "role": "matched comparison",
+      "sha256": "1ebeca3374b0b032825e3e8530dbb0713d753d17759299c1a6149f722ee816f9",
+      "bytes": 321402
+    },
+    "after-5-sunset.jpg": {
+      "build": "final",
+      "pose": "sunset",
+      "camera": "spawn",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "role": "matched comparison",
+      "sha256": "f42da2ff790694cbcf52ba122199b13d9b6baed25acf197c5acbb6efd299c4c5",
+      "bytes": 318015
+    },
+    "after-5-night.jpg": {
+      "build": "final",
+      "pose": "night",
+      "camera": "spawn",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "role": "matched comparison",
+      "sha256": "5da880062711e73c2ed57005c7731becf84a71227880fcd2284ec4a0da50f6e7",
+      "bytes": 266410
+    },
+    "after-5-rain.jpg": {
+      "build": "final",
+      "pose": "rain",
+      "camera": "spawn",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "role": "matched comparison",
+      "sha256": "9841b3c8d876424f96a47841c1294c758e4c8877220338d7cd656936b1a56bbb",
+      "bytes": 346488
+    },
+    "after-5-afterrain.jpg": {
+      "build": "final",
+      "pose": "afterrain",
+      "camera": "spawn",
+      "graphics": "Manual 5",
+      "quality": "full",
+      "role": "matched comparison",
+      "sha256": "a378d3d57ecf555a34d1113eb34c013764501abb8f8c227c6b1aea55a7c3e12d",
+      "bytes": 371576
+    },
+    "after-settings-5.jpg": {
+      "build": "final",
+      "graphics": "Manual 5",
+      "role": "settings proof",
+      "sha256": "4e28c988653b3f530389adb35298c1cd40eb245a922d7cbd6095743bfc3ad323",
+      "bytes": 289508
+    },
+    "after-10-dawn.jpg": {
+      "build": "final",
+      "pose": "dawn",
+      "camera": "spawn",
+      "graphics": "Manual 10",
+      "quality": "full",
+      "role": "matched comparison",
+      "sha256": "4c83e8cdc693ecd892bc713d161e47647261465d57d172c10cc5179f748acd29",
+      "bytes": 315885
+    },
+    "after-10-sunset.jpg": {
+      "build": "final",
+      "pose": "sunset",
+      "camera": "spawn",
+      "graphics": "Manual 10",
+      "quality": "full",
+      "role": "matched comparison",
+      "sha256": "1f7a2689afdec550018661cf062daa63162c1bfb717670bcf761c642413c103d",
+      "bytes": 310595
+    },
+    "after-10-night.jpg": {
+      "build": "final",
+      "pose": "night",
+      "camera": "spawn",
+      "graphics": "Manual 10",
+      "quality": "full",
+      "role": "matched comparison",
+      "sha256": "016fdd4b74b59a93b62041396ec04aaefcee31fe09f095d28c8645c04836e8ae",
+      "bytes": 255901
+    },
+    "after-10-rain.jpg": {
+      "build": "final",
+      "pose": "rain",
+      "camera": "spawn",
+      "graphics": "Manual 10",
+      "quality": "full",
+      "role": "matched comparison",
+      "sha256": "5bd7c6db592b2d6aa01773ebd8fad675a18d566f18523bfa483cfcf42c3ac2c5",
+      "bytes": 324820
+    },
+    "after-10-afterrain.jpg": {
+      "build": "final",
+      "pose": "afterrain",
+      "camera": "spawn",
+      "graphics": "Manual 10",
+      "quality": "full",
+      "role": "matched comparison",
+      "sha256": "f843bd8485d8172c0c72881ec1c6fd0e7bee94530d0c58cbace9a62e52aa47b8",
+      "bytes": 342088
+    },
+    "after-settings-10.jpg": {
+      "build": "final",
+      "graphics": "Manual 10",
+      "role": "settings proof",
+      "sha256": "a80d9d8c39960590c04e50dc2731b64fe84696844af3e9edd43eed23f7e48aed",
+      "bytes": 233406
+    },
+    "gameplay-5-full-afterrain.jpg": {
+      "build": "gameplay",
+      "graphics": "Manual 5",
+      "role": "full game with original UI",
+      "quality": "full",
+      "pose": "afterrain",
+      "camera": "spawn (Scriptable QA pose)",
+      "sha256": "3d87f0affc7dabfebac017e99970935dbf38cc35457f58b42c28564a3782cf3d",
+      "bytes": 389297
+    },
+    "gameplay-5-full-rain.jpg": {
+      "build": "gameplay",
+      "graphics": "Manual 5",
+      "role": "full game with original UI",
+      "quality": "full",
+      "pose": "rain",
+      "camera": "spawn (Scriptable QA pose)",
+      "sha256": "8c661a2f64a9f4bdde4703faa975eaa94a6509ad980d136363de0d614af50f37",
+      "bytes": 366929
+    },
+    "gameplay-5-reduced-afterrain.jpg": {
+      "build": "gameplay",
+      "graphics": "Manual 5",
+      "role": "full game with original UI",
+      "quality": "reduced",
+      "pose": "afterrain",
+      "camera": "spawn (Scriptable QA pose)",
+      "sha256": "0bd566412e5572bd3980f195fdc3d2bedd68c7ed3c2e3af4f63c007f8c88f7ef",
+      "bytes": 385453
+    },
+    "gameplay-5-reduced-dawn.jpg": {
+      "build": "gameplay",
+      "graphics": "Manual 5",
+      "role": "full game with original UI",
+      "quality": "reduced",
+      "pose": "dawn",
+      "camera": "spawn (Scriptable QA pose)",
+      "sha256": "f1696f9f2063b66d85046ad9634ccd0aa05b273dbecb74bbc5b38fda00865bdb",
+      "bytes": 347966
+    },
+    "gameplay-5-reduced-night.jpg": {
+      "build": "gameplay",
+      "graphics": "Manual 5",
+      "role": "full game with original UI",
+      "quality": "reduced",
+      "pose": "night",
+      "camera": "spawn (Scriptable QA pose)",
+      "sha256": "94f05f17e673a671ed754dd7475a91654fd8e83240656bf64aa9c1cc40597f66",
+      "bytes": 280766
+    },
+    "gameplay-5-reduced-ordinary.jpg": {
+      "build": "gameplay",
+      "graphics": "Manual 5",
+      "role": "full game with original UI",
+      "quality": "reduced",
+      "pose": "ordinary",
+      "camera": "Custom",
+      "sha256": "36ca76bfff1c23d2cd1c76666d2578b414fb82eb6cce23166fd5d630400d7b63",
+      "bytes": 341853
+    },
+    "gameplay-5-reduced-rain.jpg": {
+      "build": "gameplay",
+      "graphics": "Manual 5",
+      "role": "full game with original UI",
+      "quality": "reduced",
+      "pose": "rain",
+      "camera": "spawn (Scriptable QA pose)",
+      "sha256": "69f076e1683804208ddaa96912be53daf279758044566e1334a87a4b590c33e0",
+      "bytes": 366869
+    },
+    "gameplay-settings-5.jpg": {
+      "build": "gameplay",
+      "graphics": "Manual 5",
+      "role": "full game with original UI",
+      "sha256": "ace6138e20f6929947d60a6f5ff909d1ec725e11b9071c99067be31a1d67a7ac",
+      "bytes": 276336
+    },
+    "probe-day-grass.jpg": {
+      "build": "diagnostic",
+      "graphics": "Manual 10",
+      "role": "isolated A.2b ablation; not final A.2c",
+      "sha256": "ae133e58e68f8be14b3c5303eb2351fa2ef67b4824d9fb2f4b3fd93c63e6ac9e",
+      "bytes": 509468
+    },
+    "probe-day-smooth-confirmed.jpg": {
+      "build": "diagnostic",
+      "graphics": "Manual 10",
+      "role": "isolated A.2b ablation; not final A.2c",
+      "sha256": "ab04d2cfad994aa47265aae7487f5a79a98679b4be4d436fbb4ff8a4023545e7",
+      "bytes": 361920
+    },
+    "probe-night-native.jpg": {
+      "build": "diagnostic",
+      "graphics": "Manual 10",
+      "role": "isolated A.2b ablation; not final A.2c",
+      "sha256": "2d2f240b3d0f49e7bfad38736a540741788cb163b011e2c5db674ff6274929ce",
+      "bytes": 150089
+    },
+    "probe-night-no-air.jpg": {
+      "build": "diagnostic",
+      "graphics": "Manual 10",
+      "role": "isolated A.2b ablation; not final A.2c",
+      "sha256": "4b73e820f7c0418317dbf25b72eee749c55278fbc2e482da7a9a16dc537f3b23",
+      "bytes": 150023
+    }
+  },
+  "video": {
+    "file": "atmosphere-cycle-45s.mp4",
+    "sha256": "a3de8fcc9f28999e58e173483635592d2dc62856eff6e0cdb234ff5cd1fd8cbc",
+    "durationSeconds": 45,
+    "width": 2112,
+    "height": 1104,
+    "fps": 30,
+    "frames": 1350,
+    "build": "final",
+    "graphics": "Manual 5",
+    "quality": "full",
+    "camera": "spawn",
+    "rawSourceSha256": "53b6f3b3a7bfebb1e67f07c914b63c3c2688c8e8aec6e5d650d030ff29eb9109",
+    "rawDurationSeconds": 321.37,
+    "trimStartSeconds": 259,
+    "treatment": "Continuous native Studio F12 recording; 259-304 s trimmed, silent H264 transcode. No color edits, compositing, speed changes or frame interpolation. CFR encoding may duplicate/drop source frames.",
+    "review": "Nine extracted frames inspected, plus global temporal diagnostic. This is not a certification of absence of small foliage flicker.",
+    "temporalDiagnostic": {
+      "resolution": [
+        64,
+        34
+      ],
+      "maxFrameMeanAbsoluteDelta8bit": 2.1719,
+      "maxMeanLumaDelta8bit": 2.1608
+    }
+  },
+  "studioAuditSha256": "c384e7c24f3da419cf3d9b9c5dc19f0546f53d66fa41e3cce5d6870e9784dec8",
+  "camera": {
+    "name": "spawn",
+    "position": [
+      -141,
+      9,
+      -36
+    ],
+    "target": [
+      -143,
+      7,
+      -96
+    ],
+    "fieldOfView": 53,
+    "fullWindowPixels": [
+      2560,
+      1392
+    ]
+  },
+  "comparability": "Identical pose/camera/FOV/viewport and Full tier for all 20 comparison captures. Dynamic clouds and effect positions are not frame-synchronized. Raw window JPEGs, unretouched.",
+  "blocked": [
+    "physical smartphones",
+    "Roblox experience asset permissions",
+    "multiplayer load"
+  ],
+  "openDefects": [
+    "fine grass alpha edge aliasing",
+    "native Grass terrain hill grain",
+    "thin path edge artifacts",
+    "existing intrusive billboards and yellow pads (#18)"
+  ],
+  "tests": {
+    "total": 867,
+    "inherited": 859,
+    "added": 8
+  },
+  "verifiedRuntimeCI": "https://github.com/branch-danya-dev/magicpotiongacha/actions/runs/42019252849"
+}

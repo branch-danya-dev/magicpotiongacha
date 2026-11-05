@@ -1,0 +1,49 @@
+A2b fresh baseline
+2026-11-05T11:06:50.953Z M7_PATH -142.5, 0.9029377698898315, -37 5.639915466308594, 0.30588313937187195, 7.8507232666015625
+2026-11-05T11:06:50.954Z M7_VISUAL_HARNESS parts=432 plots=8 decorated=1 collisionGuards=PASS; no gameplay/backend acceptance
+2026-11-05T11:06:51.106Z M7_A2_AUDIT full lights=6 rain=60 motes=24 wind=12 emitters=0
+2026-11-05T11:06:51.254Z M7_A2_AUDIT reduced lights=3 rain=24 motes=9 wind=2 emitters=0
+2026-11-05T11:06:51.377Z M7_A2_AUDIT minimal lights=0 rain=0 motes=0 wind=0 emitters=0
+2026-11-05T11:06:51.495Z M7_A2B_LIFECYCLE PASS original sky/cloud identity, immutable textures, all-pose camera transitions within caps, GlobalWind restored
+2026-11-05T11:06:51.495Z M7_A2_LIFECYCLE PASS duplicate owner, all tiers, Reduce Motion, stop twice, lighting restoration
+2026-11-05T11:06:53.401Z M7_A2B_ASSETS failures=0 source=original-CC0-local permissions=LOCAL_ONLY
+2026-11-05T11:07:25.802Z M7_A2_BUDGET quality=full reduceMotion=false lights=6 rain=0 motes=16 wind=12 emitters=0
+2026-11-05T11:07:25.802Z M7_A2B_FRAME pose=night style=Realistic clock=22.5 sun=-0.38231831789016724, -0.9229980707168579, 0.04367269203066826 exposure=0.20000000298023224 fog=0 glints=6 rainbow=0 assetFailures=0
+2026-11-05T11:07:25.802Z M7_A2B_GRAPHICS QualityLevel10 lightingPriority=true
+2026-11-05T11:09:38.030Z M7_A2_BUDGET quality=full reduceMotion=false lights=6 rain=0 motes=24 wind=12 emitters=0
+2026-11-05T11:09:38.030Z M7_A2B_FRAME pose=afterrain style=Realistic clock=14.766388893127441 sun=-0.6619343161582947, 0.7482902407646179, 0.04364236071705818 exposure=0.10279999673366547 fog=0 glints=6 rainbow=0 assetFailures=0
+2026-11-05T11:09:38.030Z M7_A2B_GRAPHICS QualityLevel5 lightingPriority=true
+
+A2c final visual harness
+2026-11-05T11:24:10.432Z M7_PATH -142.5, 0.9029377698898315, -37 5.639915466308594, 0.30588313937187195, 7.8507232666015625
+2026-11-05T11:24:10.433Z M7_VISUAL_HARNESS parts=432 plots=8 decorated=1 collisionGuards=PASS; no gameplay/backend acceptance
+2026-11-05T11:24:10.433Z M7_A2C_GROUND PASS opaque matte top texture, original Grass friction, separated floor planes
+2026-11-05T11:24:10.588Z M7_A2_AUDIT full lights=6 rain=60 motes=24 wind=12 emitters=0
+2026-11-05T11:24:10.725Z M7_A2C_CELESTIAL full stars=48 moon=1 reduceMotion=true
+2026-11-05T11:24:10.727Z M7_A2_AUDIT reduced lights=3 rain=24 motes=9 wind=2 emitters=0
+2026-11-05T11:24:10.828Z M7_A2C_CELESTIAL reduced stars=24 moon=1 reduceMotion=true
+2026-11-05T11:24:10.830Z M7_A2_AUDIT minimal lights=0 rain=0 motes=0 wind=0 emitters=0
+2026-11-05T11:24:10.925Z M7_A2C_CELESTIAL minimal stars=12 moon=1 reduceMotion=true
+2026-11-05T11:24:10.927Z M7_A2C_LIFECYCLE PASS original sky/cloud identity, immutable textures, all-pose caps, celestial cleanup, wet colors and GlobalWind restored
+2026-11-05T11:24:10.927Z M7_A2_LIFECYCLE PASS duplicate owner, all tiers, Reduce Motion, stop twice, lighting restoration
+2026-11-05T11:24:12.749Z M7_A2C_ASSETS failures=0 source=original-CC0-local permissions=LOCAL_ONLY
+2026-11-05T11:24:36.934Z M7_A2_BUDGET quality=full reduceMotion=false lights=6 rain=0 motes=16 wind=12 emitters=0
+2026-11-05T11:24:36.934Z M7_A2B_FRAME pose=night style=Realistic clock=22.5 sun=-0.38231831789016724, -0.9229980707168579, 0.04367269203066826 exposure=0.20000000298023224 fog=0 glints=6 rainbow=0 assetFailures=0
+2026-11-05T11:24:36.934Z M7_A2B_GRAPHICS QualityLevel10 lightingPriority=true
+2026-11-05T11:24:36.934Z M7_A2C_FRAME stars=48 moon=1 floorMaterial=SmoothPlastic
+2026-11-05T11:29:23.140Z M7_A2_BUDGET quality=full reduceMotion=false lights=6 rain=0 motes=24 wind=12 emitters=0
+2026-11-05T11:29:23.140Z M7_A2B_FRAME pose=afterrain style=Realistic clock=14.766388893127441 sun=-0.6619343161582947, 0.7482902407646179, 0.04364236071705818 exposure=0.10279999673366547 fog=0 glints=6 rainbow=0 assetFailures=0
+2026-11-05T11:29:23.140Z M7_A2B_GRAPHICS QualityLevel5 lightingPriority=true
+2026-11-05T11:29:23.140Z M7_A2C_FRAME stars=0 moon=0 floorMaterial=SmoothPlastic
+
+A2c full game
+2026-11-05T11:38:28.013Z M7_A2C_ASSETS failures=0 source=original-CC0-local permissions=LOCAL_ONLY
+2026-11-05T11:40:20.209Z M7_A2C_GAMEPLAY quality=reduced graphics=QualityLevel5 camera=Custom stars=0 moon=0 failures=0
+2026-11-05T11:40:34.624Z M7_A2B_GAMEPLAY pose=night quality=reduced style=Realistic
+2026-11-05T11:40:50.857Z M7_A2C_GAMEPLAY quality=reduced graphics=QualityLevel5 camera=Scriptable stars=24 moon=1 failures=0
+2026-11-05T11:41:06.039Z M7_A2B_GAMEPLAY pose=dawn quality=reduced style=Realistic
+2026-11-05T11:41:19.439Z M7_A2B_GAMEPLAY pose=rain quality=reduced style=Realistic
+2026-11-05T11:41:41.787Z M7_A2B_GAMEPLAY pose=afterrain quality=reduced style=Realistic
+2026-11-05T11:41:57.988Z M7_A2B_GAMEPLAY quality=full
+2026-11-05T11:42:19.719Z M7_A2B_GAMEPLAY pose=rain quality=full style=Realistic
+2026-11-05T11:42:39.319Z M7_A2C_GAMEPLAY quality=full graphics=QualityLevel5 camera=Scriptable stars=0 moon=0 failures=0

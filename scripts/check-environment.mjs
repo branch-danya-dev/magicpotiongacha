@@ -172,4 +172,25 @@ assert.equal(a2b.video.durationSeconds,45);
 assert.equal(createHash('sha256').update(readFileSync(resolve(root,'docs/evidence/m7-a2b',a2b.video.file))).digest('hex'),a2b.video.sha256,'A.2b video integrity');
 assert.equal(createHash('sha256').update(readFileSync(resolve(root,'docs/evidence/m7-a2b/studio-audit.txt'))).digest('hex'),a2b.studioAuditSha256,'A.2b Studio audit integrity');
 console.log('A.2b evidence PASS: exact captured sources, 12 matched final views, supporting captures and 45-second recording');
+const a2c=JSON.parse(read('docs/evidence/m7-a2c/captures.json'));
+const a2cSources=JSON.parse(read('docs/evidence/m7-a2c/source-snapshot.json'));
+assert.equal(a2c.status,'ART_PENDING');
+assert.equal(a2c.runtimeSourceCommit,'18d36466f86f4a0bf9b4d3723482dac5b313c751');
+for(const [path,hash] of Object.entries(a2c.sources)) {
+  assert.equal(sha(a2cSources[path]),hash,`A.2c archived source integrity: ${path}`);
+  assert.equal(sha(read(path)),hash,`Current runtime differs from Studio capture: ${path}`);
+}
+for(const [name,entry] of Object.entries(a2c.images)) {
+  assert(a2c.builds[entry.build],`Unknown A.2c capture build: ${name}`);
+  assert.equal(sha(readFileSync(resolve(root,'docs/evidence/m7-a2c',name))),entry.sha256,`A.2c image integrity: ${name}`);
+}
+for(const version of ['before','after']) for(const graphics of [5,10]) for(const pose of ['dawn','sunset','night','rain','afterrain']) {
+  const entry=a2c.images[`${version}-${graphics}-${pose}.jpg`];
+  assert.equal(entry.build,version==='before'?'baseline':'final');
+  assert.equal(entry.graphics,`Manual ${graphics}`); assert.equal(entry.camera,'spawn'); assert.equal(entry.quality,'full');
+}
+assert.equal(a2c.video.durationSeconds,45);
+assert.equal(sha(readFileSync(resolve(root,'docs/evidence/m7-a2c',a2c.video.file))),a2c.video.sha256,'A.2c video integrity');
+assert.equal(sha(readFileSync(resolve(root,'docs/evidence/m7-a2c/studio-audit.txt'))),a2c.studioAuditSha256,'A.2c audit integrity');
+console.log('A.2c evidence PASS: current captured runtime, 20 matched graphics 5/10 frames, full-game UI and 45-second native recording');
 console.log(`M7 integrity PASS: ${Object.keys(baseline.unchanged).length} unchanged M6 files, gameplay World, release flags, art source hashes, A.2 capture provenance and isolated harness`);

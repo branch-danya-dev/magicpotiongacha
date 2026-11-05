@@ -2,6 +2,19 @@
 
 CLI/CI passing is necessary but does not mark any item below as completed.
 
+## Current: M7.1 A.2c — Gate A pending
+
+**ART PENDING.** A.2b direction accepted; explicit owner APPROVED is still required.
+Only A.2c was implemented. [Actual before/after Studio evidence](evidence/m7-a2c/README.md)
+contains five states at graphics 5/10, full-game UI and a native 45-second recording.
+[Implementation, diagnosis and budgets](M7_A2C_ATMOSPHERE.md).
+867 tests preserve all 859 inherited cases. Studio verifies owner restoration,
+all-tier caps, Reduce Motion and asset loading. The flat floor is quieter at 5;
+fine foliage edges, Terrain grain and thin path artifacts remain open.
+Physical phones, experience permissions and multiplayer load remain BLOCKED.
+UI #18 waits for Gate A; island #19 waits for art and later UX approval. Draft,
+no merge/publish. Earlier sections below are historical milestone records.
+
 ## M7.1 Gate A.2 — Issue #20
 
 **ART PENDING; low-quality stippling OPEN; live/device gates BLOCKED.**
