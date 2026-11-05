@@ -12,6 +12,8 @@ local Labels=require(Shared.EnvironmentLabels)
 local ForestLOD=require(Shared.ForestLOD)
 local Meadow=require(Shared.MeadowPlan)
 local MeadowMotion=require(Shared.MeadowMotion)
+local LightSlots=require(Shared.EnvironmentLights)
+local Players=game:GetService("Players")
 local View={}
 local active=nil
 local function color(v) return Color3.fromRGB(v[1],v[2],v[3]) end
@@ -110,7 +112,9 @@ function View.start(root,settings)
 	for i=1,Config.celestial.stars do
 		local d=State.star(i); stars[i]=celestialSprite("Star_"..i,Config.polishPrefix.."star.png",d.size,Vector3.new(d.x,d.y,d.z)); stars[i].alpha=d.alpha
 	end
-	local lights={}; local wind={}; local canopyGroups={}; local registered={}; local wetSurfaces={}
+	local lights={}; local lanternSlots={}; local sunSlots={}
+	for i,l in ipairs(sunPools) do sunSlots[i]={id=i,light=l,distance=math.huge} end
+	local wind={}; local canopyGroups={}; local registered={}; local wetSurfaces={}
 	local meadowWind={}; local meadowParts={}; local forestParts={}; local forestByPart={}
 	local labels={}; local annotations=true; local labelsDirty=0
 	local function registerLabel(gui)
@@ -126,6 +130,7 @@ function View.start(root,settings)
 			if string.find(p.Name,"RockPath") then table.insert(wetSurfaces,{part=p,color=p.Color,wet=Color3.new(p.Color.R*.70,p.Color.G*.75,p.Color.B*.78)}) end
 			if p:GetAttribute("EnvironmentLight") then
 				local l=effect("PointLight","M7LocalLantern",p); l.Enabled=false; l.Color=color(Config.palette.amber); l.Range=14; l.Shadows=false; table.insert(lights,l)
+				table.insert(lanternSlots,{id=p.Name,light=l,distance=math.huge})
 			end
 			-- Reviewed templates name leaf meshes *_2 and trunks *_1. Reading
 			-- SurfaceAppearance maps requires Plugin capability, unavailable here.
@@ -187,12 +192,14 @@ function View.start(root,settings)
 	function self.setQuality(name) if Config.quality[name] then self.quality=name; lod=1 end end
 	function self.setReduceMotion(enabled) self.reduceMotion=enabled==true; lod=1 end
 	function self.setPose(name)
-		if RunService:IsStudio() and (name==nil or Config.poses[name]) then
+		if RunService:IsStudio() and (name==nil or Config.poses[name]) and (name~=self.pose or self.previewStart) then
 			transition.begin(os.clock()); self.pose=name; self.previewStart=nil
 		end
 	end
 	function self.setPreview(enabled)
-		if RunService:IsStudio() then transition.begin(os.clock()); self.previewStart=enabled and os.clock() or nil end
+		if RunService:IsStudio() and (enabled==true)~=(self.previewStart~=nil) then
+			transition.begin(os.clock()); self.previewStart=enabled and os.clock() or nil
+		end
 	end
 	function self.stats()
 		local counts={lights=0,rain=0,motes=0,wind=0,emitters=0,fog=0,glints=0,rainbow=0,stars=0,moon=0,assetFailures=self.assetFailures}
@@ -217,6 +224,9 @@ function View.start(root,settings)
 	function self.update(dt)
 		step+=dt; lod+=dt; labelsDirty+=dt; if step<1/30 then return end; local elapsed=step; step=0
 		local camera=workspace.CurrentCamera; if not camera then return end
+		local character=Players.LocalPlayer.Character
+		local avatar=character and character:FindFirstChild("HumanoidRootPart")
+		local lightOrigin=avatar and avatar.Position or camera.Focus.Position
 		local time=workspace:GetServerTimeNow(); local now=os.clock()
 		local target=self.previewStart and State.preview(Config,now-self.previewStart) or State.sample(Config,time,self.pose)
 		local sample=transition.sample(target,now); local q=State.quality(Config,self.quality,self.reduceMotion)
@@ -261,8 +271,6 @@ function View.start(root,settings)
 				elseif p:GetAttribute("Meadow") then p:SetAttribute("MeadowTargetAlpha",hidden and 1 or 0)
 				else p.LocalTransparencyModifier=hidden and 1 or 0 end
 			end
-			table.sort(lights,function(a,b) return (a.Parent.Position-camera.CFrame.Position).Magnitude<(b.Parent.Position-camera.CFrame.Position).Magnitude end)
-			for i,l in ipairs(lights) do l.Enabled=i<=math.max(0,q.lights-State.sunSlots(self.quality)) and (l.Parent.Position-camera.CFrame.Position).Magnitude<q.distance end
 			table.sort(wind,function(a,b) return (a.base.Position-camera.CFrame.Position).Magnitude<(b.base.Position-camera.CFrame.Position).Magnitude end)
 			for _,w in ipairs(meadowWind) do
 				local screen,onScreen=camera:WorldToViewportPoint(w.base.Position)
@@ -277,10 +285,16 @@ function View.start(root,settings)
 				p:SetAttribute("GroundY",surface(x,z)); p:SetAttribute("RainX",x); p:SetAttribute("RainZ",z)
 			end
 		end
-		for _,l in ipairs(lights) do l.Brightness=.10+sample.night*1.53 end
-		for i,l in ipairs(sunPools) do
-			l.Enabled=i<=State.sunSlots(self.quality) and (l.Parent.Position-camera.CFrame.Position).Magnitude<q.distance
-			l.Brightness=.42*sunlight
+		for _,group in ipairs({lanternSlots,sunSlots}) do
+			for _,e in ipairs(group) do e.distance=(e.light.Parent.Position-lightOrigin).Magnitude end
+		end
+		LightSlots.step(lanternSlots,math.max(0,q.lights-State.sunSlots(self.quality)),q.distance,elapsed)
+		LightSlots.step(sunSlots,State.sunSlots(self.quality),q.distance,elapsed)
+		for _,e in ipairs(lanternSlots) do
+			e.light.Enabled=e.weight>0; e.light.Brightness=(.10+sample.night*1.53)*e.weight
+		end
+		for _,e in ipairs(sunSlots) do
+			e.light.Enabled=e.weight>0; e.light.Brightness=.42*sunlight*e.weight
 		end
 		for _,p in ipairs(meadowParts) do
 			local target=p:GetAttribute("MeadowTargetAlpha") or 0; local alpha=p.LocalTransparencyModifier

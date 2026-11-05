@@ -2,7 +2,18 @@
 
 CLI/CI passing is necessary but does not mark any item below as completed.
 
-## Current: Task 07 / #19f — gameplay props code/build delivery
+## Current: 07A / #21 — partial candidate, gate OPEN
+
+[07A report](M7_TASK07A.md): avatar-based bounded light slots, continuous cyclic
+retargeting, an ordinary-camera collision guard and eight outer-ridge colliders.
+1012 tests preserve all 995 inherited cases. Sky seams are still unresolved;
+ordinary Play/native camera/light/terrain checks were not completed because app
+control failed. No visual acceptance or device performance is claimed. The new
+sequence is 07A → 07B → 07C → owner 07D APPROVED → UX → 08 FINAL.
+The new Studio version's local atmosphere packs were installed and hash-verified,
+without uploading assets. PR #17 remains Draft. No merge or publication.
+
+## Historical: Task 07 / #19f — gameplay props code/build delivery
 
 The owner removed frames/screenshots/video from the workflow on 2026-11-05.
 [Task 04 grass](M7_TASK04.md), [task 05 forest](M7_TASK05.md),

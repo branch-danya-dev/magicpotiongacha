@@ -10,6 +10,7 @@
       "IslandLandscape": {"$path": "../src/server/IslandLandscape.luau"},
       "FarmLandscape": {"$path": "../src/server/FarmLandscape.luau"},
       "FenceBarriers": {"$path": "../src/server/FenceBarriers.luau"},
+      "RidgeBarriers": {"$path": "../src/server/RidgeBarriers.luau"},
       "ForestArt": {"$path": "../src/server/ForestArt.luau"},
       "EnvironmentArt": {"$path": "../src/server/EnvironmentArt.luau"}}},
     "StarterPlayer": {"StarterPlayerScripts": {"M7Review": {"$className": "Folder",

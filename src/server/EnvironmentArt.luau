@@ -90,6 +90,7 @@ function Art.attach(world)
 		model.Parent=folder
 	end
 	require(script.Parent.FenceBarriers).attach(folder)
+	require(script.Parent.RidgeBarriers).attach(world.root)
 	world.root.ForestFloor.Color=Color3.fromRGB(table.unpack(Config.palette.grass)); world.root.ForestFloor.Material=Enum.Material.Grass
 	meadow(world.root.ForestFloor,false)
 	require(script.Parent.FarmLandscape).attach(world)

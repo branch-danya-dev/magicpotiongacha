@@ -189,10 +189,13 @@ for(const [path,hash] of Object.entries(a2c.sources)) {
   assert.equal(sha(a2cSources[path]),hash,`A.2c archived source integrity: ${path}`);
   // A.2c is an immutable historical capture after owner Gate A approval.
   // Issue #18 changes only presentation; keep the approved atmospheric data/art exact.
-  if(path.startsWith('src/shared/Environment') || path==='src/server/EnvironmentArt.luau') {
+  // Issue #21 / 07A authorizes replacing the transition algorithm. Its archived
+  // source hash above stays immutable; behavioral regression tests cover the fix.
+  if((path.startsWith('src/shared/Environment') && path!=='src/shared/EnvironmentTransition.luau') || path==='src/server/EnvironmentArt.luau') {
     // #18a explicitly authorizes physical fence collisions. Preserve the rest
     // of the approved composition, palette, state curves and asset definitions.
     let current=read(path), approved=a2cSources[path];
+    if(path==='src/server/EnvironmentArt.luau') current=current.replace('\trequire(script.Parent.RidgeBarriers).attach(world.root)\n','');
     if(path==='src/server/EnvironmentArt.luau') {
       // Task 02 explicitly replaces the pilot substrate with IslandLandscape.
       // Continue protecting every imported prop/material/decoration operation.

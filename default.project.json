@@ -8,6 +8,7 @@
     "ServerScriptService": { "PotionTycoon": { "$path": "src/server" } },
     "ServerStorage": {"M7NatureTemplates": {"$path": "assets/environment/megakit/M7NatureTemplates.rbxmx"}},
     "StarterPlayer": {
+      "$properties": { "DevCameraOcclusionMode": "Zoom" },
       "StarterPlayerScripts": { "PotionTycoon": { "$path": "src/client" } }
     },
     "StarterGui": { "$properties": { "ScreenOrientation": "Sensor" } },

@@ -21,13 +21,24 @@ function Transition.blend(a,b,progress)
 	return result
 end
 function Transition.new()
-	local self={last=nil,from=nil,started=0}
+	local self={last=nil,from=nil,started=0,unwrapped={}}
 	function self.begin(now)
-		self.from=self.last; self.started=now
+		self.from=self.last; self.started=now; self.unwrapped={}
 	end
 	function self.sample(target,now)
 		local elapsed=now-self.started
 		self.last=self.from and Transition.blend(self.from,target,elapsed/Transition.seconds) or target
+		if self.from and elapsed>0 and elapsed<Transition.seconds then
+			-- Keep the chosen arc as a moving target passes the antipode. Choosing
+			-- the shortest arc again each frame can jump by half a day mid-fade.
+			local t=math.clamp(elapsed/Transition.seconds,0,1); t=t*t*(3-2*t)
+			for key,period in pairs({clock=24,phase=1}) do
+				local previous=self.unwrapped[key] or self.from[key]
+				local value=previous+(target[key]-previous+period/2)%period-period/2
+				self.unwrapped[key]=value
+				self.last[key]=(self.from[key]+(value-self.from[key])*t)%period
+			end
+		end
 		if elapsed>=Transition.seconds then self.from=nil end
 		return self.last
 	end
