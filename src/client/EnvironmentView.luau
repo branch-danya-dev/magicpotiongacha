@@ -14,6 +14,7 @@ local ForestLOD=require(Shared.ForestLOD)
 local Meadow=require(Shared.MeadowPlan)
 local MeadowMotion=require(Shared.MeadowMotion)
 local LightSlots=require(Shared.EnvironmentLights)
+local Vista=require(Shared.VistaPlan)
 local Players=game:GetService("Players")
 local View={}
 local active=nil
@@ -78,7 +79,7 @@ function View.start(root,settings)
 		return {part=p,gui=gui,image=img}
 	end
 	local fog={}
-	for i,pos in ipairs({{-169,-112},{-115,-106},{-184,-58}}) do
+	for i,pos in ipairs(Vista.fogAnchors) do
 		fog[i]=sprite("GroundMist_"..i,"mist",Vector2.new(42,6.5),Vector3.new(pos[1],surface(pos[1],pos[2])+1.7,pos[2]))
 	end
 	local glints={}
@@ -108,7 +109,7 @@ function View.start(root,settings)
 		local img=effect("ImageLabel","Image",gui); img.BackgroundTransparency=1; img.Size=UDim2.fromScale(1,1); img.Image=uri; img.ImageTransparency=1
 		return {attachment=attachment,gui=gui,image=img}
 	end
-	local moon=celestialSprite("Moon",Config.skyPrefix.."moon.png",Config.celestial.moonSize,Vector3.new(0,1,0))
+	local moon=celestialSprite("Moon",Config.skyPrefix.."moon.png",Vista.moonSize,Vector3.new(0,1,0))
 	local stars={}
 	for i=1,Config.celestial.stars do
 		local d=State.star(i); stars[i]=celestialSprite("Star_"..i,Config.polishPrefix.."star.png",d.size,Vector3.new(d.x,d.y,d.z)); stars[i].alpha=d.alpha
@@ -117,6 +118,7 @@ function View.start(root,settings)
 	for i,l in ipairs(sunPools) do sunSlots[i]={id=i,light=l,distance=math.huge} end
 	local wind={}; local canopyGroups={}; local registered={}; local wetSurfaces={}
 	local meadowWind={}; local meadowParts={}; local forestParts={}; local forestByPart={}
+	local vistaParts={}; local vistaByPart={}
 	local labels={}; local annotations=true; local labelsDirty=0; local pendingPanes={}
 	local function bindPane(p)
 		local id=p:GetAttribute("EnvironmentLanternPane")
@@ -153,6 +155,12 @@ function View.start(root,settings)
 			local leaf=string.match(p.Name,"Tree.*_2$") or string.match(p.Name,"Pine.*_2$")
 			local plant=string.find(p.Name,"Grass") or string.find(p.Name,"Fern") or leaf
 			local forestRole=p:GetAttribute("ForestRole")
+			local vistaRole=p:GetAttribute("VistaRole")
+			if vistaRole then
+				local entry={part=p,role=vistaRole,alpha=1,target=1,saved=p.LocalTransparencyModifier,
+					color=p.Color,window=p:GetAttribute("VistaWindow")==true}
+				table.insert(vistaParts,entry); vistaByPart[p]=entry; p.LocalTransparencyModifier=1
+			end
 			if forestRole then
 				local entry={part=p,role=forestRole,anchor=p:GetAttribute("ForestAnchor"),alpha=1,target=1,saved=p.LocalTransparencyModifier}
 				table.insert(forestParts,entry); forestByPart[p]=entry; p.LocalTransparencyModifier=1
@@ -172,7 +180,7 @@ function View.start(root,settings)
 					local pivot=CFrame.new(0,p:GetAttribute("MeadowGroundY")-p.Position.Y,0)*p.CFrame
 					table.insert(meadowWind,{part=p,base=p.CFrame,pivot=pivot,offset=pivot:ToObjectSpace(p.CFrame),visible=false})
 				end
-			elseif plant and not forestRole then table.insert(wind,{part=p,base=p.CFrame,pivot=p.CFrame*CFrame.new(0,-p.Size.Y/2,0),height=p.Size.Y,cost=1,items={{part=p,base=p.CFrame}},visible=false}) end
+			elseif plant and not forestRole and not vistaRole then table.insert(wind,{part=p,base=p.CFrame,pivot=p.CFrame*CFrame.new(0,-p.Size.Y/2,0),height=p.Size.Y,cost=1,items={{part=p,base=p.CFrame}},visible=false}) end
 		end
 	end
 	-- Children can replicate after the enable attribute. Do not miss late lanterns.
@@ -252,6 +260,8 @@ function View.start(root,settings)
 		counts.moon=moon.image.ImageTransparency<1 and 1 or 0
 		counts.forest=#forestParts; counts.forestVisible=0
 		for _,f in ipairs(forestParts) do if f.alpha<.99 then counts.forestVisible+=1 end end
+		counts.vista=#vistaParts; counts.vistaVisible=0
+		for _,v in ipairs(vistaParts) do if v.alpha<.99 then counts.vistaVisible+=1 end end
 		return counts
 	end
 	function self.setAnnotationsEnabled(enabled) annotations=enabled~=false; labelsDirty=1 end
@@ -303,7 +313,10 @@ function View.start(root,settings)
 				-- Preserve the scene silhouette at all tiers; only small decorative detail gets culled.
 				local hidden=detail>q.detail or ((detail>1 or p:GetAttribute("Meadow")) and (p.Position-camera.CFrame.Position).Magnitude>q.distance)
 				local f=forestByPart[p]
-				if f then
+				local v=vistaByPart[p]
+				if v then
+					v.target=Vista.alpha(v.role,self.quality,(camera.CFrame.Position-p.Position).Magnitude)
+				elseif f then
 					local delta=camera.CFrame.Position-f.anchor
 					f.target=ForestLOD.alpha(f.role,self.quality,Vector2.new(delta.X,delta.Z).Magnitude)
 				elseif p:GetAttribute("Meadow") then p:SetAttribute("MeadowTargetAlpha",hidden and 1 or 0)
@@ -340,6 +353,11 @@ function View.start(root,settings)
 		end
 		for _,f in ipairs(forestParts) do
 			if f.alpha~=f.target then f.alpha=ForestLOD.step(f.alpha,f.target,elapsed); f.part.LocalTransparencyModifier=f.alpha end
+		end
+		local windowColor=color(Vista.window(sample))
+		for _,v in ipairs(vistaParts) do
+			if v.alpha~=v.target then v.alpha=ForestLOD.step(v.alpha,v.target,elapsed); v.part.LocalTransparencyModifier=v.alpha end
+			if v.window then v.part.Color=windowColor end
 		end
 		MeadowMotion.step(meadowWind,self.reduceMotion and 0 or (Meadow.maxMoving[self.quality] or Meadow.maxMoving.reduced),elapsed)
 		for _,w in ipairs(meadowWind) do
@@ -433,6 +451,7 @@ function View.start(root,settings)
 		workspace.GlobalWind=savedWind
 		for _,p in ipairs(self.parts) do p.LocalTransparencyModifier=0 end
 		for _,f in ipairs(forestParts) do f.part.LocalTransparencyModifier=f.saved end
+		for _,v in ipairs(vistaParts) do v.part.LocalTransparencyModifier=v.saved; v.part.Color=v.color end
 		for _,w in ipairs(wind) do for _,item in ipairs(w.items) do item.part.CFrame=item.base end end
 		for _,w in ipairs(meadowWind) do w.part.CFrame=w.base end
 		for _,v in ipairs(wetSurfaces) do v.part.Color=v.color end

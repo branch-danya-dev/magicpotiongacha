@@ -195,6 +195,10 @@ for(const [path,hash] of Object.entries(a2c.sources)) {
     // #18a explicitly authorizes physical fence collisions. Preserve the rest
     // of the approved composition, palette, state curves and asset definitions.
     let current=read(path), approved=a2cSources[path];
+    // 07C adds a separately bounded backdrop. All other inherited art stays exact.
+    if(path==='src/server/EnvironmentArt.luau') current=current.replace('\trequire(script.Parent.VistaArt).attach(world,folder,templates)\n','');
+    if(path==='src/shared/EnvironmentPlan.luau') current=current.replace(/^local Vista=require.*\n/m,'')
+      .replace(/\t-- TASK07C_VISTA_BEGIN[^]*?\t-- TASK07C_VISTA_END\n/,'');
     if(path==='src/server/EnvironmentArt.luau') current=current.replace('\trequire(script.Parent.RidgeBarriers).attach(world.root)\n','');
     if(path==='src/server/EnvironmentArt.luau') {
       // Task 02 explicitly replaces the pilot substrate with IslandLandscape.

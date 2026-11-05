@@ -5,6 +5,7 @@ local Terrain=require(runtimeScript and runtimeScript.Parent.EnvironmentTerrain 
 local FactoryConfig=require(runtimeScript and runtimeScript.Parent.Config or "./Config")
 local Forest=require(runtimeScript and runtimeScript.Parent.ForestPlan or "./ForestPlan")
 local Meadow=require(runtimeScript and runtimeScript.Parent.MeadowPlan or "./MeadowPlan")
+local Vista=require(runtimeScript and runtimeScript.Parent.VistaPlan or "./VistaPlan")
 local Plan={catalog={CommonTree_1={1866,2},CommonTree_3={1866,2},CommonTree_5={1866,2},Pine_2={1486,2},TwistedTree_1={1866,2},
 	Bush_Common_Flowers={423,2},Clover_2={427,1},Fern_1={288,1},Flower_3_Group={422,2},Grass_Common_Short={155,1},
 	Grass_Wispy_Tall={428,1},Pebble_Round_1={136,1},RockPath_Round_Small_1={428,1},Rock_Medium_1={342,1}}}
@@ -85,6 +86,11 @@ function Plan.build(config,index)
 		colors[d.color]=true; if d.light then metrics.lights+=1 end
 	end
 	for _ in pairs(colors) do metrics.palette+=1 end
+	-- TASK07C_VISTA_BEGIN: include the separate static backdrop in the same ledger.
+	local vista=Vista.build().metrics
+	metrics.parts+=vista.parts; metrics.triangles+=vista.triangles
+	metrics.vistaParts=vista.parts; metrics.vistaTriangles=vista.triangles
+	-- TASK07C_VISTA_END
 	return {version=config.version,pilot=index,parts=parts,metrics=metrics}
 end
 return Plan

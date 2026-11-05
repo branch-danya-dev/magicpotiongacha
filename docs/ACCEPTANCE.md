@@ -2,7 +2,19 @@
 
 CLI/CI passing is necessary but does not mark any item below as completed.
 
-## Current: 07B / #21 — woodland build, native art review pending
+## Current: 07C / #21 — composed pilot, 07D pending
+
+The owner explicitly requested 07C on 2026-11-06. [Composition result](M7_07C_COMPOSITION.md):
+outer rock ridges, seven distant canopy silhouettes, two original offshore towers,
+a ruined gate, local effect anchors and the enlarged existing moon. One ordinary
+full-game Play build; no required screenshots/video. 1062 tests preserve all 1045
+inherited cases; exact-source CI, build hashes and logs accompany delivery.
+New native composition, foliage/Low graphics, grounding and ridge-camera behavior
+are NOT VERIFIED. **07D owner APPROVED is pending**, then UX, then 08. Phone,
+experience-permission and multiplayer gates remain BLOCKED. PR Draft; no merge,
+publishing or eight-farm art rollout.
+
+## Historical delivery: 07B / #21 — woodland build, native art review pending
 
 On 2026-11-06 the owner accepted 07A `04d3aea` in chat and explicitly authorized
 the next asset/content stage. This is owner-reported technical acceptance, not an

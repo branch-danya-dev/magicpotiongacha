@@ -1,7 +1,8 @@
 --!nonstrict
 -- Pure task-06 art layer consumed by EnvironmentState; no owner or clock source.
-local Style={skyPrefix="rbxasset://m7task07a-v1/",sunPools={{-171,-88},{-120,-54}},
-	pollenAnchors={{-174,-52},{-164,-94},{-118,-58},{-138,-89}}}
+local runtimeScript=rawget(getfenv(),"script")
+local Vista=require(runtimeScript and runtimeScript.Parent.VistaPlan or "./VistaPlan")
+local Style={skyPrefix="rbxasset://m7task07a-v1/",sunPools=Vista.sunPools,pollenAnchors=Vista.pollenAnchors}
 local function mix(a,b,t) return {a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t,a[3]+(b[3]-a[3])*t} end
 function Style.apply(r)
 	local day=(1-r.night)*(1-r.dawn)*(1-r.warm)

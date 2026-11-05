@@ -2,6 +2,7 @@
 -- Task 03 visual ground plan. No ownership, rewards or saved data.
 local runtimeScript=rawget(getfenv(),"script")
 local Island=require(runtimeScript and runtimeScript.Parent.IslandTerrain or "./IslandTerrain")
+local Ridge=require(runtimeScript and runtimeScript.Parent.RidgeComposition or "./RidgeComposition")
 local Ground={borderParts=20,glowParts=3,borderWidth=.14,borderDistance=110}
 local function smooth(v) v=math.clamp(v,0,1); return v*v*(3-2*v) end
 local function rect(x,z,rx,rz)
@@ -34,7 +35,7 @@ function Ground.column(x,z)
 	local road=math.abs(x)<180 and math.abs(z-math.sin(x*.027)*1.6)<6.3+.6*math.sin(x*.17)
 	local plaza=(x/14)^2+(z/11)^2<1
 	if (path or road or plaza) and Island.reserved(x,z) then material="Ground" end
-	return h,material
+	return Ridge.apply(x,z,h,material)
 end
 function Ground.border(index)
 	local ox,oz=Island.origin(index); local points={}; local r=2.5

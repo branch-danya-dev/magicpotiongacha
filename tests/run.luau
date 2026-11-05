@@ -71,5 +71,6 @@ if selected==nil or selected=="m7" then
 	require("./stability07a.spec")(Test)
 	require("./batch07a.spec")(Test)
 	require("./woodland07b.spec")(Test)
+	require("./composition07c.spec")(Test)
 end
 Test.finish()
