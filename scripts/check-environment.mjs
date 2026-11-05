@@ -198,7 +198,15 @@ for(const [path,hash] of Object.entries(a2c.sources)) {
     }
     if(path==='src/shared/EnvironmentPlan.luau') current=current.replace(',"wood",1,nil,{barrier=true})',',"wood",1)').replace(',"wood",1,{0,0,side*3},{barrier=true})',',"wood",1,{0,0,side*3})');
     if(path==='src/server/EnvironmentArt.luau') current=current.replace('true,d.barrier==true,false,d.barrier==true','true,false,false,false').replace('\n\t\t\tp:SetAttribute("PhysicalBarrier",d.barrier==true)','').replace('\n\trequire(script.Parent.FenceBarriers).attach(folder)','');
-    assert.equal(sha(current),sha(approved),`Approved atmosphere changed outside #18a fence / #19a terrain seams: ${path}`);
+    // Task 04 replaces only the vegetation block; retain every other approved prop.
+    if(path==='src/shared/EnvironmentPlan.luau') {
+      current=current.replace(/^local Meadow=require.*\n/m,'').replace(/\t-- TASK04_MEADOW_BEGIN[^]*?\t-- TASK04_MEADOW_END\n/,'');
+      approved=approved.replace(/\t-- Grass\/flowers[^]*?(?=\tlocal function lantern)/,'');
+    }
+    if(path==='src/server/EnvironmentArt.luau') current=current
+      .replace(/\t\t-- TASK04_MEADOW_BEGIN[^]*?\t\t-- TASK04_MEADOW_END\n/,'')
+      .replace('\t\t\tif d.meadow then position=Vector3.new(position.X,hit.Position.Y-.035,position.Z) end\n','');
+    assert.equal(sha(current),sha(approved),`Approved atmosphere changed outside task 01 fence / tasks 02-03 ground / task 04 meadow seams: ${path}`);
   }
 }
 for(const [name,entry] of Object.entries(a2c.images)) {

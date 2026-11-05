@@ -64,5 +64,6 @@ if selected==nil or selected=="m7" then
 	require("./safety18a.spec")(Test)
 	require("./island19a.spec")(Test)
 	require("./farm19b.spec")(Test)
+	require("./meadow19c.spec")(Test)
 end
 Test.finish()

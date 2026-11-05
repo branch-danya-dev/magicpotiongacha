@@ -3,6 +3,7 @@
 local runtimeScript=rawget(getfenv(),"script")
 local Terrain=require(runtimeScript and runtimeScript.Parent.EnvironmentTerrain or "./EnvironmentTerrain")
 local FactoryConfig=require(runtimeScript and runtimeScript.Parent.Config or "./Config")
+local Meadow=require(runtimeScript and runtimeScript.Parent.MeadowPlan or "./MeadowPlan")
 local Plan={catalog={CommonTree_1={1866,2},CommonTree_3={1866,2},CommonTree_5={1866,2},Pine_2={1486,2},TwistedTree_1={1866,2},
 	Bush_Common_Flowers={423,2},Clover_2={427,1},Fern_1={288,1},Flower_3_Group={422,2},Grass_Common_Short={155,1},
 	Grass_Wispy_Tall={428,1},Pebble_Round_1={136,1},RockPath_Round_Small_1={428,1},Rock_Medium_1={342,1}}}
@@ -49,17 +50,14 @@ function Plan.build(config,index)
 		mesh("Rock_Medium_1",p[1],p[2],.8+(i%3)*.23,i*47,2)
 		mesh("Pebble_Round_1",p[1]+2,p[2]+2,1.1,i*31,2)
 	end
-	-- Grass/flowers remain outside the working floor, including future purchase pads.
-	for i=1,208 do
-		local x,z
-		if i<=144 then local side=i%2==0 and -1 or 1; x=side*(40+(i*11%17)*.65); z=-46+(i*17%76)
-		else x=-55+(i*19%99); z=-51-(i*7%22) end
-		local detail=i%8==0 and 1 or (i%3==0 and 2 or 3)
-		mesh(i%4==0 and "Grass_Wispy_Tall" or "Grass_Common_Short",x,z,1.8+(i%5)*.2,i*137.5,detail)
-		if i%5==0 then mesh(i%10==0 and "Fern_1" or "Clover_2",x+1.4,z-1,1,i*57,2) end
-		if i%7==0 then mesh("Flower_3_Group",x-1,z+1,1,i*39,3) end
+	-- TASK04_MEADOW_BEGIN: keep the rest of the approved composition exact.
+	for _,p in ipairs(Meadow.build()) do
+		local d=mesh(p.template,p.x,p.z,p.scale,p.angle,p.detail)
+		d.meadow=true; d.flatten=p.flatten; d.tint=p.tint; d.meadowWind=p.wind; d.radius=p.radius
 	end
-	for i,p in ipairs({{-40,18},{-42,-17},{-32,-50},{12,-53},{41,-34},{41,22},{-62,-37}}) do mesh("Bush_Common_Flowers",p[1],p[2],.85+(i%3)*.12,i*70,2) end
+	mesh("Fern_1",-49,-39,.7,34,2); mesh("Fern_1",-53,-60,.8,170,2)
+	mesh("Bush_Common_Flowers",-57,-47,.75,45,2)
+	-- TASK04_MEADOW_END
 	local function lantern(x,z,world)
 		add("beam",{.45,6,.45},{x,3,z},"wood",1,nil,nil,world)
 		add("beam",{1.9,.3,.4},{x+.7,6,z},"wood",1,nil,nil,world)

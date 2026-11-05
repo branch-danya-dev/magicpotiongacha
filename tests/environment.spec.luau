@@ -2,6 +2,7 @@
 local Config=require("../src/shared/EnvironmentConfig")
 local State=require("../src/shared/EnvironmentState")
 local Plan=require("../src/shared/EnvironmentPlan")
+local Meadow=require("../src/shared/MeadowPlan")
 local Terrain=require("../src/shared/EnvironmentTerrain")
 local Codec=require("../src/shared/TradeCodec")
 local Settings=require("../src/server/ServerSettings")
@@ -95,11 +96,12 @@ return function(T:any)
 		for i=2,8 do local o=Plan.origin(i); T.falsy(Terrain.contains(o[1]-38.5,o[3]-45.5)); T.falsy(Terrain.contains(o[1]+38.5,o[3]+29.5)) end
 		T.falsy(Terrain.contains(-142.5,-12)); T.falsy(Terrain.contains(0,0))
 	end)
-	T.test("M7 assets: all placements use the closed catalog and plants avoid the floor",function()
+	T.test("M7 assets: all placements use the closed catalog and plants avoid work zones",function()
 		local used={}
 		for _,p in ipairs(Plan.build(Config,1).parts) do if p.template then
 			T.truthy(Plan.catalog[p.template]); used[p.template]=true
-			if p.template~="RockPath_Round_Small_1" then
+			if p.meadow then T.truthy(Meadow.clear(p.position[1]+142.5,p.position[3]+65,p.radius))
+			elseif p.template~="RockPath_Round_Small_1" then
 				local x,z=p.position[1]+142.5,p.position[3]+65
 				T.truthy(math.abs(x)>38.5 or z< -45.5 or z>29.5,p.template)
 			end

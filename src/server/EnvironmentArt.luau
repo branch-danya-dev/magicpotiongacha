@@ -33,6 +33,7 @@ function Art.attach(world)
 			local hit=workspace:Raycast(Vector3.new(position.X,60,position.Z),Vector3.new(0,-110,0),ground)
 			assert(hit,"Decoration has no supporting ground: "..d.id.." / "..d.template)
 			position=Vector3.new(position.X,hit.Position.Y+(d.flatten~=1 and (.16+(tonumber(string.match(d.id,"%d+"))%7)*.045) or -.08),position.Z)
+			if d.meadow then position=Vector3.new(position.X,hit.Position.Y-.035,position.Z) end
 		end
 		local cf=CFrame.new(position)*CFrame.Angles(math.rad(d.rotation[1]),math.rad(d.rotation[2]),math.rad(d.rotation[3]))
 		local model
@@ -63,6 +64,15 @@ function Art.attach(world)
 			model.Color=Color3.fromRGB(table.unpack(Config.palette[d.color])); model.Material=Enum.Material[d.material]
 		end
 		local objects=model:IsA("BasePart") and {model} or model:GetDescendants()
+		-- TASK04_MEADOW_BEGIN: static tint/grounding, no new asset or material URI.
+		if d.meadow then for _,p in ipairs(objects) do
+			if p:IsA("SurfaceAppearance") then p.Color=Color3.fromRGB(table.unpack(d.tint)) end
+			if p:IsA("BasePart") then
+				p.CastShadow=false; p:SetAttribute("Meadow",true); p:SetAttribute("MeadowWind",d.meadowWind)
+				p:SetAttribute("MeadowGroundY",position.Y); p:SetAttribute("MeadowRadius",d.radius)
+			end
+		end end
+		-- TASK04_MEADOW_END
 		for _,p in ipairs(objects) do if p:IsA("BasePart") then
 			p.Anchored,p.CanCollide,p.CanTouch,p.CanQuery=true,d.barrier==true,false,d.barrier==true
 			p:SetAttribute("PhysicalBarrier",d.barrier==true)

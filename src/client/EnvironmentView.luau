@@ -8,6 +8,8 @@ local Config=require(Shared.EnvironmentConfig)
 local State=require(Shared.EnvironmentState)
 local Transition=require(Shared.EnvironmentTransition)
 local Labels=require(Shared.EnvironmentLabels)
+local Meadow=require(Shared.MeadowPlan)
+local MeadowMotion=require(Shared.MeadowMotion)
 local View={}
 local active=nil
 local function color(v) return Color3.fromRGB(v[1],v[2],v[3]) end
@@ -97,6 +99,7 @@ function View.start(root,settings)
 		local d=State.star(i); stars[i]=celestialSprite("Star_"..i,Config.polishPrefix.."star.png",d.size,Vector3.new(d.x,d.y,d.z)); stars[i].alpha=d.alpha
 	end
 	local lights={}; local wind={}; local registered={}; local wetSurfaces={}
+	local meadowWind={}; local meadowParts={}
 	local labels={}; local annotations=true; local labelsDirty=0
 	local function registerLabel(gui)
 		if gui:IsA("BillboardGui") then table.insert(labels,{gui=gui,enabled=gui.Enabled}) end
@@ -116,7 +119,13 @@ function View.start(root,settings)
 			-- SurfaceAppearance maps requires Plugin capability, unavailable here.
 			local leaf=string.match(p.Name,"Tree.*_2$") or string.match(p.Name,"Pine.*_2$")
 			local plant=string.find(p.Name,"Grass") or string.find(p.Name,"Fern") or leaf
-			if plant then table.insert(wind,{part=p,base=p.CFrame,pivot=p.CFrame*CFrame.new(0,-p.Size.Y/2,0),height=p.Size.Y}) end
+			if p:GetAttribute("Meadow") then
+				table.insert(meadowParts,p); p.LocalTransparencyModifier=1; p:SetAttribute("MeadowTargetAlpha",1)
+				if p:GetAttribute("MeadowWind") then
+					local pivot=CFrame.new(0,p:GetAttribute("MeadowGroundY")-p.Position.Y,0)*p.CFrame
+					table.insert(meadowWind,{part=p,base=p.CFrame,pivot=pivot,offset=pivot:ToObjectSpace(p.CFrame),visible=false})
+				end
+			elseif plant then table.insert(wind,{part=p,base=p.CFrame,pivot=p.CFrame*CFrame.new(0,-p.Size.Y/2,0),height=p.Size.Y}) end
 		end
 	end
 	-- Children can replicate after the enable attribute. Do not miss late lanterns.
@@ -165,6 +174,9 @@ function View.start(root,settings)
 		for _,p in ipairs(self.rain) do if p.Transparency<1 then counts.rain+=1 end end
 		for _,p in ipairs(motes) do if p.Transparency<1 then counts.motes+=1 end end
 		for _,w in ipairs(wind) do if w.moving then counts.wind+=1 end end
+		counts.meadow=#meadowParts; counts.meadowMoving=0; counts.meadowVisible=0
+		for _,w in ipairs(meadowWind) do if (w.weight or 0)>0 then counts.meadowMoving+=1 end end
+		for _,p in ipairs(meadowParts) do if p.LocalTransparencyModifier<.99 then counts.meadowVisible+=1 end end
 		for _,v in ipairs(fog) do if v.image.ImageTransparency<1 then counts.fog+=1 end end
 		for _,p in ipairs(glints) do if p.Transparency<1 then counts.glints+=1 end end
 		counts.rainbow=rainbow.image.ImageTransparency<1 and 1 or 0
@@ -210,11 +222,20 @@ function View.start(root,settings)
 			for _,p in ipairs(self.parts) do
 				local detail=p:GetAttribute("EnvironmentDetail") or 1
 				-- Preserve the scene silhouette at all tiers; only small decorative detail gets culled.
-				if detail>q.detail or (detail>1 and (p.Position-camera.CFrame.Position).Magnitude>q.distance) then p.LocalTransparencyModifier=1 else p.LocalTransparencyModifier=0 end
+				local hidden=detail>q.detail or ((detail>1 or p:GetAttribute("Meadow")) and (p.Position-camera.CFrame.Position).Magnitude>q.distance)
+				if p:GetAttribute("Meadow") then p:SetAttribute("MeadowTargetAlpha",hidden and 1 or 0)
+				else p.LocalTransparencyModifier=hidden and 1 or 0 end
 			end
 			table.sort(lights,function(a,b) return (a.Parent.Position-camera.CFrame.Position).Magnitude<(b.Parent.Position-camera.CFrame.Position).Magnitude end)
 			for i,l in ipairs(lights) do l.Enabled=i<=q.lights and (l.Parent.Position-camera.CFrame.Position).Magnitude<q.distance end
 			table.sort(wind,function(a,b) return (a.base.Position-camera.CFrame.Position).Magnitude<(b.base.Position-camera.CFrame.Position).Magnitude end)
+			for _,w in ipairs(meadowWind) do
+				local screen,onScreen=camera:WorldToViewportPoint(w.base.Position)
+				local distance=(w.base.Position-camera.CFrame.Position).Magnitude
+				w.visible=onScreen and screen.Z>0 and distance<65 and w.part:GetAttribute("MeadowTargetAlpha")==0
+				w.rank=distance+(w.visible and 0 or 10000)
+			end
+			table.sort(meadowWind,function(a,b) return a.rank<b.rank end)
 			local center=camera.CFrame.Position
 			for i,p in ipairs(self.rain) do
 				local x=math.clamp(center.X,-181,-104)+(i*17%47)-23; local z=math.clamp(center.Z,-109,-36)+(i*29%43)-21
@@ -222,6 +243,18 @@ function View.start(root,settings)
 			end
 		end
 		for _,l in ipairs(lights) do l.Brightness=.18+sample.night*1.45 end
+		for _,p in ipairs(meadowParts) do
+			local target=p:GetAttribute("MeadowTargetAlpha") or 0; local alpha=p.LocalTransparencyModifier
+			if alpha~=target then p.LocalTransparencyModifier=alpha+math.clamp(target-alpha,-elapsed*2,elapsed*2) end
+		end
+		MeadowMotion.step(meadowWind,self.reduceMotion and 0 or (Meadow.maxMoving[self.quality] or Meadow.maxMoving.reduced),elapsed)
+		for _,w in ipairs(meadowWind) do
+			if w.weight>0 then
+				local a=Meadow.angle(time,w.base.Position.X,w.base.Position.Z,sample.wind)*w.weight
+				w.part.CFrame=w.pivot*CFrame.Angles(a*.38,0,a)*w.offset
+			elseif w.wasMoving then w.part.CFrame=w.base end
+			w.wasMoving=w.weight>0
+		end
 		-- Fading OUT still consumes a slot. New nearby foliage waits for a free
 		-- slot, so camera movement cannot double the motion budget during fades.
 		local occupied=0
@@ -296,6 +329,7 @@ function View.start(root,settings)
 		workspace.GlobalWind=savedWind
 		for _,p in ipairs(self.parts) do p.LocalTransparencyModifier=0 end
 		for _,w in ipairs(wind) do w.part.CFrame=w.base end
+		for _,w in ipairs(meadowWind) do w.part.CFrame=w.base end
 		for _,v in ipairs(wetSurfaces) do v.part.Color=v.color end
 		for _,l in ipairs(lights) do l:Destroy() end
 		atmosphere:Destroy(); sky:Destroy(); clouds:Destroy(); correction:Destroy(); bloom:Destroy(); rays:Destroy(); folder:Destroy()
