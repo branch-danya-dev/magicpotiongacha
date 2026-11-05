@@ -2,7 +2,15 @@
 
 CLI/CI passing is necessary but does not mark any item below as completed.
 
-## Current: M7.1 A.2c — Gate A pending
+## Current: Issue #18 — UI acceptance pending
+
+Owner explicitly **APPROVED artistic Gate A** on 2026-11-05. This approves the
+A.2c atmosphere only. PR #17 remains Draft; no merge or publishing authorized.
+Issue #18 is now in progress; [inventory and implementation](M7_UI18.md).
+Physical phones, experience asset permissions and multiplayer load stay BLOCKED.
+Issue #19 and station redesign wait for their subsequent gates.
+
+## Historical: M7.1 A.2c — delivered for Gate A
 
 **ART PENDING.** A.2b direction accepted; explicit owner APPROVED is still required.
 Only A.2c was implemented. [Actual before/after Studio evidence](evidence/m7-a2c/README.md)

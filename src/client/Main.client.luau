@@ -5,6 +5,9 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local player = Players.LocalPlayer
 local shared = ReplicatedStorage:WaitForChild("PotionTycoon"):WaitForChild("Shared")
 local Config = require(shared.Config)
+local ContextPolicy = require(shared.ContextUI)
+local UserInputService = game:GetService("UserInputService")
+local GuiService = game:GetService("GuiService")
 local collectionUI = require(script.Parent.CollectionUI).new(Config)
 local tradeUI = require(script.Parent.TradeUI).new(Config)
 local longTermUI = require(script.Parent.LongTermUI).new(Config)
@@ -24,10 +27,15 @@ local PurchasePrompt = remotes:WaitForChild("PurchasePrompt")
 local gui = Instance.new("ScreenGui")
 gui.Name, gui.ResetOnSpawn = "PotionTycoonUI", false
 gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+gui.ScreenInsets = Enum.ScreenInsets.CoreUISafeInsets
 gui.Parent = player:WaitForChild("PlayerGui")
 
-local BG, SURFACE, TEXT, ACCENT = Color3.fromRGB(22, 26, 34), Color3.fromRGB(42, 48, 61), Color3.fromRGB(237, 239, 246), Color3.fromRGB(119, 91, 195)
+local BG, SURFACE, TEXT, ACCENT = Color3.fromRGB(27, 40, 43), Color3.fromRGB(51, 68, 65), Color3.fromRGB(242, 238, 220), Color3.fromRGB(78, 101, 91)
 local state, selected, petPicker, hasReport = nil, "crystal", false, false
+local selectedUpgrade = false
+local context, currentContext
+local scrollPositions = {}
+local drawnKey,drawGeneration=nil,0
 local tradeState
 local bindings = {}
 local collectionPending = false
@@ -88,25 +96,28 @@ local function names(items)
 end
 
 local hud = Instance.new("Frame")
+hud.Name="ResourceBar"
 hud.Size, hud.Position = UDim2.new(1, -24, 0, 76), UDim2.fromOffset(12, 10)
 hud.BackgroundColor3, hud.Parent = BG, gui
 	round(hud)
 local balance = label(hud, "Загрузка профиля…", 36)
 balance.Position, balance.Size = UDim2.fromOffset(12, 0), UDim2.new(1, -130, 0, 36)
 balance.TextSize = 17
-local status = label(hud, "M5 · эпохи и постоянное развитие", 32)
+local status = label(hud, "", 32)
 status.Position, status.Size = UDim2.fromOffset(12, 38), UDim2.new(1, -24, 0, 32)
 status.TextSize = 11
 local toggle = button(hud, "Фабрика", function() end)
 toggle.Size, toggle.Position = UDim2.fromOffset(100, 34), UDim2.new(1, -112, 0, 3)
 
 local toast = label(gui, "Подойди к кристаллу. Назначь рабочих через меню объектов.", 54)
+toast.Name="Notice"; toast.Visible=false; toast.ZIndex=10
 toast.Position, toast.Size = UDim2.new(0, 16, 0, 90), UDim2.new(1, -32, 0, 54)
 toast.TextXAlignment = Enum.TextXAlignment.Center
 toast.BackgroundColor3, toast.BackgroundTransparency = BG, 0.15
 round(toast)
 
 local panel = Instance.new("Frame")
+panel.Name="ContextPanel"
 panel.AnchorPoint, panel.Position = Vector2.new(0.5, 0), UDim2.new(0.5, 0, 0, 146)
 panel.Visible = false
 panel.Size, panel.BackgroundColor3 = UDim2.new(0.94, 0, 0.67, 0), BG
@@ -131,14 +142,44 @@ local grid = Instance.new("UIListLayout")
 grid.FillDirection, grid.Padding, grid.Parent = Enum.FillDirection.Horizontal, UDim.new(0, 4), tabs
 
 local contents = Instance.new("ScrollingFrame")
+contents.Name="Details"
 contents.Position, contents.Size = UDim2.fromOffset(12, 94), UDim2.new(1, -24, 1, -106)
 contents.BackgroundTransparency, contents.BorderSizePixel, contents.ScrollBarThickness = 1, 0, 4
 contents.AutomaticCanvasSize, contents.CanvasSize = Enum.AutomaticSize.Y, UDim2.new()
 contents.Parent = panel
 
 local guide = button(gui, "Обучение · загрузка…", function() end)
+guide.Name="Guide"
 guide.BackgroundColor3 = ACCENT
+local regionLabel=label(gui,"",24)
+regionLabel.Name="PlotContext"; regionLabel.TextSize=12; regionLabel.TextColor3=Color3.fromRGB(232,220,184)
+regionLabel.BackgroundColor3=BG; regionLabel.BackgroundTransparency=.15; regionLabel.Visible=false; round(regionLabel)
 local draw, refresh
+local rail=Instance.new("Frame")
+rail.Name="NearbyActions"; rail.BackgroundColor3=BG; rail.Visible=false; rail.Parent=gui; round(rail)
+local details=button(rail,"Подробнее",function()
+	if not currentContext then return end
+	selected=currentContext.public and "bazaar" or currentContext.station
+	selectedUpgrade=currentContext.upgrade; petPicker=false; panel.Visible=true; draw()
+end)
+details.Size=UDim2.new(1,-104,1,-8); details.Position=UDim2.fromOffset(4,4)
+local nextObject=button(rail,"Далее · X",function() if context then context.next() end end)
+nextObject.Size=UDim2.new(0,96,1,-8); nextObject.Position=UDim2.new(1,-100,0,4)
+local function updateContext(entry,count,region)
+	currentContext=entry; rail.Visible=entry~=nil and not panel.Visible
+	regionLabel.Visible=region~=nil and region~="Моя ферма" and not panel.Visible
+	regionLabel.Text=region or ""
+	if entry then
+		details.Text=entry.upgrade and "Цена и условия" or "Подробнее"
+		nextObject.Visible=count>1
+		details.Size=UDim2.new(1,count>1 and -104 or -8,1,-8)
+		nextObject.Text=UserInputService.TouchEnabled and ("Далее · "..count) or (UserInputService.GamepadEnabled and "Далее · RB" or "Далее · X")
+	end
+end
+panel:GetPropertyChangedSignal("Visible"):Connect(function()
+	if context then context.refresh() end
+	if panel.Visible and UserInputService.GamepadEnabled then GuiService.SelectedObject=close end
+end)
 local prices={}
 local function shopPrice(card)
 	if not card.robuxAvailable or card.sku<=0 then return nil end
@@ -159,20 +200,28 @@ local function resize()
 	local camera = workspace.CurrentCamera
 	if not camera then return end
 	local viewport = camera.ViewportSize
-	local landscape = viewport.X > viewport.Y
-	if landscape then
-		hud.Size, hud.Position = UDim2.new(0.44, -16, 0, 88), UDim2.fromOffset(8, 8)
-		guide.Position, guide.Size = UDim2.fromOffset(8, 100), UDim2.new(0.44, -16, 0, 44)
-		panel.AnchorPoint, panel.Position = Vector2.new(1, 0), UDim2.new(1, -8, 0, 8)
-		panel.Size = UDim2.new(0.55, 0, 0, math.max(180, viewport.Y - 150))
+	local safe=gui.AbsoluteSize
+	local layout=ContextPolicy.layout(safe.X,safe.Y,UserInputService.TouchEnabled)
+	hud.Size,hud.Position=UDim2.fromOffset(layout.hudWidth,44),UDim2.fromOffset(12,8)
+	balance.TextSize=14; balance.Position=UDim2.fromOffset(12,4); balance.Size=UDim2.new(1,-114,0,36)
+	toggle.Size,toggle.Position=UDim2.fromOffset(96,36),UDim2.new(1,-100,0,4)
+	status.Visible=false
+	guide.Position,guide.Size=UDim2.fromOffset(12,58),UDim2.fromOffset(layout.hudWidth,44)
+	regionLabel.Position,regionLabel.Size=UDim2.fromOffset(12,106),UDim2.fromOffset(layout.hudWidth,24)
+	panel.Size=UDim2.fromOffset(layout.width,layout.height)
+	if layout.compact and layout.portrait then
+		panel.AnchorPoint,panel.Position=Vector2.new(.5,1),UDim2.new(.5,0,1,-150)
+	elseif not layout.compact then
+		-- Keep the header/close button away from the native player list.
+		panel.AnchorPoint,panel.Position=Vector2.zero,UDim2.fromOffset(12,116)
 	else
-		hud.Size, hud.Position = UDim2.new(1, -16, 0, 88), UDim2.fromOffset(8, 8)
-		guide.Position, guide.Size = UDim2.fromOffset(8, 100), UDim2.new(1, -16, 0, 44)
-		panel.AnchorPoint, panel.Position = Vector2.new(0.5, 0), UDim2.new(0.5, 0, 0, 152)
-		panel.Size = UDim2.new(1, -16, 0, math.max(180, viewport.Y - 342))
+		-- Touch locomotion occupies the bottom corners. Keep this sheet between them.
+		panel.AnchorPoint,panel.Position=Vector2.new(.5,0),UDim2.new(.5,0,0,116)
 	end
-	toast.Position, toast.Size = UDim2.new(0, 16, 0, 48), UDim2.new(landscape and 0.44 or 1, -32, 0, 44)
-	toast.Visible = false
+	rail.AnchorPoint,rail.Position=Vector2.new(.5,1),UDim2.new(.5,0,1,-layout.bottom)
+	rail.Size=UDim2.fromOffset(layout.railWidth,48)
+	toast.AnchorPoint=Vector2.new(.5,0)
+	toast.Position,toast.Size=UDim2.new(.5,0,0,136),UDim2.fromOffset(layout.hudWidth,64)
 end
 local cameraConnection
 local function watchCamera()
@@ -182,9 +231,12 @@ local function watchCamera()
 end
 workspace:GetPropertyChangedSignal("CurrentCamera"):Connect(watchCamera)
 watchCamera()
+gui:GetPropertyChangedSignal("AbsoluteSize"):Connect(resize)
+UserInputService:GetPropertyChangedSignal("TouchEnabled"):Connect(resize)
 guide.Activated:Connect(function()
 	if not state then return end
 	selected, petPicker, panel.Visible = state.tutorial.complete and "blueprint" or state.tutorial.target, false, true
+	selectedUpgrade=false
 	draw()
 end)
 local function bindText(widget, getter)
@@ -205,6 +257,11 @@ local function assignedTo(petId)
 end
 
 draw = function()
+	if drawnKey then scrollPositions[drawnKey]=contents.CanvasPosition.Y end
+	drawnKey=selected..(selectedUpgrade and ":upgrade" or "")..(petPicker and ":picker" or "")
+	drawGeneration+=1
+	local generation=drawGeneration; local savedScroll=scrollPositions[drawnKey] or 0
+	task.defer(function() if generation==drawGeneration then contents.CanvasPosition=Vector2.new(0,savedScroll) end end)
 	for _, child in ipairs(contents:GetChildren()) do child:Destroy() end
 	bindings = {}
 	local layout = Instance.new("UIListLayout")
@@ -223,6 +280,23 @@ draw = function()
 		object.LayoutOrder = order
 		return object
 	end
+	if state and selectedUpgrade then
+		title.Text="Улучшение · "..ContextPolicy.description({station=selected},Config)
+		local info=text("",92)
+		bindText(info,function()
+			return ContextPolicy.upgradeDetails(state,selected)
+		end)
+		local purchase=action("",function()
+			if selected=="blueprint" then send("advancePhase",{expectedPhase=state.phase.phase})
+			else send("buy",{upgradeId=selected}) end
+		end)
+		bindText(purchase,function()
+			local price=selected=="blueprint" and state.phase.cost or upgradePrice(selected)
+			return price and ("Купить · "..price.." Gold") or "Максимальный уровень"
+		end)
+		action("Управление объектом",function() selectedUpgrade=false; draw() end)
+		refresh(); return
+	end
 	if selected=="bazaar" then
 		title.Text="Магический базар · обмен"
 		tradeUI.draw({value=tradeState,text=text,action=action,send=send,redraw=draw})
@@ -231,6 +305,7 @@ draw = function()
 	if not state then text("Ожидаем безопасную загрузку профиля…"); return end
 	if selected=="quality" then
 		title.Text="Окружение · качество"
+		text(state.mode=="STUDIO_MEMORY" and "Локальная проверка Studio: прогресс не сохраняется после Stop." or (state.writable and "Сохранение прогресса включено." or "Сохранение приостановлено."),64)
 		text("Настройки действуют только на этом устройстве. Рабочие места, кнопки и производство остаются доступны.",88)
 		for _,q in ipairs({{"full","Полное"},{"reduced","Умеренное"},{"minimal","Минимальное"}}) do
 			action((environment.quality==q[1] and "✓ " or "")..q[2],function() environment.setQuality(q[1]); draw() end)
@@ -250,8 +325,10 @@ draw = function()
 		title.Text=selected=="rebirth" and "Rebirth · новая эпоха" or (selected=="dailies" and "Ежедневные награды" or "Time Shards · магазин")
 		longTermUI.draw({state=state,currentState=function() return state end,bindText=bindText,mode=selected,text=text,action=action,send=send,redraw=draw}); refresh(); return
 	end
-	local tutorial = text("", 96)
-	bindText(tutorial, function() return "Обучение " .. state.tutorial.step .. "/" .. state.tutorial.total .. " · " .. state.tutorial.text end)
+	if not state.tutorial.complete and selected==state.tutorial.target then
+		local tutorial = text("", 54)
+		bindText(tutorial, function() return state.tutorial.text end)
+	end
 	if petPicker then
 		title.Text = "Назначить рабочего"
 		action("Назад", function() petPicker = false; draw() end)
@@ -457,8 +534,7 @@ end
 refresh = function()
 	if not state then return end
 	balance.Text = "Gold: " .. math.floor(state.gold) .. "  |  Essence: " .. math.floor(state.essence)
-	status.Text = (state.mode == "STUDIO_MEMORY" and "STUDIO: прогресс НЕ сохраняется после Stop" or "DataStore: сохранение включено") .. (state.writable and "" or " · запись приостановлена")
-	guide.Text = state.tutorial.complete and ("Фаза "..state.phase.phase.."/4 · "..state.phase.message) or ("Шаг " .. state.tutorial.step .. "/" .. state.tutorial.total .. " · " .. (Config.stations[state.tutorial.target] and Config.stations[state.tutorial.target].name or state.tutorial.target) .. " · Подсказка")
+	guide.Text = not state.writable and "Сохранение приостановлено" or (state.tutorial.complete and ("Моя ферма · "..state.phase.name) or ("Шаг "..state.tutorial.step.."/"..state.tutorial.total.." · "..ContextPolicy.description({station=state.tutorial.target},Config)))
 	for _, update in ipairs(bindings) do update() end
 end
 
@@ -466,7 +542,7 @@ local tabList={{"blueprint","Развитие"},{"shop","Событие"},{"rebi
 for _,id in ipairs(Config.stationOrder) do table.insert(tabList,{id,Config.stations[id].name}) end
 for _,tab in ipairs({{"warehouse","Склад"},{"orders","Заказы"},{"altar","Фамильяры"}}) do table.insert(tabList,tab) end
 for _, tab in ipairs(tabList) do
-	local tabButton = button(tabs, tab[2], function() selected, petPicker = tab[1], false; draw() end)
+	local tabButton = button(tabs, tab[2], function() selected, petPicker, selectedUpgrade = tab[1], false, false; draw() end)
 	tabButton.Size = UDim2.fromOffset(104, 44)
 end
 
@@ -484,7 +560,7 @@ State.OnClientEvent:Connect(function(value)
 	local longTermChanged=state and (state.longTerm.requestId~=value.longTerm.requestId or state.longTerm.day~=value.longTerm.day)
 	local longTermPanel=selected=="rebirth" or selected=="dailies" or selected=="shards"
 	local longTermViewChanged=longTermPanel and state and Codec.encode(state.longTerm)~=Codec.encode(value.longTerm)
-	if (state and state.rebirths~=value.rebirths) or (first and value.longTerm.last and value.longTerm.last.action=="rebirth") then selected,petPicker,panel.Visible="rebirth",false,true end
+	if (state and state.rebirths~=value.rebirths) or (first and value.longTerm.last and value.longTerm.last.action=="rebirth") then selected,petPicker,panel.Visible="rebirth",false,true; selectedUpgrade=false end
 	local collectionChanged = state and collectionUI.signature(state) ~= collectionUI.signature(value)
 	local progressionChanged = state and (state.progression.sequence~=value.progression.sequence or state.phase.complete~=value.phase.complete
 		or table.concat(state.orderOffers,"|")~=table.concat(value.orderOffers,"|"))
@@ -515,8 +591,9 @@ TradeState.OnClientEvent:Connect(function(value)
 	local current=value.session
 	if current and (not previous or previous.id~=current.id or previous.state~=current.state) then
 		selected,petPicker,panel.Visible="bazaar",false,true
+		selectedUpgrade=false
 	end
-	if value.blocked then selected,petPicker,panel.Visible="bazaar",false,true end
+	if value.blocked then selected,petPicker,panel.Visible="bazaar",false,true; selectedUpgrade=false end
 	if selected=="bazaar" then draw() end
 end)
 Notice.OnClientEvent:Connect(function(value)
@@ -526,10 +603,21 @@ end)
 Focus.OnClientEvent:Connect(function(stationId)
 	if Config.stations[stationId] or stationId == "warehouse" or stationId == "orders" or stationId == "altar" or stationId == "blueprint" or stationId=="bazaar" then
 		selected, petPicker, panel.Visible = stationId, false, true
+		selectedUpgrade=false
 		draw()
 	end
 end)
 draw()
+task.spawn(function()
+	context=require(script.Parent.WorldContext).start(updateContext,function() return panel.Visible end,function()
+		local inset=GuiService:GetGuiInset(); local rectangles={}
+		for _,widget in ipairs({hud,guide,rail}) do
+			local p,s=widget.AbsolutePosition,widget.AbsoluteSize
+			table.insert(rectangles,{x=p.X+inset.X,y=p.Y+inset.Y,w=s.X,h=s.Y})
+		end
+		return rectangles
+	end)
+end)
 Ready:FireServer()
 task.spawn(function()
 	while not state do task.wait(3); Ready:FireServer() end

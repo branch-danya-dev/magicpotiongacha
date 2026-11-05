@@ -58,5 +58,8 @@ if selected==nil or selected=="m6" then
 	require("./m6_acceptance.spec")(Test)
 	require("./m6_ui.spec")(Test)
 end
-if selected==nil or selected=="m7" then require("./environment.spec")(Test) end
+if selected==nil or selected=="m7" then
+	require("./environment.spec")(Test)
+	require("./context_ui.spec")(Test)
+end
 Test.finish()

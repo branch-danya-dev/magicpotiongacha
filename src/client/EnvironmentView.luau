@@ -189,7 +189,11 @@ function View.start(root,settings)
 				end
 			end
 			local selected=Labels.select(entries,camera.ViewportSize.X,camera.ViewportSize.Y)
-			for id,l in ipairs(labels) do l.gui.Enabled=selected[id]==true end
+			-- Issue #18 owns gameplay context independently of art/quality. The
+			-- historical annotation selector is retained only in the art harness.
+			if not root:GetAttribute("WorldContextOwned") then
+				for id,l in ipairs(labels) do l.gui.Enabled=selected[id]==true end
+			end
 		end
 		if lod>=.5 then
 			lod=0
@@ -275,7 +279,9 @@ function View.start(root,settings)
 		if connection then connection:Disconnect() end
 		added:Disconnect()
 		labelAdded:Disconnect()
-		for _,l in ipairs(labels) do l.gui.Enabled=l.enabled end
+		if not root:GetAttribute("WorldContextOwned") then
+			for _,l in ipairs(labels) do l.gui.Enabled=l.enabled end
+		end
 		for k,v in pairs(saved) do Lighting[k]=v end
 		workspace.GlobalWind=savedWind
 		for _,p in ipairs(self.parts) do p.LocalTransparencyModifier=0 end
