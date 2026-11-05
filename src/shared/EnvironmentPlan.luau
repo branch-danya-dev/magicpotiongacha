@@ -3,6 +3,7 @@
 local runtimeScript=rawget(getfenv(),"script")
 local Terrain=require(runtimeScript and runtimeScript.Parent.EnvironmentTerrain or "./EnvironmentTerrain")
 local FactoryConfig=require(runtimeScript and runtimeScript.Parent.Config or "./Config")
+local Forest=require(runtimeScript and runtimeScript.Parent.ForestPlan or "./ForestPlan")
 local Meadow=require(runtimeScript and runtimeScript.Parent.MeadowPlan or "./MeadowPlan")
 local Plan={catalog={CommonTree_1={1866,2},CommonTree_3={1866,2},CommonTree_5={1866,2},Pine_2={1486,2},TwistedTree_1={1866,2},
 	Bush_Common_Flowers={423,2},Clover_2={427,1},Fern_1={288,1},Flower_3_Group={422,2},Grass_Common_Short={155,1},
@@ -33,14 +34,14 @@ function Plan.build(config,index)
 		end
 		return add("mesh",{scale,scale,scale},{x,y or Terrain.height(o[1]+x,o[3]+z)-.08,z},"cream",detail,{0,angle or 0,0},{template=name,scale=scale,flatten=name=="RockPath_Round_Small_1" and .3 or 1})
 	end
-	-- Layered groups frame the clearing; every station and the entrance stay open.
-	for _,t in ipairs({
-		{"CommonTree_1",-49,-25,1.06,25},{"CommonTree_3",-57,-47,.95,105},{"CommonTree_5",-43,-57,1.12,220},
-		{"CommonTree_1",-24,-64,1.20,140},{"Pine_2",-45,-83,.94,35},{"Pine_2",-10,-91,1.18,75},
-		{"CommonTree_3",3,-70,1.15,215},{"CommonTree_5",24,-64,1.2,310},{"CommonTree_1",43,-54,1.02,280},
-		{"Pine_2",36,-86,1.16,115},{"TwistedTree_1",-66,-7,.92,55},{"CommonTree_5",-47,16,.90,80},
-		{"CommonTree_3",45,-23,.92,165},{"CommonTree_5",43,11,.80,280},{"Pine_2",-77,-53,1.05,0}
-	}) do mesh(t[1],t[2],t[3],t[4],t[5],1) end
+	-- TASK05_FOREST_BEGIN: replace the old isolated tree instances only.
+	for _,p in ipairs(Forest.build()) do
+		add("forest",{p.scale,p.scale,p.scale},{p.x,0,p.z},"bark",1,{0,p.angle,0},{
+			forest=p.forest,template=p.template,species=p.species,variant=p.variant,scale=p.scale,flatten=1,
+			radius=p.radius,layer=p.layer,forestParts=p.parts,forestTriangles=p.triangles,
+			forestMeshTriangles=p.meshTriangles,forestNativeParts=p.nativeParts})
+	end
+	-- TASK05_FOREST_END
 	-- Thin stone ribbons follow the unchanged floor and never act as colliders.
 	for i=0,10 do mesh("RockPath_Round_Small_1",math.sin(i*.65)*1.1,28-i*5.3,5,i*23,1,.515) end
 	for i=0,4 do mesh("RockPath_Round_Small_1",0,33+i*4.4,5,15+i*19,1,.49) end
@@ -80,7 +81,7 @@ function Plan.build(config,index)
 	local colors={}
 	for _,d in ipairs(parts) do
 		local entry=d.template and Plan.catalog[d.template]
-		metrics.parts+=entry and entry[2] or 1; metrics.triangles+=entry and entry[1] or 12
+		metrics.parts+=d.forestParts or (entry and entry[2] or 1); metrics.triangles+=d.forestTriangles or (entry and entry[1] or 12)
 		colors[d.color]=true; if d.light then metrics.lights+=1 end
 	end
 	for _ in pairs(colors) do metrics.palette+=1 end

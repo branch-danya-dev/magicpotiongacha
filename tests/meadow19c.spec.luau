@@ -39,9 +39,14 @@ return function(T:any)
 		T.truthy(types.Clover_2>=30 and types.Flower_3_Group>=15)
 		T.falsy(types.Bush_Common_Flowers)
 	end)
-	T.test("19c: geometry and texture budgets remain inherited; Reduced retains meadow volume",function()
-		local plan=Plan.build(Config,1); T.truthy(plan.metrics.parts<=650 and plan.metrics.triangles<=150000)
+	T.test("19c: meadow geometry stays bounded as forest expands; Reduced retains meadow volume",function()
+		local plan=Plan.build(Config,1); T.truthy(plan.metrics.parts<=Config.budgets.parts and plan.metrics.triangles<=Config.budgets.triangles)
 		T.equal(plan.metrics.externalTextures,12)
+		local baseParts,baseTriangles=0,0
+		for _,p in ipairs(plan.parts) do if not p.forest then
+			local c=p.template and Plan.catalog[p.template]; baseParts+=c and c[2] or 1; baseTriangles+=c and c[1] or 12
+		end end
+		T.truthy(baseParts<=650 and baseTriangles<=150000)
 		local counts={0,0,0}; for _,p in ipairs(Meadow.build()) do for tier=p.detail,3 do counts[tier]+=1 end end
 		T.truthy(counts[1]>180); T.truthy(counts[2]>counts[3]*.8)
 	end)

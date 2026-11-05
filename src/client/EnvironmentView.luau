@@ -8,6 +8,7 @@ local Config=require(Shared.EnvironmentConfig)
 local State=require(Shared.EnvironmentState)
 local Transition=require(Shared.EnvironmentTransition)
 local Labels=require(Shared.EnvironmentLabels)
+local ForestLOD=require(Shared.ForestLOD)
 local Meadow=require(Shared.MeadowPlan)
 local MeadowMotion=require(Shared.MeadowMotion)
 local View={}
@@ -99,7 +100,7 @@ function View.start(root,settings)
 		local d=State.star(i); stars[i]=celestialSprite("Star_"..i,Config.polishPrefix.."star.png",d.size,Vector3.new(d.x,d.y,d.z)); stars[i].alpha=d.alpha
 	end
 	local lights={}; local wind={}; local registered={}; local wetSurfaces={}
-	local meadowWind={}; local meadowParts={}
+	local meadowWind={}; local meadowParts={}; local forestParts={}; local forestByPart={}
 	local labels={}; local annotations=true; local labelsDirty=0
 	local function registerLabel(gui)
 		if gui:IsA("BillboardGui") then table.insert(labels,{gui=gui,enabled=gui.Enabled}) end
@@ -119,13 +120,18 @@ function View.start(root,settings)
 			-- SurfaceAppearance maps requires Plugin capability, unavailable here.
 			local leaf=string.match(p.Name,"Tree.*_2$") or string.match(p.Name,"Pine.*_2$")
 			local plant=string.find(p.Name,"Grass") or string.find(p.Name,"Fern") or leaf
+			local forestRole=p:GetAttribute("ForestRole")
+			if forestRole then
+				local entry={part=p,role=forestRole,anchor=p:GetAttribute("ForestAnchor"),alpha=1,target=1,saved=p.LocalTransparencyModifier}
+				table.insert(forestParts,entry); forestByPart[p]=entry; p.LocalTransparencyModifier=1
+			end
 			if p:GetAttribute("Meadow") then
 				table.insert(meadowParts,p); p.LocalTransparencyModifier=1; p:SetAttribute("MeadowTargetAlpha",1)
 				if p:GetAttribute("MeadowWind") then
 					local pivot=CFrame.new(0,p:GetAttribute("MeadowGroundY")-p.Position.Y,0)*p.CFrame
 					table.insert(meadowWind,{part=p,base=p.CFrame,pivot=pivot,offset=pivot:ToObjectSpace(p.CFrame),visible=false})
 				end
-			elseif plant then table.insert(wind,{part=p,base=p.CFrame,pivot=p.CFrame*CFrame.new(0,-p.Size.Y/2,0),height=p.Size.Y}) end
+			elseif plant and not forestRole then table.insert(wind,{part=p,base=p.CFrame,pivot=p.CFrame*CFrame.new(0,-p.Size.Y/2,0),height=p.Size.Y}) end
 		end
 	end
 	-- Children can replicate after the enable attribute. Do not miss late lanterns.
@@ -182,6 +188,8 @@ function View.start(root,settings)
 		counts.rainbow=rainbow.image.ImageTransparency<1 and 1 or 0
 		for _,v in ipairs(stars) do if v.image.ImageTransparency<1 then counts.stars+=1 end end
 		counts.moon=moon.image.ImageTransparency<1 and 1 or 0
+		counts.forest=#forestParts; counts.forestVisible=0
+		for _,f in ipairs(forestParts) do if f.alpha<.99 then counts.forestVisible+=1 end end
 		return counts
 	end
 	function self.setAnnotationsEnabled(enabled) annotations=enabled~=false; labelsDirty=1 end
@@ -223,7 +231,11 @@ function View.start(root,settings)
 				local detail=p:GetAttribute("EnvironmentDetail") or 1
 				-- Preserve the scene silhouette at all tiers; only small decorative detail gets culled.
 				local hidden=detail>q.detail or ((detail>1 or p:GetAttribute("Meadow")) and (p.Position-camera.CFrame.Position).Magnitude>q.distance)
-				if p:GetAttribute("Meadow") then p:SetAttribute("MeadowTargetAlpha",hidden and 1 or 0)
+				local f=forestByPart[p]
+				if f then
+					local delta=camera.CFrame.Position-f.anchor
+					f.target=ForestLOD.alpha(f.role,self.quality,Vector2.new(delta.X,delta.Z).Magnitude)
+				elseif p:GetAttribute("Meadow") then p:SetAttribute("MeadowTargetAlpha",hidden and 1 or 0)
 				else p.LocalTransparencyModifier=hidden and 1 or 0 end
 			end
 			table.sort(lights,function(a,b) return (a.Parent.Position-camera.CFrame.Position).Magnitude<(b.Parent.Position-camera.CFrame.Position).Magnitude end)
@@ -246,6 +258,9 @@ function View.start(root,settings)
 		for _,p in ipairs(meadowParts) do
 			local target=p:GetAttribute("MeadowTargetAlpha") or 0; local alpha=p.LocalTransparencyModifier
 			if alpha~=target then p.LocalTransparencyModifier=alpha+math.clamp(target-alpha,-elapsed*2,elapsed*2) end
+		end
+		for _,f in ipairs(forestParts) do
+			if f.alpha~=f.target then f.alpha=ForestLOD.step(f.alpha,f.target,elapsed); f.part.LocalTransparencyModifier=f.alpha end
 		end
 		MeadowMotion.step(meadowWind,self.reduceMotion and 0 or (Meadow.maxMoving[self.quality] or Meadow.maxMoving.reduced),elapsed)
 		for _,w in ipairs(meadowWind) do
@@ -328,6 +343,7 @@ function View.start(root,settings)
 		for k,v in pairs(saved) do Lighting[k]=v end
 		workspace.GlobalWind=savedWind
 		for _,p in ipairs(self.parts) do p.LocalTransparencyModifier=0 end
+		for _,f in ipairs(forestParts) do f.part.LocalTransparencyModifier=f.saved end
 		for _,w in ipairs(wind) do w.part.CFrame=w.base end
 		for _,w in ipairs(meadowWind) do w.part.CFrame=w.base end
 		for _,v in ipairs(wetSurfaces) do v.part.Color=v.color end

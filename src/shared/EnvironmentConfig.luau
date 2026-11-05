@@ -30,5 +30,5 @@ return {
 		sunset={position={-108,9,-65},target={-220,20,-65}},
 		rainbow={position={-175,9,-65},target={-40,35,-65}},
 		sky={position={-142,9,-65},target={-142,65,-115}}},
-	budgets={parts=650,palette=12,lights=6,rain=60,motion=12,motes=24,fog=3,glints=6,rainbow=1,stars=48,triangles=150000,textureMiB=32},
+	budgets={parts=850,palette=12,lights=6,rain=60,motion=12,motes=24,fog=3,glints=6,rainbow=1,stars=48,triangles=300000,textureMiB=32},
 }

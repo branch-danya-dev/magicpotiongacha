@@ -26,18 +26,27 @@ function Art.attach(world)
 	game:GetService("RunService").Heartbeat:Wait()
 	local ground=RaycastParams.new(); ground.FilterType=Enum.RaycastFilterType.Include
 	ground.FilterDescendantsInstances={workspace.Terrain,world.root.ForestFloor,world.plots[Config.pilotPlot].model.Floor}
+	-- TASK05_FOREST_GROUND_BEGIN: new forest follows visible soil, not hidden slabs.
+	local forestGround=RaycastParams.new(); forestGround.FilterType=Enum.RaycastFilterType.Include
+	forestGround.FilterDescendantsInstances={workspace.Terrain}; forestGround.IgnoreWater=true
+	-- TASK05_FOREST_GROUND_END
 	local folder=Instance.new("Folder"); folder.Name="EnvironmentArt"; folder.Parent=world.root
 	for _,d in ipairs(Plan.build(Config,Config.pilotPlot).parts) do
-		local position=Vector3.new(table.unpack(d.position))
-		if d.template then
-			local hit=workspace:Raycast(Vector3.new(position.X,60,position.Z),Vector3.new(0,-110,0),ground)
-			assert(hit,"Decoration has no supporting ground: "..d.id.." / "..d.template)
+		local position=Vector3.new(table.unpack(d.position)); local surfaceNormal
+		if d.template or d.forest then
+			local hit=workspace:Raycast(Vector3.new(position.X,60,position.Z),Vector3.new(0,-110,0),d.forest and forestGround or ground)
+			assert(hit,"Decoration has no supporting ground: "..d.id.." / "..tostring(d.template or d.forest))
 			position=Vector3.new(position.X,hit.Position.Y+(d.flatten~=1 and (.16+(tonumber(string.match(d.id,"%d+"))%7)*.045) or -.08),position.Z)
+			surfaceNormal=hit.Normal
 			if d.meadow then position=Vector3.new(position.X,hit.Position.Y-.035,position.Z) end
 		end
 		local cf=CFrame.new(position)*CFrame.Angles(math.rad(d.rotation[1]),math.rad(d.rotation[2]),math.rad(d.rotation[3]))
 		local model
-		if d.template then
+		if d.forest then
+			local forest=require(script.Parent.ForestArt)
+			if d.forest=="log" then cf=forest.slopeFrame(cf,surfaceNormal) end
+			model=forest.build(d,templates); model:PivotTo(cf)
+		elseif d.template then
 			local source=templates:FindFirstChild(d.template); assert(source and source:IsA("Model"),"Unknown nature template")
 			model=source:Clone(); model.Name=d.id
 			if string.find(d.template,"Grass") then for _,p in ipairs(model:GetDescendants()) do

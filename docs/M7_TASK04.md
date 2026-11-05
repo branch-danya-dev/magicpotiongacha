@@ -1,5 +1,10 @@
 # Task 04 / #19c — pilot meadow
 
+**Workflow amendment:** the owner subsequently removed frames, screenshots and
+video for ongoing work and authorized task 05. The capture checklist below is
+historical; media is no longer required to continue. Studio checks remain
+unperformed, and no art approval is inferred.
+
 **CODE / BUILD PREPARED; STUDIO VERIFICATION AND ART REVIEW PENDING.**
 The owner deferred Studio use on 2026-11-05 and requested code/build work only.
 There are no new task-04 screenshots, recordings or live acceptance results.
@@ -91,4 +96,5 @@ with exact runtime commit, file hashes and serialized-script comparisons.
 - Physical smartphones, experience asset permissions and multiplayer load remain
   **BLOCKED**. No purchase, trade activation, merge or publishing is authorized.
 
-Task 04 must stay open until its actual visual evidence and owner review exist.
+The original capture requirement below was superseded by the owner amendment
+above. Code/build delivery is complete; actual appearance remains unverified.

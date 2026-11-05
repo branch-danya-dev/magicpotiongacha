@@ -206,7 +206,21 @@ for(const [path,hash] of Object.entries(a2c.sources)) {
     if(path==='src/server/EnvironmentArt.luau') current=current
       .replace(/\t\t-- TASK04_MEADOW_BEGIN[^]*?\t\t-- TASK04_MEADOW_END\n/,'')
       .replace('\t\t\tif d.meadow then position=Vector3.new(position.X,hit.Position.Y-.035,position.Z) end\n','');
-    assert.equal(sha(current),sha(approved),`Approved atmosphere changed outside task 01 fence / tasks 02-03 ground / task 04 meadow seams: ${path}`);
+    // Task 05 replaces only trees and adds the forest factory/geometry accounting.
+    if(path==='src/shared/EnvironmentPlan.luau') {
+      current=current.replace(/^local Forest=require.*\n/m,'').replace(/\t-- TASK05_FOREST_BEGIN[^]*?\t-- TASK05_FOREST_END\n/,'')
+        .replace('metrics.parts+=d.forestParts or (entry and entry[2] or 1); metrics.triangles+=d.forestTriangles or (entry and entry[1] or 12)',
+          'metrics.parts+=entry and entry[2] or 1; metrics.triangles+=entry and entry[1] or 12');
+      approved=approved.replace(/\t-- Layered groups[^]*?(?=\t-- Thin stone ribbons)/,'');
+    }
+    if(path==='src/shared/EnvironmentConfig.luau') current=current.replace('budgets={parts=850','budgets={parts=650').replace('triangles=300000','triangles=150000');
+    if(path==='src/server/EnvironmentArt.luau') current=current
+      .replace(/\t-- TASK05_FOREST_GROUND_BEGIN[^]*?\t-- TASK05_FOREST_GROUND_END\n/,'')
+      .replace('; local surfaceNormal','').replace('\t\t\tsurfaceNormal=hit.Normal\n','')
+      .replace('d.forest and forestGround or ground','ground').replace('tostring(d.template or d.forest)','d.template')
+      .replace('if d.template or d.forest then','if d.template then')
+      .replace(/if d.forest then\n[^]*?\t\telseif d.template then/,'if d.template then');
+    assert.equal(sha(current),sha(approved),`Approved atmosphere changed outside task 01 fence / tasks 02-03 ground / tasks 04-05 vegetation seams: ${path}`);
   }
 }
 for(const [name,entry] of Object.entries(a2c.images)) {
