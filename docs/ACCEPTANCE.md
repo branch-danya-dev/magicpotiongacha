@@ -11,9 +11,13 @@ Rojo builds included. Actual Studio screenshots cover five light/weather poses,
 spawn and Bazaar. [Evidence and requirement matrix](M7_ENVIRONMENT.md),
 [raw images](evidence/m7/README.md), [asset handoff](../assets/environment/README.md).
 
-**Gate A is not accepted:** native fallback is not finished Quaternius art; source
-download/package admission is BLOCKED. Contextual billboard selection resolves
-the overlap observed during review; real mobile acceptance is still outstanding. Human visual decision PENDING. **Gate B withheld.**
+**Gate A is ART REJECTED:** the owner rejected the primitive vegetation, flat
+lighting and slab landscape. A new one-farm sample and explicit artistic approval
+are required. The alternate free MegaKit Standard source is acquired and statically
+inspected; package admission/import remain BLOCKED (game-dev unavailable).
+The existing contextual billboard filter does not resolve the normal gameplay UI
+acceptance: issue #18 remains an explicit UX gate on PC and phone. **Gate B / #19
+is withheld until ART APPROVED and the UX check.** See the revised art direction.
 `EnvironmentArtEnabled=false`, monetization/trading/SKUs unchanged. Studio visual
 rendering and noncollision property assertions do not pass gameplay traversal,
 real DataStore, PolicyService, payments, phone or multiplayer acceptance.

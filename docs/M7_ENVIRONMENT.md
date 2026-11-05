@@ -1,5 +1,14 @@
 # M7.1 environment / Gate A contract
 
+**2026-11-05 owner revision:** the primitive pilot below is **ART REJECTED**.
+Historical screenshots and 841 passing tests do not pass the artistic or normal
+gameplay UI gates. [Revised direction and asset measurements](M7_ART_DIRECTION.md).
+The ordered route is revised one-farm Gate A, then #18 UI declutter; #19 full
+eight-farm island requires explicit ART APPROVED and the UX check. The free
+MegaKit Standard archive is now acquired and statically inspected outside the
+repo; canonical admission/import remain BLOCKED because game-dev is unavailable.
+No new runtime artwork, imported Roblox IDs or live acceptance is claimed here.
+
 Branch feat/m7-environment-artpass → feat/m6-collectible-monetization (Draft).
 EnvironmentArtEnabled=false by default. No publication, merge, payment, public
 trading or schema/economy change. M6 V7 and all 810 cases must remain.
@@ -67,8 +76,8 @@ remain BLOCKED until that pipeline and owner-authorized Roblox import are availa
 
 Gate A: one scene, four states and three camera positions; readable UI, open paths,
 pure schedule regression and quality ceilings. Full source/test/CI evidence and
-live observations are recorded after implementation. Owner visual decision remains
-PENDING. Gate B is withheld. DataStore/payment/policy/phone/2–8-player gates remain
+live observations are recorded after implementation. The owner's visual decision
+is ART REJECTED; a revised implementation is required. Gate B is withheld. DataStore/payment/policy/phone/2–8-player gates remain
 BLOCKED even if a local Studio visual preview can be captured.
 
 ## Gate A implementation evidence — 2026-11-05
@@ -129,7 +138,7 @@ assert the built-in engine sphere tessellation meets a measured triangle budget.
 
 | Requirement | Automated evidence | Visual evidence | Remaining gate |
 | --- | --- | --- | --- |
-| One pilot, clear work area, original eight origins | Gate-A guard, deterministic descriptors; World source contract; Studio noncollision assertions | Day overview and spawn | CC0 production art and owner artistic acceptance BLOCKED/PENDING |
+| One pilot, clear work area, original eight origins | Gate-A guard, deterministic descriptors; World source contract; Studio noncollision assertions | Historical day overview and spawn | ART REJECTED; revised production art and acceptance required |
 | Day/sunset/night/dawn/rain | Named presets, finite bounds, cyclic continuity, synchronized schedule | Same overview in all five states | Subjective palette/night approval; renderer cloud parity |
 | Gameplay authority / online-offline / V7 | All 810 M6 tests + unchanged domain/persistence sources | Isolated harness deliberately has no backend | Real saves/PolicyService/receipts/2–8 clients remain BLOCKED |
 | Quality and Reduce Motion | Three presets, fixed ceilings, no mutation, local controller | Full quality captures only | Live tier switching, portrait/landscape and 10–15 min real phone test BLOCKED |

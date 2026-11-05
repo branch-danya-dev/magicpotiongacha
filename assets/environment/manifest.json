@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "gate": "A / pilot only / awaiting visual acceptance",
+  "gate": "A / ART REJECTED / revised one-farm sample required before #18 UX and #19 rollout",
   "quaternius": {
     "status": "BLOCKED",
     "pack": "Ultimate Stylized Nature",
@@ -73,5 +73,20 @@
       "qa/environment/Review.server.luau": "6d8ebaf6f0188baa5d16dd18a6a87a3f407a2d0bf02aa942515b444e4de67a5a",
       "src/shared/EnvironmentLabels.luau": "59e09b901589c602d11eecef0cb9d287e71e1d7a9257580f606d2eebe1768d1e"
     }
+  },
+  "megakitCandidate": {
+    "admitted": false,
+    "blockers": [
+      "game-dev CLI unavailable: canonical verification/admission not performed.",
+      "Selected meshes require optimization and actual Roblox material/import validation."
+    ],
+    "robloxAssetIds": [],
+    "audit": "assets/environment/megakit-source-audit.json",
+    "sha256": "298f6732b872e4cf7b30e6e7abf9641c7f6dc6b326df37ac089533ed7e3d58c9",
+    "license": "CC0-1.0 in the acquired 2024 Standard archive",
+    "rawAssetsInRepository": false,
+    "pack": "Stylized Nature MegaKit Standard",
+    "status": "DOWNLOADED_STATIC_INSPECTION_ONLY",
+    "source": "https://quaternius.itch.io/stylized-nature-megakit"
   }
 }

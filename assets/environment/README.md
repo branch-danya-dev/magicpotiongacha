@@ -1,5 +1,26 @@
 # M7.1 provenance and import handoff
 
+## 2026-11-05 source update
+
+An alternate official free pack, **Stylized Nature MegaKit Standard** (2024), has
+now been acquired from https://quaternius.itch.io/stylized-nature-megakit . This is
+not Ultimate Stylized Nature below. SHA-256:
+`298f6732b872e4cf7b30e6e7abf9641c7f6dc6b326df37ac089533ed7e3d58c9`.
+Its 68 glTF models and local dependencies were statically inspected; exact roster,
+hashes, selected models, triangles and texture sizes are in
+`megakit-source-audit.json`. `License_Standard.txt` in that exact archive states
+CC0-1.0. The general website now also advertises QAL v1.0; this record is specific
+to the acquired Standard archive, not a claim that every Quaternius release is CC0.
+
+Source files remain in staging **outside this game repository**, unmodified and
+unadmitted. No Roblox IDs or canonical game-dev receipt exist yet. Acquisition
+removes the old source-availability blocker for this alternative; the missing
+game-dev verification/admission tool is still a blocker. Runtime is unchanged.
+The owner explicitly rejected the old native fallback. See `docs/M7_ART_DIRECTION.md`
+for the new reference selection and measured optimization needs.
+
+## Historical Ultimate Stylized Nature attempt and native fallback
+
 `manifest.json` distinguishes **selected external assets** from **actually shipped
 original geometry**. `sha256=null`, `robloxAssetId=null`, `admitted=false` mean no
 asset was acquired/admitted; they are not placeholders for fabricated proof.

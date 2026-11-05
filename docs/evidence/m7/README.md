@@ -1,5 +1,10 @@
 # M7.1 / Gate A — Studio review evidence
 
+**ART REJECTED by the owner on 2026-11-05.** These are historical first-pass
+captures, retained for before/after comparison. They do not pass the ordinary
+gameplay UI gate (#18). The revised Gate A direction is in
+[M7_ART_DIRECTION.md](../../M7_ART_DIRECTION.md); no new Studio captures are claimed.
+
 Actual unedited Roblox Studio captures, 2026-11-05 (Moscow), Studio
 0.745.462.7451125, full quality. **Original native fallback**, not imported
 Quaternius or an accepted final art pass. Other seven plots remain greybox.
