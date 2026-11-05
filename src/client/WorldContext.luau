@@ -8,11 +8,12 @@ local Shared=game.ReplicatedStorage.PotionTycoon.Shared
 local Policy=require(Shared.ContextUI)
 local Config=require(Shared.Config)
 local Context={}
-function Context.start(onChanged,isPanelOpen,blockedRects)
+function Context.start(onChanged,isPanelOpen,blockedRects,currentState)
 	local player=Players.LocalPlayer
 	local root=workspace:WaitForChild("PotionTycoonWorld")
 	assert(not root:GetAttribute("WorldContextOwned"),"Duplicate world context owner")
 	root:SetAttribute("WorldContextOwned",true)
+	local affordance=require(script.Parent.FarmAffordance).new(root,player)
 	local prompts,labels,pads,signs={},{},{},{}
 	local current,candidates=nil,{}
 	local pinned,pinnedUntil=nil,0
@@ -32,7 +33,7 @@ function Context.start(onChanged,isPanelOpen,blockedRects)
 			object.Enabled=false
 		elseif object:IsA("BasePart") then
 			if string.sub(object.Name,1,4)=="Buy_" then
-				pads[object]={color=object.Color,material=object.Material}
+				pads[object]={color=object.Color,material=object.Material,transparency=object.LocalTransparencyModifier}
 				object.Material=Enum.Material.SmoothPlastic; object.Color=Color3.fromRGB(123,143,122)
 			elseif object.Name=="Sign" and object.Parent:GetAttribute("PlotIndex") then
 				signs[object]=object.LocalTransparencyModifier; object.LocalTransparencyModifier=1
@@ -98,7 +99,10 @@ function Context.start(onChanged,isPanelOpen,blockedRects)
 			end
 		end
 		for gui in pairs(labels) do if gui.Parent then gui.Enabled=false end end
-		highlight.Adornee=current and current.anchor or nil
+		local integrated=root:GetAttribute("FarmGroundVersion")==1
+		for pad,record in pairs(pads) do if pad.Parent then pad.LocalTransparencyModifier=integrated and 1 or record.transparency end end
+		highlight.Adornee=current and not (integrated and current.upgrade) and current.anchor or nil
+		affordance.update(current,currentState and currentState(),hrp and hrp.Position)
 		onChanged(current,#candidates,region)
 	end
 	local heartbeat=RunService.Heartbeat:Connect(function(dt) elapsed+=dt; if elapsed>=.1 then elapsed=0; update(false) end end)
@@ -110,10 +114,10 @@ function Context.start(onChanged,isPanelOpen,blockedRects)
 	function self.current() return current end
 	function self.refresh() update(false) end
 	function self.stop()
-		if stopped then return end; stopped=true; heartbeat:Disconnect(); added:Disconnect(); input:Disconnect(); highlight:Destroy()
+		if stopped then return end; stopped=true; heartbeat:Disconnect(); added:Disconnect(); input:Disconnect(); highlight:Destroy(); affordance.stop()
 		for prompt,record in pairs(prompts) do if prompt.Parent then prompt.Enabled=record.enabled; prompt.ObjectText=record.objectText; prompt.ActionText=record.actionText end end
 		for gui,enabled in pairs(labels) do if gui.Parent then gui.Enabled=enabled end end
-		for pad,record in pairs(pads) do if pad.Parent then pad.Color=record.color; pad.Material=record.material end end
+		for pad,record in pairs(pads) do if pad.Parent then pad.Color=record.color; pad.Material=record.material; pad.LocalTransparencyModifier=record.transparency end end
 		for sign,transparency in pairs(signs) do if sign.Parent then sign.LocalTransparencyModifier=transparency end end
 		root:SetAttribute("WorldContextOwned",nil)
 	end

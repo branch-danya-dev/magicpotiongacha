@@ -1,6 +1,7 @@
 --!nonstrict
 -- Bounded startup-only sculpting. Never clears or overwrites pre-existing terrain.
 local Field=require(game:GetService("ReplicatedStorage").PotionTycoon.Shared.IslandTerrain)
+local FarmGround=require(game:GetService("ReplicatedStorage").PotionTycoon.Shared.FarmGround)
 local Landscape={}
 function Landscape.attach(world)
 	assert(not world.root:GetAttribute("IslandSurfaceVersion"),"Island already built")
@@ -15,7 +16,7 @@ function Landscape.attach(world)
 		for ix=1,#materials do for iz=1,#materials[ix][1] do
 			local x,z=b.min[1]+(ix-.5)*r,b.min[3]+(iz-.5)*r
 			local h,surface=-100,"Sand"
-			if not b.waterOnly then h,surface=Field.column(x,z) end
+			if not b.waterOnly then h,surface=FarmGround.column(x,z) end
 			for iy=1,#materials[ix] do
 				if occupancy[ix][iy][iz]==0 then
 					local material,fill=Field.cell(h,surface,b.min[2]+(iy-.5)*r)
@@ -29,6 +30,7 @@ function Landscape.attach(world)
 	terrain:SetMaterialColor(Enum.Material.Grass,Color3.fromRGB(141,166,107))
 	terrain:SetMaterialColor(Enum.Material.Rock,Color3.fromRGB(135,137,129))
 	terrain:SetMaterialColor(Enum.Material.Sand,Color3.fromRGB(190,177,143))
+	terrain:SetMaterialColor(Enum.Material.Ground,Color3.fromRGB(163,150,116))
 	terrain.WaterColor=Color3.fromRGB(96,149,156); terrain.WaterTransparency=.35; terrain.WaterReflectance=.12
 	-- Retain its collision/friction contract; Terrain now supplies the visible skin.
 	world.root.ForestFloor.Transparency=1

@@ -653,7 +653,7 @@ task.spawn(function()
 			table.insert(rectangles,{x=p.X+inset.X,y=p.Y+inset.Y,w=s.X,h=s.Y})
 		end
 		return rectangles
-	end)
+	end,function() return state end)
 end)
 Ready:FireServer()
 task.spawn(function()

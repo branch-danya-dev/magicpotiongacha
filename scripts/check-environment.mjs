@@ -191,6 +191,8 @@ for(const [path,hash] of Object.entries(a2c.sources)) {
         .replace(/local function landscape\(\)[\s\S]*?(?=function Art\.attach\(world\))/,'')
         .replace('\tlandscape()\n','')
         .replace('\trequire(script.Parent.IslandLandscape).attach(world)\n','')
+        .replace('\trequire(script.Parent.FarmLandscape).attach(world)\n','')
+        .replace('meadow(plot.model.Floor,false)','meadow(plot.model.Floor,surface.material=="Grass")')
         .replace('meadow(world.root.ForestFloor,false)','meadow(world.root.ForestFloor,true)');
       current=withoutTerrain(current); approved=withoutTerrain(approved);
     }

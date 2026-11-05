@@ -14,11 +14,12 @@ function absolute(node) {
 }
 absolute(project);
 // Plain delivery starts the full game without a diagnostic script or delayed pose jump.
-if(process.argv.includes('--ui') || process.argv.includes('--safety') || process.argv.includes('--atmosphere') || process.argv.includes('--island')) {
-  const script=process.argv.includes('--island')?'IslandReview':process.argv.includes('--safety')?'SafetyReview':process.argv.includes('--ui')?'UIReview':'GameplayReview';
+if(process.argv.includes('--ui') || process.argv.includes('--safety') || process.argv.includes('--atmosphere') || process.argv.includes('--island') || process.argv.includes('--farm')) {
+  const script=process.argv.includes('--farm')?'FarmReview':process.argv.includes('--island')?'IslandReview':process.argv.includes('--safety')?'SafetyReview':process.argv.includes('--ui')?'UIReview':'GameplayReview';
   project.tree.StarterPlayer.StarterPlayerScripts.A2VisualReview={$path:resolve(root,`qa/environment/${script}.client.luau`)};
 }
 if(process.argv.includes('--island')) project.tree.ServerScriptService.IslandReview={$path:resolve(root,'qa/environment/IslandReview.server.luau')};
+if(process.argv.includes('--farm')) project.tree.ServerScriptService.FarmReview={$path:resolve(root,'qa/environment/FarmReview.server.luau')};
 project.name='PotionTycoon-M7-LocalPreview';
 project.tree.Lighting.$properties.Technology='Future';
 project.tree.Lighting.$properties.LightingStyle='Realistic';

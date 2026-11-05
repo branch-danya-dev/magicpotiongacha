@@ -73,6 +73,7 @@ function Art.attach(world)
 	require(script.Parent.FenceBarriers).attach(folder)
 	world.root.ForestFloor.Color=Color3.fromRGB(table.unpack(Config.palette.grass)); world.root.ForestFloor.Material=Enum.Material.Grass
 	meadow(world.root.ForestFloor,false)
+	require(script.Parent.FarmLandscape).attach(world)
 	world.root.Bazaar.Color=Color3.fromRGB(table.unpack(Config.palette.stone)); world.root.Bazaar.Material=Enum.Material.Sandstone
 	world.root:SetAttribute("EnvironmentArtEnabled",true); world.root:SetAttribute("EnvironmentPilotPlot",Config.pilotPlot)
 	Art.update(world.plots[Config.pilotPlot],0,false)
@@ -81,6 +82,6 @@ function Art.update(plot,rebirths,aurora)
 	if plot.index~=Config.pilotPlot then return end
 	local surface=State.surface(Config,rebirths,aurora)
 	plot.model.Floor.Color=Color3.fromRGB(table.unpack(surface.color)); plot.model.Floor.Material=Enum.Material[surface.material]
-	meadow(plot.model.Floor,surface.material=="Grass")
+	meadow(plot.model.Floor,false)
 end
 return Art
