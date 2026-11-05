@@ -23,11 +23,11 @@ def star(x,y):
     a=max(a,max(0,1-abs(u)*15-abs(v)*1.5)*.45,max(0,1-abs(v)*15-abs(u)*1.5)*.45)
     return 223,236,255,round(255*a)
 png('star.png',64,star)
-(OUT/'LICENSE.txt').write_text('Original A.2c mathematical material and star art. CC0-1.0 dedication.\nNo downloaded, Nintendo/Zelda, marketplace or provider imagery.\nGenerator: scripts/create-polish-assets.py\nhttps://creativecommons.org/publicdomain/zero/1.0/\n',encoding='utf-8')
+(OUT/'LICENSE.txt').write_text('Original A.2c mathematical material and star art. CC0-1.0 dedication.\nNo downloaded, Nintendo/Zelda, marketplace or provider imagery.\nGenerator: scripts/create-polish-assets.py\nhttps://creativecommons.org/publicdomain/zero/1.0/\n',encoding='utf-8',newline='\r\n')
 files={name:hashlib.sha256((OUT/name).read_bytes()).hexdigest() for name in ['meadow.png','star.png','LICENSE.txt']}
 receipt={'license':'CC0-1.0','local_prefix':'rbxasset://m7a2c-v2/','generator':'scripts/create-polish-assets.py',
  'generator_sha256':hashlib.sha256(Path(__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest(),
  'files':files,'rgba8_mips_bytes':math.ceil((128*128+64*64)*4*4/3),
  'permissions':'LOCAL_STUDIO_ONLY; experience asset permissions BLOCKED','roblox_asset_ids':None}
-(OUT/'receipt.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8')
+(OUT/'receipt.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8',newline='\n')
 print('Original A.2c assets with closed SHA-256 roster; bytes with mips:',receipt['rgba8_mips_bytes'])

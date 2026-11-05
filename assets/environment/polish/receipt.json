@@ -2,7 +2,7 @@
   "license": "CC0-1.0",
   "local_prefix": "rbxasset://m7a2c-v2/",
   "generator": "scripts/create-polish-assets.py",
-  "generator_sha256": "3ea37b55fdf92a8e41a7d44a71e3ac98e649738ac8e76fc71d58084cb1a370de",
+  "generator_sha256": "0c2441d19e6ee841a8efae0bf844a6f5149e39b7a0054d6a0aedad9e23606f79",
   "files": {
     "meadow.png": "96ed909ec0fd840a75694681721395fa84d744556156b79785dbd3b3a23dc9fe",
     "star.png": "1ab214fbbe9b85402defdd9431eccf6b1677c3e3b0a17dd9f45bec3eea9deb4c",
