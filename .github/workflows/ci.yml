@@ -45,5 +45,6 @@ jobs:
             assets/environment/polish/
             assets/environment/fantasy/
             assets/environment/stability-sky/
+            assets/environment/woodland/
             scripts/install-atmosphere-preview.mjs
           if-no-files-found: error

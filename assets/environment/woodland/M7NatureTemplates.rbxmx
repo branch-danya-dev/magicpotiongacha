@@ -1,0 +1,1256 @@
+<?xml version='1.0' encoding='utf-8'?>
+<roblox version="4">
+  <Item class="Folder" referent="M7Templates">
+    <Properties>
+      <string name="Name">M7NatureTemplates</string>
+    </Properties>
+    <Item class="Model" referent="Bush_Common_Flowers">
+      <Properties>
+        <string name="Name">Bush_Common_Flowers</string>
+      </Properties>
+      <Item class="MeshPart" referent="M7Mesh1">
+        <Properties>
+          <Content name="MeshId">
+            <url>rbxassetid://71265164108637</url>
+          </Content>
+          <Content name="TextureID">
+            <url>rbxassetid://104223482629283</url>
+          </Content>
+          <Vector3 name="size">
+            <X>3.75265026</X>
+            <Y>2.30706787</Y>
+            <Z>4.18091297</Z>
+          </Vector3>
+          <Vector3 name="InitialSize">
+            <X>3.75265026</X>
+            <Y>2.30706787</Y>
+            <Z>4.18091297</Z>
+          </Vector3>
+          <CoordinateFrame name="CFrame">
+            <X>-0.021972806700000097</X>
+            <Y>2.17879486</Y>
+            <Z>-1.8041124150158794e-16</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>1</R11>
+            <R12>0</R12>
+            <R20>0</R20>
+            <R21>0</R21>
+            <R22>1</R22>
+          </CoordinateFrame>
+          <string name="Name">Bush_Common_Flowers_1</string>
+          <bool name="Anchored">true</bool>
+          <bool name="CanCollide">false</bool>
+          <bool name="CanTouch">false</bool>
+          <bool name="CanQuery">false</bool>
+          <bool name="DoubleSided">true</bool>
+          <bool name="CastShadow">false</bool>
+          <Color3uint8 name="Color3uint8">4294967295</Color3uint8>
+          <token name="CollisionFidelity">2</token>
+          <float name="Transparency">0.02</float>
+          <token name="RenderFidelity">1</token>
+        </Properties>
+        <Item class="SurfaceAppearance" referent="M7Surface1">
+          <Properties>
+            <token name="AlphaMode">1</token>
+            <Content name="ColorMap">
+              <url>rbxassetid://104223482629283</url>
+            </Content>
+            <Content name="NormalMap">
+              <null />
+            </Content>
+            <string name="Name">SurfaceAppearance</string>
+          </Properties>
+        </Item>
+      </Item>
+      <Item class="MeshPart" referent="M7Mesh2">
+        <Properties>
+          <Content name="MeshId">
+            <url>rbxassetid://131695601044976</url>
+          </Content>
+          <Content name="TextureID">
+            <url>rbxassetid://110724520977986</url>
+          </Content>
+          <Vector3 name="size">
+            <X>3.44552422</X>
+            <Y>3.3184967</Y>
+            <Z>3.50948501</Z>
+          </Vector3>
+          <Vector3 name="InitialSize">
+            <X>3.44552422</X>
+            <Y>3.3184967</Y>
+            <Z>3.50948501</Z>
+          </Vector3>
+          <CoordinateFrame name="CFrame">
+            <X>0.1755358266999999</X>
+            <Y>1.65924835</Y>
+            <Z>0.08529663079999981</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>1</R11>
+            <R12>0</R12>
+            <R20>0</R20>
+            <R21>0</R21>
+            <R22>1</R22>
+          </CoordinateFrame>
+          <string name="Name">Bush_Common_Flowers_2</string>
+          <bool name="Anchored">true</bool>
+          <bool name="CanCollide">false</bool>
+          <bool name="CanTouch">false</bool>
+          <bool name="CanQuery">false</bool>
+          <bool name="DoubleSided">true</bool>
+          <bool name="CastShadow">false</bool>
+          <Color3uint8 name="Color3uint8">4294967295</Color3uint8>
+          <token name="CollisionFidelity">2</token>
+          <float name="Transparency">0.02</float>
+          <token name="RenderFidelity">1</token>
+        </Properties>
+        <Item class="SurfaceAppearance" referent="M7Surface2">
+          <Properties>
+            <token name="AlphaMode">1</token>
+            <Content name="ColorMap">
+              <url>rbxassetid://110724520977986</url>
+            </Content>
+            <Content name="NormalMap">
+              <null />
+            </Content>
+            <string name="Name">SurfaceAppearance</string>
+          </Properties>
+        </Item>
+      </Item>
+    </Item>
+    <Item class="Model" referent="Grass_Common_Short">
+      <Properties>
+        <string name="Name">Grass_Common_Short</string>
+      </Properties>
+      <Item class="MeshPart" referent="M7Mesh3">
+        <Properties>
+          <Content name="MeshId">
+            <url>rbxassetid://124076969727675</url>
+          </Content>
+          <Content name="TextureID">
+            <url>rbxassetid://127695594791239</url>
+          </Content>
+          <Vector3 name="size">
+            <X>0.526763916</X>
+            <Y>1.10000002</Y>
+            <Z>0.607894897</Z>
+          </Vector3>
+          <Vector3 name="InitialSize">
+            <X>0.526763916</X>
+            <Y>1.10000002</Y>
+            <Z>0.607894897</Z>
+          </Vector3>
+          <CoordinateFrame name="CFrame">
+            <X>0.0</X>
+            <Y>0.55000001</Y>
+            <Z>0.0</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>1</R11>
+            <R12>0</R12>
+            <R20>0</R20>
+            <R21>0</R21>
+            <R22>1</R22>
+          </CoordinateFrame>
+          <string name="Name">Grass_Common_Short_1</string>
+          <bool name="Anchored">true</bool>
+          <bool name="CanCollide">false</bool>
+          <bool name="CanTouch">false</bool>
+          <bool name="CanQuery">false</bool>
+          <bool name="DoubleSided">true</bool>
+          <bool name="CastShadow">true</bool>
+          <Color3uint8 name="Color3uint8">4294967295</Color3uint8>
+          <token name="CollisionFidelity">2</token>
+        </Properties>
+        <Item class="SurfaceAppearance" referent="M7Surface3">
+          <Properties>
+            <token name="AlphaMode">1</token>
+            <Content name="ColorMap">
+              <url>rbxassetid://127695594791239</url>
+            </Content>
+            <Content name="NormalMap">
+              <null />
+            </Content>
+            <string name="Name">SurfaceAppearance</string>
+          </Properties>
+        </Item>
+      </Item>
+    </Item>
+    <Item class="Model" referent="Clover_2">
+      <Properties>
+        <string name="Name">Clover_2</string>
+      </Properties>
+      <Item class="MeshPart" referent="M7Mesh4">
+        <Properties>
+          <Content name="MeshId">
+            <url>rbxassetid://74191690609816</url>
+          </Content>
+          <Content name="TextureID">
+            <url>rbxassetid://83669120491249</url>
+          </Content>
+          <Vector3 name="size">
+            <X>0.370414734</X>
+            <Y>0.549865067</Y>
+            <Z>0.364103705</Z>
+          </Vector3>
+          <Vector3 name="InitialSize">
+            <X>0.370414734</X>
+            <Y>0.549865067</Y>
+            <Z>0.364103705</Z>
+          </Vector3>
+          <CoordinateFrame name="CFrame">
+            <X>0.0</X>
+            <Y>0.2749325335</Y>
+            <Z>0.0</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>1</R11>
+            <R12>0</R12>
+            <R20>0</R20>
+            <R21>0</R21>
+            <R22>1</R22>
+          </CoordinateFrame>
+          <string name="Name">Clover_2_1</string>
+          <bool name="Anchored">true</bool>
+          <bool name="CanCollide">false</bool>
+          <bool name="CanTouch">false</bool>
+          <bool name="CanQuery">false</bool>
+          <bool name="DoubleSided">true</bool>
+          <bool name="CastShadow">false</bool>
+          <Color3uint8 name="Color3uint8">4294967295</Color3uint8>
+          <token name="CollisionFidelity">2</token>
+          <float name="Transparency">0.02</float>
+          <token name="RenderFidelity">1</token>
+        </Properties>
+        <Item class="SurfaceAppearance" referent="M7Surface4">
+          <Properties>
+            <token name="AlphaMode">1</token>
+            <Content name="ColorMap">
+              <url>rbxassetid://83669120491249</url>
+            </Content>
+            <Content name="NormalMap">
+              <null />
+            </Content>
+            <string name="Name">SurfaceAppearance</string>
+          </Properties>
+        </Item>
+      </Item>
+    </Item>
+    <Item class="Model" referent="Fern_1">
+      <Properties>
+        <string name="Name">Fern_1</string>
+      </Properties>
+      <Item class="MeshPart" referent="M7Mesh5">
+        <Properties>
+          <Content name="MeshId">
+            <url>rbxassetid://73853474724005</url>
+          </Content>
+          <Content name="TextureID">
+            <url>rbxassetid://83669120491249</url>
+          </Content>
+          <Vector3 name="size">
+            <X>6.39240265</X>
+            <Y>1.89999998</Y>
+            <Z>5.99755859</Z>
+          </Vector3>
+          <Vector3 name="InitialSize">
+            <X>6.39240265</X>
+            <Y>1.89999998</Y>
+            <Z>5.99755859</Z>
+          </Vector3>
+          <CoordinateFrame name="CFrame">
+            <X>0.0</X>
+            <Y>0.94999999</Y>
+            <Z>0.0</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>1</R11>
+            <R12>0</R12>
+            <R20>0</R20>
+            <R21>0</R21>
+            <R22>1</R22>
+          </CoordinateFrame>
+          <string name="Name">Fern_1_1</string>
+          <bool name="Anchored">true</bool>
+          <bool name="CanCollide">false</bool>
+          <bool name="CanTouch">false</bool>
+          <bool name="CanQuery">false</bool>
+          <bool name="DoubleSided">true</bool>
+          <bool name="CastShadow">false</bool>
+          <Color3uint8 name="Color3uint8">4294967295</Color3uint8>
+          <token name="CollisionFidelity">2</token>
+          <float name="Transparency">0.02</float>
+          <token name="RenderFidelity">1</token>
+        </Properties>
+        <Item class="SurfaceAppearance" referent="M7Surface5">
+          <Properties>
+            <token name="AlphaMode">1</token>
+            <Content name="ColorMap">
+              <url>rbxassetid://83669120491249</url>
+            </Content>
+            <Content name="NormalMap">
+              <null />
+            </Content>
+            <string name="Name">SurfaceAppearance</string>
+          </Properties>
+        </Item>
+      </Item>
+    </Item>
+    <Item class="Model" referent="CommonTree_1">
+      <Properties>
+        <string name="Name">CommonTree_1</string>
+      </Properties>
+      <Item class="MeshPart" referent="M7Mesh6">
+        <Properties>
+          <Content name="MeshId">
+            <url>rbxassetid://89937554932811</url>
+          </Content>
+          <Content name="TextureID">
+            <null />
+          </Content>
+          <Vector3 name="size">
+            <X>9.04154205</X>
+            <Y>23.137352</Y>
+            <Z>8.54147434</Z>
+          </Vector3>
+          <Vector3 name="InitialSize">
+            <X>9.04154205</X>
+            <Y>23.137352</Y>
+            <Z>8.54147434</Z>
+          </Vector3>
+          <CoordinateFrame name="CFrame">
+            <X>0.14717100000000016</X>
+            <Y>11.568676</Y>
+            <Z>-0.34590148900000006</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>1</R11>
+            <R12>0</R12>
+            <R20>0</R20>
+            <R21>0</R21>
+            <R22>1</R22>
+          </CoordinateFrame>
+          <string name="Name">CommonTree_1_1</string>
+          <bool name="Anchored">true</bool>
+          <bool name="CanCollide">false</bool>
+          <bool name="CanTouch">false</bool>
+          <bool name="CanQuery">false</bool>
+          <bool name="DoubleSided">true</bool>
+          <bool name="CastShadow">true</bool>
+          <Color3uint8 name="Color3uint8">4294967295</Color3uint8>
+          <token name="CollisionFidelity">2</token>
+        </Properties>
+        <Item class="SurfaceAppearance" referent="M7Surface6">
+          <Properties>
+            <token name="AlphaMode">0</token>
+            <Content name="ColorMap">
+              <url>rbxassetid://96411665869378</url>
+            </Content>
+            <Content name="NormalMap">
+              <url>rbxassetid://82289699597708</url>
+            </Content>
+            <string name="Name">SurfaceAppearance</string>
+          </Properties>
+        </Item>
+      </Item>
+      <Item class="MeshPart" referent="M7Mesh7">
+        <Properties>
+          <Content name="MeshId">
+            <url>rbxassetid://109075223234587</url>
+          </Content>
+          <Content name="TextureID">
+            <url>rbxassetid://110724520977986</url>
+          </Content>
+          <Vector3 name="size">
+            <X>14.5887985</X>
+            <Y>15.8634882</Y>
+            <Z>15.3709373</Z>
+          </Vector3>
+          <Vector3 name="InitialSize">
+            <X>14.5887985</X>
+            <Y>15.8634882</Y>
+            <Z>15.3709373</Z>
+          </Vector3>
+          <CoordinateFrame name="CFrame">
+            <X>0.0</X>
+            <Y>16.8763542</Y>
+            <Z>-1.1102230246251565e-16</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>1</R11>
+            <R12>0</R12>
+            <R20>0</R20>
+            <R21>0</R21>
+            <R22>1</R22>
+          </CoordinateFrame>
+          <string name="Name">CommonTree_1_2</string>
+          <bool name="Anchored">true</bool>
+          <bool name="CanCollide">false</bool>
+          <bool name="CanTouch">false</bool>
+          <bool name="CanQuery">false</bool>
+          <bool name="DoubleSided">true</bool>
+          <bool name="CastShadow">false</bool>
+          <Color3uint8 name="Color3uint8">4294967295</Color3uint8>
+          <token name="CollisionFidelity">2</token>
+          <float name="Transparency">0.02</float>
+          <token name="RenderFidelity">1</token>
+        </Properties>
+        <Item class="SurfaceAppearance" referent="M7Surface7">
+          <Properties>
+            <token name="AlphaMode">1</token>
+            <Content name="ColorMap">
+              <url>rbxassetid://110724520977986</url>
+            </Content>
+            <Content name="NormalMap">
+              <null />
+            </Content>
+            <string name="Name">SurfaceAppearance</string>
+          </Properties>
+        </Item>
+      </Item>
+    </Item>
+    <Item class="Model" referent="Flower_3_Group">
+      <Properties>
+        <string name="Name">Flower_3_Group</string>
+      </Properties>
+      <Item class="MeshPart" referent="M7Mesh8">
+        <Properties>
+          <Content name="MeshId">
+            <url>rbxassetid://98116798389884</url>
+          </Content>
+          <Content name="TextureID">
+            <url>rbxassetid://104223482629283</url>
+          </Content>
+          <Vector3 name="size">
+            <X>1.08924103</X>
+            <Y>0.399775147</Y>
+            <Z>1.20238113</Z>
+          </Vector3>
+          <Vector3 name="InitialSize">
+            <X>1.08924103</X>
+            <Y>0.399775147</Y>
+            <Z>1.20238113</Z>
+          </Vector3>
+          <CoordinateFrame name="CFrame">
+            <X>0.0</X>
+            <Y>1.4271906030000001</Y>
+            <Z>0.0</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>1</R11>
+            <R12>0</R12>
+            <R20>0</R20>
+            <R21>0</R21>
+            <R22>1</R22>
+          </CoordinateFrame>
+          <string name="Name">Flower_3_Group_1</string>
+          <bool name="Anchored">true</bool>
+          <bool name="CanCollide">false</bool>
+          <bool name="CanTouch">false</bool>
+          <bool name="CanQuery">false</bool>
+          <bool name="DoubleSided">true</bool>
+          <bool name="CastShadow">false</bool>
+          <Color3uint8 name="Color3uint8">4294967295</Color3uint8>
+          <token name="CollisionFidelity">2</token>
+          <float name="Transparency">0.02</float>
+          <token name="RenderFidelity">1</token>
+        </Properties>
+        <Item class="SurfaceAppearance" referent="M7Surface8">
+          <Properties>
+            <token name="AlphaMode">1</token>
+            <Content name="ColorMap">
+              <url>rbxassetid://104223482629283</url>
+            </Content>
+            <Content name="NormalMap">
+              <null />
+            </Content>
+            <string name="Name">SurfaceAppearance</string>
+          </Properties>
+        </Item>
+      </Item>
+      <Item class="MeshPart" referent="M7Mesh9">
+        <Properties>
+          <Content name="MeshId">
+            <url>rbxassetid://138974421613690</url>
+          </Content>
+          <Content name="TextureID">
+            <url>rbxassetid://83669120491249</url>
+          </Content>
+          <Vector3 name="size">
+            <X>1.05626678</X>
+            <Y>1.40845835</Y>
+            <Z>0.97120285</Z>
+          </Vector3>
+          <Vector3 name="InitialSize">
+            <X>1.05626678</X>
+            <Y>1.40845835</Y>
+            <Z>0.97120285</Z>
+          </Vector3>
+          <CoordinateFrame name="CFrame">
+            <X>0.012786899999994716</X>
+            <Y>0.704229175</Y>
+            <Z>-0.07260899999999992</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>1</R11>
+            <R12>0</R12>
+            <R20>0</R20>
+            <R21>0</R21>
+            <R22>1</R22>
+          </CoordinateFrame>
+          <string name="Name">Flower_3_Group_2</string>
+          <bool name="Anchored">true</bool>
+          <bool name="CanCollide">false</bool>
+          <bool name="CanTouch">false</bool>
+          <bool name="CanQuery">false</bool>
+          <bool name="DoubleSided">true</bool>
+          <bool name="CastShadow">false</bool>
+          <Color3uint8 name="Color3uint8">4294967295</Color3uint8>
+          <token name="CollisionFidelity">2</token>
+          <float name="Transparency">0.02</float>
+          <token name="RenderFidelity">1</token>
+        </Properties>
+        <Item class="SurfaceAppearance" referent="M7Surface9">
+          <Properties>
+            <token name="AlphaMode">1</token>
+            <Content name="ColorMap">
+              <url>rbxassetid://83669120491249</url>
+            </Content>
+            <Content name="NormalMap">
+              <null />
+            </Content>
+            <string name="Name">SurfaceAppearance</string>
+          </Properties>
+        </Item>
+      </Item>
+    </Item>
+    <Item class="Model" referent="CommonTree_3">
+      <Properties>
+        <string name="Name">CommonTree_3</string>
+      </Properties>
+      <Item class="MeshPart" referent="M7Mesh10">
+        <Properties>
+          <Content name="MeshId">
+            <url>rbxassetid://98275526325211</url>
+          </Content>
+          <Content name="TextureID">
+            <null />
+          </Content>
+          <Vector3 name="size">
+            <X>4.42108154</X>
+            <Y>19.1874237</Y>
+            <Z>4.4732542</Z>
+          </Vector3>
+          <Vector3 name="InitialSize">
+            <X>4.42108154</X>
+            <Y>19.1874237</Y>
+            <Z>4.4732542</Z>
+          </Vector3>
+          <CoordinateFrame name="CFrame">
+            <X>-0.27225500000000125</X>
+            <Y>9.59371185</Y>
+            <Z>-0.17277526890000042</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>1</R11>
+            <R12>0</R12>
+            <R20>0</R20>
+            <R21>0</R21>
+            <R22>1</R22>
+          </CoordinateFrame>
+          <string name="Name">CommonTree_3_1</string>
+          <bool name="Anchored">true</bool>
+          <bool name="CanCollide">false</bool>
+          <bool name="CanTouch">false</bool>
+          <bool name="CanQuery">false</bool>
+          <bool name="DoubleSided">true</bool>
+          <bool name="CastShadow">true</bool>
+          <Color3uint8 name="Color3uint8">4294967295</Color3uint8>
+          <token name="CollisionFidelity">2</token>
+        </Properties>
+        <Item class="SurfaceAppearance" referent="M7Surface10">
+          <Properties>
+            <token name="AlphaMode">0</token>
+            <Content name="ColorMap">
+              <url>rbxassetid://96411665869378</url>
+            </Content>
+            <Content name="NormalMap">
+              <url>rbxassetid://82289699597708</url>
+            </Content>
+            <string name="Name">SurfaceAppearance</string>
+          </Properties>
+        </Item>
+      </Item>
+      <Item class="MeshPart" referent="M7Mesh11">
+        <Properties>
+          <Content name="MeshId">
+            <url>rbxassetid://76334757545348</url>
+          </Content>
+          <Content name="TextureID">
+            <url>rbxassetid://110724520977986</url>
+          </Content>
+          <Vector3 name="size">
+            <X>9.18070221</X>
+            <Y>15.3158379</Y>
+            <Z>9.84839249</Z>
+          </Vector3>
+          <Vector3 name="InitialSize">
+            <X>9.18070221</X>
+            <Y>15.3158379</Y>
+            <Z>9.84839249</Z>
+          </Vector3>
+          <CoordinateFrame name="CFrame">
+            <X>0.0</X>
+            <Y>14.342872620000001</Y>
+            <Z>-4.0592529337857286e-16</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>1</R11>
+            <R12>0</R12>
+            <R20>0</R20>
+            <R21>0</R21>
+            <R22>1</R22>
+          </CoordinateFrame>
+          <string name="Name">CommonTree_3_2</string>
+          <bool name="Anchored">true</bool>
+          <bool name="CanCollide">false</bool>
+          <bool name="CanTouch">false</bool>
+          <bool name="CanQuery">false</bool>
+          <bool name="DoubleSided">true</bool>
+          <bool name="CastShadow">false</bool>
+          <Color3uint8 name="Color3uint8">4294967295</Color3uint8>
+          <token name="CollisionFidelity">2</token>
+          <float name="Transparency">0.02</float>
+          <token name="RenderFidelity">1</token>
+        </Properties>
+        <Item class="SurfaceAppearance" referent="M7Surface11">
+          <Properties>
+            <token name="AlphaMode">1</token>
+            <Content name="ColorMap">
+              <url>rbxassetid://110724520977986</url>
+            </Content>
+            <Content name="NormalMap">
+              <null />
+            </Content>
+            <string name="Name">SurfaceAppearance</string>
+          </Properties>
+        </Item>
+      </Item>
+    </Item>
+    <Item class="Model" referent="CommonTree_5">
+      <Properties>
+        <string name="Name">CommonTree_5</string>
+      </Properties>
+      <Item class="MeshPart" referent="M7Mesh12">
+        <Properties>
+          <Content name="MeshId">
+            <url>rbxassetid://107335968123994</url>
+          </Content>
+          <Content name="TextureID">
+            <null />
+          </Content>
+          <Vector3 name="size">
+            <X>4.88599777</X>
+            <Y>15.4509068</Y>
+            <Z>4.67486191</Z>
+          </Vector3>
+          <Vector3 name="InitialSize">
+            <X>4.88599777</X>
+            <Y>15.4509068</Y>
+            <Z>4.67486191</Z>
+          </Vector3>
+          <CoordinateFrame name="CFrame">
+            <X>-0.2249016760229501</X>
+            <Y>7.7254534</Y>
+            <Z>-0.12333679999999703</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>1</R11>
+            <R12>0</R12>
+            <R20>0</R20>
+            <R21>0</R21>
+            <R22>1</R22>
+          </CoordinateFrame>
+          <string name="Name">CommonTree_5_1</string>
+          <bool name="Anchored">true</bool>
+          <bool name="CanCollide">false</bool>
+          <bool name="CanTouch">false</bool>
+          <bool name="CanQuery">false</bool>
+          <bool name="DoubleSided">true</bool>
+          <bool name="CastShadow">true</bool>
+          <Color3uint8 name="Color3uint8">4294967295</Color3uint8>
+          <token name="CollisionFidelity">2</token>
+        </Properties>
+        <Item class="SurfaceAppearance" referent="M7Surface12">
+          <Properties>
+            <token name="AlphaMode">0</token>
+            <Content name="ColorMap">
+              <url>rbxassetid://96411665869378</url>
+            </Content>
+            <Content name="NormalMap">
+              <url>rbxassetid://82289699597708</url>
+            </Content>
+            <string name="Name">SurfaceAppearance</string>
+          </Properties>
+        </Item>
+      </Item>
+      <Item class="MeshPart" referent="M7Mesh13">
+        <Properties>
+          <Content name="MeshId">
+            <url>rbxassetid://117898133185832</url>
+          </Content>
+          <Content name="TextureID">
+            <url>rbxassetid://110724520977986</url>
+          </Content>
+          <Vector3 name="size">
+            <X>9.95571709</X>
+            <Y>11.9511871</Y>
+            <Z>11.1714725</Z>
+          </Vector3>
+          <Vector3 name="InitialSize">
+            <X>9.95571709</X>
+            <Y>11.9511871</Y>
+            <Z>11.1714725</Z>
+          </Vector3>
+          <CoordinateFrame name="CFrame">
+            <X>-1.0692859222843562e-16</X>
+            <Y>13.02577685</Y>
+            <Z>0.0</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>1</R11>
+            <R12>0</R12>
+            <R20>0</R20>
+            <R21>0</R21>
+            <R22>1</R22>
+          </CoordinateFrame>
+          <string name="Name">CommonTree_5_2</string>
+          <bool name="Anchored">true</bool>
+          <bool name="CanCollide">false</bool>
+          <bool name="CanTouch">false</bool>
+          <bool name="CanQuery">false</bool>
+          <bool name="DoubleSided">true</bool>
+          <bool name="CastShadow">false</bool>
+          <Color3uint8 name="Color3uint8">4294967295</Color3uint8>
+          <token name="CollisionFidelity">2</token>
+          <float name="Transparency">0.02</float>
+          <token name="RenderFidelity">1</token>
+        </Properties>
+        <Item class="SurfaceAppearance" referent="M7Surface13">
+          <Properties>
+            <token name="AlphaMode">1</token>
+            <Content name="ColorMap">
+              <url>rbxassetid://110724520977986</url>
+            </Content>
+            <Content name="NormalMap">
+              <null />
+            </Content>
+            <string name="Name">SurfaceAppearance</string>
+          </Properties>
+        </Item>
+      </Item>
+    </Item>
+    <Item class="Model" referent="Grass_Wispy_Tall">
+      <Properties>
+        <string name="Name">Grass_Wispy_Tall</string>
+      </Properties>
+      <Item class="MeshPart" referent="M7Mesh14">
+        <Properties>
+          <Content name="MeshId">
+            <url>rbxassetid://118085961837111</url>
+          </Content>
+          <Content name="TextureID">
+            <url>rbxassetid://127695594791239</url>
+          </Content>
+          <Vector3 name="size">
+            <X>1.65816903</X>
+            <Y>1.78857362</Y>
+            <Z>1.71592712</Z>
+          </Vector3>
+          <Vector3 name="InitialSize">
+            <X>1.65816903</X>
+            <Y>1.78857362</Y>
+            <Z>1.71592712</Z>
+          </Vector3>
+          <CoordinateFrame name="CFrame">
+            <X>2.2144829373016428e-17</X>
+            <Y>0.89428681</Y>
+            <Z>0.0</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>1</R11>
+            <R12>0</R12>
+            <R20>0</R20>
+            <R21>0</R21>
+            <R22>1</R22>
+          </CoordinateFrame>
+          <string name="Name">Grass_Wispy_Tall_1</string>
+          <bool name="Anchored">true</bool>
+          <bool name="CanCollide">false</bool>
+          <bool name="CanTouch">false</bool>
+          <bool name="CanQuery">false</bool>
+          <bool name="DoubleSided">true</bool>
+          <bool name="CastShadow">true</bool>
+          <Color3uint8 name="Color3uint8">4294967295</Color3uint8>
+          <token name="CollisionFidelity">2</token>
+        </Properties>
+        <Item class="SurfaceAppearance" referent="M7Surface14">
+          <Properties>
+            <token name="AlphaMode">1</token>
+            <Content name="ColorMap">
+              <url>rbxassetid://127695594791239</url>
+            </Content>
+            <Content name="NormalMap">
+              <null />
+            </Content>
+            <string name="Name">SurfaceAppearance</string>
+          </Properties>
+        </Item>
+      </Item>
+    </Item>
+    <Item class="Model" referent="Pebble_Round_1">
+      <Properties>
+        <string name="Name">Pebble_Round_1</string>
+      </Properties>
+      <Item class="MeshPart" referent="M7Mesh15">
+        <Properties>
+          <Content name="MeshId">
+            <url>rbxassetid://130436974229635</url>
+          </Content>
+          <Content name="TextureID">
+            <url>rbxassetid://102348628758318</url>
+          </Content>
+          <Vector3 name="size">
+            <X>2.35678101</X>
+            <Y>0.450000018</Y>
+            <Z>1.7298584</Z>
+          </Vector3>
+          <Vector3 name="InitialSize">
+            <X>2.35678101</X>
+            <Y>0.450000018</Y>
+            <Z>1.7298584</Z>
+          </Vector3>
+          <CoordinateFrame name="CFrame">
+            <X>0.0</X>
+            <Y>0.225000009</Y>
+            <Z>0.0</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>1</R11>
+            <R12>0</R12>
+            <R20>0</R20>
+            <R21>0</R21>
+            <R22>1</R22>
+          </CoordinateFrame>
+          <string name="Name">Pebble_Round_1_1</string>
+          <bool name="Anchored">true</bool>
+          <bool name="CanCollide">false</bool>
+          <bool name="CanTouch">false</bool>
+          <bool name="CanQuery">false</bool>
+          <bool name="DoubleSided">true</bool>
+          <bool name="CastShadow">true</bool>
+          <Color3uint8 name="Color3uint8">4294967295</Color3uint8>
+          <token name="CollisionFidelity">2</token>
+        </Properties>
+        <Item class="SurfaceAppearance" referent="M7Surface15">
+          <Properties>
+            <token name="AlphaMode">1</token>
+            <Content name="ColorMap">
+              <url>rbxassetid://102348628758318</url>
+            </Content>
+            <Content name="NormalMap">
+              <null />
+            </Content>
+            <string name="Name">SurfaceAppearance</string>
+          </Properties>
+        </Item>
+      </Item>
+    </Item>
+    <Item class="Model" referent="Pine_2">
+      <Properties>
+        <string name="Name">Pine_2</string>
+      </Properties>
+      <Item class="MeshPart" referent="M7Mesh16">
+        <Properties>
+          <Content name="MeshId">
+            <url>rbxassetid://112432630564594</url>
+          </Content>
+          <Content name="TextureID">
+            <null />
+          </Content>
+          <Vector3 name="size">
+            <X>7.48719788</X>
+            <Y>24.0474968</Y>
+            <Z>11.2266693</Z>
+          </Vector3>
+          <Vector3 name="InitialSize">
+            <X>7.48719788</X>
+            <Y>24.0474968</Y>
+            <Z>11.2266693</Z>
+          </Vector3>
+          <CoordinateFrame name="CFrame">
+            <X>-0.830619800000008</X>
+            <Y>12.0237484</Y>
+            <Z>0.5601501999999954</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>1</R11>
+            <R12>0</R12>
+            <R20>0</R20>
+            <R21>0</R21>
+            <R22>1</R22>
+          </CoordinateFrame>
+          <string name="Name">Pine_2_1</string>
+          <bool name="Anchored">true</bool>
+          <bool name="CanCollide">false</bool>
+          <bool name="CanTouch">false</bool>
+          <bool name="CanQuery">false</bool>
+          <bool name="DoubleSided">true</bool>
+          <bool name="CastShadow">true</bool>
+          <Color3uint8 name="Color3uint8">4294967295</Color3uint8>
+          <token name="CollisionFidelity">2</token>
+        </Properties>
+        <Item class="SurfaceAppearance" referent="M7Surface16">
+          <Properties>
+            <token name="AlphaMode">0</token>
+            <Content name="ColorMap">
+              <url>rbxassetid://96411665869378</url>
+            </Content>
+            <Content name="NormalMap">
+              <url>rbxassetid://82289699597708</url>
+            </Content>
+            <string name="Name">SurfaceAppearance</string>
+          </Properties>
+        </Item>
+      </Item>
+      <Item class="MeshPart" referent="M7Mesh17">
+        <Properties>
+          <Content name="MeshId">
+            <url>rbxassetid://113857411980935</url>
+          </Content>
+          <Content name="TextureID">
+            <url>rbxassetid://118034762489808</url>
+          </Content>
+          <Vector3 name="size">
+            <X>19.4139748</X>
+            <Y>20.4154167</Y>
+            <Z>17.6960335</Z>
+          </Vector3>
+          <Vector3 name="InitialSize">
+            <X>19.4139748</X>
+            <Y>20.4154167</Y>
+            <Z>17.6960335</Z>
+          </Vector3>
+          <CoordinateFrame name="CFrame">
+            <X>0.0</X>
+            <Y>14.7936687</Y>
+            <Z>0.0</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>1</R11>
+            <R12>0</R12>
+            <R20>0</R20>
+            <R21>0</R21>
+            <R22>1</R22>
+          </CoordinateFrame>
+          <string name="Name">Pine_2_2</string>
+          <bool name="Anchored">true</bool>
+          <bool name="CanCollide">false</bool>
+          <bool name="CanTouch">false</bool>
+          <bool name="CanQuery">false</bool>
+          <bool name="DoubleSided">true</bool>
+          <bool name="CastShadow">false</bool>
+          <Color3uint8 name="Color3uint8">4294967295</Color3uint8>
+          <token name="CollisionFidelity">2</token>
+          <float name="Transparency">0.02</float>
+          <token name="RenderFidelity">1</token>
+        </Properties>
+        <Item class="SurfaceAppearance" referent="M7Surface17">
+          <Properties>
+            <token name="AlphaMode">1</token>
+            <Content name="ColorMap">
+              <url>rbxassetid://118034762489808</url>
+            </Content>
+            <Content name="NormalMap">
+              <null />
+            </Content>
+            <string name="Name">SurfaceAppearance</string>
+          </Properties>
+        </Item>
+      </Item>
+    </Item>
+    <Item class="Model" referent="RockPath_Round_Small_1">
+      <Properties>
+        <string name="Name">RockPath_Round_Small_1</string>
+      </Properties>
+      <Item class="MeshPart" referent="M7Mesh18">
+        <Properties>
+          <Content name="MeshId">
+            <url>rbxassetid://73285867832875</url>
+          </Content>
+          <Content name="TextureID">
+            <url>rbxassetid://102348628758318</url>
+          </Content>
+          <Vector3 name="size">
+            <X>1.12798309</X>
+            <Y>0.203922093</Y>
+            <Z>1.57014465</Z>
+          </Vector3>
+          <Vector3 name="InitialSize">
+            <X>1.12798309</X>
+            <Y>0.203922093</Y>
+            <Z>1.57014465</Z>
+          </Vector3>
+          <CoordinateFrame name="CFrame">
+            <X>0.0</X>
+            <Y>0.1019610465</Y>
+            <Z>0.0</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>1</R11>
+            <R12>0</R12>
+            <R20>0</R20>
+            <R21>0</R21>
+            <R22>1</R22>
+          </CoordinateFrame>
+          <string name="Name">RockPath_Round_Small_1_1</string>
+          <bool name="Anchored">true</bool>
+          <bool name="CanCollide">false</bool>
+          <bool name="CanTouch">false</bool>
+          <bool name="CanQuery">false</bool>
+          <bool name="DoubleSided">true</bool>
+          <bool name="CastShadow">true</bool>
+          <Color3uint8 name="Color3uint8">4294967295</Color3uint8>
+          <token name="CollisionFidelity">2</token>
+          <token name="RenderFidelity">1</token>
+        </Properties>
+        <Item class="SurfaceAppearance" referent="M7Surface18">
+          <Properties>
+            <token name="AlphaMode">1</token>
+            <Content name="ColorMap">
+              <url>rbxassetid://102348628758318</url>
+            </Content>
+            <Content name="NormalMap">
+              <null />
+            </Content>
+            <string name="Name">SurfaceAppearance</string>
+          </Properties>
+        </Item>
+      </Item>
+    </Item>
+    <Item class="Model" referent="Rock_Medium_1">
+      <Properties>
+        <string name="Name">Rock_Medium_1</string>
+      </Properties>
+      <Item class="MeshPart" referent="M7Mesh19">
+        <Properties>
+          <Content name="MeshId">
+            <url>rbxassetid://115569212714828</url>
+          </Content>
+          <Content name="TextureID">
+            <url>rbxassetid://129375472066299</url>
+          </Content>
+          <Vector3 name="size">
+            <X>4.56699276</X>
+            <Y>3.20000005</Y>
+            <Z>4.23278809</Z>
+          </Vector3>
+          <Vector3 name="InitialSize">
+            <X>4.56699276</X>
+            <Y>3.20000005</Y>
+            <Z>4.23278809</Z>
+          </Vector3>
+          <CoordinateFrame name="CFrame">
+            <X>-7.595683251208213e-17</X>
+            <Y>1.600000025</Y>
+            <Z>0.0</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>1</R11>
+            <R12>0</R12>
+            <R20>0</R20>
+            <R21>0</R21>
+            <R22>1</R22>
+          </CoordinateFrame>
+          <string name="Name">Rock_Medium_1_1</string>
+          <bool name="Anchored">true</bool>
+          <bool name="CanCollide">false</bool>
+          <bool name="CanTouch">false</bool>
+          <bool name="CanQuery">false</bool>
+          <bool name="DoubleSided">true</bool>
+          <bool name="CastShadow">true</bool>
+          <Color3uint8 name="Color3uint8">4294967295</Color3uint8>
+          <token name="CollisionFidelity">2</token>
+        </Properties>
+        <Item class="SurfaceAppearance" referent="M7Surface19">
+          <Properties>
+            <token name="AlphaMode">1</token>
+            <Content name="ColorMap">
+              <url>rbxassetid://129375472066299</url>
+            </Content>
+            <Content name="NormalMap">
+              <null />
+            </Content>
+            <string name="Name">SurfaceAppearance</string>
+          </Properties>
+        </Item>
+      </Item>
+    </Item>
+    <Item class="Model" referent="TwistedTree_1">
+      <Properties>
+        <string name="Name">TwistedTree_1</string>
+      </Properties>
+      <Item class="MeshPart" referent="M7Mesh20">
+        <Properties>
+          <Content name="MeshId">
+            <url>rbxassetid://92249803120756</url>
+          </Content>
+          <Content name="TextureID">
+            <null />
+          </Content>
+          <Vector3 name="size">
+            <X>16.375885</X>
+            <Y>22.1732407</Y>
+            <Z>12.2618103</Z>
+          </Vector3>
+          <Vector3 name="InitialSize">
+            <X>16.375885</X>
+            <Y>22.1732407</Y>
+            <Z>12.2618103</Z>
+          </Vector3>
+          <CoordinateFrame name="CFrame">
+            <X>0.6036186999999984</X>
+            <Y>11.08662035</Y>
+            <Z>-0.14535499999999502</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>1</R11>
+            <R12>0</R12>
+            <R20>0</R20>
+            <R21>0</R21>
+            <R22>1</R22>
+          </CoordinateFrame>
+          <string name="Name">TwistedTree_1_1</string>
+          <bool name="Anchored">true</bool>
+          <bool name="CanCollide">false</bool>
+          <bool name="CanTouch">false</bool>
+          <bool name="CanQuery">false</bool>
+          <bool name="DoubleSided">true</bool>
+          <bool name="CastShadow">true</bool>
+          <Color3uint8 name="Color3uint8">4294967295</Color3uint8>
+          <token name="CollisionFidelity">2</token>
+        </Properties>
+        <Item class="SurfaceAppearance" referent="M7Surface20">
+          <Properties>
+            <token name="AlphaMode">0</token>
+            <Content name="ColorMap">
+              <url>rbxassetid://77393985107765</url>
+            </Content>
+            <Content name="NormalMap">
+              <url>rbxassetid://127929432830190</url>
+            </Content>
+            <string name="Name">SurfaceAppearance</string>
+          </Properties>
+        </Item>
+      </Item>
+      <Item class="MeshPart" referent="M7Mesh21">
+        <Properties>
+          <Content name="MeshId">
+            <url>rbxassetid://132501475885875</url>
+          </Content>
+          <Content name="TextureID">
+            <url>rbxassetid://136298981634226</url>
+          </Content>
+          <Vector3 name="size">
+            <X>19.394228</X>
+            <Y>20.0992851</Y>
+            <Z>16.5725861</Z>
+          </Vector3>
+          <Vector3 name="InitialSize">
+            <X>19.394228</X>
+            <Y>20.0992851</Y>
+            <Z>16.5725861</Z>
+          </Vector3>
+          <CoordinateFrame name="CFrame">
+            <X>0.0</X>
+            <Y>13.96531295</Y>
+            <Z>0.0</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>1</R11>
+            <R12>0</R12>
+            <R20>0</R20>
+            <R21>0</R21>
+            <R22>1</R22>
+          </CoordinateFrame>
+          <string name="Name">TwistedTree_1_2</string>
+          <bool name="Anchored">true</bool>
+          <bool name="CanCollide">false</bool>
+          <bool name="CanTouch">false</bool>
+          <bool name="CanQuery">false</bool>
+          <bool name="DoubleSided">true</bool>
+          <bool name="CastShadow">false</bool>
+          <Color3uint8 name="Color3uint8">4294967295</Color3uint8>
+          <token name="CollisionFidelity">2</token>
+          <float name="Transparency">0.02</float>
+          <token name="RenderFidelity">1</token>
+        </Properties>
+        <Item class="SurfaceAppearance" referent="M7Surface21">
+          <Properties>
+            <token name="AlphaMode">1</token>
+            <Content name="ColorMap">
+              <url>rbxassetid://136298981634226</url>
+            </Content>
+            <Content name="NormalMap">
+              <null />
+            </Content>
+            <string name="Name">SurfaceAppearance</string>
+          </Properties>
+        </Item>
+      </Item>
+    </Item>
+  </Item>
+</roblox>

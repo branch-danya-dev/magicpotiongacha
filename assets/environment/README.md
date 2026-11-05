@@ -1,5 +1,20 @@
 # M7.1 inspected asset provenance
 
+## Current 07B woodland
+
+Current ordinary/review projects use [woodland/M7NatureTemplates.rbxmx](woodland/M7NatureTemplates.rbxmx),
+a sealed presentation derivative of the same 14 admitted models below. Geometry,
+maps and asset IDs are unchanged. Eleven alpha foliage parts use smooth blending,
+no foliage shadow and Precise fidelity; opaque grass/bark/rocks keep their settings.
+[Receipt](woodland/receipt.json), [offline inspection](woodland/inspection.json),
+[full implementation/limits](../../docs/M7_07B_WOODLAND.md). Native Low/Automatic
+and new ordinary Play appearance are NOT VERIFIED. No new import/upload occurred.
+
+The current local sky uses `stability-sky` alongside `atmosphere` and `polish`.
+The original `fantasy` pack and its description below remain historical evidence.
+
+## Original admitted package
+
 The owner approved the direct workflow on 2026-11-05: static inspection, local
 optimization and Roblox Studio import of 14 selected free Quaternius models.
 Missing game-dev is no longer a blocker for this explicitly authorized subset.

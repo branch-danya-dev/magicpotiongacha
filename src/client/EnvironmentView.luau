@@ -156,7 +156,7 @@ function View.start(root,settings)
 			if forestRole then
 				local entry={part=p,role=forestRole,anchor=p:GetAttribute("ForestAnchor"),alpha=1,target=1,saved=p.LocalTransparencyModifier}
 				table.insert(forestParts,entry); forestByPart[p]=entry; p.LocalTransparencyModifier=1
-				if string.match(p.Name,"^ForestCrown_") then
+				if p:GetAttribute("ForestCanopy") then
 					local group=canopyGroups[p.Parent]
 					if not group then
 						local pivot=p.Parent:GetPivot()
@@ -349,7 +349,7 @@ function View.start(root,settings)
 			elseif w.wasMoving then w.part.CFrame=w.base end
 			w.wasMoving=w.weight>0
 		end
-		-- Canopy lobes move as one group; all four cost slots, even while fading.
+		-- Imported canopies move as one group; every moving mesh costs one slot.
 		for _,w in ipairs(wind) do
 			w.visible=w.part.LocalTransparencyModifier<.99 and (w.base.Position-camera.CFrame.Position).Magnitude<q.distance
 		end

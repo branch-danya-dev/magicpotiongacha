@@ -2,7 +2,21 @@
 
 CLI/CI passing is necessary but does not mark any item below as completed.
 
-## Current: 07A / #21 — integrated A1–A8 candidate, owner pass pending
+## Current: 07B / #21 — woodland build, native art review pending
+
+On 2026-11-06 the owner accepted 07A `04d3aea` in chat and explicitly authorized
+the next asset/content stage. This is owner-reported technical acceptance, not an
+agent-measured device result. Phone/permission/load blockers remain in force.
+
+[07B result](M7_07B_WOODLAND.md): 29 complete Quaternius trees, mixed undergrowth,
+mesh fallen wood and refined meadow replace the rejected sphere forest. Original
+CC0 geometry/maps/IDs are retained; a sealed derivative changes only the bounded
+foliage render settings. New ordinary Play appearance/Low graphics are NOT VERIFIED.
+07C, 07D, UX and 08 are subsequent stages; PR Draft, no merge/publishing.
+
+## Historical delivery: 07A / #21 — integrated A1–A8 candidate
+
+The following records the state at delivery, before the owner's acceptance above.
 
 [Integrated batch result](M7_07A_BATCH_RESULT.md): A1–A8 code/asset changes are
 implemented; native rendering and ordinary Play remain NOT VERIFIED. A corrected

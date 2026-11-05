@@ -1,5 +1,11 @@
 # 07A A1–A8 — one integrated candidate
 
+**Owner update, 2026-11-06:** the owner accepted this candidate (`04d3aea`) in chat
+and authorized the next asset/content stage. 07A's technical gate is accepted on
+that basis. The report below preserves the evidence and limitations at delivery;
+it does not turn unperformed agent/device tests into passes. Continue with
+[07B woodland](M7_07B_WOODLAND.md); final 07D art approval remains separate.
+
 Source base: owner documentation `62f0822`, following the partial implementation
 `9d1dbe9`. Requirements: [batch specification](M7_07A_FIX_BATCH.md). This report
 replaces the partial candidate as the current delivery; historical files stay intact.

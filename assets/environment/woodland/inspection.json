@@ -1,0 +1,215 @@
+{
+  "method": "offline source geometry/alpha audit; NOT a native render result",
+  "models": {
+    "Bush_Common_Flowers": {
+      "triangles": 423,
+      "exactDuplicateTriangles": 0,
+      "smoothAlphaParts": 2,
+      "radius": 2.8247463363691208,
+      "height": 3.332328795
+    },
+    "Grass_Common_Short": {
+      "triangles": 155,
+      "exactDuplicateTriangles": 0,
+      "smoothAlphaParts": 0,
+      "radius": 0.40318665722469454,
+      "height": 1.10000002
+    },
+    "Clover_2": {
+      "triangles": 427,
+      "exactDuplicateTriangles": 0,
+      "smoothAlphaParts": 1,
+      "radius": 0.2607010700589323,
+      "height": 0.549865067
+    },
+    "Fern_1": {
+      "triangles": 288,
+      "exactDuplicateTriangles": 0,
+      "smoothAlphaParts": 1,
+      "radius": 4.383736607423774,
+      "height": 1.89999998
+    },
+    "CommonTree_1": {
+      "triangles": 1866,
+      "exactDuplicateTriangles": 0,
+      "smoothAlphaParts": 1,
+      "radius": 10.596975122117518,
+      "height": 24.8080983
+    },
+    "Flower_3_Group": {
+      "triangles": 422,
+      "exactDuplicateTriangles": 0,
+      "smoothAlphaParts": 2,
+      "radius": 0.812197633628134,
+      "height": 1.6270781765000002
+    },
+    "CommonTree_3": {
+      "triangles": 1866,
+      "exactDuplicateTriangles": 0,
+      "smoothAlphaParts": 1,
+      "radius": 6.73294117075059,
+      "height": 22.00079157
+    },
+    "CommonTree_5": {
+      "triangles": 1866,
+      "exactDuplicateTriangles": 0,
+      "smoothAlphaParts": 1,
+      "radius": 7.482946614925396,
+      "height": 19.0013704
+    },
+    "Grass_Wispy_Tall": {
+      "triangles": 428,
+      "exactDuplicateTriangles": 0,
+      "smoothAlphaParts": 0,
+      "radius": 1.194097901808841,
+      "height": 1.78857362
+    },
+    "Pebble_Round_1": {
+      "triangles": 136,
+      "exactDuplicateTriangles": 0,
+      "smoothAlphaParts": 0,
+      "radius": 1.4627478247929069,
+      "height": 0.450000018
+    },
+    "Pine_2": {
+      "triangles": 1486,
+      "exactDuplicateTriangles": 0,
+      "smoothAlphaParts": 1,
+      "radius": 13.135420611204717,
+      "height": 25.001377050000002
+    },
+    "RockPath_Round_Small_1": {
+      "triangles": 428,
+      "exactDuplicateTriangles": 0,
+      "smoothAlphaParts": 0,
+      "radius": 0.9676566186151071,
+      "height": 0.203922093
+    },
+    "Rock_Medium_1": {
+      "triangles": 342,
+      "exactDuplicateTriangles": 0,
+      "smoothAlphaParts": 0,
+      "radius": 3.114435316685504,
+      "height": 3.20000005
+    },
+    "TwistedTree_1": {
+      "triangles": 1866,
+      "exactDuplicateTriangles": 0,
+      "smoothAlphaParts": 1,
+      "radius": 12.756260579050286,
+      "height": 24.0149555
+    }
+  },
+  "textures": {
+    "textures/Flowers.png": {
+      "sha256": "4d8cc7d9f98a17c94370dd19a837b7f4dea4b4892b0048645256b507d0a04dfb",
+      "size": [
+        512,
+        498
+      ],
+      "transparentPixels": 123689,
+      "opaquePixels": 121263,
+      "fractionalAlphaPixels": 10024,
+      "fractionalAlphaFraction": 0.03931350401606426
+    },
+    "textures/Leaves_NormalTree_C.png": {
+      "sha256": "998612bdf0b76a22f5f54d65cd7a457815d2842d89653fa4348a4ebb42933ad3",
+      "size": [
+        1024,
+        1024
+      ],
+      "transparentPixels": 786029,
+      "opaquePixels": 146491,
+      "fractionalAlphaPixels": 116056,
+      "fractionalAlphaFraction": 0.11067962646484375
+    },
+    "textures/Grass.png": {
+      "sha256": "5d69048193b246a73c996b892607fb36c75d0c60afcb2dab8aa12de3c0b2d9bd",
+      "size": [
+        512,
+        512
+      ],
+      "transparentPixels": 0,
+      "opaquePixels": 262144,
+      "fractionalAlphaPixels": 0,
+      "fractionalAlphaFraction": 0.0
+    },
+    "textures/Leaves.png": {
+      "sha256": "b67bab415e7dca72d296b9081bc33ce8575f6ea43ac94d6a287da021c5dc3b00",
+      "size": [
+        512,
+        512
+      ],
+      "transparentPixels": 142998,
+      "opaquePixels": 109408,
+      "fractionalAlphaPixels": 9738,
+      "fractionalAlphaFraction": 0.03714752197265625
+    },
+    "textures/Bark_NormalTree.png": {
+      "sha256": "9d13acc52ef4143ca74b4d7b77f030663689554ff0120ee2f87367815ffe4c48",
+      "size": [
+        1024,
+        1024
+      ],
+      "transparentPixels": 0,
+      "opaquePixels": 1048576,
+      "fractionalAlphaPixels": 0,
+      "fractionalAlphaFraction": 0.0
+    },
+    "textures/PathRocks_Diffuse.png": {
+      "sha256": "0174ef18e2c994264d3c123e04bb45d7ad33ea8b664dbd76c7c219b802e61ede",
+      "size": [
+        512,
+        512
+      ],
+      "transparentPixels": 0,
+      "opaquePixels": 262144,
+      "fractionalAlphaPixels": 0,
+      "fractionalAlphaFraction": 0.0
+    },
+    "textures/Leaf_Pine_C.png": {
+      "sha256": "435df61e3d607d4cd61a7d469d63ed7c72f4ec87e55525c7443ba86521199a8e",
+      "size": [
+        512,
+        512
+      ],
+      "transparentPixels": 184299,
+      "opaquePixels": 75511,
+      "fractionalAlphaPixels": 2334,
+      "fractionalAlphaFraction": 0.00890350341796875
+    },
+    "textures/Rocks_Diffuse.png": {
+      "sha256": "bf6ca2e93d69c3e330d55071c252ef4dee1472de137061a5afcb1e5bd7669182",
+      "size": [
+        512,
+        512
+      ],
+      "transparentPixels": 0,
+      "opaquePixels": 262144,
+      "fractionalAlphaPixels": 0,
+      "fractionalAlphaFraction": 0.0
+    },
+    "textures/Leaves_TwistedTree_C.png": {
+      "sha256": "66253356a36da8f3e45cdecc8bbb6ca09238072502e469bde032ec7883efd6f8",
+      "size": [
+        512,
+        512
+      ],
+      "transparentPixels": 182284,
+      "opaquePixels": 71871,
+      "fractionalAlphaPixels": 7989,
+      "fractionalAlphaFraction": 0.030475616455078125
+    },
+    "textures/Bark_TwistedTree.png": {
+      "sha256": "4ae0a89814815967d288062963125dea4a36c5a8413777485af7289c1420be2a",
+      "size": [
+        1024,
+        1024
+      ],
+      "transparentPixels": 0,
+      "opaquePixels": 1048576,
+      "fractionalAlphaPixels": 0,
+      "fractionalAlphaFraction": 0.0
+    }
+  }
+}

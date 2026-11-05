@@ -5,6 +5,7 @@ local Island=require("../src/shared/IslandTerrain")
 local Ground=require("../src/shared/FarmGround")
 local Plan=require("../src/shared/EnvironmentPlan")
 local Config=require("../src/shared/EnvironmentConfig")
+local Nature=require("../src/shared/NatureGeometry")
 return function(T:any)
 	T.test("19d: repeatable forest has depth, all five silhouettes and bounded population",function()
 		local p,m=Forest.build(); local again=Forest.build(); T.same(p,again); T.truthy(m.trees>=25 and m.trees<=Forest.maxTrees)
@@ -51,8 +52,7 @@ return function(T:any)
 	end)
 	T.test("19d: admitted bark and ground mesh bounds fit reserved placement radii",function()
 		-- Measured from the hash-pinned template CFrame/Size (corner radius in XZ).
-		local actual={CommonTree_1=6.5652901883,CommonTree_3=3.4596957397,CommonTree_5=3.6294725991,
-			Pine_2=7.6834492434,TwistedTree_1=10.8019900854,Fern_1=4.3827366075,Rock_Medium_1=3.1134353167}
+		local actual={}; for name,p in pairs(Nature) do actual[name]=p.radius end
 		for _,d in ipairs(Forest.build()) do
 			if d.template then
 				local width=d.forest=="tree" and Forest.forms[d.species].stemWide or 1
@@ -65,37 +65,32 @@ return function(T:any)
 			end
 		end
 	end)
-	T.test("19d: each tree has connected multi-lobed core volume at Minimal",function()
+	T.test("19d: each tree retains its complete imported canopy at Minimal",function()
 		for kind in pairs(Forest.forms) do
 			local pieces=Forest.crowns(kind,0); local core=0
 			for _,p in ipairs(pieces) do
 				if p.role=="core" then core+=1; T.equal(LOD.alpha(p.role,"minimal",80),0) end
-				T.equal(p.shape,"Ball"); for _,v in ipairs(p.size) do T.truthy(v>1 and v<30) end
+				T.equal(p.shape,"Mesh"); for _,v in ipairs(p.size) do T.truthy(v>1 and v<30) end
 			end
-			T.equal(core,3)
-			-- Core lobes overlap rather than becoming isolated balls when details cull.
-			for i=2,3 do
-				local a,b=pieces[i-1],pieces[i]; local overlap=0
-				for axis=1,3 do
-					local separation=math.abs(a.position[axis]-b.position[axis])
-					if separation<(a.size[axis]+b.size[axis])/2 then overlap+=1 end
-				end
-				T.equal(overlap,3,kind)
-			end
+			T.equal(core,1)
+			local bark=Nature[Forest.forms[kind].template].parts[1]
+			local canopy=pieces[1]
+			T.truthy(canopy.position[2]-canopy.size[2]/2<bark.position[2]+bark.size[2]/2,kind)
+			T.truthy(canopy.position[2]+canopy.size[2]/2>bark.position[2],kind)
 		end
 	end)
-	T.test("19d: logs have two separated cut ends and ground-level moss",function()
-		local p=Forest.logPieces(); T.equal(p[1].shape,"Cylinder")
-		T.truthy(p[2].position[1]<-p[1].size[1]/2 and p[3].position[1]>p[1].size[1]/2)
-		for i=1,3 do T.equal(p[i].role,"core") end
+	T.test("19d: fallen wood uses grounded curved bark mesh without proxy primitives",function()
+		local p=Forest.logPieces(); T.equal(p[1].shape,"Mesh"); T.equal(#p,1)
+		T.truthy(p[1].size[1]>7 and p[1].size[1]<9); T.equal(p[1].source,"CommonTree_3_1")
+		T.equal(p[1].role,"core"); T.near(p[1].roll,math.pi/2)
 		for _,v in ipairs(p) do T.truthy(v.position[2]-v.size[2]/2>=-.11) end
 	end)
-	T.test("19d: complete forest budget includes native geometry charges and exact mesh counts",function()
+	T.test("19d: complete forest budget includes all admitted mesh triangles and zero proxies",function()
 		local p,m=Forest.build(); local parts,triangles=0,0
 		for _,d in ipairs(p) do parts+=d.parts; triangles+=d.triangles end
 		T.equal(parts,m.parts); T.equal(triangles,m.triangles)
 		T.truthy(m.parts<=Forest.maxParts and m.triangles<=Forest.maxTriangleCharge)
-		T.truthy(m.nativeParts>100 and m.meshTriangles>0 and m.meshTriangles<m.triangles)
+		T.equal(m.nativeParts,0); T.truthy(m.meshTriangles>0); T.equal(m.meshTriangles,m.triangles)
 		local plan=Plan.build(Config,1); T.truthy(plan.metrics.parts<=Config.budgets.parts)
 		T.truthy(plan.metrics.triangles<=Config.budgets.triangles); T.equal(plan.metrics.externalTextures,12)
 		local count=0; for _,d in ipairs(plan.parts) do if d.forest then count+=1 end end

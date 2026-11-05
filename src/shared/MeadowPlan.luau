@@ -34,7 +34,7 @@ function Meadow.build()
 		local x=-58+i*3.35+(noise(i+5,j)-.5)*1.4
 		local z=-69+j*3.35+(noise(j+9,i)-.5)*1.4
 		local n=noise(i+17,j+31)
-		local scale=4.8+n*1.1; local radius=scale*.43
+		local scale=3.0+n*1.1; local radius=scale*.43
 		if Meadow.clear(x,z,radius) and n>.055 then
 			table.insert(candidates,{x=x,z=z,n=n,scale=scale,radius=radius,rank=n+math.max(0,-z-48)*.012})
 		end
@@ -42,7 +42,7 @@ function Meadow.build()
 	table.sort(candidates,function(a,b) return a.rank<b.rank end)
 	local result={}
 	for i=1,math.min(390,#candidates) do
-		local p=candidates[i]; local tall=i%23==0
+		local p=candidates[i]; local tall=i%11==0
 		local template=tall and "Grass_Wispy_Tall" or "Grass_Common_Short"
 		local scale=tall and p.scale*.35 or p.scale
 		local height=.65+p.n*.65
@@ -58,7 +58,7 @@ function Meadow.build()
 		local x,z=p.x+.7,p.z-.7
 		if Meadow.clear(x,z,radius) then table.insert(result,{template=flower and "Flower_3_Group" or "Clover_2",x=x,z=z,
 			scale=scale,flatten=flower and .85 or .25,angle=i*71,detail=i%4==0 and 2 or 1,radius=radius,
-			tint=flower and {255,244,240} or {157,194,116},wind=false}) end
+			tint=flower and ({{255,244,240},{255,220,235},{223,232,255}})[i%7%3+1] or {157,194,116},wind=false}) end
 	end
 	assert(#result<=Meadow.maxPlants)
 	return result
