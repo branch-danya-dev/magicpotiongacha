@@ -8,7 +8,7 @@ Code/tests or a separate beauty scene alone do not satisfy visual acceptance.
 | Order | Task | Scope and acceptance | Current status |
 | --- | --- | --- | --- |
 | 01 / #18a | Critical defects | Smooth time changes including diagnostics; fence collisions; fall recovery; mobile Factory entry. Continuous actual Play evidence. | Implemented; [visual review pending](evidence/m7-18a/README.md) |
-| 02 / #19a | Island landscape | One island for 4×2 farms and bazaar; hills, slopes, shoreline/water; hide exposed rectangular plates; retain gameplay coordinates and access. | Not started |
+| 02 / #19a | Island landscape | One island for 4×2 farms and bazaar; hills, slopes, shoreline/water; hide exposed common base; retain gameplay coordinates and access. Individual farm integration follows in 03. | Implemented; [visual review pending](evidence/m7-19a/README.md) |
 | 03 / #19b | Farm integration | Remove green plot plate; thin yellow ground boundary; local soft green build affordance; natural paths and approaches. | Not started |
 | 04 / #19c | Grass and flowers | Volumetric varied grass, visible wind, flowers/clover; clear station/path zones; video at graphics 5/10. | Not started |
 | 05 / #19d | Forest | Expressive stylized trees, deep edge forest, understory, rocks, fallen logs and clearings; distant vegetation optimization. | Not started |

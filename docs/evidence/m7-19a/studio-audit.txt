@@ -1,0 +1,42 @@
+=== baseline ===
+2026-11-05T16:24:24.147Z M7_19A_CLEARANCE plots=8 samples=2888 highest=-0.4062538146972656 worldAnchors=PASS
+2026-11-05T16:29:45.480Z M7_19A_FRAME view=spawn pose=day viewport=2113, 1113 graphics=QualityLevel5 quality=reduced camera=-135.703629, 11.5109081, -35.9381676, 0.800000012, -0.253731251, 0.543709874, 0, 0.906183124, 0.422885448, -0.599999964, -0.338308364, 0.724946499 surface=nil
+2026-11-05T16:29:54.596Z M7_19A_FRAME view=west-coast pose=day viewport=2113, 1113 graphics=QualityLevel5 quality=reduced camera=-196.217621, 12.2403755, 6.78237534, 0.707106829, -0.453427136, 0.542590022, 0, 0.767338216, 0.641242743, -0.707106829, -0.453427136, 0.542590022 surface=nil
+2026-11-05T16:30:09.696Z M7_19A_FRAME view=bazaar-overview pose=day viewport=2113, 1113 graphics=QualityLevel5 quality=reduced camera=6.24458218, 11.1194229, 16.8464928, 0.816967785, -0.2880916, 0.499566555, 0, 0.866275489, 0.499566555, -0.576683104, -0.408129781, 0.707719326 surface=nil
+2026-11-05T16:31:02.411Z M7_19A_FRAME view=spawn pose=day viewport=2113, 1113 graphics=QualityLevel10 quality=reduced camera=-135.703629, 11.5109081, -35.9381676, 0.800000012, -0.253731251, 0.543709874, 0, 0.906183124, 0.422885448, -0.599999964, -0.338308364, 0.724946499 surface=nil
+2026-11-05T16:31:13.126Z M7_19A_FRAME view=west-coast pose=day viewport=2113, 1113 graphics=QualityLevel10 quality=reduced camera=-196.217621, 12.2403755, 6.78237534, 0.707106829, -0.453427136, 0.542590022, 0, 0.767338216, 0.641242743, -0.707106829, -0.453427136, 0.542590022 surface=nil
+2026-11-05T16:31:24.192Z M7_19A_FRAME view=bazaar-overview pose=day viewport=2113, 1113 graphics=QualityLevel10 quality=reduced camera=6.24458218, 11.1194229, 16.8464928, 0.816967785, -0.2880916, 0.499566555, 0, 0.866275489, 0.499566555, -0.576683104, -0.408129781, 0.707719326 surface=nil
+2026-11-05T16:32:19.075Z M7_19A_FRAME view=bazaar-overview pose=day viewport=2113, 1113 graphics=QualityLevel10 quality=reduced camera=199.82663, 204.701477, 291.087738, 0.816967785, -0.2880916, 0.499566555, 0, 0.866275489, 0.499566555, -0.576683104, -0.408129781, 0.707719326 surface=nil
+2026-11-05T16:33:38.782Z M7_19A_CLEARANCE plots=8 samples=2888 highest=-0.4062538146972656 worldAnchors=PASS
+=== candidate-final ===
+2026-11-05T16:38:41.164Z M7_19A_TERRAIN cells=1082880 written=675289 preserved=0 startupSeconds=4.197 plots=8 decorated=1
+2026-11-05T16:38:41.323Z M7_19A_CLEARANCE plots=8 samples=2888 highest=-0.4062538146972656 worldAnchors=PASS
+2026-11-05T16:38:41.323Z M7_19A_BASE hidden=true collisionRetained=true
+2026-11-05T16:38:59.380Z M7_19A_FRAME view=spawn pose=day viewport=2113, 1113 graphics=QualityLevel10 quality=reduced camera=-135.703629, 11.5109081, -35.9381676, 0.800000012, -0.253731251, 0.543709874, 0, 0.906183124, 0.422885448, -0.599999964, -0.338308364, 0.724946499 surface=1
+2026-11-05T16:39:11.012Z M7_19A_FRAME view=west-coast pose=day viewport=2113, 1113 graphics=QualityLevel10 quality=reduced camera=-196.217621, 12.3341255, 6.78237534, 0.707106829, -0.453427136, 0.542590022, 0, 0.767338216, 0.641242743, -0.707106829, -0.453427136, 0.542590022 surface=1
+2026-11-05T16:39:20.980Z M7_19A_FRAME view=bazaar-overview pose=day viewport=2113, 1113 graphics=QualityLevel10 quality=reduced camera=6.24458218, 11.1194229, 16.8464928, 0.816967785, -0.2880916, 0.499566555, 0, 0.866275489, 0.499566555, -0.576683104, -0.408129781, 0.707719326 surface=1
+2026-11-05T16:40:28.076Z M7_19A_FRAME view=spawn pose=day viewport=2113, 1113 graphics=QualityLevel5 quality=reduced camera=-135.703629, 11.5109081, -35.9381676, 0.800000012, -0.253731251, 0.543709874, 0, 0.906183124, 0.422885448, -0.599999964, -0.338308364, 0.724946499 surface=1
+2026-11-05T16:40:38.859Z M7_19A_FRAME view=west-coast pose=day viewport=2113, 1113 graphics=QualityLevel5 quality=reduced camera=-196.217621, 12.3341255, 6.78237534, 0.707106829, -0.453427136, 0.542590022, 0, 0.767338216, 0.641242743, -0.707106829, -0.453427136, 0.542590022 surface=1
+2026-11-05T16:40:50.792Z M7_19A_FRAME view=bazaar-overview pose=day viewport=2113, 1113 graphics=QualityLevel5 quality=reduced camera=6.24458218, 11.1194229, 16.8464928, 0.816967785, -0.2880916, 0.499566555, 0, 0.866275489, 0.499566555, -0.576683104, -0.408129781, 0.707719326 surface=1
+2026-11-05T16:41:03.691Z M7_19A_FRAME view=spawn pose=day viewport=2113, 1113 graphics=QualityLevel5 quality=reduced camera=-135.703629, 11.5109081, -35.9381676, 0.800000012, -0.253731251, 0.543709874, 0, 0.906183124, 0.422885448, -0.599999964, -0.338308364, 0.724946499 surface=1
+2026-11-05T16:41:26.258Z M7_19A_FRAME view=spawn pose=day viewport=2113, 1113 graphics=QualityLevel5 quality=reduced camera=-135.703629, 11.5109081, -35.9381676, 0.800000012, -0.253731251, 0.543709874, 0, 0.906183124, 0.422885448, -0.599999964, -0.338308364, 0.724946499 surface=1
+2026-11-05T16:41:27.291Z M7_19A_WALK step=1 reached=true alive=true
+2026-11-05T16:41:29.057Z M7_19A_WALK step=2 reached=true alive=true
+2026-11-05T16:41:33.557Z M7_19A_WALK step=3 reached=true alive=true
+2026-11-05T16:41:37.973Z M7_19A_WALK step=4 reached=true alive=true
+2026-11-05T16:41:42.389Z M7_19A_WALK step=5 reached=true alive=true
+2026-11-05T16:41:46.939Z M7_19A_WALK step=6 reached=true alive=true
+2026-11-05T16:41:50.239Z M7_19A_WALK step=7 reached=true alive=true
+2026-11-05T16:41:54.339Z M7_19A_WALK step=8 reached=true alive=true
+2026-11-05T16:41:58.406Z M7_19A_WALK step=9 reached=true alive=true
+2026-11-05T16:42:01.657Z M7_19A_WALK step=10 reached=true alive=true
+2026-11-05T16:42:03.055Z M7_19A_WALK step=11 reached=true alive=true
+2026-11-05T16:42:04.438Z M7_19A_WALK step=12 reached=true alive=true
+2026-11-05T16:42:08.188Z M7_19A_WALK step=13 reached=true alive=true
+2026-11-05T16:42:12.389Z M7_19A_WALK step=14 reached=true alive=true
+2026-11-05T16:42:16.839Z M7_19A_WALK step=15 reached=true alive=true
+2026-11-05T16:46:44.644Z M7_19A_FRAME view=west-coast pose=day viewport=2113, 1113 graphics=QualityLevel5 quality=reduced camera=-196.217621, 12.3341255, 6.78237534, 0.707106829, -0.453427136, 0.542590022, 0, 0.767338216, 0.641242743, -0.707106829, -0.453427136, 0.542590022 surface=1
+2026-11-05T16:47:07.027Z M7_19A_FRAME view=bazaar-overview pose=day viewport=2113, 1113 graphics=QualityLevel5 quality=reduced camera=6.24458218, 11.1194229, 16.8464928, 0.816967785, -0.2880916, 0.499566555, 0, 0.866275489, 0.499566555, -0.576683104, -0.408129781, 0.707719326 surface=1
+2026-11-05T16:49:27.523Z M7_19A_FRAME view=bazaar-overview pose=day viewport=2113, 1113 graphics=QualityLevel10 quality=reduced camera=109.18158, 114.056419, 162.67392, 0.816967785, -0.2880916, 0.499566555, 0, 0.866275489, 0.499566555, -0.576683104, -0.408129781, 0.707719326 surface=1
+=== plain-delivery ===
+2026-11-05T16:52:24.056Z M7_19A_TERRAIN cells=1082880 written=675289 preserved=0 startupSeconds=4.272 plots=8 decorated=1

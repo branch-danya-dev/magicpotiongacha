@@ -2,7 +2,20 @@
 
 CLI/CI passing is necessary but does not mark any item below as completed.
 
-## Current: Task 01 / #18a — critical Play fixes, visual review pending
+## Current: Task 02 / #19a — island landscape, visual review pending
+
+One continuous native Terrain island now surrounds the eight unchanged farm plots
+and central bazaar. The common rectangular base is hidden; hills, slopes, coast and
+water are visible in full-game Play. Individual farm plates remain for task 03.
+[Actual evidence, exact builds and limitations](evidence/m7-19a/README.md):
+graphics 5/10 comparisons, 80-second native walk recording, plain one-Play file.
+922 tests pass; Windows/Ubuntu CI pass. Studio checked 2888 Terrain clearance rays
+over all eight plots; all 15 walking segments reached their destination alive.
+The distant finite water edge remains visible at extreme zoom. Physical phones,
+experience permissions and multiplayer load remain BLOCKED. PR stays Draft;
+no merge or publishing. Tasks 03–07 not started; 08 needs final pilot APPROVED.
+
+## Task 01 / #18a — critical Play fixes, visual review pending
 
 Owner explicitly **APPROVED artistic Gate A** on 2026-11-05. This approves the
 A.2c atmosphere only. PR #17 remains Draft; no merge or publishing authorized.
@@ -13,7 +26,7 @@ Play build, [20 actual Studio captures and three recordings](evidence/m7-18a/REA
 fixed and exercised with the native player list open in both phone orientations.
 Broader resource/guide overlap and unperformed regression cases remain documented.
 Physical phones, experience asset permissions and multiplayer load stay BLOCKED.
-Tasks 02–07 have not started; task 08 requires final pilot APPROVED after 07.
+Task 02 followed by the owner's request; task 08 requires final pilot APPROVED after 07.
 
 ## Historical: M7.1 A.2c — delivered for Gate A
 
