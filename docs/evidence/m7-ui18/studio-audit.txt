@@ -1,0 +1,55 @@
+2026-11-05T13:19:35.838Z,64.838356,7fd0,6,Info [FLog::CreatorOutput] UI18_AUDIT route=spawn pose=day viewport=1920x1080 touch=false prompts=1 labels=0 selected=press panel=false quality=reduced graphics=QualityLevel10
+2026-11-05T13:19:35.838Z,64.838356,7fd0,6,Info [FLog::CreatorOutput] UI18_BOUNDS enabled=true gui=1920, 1022 panel=12, 116 420, 660
+2026-11-05T13:19:35.839Z,64.839355,7fd0,6,Info [FLog::CreatorOutput] UI18_CHAT active=false size={0.400000006, 0}, {0.340000004, 0} position={0, 0}, {0, 0}
+2026-11-05T13:22:16.215Z,225.215805,96c4,6,Info [FLog::CreatorOutput] UI18_AUDIT route=spawn pose=day viewport=1920x1080 touch=false prompts=1 labels=0 selected=press panel=false quality=reduced graphics=QualityLevel5
+2026-11-05T13:22:16.215Z,225.215805,96c4,6,Info [FLog::CreatorOutput] UI18_BOUNDS enabled=true gui=1920, 1022 panel=12, 116 420, 660
+2026-11-05T13:22:16.215Z,225.215805,96c4,6,Info [FLog::CreatorOutput] UI18_CHAT active=false size={0.400000006, 0}, {0.340000004, 0} position={0, 0}, {0, 0}
+2026-11-05T13:22:30.380Z,239.380630,9208,6,Info [FLog::CreatorOutput] UI18_AUDIT route=spawn pose=sunset viewport=1920x1080 touch=false prompts=1 labels=0 selected=press panel=false quality=reduced graphics=QualityLevel5
+2026-11-05T13:22:30.380Z,239.380630,9208,6,Info [FLog::CreatorOutput] UI18_BOUNDS enabled=true gui=1920, 1022 panel=12, 116 420, 660
+2026-11-05T13:22:30.381Z,239.381622,9208,6,Info [FLog::CreatorOutput] UI18_CHAT active=false size={0.400000006, 0}, {0.340000004, 0} position={0, 0}, {0, 0}
+2026-11-05T13:22:57.246Z,266.246674,71d0,6,Info [FLog::CreatorOutput] UI18_AUDIT route=spawn pose=night viewport=1920x1080 touch=false prompts=1 labels=0 selected=press panel=false quality=reduced graphics=QualityLevel5
+2026-11-05T13:22:57.246Z,266.246674,71d0,6,Info [FLog::CreatorOutput] UI18_BOUNDS enabled=true gui=1920, 1022 panel=12, 116 420, 660
+2026-11-05T13:22:57.246Z,266.246674,71d0,6,Info [FLog::CreatorOutput] UI18_CHAT active=false size={0.400000006, 0}, {0.340000004, 0} position={0, 0}, {0, 0}
+2026-11-05T13:24:58.957Z,387.957672,96c4,6,Info [FLog::CreatorOutput] UI18_ROUTE crystal
+2026-11-05T13:24:59.975Z,388.975555,3e44,6,Info [FLog::CreatorOutput] UI18_AUDIT route=crystal pose=night viewport=1366x768 touch=false prompts=1 labels=0 selected=crystal panel=false quality=reduced graphics=QualityLevel5
+2026-11-05T13:24:59.975Z,388.975555,3e44,6,Info [FLog::CreatorOutput] UI18_BOUNDS enabled=true gui=1366, 710 panel=12, 116 420, 578
+2026-11-05T13:24:59.975Z,388.975555,3e44,6,Info [FLog::CreatorOutput] UI18_CHAT active=false size={0.400000006, 0}, {0.340000004, 0} position={0, 0}, {0, 0}
+2026-11-05T13:25:27.125Z,416.125885,96c4,6,Info [FLog::CreatorOutput] UI18_ROUTE garden
+2026-11-05T13:25:28.140Z,417.140533,3d50,6,Info [FLog::CreatorOutput] UI18_AUDIT route=garden pose=night viewport=1366x768 touch=false prompts=1 labels=0 selected=Buy_garden panel=false quality=reduced graphics=QualityLevel5
+2026-11-05T13:25:28.140Z,417.140533,3d50,6,Info [FLog::CreatorOutput] UI18_BOUNDS enabled=true gui=1366, 710 panel=12, 116 420, 578
+2026-11-05T13:25:28.140Z,417.140533,3d50,6,Info [FLog::CreatorOutput] UI18_CHAT active=false size={0.400000006, 0}, {0.340000004, 0} position={0, 0}, {0, 0}
+2026-11-05T13:30:10.729Z,699.729919,96c4,6,Info [FLog::CreatorOutput] UI18_ROUTE Buy_garden
+2026-11-05T13:30:11.745Z,700.745544,3d50,6,Info [FLog::CreatorOutput] UI18_AUDIT route=Buy_garden pose=night viewport=1366x768 touch=false prompts=1 labels=0 selected=Buy_garden panel=false quality=reduced graphics=QualityLevel5
+2026-11-05T13:30:11.745Z,700.745544,3d50,6,Info [FLog::CreatorOutput] UI18_BOUNDS enabled=true gui=1366, 710 panel=12, 116 420, 578
+2026-11-05T13:30:11.745Z,700.745544,3d50,6,Info [FLog::CreatorOutput] UI18_CHAT active=false size={0.400000006, 0}, {0.340000004, 0} position={0, 0}, {0, 0}
+2026-11-05T13:30:47.276Z,736.276245,96c4,6,Info [FLog::CreatorOutput] UI18_ROUTE TradePost
+2026-11-05T13:30:48.294Z,737.294006,9208,6,Info [FLog::CreatorOutput] UI18_AUDIT route=TradePost pose=night viewport=1366x768 touch=false prompts=1 labels=0 selected=TradePost panel=false quality=reduced graphics=QualityLevel5
+2026-11-05T13:30:48.294Z,737.294006,9208,6,Info [FLog::CreatorOutput] UI18_BOUNDS enabled=true gui=1366, 710 panel=12, 116 420, 578
+2026-11-05T13:30:48.294Z,737.294006,9208,6,Info [FLog::CreatorOutput] UI18_CHAT active=false size={0.400000006, 0}, {0.340000004, 0} position={0, 0}, {0, 0}
+2026-11-05T13:31:13.609Z,762.609741,96c4,6,Info [FLog::CreatorOutput] UI18_ROUTE neighbour
+2026-11-05T13:31:14.626Z,763.626709,4ba0,6,Info [FLog::CreatorOutput] UI18_AUDIT route=neighbour pose=night viewport=1366x768 touch=false prompts=0 labels=0 selected= panel=false quality=reduced graphics=QualityLevel5
+2026-11-05T13:31:14.627Z,763.627686,4ba0,6,Info [FLog::CreatorOutput] UI18_BOUNDS enabled=true gui=1366, 710 panel=12, 116 420, 578
+2026-11-05T13:31:14.627Z,763.627686,4ba0,6,Info [FLog::CreatorOutput] UI18_CHAT active=false size={0.400000006, 0}, {0.340000004, 0} position={0, 0}, {0, 0}
+2026-11-05T13:31:25.443Z,774.443970,96c4,6,Info [FLog::CreatorOutput] UI18_AUDIT route=neighbour pose=night viewport=1366x768 touch=false prompts=0 labels=0 selected= panel=false quality=reduced graphics=QualityLevel5
+2026-11-05T13:31:25.443Z,774.443970,96c4,6,Info [FLog::CreatorOutput] UI18_BOUNDS enabled=true gui=1366, 710 panel=12, 116 420, 578
+2026-11-05T13:31:25.444Z,774.444946,96c4,6,Info [FLog::CreatorOutput] UI18_CHAT active=false size={0.400000006, 0}, {0.340000004, 0} position={0, 0}, {0, 0}
+2026-11-05T13:31:47.524Z,796.524780,96c4,6,Info [FLog::CreatorOutput] UI18_ROUTE spawn
+2026-11-05T13:31:48.525Z,797.525452,3d50,6,Info [FLog::CreatorOutput] UI18_AUDIT route=spawn pose=night viewport=1366x768 touch=false prompts=1 labels=0 selected=press panel=false quality=reduced graphics=QualityLevel5
+2026-11-05T13:31:48.525Z,797.525452,3d50,6,Info [FLog::CreatorOutput] UI18_BOUNDS enabled=true gui=1366, 710 panel=12, 116 420, 578
+2026-11-05T13:31:48.525Z,797.525452,3d50,6,Info [FLog::CreatorOutput] UI18_CHAT active=false size={0.400000006, 0}, {0.340000004, 0} position={0, 0}, {0, 0}
+2026-11-05T13:32:04.524Z,813.524780,3e44,6,Info [FLog::CreatorOutput] UI18_AUDIT route=spawn pose=rain viewport=1366x768 touch=false prompts=1 labels=0 selected=press panel=false quality=reduced graphics=QualityLevel5
+2026-11-05T13:32:04.524Z,813.524780,3e44,6,Info [FLog::CreatorOutput] UI18_BOUNDS enabled=true gui=1366, 710 panel=12, 116 420, 578
+2026-11-05T13:32:04.524Z,813.524780,3e44,6,Info [FLog::CreatorOutput] UI18_CHAT active=false size={0.400000006, 0}, {0.340000004, 0} position={0, 0}, {0, 0}
+2026-11-05T13:32:15.374Z,824.374878,8c78,6,Info [FLog::CreatorOutput] UI18_AUDIT route=spawn pose=day viewport=1366x768 touch=false prompts=1 labels=0 selected=press panel=false quality=reduced graphics=QualityLevel5
+2026-11-05T13:32:15.374Z,824.374878,8c78,6,Info [FLog::CreatorOutput] UI18_BOUNDS enabled=true gui=1366, 710 panel=12, 116 420, 578
+2026-11-05T13:32:15.374Z,824.374878,8c78,6,Info [FLog::CreatorOutput] UI18_CHAT active=false size={0.400000006, 0}, {0.340000004, 0} position={0, 0}, {0, 0}
+2026-11-05T13:34:42.034Z,971.034851,96c4,6,Info [FLog::CreatorOutput] UI18_ROUTE crystal
+2026-11-05T13:34:43.051Z,972.051575,4ba0,6,Info [FLog::CreatorOutput] UI18_AUDIT route=crystal pose=day viewport=402x778 touch=true prompts=1 labels=0 selected=crystal panel=false quality=reduced graphics=QualityLevel5
+2026-11-05T13:34:43.051Z,972.051575,4ba0,6,Info [FLog::CreatorOutput] UI18_BOUNDS enabled=true gui=402, 720 panel=12, 196 378, 374
+2026-11-05T13:34:43.052Z,972.052612,4ba0,6,Info [FLog::CreatorOutput] UI18_CHAT active=false size={0.400000006, 0}, {0.340000004, 0} position={0, 0}, {0, 0}
+2026-11-05T13:35:34.786Z,1023.786255,96c4,6,Info [FLog::CreatorOutput] UI18_AUDIT route=crystal pose=day viewport=402x778 touch=true prompts=1 labels=0 selected=crystal panel=false quality=reduced graphics=QualityLevel5
+2026-11-05T13:35:34.786Z,1023.786255,96c4,6,Info [FLog::CreatorOutput] UI18_BOUNDS enabled=true gui=402, 720 panel=12, 196 378, 374
+2026-11-05T13:35:34.786Z,1023.786255,96c4,6,Info [FLog::CreatorOutput] UI18_CHAT active=false size={0.400000006, 0}, {0.340000004, 0} position={0, 0}, {0, 0}
+2026-11-05T13:38:11.562Z,1180.562744,96c4,6,Info [FLog::CreatorOutput] UI18_AUDIT route=crystal pose=day viewport=750x382 touch=true prompts=0 labels=0 selected= panel=false quality=reduced graphics=QualityLevel5
+2026-11-05T13:38:11.562Z,1180.562744,96c4,6,Info [FLog::CreatorOutput] UI18_BOUNDS enabled=true gui=750, 324 panel=184, 116 382, 192
+2026-11-05T13:38:11.562Z,1180.562744,96c4,6,Info [FLog::CreatorOutput] UI18_CHAT active=false size={0.400000006, 0}, {0.340000004, 0} position={0, 0}, {0, 0}

@@ -6,7 +6,10 @@ CLI/CI passing is necessary but does not mark any item below as completed.
 
 Owner explicitly **APPROVED artistic Gate A** on 2026-11-05. This approves the
 A.2c atmosphere only. PR #17 remains Draft; no merge or publishing authorized.
-Issue #18 is now in progress; [inventory and implementation](M7_UI18.md).
+Issue #18 implementation has a review build; [inventory and implementation](M7_UI18.md),
+[actual Studio screenshots/video and open limitations](evidence/m7-ui18/README.md).
+892 automated tests pass; UI acceptance remains pending. The portrait player-list
+overlap and unperformed live regression cases are explicitly listed in the report.
 Physical phones, experience asset permissions and multiplayer load stay BLOCKED.
 Issue #19 and station redesign wait for their subsequent gates.
 
