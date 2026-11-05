@@ -1,29 +1,34 @@
-# M7 — revised sequential world rework
+# M7 — последовательный план видимого улучшения мира
 
-Owner's 2026-11-05 sequence, amended by the latest instruction: continue
-**without frames, screenshots or video**. Deliver code, an ordinary full-game
-Studio build, regression checks/Windows+Ubuntu CI, and honest remaining limits.
-No media production or diagnostic camera helper is required for subsequent work.
-Historical evidence remains immutable. Passing code/build checks does not imply
-that unperformed Studio, artistic or real-device checks passed.
+**Актуализировано по решению владельца от 06.11.2026.** Задачи 01–07 реализованы в коде и обычной сборке, но **художественная приёмка Gate A НЕ пройдена**. Основание — реальные замечания по деревьям, пустому ландшафту, швам неба, миганию фонарей, клиппингу камеры и возможности забраться на внешний хребет. **Phase 08 — последняя** после исправлений, законченной художественной композиции одного пилота и его приёмки.
 
-| Order | Task | Scope and acceptance | Current status |
+**Единая действующая техническая/художественная постановка:** [M7_POST07_ART_FINALIZATION.md](M7_POST07_ART_FINALIZATION.md). **Актуальный трекер для Astra:** [#21 Gate A.3](https://github.com/branch-danya-dev/magicpotiongacha/issues/21). Исторические отчёты задач 01–07/issue #20 сохраняют результаты на своих SHA; новый gate не означает, что прежние задачи технически не выполнялись.
+
+| Очередь | Задача | Видимый результат / критерий | Статус |
 | --- | --- | --- | --- |
-| 01 / #18a | Critical defects | Smooth time changes including diagnostics; fence collisions; fall recovery; mobile Factory entry. Continuous actual Play evidence. | Implemented; [visual review pending](evidence/m7-18a/README.md) |
-| 02 / #19a | Island landscape | One island for 4×2 farms and bazaar; hills, slopes, shoreline/water; hide exposed common base; retain gameplay coordinates and access. Individual farm integration follows in 03. | Implemented; [visual review pending](evidence/m7-19a/README.md) |
-| 03 / #19b | Farm integration | Remove green plot plate; thin yellow ground boundary; local soft green build affordance; natural paths and approaches. | Implemented; [first visual checkpoint pending](evidence/m7-19b/README.md) |
-| 04 / #19c | Grass and flowers | Volumetric varied grass, visible wind, flowers/clover; clear station/path zones; quality-tier checks. | [Code/build delivered; media requirement waived](M7_TASK04.md) |
-| 05 / #19d | Forest | Expressive stylized trees, deep edge forest, understory, rocks, fallen logs and clearings; distant vegetation optimization. | [Implemented; code/build checks, no media requested](M7_TASK05.md) |
-| 06 / #19e | Fantasy atmosphere | Artistic sky/horizon; spatial light and haze; restrained pollen/glints; unified weather/wind/vegetation cycle; convincing Reduced Play. | [Implemented in code/build; Studio appearance unverified, media waived](M7_TASK06.md) |
-| 07 / #19f | Gameplay props | Replace pilot station blocks, crystal, lanterns and nearby bazaar; coherent construction/upgrade states; preserve mechanics/economy. | [Implemented in code/build; final pilot artistic approval pending](M7_TASK07.md) |
-| 08 / #19g | Whole-island rollout | Dress remaining seven farms and bazaar; coherent variation; routes/collisions/interactions; regression and available performance checks. | Blocked by final pilot APPROVED |
+| 01 / #18a | Базовая стабильность | Плавный time set, физика ограждений, recovery при падении, mobile Factory. | Реализовано в коде; [визуальная проверка не закрыта](evidence/m7-18a/README.md) |
+| 02 / #19a | Первичный рельеф | Общий остров, берег, холмы/вода, игровые координаты прежние. | Реализовано; [визуальная проверка не закрыта](evidence/m7-19a/README.md) |
+| 03 / #19b | Интеграция пилотной фермы | Убрана зелёная плита, жёлтая граница, локальный зелёный build cue. | Реализовано; [визуальная проверка не закрыта](evidence/m7-19b/README.md) |
+| 04 / #19c | Трава и цветы | Разнообразная трава, ветер, цветы, зоны проходов свободны. | [Код/сборка есть](M7_TASK04.md), арт не принят |
+| 05 / #19d | Первичный лес | Деревья, подлесок и слои окружения. | [Код/сборка есть](M7_TASK05.md); **круглые Sphere-кроны визуально отвергнуты** |
+| 06 / #19e | Атмосферная база | Небо, свет, weather/wind, VFX и качество. | [Код/сборка есть](M7_TASK06.md); **швы неба/лампы и вид света требуют новых правок** |
+| 07 / #19f | Модели объектов фермы | Станки, фонари, базарные объекты, фазы строительства. | [Код/сборка есть](M7_TASK07.md); **обычная игра визуально не принята** |
+| **07A / #21** | **P0: камера и дефекты мира** | Камера не входит в холмы, внешние гребни непроходимы, нет падения/сквозных оград; лампы не мигают на развороте; skybox бесшовный; смена времени плавная. | **TODO — выполнить первым** |
+| **07B / #21** | **P1: утверждённые бесплатные ассеты** | Настоящие красивые деревья/травы Quaternius Stylized Nature MegaKit вместо шаровых крон, разнотипные цветы, папоротники, валежник; asset/license/perf gate. | **TODO — только после 07A** |
+| **07C / #21** | **P1: полная художественная композиция пилота** | Густой лес за холмами, более островной внешний рельеф, дальние башни/острова, оригинальные небесные тела по вкусу; светлячки, ветер, глубина, выразительные и читаемые день/ночь; обычный Play не выглядит тестовой картой. | **TODO — после 07B** |
+| **07D / #21** | **Gate A: визуальная и функциональная приёмка** | Full-game Play на обычной камере/UI, проверка Low/Reduced, света и коллизий, тесты/CI и бюджет; **явное APPROVED владельца**. | **BLOCKED до 07A–C** |
+| **UX / #18** | Чистый игровой интерфейс | Подсказки/панели не заслоняют ландшафт на обычном PC/mobile Play. Отдельный обязательный gate. | **Отдельная задача; требуется до 08** |
+| **08 / #19** | **ФИНАЛ: весь остров 4×2 + Bazaar** | Применить **одобренную** художественную систему ко всем оставшимся 7 фермам, базару и ландшафту; сохранить графику, interaction topology, владение, DataStore, performance worst-case. | **СТРОГО BLOCKED до 07D APPROVED + UX gate #18** |
 
-After 03: first visual checkpoint — island/farm no longer read as rectangular
-platforms. After 06: nature acceptance — living fantasy forest with grass, relief,
-trees and atmosphere. After 07: full pilot artistic gate; only the owner's explicit
-**APPROVED** permits 08. Earlier Gate A approval is historical and does not approve
-the new completed pilot, the UI gate or the eight-farm rollout.
+### Порядок / жёсткие gates
 
-PR #17 remains Draft on `feat/m7-environment-artpass`. No merge or publishing.
-Physical smartphones, experience asset permissions and multiplayer load remain
-BLOCKED until actually checked. No paid acquisition or trade activation.
+1. Исправить 07A в пилотном ordinary full-game Play, подтвердить ручными воспроизведениями дефектов/исправлений. **Не закрывать только юнит-тестами**.
+2. Выполнить 07B: source/license/hash manifest бесплатного Quaternius, реально применённые mesh foliage, grass/flowers с проверкой Roblox Low/Automatic; никаких платных закупок без согласования.
+3. Выполнить 07C: цельная художественная сцена пилота и видимая перспектива, не размножая недоделанные станки/цветные блоки на всё поле.
+4. Gate 07D: только owner **APPROVED** обычной игры. Если вид не принят — вернуться к 07A–C.
+5. Закрыть обязательную чистоту UX по [#18](https://github.com/branch-danya-dev/magicpotiongacha/issues/18), совместить с одобренным артом.
+6. **Только теперь** 08 / [#19](https://github.com/branch-danya-dev/magicpotiongacha/issues/19) — итоговая застройка и художественный rollout 8 plots + Bazaar. Полные инварианты server/plot/userId/MaxPlayers, регрессии и ограничения описаны в #19.
+
+**Поставка по последнему указанию владельца:** исходный код + ordinary full-game Studio build + актуальные регрессионные проверки/CI Windows+Ubuntu и честные ограничения. Обязательное изготовление отдельных screenshots, видеороликов, beauty harness или camera helper **отменено**. Но Studio appearance, camera/collision, asset permission, real device performance, 2–8 players и художественное решение нельзя объявлять пройденными без фактического теста.
+
+Оставить [PR #17](https://github.com/branch-danya-dev/magicpotiongacha/pull/17) **Draft**, не сливать, не публиковать, не покупать ассеты; флаги монетизации/торговли и безопасные defaults сохраняются. Защищённые M6-инварианты не ломать.
