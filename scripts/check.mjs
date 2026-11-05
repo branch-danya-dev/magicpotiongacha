@@ -36,6 +36,7 @@ run(process.execPath, ['scripts/check-environment.mjs']);
 run(process.execPath, ['scripts/check-ui.mjs']);
 run(process.execPath, ['scripts/check-18a-evidence.mjs']);
 run(process.execPath, ['scripts/check-19a-evidence.mjs']);
+run(process.execPath, ['scripts/check-19b-evidence.mjs']);
 run(tool('luau', 'luau-compile'), ['--null', ...all]);
 // Roblox engine scripts require Studio's type environment. The portable domain and
 // persistence modules are checked here; the runtime scripts are compiled above.

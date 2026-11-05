@@ -1,0 +1,1043 @@
+Source SHA: e77905569ec40ca4a091af52a536157bbdd11d87
+Platform: win32
+> C:\Users\keara\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe scripts/check-environment.mjs
+A.2c art PASS: original closed asset roster, opaque seamless low-frequency meadow, transparent star borders, combined memory budget
+A.2b cubemap PASS: decoded all six PNG faces; 3056 shared edge rays, zero RGBA discontinuities
+A.2b evidence PASS: exact captured sources, 12 matched final views, supporting captures and 45-second recording
+A.2c evidence PASS: archived captured runtime, approved atmosphere data/art, 20 matched graphics 5/10 frames and native recording
+M7 integrity PASS: 70 unchanged M6 files, gameplay World, release flags, art source hashes, A.2 capture provenance and isolated harness
+> C:\Users\keara\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe scripts/check-ui.mjs
+UI18 contract PASS: original intent sequencing/payment handling; native prompts; CoreGui and release isolation
+UI18 evidence PASS: d6c836f5ea96269e20259b26fb7d173b2e8aa1f7; 21 actual Studio captures; review remains pending
+> C:\Users\keara\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe scripts/check-18a-evidence.mjs
+18a evidence PASS: 20 Studio captures, 3 real videos; runtime c0c1912185ea19bfbae5755d717e2da8fdec2b93
+> C:\Users\keara\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe scripts/check-19a-evidence.mjs
+19a evidence PASS: archived runtime, six graphics 5/10 pairs, real video; runtime 8eb1cfe89d1965061f029fdbc3d7f142c9411853
+> C:\Users\keara\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe scripts/check-19b-evidence.mjs
+19b evidence PASS: eight camera pairs, bounded glow, 12 walk segments, ordinary Play; runtime e77905569ec40ca4a091af52a536157bbdd11d87
+> .tools\luau\luau-compile.exe --null src/client/CollectionUI.luau src/client/Environment.client.luau src/client/EnvironmentController.luau src/client/EnvironmentView.luau src/client/FamiliarView.client.luau src/client/FarmAffordance.luau src/client/LongTermUI.luau src/client/Main.client.luau src/client/ShopPreview.luau src/client/ShopUI.luau src/client/TradeUI.luau src/client/WorldContext.luau src/server/CharacterSafety.server.luau src/server/EnvironmentArt.luau src/server/FarmLandscape.luau src/server/FenceBarriers.luau src/server/IslandLandscape.luau src/server/Main.server.luau src/server/ProfileStore.luau src/server/PurchaseCoordinator.luau src/server/PurchaseRuntime.luau src/server/ReceiptJournal.luau src/server/ServerSettings.luau src/server/TradeCoordinator.luau src/server/TradeJournal.luau src/server/TradeRuntime.luau src/server/World.luau src/shared/Access.luau src/shared/CharacterRecovery.luau src/shared/Collection.luau src/shared/Config.luau src/shared/ContextUI.luau src/shared/Dailies.luau src/shared/EnvironmentConfig.luau src/shared/EnvironmentLabels.luau src/shared/EnvironmentPlan.luau src/shared/EnvironmentState.luau src/shared/EnvironmentTerrain.luau src/shared/EnvironmentTransition.luau src/shared/Epochs.luau src/shared/Factory.luau src/shared/Familiars.luau src/shared/FarmGround.luau src/shared/IslandTerrain.luau src/shared/ItemOrigin.luau src/shared/LegacyConfig.luau src/shared/LongTerm.luau src/shared/Monetization.luau src/shared/OfferCatalog.luau src/shared/Policy.luau src/shared/Progression.luau src/shared/Protocol.luau src/shared/TradeCodec.luau src/shared/TradeSession.luau src/shared/Trading.luau tests/M2Harness.luau tests/M2Scenario.luau tests/M3Harness.luau tests/M3Scenario.luau tests/M4Harness.luau tests/M5Harness.luau tests/M6Harness.luau tests/Scenarios.luau tests/Test.luau tests/TradeSessionHarness.luau tests/acceptance.spec.luau tests/collection.spec.luau tests/collection_store.spec.luau tests/context_ui.spec.luau tests/environment.spec.luau tests/factory.spec.luau tests/farm19b.spec.luau tests/fixtures/m0-profile.luau tests/fixtures/m1-profile.luau tests/fixtures/m2-profile.luau tests/fixtures/m3-profile.luau tests/fixtures/m4-pending.luau tests/fixtures/m5-progression-pending.luau tests/island19a.spec.luau tests/m1.spec.luau tests/m2.spec.luau tests/m3_acceptance.spec.luau tests/m3_factory.spec.luau tests/m3_progression.spec.luau tests/m3_store.spec.luau tests/m5_acceptance.spec.luau tests/m5_daily.spec.luau tests/m5_model.spec.luau tests/m5_store.spec.luau tests/m5_trade.spec.luau tests/m5_ui.spec.luau tests/m6_acceptance.spec.luau tests/m6_interop.spec.luau tests/m6_model.spec.luau tests/m6_receipt.spec.luau tests/m6_ui.spec.luau tests/migration.spec.luau tests/policy.spec.luau tests/profile_store.spec.luau tests/protocol.spec.luau tests/run.luau tests/safety18a.spec.luau tests/trade_durable.spec.luau tests/trade_migration.spec.luau tests/trade_model.spec.luau tests/trade_session.spec.luau qa/environment/FarmReview.client.luau qa/environment/FarmReview.server.luau qa/environment/GameplayReview.client.luau qa/environment/IslandReview.client.luau qa/environment/IslandReview.server.luau qa/environment/Review.client.luau qa/environment/Review.server.luau qa/environment/SafetyReview.client.luau qa/environment/UIReview.client.luau
+Compiled 17 KLOC into 988 KB bytecode (read 0.01s, parse 0.01s, compile 0.03s)
+> .tools\luau\luau-analyze.exe src/server/ProfileStore.luau src/server/PurchaseCoordinator.luau src/server/ReceiptJournal.luau src/server/TradeCoordinator.luau src/server/TradeJournal.luau src/shared/Access.luau src/shared/CharacterRecovery.luau src/shared/Collection.luau src/shared/Config.luau src/shared/ContextUI.luau src/shared/Dailies.luau src/shared/EnvironmentConfig.luau src/shared/EnvironmentLabels.luau src/shared/EnvironmentPlan.luau src/shared/EnvironmentState.luau src/shared/EnvironmentTerrain.luau src/shared/EnvironmentTransition.luau src/shared/Epochs.luau src/shared/Factory.luau src/shared/Familiars.luau src/shared/FarmGround.luau src/shared/IslandTerrain.luau src/shared/ItemOrigin.luau src/shared/LegacyConfig.luau src/shared/LongTerm.luau src/shared/Monetization.luau src/shared/OfferCatalog.luau src/shared/Policy.luau src/shared/Progression.luau src/shared/Protocol.luau src/shared/TradeCodec.luau src/shared/TradeSession.luau src/shared/Trading.luau tests/M2Harness.luau tests/M2Scenario.luau tests/M3Harness.luau tests/M3Scenario.luau tests/M4Harness.luau tests/M5Harness.luau tests/M6Harness.luau tests/Scenarios.luau tests/Test.luau tests/TradeSessionHarness.luau tests/acceptance.spec.luau tests/collection.spec.luau tests/collection_store.spec.luau tests/context_ui.spec.luau tests/environment.spec.luau tests/factory.spec.luau tests/farm19b.spec.luau tests/fixtures/m0-profile.luau tests/fixtures/m1-profile.luau tests/fixtures/m2-profile.luau tests/fixtures/m3-profile.luau tests/fixtures/m4-pending.luau tests/fixtures/m5-progression-pending.luau tests/island19a.spec.luau tests/m1.spec.luau tests/m2.spec.luau tests/m3_acceptance.spec.luau tests/m3_factory.spec.luau tests/m3_progression.spec.luau tests/m3_store.spec.luau tests/m5_acceptance.spec.luau tests/m5_daily.spec.luau tests/m5_model.spec.luau tests/m5_store.spec.luau tests/m5_trade.spec.luau tests/m5_ui.spec.luau tests/m6_acceptance.spec.luau tests/m6_interop.spec.luau tests/m6_model.spec.luau tests/m6_receipt.spec.luau tests/m6_ui.spec.luau tests/migration.spec.luau tests/policy.spec.luau tests/profile_store.spec.luau tests/protocol.spec.luau tests/run.luau tests/safety18a.spec.luau tests/trade_durable.spec.luau tests/trade_migration.spec.luau tests/trade_model.spec.luau tests/trade_session.spec.luau
+> .tools\luau\luau.exe tests/run.luau
+PASS protocol: valid exact payload 1 / click
+PASS protocol: valid exact payload 2 / assign
+PASS protocol: valid exact payload 3 / assign
+PASS protocol: valid exact payload 4 / harvest
+PASS protocol: valid exact payload 5 / collect
+PASS protocol: valid exact payload 6 / load
+PASS protocol: valid exact payload 7 / brew
+PASS protocol: valid exact payload 8 / setRecipe
+PASS protocol: valid exact payload 9 / setAuto
+PASS protocol: valid exact payload 10 / setAuto
+PASS protocol: valid exact payload 11 / buy
+PASS protocol: valid exact payload 12 / hire
+PASS protocol: valid exact payload 13 / discard
+PASS protocol: valid exact payload 14 / acceptOrder
+PASS protocol: valid exact payload 15 / claimOrder
+PASS protocol: rejects unknown action
+PASS protocol: rejects non-string action
+PASS protocol: rejects nil and non-table payload
+PASS protocol: rejects forged economic fields
+PASS protocol: rejects missing fields
+PASS protocol: rejects nested values and functions
+PASS protocol: boolean values are not coerced
+PASS protocol: numeric values cannot replace opaque identifiers
+PASS protocol: discard amount must be a bounded positive integer
+PASS protocol: identifiers are bounded and nonblank
+PASS protocol: rejects numeric and array keys
+PASS protocol: rejects metatable payload without invoking it
+PASS protocol: rejects invalid server identity and clock
+PASS protocol: permits Studio test identities
+PASS protocol: click burst then time-based replenishment
+PASS protocol: control burst then time-based replenishment
+PASS protocol: invalid traffic consumes aggregate budget
+PASS protocol: aggregate limit combines click and controls
+PASS protocol: rewind is rejected without refilling
+PASS protocol: budgets are isolated per player
+PASS protocol: forget releases state for a new session
+PASS protocol: long idle never accumulates beyond burst
+PASS protocol: never mutates caller payload
+PASS protocol: invalid configuration fails early
+PASS store: missing key acquires a lease and initializes once
+PASS store: local mutations do not change the stored snapshot
+PASS store: duplicate load returns the same live profile without a second write
+PASS store: a second owner cannot load an active session
+PASS store: different users have independent leases
+PASS store: expiry permits takeover and fences the stale writer
+PASS store: safety margin freezes actions but permits a verified renewal
+PASS store: an expired session cannot silently reacquire through save
+PASS store: lost ownership is checked against persisted state
+PASS store: revision conflicts cannot overwrite a newer snapshot
+PASS store: future record schema is rejected without overwrite
+PASS store: future game profile schema is rejected without defaults
+PASS store: invalid stored profile never becomes a fresh player
+PASS store: invalid envelope lease and revision are rejected
+PASS store: exhausted load errors leave no writable default profile
+PASS store: transient load errors retry with the same acquisition
+PASS store: unknown load outcome does not initialize a second profile
+PASS store: lost load responses can be retried later without resetting data
+PASS store: save request failures pause writes and can recover before expiry
+PASS store: save retries recognize an already committed operation
+PASS store: unconfirmed writes cannot later overwrite a newer revision
+PASS store: callback replay changes no gameplay state or revision twice
+PASS store: callback replay observes a competing lease and cancels
+PASS store: release persists latest profile and clears its own lease
+PASS store: duplicate release is a no-op, not a second persistence write
+PASS store: failed release preserves the lock and freezes gameplay
+PASS store: release retries recognize a successful commit with a lost response
+PASS store: failed validation on save does not persist corrupt memory
+PASS store: a disappeared key is not replaced with the local snapshot
+PASS store: non-serializable profile values are rejected
+PASS store: a failing validator or factory cannot create a record
+PASS store: invalid IDs are rejected, Studio negative IDs remain usable
+PASS store: invalid clocks fail closed without persistence
+PASS store: release waits for autosave then captures the newest memory
+PASS store: a gate timeout preserves memory for a subsequent release retry
+PASS store: profile identity cannot disagree with the DataStore user key
+PASS store: quarantine blocks saves/releases without touching persisted data
+PASS store: quarantine during in-flight save cannot reopen writable state
+PASS store: a queued release after quarantine never snapshots tainted memory
+PASS factory: fresh profile validates with three fixed free starters
+PASS factory: Studio and regular user identities have valid deterministic profiles
+PASS factory: profile data does not alias configuration or another player
+PASS factory: starter instance IDs are unique across owners
+PASS factory: guaranteed hires spend configured Gold and have fixed stats
+PASS factory: unaffordable or unknown hires cannot partially charge or mint
+PASS factory: hire capacity guard is checked before payment
+PASS factory: server click adds exactly one Essence
+PASS factory: unknown and malformed actions cannot advance or mutate a profile
+PASS factory: clicks respect the finite balance ceiling
+PASS factory: manual gathering has a persistent server-time cooldown
+PASS factory: unbuilt mine cannot gather or host a worker
+PASS factory: an unaffordable upgrade spends nothing
+PASS factory: an upgrade uses server configuration and applies once
+PASS factory: maximum upgrades are bounded
+PASS factory: one familiar cannot occupy two workplaces
+PASS factory: only crystal workplace and crystal upgrades generate Essence
+PASS factory: passive crystal upgrades work without occupying a familiar
+PASS factory: clamped stats preserve the original familiar roll
+PASS factory: farming above the station cap provides no extra throughput
+PASS factory: auto-brewing requires an assigned worker
+PASS factory: selecting an undiscovered recipe disables automation
+PASS factory: loading conserves physical ingredients
+PASS factory: a batch reserves ingredients and Essence exactly once
+PASS factory: missing inputs or Essence do not partially charge a batch
+PASS factory: ordinary potions export even when raw storage is full
+PASS factory: unfinished batches cannot be switched into another recipe
+PASS factory: recipe switching returns loaded ingredients without loss
+PASS factory: recipe switching rejects when returning inputs would overflow
+PASS factory: station upgrades preserve older recipe compatibility
+PASS factory: collection respects capacity and retains uncollected output
+PASS factory: intermediate storage is independent of raw storage
+PASS factory: full intermediate output blocks only its own new batch
+PASS factory: complete automated starter chain earns Gold
+PASS factory: missing Essence pauses brewing but not farming
+PASS factory: explicit discard removes only the specified owned quantity
+PASS factory: invalid disposal cannot mint, overdraw or remove quest items
+PASS factory: disposal can recover a line blocked by excess unused ingredients
+PASS factory: hauler reserves cargo and conserves it while destination is blocked
+PASS factory: unassigning a hauler pauses rather than duplicates or deletes cargo
+PASS factory: pipes move fluids but do not silently move solid ingredients
+PASS factory: order quota reserves only its count and exports extras
+PASS factory: order claim is awarded exactly once
+PASS factory: cannot replace an active order or accept a locked recipe
+PASS factory: expired order stock exports once without contract bonus
+PASS factory: offline simulation matches one-second online simulation exactly
+PASS factory: irregular update partitions preserve jobs and random outcomes
+PASS factory: repeated catch-up cannot mint money, items or reroll slime
+PASS factory: offline cap discards the excess interval rather than banking it
+PASS factory: backwards and invalid clocks are rejected without state changes
+PASS factory: deployed slime byproduct has deterministic saved randomness
+PASS factory: unassigned slime has no passive production
+PASS factory: starter grant is not repeated on catch-up or profile reload
+PASS factory: two-stage recipe consumes a real produced intermediate
+PASS factory: real fixed hires enable the complete automated two-stage chain
+PASS factory: real profile survives lease-backed save and offline reload
+PASS factory: validator rejects future schema
+PASS factory: validator rejects NaN gold
+PASS factory: validator rejects infinite Essence
+PASS factory: validator rejects negative item count
+PASS factory: validator rejects fractional item count
+PASS factory: validator rejects unknown inventory item
+PASS factory: validator rejects warehouse overflow
+PASS factory: validator rejects invalid familiar stat
+PASS factory: validator rejects duplicate assignment
+PASS factory: validator rejects worker in unbuilt station
+PASS factory: validator rejects missing station
+PASS factory: validator rejects unknown station
+PASS factory: validator rejects invalid station level
+PASS factory: validator rejects potion in raw inventory
+PASS factory: validator rejects orphan quest stock
+PASS factory: validator rejects unknown recipe collection
+PASS factory: validator rejects invalid RNG
+PASS factory: validator rejects infinite last timestamp
+PASS acceptance: zero-resource Studio identity reaches autonomous Healing through valid intents
+PASS acceptance: persisted two-hour cap survives an immediate second session without duplicate rewards
+ECONOMY manual: sale=19s autonomous=105s NPC=181s actions=63 clicks=30 harvests=7 GoldAfterClaim=124 passive600s=756
+PASS M1: zero-resource full tutorial / manual
+ECONOMY automation: sale=19s autonomous=120s NPC=190s actions=114 clicks=100 harvests=3 GoldAfterClaim=110 passive600s=742
+PASS M1: zero-resource full tutorial / automation
+ECONOMY detour: sale=19s autonomous=172s NPC=256s actions=102 clicks=51 harvests=10 GoldAfterClaim=136 passive600s=742
+PASS M1: zero-resource full tutorial / detour
+PASS M1: reservoir cannot power a brew without an explicit transfer
+PASS M1: tanks conserve Essence, stop at capacity and share scarce pipe supply
+PASS M1: automatic haulers never pick up liquids without pipes
+PASS M1: crate source, transit and delivered stock are disjoint
+PASS M1: unassignment and slower replacement preserve paused crate cargo
+PASS M1: partial delivery retains remainder until quest storage has room
+PASS M1: queue backpressure waits without charging or rerolling the batch
+PASS M1: expiry sells queued, travelling and delivered crates once, even paused
+PASS M1: expiry at the delivery boundary exports without contract reward
+PASS M1: automatic batch pauses without its master and resumes prepaid
+PASS M1: current recipe changes cannot redirect a travelling quest crate
+PASS M1: repeated buy request is fenced by the expected level
+PASS M1: malicious logistics, tutorial and purchase payloads fail exact schemas
+PASS M1: refilling is authorized at one's own live nearby machine only
+PASS M1: new controls remain under aggregate and per-action rate limits
+PASS M1: full tutorial survives save, offline catch-up and immediate second join
+PASS M1: every tutorial checkpoint resumes without resetting facts or starter workers
+PASS M1: two-machine liquid chain and quest cargo match online for two hours
+PASS M1: a full raw warehouse never blocks already loaded normal potion export
+PASS M1: stock saved in transit resumes delivery rather than picking up twice
+PASS M1: invalid saved state fails closed / tank overflow
+PASS M1: invalid saved state fails closed / unbuilt tank
+PASS M1: invalid saved state fails closed / negative tank
+PASS M1: invalid saved state fails closed / queue overflow
+PASS M1: invalid saved state fails closed / orphan crate
+PASS M1: invalid saved state fails closed / wrong source
+PASS M1: invalid saved state fails closed / pipe cursor
+PASS M1: invalid saved state fails closed / unknown tutorial step
+PASS M1: invalid saved state fails closed / false tutorial step
+PASS M1: invalid saved state fails closed / unknown telemetry
+PASS M1: invalid saved state fails closed / negative stall
+PASS M1: mixed production, recipe switches, expiry and claims conserve every potion
+PASS M1 migration: V1 preserves all balances, timers, stock and prepaid jobs
+PASS M1 migration: lost load reply retries without a second upgrade or grant
+PASS M1 migration: old liquid cargo finishes once and old brewing stays prepaid
+PASS M1 migration: fail closed and leave bytes intact / future
+PASS M1 migration: fail closed and leave bytes intact / bad-version
+PASS M1 migration: fail closed and leave bytes intact / bad-cargo
+PASS M1 migration: fail closed and leave bytes intact / wrong-user
+PASS M1 migration: fail closed and leave bytes intact / bad-timer
+PASS M1 migration: fail closed and leave bytes intact / NaN-duration
+PASS M1 migration: foreign active lease cannot be upgraded or stolen
+PASS M1 migration: broken migrator cannot replace a saved profile / throw
+PASS M1 migration: broken migrator cannot replace a saved profile / nil
+PASS M1 migration: broken migrator cannot replace a saved profile / identity
+PASS M1 migration: broken migrator cannot replace a saved profile / cycle
+PASS M2: exhaustive 100000 draws match every final outcome and tier exactly
+PASS M2: all disclosed tuples reconstruct total probability without sampling
+PASS M2: independent inclusive stat endpoints / moon_cat
+PASS M2: independent inclusive stat endpoints / brewer
+PASS M2: independent inclusive stat endpoints / ancient_owl
+PASS M2: independent inclusive stat endpoints / prism_slime
+PASS M2: independent inclusive stat endpoints / ghost_wolf
+PASS M2: independent inclusive stat endpoints / ghost_alpha
+PASS M2: independent inclusive stat endpoints / aether_sprite
+PASS M2: independent inclusive stat endpoints / farmer
+PASS M2: independent inclusive stat endpoints / golden_slime
+PASS M2: independent inclusive stat endpoints / void_cat
+PASS M2: independent inclusive stat endpoints / slime
+PASS M2: independent inclusive stat endpoints / bloom_owl
+PASS M2: invalid rarity roll rejected / 0
+PASS M2: invalid rarity roll rejected / -1
+PASS M2: invalid rarity roll rejected / 100001
+PASS M2: invalid rarity roll rejected / 1.5
+PASS M2: invalid rarity roll rejected / inf
+PASS M2: invalid rarity roll rejected / nan
+PASS M2: invalid design data refuses startup / weight
+PASS M2: invalid design data refuses startup / duplicate
+PASS M2: invalid design data refuses startup / range
+PASS M2: invalid design data refuses startup / offer
+PASS M2: invalid design data refuses startup / evolution
+PASS M2: five summons charge once, unique IDs, separate production RNG
+PASS M2: current retry returns receipt without cost or RNG; old/conflicting ID rejected
+PASS M2: collection cooldown includes lock and fixed shop operations
+PASS M2: full inventory rejects before charge and RNG / summon
+PASS M2: full inventory rejects before charge and RNG / shopFamiliar
+PASS M2: full inventory rejects before charge and RNG / hire
+PASS M2: insufficient Essence cannot consume RNG; cannot use machine Essence
+PASS M2: only complete batches fit the remaining inventory
+PASS M2: rejected summon is atomic / unknown-pool
+PASS M2: rejected summon is atomic / bad-count
+PASS M2: rejected summon is atomic / serial-limit
+PASS M2: rejected summon is atomic / collision
+PASS M2: fixed offer is exact and available without policy / farmer
+PASS M2: fixed offer is exact and available without policy / slime
+PASS M2: fixed offer is exact and available without policy / brewer
+PASS M2: fixed offer is exact and available without policy / bloom_owl
+PASS M2: fixed offer is exact and available without policy / golden_slime
+PASS M2: fixed offer is exact and available without policy / moon_cat
+PASS M2: fixed offer is exact and available without policy / ancient_owl
+PASS M2: fixed offer is exact and available without policy / prism_slime
+PASS M2: fixed offer is exact and available without policy / void_cat
+PASS M2: fixed offer is exact and available without policy / aether_sprite
+PASS M2: deterministic monotonic evolution / farmer
+PASS M2: deterministic monotonic evolution / slime
+PASS M2: deterministic monotonic evolution / brewer
+PASS M2: deterministic monotonic evolution / bloom_owl
+PASS M2: deterministic monotonic evolution / golden_slime
+PASS M2: deterministic monotonic evolution / moon_cat
+PASS M2: Fuse refuses invalid parents/preview atomically / duplicate
+PASS M2: Fuse refuses invalid parents/preview atomically / missing
+PASS M2: Fuse refuses invalid parents/preview atomically / mixed
+PASS M2: Fuse refuses invalid parents/preview atomically / locked
+PASS M2: Fuse refuses invalid parents/preview atomically / assigned
+PASS M2: Fuse refuses invalid parents/preview atomically / terminal
+PASS M2: Fuse refuses invalid parents/preview atomically / legacy-high
+PASS M2: Fuse refuses invalid parents/preview atomically / expired
+PASS M2: Fuse refuses invalid parents/preview atomically / changed
+PASS M2: Fuse refuses invalid parents/preview atomically / no-confirm
+PASS M2: improving any parent stat cannot weaken Fuse across all allowed integers
+PASS M2: paid ancestry survives fixed purchases, gacha, lock and Fuse
+PASS M2: one paid parent taints result; Legacy ancestry and statistics survive
+PASS M2: Fuse frees four slots even at capacity and removes slime timers
+PASS M2: spoofed authority rejected / stats
+PASS M2: spoofed authority rejected / species
+PASS M2: spoofed authority rejected / price
+PASS M2: spoofed authority rejected / reward
+PASS M2: spoofed authority rejected / policy
+PASS M2: spoofed authority rejected / seed
+PASS M2: spoofed authority rejected / userId
+PASS M2: spoofed authority rejected / paidOrigin
+PASS M2: spoofed authority rejected / now
+PASS M2: strict intents reject malformed arrays, IDs, booleans and sequence
+PASS M2: all collection intents use own altar and shared rate limiter
+PASS M2 policy: server permission and guaranteed fallback / unrestricted
+PASS M2 policy: server permission and guaranteed fallback / restricted
+PASS M2 policy: server permission and guaranteed fallback / error
+PASS M2 policy: server permission and guaranteed fallback / nil
+PASS M2 policy: server permission and guaranteed fallback / missing
+PASS M2 policy: server permission and guaranteed fallback / wrong-type
+PASS M2 policy: expiry fails closed at exact boundary, permission can be revoked
+PASS M2 policy: late result cannot revive departed player or overwrite newer result
+PASS M2 policy: trading remains denied unless explicitly granted by platform
+PASS M2 store: candidate hidden and factory frozen until durable confirmation
+PASS M2 store: CAS replay and one lost reply do not reroll or charge twice
+PASS M2 store: ambiguous failure freezes old live state; rejoin reconciles / before-write
+PASS M2 store: ambiguous failure freezes old live state; rejoin reconciles / after-write
+PASS M2 store: simultaneous identical requests serialize to one reward
+PASS M2 store: simultaneous conflicting request ID cannot steal the receipt
+PASS M2 store: disconnect during write releases committed candidate, not old profile
+PASS M2 store: invalidation during write never acknowledges or revives candidate
+PASS M2 store: partial RNG exception abandons candidate without charge or receipt
+PASS M2 store: two concurrent Fuse commands consume five parents exactly once
+PASS M2 store: failed Fuse never exposes partial deletion / before-write
+PASS M2 store: failed Fuse never exposes partial deletion / after-write
+PASS M2 store: Fuse replay survives reconnect, cannot consume same parents twice
+PASS M2 migration: genuine V2 preserves every existing field, cargo and paid job
+PASS M2 migration: V2 callback replay/lost response upgrades only once
+PASS M2 migration: pending jobs and cargo have identical online/offline completion
+PASS M2 migration: invalid saves preserved, never replaced / future
+PASS M2 migration: invalid saves preserved, never replaced / bad-old-tank
+PASS M2 migration: invalid saves preserved, never replaced / bad-old-pet
+PASS M2 migration: invalid saves preserved, never replaced / missing-origin
+PASS M2 migration: invalid saves preserved, never replaced / paid-laundering
+PASS M2 migration: invalid saves preserved, never replaced / out-of-range
+PASS M2 migration: invalid saves preserved, never replaced / wrong-stage
+PASS M2 migration: invalid saves preserved, never replaced / bad-receipt
+PASS M2 migration: invalid saves preserved, never replaced / bad-paid-currency
+M2_ECONOMY restricted: evolved=796s rage=1347s autoRage1200s=7 Gold=566 Essence=1900
+PASS M2 F2P: zero resources through tutorial, fixed Fuse and autonomous Rage / restricted
+M2_ECONOMY unavailable: evolved=796s rage=1347s autoRage1200s=7 Gold=566 Essence=1900
+PASS M2 F2P: zero resources through tutorial, fixed Fuse and autonomous Rage / unavailable
+PASS M2: station caps affect new forms without changing base stats
+PASS M3: phase graph prerequisites precede unlocks and fit configured buffers
+PASS M3: phase purchase is explicit, paid once and opens distinct content / 2
+PASS M3: phase purchase is explicit, paid once and opens distinct content / 3
+PASS M3: phase purchase is explicit, paid once and opens distinct content / 4
+PASS M3: insufficient phase funds and skipped/stale phase preserve economy
+PASS M3: fixed slot tier gate, payment and replay / garden2/1
+PASS M3: fixed slot tier gate, payment and replay / garden2/2
+PASS M3: fixed slot tier gate, payment and replay / garden2/3
+PASS M3: fixed slot tier gate, payment and replay / cauldron2/1
+PASS M3: fixed slot tier gate, payment and replay / cauldron2/2
+PASS M3: fixed slot tier gate, payment and replay / cauldron2/3
+PASS M3: fixed slot tier gate, payment and replay / distillery2/1
+PASS M3: fixed slot tier gate, payment and replay / distillery2/2
+PASS M3: fixed slot tier gate, payment and replay / distillery2/3
+PASS M3: fixed slot tier gate, payment and replay / mushrooms/1
+PASS M3: fixed slot tier gate, payment and replay / mushrooms/2
+PASS M3: fixed slot tier gate, payment and replay / mushrooms/3
+PASS M3: fixed slot tier gate, payment and replay / berries/1
+PASS M3: fixed slot tier gate, payment and replay / berries/2
+PASS M3: fixed slot tier gate, payment and replay / berries/3
+PASS M3: fixed slot tier gate, payment and replay / press/1
+PASS M3: fixed slot tier gate, payment and replay / press/2
+PASS M3: fixed slot tier gate, payment and replay / press/3
+PASS M3: fixed slot tier gate, payment and replay / centrifuge/1
+PASS M3: fixed slot tier gate, payment and replay / centrifuge/2
+PASS M3: fixed slot tier gate, payment and replay / centrifuge/3
+PASS M3: locked slots cannot be bought by bypassing the UI
+PASS M3: phase four completion is status only; no Rebirth or reward
+PASS M3: upgrades preserve prepaid jobs, ingredients, cargo and original stats
+PASS M3: guaranteed cauldron is owned, unique, capped and cannot duplicate on equip
+PASS M3: cauldron bonus cannot exceed production cap or alter active batch
+PASS M3: forged economic payload refused / cost
+PASS M3: forged economic payload refused / bonus
+PASS M3: forged economic payload refused / ownerId
+PASS M3: forged economic payload refused / phase
+PASS M3: forged economic payload refused / level
+PASS M3: forged economic payload refused / reward
+PASS M3: forged economic payload refused / complete
+PASS M3: forged economic payload refused / paidDerived
+PASS M3: intents have explicit targets, sequence and bounded expected phase
+PASS M3: manual recipe prepays exactly once and discovers technology / spore_paste
+PASS M3: manual recipe prepays exactly once and discovers technology / berry_essence
+PASS M3: manual recipe prepays exactly once and discovers technology / focus
+PASS M3: manual recipe prepays exactly once and discovers technology / flare
+PASS M3: manual recipe prepays exactly once and discovers technology / aether_serum
+PASS M3: manual recipe prepays exactly once and discovers technology / ascension
+PASS M3: later recipes reject phase/tier/archetype bypass and require manual discovery
+PASS M3: two cauldrons reserve one shared NPC quota and export excess
+PASS M3: second cauldron crate follows its own route, survives reassignment and expiry
+PASS M3: phase-three stock intake leaves room for every raw source
+PASS M3: activating stock shares does not trap or delete earlier cargo
+PASS M3: pipes move new liquids but leave solid paste to manual/hauler
+PASS M3: scarce shared input alternates consumers across save/rejoin / spore_paste
+PASS M3: scarce shared input alternates consumers across save/rejoin / berry_essence
+PASS M3: supply-next changes bounded cursor and round robin resumes
+PASS M3: new contracts require discovered reachable technology and board has at most three
+PASS M3: original hauling route indices stay stable for migrated profiles
+PASS M3 migration: authentic V3 preserves rolls, locks, ancestry, receipts and active factory
+PASS M3 migration: callback replay/lost reply and offline cap do not grant twice
+PASS M3 persistence: corrupt/future records fail closed / future
+PASS M3 persistence: corrupt/future records fail closed / unknown-old-fields
+PASS M3 persistence: corrupt/future records fail closed / old-roll
+PASS M3 persistence: corrupt/future records fail closed / phase
+PASS M3 persistence: corrupt/future records fail closed / cauldron-owner
+PASS M3 persistence: corrupt/future records fail closed / cauldron-bonus
+PASS M3 persistence: corrupt/future records fail closed / double-equip
+PASS M3 persistence: corrupt/future records fail closed / locked-slot
+PASS M3 persistence: corrupt/future records fail closed / future-tech
+PASS M3 persistence: corrupt/future records fail closed / input-cursor
+PASS M3 persistence: corrupt/future records fail closed / receipt
+PASS M3 persistence: atomic rollback/reconciliation / build/before
+PASS M3 persistence: atomic rollback/reconciliation / build/after
+PASS M3 persistence: atomic rollback/reconciliation / advancePhase/before
+PASS M3 persistence: atomic rollback/reconciliation / advancePhase/after
+PASS M3 persistence: atomic rollback/reconciliation / equipCauldron/before
+PASS M3 persistence: atomic rollback/reconciliation / equipCauldron/after
+PASS M3 persistence: concurrent identical intents commit once / build
+PASS M3 persistence: concurrent identical intents commit once / advancePhase
+PASS M3 persistence: concurrent identical intents commit once / equipCauldron
+PASS M3 persistence: committed phase receipt survives rejoin without another milestone item
+PASS M3 persistence: conflicting concurrent construction cannot spend the same request twice
+PASS M3 persistence: M2 shop and phase transition share one gate without lost updates
+PASS M3 persistence: current schema roundtrips equipped locked cauldron and ancestry
+M3_ECONOMY manual phase=2 time=783s clicks=30 harvests=7 income=1048 spent=568 Gold=480
+M3_ECONOMY manual phase=3 time=1832s clicks=30 harvests=108 income=3078 spent=3068 Gold=10
+M3_ECONOMY manual phase=4 time=4848s clicks=30 harvests=399 income=9029 spent=9018 Gold=11
+M3_COMPLETE manual firstAscension=6877s fullSetup=7357s clicks=30 harvests=608 discards=0 income=19994 spent=14068 focus1200s=13 ascension1200s=13
+PASS M3 F2P: four phases from zero, no familiar RNG / manual
+M3_ECONOMY automation phase=2 time=791s clicks=100 harvests=3 income=1020 spent=568 Gold=452
+M3_ECONOMY automation phase=3 time=2459s clicks=100 harvests=8 income=3092 spent=3068 Gold=24
+M3_ECONOMY automation phase=4 time=7149s clicks=100 harvests=17 income=9043 spent=9018 Gold=25
+M3_COMPLETE automation firstAscension=10273s fullSetup=11341s clicks=100 harvests=30 discards=22 income=20993 spent=14068 focus1200s=12 ascension1200s=16
+PASS M3 F2P: four phases from zero, no familiar RNG / automation
+M3_ECONOMY detour phase=2 time=2782s clicks=51 harvests=10 income=1146 spent=668 Gold=478
+M3_ECONOMY detour phase=3 time=4267s clicks=51 harvests=13 income=3204 spent=3168 Gold=36
+M3_ECONOMY detour phase=4 time=9012s clicks=51 harvests=21 income=9155 spent=9118 Gold=37
+M3_COMPLETE detour firstAscension=12173s fullSetup=13214s clicks=51 harvests=36 discards=25 income=21281 spent=14168 focus1200s=14 ascension1200s=16
+PASS M3 F2P: four phases from zero, no familiar RNG / detour
+PASS M3: complete multistation factory has exact 7200-second online/offline parity
+M3_BENCH 8 independent snapshots x 13 slots x 7200 ticks: 2.827 CPU seconds; portable only, no FPS/replication claim
+PASS M3: bounded eight-plot synthetic catch-up workload
+PASS M4: SHA-256 known vectors and canonical field order
+M4_PROTOCOL normal journal/profile requests=16
+PASS M4: durable item exchange preserves IDs/metadata and acknowledges both
+PASS M4 crash oracle at every durable boundary / 1/before
+PASS M4 crash oracle at every durable boundary / 1/after
+PASS M4 crash oracle at every durable boundary / 2/before
+PASS M4 crash oracle at every durable boundary / 2/after
+PASS M4 crash oracle at every durable boundary / 3/before
+PASS M4 crash oracle at every durable boundary / 3/after
+PASS M4 crash oracle at every durable boundary / 4/before
+PASS M4 crash oracle at every durable boundary / 4/after
+PASS M4 crash oracle at every durable boundary / 5/before
+PASS M4 crash oracle at every durable boundary / 5/after
+PASS M4 crash oracle at every durable boundary / 6/before
+PASS M4 crash oracle at every durable boundary / 6/after
+PASS M4 crash oracle at every durable boundary / 7/before
+PASS M4 crash oracle at every durable boundary / 7/after
+PASS M4 crash oracle at every durable boundary / 8/before
+PASS M4 crash oracle at every durable boundary / 8/after
+PASS M4 crash oracle at every durable boundary / 9/before
+PASS M4 crash oracle at every durable boundary / 9/after
+PASS M4 crash oracle at every durable boundary / 10/before
+PASS M4 crash oracle at every durable boundary / 10/after
+PASS M4 crash oracle at every durable boundary / 11/before
+PASS M4 crash oracle at every durable boundary / 11/after
+PASS M4 crash oracle at every durable boundary / 12/before
+PASS M4 crash oracle at every durable boundary / 12/after
+PASS M4 crash oracle at every durable boundary / 13/before
+PASS M4 crash oracle at every durable boundary / 13/after
+PASS M4 crash oracle at every durable boundary / 14/before
+PASS M4 crash oracle at every durable boundary / 14/after
+PASS M4 crash oracle at every durable boundary / 15/before
+PASS M4 crash oracle at every durable boundary / 15/after
+PASS M4 crash oracle at every durable boundary / 16/before
+PASS M4 crash oracle at every durable boundary / 16/after
+PASS M4: transient lost reply is idempotent / 1
+PASS M4: transient lost reply is idempotent / 2
+PASS M4: transient lost reply is idempotent / 3
+PASS M4: transient lost reply is idempotent / 4
+PASS M4: transient lost reply is idempotent / 5
+PASS M4: transient lost reply is idempotent / 6
+PASS M4: transient lost reply is idempotent / 7
+PASS M4: transient lost reply is idempotent / 8
+PASS M4: transient lost reply is idempotent / 9
+PASS M4: transient lost reply is idempotent / 10
+PASS M4: transient lost reply is idempotent / 11
+PASS M4: transient lost reply is idempotent / 12
+PASS M4: transient lost reply is idempotent / 13
+PASS M4: transient lost reply is idempotent / 14
+PASS M4: transient lost reply is idempotent / 15
+PASS M4: transient lost reply is idempotent / 16
+M4_PROTOCOL absent-profile recovery requests=17
+PASS M4: absent-player recovery has bounded lease/write/release work
+PASS M4 recovery crash oracle including absent-profile leases / 1/before
+PASS M4 recovery crash oracle including absent-profile leases / 1/after
+PASS M4 recovery crash oracle including absent-profile leases / 2/before
+PASS M4 recovery crash oracle including absent-profile leases / 2/after
+PASS M4 recovery crash oracle including absent-profile leases / 3/before
+PASS M4 recovery crash oracle including absent-profile leases / 3/after
+PASS M4 recovery crash oracle including absent-profile leases / 4/before
+PASS M4 recovery crash oracle including absent-profile leases / 4/after
+PASS M4 recovery crash oracle including absent-profile leases / 5/before
+PASS M4 recovery crash oracle including absent-profile leases / 5/after
+PASS M4 recovery crash oracle including absent-profile leases / 6/before
+PASS M4 recovery crash oracle including absent-profile leases / 6/after
+PASS M4 recovery crash oracle including absent-profile leases / 7/before
+PASS M4 recovery crash oracle including absent-profile leases / 7/after
+PASS M4 recovery crash oracle including absent-profile leases / 8/before
+PASS M4 recovery crash oracle including absent-profile leases / 8/after
+PASS M4 recovery crash oracle including absent-profile leases / 9/before
+PASS M4 recovery crash oracle including absent-profile leases / 9/after
+PASS M4 recovery crash oracle including absent-profile leases / 10/before
+PASS M4 recovery crash oracle including absent-profile leases / 10/after
+PASS M4 recovery crash oracle including absent-profile leases / 11/before
+PASS M4 recovery crash oracle including absent-profile leases / 11/after
+PASS M4 recovery crash oracle including absent-profile leases / 12/before
+PASS M4 recovery crash oracle including absent-profile leases / 12/after
+PASS M4 recovery crash oracle including absent-profile leases / 13/before
+PASS M4 recovery crash oracle including absent-profile leases / 13/after
+PASS M4 recovery crash oracle including absent-profile leases / 14/before
+PASS M4 recovery crash oracle including absent-profile leases / 14/after
+PASS M4 recovery crash oracle including absent-profile leases / 15/before
+PASS M4 recovery crash oracle including absent-profile leases / 15/after
+PASS M4 recovery crash oracle including absent-profile leases / 16/before
+PASS M4 recovery crash oracle including absent-profile leases / 16/after
+PASS M4 recovery crash oracle including absent-profile leases / 17/before
+PASS M4 recovery crash oracle including absent-profile leases / 17/after
+PASS M4: decision denial aborts and fences delayed prepares on both sides
+PASS M4: abort barrier also fences a side never prepared
+PASS M4: absent users settle through recovery leases without logging in
+PASS M4: recovery refuses foreign live lease and missing profile
+PASS M4: completed journal compacts, retains audit then expires without recreation
+PASS M4: budget exhaustion cannot change ownership or delete reservations
+PASS M4: new-server login stays frozen until both profiles settle / 101
+PASS M4: new-server login stays frozen until both profiles settle / 202
+PASS M4: overlapping journal cannot reserve the same item or disturb the first reservation
+PASS M4: abort racing a delayed second prepare fences both sides
+PASS M4: durable scanner advances fixed registry shards instead of starving later journals
+PASS M4: corrupt/missing journal never unlocks a loaded pending profile
+PASS M4: a delayed profile callback cannot write with an expired dispatch-time lease
+PASS M4: bounded registry refuses admission before touching another profile
+PASS M4: registry orphan survives lost registration reply and expires only after creation deadline
+PASS M4: unknown GC delete outcome cannot recreate a completed exchange
+PASS M4: delayed journal creation after orphan cleanup cannot escape the registry
+PASS M4: reject unusable/forged offers without inventory mutation / foreign
+PASS M4: reject unusable/forged offers without inventory mutation / locked
+PASS M4: reject unusable/forged offers without inventory mutation / assigned
+PASS M4: reject unusable/forged offers without inventory mutation / starter
+PASS M4: reject unusable/forged offers without inventory mutation / legacy
+PASS M4: reject unusable/forged offers without inventory mutation / unknown-origin
+PASS M4: reject unusable/forged offers without inventory mutation / cauldron-owner
+PASS M4: reject unusable/forged offers without inventory mutation / cauldron-bonus
+PASS M4: reject unusable/forged offers without inventory mutation / equipped
+PASS M4: reject unusable/forged offers without inventory mutation / duplicate
+PASS M4: reject unusable/forged offers without inventory mutation / currency
+PASS M4: reject unusable/forged offers without inventory mutation / seven
+PASS M4: bounded multi-item and gift conservation / 1:1
+PASS M4: bounded multi-item and gift conservation / 2:1
+PASS M4: bounded multi-item and gift conservation / 3:2
+PASS M4: bounded multi-item and gift conservation / gift
+PASS M4: capacity uses simultaneous incoming/outgoing and rejects collisions
+PASS M4: rare cauldron net capacity cannot overflow
+PASS M4: persistent reservation blocks every economic path and stale saves
+PASS M4: exact Remote shape rejects forged field / ownerId
+PASS M4: exact Remote shape rejects forged field / price
+PASS M4: exact Remote shape rejects forged field / stats
+PASS M4: exact Remote shape rejects forged field / paidDerived
+PASS M4: exact Remote shape rejects forged field / position
+PASS M4: exact Remote shape rejects forged field / reward
+PASS M4: exact Remote shape rejects forged field / decision
+PASS M4: exact Remote shape rejects forged field / timestamp
+PASS M4 policy: explicit trading permission for all provenance / allowed
+PASS M4 policy: explicit trading permission for all provenance / restricted
+PASS M4 policy: explicit trading permission for all provenance / missing
+PASS M4 policy: explicit trading permission for all provenance / expired
+PASS M4 policy: explicit trading permission for all provenance / failure
+PASS M4 policy: explicit trading permission for all provenance / random-only
+PASS M4: Fuse retains paid ancestry and cannot launder unknown origin / known-paid
+PASS M4: Fuse retains paid ancestry and cannot launder unknown origin / legacy-parent
+PASS M4: Fuse retains paid ancestry and cannot launder unknown origin / historical-fuse
+PASS M4: transferred strong familiar retains origin ID and recipient station cap
+PASS M4 policy: forced lookup cannot reuse an older cached permission when superseded
+PASS M4 session: two distinct ready and exact-hash confirmations settle once
+PASS M4 session: any offer edit invalidates both ready/confirm flags and old hash
+PASS M4 session: invitation admission / disabled
+PASS M4 session: invitation admission / self
+PASS M4 session: invitation admission / cross-server
+PASS M4 session: invitation admission / out-of-range
+PASS M4 session: invitation admission / busy
+PASS M4 session: invitation admission / policy-missing
+PASS M4 session: invitation admission / policy-restricted
+PASS M4 session: invitation admission / policy-failure
+PASS M4 session: invitee decline, invitation expiry and cooldown
+PASS M4 session: third player cannot use another offer or occupy its participants
+PASS M4 session: policy yield reserves the invitation slot and rechecks identity
+PASS M4 session: stale item snapshot invalidates final confirmation / lock
+PASS M4 session: stale item snapshot invalidates final confirmation / assign
+PASS M4 session: stale item snapshot invalidates final confirmation / stats
+PASS M4 session: stale item snapshot invalidates final confirmation / provenance
+PASS M4 session: final post-yield guard aborts safely / policy
+PASS M4 session: final post-yield guard aborts safely / expired
+PASS M4 session: final post-yield guard aborts safely / identity
+PASS M4 session: final post-yield guard aborts safely / position
+PASS M4 session: final post-yield guard aborts safely / disabled
+PASS M4 session: final post-yield guard aborts safely / cancel
+PASS M4 session: final post-yield guard aborts safely / disconnect
+PASS M4 session: unknown commit never reports success or permits more mutations
+PASS M4 session: pre-commit leave cancels and negotiation timeout releases slots
+PASS M4 session: failed presentation callback cannot strand a frozen exchange
+PASS M4 session: low admission budget clears confirms without freezing or writing
+PASS M4 session: aggregate control budget applies to trade spam
+M4_BENCH 8 users / 20 settled trades / 1160 requests (1000 disabled): 0.441 CPU seconds; no Roblox latency claim
+PASS M4: bounded eight-user request workload stays isolated
+PASS M4 migration: genuine V4 retains every old field, equipped item, job and receipts
+PASS M4 persistence: malformed migration/reservation fails closed / future
+PASS M4 persistence: malformed migration/reservation fails closed / old-trade
+PASS M4 persistence: malformed migration/reservation fails closed / bad-sequence
+PASS M4 persistence: malformed migration/reservation fails closed / missing-receipt
+PASS M4 persistence: malformed migration/reservation fails closed / bad-pending-hash
+PASS M4 persistence: malformed migration/reservation fails closed / bad-stage
+PASS M5: an already-owned permanent title cannot consume a shard again
+PASS M5: a capped perk rejects even when more earned shards are available
+PASS M5: completed batch grants one shard only through an explicit reset transaction
+PASS M5: exhaustive cycle reset preserves inventory rights histories and daily claims
+PASS M5: reset fails closed without mutation / phase
+PASS M5: reset fails closed without mutation / archive-only
+PASS M5: reset fails closed without mutation / old-cycle
+PASS M5: reset fails closed without mutation / no-confirm
+PASS M5: reset fails closed without mutation / paid-gold
+PASS M5: reset fails closed without mutation / paid-essence
+PASS M5: reset fails closed without mutation / trade-negotiating
+PASS M5: reset fails closed without mutation / trade-pending
+PASS M5: reset fails closed without mutation / clock
+PASS M5: reset fails closed without mutation / identity
+PASS M5: archived technology survives but phase and epoch gate access anew
+PASS M5: old collection and phase receipts survive reset and cannot regrant
+PASS M5: permanent perk price maximum and replay / industry
+PASS M5: permanent perk price maximum and replay / essence
+PASS M5: permanent perk price maximum and replay / title
+PASS M5: perks affect work/Essence but do not bypass station skill caps
+PASS M5: guaranteed shard choice never draws RNG or needs random permission / bloom_owl
+PASS M5: guaranteed shard choice never draws RNG or needs random permission / golden_slime
+PASS M5: guaranteed shard choice never draws RNG or needs random permission / moon_cat
+PASS M5: forged reset economic fields reject / gold
+PASS M5: forged reset economic fields reject / shards
+PASS M5: forged reset economic fields reject / reward
+PASS M5: forged reset economic fields reject / epoch
+PASS M5: forged reset economic fields reject / cycleId
+PASS M5: forged reset economic fields reject / serverTime
+PASS M5: forged reset economic fields reject / stats
+PASS M5: forged reset economic fields reject / ownerId
+PASS M5: forged reset economic fields reject / policy
+PASS M5: forged reset economic fields reject / price
+PASS M5: epoch strategy is explicit and bounded at large cycle counts
+PASS M5 daily: all three goals earned in phase one and cannot be reclaimed on another server / 10
+PASS M5 daily: all three goals earned in phase one and cannot be reclaimed on another server / 11
+PASS M5 daily: all three goals earned in phase one and cannot be reclaimed on another server / 12
+PASS M5 daily: real manual Essence actions count and claims are explicit/idempotent
+PASS M5 daily: completion uses manual online batch events; offline and automation excluded
+PASS M5 daily: quest claim requires completion and rejects client clock/progress
+PASS M5 daily: UTC rollover is deterministic, atomic on claim and cannot roll back
+PASS M5 daily: all three day rotations are reachable phase-one goals
+PASS M5 calendar: day 1/7/8, unique entitlement and next-series fixed replacement
+PASS M5 calendar: skip resets streak; same-day and backwards-day claims deny
+PASS M5 calendar: full inventory retains claim across day change Rebirth and reload
+PASS M5 altar: full inventory never debits shards or advances serial
+PASS M5 rewards: balance overflow preserves unclaimed rights
+PASS M5 persistence: unique seventh-day entitlement survives unknown claim / before
+PASS M5 persistence: unique seventh-day entitlement survives unknown claim / after
+PASS M5 persistence: unknown write fences old state and restores exactly once / rebirth/before
+PASS M5 persistence: unknown write fences old state and restores exactly once / rebirth/after
+PASS M5 persistence: callback replay and concurrent same intent grant once / rebirth
+PASS M5 persistence: unknown write fences old state and restores exactly once / buyRebirthPerk/before
+PASS M5 persistence: unknown write fences old state and restores exactly once / buyRebirthPerk/after
+PASS M5 persistence: callback replay and concurrent same intent grant once / buyRebirthPerk
+PASS M5 persistence: unknown write fences old state and restores exactly once / chooseRebirthPet/before
+PASS M5 persistence: unknown write fences old state and restores exactly once / chooseRebirthPet/after
+PASS M5 persistence: callback replay and concurrent same intent grant once / chooseRebirthPet
+PASS M5 persistence: unknown write fences old state and restores exactly once / claimDaily/before
+PASS M5 persistence: unknown write fences old state and restores exactly once / claimDaily/after
+PASS M5 persistence: callback replay and concurrent same intent grant once / claimDaily
+PASS M5 persistence: unknown write fences old state and restores exactly once / claimCalendar/before
+PASS M5 persistence: unknown write fences old state and restores exactly once / claimCalendar/after
+PASS M5 persistence: callback replay and concurrent same intent grant once / claimCalendar
+PASS M5 persistence: unknown write fences old state and restores exactly once / deliverCalendarPet/before
+PASS M5 persistence: unknown write fences old state and restores exactly once / deliverCalendarPet/after
+PASS M5 persistence: callback replay and concurrent same intent grant once / deliverCalendarPet
+PASS M5 persistence: conflicting same request cannot buy two permanent rewards
+PASS M5 persistence: queued command rechecks departed Player before reset
+PASS M5 migration: V5 pending COMMIT recovers before any reset or offline payout
+PASS M5 migration: every V5 field is retained without invented history
+PASS M5 persistence: invalid migration/current meta never overwrites / future
+PASS M5 persistence: invalid migration/current meta never overwrites / historical-state
+PASS M5 persistence: invalid migration/current meta never overwrites / shards
+PASS M5 persistence: invalid migration/current meta never overwrites / perk
+PASS M5 persistence: invalid migration/current meta never overwrites / free-perk
+PASS M5 persistence: invalid migration/current meta never overwrites / foreign-epoch-stock
+PASS M5 persistence: invalid migration/current meta never overwrites / cycle
+PASS M5 persistence: invalid migration/current meta never overwrites / completion
+PASS M5 persistence: invalid migration/current meta never overwrites / daily-day
+PASS M5 persistence: invalid migration/current meta never overwrites / daily-claim
+PASS M5 persistence: invalid migration/current meta never overwrites / calendar
+PASS M5 persistence: invalid migration/current meta never overwrites / pending-right
+PASS M5 persistence: invalid migration/current meta never overwrites / receipt
+PASS M5/M4: transferred pet and cauldron ownership survive reset and a reverse trade
+PASS M5/M4: live negotiation blocks reset before any journal exists / invited
+PASS M5/M4: live negotiation blocks reset before any journal exists / negotiating
+PASS M5/M4: live negotiation blocks reset before any journal exists / ready
+PASS M5/M4: policy yield has already reserved the negotiation and prevents reset
+PASS M5/M4: pending reset write prevents invitation and publishes only confirmed inventory
+PASS M5/M4: persistent reservation denies all meta commands / rebirth
+PASS M5/M4: persistent reservation denies all meta commands / buyRebirthPerk
+PASS M5/M4: persistent reservation denies all meta commands / chooseRebirthPet
+PASS M5/M4: persistent reservation denies all meta commands / claimDaily
+PASS M5/M4: persistent reservation denies all meta commands / claimCalendar
+PASS M5/M4: persistent reservation denies all meta commands / deliverCalendarPet
+PASS M5/M4: fixed shard pet carries paid-origin metadata into normal trade restrictions
+PASS M5 UI: reset requires review and distinct confirmation tied to the same cycle/request
+PASS M5 UI: unrelated durable reward invalidates an old review and cancel sends nothing
+PASS M5 UI: welcome reopening and Continue have no economic command
+M5_ECONOMY manual epoch=0 phase=2 time=783s clicks=30 harvests=7 income=1048 spent=568 Gold=480
+M5_ECONOMY manual epoch=0 phase=3 time=1832s clicks=30 harvests=108 income=3078 spent=3068 Gold=10
+M5_ECONOMY manual epoch=0 phase=4 time=4848s clicks=30 harvests=399 income=9029 spent=9018 Gold=11
+M5_COMPLETE manual epoch=0 finalBatch=6877s fullSetup=7357s clicks=30 harvests=608 discards=0 income=19994 spent=14068 final1200s=13 pets=12
+PASS M5 F2P: four phases, real final batch, no familiar RNG / manual/epoch0
+M5_ECONOMY manual epoch=1 phase=2 time=783s clicks=30 harvests=7 income=1134 spent=625 Gold=509
+M5_ECONOMY manual epoch=1 phase=3 time=1739s clicks=30 harvests=114 income=3390 spent=3375 Gold=15
+M5_ECONOMY manual epoch=1 phase=4 time=4450s clicks=30 harvests=430 income=9926 spent=9920 Gold=6
+M5_COMPLETE manual epoch=1 finalBatch=6283s fullSetup=6298s clicks=30 harvests=643 discards=0 income=23382 spent=13957 final1200s=15 pets=12
+PASS M5 F2P: four phases, real final batch, no familiar RNG / manual/epoch1
+M5_ECONOMY manual epoch=2 phase=2 time=775s clicks=33 harvests=4 income=1497 spent=682 Gold=815
+M5_ECONOMY manual epoch=2 phase=3 time=1512s clicks=33 harvests=77 income=3682 spent=3682 Gold=0
+M5_ECONOMY manual epoch=2 phase=4 time=3825s clicks=33 harvests=297 income=10830 spent=10822 Gold=8
+M5_COMPLETE manual epoch=2 finalBatch=5459s fullSetup=5474s clicks=33 harvests=456 discards=0 income=32456 spent=15226 final1200s=19 pets=12
+PASS M5 F2P: four phases, real final batch, no familiar RNG / manual/epoch2
+PASS M5 F2P: earned third reset wraps to Classic with bounded benefit / manual
+M5_ECONOMY automation epoch=0 phase=2 time=791s clicks=100 harvests=3 income=1020 spent=568 Gold=452
+M5_ECONOMY automation epoch=0 phase=3 time=2459s clicks=100 harvests=8 income=3092 spent=3068 Gold=24
+M5_ECONOMY automation epoch=0 phase=4 time=7149s clicks=100 harvests=17 income=9043 spent=9018 Gold=25
+M5_COMPLETE automation epoch=0 finalBatch=10273s fullSetup=11341s clicks=100 harvests=30 discards=22 income=20993 spent=14068 final1200s=16 pets=12
+PASS M5 F2P: four phases, real final batch, no familiar RNG / automation/epoch0
+M5_ECONOMY automation epoch=1 phase=2 time=826s clicks=113 harvests=4 income=1182 spent=625 Gold=557
+M5_ECONOMY automation epoch=1 phase=3 time=2475s clicks=113 harvests=7 income=3406 spent=3375 Gold=31
+M5_ECONOMY automation epoch=1 phase=4 time=7048s clicks=113 harvests=17 income=9958 spent=9920 Gold=38
+M5_COMPLETE automation epoch=1 finalBatch=10101s fullSetup=10117s clicks=113 harvests=25 discards=0 income=22326 spent=13957 final1200s=13 pets=12
+PASS M5 F2P: four phases, real final batch, no familiar RNG / automation/epoch1
+M5_ECONOMY automation epoch=2 phase=2 time=778s clicks=96 harvests=3 income=1497 spent=682 Gold=815
+M5_ECONOMY automation epoch=2 phase=3 time=1937s clicks=96 harvests=4 income=3701 spent=3682 Gold=19
+M5_ECONOMY automation epoch=2 phase=4 time=5320s clicks=96 harvests=15 income=10830 spent=10822 Gold=8
+M5_COMPLETE automation epoch=2 finalBatch=7739s fullSetup=7755s clicks=96 harvests=22 discards=0 income=35185 spent=15226 final1200s=22 pets=12
+PASS M5 F2P: four phases, real final batch, no familiar RNG / automation/epoch2
+PASS M5 F2P: earned third reset wraps to Classic with bounded benefit / automation
+M5_ECONOMY detour epoch=0 phase=2 time=2782s clicks=51 harvests=10 income=1146 spent=668 Gold=478
+M5_ECONOMY detour epoch=0 phase=3 time=4267s clicks=51 harvests=13 income=3204 spent=3168 Gold=36
+M5_ECONOMY detour epoch=0 phase=4 time=9012s clicks=51 harvests=21 income=9155 spent=9118 Gold=37
+M5_COMPLETE detour epoch=0 finalBatch=12173s fullSetup=13214s clicks=51 harvests=36 discards=25 income=21281 spent=14168 final1200s=16 pets=12
+PASS M5 F2P: four phases, real final batch, no familiar RNG / detour/epoch0
+M5_ECONOMY detour epoch=1 phase=2 time=2787s clicks=57 harvests=8 income=1390 spent=735 Gold=655
+M5_ECONOMY detour epoch=1 phase=3 time=4052s clicks=57 harvests=11 income=3518 spent=3485 Gold=33
+M5_ECONOMY detour epoch=1 phase=4 time=7870s clicks=57 harvests=20 income=10038 spent=10030 Gold=8
+M5_COMPLETE detour epoch=1 finalBatch=10375s fullSetup=10391s clicks=57 harvests=25 discards=7 income=23046 spent=14067 final1200s=14 pets=12
+PASS M5 F2P: four phases, real final batch, no familiar RNG / detour/epoch1
+M5_ECONOMY detour epoch=2 phase=2 time=2755s clicks=51 harvests=5 income=1592 spent=802 Gold=790
+M5_ECONOMY detour epoch=2 phase=3 time=3766s clicks=51 harvests=6 income=3815 spent=3802 Gold=13
+M5_ECONOMY detour epoch=2 phase=4 time=7167s clicks=51 harvests=16 income=10963 spent=10942 Gold=21
+M5_COMPLETE detour epoch=2 finalBatch=9498s fullSetup=9514s clicks=51 harvests=24 discards=3 income=35280 spent=15346 final1200s=22 pets=12
+PASS M5 F2P: four phases, real final batch, no familiar RNG / detour/epoch2
+PASS M5 F2P: earned third reset wraps to Classic with bounded benefit / detour
+PASS M5 F2P: epoch factory exact 7200-second online/offline parity / 0
+PASS M5 F2P: epoch factory exact 7200-second online/offline parity / 1
+PASS M5 F2P: epoch factory exact 7200-second online/offline parity / 2
+PASS M6 receipts: four confirmed boundaries precede acknowledgment
+PASS M6 receipts: crash/reconnect at durable boundary 1 / before
+PASS M6 receipts: crash/reconnect at durable boundary 1 / after
+PASS M6 receipts: crash/reconnect at durable boundary 2 / before
+PASS M6 receipts: crash/reconnect at durable boundary 2 / after
+PASS M6 receipts: crash/reconnect at durable boundary 3 / before
+PASS M6 receipts: crash/reconnect at durable boundary 3 / after
+PASS M6 receipts: crash/reconnect at durable boundary 4 / before
+PASS M6 receipts: crash/reconnect at durable boundary 4 / after
+PASS M6 receipts: lost reply retried at boundary 1
+PASS M6 receipts: lost reply retried at boundary 2
+PASS M6 receipts: lost reply retried at boundary 3
+PASS M6 receipts: lost reply retried at boundary 4
+PASS M6 receipts: UpdateAsync callback replay is pure and bounded
+PASS M6 receipts: separate legitimate purchase IDs each grant once
+PASS M6 receipts: confirmed proof can acknowledge after player leaves
+PASS M6 intents: unknown profile write preserves charge/right / buyEventGold/before
+PASS M6 intents: unknown profile write preserves charge/right / buyEventGold/after
+PASS M6 intents: unknown profile write preserves charge/right / deliverPurchases/before
+PASS M6 intents: unknown profile write preserves charge/right / deliverPurchases/after
+PASS M6 receipts: full pet inventory retains acknowledged queue across restart
+PASS M6 receipts: full cauldron inventory retains acknowledged queue across restart
+PASS M6 receipts: durable record waits for absent without acknowledgment
+PASS M6 receipts: durable record waits for busy without acknowledgment
+PASS M6 receipts: durable record waits for trade without acknowledgment
+PASS M6 receipts: concurrent reentrant callbacks cannot enter the profile gate
+PASS M6 receipts: live lease excludes another server; expired old writer cannot grant
+PASS M6 receipts: two server coordinators reconcile one shared receipt and lease
+PASS M6 receipts: malformed trusted input / PlayerId
+PASS M6 receipts: malformed trusted input / ProductId
+PASS M6 receipts: malformed trusted input / PurchaseId
+PASS M6 receipts: unknown SKU and conflicting identity never grant
+PASS M6 receipts: previously bound SKU rejects a changed grant even for a new purchase
+PASS M6 receipts: archive grant survives event end and sales disable
+PASS M6 receipts: journal collision/invalid future state fails closed
+PASS M6 passes: server ownership lookup / false
+PASS M6 passes: server ownership lookup / error
+PASS M6 passes: server ownership lookup / true
+PASS M6 passes: ownership yielding across reconnect cannot mutate a replacement session
+PASS M6 passes: durable fault 1 / before
+PASS M6 passes: durable fault 1 / after
+PASS M6 passes: durable fault 2 / before
+PASS M6 passes: durable fault 2 / after
+PASS M6 receipts: history and queue saturation never evict old proof
+PASS M6 config: default release cannot prompt real spending or enable public trading
+PASS M6 catalog: UTC half-open sale interval / -1
+PASS M6 catalog: UTC half-open sale interval / 0
+PASS M6 catalog: UTC half-open sale interval / 1
+PASS M6 catalog: UTC half-open sale interval / 1209599
+PASS M6 catalog: UTC half-open sale interval / 1209600
+PASS M6 catalog: UTC half-open sale interval / 1209601
+PASS M6 catalog: malformed configuration fails closed / duplicateSKU
+PASS M6 catalog: malformed configuration fails closed / negativeSKU
+PASS M6 catalog: malformed configuration fails closed / unknownSKU
+PASS M6 catalog: malformed configuration fails closed / kind
+PASS M6 catalog: malformed configuration fails closed / stat
+PASS M6 catalog: malformed configuration fails closed / event
+PASS M6 catalog: malformed configuration fails closed / chance
+PASS M6 model: Gold and paid gameplay/visual data are identical / ghost_wolf_v1
+PASS M6 model: Gold and paid gameplay/visual data are identical / spectral_cauldron_v1
+PASS M6 model: Gold retry is exact and conflicting/stale request does not charge
+PASS M6 model: legacy paid Gold remains paid-derived; fixed shop needs no random policy
+PASS M6 model: no funds/clock/session can bypass purchase validation
+PASS M6 protocol: client cannot supply trusted field / PurchaseId
+PASS M6 protocol: client cannot supply trusted field / ProductId
+PASS M6 protocol: client cannot supply trusted field / PlayerId
+PASS M6 protocol: client cannot supply trusted field / price
+PASS M6 protocol: client cannot supply trusted field / stats
+PASS M6 protocol: client cannot supply trusted field / paidDerived
+PASS M6 protocol: client cannot supply trusted field / now
+PASS M6 protocol: client cannot supply trusted field / reward
+PASS M6 protocol: client cannot supply trusted field / gold
+PASS M6 model: five event wolves Fuse deterministically with paid OR and known AND
+PASS M6 queue: real Fuse frees slots and delivers each retained right once
+PASS M6 Fuse: an unknown parent never becomes known through seasonal evolution
+PASS M6 expiry: closing sales never changes owned stats, effects or provenance
+PASS M6 validation: corrupt purchase evidence is rejected / queuedInstance
+PASS M6 validation: corrupt purchase evidence is rejected / duplicateProof
+PASS M6 validation: corrupt purchase evidence is rejected / wrongHash
+PASS M6 validation: corrupt purchase evidence is rejected / futureStatus
+PASS M6 validation: corrupt purchase evidence is rejected / duplicateItem
+PASS M6 cosmetic: Gold entitlement is permanent, unique, fixed and account-bound
+PASS M6/M4: paid pet transfers, receipt replay never recreates old ownership
+PASS M6/M4: paid cauldron transfers, receipt replay never recreates old ownership
+PASS M6/M4: pending durable trade defers payment then recovers before replay
+PASS M6/M4: paid seasonal inventory still obeys policy of player 101
+PASS M6/M4: paid seasonal inventory still obeys policy of player 202
+PASS M6/M4: value write excludes trade invitation and live negotiation excludes delivery
+PASS M6/M5: Rebirth preserves delivered items, queued rights, receipt proofs and pass
+PASS M6/M5: receipt waiting at profile write cannot race reset
+PASS M6 migration: authentic V6 progressed profile gains empty V7 rights only
+PASS M6 migration: authentic V6 pending M4 commit recovers without losing inventory
+PASS M6 migration: V1 cannot smuggle V7 payment state
+PASS M6 migration: V2 cannot smuggle V7 payment state
+PASS M6 migration: V3 cannot smuggle V7 payment state
+PASS M6 migration: V4 cannot smuggle V7 payment state
+PASS M6 migration: V5 cannot smuggle V7 payment state
+PASS M6 migration: V6 cannot smuggle V7 payment state
+PASS M6 persistence: future/invalid V7 saved record is never overwritten by default
+M6_F2P route=new offer=ghost_wolf_v1 elapsed=1630s priorCycle=0s clicks=100 harvests=3 income=2028 spent=1968 Gold=60
+M6_F2P route=new offer=spectral_cauldron_v1 elapsed=3790s priorCycle=0s clicks=100 harvests=3 income=4576 spent=4568 Gold=8
+PASS M6 F2P: earned event wolf and cauldron inside real UTC window / new
+M6_F2P route=veteran-rebirth offer=ghost_wolf_v1 elapsed=13966s priorCycle=12541s clicks=113 harvests=4 income=1998 spent=1985 Gold=13
+M6_F2P route=veteran-rebirth offer=spectral_cauldron_v1 elapsed=15946s priorCycle=12541s clicks=113 harvests=4 income=4638 spent=4585 Gold=53
+PASS M6 F2P: earned event wolf and cauldron inside real UTC window / veteran-rebirth
+M6_F2P route=restricted offer=ghost_wolf_v1 elapsed=1630s priorCycle=0s clicks=100 harvests=3 income=2028 spent=1968 Gold=60
+M6_F2P route=restricted offer=spectral_cauldron_v1 elapsed=3790s priorCycle=0s clicks=100 harvests=3 income=4576 spent=4568 Gold=8
+PASS M6 F2P: earned event wolf and cauldron inside real UTC window / restricted
+M6_FACTORY tier1 identicalPaidAndGoldIncome7200=8624
+PASS M6 simulation: paid/free effects retain exact 7200-second online/offline parity
+M6_HAUL tier=1 base=2/5s skill=10 event=2/5s skill=10
+PASS M6 throughput: one existing carrier, tier cap and real delivered cargo / tier1
+M6_HAUL tier=2 base=2/5s skill=10 event=2/4s skill=25
+PASS M6 throughput: one existing carrier, tier cap and real delivered cargo / tier2
+M6_HAUL tier=3 base=2/5s skill=10 event=2/4s skill=28
+PASS M6 throughput: one existing carrier, tier cap and real delivered cargo / tier3
+M6_BREW ascension base=6.106870s (7s ticks, 171.43 batches/1200s) event=5.816067s (6s ticks, 200.00 batches/1200s) chance=0.130
+PASS M6 brew: measured speed bonus consumes same inputs and preserves double-output chance
+PASS M6 technology: event equipment cannot build a slot, unlock a recipe or waive inputs
+PASS M6 UI: Gold review and explicit confirmation send one fixed intent
+PASS M6 UI: Robux requires known platform price; prompt carries no payment proof
+PASS M6 UI: ended event hides acquisition but preserves delivery and processed explanation
+PASS M6 UI: cancellation sends nothing; rights refresh is a request, never local grant
+PASS M7 A2c: moon world bearing is normalized, low and continuous across the seam
+PASS M7 A2c: celestial fade excludes day and overcast night without popping
+PASS M7 A2c: static stars stay normalized, above horizon and within alpha bounds
+PASS M7 A2c: dawn and sunset have distinct shadow hues and localized fog
+PASS M7 A2c: wet stone survives clearing and dries without changing material semantics
+PASS M7 A2c: core night identity survives Reduce Motion / full
+PASS M7 A2c: core night identity survives Reduce Motion / reduced
+PASS M7 A2c: core night identity survives Reduce Motion / minimal
+PASS M7 annotations: nearest wins overlap and selection leaves source untouched
+PASS M7 annotations: hidden, distant, offscreen and behind camera are excluded
+PASS M7 annotations: mobile and desktop caps with deterministic ties
+PASS M7 Gate A: release off, one pilot, no implicit eight-plot rollout
+M7_PILOT {s10:textureMiBd27.960000000000001;s14:decoratedPlotsd1;s15:serverParticlesd0;s16:externalTexturesd12;s5:partsd432;s6:lightsd6;s6:motiond0;s7:paletted4;s9:trianglesd116626;}
+M7_PROJECTION meshPartsUpperBound8=3456 (arithmetic only; Gate B not built)
+PASS M7 pilot: deterministic reviewed catalog and bounded geometry
+PASS M7 terrain: continuous flat clearing contains all fixed work anchors
+PASS M7 terrain: aligned reserved region excludes other plots and public corridor
+PASS M7 assets: all placements use the closed catalog and plants avoid the floor
+PASS M7 topology: original 4x2 plot origin / 1
+PASS M7 topology: original 4x2 plot origin / 2
+PASS M7 topology: original 4x2 plot origin / 3
+PASS M7 topology: original 4x2 plot origin / 4
+PASS M7 topology: original 4x2 plot origin / 5
+PASS M7 topology: original 4x2 plot origin / 6
+PASS M7 topology: original 4x2 plot origin / 7
+PASS M7 topology: original 4x2 plot origin / 8
+PASS M7 light: readable bounded preset / day
+PASS M7 light: readable bounded preset / sunset
+PASS M7 light: readable bounded preset / night
+PASS M7 light: readable bounded preset / dawn
+PASS M7 light: readable bounded preset / rain
+PASS M7 schedule: same server time gives identical weather without player state
+PASS M7 transitions: midnight and day/weather boundaries are continuous
+PASS M7 quality: light/rain/motion ceilings and Reduce Motion / full
+PASS M7 quality: light/rain/motion ceilings and Reduce Motion / reduced
+PASS M7 quality: light/rain/motion ceilings and Reduce Motion / minimal
+PASS M7 quality: invalid selection fails to reduced, minimal has no animated effects
+PASS M7 appearance: personal epoch is local and M6 aurora remains intact / 0
+PASS M7 appearance: personal epoch is local and M6 aurora remains intact / 1
+PASS M7 appearance: personal epoch is local and M6 aurora remains intact / 2
+PASS M7 local settings: valid quality and accessibility do not need a server command
+PASS M7 schedule: rejects nonfinite time / nan
+PASS M7 schedule: rejects nonfinite time / inf
+PASS M7 schedule: rejects nonfinite time / -inf
+PASS M7 A2: all atmosphere fields remain continuous at authored keys and cycle seam
+PASS M7 A2: rain timing is configurable and periodic without abrupt onset
+PASS M7 A2: reproducible preview loops and reaches night plus rain
+PASS M7 A2: bounded ambient effects and complete ReduceMotion / full
+PASS M7 A2: bounded ambient effects and complete ReduceMotion / reduced
+PASS M7 A2: bounded ambient effects and complete ReduceMotion / minimal
+PASS M7 A2: motes stay at the pilot perimeter, fade smoothly and do not mutate inputs
+PASS M7 A2b: weather stages advance independently of sun and return to clear
+PASS M7 A2b: weather overlay preserves time, night and dawn identities
+PASS M7 A2b: every weather channel is bounded and continuous across two cycles
+PASS M7 A2b: all preview fields close at the seam without a texture switch
+PASS M7 A2b: six review states, intermediate dusk, and actual sunset target
+PASS M7 A2b: pooled local effects remain capped with motion disabled / full
+PASS M7 A2b: pooled local effects remain capped with motion disabled / reduced
+PASS M7 A2b: pooled local effects remain capped with motion disabled / minimal
+PASS UI18: desktop panel clears native chat at both review resolutions
+PASS UI18: narrow screens yield to open native chat and restore on close
+PASS UI18: HUD and reserved action rail cannot be overlapped by native prompt
+PASS UI18: price and shortfall follow current server snapshot without mutation
+PASS UI18: max upgrade and phase prerequisites remain inspectable
+PASS UI18: own and public contexts exclude neighbours
+PASS UI18: rejects unavailable context / disabled
+PASS UI18: rejects unavailable context / hidden
+PASS UI18: rejects unavailable context / occluded
+PASS UI18: rejects unavailable context / far
+PASS UI18: rejects unavailable context / behind
+PASS UI18: rejects unavailable context / left
+PASS UI18: rejects unavailable context / top
+PASS UI18: rejects unavailable context / bottom
+PASS UI18: rejects unavailable context / nan
+PASS UI18: exact native activation limit is retained
+PASS UI18: selection is deterministic, singular and does not mutate inputs
+PASS UI18: cycling moves and wraps without activating a purchase
+PASS UI18: small movement does not oscillate focus, stale focus expires
+PASS UI18: safe panel and action rail / 1366x768
+PASS UI18: safe panel and action rail / 1920x1080
+PASS UI18: safe panel and action rail / 844x390
+PASS UI18: safe panel and action rail / 390x844
+PASS UI18: safe panel and action rail / 320x568
+PASS UI18: short context titles contain no prices or status blocks
+PASS 18a: diagnostic transitions begin at the displayed frame, settle exactly
+PASS 18a: repeated weather retarget has no discontinuity or second owner
+PASS 18a: clock and phase wrap through their seam instead of noon
+PASS 18a: bounded 30fps transition into day
+PASS 18a: bounded 30fps transition into sunset
+PASS 18a: bounded 30fps transition into night
+PASS 18a: bounded 30fps transition into dawn
+PASS 18a: bounded 30fps transition into rain
+PASS 18a: bounded 30fps transition into afterrain
+PASS 18a: finite decorative fence collisions leave the entrance open
+PASS 18a: recovery precedes the kill plane including a fast fall
+PASS 18a: recovery cooldown and invalid coordinates do not loop
+PASS 18a: factory entry clears native list and touch corners 402
+PASS 18a: factory entry clears native list and touch corners 750
+PASS 18a: factory entry clears native list and touch corners 320
+PASS 19a: unchanged plot 1 anchors, pads and waypoints stay dry and flat
+PASS 19a: unchanged plot 2 anchors, pads and waypoints stay dry and flat
+PASS 19a: unchanged plot 3 anchors, pads and waypoints stay dry and flat
+PASS 19a: unchanged plot 4 anchors, pads and waypoints stay dry and flat
+PASS 19a: unchanged plot 5 anchors, pads and waypoints stay dry and flat
+PASS 19a: unchanged plot 6 anchors, pads and waypoints stay dry and flat
+PASS 19a: unchanged plot 7 anchors, pads and waypoints stay dry and flat
+PASS 19a: unchanged plot 8 anchors, pads and waypoints stay dry and flat
+PASS 19a: every work floor has a conservative four-stud voxel margin
+PASS 19a: connected flat walking routes reach both rows and the bazaar
+PASS 19a: hidden legacy base never permits walking above water
+PASS 19a: continuous irregular coast has sand, submerged sea floor and relief
+PASS 19a: chunk bounds are aligned, non-overlapping and within total budget
+PASS 19a: soil and water occupancy are finite and meet across the shoreline
+PASS 19a: regional joins use identical world-space water levels
+PASS 19b: all eight visual soil clearings close the floor gap without moving origins
+PASS 19b: soil joins are continuous and the distant coast is unchanged
+PASS 19b: every entrance has a natural approach to the shared bazaar
+PASS 19b: thin rounded ownership outline follows the original plot footprint
+PASS 19b: only an affordable selected own upgrade gets a green affordance
+PASS 19b: green glow fails closed / foreign
+PASS 19b: green glow fails closed / unowned
+PASS 19b: green glow fails closed / unselected
+PASS 19b: green glow fails closed / far
+PASS 19b: green glow fails closed / nan
+PASS 19b: green glow fails closed / hidden
+PASS 19b: green glow fails closed / occluded
+PASS 19b: green glow fails closed / disabled
+PASS 19b: green glow fails closed / readonly
+PASS 19b: green glow fails closed / maximum
+PASS 19b: green glow fails closed / phase
+PASS 19b: phase prerequisite and funds changes refresh the same affordance
+
+939 passed; 0 failed; 939 total
+> .tools\rojo\rojo.exe build default.project.json -o build/PotionTycoon.rbxlx
+Building project 'PotionTycoon'
+Built project to PotionTycoon.rbxlx
+> .tools\rojo\rojo.exe sourcemap default.project.json -o build/sourcemap.json
+Created sourcemap at build/sourcemap.json
+> .tools\rojo\rojo.exe build qa/environment.project.json -o build/M7PilotReview.rbxlx
+Building project 'M7PilotReview'
+Built project to M7PilotReview.rbxlx
+> .tools\rojo\rojo.exe sourcemap qa/environment.project.json -o build/environment-sourcemap.json
+Created sourcemap at build/environment-sourcemap.json
+PASS: 115 Luau sources; compile, portable analysis, tests, Rojo build and sourcemap.
