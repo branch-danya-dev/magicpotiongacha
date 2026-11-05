@@ -13,6 +13,9 @@ function absolute(node) {
   }
 }
 absolute(project);
+project.tree.StarterPlayer.StarterPlayerScripts.A2VisualReview={
+  $path:resolve(root,'qa/environment/GameplayReview.client.luau')
+};
 project.name='PotionTycoon-M7-LocalPreview';
 project.tree.Lighting.$properties.Technology='Future';
 mkdirSync(resolve(root,'build'),{recursive:true});

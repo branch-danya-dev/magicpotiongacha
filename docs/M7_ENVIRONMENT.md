@@ -1,5 +1,10 @@
 # M7.1 / revised one-farm Gate A
 
+Current patch: [Gate A.2 lighting/weather](M7_A2_ATMOSPHERE.md), Issue #20.
+851 portable tests; new [raw evidence](evidence/m7-a2/README.md) includes Automatic
+and Manual 5 comparisons. ART PENDING; stippling remains OPEN. The A.1 record
+below is historical where it describes static foliage or 844 tests.
+
 The primitive pilot was ART REJECTED. This revision replaces its nature with
 14 inspected/optimized Quaternius MegaKit Standard models and bounded native
 Terrain. The owner authorized direct preparation/import despite missing game-dev.

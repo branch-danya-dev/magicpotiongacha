@@ -114,4 +114,42 @@ return function(T:any)
 	for _,value in ipairs({0/0,math.huge,-math.huge}) do
 		T.test("M7 schedule: rejects nonfinite time / "..tostring(value),function() T.throws(function() State.sample(Config,value) end) end)
 	end
+	T.test("M7 A2: all atmosphere fields remain continuous at authored keys and cycle seam",function()
+		for _,key in ipairs(Config.keys) do
+			local a=State.at(Config,(key.phase-1e-6)%1,.5); local b=State.at(Config,(key.phase+1e-6)%1,.5)
+			for name,value in pairs(a) do if name~="phase" and name~="clock" then
+				if type(value)=="table" then for i,v in ipairs(value) do T.truthy(math.abs(v-b[name][i])<.01,name) end
+				else T.truthy(math.abs(value-b[name])<.01,name) end
+			end end
+		end
+	end)
+	T.test("M7 A2: rain timing is configurable and periodic without abrupt onset",function()
+		local c=Codec.copy(Config); c.weatherSeconds=100; c.weather={start=10,rise=20,finish=60,fall=30}
+		T.equal(State.sample(c,9).rain,0); T.equal(State.sample(c,30).rain,1); T.equal(State.sample(c,90).rain,0)
+		T.truthy(State.sample(c,20).rain>0 and State.sample(c,20).rain<1)
+		T.equal(State.sample(c,20).rain,State.sample(c,120).rain)
+	end)
+	T.test("M7 A2: reproducible preview loops and reaches night plus rain",function()
+		T.same(State.preview(Config,0),State.preview(Config,Config.previewSeconds))
+		T.truthy(State.preview(Config,Config.previewSeconds*.51).night>.95)
+		T.truthy(State.preview(Config,Config.previewSeconds*.84).rain>.95)
+		T.throws(function() State.preview(Config,math.huge) end)
+	end)
+	for _,tier in ipairs({"full","reduced","minimal"}) do
+		T.test("M7 A2: bounded ambient effects and complete ReduceMotion / "..tier,function()
+			local q=State.quality(Config,tier,false)
+			T.truthy(q.motes<=Config.budgets.motes); T.truthy(q.bloom<=.05); T.truthy(q.rays<=.03)
+			q=State.quality(Config,tier,true); T.equal(q.motes,0); T.equal(q.motion,0); T.equal(q.rain,0)
+		end)
+	end
+	T.test("M7 A2: motes stay at the pilot perimeter, fade smoothly and do not mutate inputs",function()
+		local before=Codec.copy(Config)
+		for i=1,24 do for time=0,30 do
+			local m=State.mote(i,time,1,0); local n=State.mote(i,time+.01,1,0)
+			T.same(m,State.mote(i,time,1,0)); T.truthy(m.x> -190 and m.x< -95 and m.z> -112 and m.z< -37)
+			T.truthy(m.y>1 and m.y<7); T.truthy(m.alpha>=0 and m.alpha<=.65)
+			T.truthy(math.abs(m.alpha-n.alpha)<.01); T.truthy(State.mote(i,time,1,1).alpha<=m.alpha)
+		end end
+		T.same(Config,before)
+	end)
 end

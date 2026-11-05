@@ -58,12 +58,32 @@ for (const model of receipt.models) {
 assert.match(builder, /p\.Anchored,p\.CanCollide,p\.CanTouch,p\.CanQuery=true,false,false,false/);
 assert(!/rbxassetid:\/\/|HttpService|loadstring|RemoteEvent/.test(builder), 'Unreviewed external art dependency');
 const current = JSON.parse(read('docs/evidence/m7-revision/captures.json'));
+const a1Snapshot=JSON.parse(read('docs/evidence/m7-revision/source-snapshot.json'));
 assert.equal(current.status, 'OWNER_REVIEW_PENDING');
 assert.equal(current.graphicsQuality, 10);
 for (const [path, hash] of Object.entries(current.sources)) {
-  assert.equal(sha(read(path)), hash, `Current Studio evidence source changed: ${path}; recapture the affected views`);
+  assert.equal(sha(a1Snapshot[path]), hash, `Archived A.1 Studio evidence source changed: ${path}`);
 }
 for (const name of ['day-overview','sunset-overview','night-overview','rain-overview','dawn-overview','day-spawn','day-bazaar','day-foliage','gameplay-ui','graphics-settings']) {
   assert.equal(createHash('sha256').update(readFileSync(resolve(root, 'docs/evidence/m7-revision', name+'.jpg'))).digest('hex'), current.images[name+'.jpg'], `Current capture integrity: ${name}`);
 }
-console.log(`M7 integrity PASS: ${Object.keys(baseline.unchanged).length} unchanged M6 files, gameplay World, release flags, art source hashes and isolated harness`);
+const a2=JSON.parse(read('docs/evidence/m7-a2/captures.json'));
+assert.equal(a2.status,'OWNER_REVIEW_PENDING');
+assert.equal(a2.parentCommit,'f343966580e91b20db4f1516741bae1d0e8ee291');
+for (const [path,hash] of Object.entries(a2.sources)) {
+  assert.equal(sha(read(path)),hash,`A.2 captured source changed: ${path}`);
+}
+for (const [name,entry] of Object.entries(a2.images)) {
+  assert(a2.builds[entry.build],`Unknown capture build: ${name}`);
+  assert.equal(createHash('sha256').update(readFileSync(resolve(root,'docs/evidence/m7-a2',name))).digest('hex'),entry.sha256,`A.2 capture integrity: ${name}`);
+}
+for (const pose of ['day','sunset','night','rain','dawn']) {
+  assert.equal(a2.images[pose+'-overview.jpg'].graphics,'Manual 10');
+  assert.equal(a2.images[pose+'-overview.jpg'].build,'final');
+}
+for (const setting of ['auto','low5']) for (const pose of ['day','night']) {
+  assert.equal(a2.images[`before-${setting}-${pose}.jpg`].build,'baseline');
+  assert.equal(a2.images[`after-${setting}-${pose}.jpg`].build,'final');
+}
+for (const pose of ['day','night']) assert.equal(a2.images[`gameplay-${pose}.jpg`].build,'gameplay');
+console.log(`M7 integrity PASS: ${Object.keys(baseline.unchanged).length} unchanged M6 files, gameplay World, release flags, art source hashes, A.2 capture provenance and isolated harness`);

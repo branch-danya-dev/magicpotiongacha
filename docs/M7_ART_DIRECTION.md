@@ -1,5 +1,12 @@
 # M7.1 / Gate A — Honeyglade pilot
 
+## Gate A.2 — current review candidate
+
+Issue #20 adds the [lighting/weather pass](M7_A2_ATMOSPHERE.md) on this same
+one-farm composition. [New Studio evidence](evidence/m7-a2/README.md) replaces the
+A.1 series for current atmosphere review. ART PENDING; low-quality stippling is
+still OPEN. #18, #19, station models and music remain deferred.
+
 ## Owner revision — 2026-11-05 (takes precedence)
 
 The existing primitive pilot is **ART REJECTED**, not pending approval. Its green

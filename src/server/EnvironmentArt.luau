@@ -58,7 +58,7 @@ function Art.attach(world)
 				-- The heavily flattened stones use a quiet native surface; retain the
 				-- reviewed geometry without magnifying the source atlas's dark seams.
 				if p:IsA("SurfaceAppearance") then p:Destroy()
-				elseif p:IsA("MeshPart") then p.TextureID=""; p.Color=Color3.fromRGB(186,176,149); p.Material=Enum.Material.Slate; p.CastShadow=false end
+				elseif p:IsA("MeshPart") then p.TextureID=""; p.Color=Color3.fromRGB(186,176,149); p.Material=Enum.Material.SmoothPlastic; p.CastShadow=false end
 			end end
 			if d.flatten~=1 then for _,p in ipairs(model:GetDescendants()) do if p:IsA("BasePart") then
 				p.Size=Vector3.new(p.Size.X,p.Size.Y*d.flatten,p.Size.Z)

@@ -2,6 +2,17 @@
 
 CLI/CI passing is necessary but does not mark any item below as completed.
 
+## M7.1 Gate A.2 — Issue #20
+
+**ART PENDING; low-quality stippling OPEN; live/device gates BLOCKED.**
+[Implementation, caps and diagnostic limits](M7_A2_ATMOSPHERE.md),
+[raw Studio evidence and reproducible preview](evidence/m7-a2/README.md).
+851 portable tests preserve all 844 inherited cases. Studio verifies the effect
+lifecycle and caps, plus the five visual presets and ordinary UI day/night views.
+A 45-second reproducible Studio preview is supplied; recorded video is not.
+This does not pass owner visual approval, #18 UX, real-phone performance,
+multiplayer or backend acceptance. Do not start #19 or merge/publish.
+
 ## M7.1 revised one-farm Gate A — 2026-11-05
 
 [Issue #16](https://github.com/branch-danya-dev/magicpotiongacha/issues/16), stacked
