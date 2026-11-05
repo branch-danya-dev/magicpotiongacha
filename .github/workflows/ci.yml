@@ -39,5 +39,6 @@ jobs:
             build/environment-sourcemap.json
             assets/environment/manifest.json
             assets/environment/atmosphere/
+            assets/environment/polish/
             scripts/install-atmosphere-preview.mjs
           if-no-files-found: error

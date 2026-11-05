@@ -36,3 +36,10 @@ for x=-37,37,4 do for z=-44,28,4 do
 	assert(not hit or hit.Position.Y<.5,"Terrain intrudes on work floor")
 end end
 print("M7_VISUAL_HARNESS parts="..count.." plots=8 decorated=1 collisionGuards=PASS; no gameplay/backend acceptance")
+local floor=world.plots[1].model.Floor
+local grass=PhysicalProperties.new(Enum.Material.Grass)
+assert(floor.CustomPhysicalProperties.Friction==grass.Friction,"Meadow changed ground physics")
+assert(floor.Material==Enum.Material.SmoothPlastic and floor.M7Meadow:IsA("Texture"),"Quiet meadow missing")
+assert(floor.Transparency==0 and floor.Reflectance==0,"Ground alpha/reflectance regression")
+assert(floor.Position.Y-floor.Size.Y/2>=world.root.ForestFloor.Position.Y+world.root.ForestFloor.Size.Y/2,"Overlapping floor planes")
+print("M7_A2C_GROUND PASS opaque matte top texture, original Grass friction, separated floor planes")

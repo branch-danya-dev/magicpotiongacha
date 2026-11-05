@@ -5,6 +5,19 @@ local Plan=require(Shared.EnvironmentPlan)
 local Field=require(Shared.EnvironmentTerrain)
 local State=require(Shared.EnvironmentState)
 local Art={}
+local function meadow(floor,enabled)
+	-- Preserve the existing collision/friction contract while replacing only
+	-- native Grass shading. Local PBR packs fail Studio's TexturePack loader;
+	-- an immutable, low-frequency top Texture works at graphics 5 and 10.
+	if floor.CustomPhysicalProperties==nil then floor.CustomPhysicalProperties=PhysicalProperties.new(floor.Material) end
+	local texture=floor:FindFirstChild("M7Meadow")
+	if not texture then
+		texture=Instance.new("Texture"); texture.Name="M7Meadow"; texture.Face=Enum.NormalId.Top
+		texture.Texture=Config.polishPrefix.."meadow.png"; texture.StudsPerTileU=14; texture.StudsPerTileV=14; texture.Parent=floor
+	end
+	texture.Color3=floor.Color; texture.Transparency=enabled and 0 or 1
+	if enabled then floor.Material=Enum.Material.SmoothPlastic end
+end
 local function landscape()
 	local terrain=workspace.Terrain; local b=Field.bounds; local r=Field.resolution
 	local region=Region3.new(Vector3.new(table.unpack(b.min)),Vector3.new(table.unpack(b.max)))
@@ -54,6 +67,11 @@ function Art.attach(world)
 			if string.find(d.template,"Grass") then for _,p in ipairs(model:GetDescendants()) do
 				if p:IsA("SurfaceAppearance") then p.Color=Color3.fromRGB(138,195,112) end
 			end end
+			-- The original fern atlas has pale edge pixels. A stable leaf tint limits
+			-- their contrast without removing alpha or changing the reviewed mesh.
+			if d.template=="Fern_1" then for _,p in ipairs(model:GetDescendants()) do
+				if p:IsA("SurfaceAppearance") then p.Color=Color3.fromRGB(143,190,107) end
+			end end
 			if d.template=="RockPath_Round_Small_1" then for _,p in ipairs(model:GetDescendants()) do
 				-- The heavily flattened stones use a quiet native surface; retain the
 				-- reviewed geometry without magnifying the source atlas's dark seams.
@@ -77,6 +95,7 @@ function Art.attach(world)
 		model.Parent=folder
 	end
 	world.root.ForestFloor.Color=Color3.fromRGB(table.unpack(Config.palette.grass)); world.root.ForestFloor.Material=Enum.Material.Grass
+	meadow(world.root.ForestFloor,true)
 	world.root.Bazaar.Color=Color3.fromRGB(table.unpack(Config.palette.stone)); world.root.Bazaar.Material=Enum.Material.Sandstone
 	world.root:SetAttribute("EnvironmentArtEnabled",true); world.root:SetAttribute("EnvironmentPilotPlot",Config.pilotPlot)
 	Art.update(world.plots[Config.pilotPlot],0,false)
@@ -85,5 +104,6 @@ function Art.update(plot,rebirths,aurora)
 	if plot.index~=Config.pilotPlot then return end
 	local surface=State.surface(Config,rebirths,aurora)
 	plot.model.Floor.Color=Color3.fromRGB(table.unpack(surface.color)); plot.model.Floor.Material=Enum.Material[surface.material]
+	meadow(plot.model.Floor,surface.material=="Grass")
 end
 return Art

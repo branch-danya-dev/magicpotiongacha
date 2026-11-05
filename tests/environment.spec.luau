@@ -8,6 +8,45 @@ local Settings=require("../src/server/ServerSettings")
 local Controller=require("../src/client/EnvironmentController")
 local Labels=require("../src/shared/EnvironmentLabels")
 return function(T:any)
+	T.test("M7 A2c: moon world bearing is normalized, low and continuous across the seam",function()
+		for i=0,1000 do
+			local d=State.moon(i/1000); T.truthy(math.abs(d[1]^2+d[2]^2+d[3]^2-1)<1e-9)
+			T.truthy(d[2]>.28 and d[2]<.4)
+		end
+		local a,b=State.moon(0),State.moon(1); for i=1,3 do T.truthy(math.abs(a[i]-b[i])<1e-9) end
+	end)
+	T.test("M7 A2c: celestial fade excludes day and overcast night without popping",function()
+		T.equal(State.sample(Config,0,"day").celestial,0)
+		T.equal(State.sample(Config,0,"night").celestial,1)
+		T.equal(State.at(Config,.51,1).celestial,0)
+		for i=1,1000 do
+			local a=State.at(Config,.51,0,{cloud=(i-1)/1000}); local b=State.at(Config,.51,0,{cloud=i/1000})
+			T.truthy(b.celestial<=a.celestial and math.abs(a.celestial-b.celestial)<.003)
+		end
+	end)
+	T.test("M7 A2c: static stars stay normalized, above horizon and within alpha bounds",function()
+		for i=1,Config.celestial.stars do
+			local d=State.star(i); T.same(d,State.star(i)); T.truthy(math.abs(d.x*d.x+d.y*d.y+d.z*d.z-1)<1e-9)
+			T.truthy(d.y>.2 and d.y<1); T.truthy(d.alpha>0 and d.alpha<=1); T.truthy(d.size<=3.3)
+		end
+	end)
+	T.test("M7 A2c: dawn and sunset have distinct shadow hues and localized fog",function()
+		local a,b=State.sample(Config,0,"dawn"),State.sample(Config,0,"sunset")
+		T.truthy(a.ambient[2]>a.ambient[1]+30); T.truthy(b.ambient[3]>b.ambient[2])
+		T.truthy(a.fog>b.fog+.8); T.truthy(a.glint>0); T.truthy(a.warm<b.warm)
+	end)
+	T.test("M7 A2c: wet stone survives clearing and dries without changing material semantics",function()
+		local a=State.sample(Config,0,"afterrain"); T.truthy(a.wetStone>.5)
+		T.equal(State.sample(Config,0,"day").wetStone,0)
+		T.equal(State.surface(Config,0,false).material,"Grass")
+		T.equal(State.surface(Config,0,true).material,"Neon")
+	end)
+	for _,tier in ipairs({"full","reduced","minimal"}) do
+		T.test("M7 A2c: core night identity survives Reduce Motion / "..tier,function()
+			local q=State.quality(Config,tier,true); T.truthy(q.stars>=12 and q.stars<=Config.budgets.stars)
+			T.equal(q.rain,0); T.equal(q.motion,0); T.equal(q.motes,0)
+		end)
+	end
 	T.test("M7 annotations: nearest wins overlap and selection leaves source untouched",function()
 		local entries={{id=1,x=200,y=200,z=1,distance=50,w=230,h=64,enabled=true},
 			{id=2,x=210,y=200,z=1,distance=10,w=230,h=64,enabled=true},

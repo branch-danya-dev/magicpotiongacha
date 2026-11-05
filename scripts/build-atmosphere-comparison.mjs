@@ -17,10 +17,10 @@ for(const style of ['Soft','Realistic']) {
   project.tree.Lighting.$properties.PrioritizeLightingQuality=true;
   const path=resolve(root,`build/atmosphere-${style}.project.json`);
   writeFileSync(path,JSON.stringify(project,null,2));
-  const r=spawnSync(resolve(root,'.tools/rojo/rojo'+(process.platform==='win32'?'.exe':'')),['build',path,'-o',`build/M7A2b-${style}-Verified.rbxlx`],{cwd:root,stdio:'inherit'});
+  const r=spawnSync(resolve(root,'.tools/rojo/rojo'+(process.platform==='win32'?'.exe':'')),['build',path,'-o',`build/M7A2c-${style}-Verified.rbxlx`],{cwd:root,stdio:'inherit'});
   assert.equal(r.status,0);
 }
 // Reproducible diagnostic starting camera; runtime modules are byte-identical.
-const review=readFileSync(resolve(root,'build/M7A2b-Realistic-Verified.rbxlx'),'utf8');
+const review=readFileSync(resolve(root,'build/M7A2c-Realistic-Verified.rbxlx'),'utf8');
 assert.equal(review.split('local mode,angle=1,1').length,2);
-writeFileSync(resolve(root,'build/M7A2b-NightAudit.rbxlx'),review.replace('local mode,angle=1,1','local mode,angle=3,7'));
+writeFileSync(resolve(root,'build/M7A2c-SpawnAudit.rbxlx'),review.replace('local mode,angle=1,1','local mode,angle=3,2'));

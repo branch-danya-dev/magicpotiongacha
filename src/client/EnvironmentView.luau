@@ -33,7 +33,10 @@ function View.start(root,settings)
 	end
 	sky.SunTextureId=Config.skyPrefix.."sun.png"; sky.MoonTextureId=Config.skyPrefix.."moon.png"
 	for _,name in ipairs({"sun","moon","mist","rainbow"}) do table.insert(assets,Config.skyPrefix..name..".png") end
-	sky.CelestialBodiesShown=true; sky.StarCount=900; sky.SunAngularSize=7; sky.MoonAngularSize=9
+	for _,name in ipairs({"meadow","star"}) do table.insert(assets,Config.polishPrefix..name..".png") end
+	-- The sky retains its sun; a single owned celestial rig supplies a low moon
+	-- and legible stars. Native zenith moon/stars are disabled, never duplicated.
+	sky.CelestialBodiesShown=true; sky.StarCount=0; sky.SunAngularSize=7; sky.MoonAngularSize=0
 	-- A single asset set for the entire session. No texture swaps at time/weather keys.
 	sky.Parent=Lighting
 	self.assetFailures=0
@@ -42,7 +45,7 @@ function View.start(root,settings)
 			if status~=Enum.AssetFetchStatus.Success then self.assetFailures+=1 end
 		end) end)
 		if not ok then self.assetFailures+=1 end
-		if active==self and RunService:IsStudio() then print("M7_A2B_ASSETS failures="..self.assetFailures.." source=original-CC0-local permissions=LOCAL_ONLY") end
+		if active==self and RunService:IsStudio() then print("M7_A2C_ASSETS failures="..self.assetFailures.." source=original-CC0-local permissions=LOCAL_ONLY") end
 	end)
 	local clouds=effect("Clouds","M7Clouds",workspace.Terrain)
 	local correction=effect("ColorCorrectionEffect","M7Color",Lighting)
@@ -67,17 +70,32 @@ function View.start(root,settings)
 		return {part=p,gui=gui,image=img}
 	end
 	local fog={}
-	for i,pos in ipairs({{-185,-113},{-103,-103},{-187,-58}}) do
-		fog[i]=sprite("GroundMist_"..i,"mist",Vector2.new(24,5),Vector3.new(pos[1],surface(pos[1],pos[2])+1.3,pos[2]))
+	for i,pos in ipairs({{-169,-112},{-115,-106},{-184,-58}}) do
+		fog[i]=sprite("GroundMist_"..i,"mist",Vector2.new(42,6.5),Vector3.new(pos[1],surface(pos[1],pos[2])+1.7,pos[2]))
 	end
 	local glints={}
 	for i=1,Config.budgets.glints do
-		local x=i%2==0 and -183 or -103; local z=-46-i*9
-		local p=localPart("DewAndGlow_"..i,Vector3.new(.38,.14,.6)); p.Material=Enum.Material.Neon
+		local x=-142.5+(i%2==0 and -1 or 1)*(14+i*2); local z=-46-i*9
+		local p=localPart("DewAndGlow_"..i,Vector3.new(.3,.04,.18)); p.Shape=Enum.PartType.Ball; p.Material=Enum.Material.Neon
 		p.Position=Vector3.new(x,surface(x,z)+.2,z); p.Color=Color3.fromRGB(129,218,224); glints[i]=p
 	end
 	local rainbow=sprite("AfterRainArc","rainbow",Vector2.new(95,48),Vector3.new(-140,50,-160))
-	local lights={}; local wind={}; local registered={}
+	-- One non-rendering anchor, no per-star Parts/lights/emitters. The rig follows
+	-- camera translation only so celestial bearings remain fixed in the world.
+	local celestialAnchor=localPart("CelestialAnchor",Vector3.new(.1,.1,.1))
+	local function celestialSprite(name,uri,size,direction)
+		local attachment=effect("Attachment",name,celestialAnchor); attachment.Position=direction*Config.celestial.distance
+		local gui=effect("BillboardGui",name.."Sprite",attachment); gui.Adornee=attachment
+		gui.Size=UDim2.fromScale(size,size); gui.LightInfluence=0; gui.AlwaysOnTop=false
+		local img=effect("ImageLabel","Image",gui); img.BackgroundTransparency=1; img.Size=UDim2.fromScale(1,1); img.Image=uri; img.ImageTransparency=1
+		return {attachment=attachment,gui=gui,image=img}
+	end
+	local moon=celestialSprite("Moon",Config.skyPrefix.."moon.png",Config.celestial.moonSize,Vector3.new(0,1,0))
+	local stars={}
+	for i=1,Config.celestial.stars do
+		local d=State.star(i); stars[i]=celestialSprite("Star_"..i,Config.polishPrefix.."star.png",d.size,Vector3.new(d.x,d.y,d.z)); stars[i].alpha=d.alpha
+	end
+	local lights={}; local wind={}; local registered={}; local wetSurfaces={}
 	local labels={}; local annotations=true; local labelsDirty=0
 	local function registerLabel(gui)
 		if gui:IsA("BillboardGui") then table.insert(labels,{gui=gui,enabled=gui.Enabled}) end
@@ -89,6 +107,7 @@ function View.start(root,settings)
 		if p:IsA("BasePart") then
 			registered[p]=true
 			table.insert(self.parts,p)
+			if string.find(p.Name,"RockPath") then table.insert(wetSurfaces,{part=p,color=p.Color,wet=Color3.new(p.Color.R*.70,p.Color.G*.75,p.Color.B*.78)}) end
 			if p:GetAttribute("EnvironmentLight") then
 				local l=effect("PointLight","M7LocalLantern",p); l.Color=color(Config.palette.amber); l.Range=14; l.Shadows=false; table.insert(lights,l)
 			end
@@ -133,7 +152,7 @@ function View.start(root,settings)
 	function self.setPose(name) if RunService:IsStudio() and (name==nil or Config.poses[name]) then self.pose=name end end
 	function self.setPreview(enabled) if RunService:IsStudio() then self.previewStart=enabled and os.clock() or nil end end
 	function self.stats()
-		local counts={lights=0,rain=0,motes=0,wind=0,emitters=0,fog=0,glints=0,rainbow=0,assetFailures=self.assetFailures}
+		local counts={lights=0,rain=0,motes=0,wind=0,emitters=0,fog=0,glints=0,rainbow=0,stars=0,moon=0,assetFailures=self.assetFailures}
 		for _,l in ipairs(lights) do if l.Enabled then counts.lights+=1 end end
 		for _,p in ipairs(self.rain) do if p.Transparency<1 then counts.rain+=1 end end
 		for _,p in ipairs(motes) do if p.Transparency<1 then counts.motes+=1 end end
@@ -141,6 +160,8 @@ function View.start(root,settings)
 		for _,v in ipairs(fog) do if v.image.ImageTransparency<1 then counts.fog+=1 end end
 		for _,p in ipairs(glints) do if p.Transparency<1 then counts.glints+=1 end end
 		counts.rainbow=rainbow.image.ImageTransparency<1 and 1 or 0
+		for _,v in ipairs(stars) do if v.image.ImageTransparency<1 then counts.stars+=1 end end
+		counts.moon=moon.image.ImageTransparency<1 and 1 or 0
 		return counts
 	end
 	function self.setAnnotationsEnabled(enabled) annotations=enabled~=false; labelsDirty=1 end
@@ -149,6 +170,11 @@ function View.start(root,settings)
 		local camera=workspace.CurrentCamera; if not camera then return end
 		local time=workspace:GetServerTimeNow(); local sample=self.previewStart and State.preview(Config,os.clock()-self.previewStart) or State.sample(Config,time,self.pose); local q=State.quality(Config,self.quality,self.reduceMotion)
 		apply(sample,q)
+		celestialAnchor.Position=camera.CFrame.Position
+		moon.attachment.Position=Vector3.new(table.unpack(State.moon(sample.phase)))*Config.celestial.distance
+		moon.image.ImageTransparency=1-sample.celestial*.94
+		for i,v in ipairs(stars) do v.image.ImageTransparency=1-(i<=q.stars and sample.celestial*v.alpha or 0) end
+		for _,v in ipairs(wetSurfaces) do v.part.Color=v.color:Lerp(v.wet,sample.wetStone*.35) end
 		if labelsDirty>=.25 then
 			labelsDirty=0
 			local entries={}
@@ -225,11 +251,13 @@ function View.start(root,settings)
 		for i,v in ipairs(fog) do
 			local distance=(v.part.Position-camera.CFrame.Position).Magnitude
 			local fade=math.clamp((q.distance-distance)/20,0,1)
-			v.image.ImageTransparency=1-(i<=q.fog and sample.fog*.6*fade or 0)
+			v.image.ImageTransparency=1-(i<=q.fog and sample.fog*.85*fade or 0)
+			v.image.ImageColor3=Color3.fromRGB(214,229,239):Lerp(Color3.fromRGB(228,249,241),sample.dawn)
 		end
 		for i,p in ipairs(glints) do
 			local distance=(p.Position-camera.CFrame.Position).Magnitude; local fade=math.clamp((q.distance-distance)/20,0,1)
-			p.Transparency=1-(i<=q.glints and math.max(sample.night*.68,sample.glint*.45)*fade or 0)
+			p.Transparency=1-(i<=q.glints and math.max(sample.night*.6,sample.glint*.65)*fade or 0)
+			p.Color=color({195-66*sample.night,231-13*sample.night,219+5*sample.night})
 		end
 		local sun=Lighting:GetSunDirection(); local horizontal=Vector3.new(-sun.X,0,-sun.Z)
 		local eligible=sun.Y>.08 and sun.Y<.88 and horizontal.Magnitude>.01
@@ -252,6 +280,7 @@ function View.start(root,settings)
 		workspace.GlobalWind=savedWind
 		for _,p in ipairs(self.parts) do p.LocalTransparencyModifier=0 end
 		for _,w in ipairs(wind) do w.part.CFrame=w.base end
+		for _,v in ipairs(wetSurfaces) do v.part.Color=v.color end
 		for _,l in ipairs(lights) do l:Destroy() end
 		atmosphere:Destroy(); sky:Destroy(); clouds:Destroy(); correction:Destroy(); bloom:Destroy(); rays:Destroy(); folder:Destroy()
 		for _,v in ipairs(displaced) do v.object.Parent=v.parent end

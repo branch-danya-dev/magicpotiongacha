@@ -40,11 +40,25 @@ function State.at(config:any,phase:number,rain:number,weather:any?):any
 	r.cover=.12+.72*r.cloud; r.cloudDensity=.22+.5*r.cloud
 	r.tint=lerp(r.tint,{218,235,246},r.cloud*.32); r.sky=lerp(r.sky,{163,186,204},r.cloud*.6)
 	r.sun=lerp(r.sun,{182,199,215},r.cloud*.82); r.cloudColor=lerp({240,237,229},{145,167,189},r.cloud)
-	r.fog=math.max(r.dawn*.7,rain*.22); r.glint=math.max(r.dawn*.5,r.wet*(1-rain))*(1-r.night)
+	r.fog=math.max(r.dawn,rain*.22); r.glint=math.max(r.dawn*.7,r.wet*(1-rain))*(1-r.night)
+	r.celestial=smooth((r.night-.22)/.55)*(1-smooth(r.cloud/.85))
+	r.wetStone=r.wet*(1-rain*.2)
 	r.wind=.25+.5*r.cloud+.25*rain
 	-- Eligibility only: renderer also checks actual sun elevation/view direction.
 	r.rainbow=r.afterRain*(1-r.night)*(1-r.cloud)
 	return r
+end
+-- Art-directed celestial path, deliberately lower than the engine's zenith moon.
+-- World-oriented, never locked to camera rotation. Smooth/periodic at the cycle seam.
+function State.moon(phase)
+	local az=math.rad(15+12*math.sin(phase*math.pi*2)); local el=math.rad(20+3*math.cos(phase*math.pi*2))
+	return {math.sin(az)*math.cos(el),math.sin(el),-math.cos(az)*math.cos(el)}
+end
+function State.star(index)
+	local az=index<=16 and (-60+(index*37%120)) or (index*137.507764%360)
+	local el=12+(index*23%59)
+	local a,e=math.rad(az),math.rad(el)
+	return {x=math.sin(a)*math.cos(e),y=math.sin(e),z=-math.cos(a)*math.cos(e),size=1.5+(index%4)*.6,alpha=.6+(index%3)*.15}
 end
 function State.sample(config:any,serverSeconds:number,pose:string?):any
 	assert(type(serverSeconds)=="number" and serverSeconds==serverSeconds and math.abs(serverSeconds)<1e13,"Invalid environment clock")

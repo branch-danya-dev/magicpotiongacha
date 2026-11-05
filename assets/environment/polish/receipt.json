@@ -1,0 +1,14 @@
+{
+  "license": "CC0-1.0",
+  "local_prefix": "rbxasset://m7a2c-v2/",
+  "generator": "scripts/create-polish-assets.py",
+  "generator_sha256": "3ea37b55fdf92a8e41a7d44a71e3ac98e649738ac8e76fc71d58084cb1a370de",
+  "files": {
+    "meadow.png": "96ed909ec0fd840a75694681721395fa84d744556156b79785dbd3b3a23dc9fe",
+    "star.png": "1ab214fbbe9b85402defdd9431eccf6b1677c3e3b0a17dd9f45bec3eea9deb4c",
+    "LICENSE.txt": "f8c701bdd9f9608633fe842813830fa25ab513f58cac11a5aac78a9e56aacc5b"
+  },
+  "rgba8_mips_bytes": 109227,
+  "permissions": "LOCAL_STUDIO_ONLY; experience asset permissions BLOCKED",
+  "roblox_asset_ids": null
+}

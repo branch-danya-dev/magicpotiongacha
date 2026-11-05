@@ -28,5 +28,8 @@ Input.InputBegan:Connect(function(input,handled)
 		review=true; preview=not preview; Controller.view.setPreview(preview)
 	elseif input.KeyCode==Enum.KeyCode.C then
 		review=false; preview=false; Controller.view.setPreview(false); Controller.view.setPose(nil); workspace.CurrentCamera.CameraType=Enum.CameraType.Custom
+	elseif input.KeyCode==Enum.KeyCode.P then
+		local s=Controller.view.stats()
+		print("M7_A2C_GAMEPLAY quality="..Controller.quality.." graphics="..UserSettings().GameSettings.SavedQualityLevel.Name.." camera="..workspace.CurrentCamera.CameraType.Name.." stars="..s.stars.." moon="..s.moon.." failures="..s.assetFailures)
 	end
 end)

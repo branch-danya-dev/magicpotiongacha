@@ -96,6 +96,32 @@ for(const [name,hash] of Object.entries(skyReceipt.files)) {
   assert.equal(createHash('sha256').update(readFileSync(resolve(root,'assets/environment/atmosphere',name))).digest('hex'),hash,`Atmosphere art integrity: ${name}`);
 }
 assert(receipt.texture_rgba8_mips_bytes+skyReceipt.rgba8_mips_bytes<=32*1024*1024,'Combined texture budget');
+const polish=JSON.parse(read('assets/environment/polish/receipt.json'));
+assert.equal(polish.license,'CC0-1.0'); assert.equal(polish.roblox_asset_ids,null);
+assert.equal(sha(read(polish.generator)),polish.generator_sha256);
+assert.deepEqual(Object.keys(polish.files).sort(),['LICENSE.txt','meadow.png','star.png']);
+assert(receipt.texture_rgba8_mips_bytes+skyReceipt.rgba8_mips_bytes+polish.rgba8_mips_bytes<=32*1024*1024,'Combined A.2c texture budget');
+for(const [name,hash] of Object.entries(polish.files)) assert.equal(sha(readFileSync(resolve(root,'assets/environment/polish',name))),hash);
+// Decode delivered pixels: tile edges and sprite borders must stay seamless.
+for(const [name,n] of [['meadow.png',128],['star.png',64]]) {
+  const png=readFileSync(resolve(root,'assets/environment/polish',name));
+  assert.equal(png.readUInt32BE(16),n); assert.equal(png.readUInt32BE(20),n);
+  assert.equal(png[24],8); assert.equal(png[25],6); assert.equal(png[28],0);
+  const chunks=[]; for(let p=8;p<png.length;) { const len=png.readUInt32BE(p); if(png.toString('ascii',p+4,p+8)==='IDAT') chunks.push(png.subarray(p+8,p+8+len)); p+=12+len; }
+  const raw=inflateSync(Buffer.concat(chunks)),stride=n*4+1;
+  assert.equal(raw.length,n*stride);
+  const pixel=(x,y)=>raw.subarray(y*stride+1+x*4,y*stride+5+x*4);
+  for(let y=0;y<n;y++) assert.equal(raw[y*stride],0);
+  for(let i=0;i<n;i++) {
+    if(name==='meadow.png') { assert.deepEqual(pixel(0,i),pixel(n-1,i)); assert.deepEqual(pixel(i,0),pixel(i,n-1)); }
+    else for(const p of [pixel(0,i),pixel(n-1,i),pixel(i,0),pixel(i,n-1)]) assert.equal(p[3],0);
+  }
+  if(name==='meadow.png') for(let y=0;y<n;y++) for(let x=0;x<n;x++) {
+    const p=pixel(x,y); assert.equal(p[3],255); assert(p[0]>=200 && p[0]<=232);
+    if(x) assert(Math.abs(p[0]-pixel(x-1,y)[0])<=2,'High-frequency meadow edge');
+  }
+}
+console.log('A.2c art PASS: original closed asset roster, opaque seamless low-frequency meadow, transparent star borders, combined memory budget');
 // Independently decode the delivered PNG bytes, not the generator's receipt.
 // Every shared ray on the six cube boundaries must have identical RGBA texels.
 const edgePixels=new Map(); let shared=0;
@@ -132,7 +158,7 @@ assert.equal(a2b.status,'ART_PENDING');
 assert.equal(a2b.runtimeSourceCommit,'39788eafaf93de4c21f7817f0aff4cb4e38ffd35');
 for(const [path,hash] of Object.entries(a2b.sources)) {
   assert.equal(sha(a2bSources[path]),hash,`A.2b archived source integrity: ${path}`);
-  assert.equal(sha(read(path)),hash,`A.2b runtime changed since capture: ${path}`);
+  // A.2b is now historical; its immutable source snapshot remains checked above.
 }
 for(const [name,entry] of Object.entries(a2b.images)) {
   assert(a2b.builds[entry.build],`Unknown A.2b capture build: ${name}`);
