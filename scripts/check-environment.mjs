@@ -183,10 +183,20 @@ for(const [path,hash] of Object.entries(a2c.sources)) {
   if(path.startsWith('src/shared/Environment') || path==='src/server/EnvironmentArt.luau') {
     // #18a explicitly authorizes physical fence collisions. Preserve the rest
     // of the approved composition, palette, state curves and asset definitions.
-    let current=read(path);
+    let current=read(path), approved=a2cSources[path];
+    if(path==='src/server/EnvironmentArt.luau') {
+      // Task 02 explicitly replaces the pilot substrate with IslandLandscape.
+      // Continue protecting every imported prop/material/decoration operation.
+      const withoutTerrain=s=>s.replace('local Field=require(Shared.EnvironmentTerrain)\n','')
+        .replace(/local function landscape\(\)[\s\S]*?(?=function Art\.attach\(world\))/,'')
+        .replace('\tlandscape()\n','')
+        .replace('\trequire(script.Parent.IslandLandscape).attach(world)\n','')
+        .replace('meadow(world.root.ForestFloor,false)','meadow(world.root.ForestFloor,true)');
+      current=withoutTerrain(current); approved=withoutTerrain(approved);
+    }
     if(path==='src/shared/EnvironmentPlan.luau') current=current.replace(',"wood",1,nil,{barrier=true})',',"wood",1)').replace(',"wood",1,{0,0,side*3},{barrier=true})',',"wood",1,{0,0,side*3})');
     if(path==='src/server/EnvironmentArt.luau') current=current.replace('true,d.barrier==true,false,d.barrier==true','true,false,false,false').replace('\n\t\t\tp:SetAttribute("PhysicalBarrier",d.barrier==true)','').replace('\n\trequire(script.Parent.FenceBarriers).attach(folder)','');
-    assert.equal(sha(current),hash,`Approved atmosphere changed outside #18a fence seam: ${path}`);
+    assert.equal(sha(current),sha(approved),`Approved atmosphere changed outside #18a fence / #19a terrain seams: ${path}`);
   }
 }
 for(const [name,entry] of Object.entries(a2c.images)) {

@@ -62,5 +62,6 @@ if selected==nil or selected=="m7" then
 	require("./environment.spec")(Test)
 	require("./context_ui.spec")(Test)
 	require("./safety18a.spec")(Test)
+	require("./island19a.spec")(Test)
 end
 Test.finish()
