@@ -55,6 +55,8 @@ return function(T:any)
 			local l=UI.layout(size[1],size[2],true); local f=l.factory
 			T.truthy(f.x>=96); T.truthy(f.x+f.w<=size[1]-96)
 			T.truthy(f.y>=150 and f.y+f.h<=size[2]-48)
+			local railTop=size[2]-l.bottom-48; local railBottom=size[2]-l.bottom
+			T.truthy(f.y+f.h+12<=railTop or railBottom+12<=f.y)
 		end)
 	end
 end
