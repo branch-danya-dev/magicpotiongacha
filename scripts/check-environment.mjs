@@ -30,16 +30,40 @@ for (const asset of manifest.quaternius.selected) {
   assert.equal(asset.sha256, null); assert.equal(asset.robloxAssetId, null);
 }
 for (const [path, hash] of Object.entries(manifest.nativeFallback.sources)) {
-  assert.equal(sha(read(path)), hash, `Art source integrity: ${path}`);
+  assert.equal(sha(read(`${manifest.nativeFallback.sourceSnapshotRoot}/${path}`)), hash, `Rejected art snapshot integrity: ${path}`);
 }
 const captures = JSON.parse(read('docs/evidence/m7/captures.json'));
 for (const [path, hash] of Object.entries(captures.sources)) {
-  assert.equal(sha(read(path)), hash, `Studio capture source changed: ${path}`);
+  assert.equal(sha(read(`${captures.sourceSnapshotRoot}/${path}`)), hash, `Historical Studio capture source changed: ${path}`);
 }
 for (const [name, hash] of Object.entries(captures.images)) {
   assert.equal(createHash('sha256').update(readFileSync(resolve(root, 'docs/evidence/m7', name))).digest('hex'), hash, `Capture integrity: ${name}`);
 }
 const builder = read('src/server/EnvironmentArt.luau');
+const receipt = JSON.parse(read('assets/environment/megakit/receipt.json'));
+assert.equal(receipt.models.length, 14);
+assert(receipt.texture_rgba8_mips_bytes <= 32*1024*1024);
+for (const [path, hash] of Object.entries(receipt.files)) {
+  assert.equal(createHash('sha256').update(readFileSync(resolve(root, 'assets/environment/megakit', path))).digest('hex'), hash, `Imported asset changed: ${path}`);
+}
+const template=read('assets/environment/megakit/M7NatureTemplates.rbxmx');
+for (const match of template.matchAll(/<Item class="([^"]+)"/g)) assert(['Folder','Model','MeshPart','SurfaceAppearance'].includes(match[1]), 'Executable/unreviewed imported content');
+assert.equal((template.match(/class="MeshPart"/g)||[]).length,21);
+for (const model of receipt.models) {
+  const gltf=JSON.parse(read(`assets/environment/megakit/prepared/${model.name}.gltf`));
+  const triangles=gltf.meshes.flatMap(m=>m.primitives).reduce((n,p)=>n+gltf.accessors[p.indices].count/3,0);
+  assert.equal(triangles,model.triangles);
+  assert(triangles<=((model.name.includes('Tree')||model.name.startsWith('Pine'))?2000:500));
+}
 assert.match(builder, /p\.Anchored,p\.CanCollide,p\.CanTouch,p\.CanQuery=true,false,false,false/);
 assert(!/rbxassetid:\/\/|HttpService|loadstring|RemoteEvent/.test(builder), 'Unreviewed external art dependency');
+const current = JSON.parse(read('docs/evidence/m7-revision/captures.json'));
+assert.equal(current.status, 'OWNER_REVIEW_PENDING');
+assert.equal(current.graphicsQuality, 10);
+for (const [path, hash] of Object.entries(current.sources)) {
+  assert.equal(sha(read(path)), hash, `Current Studio evidence source changed: ${path}; recapture the affected views`);
+}
+for (const name of ['day-overview','sunset-overview','night-overview','rain-overview','dawn-overview','day-spawn','day-bazaar','day-foliage','gameplay-ui','graphics-settings']) {
+  assert.equal(createHash('sha256').update(readFileSync(resolve(root, 'docs/evidence/m7-revision', name+'.jpg'))).digest('hex'), current.images[name+'.jpg'], `Current capture integrity: ${name}`);
+}
 console.log(`M7 integrity PASS: ${Object.keys(baseline.unchanged).length} unchanged M6 files, gameplay World, release flags, art source hashes and isolated harness`);

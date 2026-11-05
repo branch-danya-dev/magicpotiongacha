@@ -1,153 +1,82 @@
-# M7.1 environment / Gate A contract
+# M7.1 / revised one-farm Gate A
 
-**2026-11-05 owner revision:** the primitive pilot below is **ART REJECTED**.
-Historical screenshots and 841 passing tests do not pass the artistic or normal
-gameplay UI gates. [Revised direction and asset measurements](M7_ART_DIRECTION.md).
-The ordered route is revised one-farm Gate A, then #18 UI declutter; #19 full
-eight-farm island requires explicit ART APPROVED and the UX check. The free
-MegaKit Standard archive is now acquired and statically inspected outside the
-repo; canonical admission/import remain BLOCKED because game-dev is unavailable.
-No new runtime artwork, imported Roblox IDs or live acceptance is claimed here.
+The primitive pilot was ART REJECTED. This revision replaces its nature with
+14 inspected/optimized Quaternius MegaKit Standard models and bounded native
+Terrain. The owner authorized direct preparation/import despite missing game-dev.
+[Direction](M7_ART_DIRECTION.md), [asset provenance](../assets/environment/README.md),
+[current raw Studio evidence](evidence/m7-revision/README.md).
 
-Branch feat/m7-environment-artpass → feat/m6-collectible-monetization (Draft).
-EnvironmentArtEnabled=false by default. No publication, merge, payment, public
-trading or schema/economy change. M6 V7 and all 810 cases must remain.
+Branch feat/m7-environment-artpass, Draft PR #17 over M6 bbc8891. Gate A remains
+pending owner visual acceptance. #18 gameplay UI follows; #19 eight-farm island
+requires explicit ART APPROVED and UX check. No merge, publication, purchases,
+M7.2/M7.3 or decoration of the other seven plots.
 
-## Authority and topology
+## Gameplay boundary
 
-World's existing eight logical plots, 4×2 origins, 13 stations, auxiliary anchors,
-input/output waypoints, floor height, spawn, pads, owner guards, prompts, distances
-and Bazaar/TradePost are immutable. New geometry is a separate decoration folder;
-it never carries StationId, prompts, remotes or resources. All decoration is anchored,
-noncolliding, nontouchable and nonqueryable. Existing functional floor collision
-remains. Thin path surfaces do not create a new walking height or collision.
+All 70 protected M6 source/test hashes and the complete original World after
+removing only explicit presentation seams are checked. Eight plot origins, floor
+transforms, 13 stations, pads, prompts, ranges, ownership, transport waypoints,
+spawn and Bazaar/TradePost remain intact. V7 economy/persistence is unchanged.
+EnvironmentArtEnabled, MonetizationEnabled and TradingEnabled ship false.
 
-Only Plot_1 is decorated for Gate A, with a small Bazaar framing sample. Other
-seven plots remain unchanged. The builder is deterministic and bounded, reusable
-later, but Gate B is not enabled by a setting in this delivery. Floor/epoch/theme
-presentation is applied after World:update so gameplay ticks cannot revert art.
-Personal epochs/aurora never drive global weather. Function remains in old anchors.
+Imported templates live inertly in ServerStorage. A separate decoration folder
+contains anchored, noncolliding, nontouchable/nonqueryable geometry with no prompts
+or economy attributes. Native Terrain fills only empty cells in the bounded pilot
+region; it never clears existing Terrain. The original work floor stays in place.
+Terrain collision does exist outside the floor. Studio raycasts assert that its
+smoothed surface stays below the work floor; planting is grounded by raycasts
+after a simulation step. Turning the feature off on a new server restores the
+original world. Runtime deletion of Terrain is not used as rollback.
 
-## Environment and quality
+## Presentation
 
-One client controller owns Lighting, Atmosphere, Clouds, correction and bloom while
-the feature is enabled. Synchronized time comes from Workspace:GetServerTimeNow;
-shared pure schedules contain no player, economy or persistence references.
-Smooth cyclic interpolation, clear/soft rain, no lightning or wetness simulation.
-Feature-off leaves old lighting and geometry untouched. Studio-only review poses
-must never become client authority over server state.
+One client controller owns the deterministic day/night and weather cycle using
+server time. Quality presets cap details, lights and fixed-count local rain.
+Nested mesh descendants participate in LOD. No economic remotes/profile writes.
+The existing contextual labels are unchanged; beauty captures suppress annotations
+only in the isolated harness. They do not demonstrate the #18 UX gate.
 
-Full/reduced/minimal are local presentation preferences. Rain and foliage movement
-are off in minimal or Reduce Motion. Distance LOD hides detail only, never prompts,
-anchors, floors, gates or owned machines. Client-only rain has fixed population;
-no server-replicated emitters. Light distance/count caps and modest bloom keep night
-readable. Explicit settings are in the existing menu; no new economic Remote.
+| Metric | Authored limit/count | Evidence limitation |
+| --- | ---: | --- |
+| Decor mesh/box Parts | 432 / <=650 | Runtime assertion, one decorated plot |
+| Geometry estimate | 116,626 triangles | Excludes Terrain, avatars, machines and GPU LOD |
+| Trees / small props | <=2000 / <=500 triangles | Prepared glTF index counts checked |
+| Imported texture set | 12 maps / 27.96 MiB | RGBA8+mips estimate, not GPU memory |
+| Local lights full/reduced/minimal | <=6 / 3 / 0 | No mobile performance claim |
+| Local rain full/reduced/minimal | <=60 / 24 / 0 | Reduce Motion disables rain |
+| Animated imported foliage | 0 | Static silhouettes; wind not added |
+| Total triangles/draw calls/FPS/load time | Unmeasured | Real device profiler required |
 
-Billboard text is contextually selected on the client at 4 Hz: closest first,
-non-overlapping screen rectangles, <=6 desktop / <=3 narrow-screen labels. This
-does not remove parts, change their text, disable ProximityPrompts or alter server
-callbacks. Original Enabled values are restored on teardown. The isolated beauty
-view can suppress annotations; U restores this same contextual selection for audit.
+## Validation and review
 
-Provisional Gate A ceilings: 650 decorative primitive parts, <=12 distinct RGB
-material groups, <=6 local active lights, <=60 active rain streaks, <=12 animated
-foliage groups, zero external textures, zero server particles. Primitive render
-tessellation is engine-owned: report part counts and conservative estimates, not
-invented mesh triangle measurements. Gate B projections are arithmetic, not a built
-or approved full map. Real load time, triangles, FPS, thermal behavior and memory
-are BLOCKED until measured on hardware.
+The 841 existing portable tests are preserved, with the obsolete zero-texture
+expectation updated for imported assets; 3 new terrain/catalog boundary cases
+bring the total to 844. Compile/portable analysis, integrity and both Rojo builds
+are required. Integrity checks the imported-file receipt, inert XML class
+allowlist, actual mesh counts, historical captures and current capture sources.
 
-## Reproducibility and admission
+Run `npm run tools` then `npm test` (equivalent node scripts work without npm).
+Open build/M7PilotReview.rbxlx in Studio and Play for the isolated art harness:
+1 day, 2 sunset, 3 night, 4 rain, 5 dawn; V cameras; U annotations; H label.
+The harness has no DataStore, purchase or trade runtime. Full-game local preview:
+`node scripts/build-local-preview.mjs`, then open the generated
+build/PotionTycoon-M7-LocalPreview.rbxlx. Art is enabled only in Studio, progress
+uses memory, commerce remains off. Never publish that disposable artifact.
 
-Pure decoration descriptors → Roblox builder → Rojo build. Every primitive's
-position/size/palette is versioned. Local preview is generated from the same source
-modules, not a separately painted concept. Archive raw captures with exact source
-and named pose; label actual Studio versus mockup. Never claim visuals from code
-compilation alone. No external Toolbox code/plugins.
+Studio 0.745.462.7451125 / Future lighting is the observed renderer. Final local
+harness reports 432 parts, 8 plots, 1 decorated, collisionGuards=PASS. Earlier
+iteration errors (terrain readiness and runtime RenderFidelity permission) were
+corrected before captures. Platform warnings from unpublished-place/avatar APIs
+are not backend acceptance. Published asset permissions still require verification.
 
-Quaternius official page links a public Drive directory, not a versioned zip.
-Record selected files and SHA-256 individually; do not invent an archive hash.
-Stage source outside runtime, inspect OBJ/MTL references, verify CC0, then obtain
-canonical package verification with game-dev before admission. Native fallback
-is original work, not a conversion. Actual mesh import/AssetIds and permissions
-remain BLOCKED until that pipeline and owner-authorized Roblox import are available.
+Outstanding: owner visual decision; #18 normal gameplay UI/PC+mobile flow; real
+phone 10–15 minute profiling; second-account asset loading; 2–8 players; real
+DataStore/PolicyService/receipts and full epoch/aurora checks. Keep Issue #16 open.
 
-## Acceptance
-
-Gate A: one scene, four states and three camera positions; readable UI, open paths,
-pure schedule regression and quality ceilings. Full source/test/CI evidence and
-live observations are recorded after implementation. The owner's visual decision
-is ART REJECTED; a revised implementation is required. Gate B is withheld. DataStore/payment/policy/phone/2–8-player gates remain
-BLOCKED even if a local Studio visual preview can be captured.
-
-## Gate A implementation evidence — 2026-11-05
-
-**Technical pilot / visual review candidate, not an accepted finished art pass.**
-All 810 M6 tests are preserved unchanged; 31 environment tests bring the total to
-841. `check-environment.mjs` also verifies 70 M6 source/test file hashes and the
-entire original World after removing only five presentation lines and its optional
-flag argument. This protects IDs, callbacks, offsets, transforms, waypoints, spawn,
-owner/range checks, phase logic and disabled commerce. CI builds both places from
-the exact PR head and uploads source maps, provenance manifest and verification log.
-
-Studio 0.745.462.7451125 loaded and ran the isolated review place. Its server
-reported `M7_VISUAL_HARNESS parts=358 plots=8 decorated=1 collisionGuards=PASS`.
-No M7 script exception was found in that session's log. Studio automatically
-migrated legacy Compatibility lighting to Voxel on opening; these captures are
-from that engine mode, not a claim about all renderers. The renderer also logged
-`CloudsUpsampleNoHistoryFS is not available`; cloud rendering parity requires a
-separate device/renderer check. Unpublished-place platform API warnings do not
-constitute successful backend acceptance.
-
-The captured build SHA-256 is
-`b8fd4f81cb6896dcf935bfa58d0335bfe90bd3795a32f1b2a5fe23be3b8120e6`.
-The filename `M7PilotReview4.rbxlx` in raw screenshots was the fourth local review
-iteration; it is byte-identical to the final `M7PilotReview.rbxlx` generated by
-the checked-in sources. Manifest source hashes identify the captured implementation.
-Screenshots are unedited Studio window captures in `docs/evidence/m7/`; beauty
-views disable annotations **only in the isolated harness**. Audit captures restore
-them. This is not a Blender mockup, phone test or active gameplay session.
-
-### Measured counts and limits
-
-These are descriptor/runtime **instance counts**, not GPU measurements. Baseline
-means additional M7 presentation overhead with the flag off, not total M6 world.
-
-| Metric | Flag-off baseline | Gate A candidate | Ceiling / eight-plot projection |
-| --- | ---: | ---: | --- |
-| Decorative Parts | 0 | 358 | <=650/pilot; <=2,864 naive eightfold upper bound |
-| Built-in Sphere SpecialMeshes | 0 | 288 | <=650/pilot; <=2,304 eightfold upper bound |
-| Geometry + mesh instances | 0 | 646 | One art folder additional; full map not built |
-| Distinct decor colors / materials | 0 / 0 | 10 / 4 | <=12 colors; shared palette/materials |
-| New external mesh/texture IDs / decals | 0 | 0 | 0 until verified admission |
-| Local lights full/reduced/minimal | 0 | <=6 / 3 / 0 | Global per-client cap remains 6 for future map |
-| Active rain streaks full/reduced/minimal | 0 | <=60 / 24 / 0 | 60 preallocated Parts; no server particles |
-| Animated foliage full/reduced/minimal | 0 | 3 / 3 / 0 | <=12; Reduce Motion disables all rain/wind |
-| Detail 1 / 2 / 3 Parts | 0 | 149 / 53 / 156 | Reduced hides detail 3, minimal keeps detail 1 |
-| Imported texture memory | 0 | 0 | Engine material memory not measured |
-| Triangles, total GPU memory, FPS, load time | Unmeasured | Unmeasured | BLOCKED: hardware profiler; no invented figures |
-
-Eightfold counts intentionally overcount the shared Bazaar sample; they are an
-upper-bound planning exercise, not a measured or implemented eight-plot valley.
-Future external mesh targets: <=2k triangles/tree, <=500/small prop, <20k/mesh;
-provisional total visible environment target <=150k triangles, <=32 MiB imported
-textures, <=5 s incremental warm load. Those targets require validation and do not
-assert the built-in engine sphere tessellation meets a measured triangle budget.
-
-### Requirement → evidence → outstanding gate
-
-| Requirement | Automated evidence | Visual evidence | Remaining gate |
-| --- | --- | --- | --- |
-| One pilot, clear work area, original eight origins | Gate-A guard, deterministic descriptors; World source contract; Studio noncollision assertions | Historical day overview and spawn | ART REJECTED; revised production art and acceptance required |
-| Day/sunset/night/dawn/rain | Named presets, finite bounds, cyclic continuity, synchronized schedule | Same overview in all five states | Subjective palette/night approval; renderer cloud parity |
-| Gameplay authority / online-offline / V7 | All 810 M6 tests + unchanged domain/persistence sources | Isolated harness deliberately has no backend | Real saves/PolicyService/receipts/2–8 clients remain BLOCKED |
-| Quality and Reduce Motion | Three presets, fixed ceilings, no mutation, local controller | Full quality captures only | Live tier switching, portrait/landscape and 10–15 min real phone test BLOCKED |
-| Epochs and M6 aurora | Three epoch surface cases and exact aurora color/material; World contract | No multi-epoch capture in this gate | Three epochs/aurora in full game BLOCKED |
-| Bazaar gate and access | Unchanged World + Access hash and M4 cases | Bazaar audit retains QA-closed notice and original TradePost | Human traversal and multiplayer range/collision check BLOCKED |
-| UI readability | Nearest-first screen rectangle selection, tie/cap/hidden/offscreen regression; prompts untouched | Corrected spawn/Bazaar and sunset annotation captures | Real phone portrait/landscape and human interaction acceptance BLOCKED |
-| External asset provenance | Manifest/license/source audit, null hashes/IDs rejected as admission | Original native fallback clearly labelled | Quaternius download quota + missing game-dev package pipeline BLOCKED |
-| Rollback | Default-off flags, no harness in main project | Separate main and review builds | Restart server with false flag; no published map changed |
-
-No full-map rollout, publication, merge, paid purchase or public trading occurred.
-Keep Issue #16 open: Quaternius integration, real-phone UI readability and artistic
-acceptance are outstanding; Gate B follows only the owner's pilot approval.
+During automatic-quality startup, thin stone faces and foliage showed dark
+stippling; it disappeared at fixed Roblox graphics quality 10. The final beauty
+series therefore pins quality 10 (settings screenshot included). This is an open
+low-quality renderer check, not a proven universal fix. Stone placements now
+exclude the actual purchase-pad footprints; the Studio harness verifies rotated
+mesh bounds against every pilot pad. Reduced/minimal presets disable shadows,
+but require their own device review before mobile acceptance.

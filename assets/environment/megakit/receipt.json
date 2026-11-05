@@ -1,0 +1,278 @@
+{
+  "source_archive_sha256": "298f6732b872e4cf7b30e6e7abf9641c7f6dc6b326df37ac089533ed7e3d58c9",
+  "license": "CC0-1.0 / License_Standard.txt",
+  "workflow": "Owner-approved direct static inspection, Blender optimization, Studio importer; not a game-dev receipt",
+  "studio_import_sha256": "d497a330dda1f6f8ed08e27afd8c56c3afce9acae7c59797497b4cb0b8966388",
+  "models": [
+    {
+      "name": "Bush_Common_Flowers",
+      "triangles": 423,
+      "parts": [
+        {
+          "MeshId": "rbxassetid://71265164108637",
+          "TextureID": "rbxassetid://104223482629283",
+          "ColorMap": "rbxassetid://104223482629283",
+          "NormalMap": null
+        },
+        {
+          "MeshId": "rbxassetid://131695601044976",
+          "TextureID": "rbxassetid://110724520977986",
+          "ColorMap": "rbxassetid://110724520977986",
+          "NormalMap": null
+        }
+      ]
+    },
+    {
+      "name": "Grass_Common_Short",
+      "triangles": 155,
+      "parts": [
+        {
+          "MeshId": "rbxassetid://124076969727675",
+          "TextureID": "rbxassetid://127695594791239",
+          "ColorMap": "rbxassetid://127695594791239",
+          "NormalMap": null
+        }
+      ]
+    },
+    {
+      "name": "Clover_2",
+      "triangles": 427,
+      "parts": [
+        {
+          "MeshId": "rbxassetid://74191690609816",
+          "TextureID": "rbxassetid://83669120491249",
+          "ColorMap": "rbxassetid://83669120491249",
+          "NormalMap": null
+        }
+      ]
+    },
+    {
+      "name": "Fern_1",
+      "triangles": 288,
+      "parts": [
+        {
+          "MeshId": "rbxassetid://73853474724005",
+          "TextureID": "rbxassetid://83669120491249",
+          "ColorMap": "rbxassetid://83669120491249",
+          "NormalMap": null
+        }
+      ]
+    },
+    {
+      "name": "CommonTree_1",
+      "triangles": 1866,
+      "parts": [
+        {
+          "MeshId": "rbxassetid://89937554932811",
+          "TextureID": null,
+          "ColorMap": "rbxassetid://96411665869378",
+          "NormalMap": "rbxassetid://82289699597708"
+        },
+        {
+          "MeshId": "rbxassetid://109075223234587",
+          "TextureID": "rbxassetid://110724520977986",
+          "ColorMap": "rbxassetid://110724520977986",
+          "NormalMap": null
+        }
+      ]
+    },
+    {
+      "name": "Flower_3_Group",
+      "triangles": 422,
+      "parts": [
+        {
+          "MeshId": "rbxassetid://98116798389884",
+          "TextureID": "rbxassetid://104223482629283",
+          "ColorMap": "rbxassetid://104223482629283",
+          "NormalMap": null
+        },
+        {
+          "MeshId": "rbxassetid://138974421613690",
+          "TextureID": "rbxassetid://83669120491249",
+          "ColorMap": "rbxassetid://83669120491249",
+          "NormalMap": null
+        }
+      ]
+    },
+    {
+      "name": "CommonTree_3",
+      "triangles": 1866,
+      "parts": [
+        {
+          "MeshId": "rbxassetid://98275526325211",
+          "TextureID": null,
+          "ColorMap": "rbxassetid://96411665869378",
+          "NormalMap": "rbxassetid://82289699597708"
+        },
+        {
+          "MeshId": "rbxassetid://76334757545348",
+          "TextureID": "rbxassetid://110724520977986",
+          "ColorMap": "rbxassetid://110724520977986",
+          "NormalMap": null
+        }
+      ]
+    },
+    {
+      "name": "CommonTree_5",
+      "triangles": 1866,
+      "parts": [
+        {
+          "MeshId": "rbxassetid://107335968123994",
+          "TextureID": null,
+          "ColorMap": "rbxassetid://96411665869378",
+          "NormalMap": "rbxassetid://82289699597708"
+        },
+        {
+          "MeshId": "rbxassetid://117898133185832",
+          "TextureID": "rbxassetid://110724520977986",
+          "ColorMap": "rbxassetid://110724520977986",
+          "NormalMap": null
+        }
+      ]
+    },
+    {
+      "name": "Grass_Wispy_Tall",
+      "triangles": 428,
+      "parts": [
+        {
+          "MeshId": "rbxassetid://118085961837111",
+          "TextureID": "rbxassetid://127695594791239",
+          "ColorMap": "rbxassetid://127695594791239",
+          "NormalMap": null
+        }
+      ]
+    },
+    {
+      "name": "Pebble_Round_1",
+      "triangles": 136,
+      "parts": [
+        {
+          "MeshId": "rbxassetid://130436974229635",
+          "TextureID": "rbxassetid://102348628758318",
+          "ColorMap": "rbxassetid://102348628758318",
+          "NormalMap": null
+        }
+      ]
+    },
+    {
+      "name": "Pine_2",
+      "triangles": 1486,
+      "parts": [
+        {
+          "MeshId": "rbxassetid://112432630564594",
+          "TextureID": null,
+          "ColorMap": "rbxassetid://96411665869378",
+          "NormalMap": "rbxassetid://82289699597708"
+        },
+        {
+          "MeshId": "rbxassetid://113857411980935",
+          "TextureID": "rbxassetid://118034762489808",
+          "ColorMap": "rbxassetid://118034762489808",
+          "NormalMap": null
+        }
+      ]
+    },
+    {
+      "name": "RockPath_Round_Small_1",
+      "triangles": 428,
+      "parts": [
+        {
+          "MeshId": "rbxassetid://73285867832875",
+          "TextureID": "rbxassetid://102348628758318",
+          "ColorMap": "rbxassetid://102348628758318",
+          "NormalMap": null
+        }
+      ]
+    },
+    {
+      "name": "Rock_Medium_1",
+      "triangles": 342,
+      "parts": [
+        {
+          "MeshId": "rbxassetid://115569212714828",
+          "TextureID": "rbxassetid://129375472066299",
+          "ColorMap": "rbxassetid://129375472066299",
+          "NormalMap": null
+        }
+      ]
+    },
+    {
+      "name": "TwistedTree_1",
+      "triangles": 1866,
+      "parts": [
+        {
+          "MeshId": "rbxassetid://92249803120756",
+          "TextureID": null,
+          "ColorMap": "rbxassetid://77393985107765",
+          "NormalMap": "rbxassetid://127929432830190"
+        },
+        {
+          "MeshId": "rbxassetid://132501475885875",
+          "TextureID": "rbxassetid://136298981634226",
+          "ColorMap": "rbxassetid://136298981634226",
+          "NormalMap": null
+        }
+      ]
+    }
+  ],
+  "files": {
+    "License_Standard.txt": "120710e542c3ebaf83856c4eb55b4a1e680593b39302eba7fdc5d942dfe78c58",
+    "M7NatureTemplates.rbxmx": "8c9e349e083e7dc012c80fe10dde6c95bc664b2ab1ea5528b0df8744448d3d8b",
+    "prepared/Bush_Common_Flowers.bin": "14cdbc2334c12e85cb2b52e64105684828c3511be714142f542e6fe6519f57ed",
+    "prepared/Bush_Common_Flowers.gltf": "518790c3e9b285dd287921d159156e67a6b3e14a83c095ca185f2ab2770122d4",
+    "prepared/Clover_2.bin": "265478b728d98a852536d30844557c108b739295e2de1b6aa75edcae4fc8e140",
+    "prepared/Clover_2.gltf": "b6a80af2165f3e51c24d3a5e42e22a20c634e7566a3957cacbbadf132ee26868",
+    "prepared/CommonTree_1.bin": "01f0a18bb633d2c86987cb41f55df261a640090225e1fd9338bdd8fb1dd87b66",
+    "prepared/CommonTree_1.gltf": "be2e88c89ce2ee2d274c336f8ecbf0f0f8fff7e1fd335bb823edf8b33966937f",
+    "prepared/CommonTree_3.bin": "d5b1b911b87ab913b41abf7403b20b833ea4f116e9fafa811ff021f5f7dc2269",
+    "prepared/CommonTree_3.gltf": "6bf673ccc07f10a8d23b3b6299f814ca3fe20f153124f6fef97140d4edbd68b9",
+    "prepared/CommonTree_5.bin": "1f7e50c704db4af634c33cd070564a0898503f77b38db4acee6639937f3b66f3",
+    "prepared/CommonTree_5.gltf": "8c6f4c5550347985f92f9327e1b5be1fdb25d67636b4e7a10d2a53bbe7edc80d",
+    "prepared/Fern_1.bin": "17243c434858a96e38e13ca14f52f5afe74d8fc65f82a140e830622d55309093",
+    "prepared/Fern_1.gltf": "77e2dd749231c797624250ad26c4f3a3f33f6fbec8f7e3a7af89de3e58ca4402",
+    "prepared/Flower_3_Group.bin": "30533ce24ea101f94acc6fce7a58882891b833789379f2c12c0c6385bc1697bb",
+    "prepared/Flower_3_Group.gltf": "78a17dc2c5c0bbc3286b5e5c0c1fbd406bcd703c6e78f37c9d010e328cfcdff2",
+    "prepared/Grass_Common_Short.bin": "e11460b471d4aec09d9de69c8888d21b2bc01349d4d9201d49320cc32e36c390",
+    "prepared/Grass_Common_Short.gltf": "4c4a77c0a48c62a23fd475880c04c1d4d2cabace5069930c16d41fec7e844c0d",
+    "prepared/Grass_Wispy_Tall.bin": "6303930297011543c83a24063e6a6a233c9835293031a2da9b13251618a49dcf",
+    "prepared/Grass_Wispy_Tall.gltf": "05fa5b32d8655df1a2fc9d4b905a514744fbe2375fed407d4691b27d3f3299a6",
+    "prepared/library-textures/Bark_NormalTree.png": "9d13acc52ef4143ca74b4d7b77f030663689554ff0120ee2f87367815ffe4c48",
+    "prepared/library-textures/Bark_NormalTree_Normal.png": "69d030da57a0cf9eb8840c7d8ce9b5651a9304c53dd1ed2bbd1e3f8ddc8d85b8",
+    "prepared/library-textures/Bark_TwistedTree.png": "4ae0a89814815967d288062963125dea4a36c5a8413777485af7289c1420be2a",
+    "prepared/library-textures/Bark_TwistedTree_Normal.png": "be7b928feb3002b9187d1cfae13d300dddee0218ce1f055363421ad7e26f2188",
+    "prepared/library-textures/Flowers.png": "4d8cc7d9f98a17c94370dd19a837b7f4dea4b4892b0048645256b507d0a04dfb",
+    "prepared/library-textures/Grass.png": "5d69048193b246a73c996b892607fb36c75d0c60afcb2dab8aa12de3c0b2d9bd",
+    "prepared/library-textures/Leaf_Pine_C.png": "435df61e3d607d4cd61a7d469d63ed7c72f4ec87e55525c7443ba86521199a8e",
+    "prepared/library-textures/Leaves.png": "b67bab415e7dca72d296b9081bc33ce8575f6ea43ac94d6a287da021c5dc3b00",
+    "prepared/library-textures/Leaves_NormalTree_C.png": "998612bdf0b76a22f5f54d65cd7a457815d2842d89653fa4348a4ebb42933ad3",
+    "prepared/library-textures/Leaves_TwistedTree_C.png": "66253356a36da8f3e45cdecc8bbb6ca09238072502e469bde032ec7883efd6f8",
+    "prepared/library-textures/PathRocks_Diffuse.png": "0174ef18e2c994264d3c123e04bb45d7ad33ea8b664dbd76c7c219b802e61ede",
+    "prepared/library-textures/Rocks_Diffuse.png": "bf6ca2e93d69c3e330d55071c252ef4dee1472de137061a5afcb1e5bd7669182",
+    "prepared/M7NatureLibrary.bin": "7d98dbd332bc2eec60a919881b7c58830bd7c9abfe5ab9f2ec36d47bf903e3b0",
+    "prepared/M7NatureLibrary.gltf": "90a16082e42ca67acd9bc2160d7a2ba743e7f944c4430f000dd4761fbd642c3e",
+    "prepared/Pebble_Round_1.bin": "995d34f709787c9e67a3893383e8fadc9292ee6506d721b6891925f60aa8208b",
+    "prepared/Pebble_Round_1.gltf": "6a9e1641753300445677d5974dea57f2a85bcc27132657662b59eac540b4b701",
+    "prepared/Pine_2.bin": "fa4b01f5115aab9d110393899df3f86e22d0db10bcc70b4e4df11a3c3bb0ec3f",
+    "prepared/Pine_2.gltf": "209a95e343ac4a45ae9070a4087e09b5c25b65fd70014c03d32649da18a2d352",
+    "prepared/preparation.json": "b5347f989eaf5943c543b138df47c5f6245f702483224978b191e185286f228d",
+    "prepared/Rock_Medium_1.bin": "a4bd0c043f21931329028a85294a06552ee8cbb45dac242bec590d504e7c663e",
+    "prepared/Rock_Medium_1.gltf": "cdfb8e5dd8c8ea864cf62f430bdd070421a35dba556348094b686f24959a67ac",
+    "prepared/RockPath_Round_Small_1.bin": "f478d4df08e5d4f23f66f98bdf9c6b1293ee4bb07cc9a7467825d77a984c123f",
+    "prepared/RockPath_Round_Small_1.gltf": "1e2f3ee9c3a84b42810172ad69e67f699b6f422330d691701a1698a60bff9b6f",
+    "prepared/textures/Bark_NormalTree.png": "9d13acc52ef4143ca74b4d7b77f030663689554ff0120ee2f87367815ffe4c48",
+    "prepared/textures/Bark_NormalTree_Normal.png": "69d030da57a0cf9eb8840c7d8ce9b5651a9304c53dd1ed2bbd1e3f8ddc8d85b8",
+    "prepared/textures/Bark_TwistedTree.png": "4ae0a89814815967d288062963125dea4a36c5a8413777485af7289c1420be2a",
+    "prepared/textures/Bark_TwistedTree_Normal.png": "be7b928feb3002b9187d1cfae13d300dddee0218ce1f055363421ad7e26f2188",
+    "prepared/textures/Flowers.png": "4d8cc7d9f98a17c94370dd19a837b7f4dea4b4892b0048645256b507d0a04dfb",
+    "prepared/textures/Grass.png": "5d69048193b246a73c996b892607fb36c75d0c60afcb2dab8aa12de3c0b2d9bd",
+    "prepared/textures/Leaf_Pine_C.png": "435df61e3d607d4cd61a7d469d63ed7c72f4ec87e55525c7443ba86521199a8e",
+    "prepared/textures/Leaves.png": "b67bab415e7dca72d296b9081bc33ce8575f6ea43ac94d6a287da021c5dc3b00",
+    "prepared/textures/Leaves_NormalTree_C.png": "998612bdf0b76a22f5f54d65cd7a457815d2842d89653fa4348a4ebb42933ad3",
+    "prepared/textures/Leaves_TwistedTree_C.png": "66253356a36da8f3e45cdecc8bbb6ca09238072502e469bde032ec7883efd6f8",
+    "prepared/textures/PathRocks_Diffuse.png": "0174ef18e2c994264d3c123e04bb45d7ad33ea8b664dbd76c7c219b802e61ede",
+    "prepared/textures/Rocks_Diffuse.png": "bf6ca2e93d69c3e330d55071c252ef4dee1472de137061a5afcb1e5bd7669182",
+    "prepared/TwistedTree_1.bin": "f3bba76d77e0d06b6b477389cc83b1b66a54ae557fe24c99152952e8bfad2d97",
+    "prepared/TwistedTree_1.gltf": "0fff0ff0f005d720cc35ca67e1c016617350db30a6f16ff5b29da1f7b2a865dc"
+  },
+  "texture_rgba8_mips_bytes": 29321906
+}

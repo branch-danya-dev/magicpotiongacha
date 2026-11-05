@@ -2,6 +2,7 @@
 local Config=require("../src/shared/EnvironmentConfig")
 local State=require("../src/shared/EnvironmentState")
 local Plan=require("../src/shared/EnvironmentPlan")
+local Terrain=require("../src/shared/EnvironmentTerrain")
 local Codec=require("../src/shared/TradeCodec")
 local Settings=require("../src/server/ServerSettings")
 local Controller=require("../src/client/EnvironmentController")
@@ -29,17 +30,42 @@ return function(T:any)
 		T.falsy(Settings.EnvironmentArtEnabled); T.falsy(Settings.MonetizationEnabled); T.falsy(Settings.TradingEnabled)
 		local p=Plan.build(Config,1); T.equal(p.metrics.decoratedPlots,1); T.throws(function() Plan.build(Config,2) end)
 	end)
-	T.test("M7 pilot: deterministic closed palette and bounded native geometry",function()
+	T.test("M7 pilot: deterministic reviewed catalog and bounded geometry",function()
 		local a=Plan.build(Config,1); T.same(a,Plan.build(Config,1)); local seen={}
 		for _,p in ipairs(a.parts) do
 			T.falsy(seen[p.id]); seen[p.id]=true; T.truthy(Config.palette[p.color]); T.truthy(p.detail>=1 and p.detail<=3)
 			for _,n in ipairs(p.position) do T.truthy(n==n and math.abs(n)<1000) end
 			for _,n in ipairs(p.size) do T.truthy(n>0 and n<100) end
 		end
-		for _,k in ipairs({"parts","lights","motion","palette"}) do T.truthy(a.metrics[k]<=Config.budgets[k],k) end
-		T.equal(a.metrics.externalTextures,0); T.equal(a.metrics.serverParticles,0)
+		for _,k in ipairs({"parts","lights","motion","palette","triangles","textureMiB"}) do T.truthy(a.metrics[k]<=Config.budgets[k],k) end
+		T.equal(a.metrics.externalTextures,12); T.equal(a.metrics.serverParticles,0)
 		print("M7_PILOT "..Codec.encode(a.metrics))
-		print("M7_PROJECTION nativePartsUpperBound8="..(a.metrics.parts*8).." (arithmetic only; Gate B not built)")
+		print("M7_PROJECTION meshPartsUpperBound8="..(a.metrics.parts*8).." (arithmetic only; Gate B not built)")
+	end)
+	T.test("M7 terrain: continuous flat clearing contains all fixed work anchors",function()
+		for x=-38,38,2 do for z=-45,29,2 do
+			T.truthy(math.abs(Terrain.height(-142.5+x,-65+z)-.45)<.0001); T.truthy(Terrain.reserved(-142.5+x,-65+z))
+		end end
+		for x=-240,-92,3 do for z=-180,-20,3 do
+			local h=Terrain.height(x,z); T.truthy(h>-24 and h<32)
+			T.truthy(math.abs(h-Terrain.height(x+.01,z))<.1)
+		end end
+	end)
+	T.test("M7 terrain: aligned reserved region excludes other plots and public corridor",function()
+		for _,b in pairs(Terrain.bounds) do for _,v in ipairs(b) do T.equal(v%4,0) end end
+		for i=2,8 do local o=Plan.origin(i); T.falsy(Terrain.contains(o[1]-38.5,o[3]-45.5)); T.falsy(Terrain.contains(o[1]+38.5,o[3]+29.5)) end
+		T.falsy(Terrain.contains(-142.5,-12)); T.falsy(Terrain.contains(0,0))
+	end)
+	T.test("M7 assets: all placements use the closed catalog and plants avoid the floor",function()
+		local used={}
+		for _,p in ipairs(Plan.build(Config,1).parts) do if p.template then
+			T.truthy(Plan.catalog[p.template]); used[p.template]=true
+			if p.template~="RockPath_Round_Small_1" then
+				local x,z=p.position[1]+142.5,p.position[3]+65
+				T.truthy(math.abs(x)>38.5 or z< -45.5 or z>29.5,p.template)
+			end
+		end end
+		for name in pairs(Plan.catalog) do T.truthy(used[name],name) end
 	end)
 	for i=1,8 do
 		T.test("M7 topology: original 4x2 plot origin / "..i,function()

@@ -16,7 +16,7 @@ local function annotate(p)
 end
 root.DescendantAdded:Connect(annotate)
 for _,p in ipairs(root:GetDescendants()) do annotate(p) end
-local states={"day","sunset","night","rain","dawn"}; local cameras={"overview","spawn","bazaar"}; local mode,angle=1,1
+local states={"day","sunset","night","rain","dawn"}; local cameras={"overview","spawn","bazaar","foliage"}; local mode,angle=1,1
 local gui=Instance.new("ScreenGui"); gui.Name="M7VisualHarness"; gui.ResetOnSpawn=false; gui.Parent=Players.LocalPlayer:WaitForChild("PlayerGui")
 local label=Instance.new("TextLabel"); label.Size=UDim2.fromOffset(760,42); label.Position=UDim2.new(.5,-380,1,-52)
 label.BackgroundColor3=Color3.fromRGB(25,37,37); label.BackgroundTransparency=.12; label.TextColor3=Color3.fromRGB(246,236,212)

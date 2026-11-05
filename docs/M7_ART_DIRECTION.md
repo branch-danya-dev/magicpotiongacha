@@ -43,88 +43,33 @@ no noisy scans. Dawn peach/cool shadow; day cream/blue-green shadow; sunset hone
 side light; twilight light blue with amber lamps; rain cool diffuse with depth.
 Do not promise the reference's Unity/Godot shaders in Roblox.
 
-### Acquired source candidate, not yet admitted
+### Imported source and preparation
 
-The free [Stylized Nature MegaKit Standard](https://quaternius.itch.io/stylized-nature-megakit)
-was downloaded on 2026-11-05 from the author's itch.io page. The archive contains
-68 models and an explicit CC0-1.0 `License_Standard.txt`. It is an alternative to
-the older Ultimate Stylized Nature Google Drive download, not the same package.
-Archive SHA-256:
-`298f6732b872e4cf7b30e6e7abf9641c7f6dc6b326df37ac089533ed7e3d58c9`.
-The general site now carries QAL v1.0; preserve the exact 2024 Standard archive's
-CC0 proof and do not generalize that license to other downloads or new releases.
+The owner explicitly approved direct static inspection, optimization and Studio
+import on 2026-11-05 despite the absent game-dev CLI. That exception is fulfilled;
+no canonical game-dev receipt is claimed. The exact free 2024 Standard archive
+contains CC0-1.0 proof. See [asset provenance](../assets/environment/README.md).
 
-| Source selection | Measured triangles per source model | Preparation required |
-| --- | --- | --- |
-| CommonTree_1 / 3 / 5 | 6265 / 3505 / 3182 | Reduce to <=2000, preserve branch/crown silhouette |
-| TwistedTree_1; Pine_2 | 9564; 3648 | Optimize; sparse landmark/backdrop use |
-| Grass_Common_Short; Grass_Wispy_Tall | 155; 622 | Short primary, tall sparse; simplify tall variant |
-| Bush_Common_Flowers; Clover_2; Fern_1; Flower_3_Group | 1368; 615; 288; 755 | Simplify heavy groups; local flower patches |
-| Rock_Medium_1; Pebble_Round_1; RockPath_Round_Small_1 | 342; 136; 998 | Simplify path; preserve gameplay collision |
+Fourteen reviewed models now provide branched trees, pine, a red landmark tree,
+grass, clover, fern, flowering bushes, flowers and rocks. The pilot uses native
+bounded Terrain, painted bark/leaf atlases and warm native stone paths/wood lamps.
+Paths retain the imported geometry, with a quiet native surface to reduce atlas
+noise. Source preparation retains whole leaf cards and limits trees to 2,000
+triangles, small props to 500; the actual imported IDs are in the receipt.
 
-Static audit: ZIP CRC and safe paths; no symlink records; all 68 glTF buffer/image
-dependencies local and present; buffer sizes, index ranges and triangle counts
-checked. Selected texture dimensions/hashes recorded. This is **not** a canonical
-package receipt, malware certification, visual model QA or successful Roblox import.
-No third-party code was executed. Files remain in staging outside the game repo.
-[Source audit](../assets/environment/megakit-source-audit.json).
+### Review contract
 
-The selected vendoring skill explicitly requires `game-dev` package verification
-and admission. That CLI is absent. **Runtime import remains BLOCKED** pending a
-working CLI or the owner's explicit exception for a documented direct workflow.
-Do not mark new artwork complete while this remains unresolved.
+This is the replacement candidate for the rejected primitive pilot, not an
+ART APPROVED result. [Current Studio evidence](evidence/m7-revision/README.md)
+separates beauty views from ordinary gameplay. Existing machines, purchase pads,
+and crystal are still M6 greybox; final machinery belongs to later art work.
+Seven other plots remain unchanged. Do not duplicate the pilot before explicit
+ART APPROVED and the separate #18 UX check; #19 builds the shared island later.
 
-### Targets to validate, not measured performance
-
-Trees <=2000 triangles, small props <=500; visible environment <=150k triangles;
-imported texture budget <=32 MiB. Initial added draw-call targets: <=100 full,
-<=60 reduced, <=35 minimal; visible grass groups <=80/35/12 per pilot. Local
-lights <=6/3/0. Profile actual Roblox rendering before claiming these targets pass.
-
-After rebuilding, capture the same camera at dawn/day/sunset/twilight/rain, plus
-ground/tree closeups and normal gameplay spawn/crystal/Bazaar views. Do not hide
-world labels to claim the #18 UX gate. Real phone and 2–8 player tests remain
-BLOCKED until performed. New screenshots are not yet available in this revision.
-
-## Historical first-pass direction (rejected implementation)
-
-This document precedes the art implementation. The owner's Issue #16 authorizes
-one pilot and lighting/weather comparisons. Gate B (eight decorated plots) waits
-for the owner's visual acceptance. Base: M6 bbc8891d45e551b691363383d1cacf2d69354283.
-
-Cozy Light Fantasy: an inhabited alchemist's clearing in a soft, generous valley.
-Broad rounded silhouettes, quiet grass, honey wood, warm stone and cream cloth;
-selective lilac crystal and amber lantern accents. Zelda is an atmosphere reference,
-not an asset, character, composition or music source. No copyrighted game assets.
-
-Palette: grass #86A66D, sage #638777, deep leaves #3E665C, stone #B5AA91,
-honey wood #96724D, cream #F1DCAD, sky #B8D7DE. Saturation belongs to small flower
-groups and the crystal. Avoid acid neon, noisy realistic PBR, hard polygon facets,
-black nighttime shadows and bright white rain. Existing stations remain temporary.
-
-Composition: keep the flat 77×75 work surface, agricultural left and processing
-right. Low planting frames the entrance; trees form irregular rounded masses at
-the outer edges and back. The crystal remains the focal point. A worn honey-stone
-path and paired lanterns connect the clearing toward the existing Bazaar. Keep
-the passage and TradePost visible. Hills stay outside floors, pads and waypoints.
-
-Day should feel fresh and readable; sunset warm but not orange everywhere; night
-blue with visible ground and amber accents; rain soft with broad cloud shadow.
-One 25-minute deterministic presentation cycle; smooth long transitions. No rain
-sound or music without a separately verified license. UI retains opaque dark
-backing and light text; use an uncluttered art-review view separately from the
-actual gameplay view, clearly labelled.
-
-Nature source priority: Quaternius Ultimate Stylized Nature Pack, May 2022, CC0
-1.0, official source https://quaternius.com/packs/ultimatestylizednature.html .
-External source download, validated package admission, engine upload and artistic
-approval are different gates. `game-dev` is unavailable on this workstation;
-verified package admission remains BLOCKED. No loose external files are copied
-into runtime. The first runnable fallback uses original deterministic Roblox
-primitive artwork; it must not be described as imported Quaternius art. Source
-selection/license/hash handoff is kept separately. No paid pack or AI spend.
-
-Review: compare the same scene/camera in day/sunset/night/rain; also inspect spawn,
-crystal overview and Bazaar approach. Request owner approval of palette, density,
-tree silhouettes, clear work zones and night visibility. No eight-plot rollout
-until that decision; Studio screenshots do not prove real-device performance.
+The authored mesh/Part count is 432; mesh plus native box estimate is 116,626
+triangles, excluding engine-generated Terrain. The complete imported texture set
+is 27.96 MiB RGBA8 plus mipmaps (conservative file-derived estimate, not GPU usage).
+Full/reduced/minimal light caps remain 6/3/0. Draw calls, total visible triangles,
+FPS, thermal behavior and real-phone usability remain unmeasured. Prior draw-call
+and grass-density targets are targets only; the current full-detail composition
+is not certified for low-end phones.

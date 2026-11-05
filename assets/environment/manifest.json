@@ -1,6 +1,6 @@
 {
-  "version": 1,
-  "gate": "A / ART REJECTED / revised one-farm sample required before #18 UX and #19 rollout",
+  "version": 2,
+  "gate": "A / replacement candidate awaiting visual acceptance; #18 UX before #19 rollout",
   "quaternius": {
     "status": "BLOCKED",
     "pack": "Ultimate Stylized Nature",
@@ -56,7 +56,8 @@
         "robloxAssetId": null,
         "admitted": false
       }
-    ]
+    ],
+    "historical": true
   },
   "nativeFallback": {
     "author": "Original project implementation",
@@ -72,21 +73,59 @@
       "qa/environment/Review.client.luau": "f2a054e071cca6fb609c5c1d49199d9750a85746ca4434dc9cace6fa4c76fc05",
       "qa/environment/Review.server.luau": "6d8ebaf6f0188baa5d16dd18a6a87a3f407a2d0bf02aa942515b444e4de67a5a",
       "src/shared/EnvironmentLabels.luau": "59e09b901589c602d11eecef0cb9d287e71e1d7a9257580f606d2eebe1768d1e"
-    }
+    },
+    "sourceSnapshotRoot": "docs/evidence/m7/rejected-source",
+    "status": "HISTORICAL_ART_REJECTED"
   },
   "megakitCandidate": {
-    "admitted": false,
+    "admitted": true,
     "blockers": [
-      "game-dev CLI unavailable: canonical verification/admission not performed.",
-      "Selected meshes require optimization and actual Roblox material/import validation."
+      "Visual acceptance of the revised farm, actual mobile performance and published-experience asset permission checks remain pending."
     ],
-    "robloxAssetIds": [],
+    "robloxAssetIds": [
+      "rbxassetid://102348628758318",
+      "rbxassetid://104223482629283",
+      "rbxassetid://107335968123994",
+      "rbxassetid://109075223234587",
+      "rbxassetid://110724520977986",
+      "rbxassetid://112432630564594",
+      "rbxassetid://113857411980935",
+      "rbxassetid://115569212714828",
+      "rbxassetid://117898133185832",
+      "rbxassetid://118034762489808",
+      "rbxassetid://118085961837111",
+      "rbxassetid://124076969727675",
+      "rbxassetid://127695594791239",
+      "rbxassetid://127929432830190",
+      "rbxassetid://129375472066299",
+      "rbxassetid://130436974229635",
+      "rbxassetid://131695601044976",
+      "rbxassetid://132501475885875",
+      "rbxassetid://136298981634226",
+      "rbxassetid://138974421613690",
+      "rbxassetid://71265164108637",
+      "rbxassetid://73285867832875",
+      "rbxassetid://73853474724005",
+      "rbxassetid://74191690609816",
+      "rbxassetid://76334757545348",
+      "rbxassetid://77393985107765",
+      "rbxassetid://82289699597708",
+      "rbxassetid://83669120491249",
+      "rbxassetid://89937554932811",
+      "rbxassetid://92249803120756",
+      "rbxassetid://96411665869378",
+      "rbxassetid://98116798389884",
+      "rbxassetid://98275526325211"
+    ],
     "audit": "assets/environment/megakit-source-audit.json",
     "sha256": "298f6732b872e4cf7b30e6e7abf9641c7f6dc6b326df37ac089533ed7e3d58c9",
     "license": "CC0-1.0 in the acquired 2024 Standard archive",
     "rawAssetsInRepository": false,
     "pack": "Stylized Nature MegaKit Standard",
-    "status": "DOWNLOADED_STATIC_INSPECTION_ONLY",
-    "source": "https://quaternius.itch.io/stylized-nature-megakit"
+    "status": "DIRECT_IMPORT_LOCAL_STUDIO_VALIDATION",
+    "source": "https://quaternius.itch.io/stylized-nature-megakit",
+    "authorization": "Owner approved direct inspection/optimization/Studio import on 2026-11-05; missing game-dev is no longer a blocker.",
+    "receipt": "assets/environment/megakit/receipt.json",
+    "preparedAssetsInRepository": true
   }
 }

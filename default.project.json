@@ -6,6 +6,7 @@
       "PotionTycoon": { "$className": "Folder", "Shared": { "$path": "src/shared" } }
     },
     "ServerScriptService": { "PotionTycoon": { "$path": "src/server" } },
+    "ServerStorage": {"M7NatureTemplates": {"$path": "assets/environment/megakit/M7NatureTemplates.rbxmx"}},
     "StarterPlayer": {
       "StarterPlayerScripts": { "PotionTycoon": { "$path": "src/client" } }
     },

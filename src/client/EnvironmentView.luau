@@ -37,8 +37,8 @@ function View.start(root,settings)
 		end
 	end
 	-- Children can replicate after the enable attribute. Do not miss late lanterns.
-	local added=root.EnvironmentArt.ChildAdded:Connect(register)
-	for _,p in ipairs(root.EnvironmentArt:GetChildren()) do register(p) end
+	local added=root.EnvironmentArt.DescendantAdded:Connect(register)
+	for _,p in ipairs(root.EnvironmentArt:GetDescendants()) do register(p) end
 	for i=1,Config.budgets.rain do
 		local p=effect("Part","LocalRain_"..i,folder); p.Size=Vector3.new(.035,.9,.035)
 		p.Anchored,p.CanCollide,p.CanTouch,p.CanQuery,p.CastShadow=true,false,false,false,false

@@ -2,19 +2,23 @@
 
 CLI/CI passing is necessary but does not mark any item below as completed.
 
-## M7.1 Gate A technical pilot — 2026-11-05
+## M7.1 revised one-farm Gate A — 2026-11-05
 
 [Issue #16](https://github.com/branch-danya-dev/magicpotiongacha/issues/16), stacked
 on M6 PR #15 at `bbc8891d45e551b691363383d1cacf2d69354283`.
-841 CLI cases pass (all 810 original + 31 environment), source integrity and both
-Rojo builds included. Actual Studio screenshots cover five light/weather poses,
-spawn and Bazaar. [Evidence and requirement matrix](M7_ENVIRONMENT.md),
-[raw images](evidence/m7/README.md), [asset handoff](../assets/environment/README.md).
+844 CLI cases (all 810 original + 34 environment), source integrity and both
+Rojo builds are required. Actual Studio screenshots cover five light/weather poses,
+spawn, foliage, Bazaar and ordinary gameplay UI. [Evidence and limits](M7_ENVIRONMENT.md),
+[current raw images](evidence/m7-revision/README.md), [asset provenance](../assets/environment/README.md).
 
-**Gate A is ART REJECTED:** the owner rejected the primitive vegetation, flat
-lighting and slab landscape. A new one-farm sample and explicit artistic approval
-are required. The alternate free MegaKit Standard source is acquired and statically
-inspected; package admission/import remain BLOCKED (game-dev unavailable).
+**The earlier primitive pilot is ART REJECTED; the replacement is OWNER REVIEW
+PENDING.** The owner approved direct preparation/import despite missing game-dev.
+Fourteen inspected CC0 MegaKit Standard models are imported and render in Studio;
+the receipt pins the actual mesh/texture IDs. The new one-farm composition uses
+bounded Terrain, 432 decor Parts and 116,626 authored triangles excluding Terrain.
+Studio collision guards passed. Beauty captures pin Roblox Manual quality 10;
+dark stippling at Automatic/lower quality remains an open renderer/device check.
+The ordinary full-game capture uses Automatic quality and memory-only progress.
 The existing contextual billboard filter does not resolve the normal gameplay UI
 acceptance: issue #18 remains an explicit UX gate on PC and phone. **Gate B / #19
 is withheld until ART APPROVED and the UX check.** See the revised art direction.

@@ -1,65 +1,53 @@
-# M7.1 provenance and import handoff
+# M7.1 inspected asset provenance
 
-## 2026-11-05 source update
+The owner approved the direct workflow on 2026-11-05: static inspection, local
+optimization and Roblox Studio import of 14 selected free Quaternius models.
+Missing game-dev is no longer a blocker for this explicitly authorized subset.
+This is a documented direct import, **not a canonical game-dev receipt**.
 
-An alternate official free pack, **Stylized Nature MegaKit Standard** (2024), has
-now been acquired from https://quaternius.itch.io/stylized-nature-megakit . This is
-not Ultimate Stylized Nature below. SHA-256:
+Source: [Stylized Nature MegaKit Standard](https://quaternius.itch.io/stylized-nature-megakit),
+2024 free Standard archive, 68 models. Archive SHA-256:
 `298f6732b872e4cf7b30e6e7abf9641c7f6dc6b326df37ac089533ed7e3d58c9`.
-Its 68 glTF models and local dependencies were statically inspected; exact roster,
-hashes, selected models, triangles and texture sizes are in
-`megakit-source-audit.json`. `License_Standard.txt` in that exact archive states
-CC0-1.0. The general website now also advertises QAL v1.0; this record is specific
-to the acquired Standard archive, not a claim that every Quaternius release is CC0.
+[Exact bundled CC0 license](megakit/License_Standard.txt). The newer general QAL
+site license is not used as proof for this archive or generalized to all releases.
 
-Source files remain in staging **outside this game repository**, unmodified and
-unadmitted. No Roblox IDs or canonical game-dev receipt exist yet. Acquisition
-removes the old source-availability blocker for this alternative; the missing
-game-dev verification/admission tool is still a blocker. Runtime is unchanged.
-The owner explicitly rejected the old native fallback. See `docs/M7_ART_DIRECTION.md`
-for the new reference selection and measured optimization needs.
+[Source audit](megakit-source-audit.json) records ZIP integrity/safe paths, local
+glTF dependencies, buffer/index validation, hashes and original triangle counts.
+No source scripts, plugins, animations or remote code were executed/admitted.
 
-## Historical Ultimate Stylized Nature attempt and native fallback
+## Reproduction
 
-`manifest.json` distinguishes **selected external assets** from **actually shipped
-original geometry**. `sha256=null`, `robloxAssetId=null`, `admitted=false` mean no
-asset was acquired/admitted; they are not placeholders for fabricated proof.
+1. Acquire that exact archive from the author; verify its SHA-256 and bundled
+   license. Extract the selected glTF files/dependencies into staging.
+2. Run `scripts/prepare-environment-assets.py` with Blender 4.5.9 LTS, background,
+   factory settings and disabled autoexec, as documented in the script. It checks
+   selected source hashes, separates materials, normalizes size/pivot, simplifies
+   bark, retains whole connected leaf cards and downsizes maps to <=1024.
+3. Import the prepared `M7NatureLibrary.gltf` with Roblox Studio's importer.
+   Anchor models, disable collisions/touch/query, enable DoubleSided and set
+   foliage SurfaceAppearance AlphaMode=Transparency. Save the local import place.
+   The importer produced actual rbxassetid references even with model upload off;
+   model publication and game publication are separate from mesh/texture import.
+4. Run `python scripts/admit-environment-assets.py IMPORT.rbxlx PREPARED_DIR`.
+   It permits only Model/MeshPart/SurfaceAppearance and grounds each model. Keep
+   `License_Standard.txt` in the admitted directory before sealing the receipt.
+5. Run the normal verification command and inspect the actual Studio result.
+   Re-importing produces new IDs: renew the receipt and screenshots together.
 
-The official [Quaternius pack page](https://quaternius.com/packs/ultimatestylizednature.html)
-advertises Ultimate Stylized Nature (May 2022, 63 models, CC0). Its download link
-opens the public Drive folder recorded in the manifest. The selected OBJ/MTL names
-and file IDs were read from that official folder. On 2026-11-05 the attempted
-BirchTree_1.obj download returned a **Quota exceeded HTML page**, rejected before
-import. There is no downloaded archive or usable source asset hash to report.
-License: [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/).
+[Receipt](megakit/receipt.json) includes actual mesh/map IDs from Studio's saved
+XML, import-place hash and all admitted file hashes. [Preparation report](megakit/prepared/preparation.json)
+records exact counts/settings. 14 models / 21 inert MeshParts; trees <=2000,
+small props <=500. Twelve unique maps total 27.96 MiB at RGBA8 plus mipmaps.
+Prepared interchange files and textures are included; originals stay in staging.
+Runtime stone paths use native Slate and no shadow casting; their templates set
+[RenderFidelity.Precise](https://create.roblox.com/docs/reference/engine/enums/RenderFidelity)
+before play to preserve thin faces under engine LOD; other assets retain
+the inspected texture maps. No guessed IDs or Toolbox content.
 
-Independent blocker: the installed Game Development Studio guidance requires
-canonical package verification/admission using `game-dev`, which is not installed.
-Its routing skill says: “If `game-dev` is unavailable, report the missing local CLI
-and the blocked workflow. Do not install software, change credentials, solicit a
-key, or substitute an unrequested remote service.” No software/provider purchase,
-account changes, Toolbox scripts or external service substitution were performed.
+The assets render in the owner's local Studio session. Permission/loading in a
+published experience and on a second account is **not verified**. Real phone,
+multiplayer, and artistic acceptance are separate outstanding gates.
 
-When the source and package pipeline are available:
-
-1. Download only selected OBJ/MTL pairs from the recorded official folder, outside
-   runtime. Verify file signatures/content, SHA-256 and CC0 proof per file.
-2. Inspect referenced materials/textures and dependencies. Reject scripts, unknown
-   URLs and unrelated assets. Keep originals and conversion provenance.
-3. Normalize scale/pivot/materials, triangulate, inspect the actual mesh. Target
-   <=2,000 triangles/tree and <=500/small prop; hard ceiling <20,000/mesh. These are
-   **import targets, not measured values of unavailable meshes**.
-4. Produce and verify the canonical package, record receipt/manifest digest and
-   admit the exact verified package under the authorized plan.
-5. Import through the owner's permitted Roblox asset workflow; record actual
-   asset IDs/owner permissions, source hashes, transforms and conversion settings.
-   No publication or paid action is authorized by this handoff.
-6. Replace native descriptor visual types, retain all logical anchors, rerun
-   integrity/regression/Studio checks and renew the same-camera visual review.
-
-The current fallback consists of original `EnvironmentPlan` descriptors, Parts
-and built-in Sphere SpecialMeshes. It uses **no external mesh IDs or textures**.
-The Sphere mesh is needed because PartType.Ball does not preserve ellipsoid
-proportions; see [Roblox SpecialMesh](https://create.roblox.com/docs/reference/engine/classes/SpecialMesh).
-Source hashes normalize CRLF to LF, so Windows/Ubuntu check the same source bytes.
-CI validates those hashes, the unchanged M6 sources and the World gameplay seam.
+The old Ultimate Stylized Nature download attempt and rejected native pilot remain
+in manifest.json as history only; neither is the current source. Historical
+captures pin archived source snapshots and are not evidence for this revision.
