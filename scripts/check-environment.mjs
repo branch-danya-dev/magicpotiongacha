@@ -126,4 +126,24 @@ for(const face of ['ft','bk','lf','rt','up','dn']) {
 }
 assert.equal(edgePixels.size,3056); assert.equal(shared,3064);
 console.log('A.2b cubemap PASS: decoded all six PNG faces; 3056 shared edge rays, zero RGBA discontinuities');
+const a2b=JSON.parse(read('docs/evidence/m7-a2b/captures.json'));
+const a2bSources=JSON.parse(read('docs/evidence/m7-a2b/source-snapshot.json'));
+assert.equal(a2b.status,'ART_PENDING');
+assert.equal(a2b.runtimeSourceCommit,'39788eafaf93de4c21f7817f0aff4cb4e38ffd35');
+for(const [path,hash] of Object.entries(a2b.sources)) {
+  assert.equal(sha(a2bSources[path]),hash,`A.2b archived source integrity: ${path}`);
+  assert.equal(sha(read(path)),hash,`A.2b runtime changed since capture: ${path}`);
+}
+for(const [name,entry] of Object.entries(a2b.images)) {
+  assert(a2b.builds[entry.build],`Unknown A.2b capture build: ${name}`);
+  assert.equal(createHash('sha256').update(readFileSync(resolve(root,'docs/evidence/m7-a2b',name))).digest('hex'),entry.sha256,`A.2b image integrity: ${name}`);
+}
+for(const camera of ['overview','spawn']) for(const pose of ['day','sunset','night','rain','dawn','afterrain']) {
+  const entry=a2b.images[`final-${camera}-${pose}.jpg`];
+  assert.equal(entry.build,'final'); assert.equal(entry.graphics,'Manual 5'); assert.equal(entry.quality,'full');
+}
+assert.equal(a2b.video.durationSeconds,45);
+assert.equal(createHash('sha256').update(readFileSync(resolve(root,'docs/evidence/m7-a2b',a2b.video.file))).digest('hex'),a2b.video.sha256,'A.2b video integrity');
+assert.equal(createHash('sha256').update(readFileSync(resolve(root,'docs/evidence/m7-a2b/studio-audit.txt'))).digest('hex'),a2b.studioAuditSha256,'A.2b Studio audit integrity');
+console.log('A.2b evidence PASS: exact captured sources, 12 matched final views, supporting captures and 45-second recording');
 console.log(`M7 integrity PASS: ${Object.keys(baseline.unchanged).length} unchanged M6 files, gameplay World, release flags, art source hashes, A.2 capture provenance and isolated harness`);

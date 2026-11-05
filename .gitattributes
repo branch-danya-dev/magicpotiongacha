@@ -1,5 +1,6 @@
 # The inspected package receipt hashes exact bytes on Windows and Ubuntu.
 assets/environment/megakit/** -text whitespace=cr-at-eol
 assets/environment/atmosphere/** -text whitespace=cr-at-eol
+docs/evidence/m7-a2b/studio-audit.txt -text whitespace=cr-at-eol
 # Preserve the author's bundled license verbatim, including its trailing spaces.
 assets/environment/megakit/License_Standard.txt whitespace=cr-at-eol,-blank-at-eol
