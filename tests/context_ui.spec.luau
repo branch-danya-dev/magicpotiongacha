@@ -8,6 +8,20 @@ local function entry(id,changes)
 	return e
 end
 return function(T:any)
+	T.test("UI18: desktop panel clears native chat at both review resolutions",function()
+		for _,w in ipairs({1366,1920}) do
+			local l=UI.layout(w,768,false,w*.4)
+			T.truthy(not l.chatModal); T.truthy(l.left>w*.4)
+			T.truthy(l.left+l.width<w-250)
+		end
+	end)
+	T.test("UI18: narrow screens yield to open native chat and restore on close",function()
+		for _,s in ipairs({{402,816,true},{874,344,true},{800,600,false}}) do
+			T.truthy(UI.layout(s[1],s[2],s[3],s[1]*.4).chatModal)
+			T.truthy(not UI.layout(table.unpack(s)).chatModal)
+		end
+		T.truthy(UI.layout(1366,768,false,1100).chatModal)
+	end)
 	T.test("UI18: HUD and reserved action rail cannot be overlapped by native prompt",function()
 		local list={entry("blocked"),entry("clear",{x=800})}
 		local selected=UI.candidates(list,1,1280,720,{{x=350,y=230,w=100,h=40}})

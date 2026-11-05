@@ -21,7 +21,8 @@ local function audit()
 	local panel=gui and gui:FindFirstChild("ContextPanel")
 	local c=workspace.CurrentCamera
 	print("UI18_AUDIT route="..route[routeIndex].." pose="..poses[poseIndex].." viewport="..c.ViewportSize.X.."x"..c.ViewportSize.Y.." touch="..tostring(Input.TouchEnabled).." prompts="..enabled.." labels="..labels.." selected="..table.concat(names,",").." panel="..tostring(panel and panel.Visible).." quality="..Controller.quality.." graphics="..UserSettings().GameSettings.SavedQualityLevel.Name)
-	if gui then print("UI18_BOUNDS gui="..tostring(gui.AbsoluteSize).." panel="..(panel and tostring(panel.AbsolutePosition).." "..tostring(panel.AbsoluteSize) or "baseline")) end
+	if gui then print("UI18_BOUNDS enabled="..tostring(gui.Enabled).." gui="..tostring(gui.AbsoluteSize).." panel="..(panel and tostring(panel.AbsolutePosition).." "..tostring(panel.AbsoluteSize) or "baseline")) end
+	pcall(function() print("UI18_CHAT active="..tostring(game.StarterGui:GetCore("ChatActive")).." size="..tostring(game.StarterGui:GetCore("ChatWindowSize")).." position="..tostring(game.StarterGui:GetCore("ChatWindowPosition"))) end)
 end
 local function move()
 	local p=plot(); local character=player.Character

@@ -34,12 +34,14 @@ function UI.choose(candidates,previous,cycle)
 	end
 	return candidates[1]
 end
-function UI.layout(width,height,touch)
+function UI.layout(width,height,touch,chatRight)
 	local compact=touch or width<900
 	local portrait=height>width
 	local panelWidth=compact and (portrait and width-24 or math.min(400,width*.51)) or math.min(420,width-32)
 	local panelHeight=compact and (portrait and math.min(height*.52,height-270,510) or height-132) or math.min(height-132,660)
-	return {compact=compact,portrait=portrait,width=math.max(240,panelWidth),height=math.max(180,panelHeight),
+	local left=chatRight and math.max(12,chatRight+12) or 12
+	local chatModal=chatRight~=nil and (compact or left+panelWidth>width-12)
+	return {compact=compact,portrait=portrait,left=left,chatModal=chatModal,width=math.max(240,panelWidth),height=math.max(180,panelHeight),
 		hudWidth=math.min(width-24,360),railWidth=math.min(width-24,300),bottom=touch and portrait and 150 or 20}
 end
 function UI.description(entry,config)

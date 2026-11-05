@@ -8,6 +8,7 @@ local Config = require(shared.Config)
 local ContextPolicy = require(shared.ContextUI)
 local UserInputService = game:GetService("UserInputService")
 local GuiService = game:GetService("GuiService")
+local StarterGui = game:GetService("StarterGui")
 local collectionUI = require(script.Parent.CollectionUI).new(Config)
 local tradeUI = require(script.Parent.TradeUI).new(Config)
 local longTermUI = require(script.Parent.LongTermUI).new(Config)
@@ -196,24 +197,46 @@ local function shopPrice(card)
 	return nil
 end
 
+local chatRight,chatRect
+local function readChat()
+	local camera=workspace.CurrentCamera
+	if not camera then return end
+	local viewport=camera.ViewportSize
+	local ok,active,size,position=pcall(function()
+		return StarterGui:GetCore("ChatActive"),StarterGui:GetCore("ChatWindowSize"),StarterGui:GetCore("ChatWindowPosition")
+	end)
+	-- Read native chat bounds, never change CoreGui visibility or position. Core
+	-- scripts can register late; reserve the current legacy chat's default region.
+	local right,rect
+	if not ok or active~=false then
+		local p=typeof(position)=="UDim2" and Vector2.new(position.X.Scale*viewport.X+position.X.Offset,position.Y.Scale*viewport.Y+position.Y.Offset) or Vector2.zero
+		local s=typeof(size)=="UDim2" and Vector2.new(size.X.Scale*viewport.X+size.X.Offset,size.Y.Scale*viewport.Y+size.Y.Offset) or Vector2.new(viewport.X*.4,viewport.Y*.335)
+		right=p.X+s.X; rect={x=p.X,y=p.Y,w=s.X,h=s.Y+40}
+	end
+	local changed=right~=chatRight
+	chatRight,chatRect=right,rect
+	return changed
+end
 local function resize()
 	local camera = workspace.CurrentCamera
 	if not camera then return end
 	local viewport = camera.ViewportSize
 	local safe=gui.AbsoluteSize
-	local layout=ContextPolicy.layout(safe.X,safe.Y,UserInputService.TouchEnabled)
-	hud.Size,hud.Position=UDim2.fromOffset(layout.hudWidth,44),UDim2.fromOffset(12,8)
+	readChat()
+	local layout=ContextPolicy.layout(safe.X,safe.Y,UserInputService.TouchEnabled,chatRight)
+	gui.Enabled=not layout.chatModal
+	hud.Size,hud.Position=UDim2.fromOffset(layout.hudWidth,44),UDim2.fromOffset(layout.compact and 12 or layout.left,8)
 	balance.TextSize=14; balance.Position=UDim2.fromOffset(12,4); balance.Size=UDim2.new(1,-114,0,36)
 	toggle.Size,toggle.Position=UDim2.fromOffset(96,36),UDim2.new(1,-100,0,4)
 	status.Visible=false
-	guide.Position,guide.Size=UDim2.fromOffset(12,58),UDim2.fromOffset(layout.hudWidth,44)
-	regionLabel.Position,regionLabel.Size=UDim2.fromOffset(12,106),UDim2.fromOffset(layout.hudWidth,24)
+	guide.Position,guide.Size=UDim2.fromOffset(layout.compact and 12 or layout.left,58),UDim2.fromOffset(layout.hudWidth,44)
+	regionLabel.Position,regionLabel.Size=UDim2.fromOffset(layout.compact and 12 or layout.left,106),UDim2.fromOffset(layout.hudWidth,24)
 	panel.Size=UDim2.fromOffset(layout.width,layout.height)
 	if layout.compact and layout.portrait then
 		panel.AnchorPoint,panel.Position=Vector2.new(.5,1),UDim2.new(.5,0,1,-150)
 	elseif not layout.compact then
-		-- Keep the header/close button away from the native player list.
-		panel.AnchorPoint,panel.Position=Vector2.zero,UDim2.fromOffset(12,116)
+		-- Keep the header/close button outside both native chat and player list.
+		panel.AnchorPoint,panel.Position=Vector2.zero,UDim2.fromOffset(layout.left,116)
 	else
 		-- Touch locomotion occupies the bottom corners. Keep this sheet between them.
 		panel.AnchorPoint,panel.Position=Vector2.new(.5,0),UDim2.new(.5,0,0,116)
@@ -222,7 +245,11 @@ local function resize()
 	rail.Size=UDim2.fromOffset(layout.railWidth,48)
 	toast.AnchorPoint=Vector2.new(.5,0)
 	toast.Position,toast.Size=UDim2.new(.5,0,0,136),UDim2.fromOffset(layout.hudWidth,64)
+	if not layout.compact then toast.AnchorPoint=Vector2.zero; toast.Position=UDim2.fromOffset(layout.left,136) end
 end
+task.spawn(function()
+	while gui.Parent do task.wait(.5); if readChat() then resize() end end
+end)
 local cameraConnection
 local function watchCamera()
 	if cameraConnection then cameraConnection:Disconnect() end
@@ -609,8 +636,9 @@ Focus.OnClientEvent:Connect(function(stationId)
 end)
 draw()
 task.spawn(function()
-	context=require(script.Parent.WorldContext).start(updateContext,function() return panel.Visible end,function()
+	context=require(script.Parent.WorldContext).start(updateContext,function() return panel.Visible or not gui.Enabled end,function()
 		local inset=GuiService:GetGuiInset(); local rectangles={}
+		if chatRect then table.insert(rectangles,chatRect) end
 		for _,widget in ipairs({hud,guide,rail}) do
 			local p,s=widget.AbsolutePosition,widget.AbsoluteSize
 			table.insert(rectangles,{x=p.X+inset.X,y=p.Y+inset.Y,w=s.X,h=s.Y})
