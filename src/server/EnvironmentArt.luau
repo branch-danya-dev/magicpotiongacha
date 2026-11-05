@@ -89,11 +89,13 @@ function Art.attach(world)
 		end
 		local objects=model:IsA("BasePart") and {model} or model:GetDescendants()
 		for _,p in ipairs(objects) do if p:IsA("BasePart") then
-			p.Anchored,p.CanCollide,p.CanTouch,p.CanQuery=true,false,false,false
+			p.Anchored,p.CanCollide,p.CanTouch,p.CanQuery=true,d.barrier==true,false,d.barrier==true
+			p:SetAttribute("PhysicalBarrier",d.barrier==true)
 			p:SetAttribute("EnvironmentDetail",d.detail); p:SetAttribute("EnvironmentWind",false); p:SetAttribute("EnvironmentLight",d.light==true)
 		end end
 		model.Parent=folder
 	end
+	require(script.Parent.FenceBarriers).attach(folder)
 	world.root.ForestFloor.Color=Color3.fromRGB(table.unpack(Config.palette.grass)); world.root.ForestFloor.Material=Enum.Material.Grass
 	meadow(world.root.ForestFloor,true)
 	world.root.Bazaar.Color=Color3.fromRGB(table.unpack(Config.palette.stone)); world.root.Bazaar.Material=Enum.Material.Sandstone

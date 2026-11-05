@@ -68,8 +68,8 @@ function Plan.build(config,index)
 	end
 	lantern(-7,29); lantern(7,29); lantern(-34,-30); lantern(33,-30)
 	for _,side in ipairs({-1,1}) do for i=0,2 do
-		add("beam",{.5,3,.5},{side*(13+i*7),1.7,28},"wood",1)
-		if i<2 then add("beam",{7,.35,.35},{side*(16.5+i*7),2.5,28},"wood",1,{0,0,side*3}) end
+		add("beam",{.5,3,.5},{side*(13+i*7),1.7,28},"wood",1,nil,{barrier=true})
+		if i<2 then add("beam",{7,.35,.35},{side*(16.5+i*7),2.5,28},"wood",1,{0,0,side*3},{barrier=true}) end
 	end end
 	-- Adjacent Bazaar sample; original road and trade post are unchanged.
 	for _,x in ipairs({-12,12}) do

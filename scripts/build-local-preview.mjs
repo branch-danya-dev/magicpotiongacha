@@ -13,9 +13,11 @@ function absolute(node) {
   }
 }
 absolute(project);
-project.tree.StarterPlayer.StarterPlayerScripts.A2VisualReview={
-  $path:resolve(root,process.argv.includes('--ui')?'qa/environment/UIReview.client.luau':'qa/environment/GameplayReview.client.luau')
-};
+// Plain delivery starts the full game without a diagnostic script or delayed pose jump.
+if(process.argv.includes('--ui') || process.argv.includes('--safety') || process.argv.includes('--atmosphere')) {
+  const script=process.argv.includes('--safety')?'SafetyReview':process.argv.includes('--ui')?'UIReview':'GameplayReview';
+  project.tree.StarterPlayer.StarterPlayerScripts.A2VisualReview={$path:resolve(root,`qa/environment/${script}.client.luau`)};
+}
 project.name='PotionTycoon-M7-LocalPreview';
 project.tree.Lighting.$properties.Technology='Future';
 project.tree.Lighting.$properties.LightingStyle='Realistic';

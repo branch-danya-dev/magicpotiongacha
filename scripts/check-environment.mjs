@@ -56,7 +56,7 @@ for (const model of receipt.models) {
   assert.equal(triangles,model.triangles);
   assert(triangles<=((model.name.includes('Tree')||model.name.startsWith('Pine'))?2000:500));
 }
-assert.match(builder, /p\.Anchored,p\.CanCollide,p\.CanTouch,p\.CanQuery=true,false,false,false/);
+assert.match(builder, /p\.Anchored,p\.CanCollide,p\.CanTouch,p\.CanQuery=true,d\.barrier==true,false,d\.barrier==true/);
 assert(!/rbxassetid:\/\/|HttpService|loadstring|RemoteEvent/.test(builder), 'Unreviewed external art dependency');
 const current = JSON.parse(read('docs/evidence/m7-revision/captures.json'));
 const a1Snapshot=JSON.parse(read('docs/evidence/m7-revision/source-snapshot.json'));
@@ -180,8 +180,14 @@ for(const [path,hash] of Object.entries(a2c.sources)) {
   assert.equal(sha(a2cSources[path]),hash,`A.2c archived source integrity: ${path}`);
   // A.2c is an immutable historical capture after owner Gate A approval.
   // Issue #18 changes only presentation; keep the approved atmospheric data/art exact.
-  if(path.startsWith('src/shared/Environment') || path==='src/server/EnvironmentArt.luau')
-    assert.equal(sha(read(path)),hash,`Approved atmosphere changed: ${path}`);
+  if(path.startsWith('src/shared/Environment') || path==='src/server/EnvironmentArt.luau') {
+    // #18a explicitly authorizes physical fence collisions. Preserve the rest
+    // of the approved composition, palette, state curves and asset definitions.
+    let current=read(path);
+    if(path==='src/shared/EnvironmentPlan.luau') current=current.replace(',"wood",1,nil,{barrier=true})',',"wood",1)').replace(',"wood",1,{0,0,side*3},{barrier=true})',',"wood",1,{0,0,side*3})');
+    if(path==='src/server/EnvironmentArt.luau') current=current.replace('true,d.barrier==true,false,d.barrier==true','true,false,false,false').replace('\n\t\t\tp:SetAttribute("PhysicalBarrier",d.barrier==true)','').replace('\n\trequire(script.Parent.FenceBarriers).attach(folder)','');
+    assert.equal(sha(current),hash,`Approved atmosphere changed outside #18a fence seam: ${path}`);
+  }
 }
 for(const [name,entry] of Object.entries(a2c.images)) {
   assert(a2c.builds[entry.build],`Unknown A.2c capture build: ${name}`);

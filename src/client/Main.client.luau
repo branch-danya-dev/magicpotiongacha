@@ -228,6 +228,13 @@ local function resize()
 	hud.Size,hud.Position=UDim2.fromOffset(layout.hudWidth,44),UDim2.fromOffset(layout.compact and 12 or layout.left,8)
 	balance.TextSize=14; balance.Position=UDim2.fromOffset(12,4); balance.Size=UDim2.new(1,-114,0,36)
 	toggle.Size,toggle.Position=UDim2.fromOffset(96,36),UDim2.new(1,-100,0,4)
+	-- CoreGui's player list has no public bounds API. Keep the compact factory
+	-- entry in the bottom centre, away from the top-right list and touch corners.
+	if layout.compact then
+		toggle.Parent=gui
+		toggle.Size,toggle.Position=UDim2.fromOffset(layout.factory.w,layout.factory.h),UDim2.fromOffset(layout.factory.x,layout.factory.y)
+		balance.Size=UDim2.new(1,-24,0,36)
+	else toggle.Parent=hud end
 	status.Visible=false
 	guide.Position,guide.Size=UDim2.fromOffset(layout.compact and 12 or layout.left,58),UDim2.fromOffset(layout.hudWidth,44)
 	regionLabel.Position,regionLabel.Size=UDim2.fromOffset(layout.compact and 12 or layout.left,106),UDim2.fromOffset(layout.hudWidth,24)
@@ -639,7 +646,7 @@ task.spawn(function()
 	context=require(script.Parent.WorldContext).start(updateContext,function() return panel.Visible or not gui.Enabled end,function()
 		local inset=GuiService:GetGuiInset(); local rectangles={}
 		if chatRect then table.insert(rectangles,chatRect) end
-		for _,widget in ipairs({hud,guide,rail}) do
+		for _,widget in ipairs({hud,guide,rail,toggle}) do
 			local p,s=widget.AbsolutePosition,widget.AbsoluteSize
 			table.insert(rectangles,{x=p.X+inset.X,y=p.Y+inset.Y,w=s.X,h=s.Y})
 		end

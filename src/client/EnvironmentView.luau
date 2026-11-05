@@ -6,6 +6,7 @@ local ContentProvider=game:GetService("ContentProvider")
 local Shared=game:GetService("ReplicatedStorage").PotionTycoon.Shared
 local Config=require(Shared.EnvironmentConfig)
 local State=require(Shared.EnvironmentState)
+local Transition=require(Shared.EnvironmentTransition)
 local Labels=require(Shared.EnvironmentLabels)
 local View={}
 local active=nil
@@ -147,10 +148,17 @@ function View.start(root,settings)
 		rays.Intensity=q.rays*(1-sample.rain)*(1-sample.night); rays.Enabled=q.rays>0
 	end
 	local lod=0; local step=0; local connection
+	local transition=Transition.new()
 	function self.setQuality(name) if Config.quality[name] then self.quality=name; lod=1 end end
 	function self.setReduceMotion(enabled) self.reduceMotion=enabled==true; lod=1 end
-	function self.setPose(name) if RunService:IsStudio() and (name==nil or Config.poses[name]) then self.pose=name end end
-	function self.setPreview(enabled) if RunService:IsStudio() then self.previewStart=enabled and os.clock() or nil end end
+	function self.setPose(name)
+		if RunService:IsStudio() and (name==nil or Config.poses[name]) then
+			transition.begin(os.clock()); self.pose=name; self.previewStart=nil
+		end
+	end
+	function self.setPreview(enabled)
+		if RunService:IsStudio() then transition.begin(os.clock()); self.previewStart=enabled and os.clock() or nil end
+	end
 	function self.stats()
 		local counts={lights=0,rain=0,motes=0,wind=0,emitters=0,fog=0,glints=0,rainbow=0,stars=0,moon=0,assetFailures=self.assetFailures}
 		for _,l in ipairs(lights) do if l.Enabled then counts.lights+=1 end end
@@ -168,7 +176,9 @@ function View.start(root,settings)
 	function self.update(dt)
 		step+=dt; lod+=dt; labelsDirty+=dt; if step<1/30 then return end; local elapsed=step; step=0
 		local camera=workspace.CurrentCamera; if not camera then return end
-		local time=workspace:GetServerTimeNow(); local sample=self.previewStart and State.preview(Config,os.clock()-self.previewStart) or State.sample(Config,time,self.pose); local q=State.quality(Config,self.quality,self.reduceMotion)
+		local time=workspace:GetServerTimeNow(); local now=os.clock()
+		local target=self.previewStart and State.preview(Config,now-self.previewStart) or State.sample(Config,time,self.pose)
+		local sample=transition.sample(target,now); local q=State.quality(Config,self.quality,self.reduceMotion)
 		apply(sample,q)
 		celestialAnchor.Position=camera.CFrame.Position
 		moon.attachment.Position=Vector3.new(table.unpack(State.moon(sample.phase)))*Config.celestial.distance

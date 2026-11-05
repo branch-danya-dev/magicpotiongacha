@@ -13,7 +13,8 @@ world.root:SetAttribute("VisualHarness",true)
 local count=0
 for _,p in ipairs(world.root.EnvironmentArt:GetDescendants()) do
 	if not p:IsA("BasePart") then continue end
-	assert(p.Anchored and not p.CanCollide and not p.CanTouch and not p.CanQuery,"Unsafe decoration")
+	local barrier=p:GetAttribute("PhysicalBarrier")==true
+	assert(p.Anchored and p.CanCollide==barrier and not p.CanTouch and p.CanQuery==barrier,"Unsafe decoration/barrier")
 	assert(not p:FindFirstChildWhichIsA("ProximityPrompt",true),"Art contains a prompt")
 	count+=1
 end

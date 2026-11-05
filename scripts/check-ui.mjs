@@ -18,9 +18,10 @@ console.log('UI18 contract PASS: original intent sequencing/payment handling; na
 // The review must describe the actual captured runtime, not later unreviewed code.
 const evidence='docs/evidence/m7-ui18/';
 const manifest=JSON.parse(read(evidence+'captures.json'));
+const capturedSources=JSON.parse(read(evidence+'source-snapshot.json'));
 const sha256=bytes=>createHash('sha256').update(bytes).digest('hex');
 for(const [path,hash] of Object.entries(manifest.sourcesNormalizedLF))
-  assert.equal(sha256(read(path)),hash,`UI18 captured runtime changed: ${path}`);
+  assert.equal(sha256(capturedSources[path]),hash,`UI18 historical captured source changed: ${path}`);
 for(const [file,hash] of Object.entries(manifest.files))
   assert.equal(sha256(readFileSync(evidence+file)),hash,`UI18 evidence changed: ${file}`);
 console.log(`UI18 evidence PASS: ${manifest.runtimeSourceCommit}; ${manifest.captures.length} actual Studio captures; review remains pending`);

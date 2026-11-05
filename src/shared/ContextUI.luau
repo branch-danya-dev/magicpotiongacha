@@ -42,6 +42,7 @@ function UI.layout(width,height,touch,chatRight)
 	local left=chatRight and math.max(12,chatRight+12) or 12
 	local chatModal=chatRight~=nil and (compact or left+panelWidth>width-12)
 	return {compact=compact,portrait=portrait,left=left,chatModal=chatModal,width=math.max(240,panelWidth),height=math.max(180,panelHeight),
+		factory={x=(width-104)/2,y=height-94,w=104,h=44},
 		hudWidth=math.min(width-24,360),railWidth=math.min(width-24,300),bottom=touch and portrait and 150 or 20}
 end
 function UI.description(entry,config)
