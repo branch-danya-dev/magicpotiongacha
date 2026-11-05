@@ -2,16 +2,18 @@
 
 CLI/CI passing is necessary but does not mark any item below as completed.
 
-## Current: Issue #18 — UI acceptance pending
+## Current: Task 01 / #18a — critical Play fixes, visual review pending
 
 Owner explicitly **APPROVED artistic Gate A** on 2026-11-05. This approves the
 A.2c atmosphere only. PR #17 remains Draft; no merge or publishing authorized.
-Issue #18 implementation has a review build; [inventory and implementation](M7_UI18.md),
-[actual Studio screenshots/video and open limitations](evidence/m7-ui18/README.md).
-892 automated tests pass; UI acceptance remains pending. The portrait player-list
-overlap and unperformed live regression cases are explicitly listed in the report.
+The [new eight-task sequence](M7_REWORK_PLAN.md) starts with smooth time changes,
+physical fences, server fall recovery and mobile Factory entry. Task 01 has a plain
+Play build, [20 actual Studio captures and three recordings](evidence/m7-18a/README.md).
+907 automated tests pass; visual acceptance remains pending. Factory overlap was
+fixed and exercised with the native player list open in both phone orientations.
+Broader resource/guide overlap and unperformed regression cases remain documented.
 Physical phones, experience asset permissions and multiplayer load stay BLOCKED.
-Issue #19 and station redesign wait for their subsequent gates.
+Tasks 02–07 have not started; task 08 requires final pilot APPROVED after 07.
 
 ## Historical: M7.1 A.2c — delivered for Gate A
 

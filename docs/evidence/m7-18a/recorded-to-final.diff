@@ -1,0 +1,33 @@
+diff --git a/src/client/Main.client.luau b/src/client/Main.client.luau
+index 333c716..712006b 100644
+--- a/src/client/Main.client.luau
++++ b/src/client/Main.client.luau
+@@ -178,6 +178,7 @@ local function updateContext(entry,count,region)
+ 	end
+ end
+ panel:GetPropertyChangedSignal("Visible"):Connect(function()
++	toggle.Visible=not panel.Visible or toggle.Parent==hud
+ 	if context then context.refresh() end
+ 	if panel.Visible and UserInputService.GamepadEnabled then GuiService.SelectedObject=close end
+ end)
+@@ -235,6 +236,7 @@ local function resize()
+ 		toggle.Size,toggle.Position=UDim2.fromOffset(layout.factory.w,layout.factory.h),UDim2.fromOffset(layout.factory.x,layout.factory.y)
+ 		balance.Size=UDim2.new(1,-24,0,36)
+ 	else toggle.Parent=hud end
++	toggle.Visible=not panel.Visible or not layout.compact
+ 	status.Visible=false
+ 	guide.Position,guide.Size=UDim2.fromOffset(layout.compact and 12 or layout.left,58),UDim2.fromOffset(layout.hudWidth,44)
+ 	regionLabel.Position,regionLabel.Size=UDim2.fromOffset(layout.compact and 12 or layout.left,106),UDim2.fromOffset(layout.hudWidth,24)
+diff --git a/src/shared/ContextUI.luau b/src/shared/ContextUI.luau
+index eeb85da..9a4e9c3 100644
+--- a/src/shared/ContextUI.luau
++++ b/src/shared/ContextUI.luau
+@@ -42,7 +42,7 @@ function UI.layout(width,height,touch,chatRight)
+ 	local left=chatRight and math.max(12,chatRight+12) or 12
+ 	local chatModal=chatRight~=nil and (compact or left+panelWidth>width-12)
+ 	return {compact=compact,portrait=portrait,left=left,chatModal=chatModal,width=math.max(240,panelWidth),height=math.max(180,panelHeight),
+-		factory={x=(width-104)/2,y=height-94,w=104,h=44},
++		factory={x=(width-104)/2,y=height-124,w=104,h=44},
+ 		hudWidth=math.min(width-24,360),railWidth=math.min(width-24,300),bottom=touch and portrait and 150 or 20}
+ end
+ function UI.description(entry,config)
