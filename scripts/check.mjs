@@ -34,6 +34,7 @@ JSON.parse(await readFile(resolve(root, 'default.project.json'), 'utf8'));
 const all = [...await files('src'), ...await files('tests'), ...await files('qa')];
 run(process.execPath, ['scripts/check-environment.mjs']);
 run(process.execPath, ['scripts/check-task06.mjs']);
+run(process.execPath, ['scripts/check-07a.mjs']);
 run(process.execPath, ['scripts/check-ui.mjs']);
 run(process.execPath, ['scripts/check-18a-evidence.mjs']);
 run(process.execPath, ['scripts/check-19a-evidence.mjs']);

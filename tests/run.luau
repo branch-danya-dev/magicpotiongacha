@@ -69,5 +69,6 @@ if selected==nil or selected=="m7" then
 	require("./atmosphere19e.spec")(Test)
 	require("./props19f.spec")(Test)
 	require("./stability07a.spec")(Test)
+	require("./batch07a.spec")(Test)
 end
 Test.finish()

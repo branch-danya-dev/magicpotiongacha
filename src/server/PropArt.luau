@@ -7,8 +7,9 @@ local EnvironmentPlan=require(Shared.EnvironmentPlan)
 local EnvironmentConfig=require(Shared.EnvironmentConfig)
 local Art={}
 local function color(tint) return Color3.fromRGB(table.unpack(Plan.palette[tint])) end
-local function build(parent,name,pieces,basis)
+local function build(parent,name,pieces,basis,lampId)
 	local model=Instance.new("Model"); model.Name=name
+	if lampId then model.ModelStreamingMode=Enum.ModelStreamingMode.Persistent end
 	local entries={}
 	for _,d in ipairs(pieces) do
 		local p=Instance.new(d.shape=="Wedge" and "WedgePart" or "Part"); p.Name=d.name
@@ -20,6 +21,9 @@ local function build(parent,name,pieces,basis)
 		p.TopSurface=Enum.SurfaceType.Smooth; p.BottomSurface=Enum.SurfaceType.Smooth
 		p.Reflectance=0; p.CastShadow=d.role~="status"; p.Transparency=1
 		p.Color=color(d.tint); p.Material=Enum.Material[d.material]
+		if lampId and string.find(p.Name,"AmberPane",1,true) then
+			p.CastShadow=false; p:SetAttribute("EnvironmentLanternPane",lampId)
+		end
 		p.Parent=model; table.insert(entries,{part=p,definition=d})
 	end
 	model.Parent=parent
@@ -51,10 +55,10 @@ function Art.attach(world)
 		return hit and hit.Position.Y+.025 or .5
 	end
 	local partCount,triangles=0,0
-	local function create(name,pieces,cf)
+	local function create(name,pieces,cf,lampId)
 		local count,cost=Plan.metrics(pieces); partCount+=count; triangles+=cost
 		assert(partCount<=Plan.maxParts and triangles<=Plan.maxTriangleCharge,"Pilot prop budget exceeded")
-		return build(folder,name,pieces,cf)
+		return build(folder,name,pieces,cf,lampId)
 	end
 	local function link(anchor,model)
 		assert(not anchor:FindFirstChild("PresentationModel"),"Duplicate presentation link")
@@ -72,7 +76,9 @@ function Art.attach(world)
 	for i,d in ipairs(env.parts) do
 		if d.light then
 			local anchor=assert(world.root.EnvironmentArt:FindFirstChild(d.id))
-			local lamp=create("Lantern_"..i,Plan.lantern(),CFrame.new(anchor.Position))
+			-- A lamp is one stable assembly; its emissive pane is never LOD-culled.
+			-- Persistence is restricted to these six small existing models.
+			local lamp=create("Lantern_"..i,Plan.lantern(),CFrame.new(anchor.Position),anchor.Name)
 			table.insert(props.static,lamp); anchor.Transparency=1
 			local cap=env.parts[i+1]
 			assert(cap and cap.position[1]==d.position[1] and cap.position[3]==d.position[3],"Lamp cap moved")

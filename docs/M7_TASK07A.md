@@ -1,5 +1,7 @@
 # 07A / #21 — candidate, acceptance still open
 
+Historical partial candidate. Current delivery: [integrated A1–A8 batch](M7_07A_BATCH_RESULT.md).
+
 Based on the owner's docs-only `f81055f`, after task 07 `902d70d`.
 This is a **partial 07A code/build delivery**, not a completed gate. Do not start
 07B, 07C, UX or phase 08 on the basis of this report. The authoritative sequence

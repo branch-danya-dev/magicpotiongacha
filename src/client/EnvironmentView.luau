@@ -8,6 +8,7 @@ local Config=require(Shared.EnvironmentConfig)
 local State=require(Shared.EnvironmentState)
 local Style=require(Shared.AtmosphereStyle)
 local Transition=require(Shared.EnvironmentTransition)
+local Clock=require(Shared.EnvironmentClock)
 local Labels=require(Shared.EnvironmentLabels)
 local ForestLOD=require(Shared.ForestLOD)
 local Meadow=require(Shared.MeadowPlan)
@@ -112,13 +113,27 @@ function View.start(root,settings)
 	for i=1,Config.celestial.stars do
 		local d=State.star(i); stars[i]=celestialSprite("Star_"..i,Config.polishPrefix.."star.png",d.size,Vector3.new(d.x,d.y,d.z)); stars[i].alpha=d.alpha
 	end
-	local lights={}; local lanternSlots={}; local sunSlots={}
+	local lights={}; local lanternSlots={}; local sunSlots={}; local lampPanes={}; local lampsById={}
 	for i,l in ipairs(sunPools) do sunSlots[i]={id=i,light=l,distance=math.huge} end
 	local wind={}; local canopyGroups={}; local registered={}; local wetSurfaces={}
 	local meadowWind={}; local meadowParts={}; local forestParts={}; local forestByPart={}
-	local labels={}; local annotations=true; local labelsDirty=0
+	local labels={}; local annotations=true; local labelsDirty=0; local pendingPanes={}
+	local function bindPane(p)
+		local id=p:GetAttribute("EnvironmentLanternPane")
+		if not id then return false end
+		lampPanes[id]=p; if lampsById[id] then lampsById[id].Parent=p end
+		return true
+	end
 	local function registerLabel(gui)
 		if gui:IsA("BillboardGui") then table.insert(labels,{gui=gui,enabled=gui.Enabled}) end
+		if gui:IsA("BasePart") and string.find(gui.Name,"AmberPane",1,true) then
+			-- Attributes may replicate after ancestry; six bounded one-shot hooks.
+			if not bindPane(gui) and not pendingPanes[gui] then
+				pendingPanes[gui]=gui:GetAttributeChangedSignal("EnvironmentLanternPane"):Connect(function()
+					if bindPane(gui) then pendingPanes[gui]:Disconnect(); pendingPanes[gui]=nil end
+				end)
+			end
+		end
 	end
 	for _,gui in ipairs(root:GetDescendants()) do registerLabel(gui) end
 	local labelAdded=root.DescendantAdded:Connect(registerLabel)
@@ -130,6 +145,7 @@ function View.start(root,settings)
 			if string.find(p.Name,"RockPath") then table.insert(wetSurfaces,{part=p,color=p.Color,wet=Color3.new(p.Color.R*.70,p.Color.G*.75,p.Color.B*.78)}) end
 			if p:GetAttribute("EnvironmentLight") then
 				local l=effect("PointLight","M7LocalLantern",p); l.Enabled=false; l.Color=color(Config.palette.amber); l.Range=14; l.Shadows=false; table.insert(lights,l)
+				lampsById[p.Name]=l; if lampPanes[p.Name] then l.Parent=lampPanes[p.Name] end
 				table.insert(lanternSlots,{id=p.Name,light=l,distance=math.huge})
 			end
 			-- Reviewed templates name leaf meshes *_2 and trunks *_1. Reading
@@ -174,7 +190,8 @@ function View.start(root,settings)
 		p.Material=i%3~=0 and Enum.Material.Neon or Enum.Material.SmoothPlastic
 		p.Color=i%3~=0 and Color3.fromRGB(238,226,140) or Color3.fromRGB(242,222,184); p.Transparency=1; motes[i]=p
 	end
-	local function apply(sample,q,flow)
+	local fx={bloom=0,rays=0}
+	local function apply(sample,q,flow,elapsed)
 		Lighting.ClockTime=sample.clock; Lighting.Brightness=sample.brightness; Lighting.Ambient=color(sample.ambient)
 		Lighting.OutdoorAmbient=color(sample.outdoor); Lighting.GlobalShadows=q.shadows; Lighting.ExposureCompensation=sample.exposure
 		Lighting.GeographicLatitude=26; Lighting.ShadowSoftness=sample.shadowSoftness
@@ -184,17 +201,34 @@ function View.start(root,settings)
 		clouds.Cover=sample.cover; clouds.Density=sample.cloudDensity; clouds.Color=color(sample.cloudColor)
 		correction.TintColor=color(sample.tint); correction.Saturation=sample.saturation; correction.Contrast=.025
 		workspace.GlobalWind=Vector3.new(flow.x,0,flow.z)
-		bloom.Intensity=q.bloom; bloom.Enabled=q.bloom>0
-		rays.Intensity=q.rays*(1-sample.rain)*(1-sample.night); rays.Enabled=q.rays>0
+		fx.bloom=Clock.effect(fx.bloom,q.bloom,elapsed); fx.rays=Clock.effect(fx.rays,q.rays,elapsed)
+		-- Quality changes ease post effects, but hard light/particle caps still
+		-- take effect immediately. No extra sources during a fade.
+		bloom.Intensity=fx.bloom; bloom.Enabled=fx.bloom>.0001
+		rays.Intensity=fx.rays*(1-sample.rain)*(1-sample.night); rays.Enabled=fx.rays>.0001
 	end
 	local lod=0; local step=0; local connection
-	local transition=Transition.new()
+	local transition=Transition.new({forward=true,clockAtPhase=function(phase) return Clock.at(Config,phase) end})
 	function self.setQuality(name) if Config.quality[name] then self.quality=name; lod=1 end end
 	function self.setReduceMotion(enabled) self.reduceMotion=enabled==true; lod=1 end
 	function self.setPose(name)
-		if RunService:IsStudio() and (name==nil or Config.poses[name]) and (name~=self.pose or self.previewStart) then
-			transition.begin(os.clock()); self.pose=name; self.previewStart=nil
+		if RunService:IsStudio() and (name==nil or Config.poses[name]) and (name~=self.pose or self.previewStart or self.clockPhase or self.weather) then
+			transition.begin(os.clock()); self.pose=name; self.previewStart=nil; self.clockPhase=nil; self.clockHour=nil; self.weather=nil
 		end
+	end
+	function self.setTime(hour)
+		if not RunService:IsStudio() then return false end
+		local phase=hour~=nil and Clock.phase(Config,hour) or nil
+		if hour~=nil and not phase then return false end
+		local value=hour~=nil and hour%24 or nil
+		if value==self.clockHour and not self.previewStart then return true end
+		transition.begin(os.clock()); self.clockHour=value; self.clockPhase=phase; self.previewStart=nil
+		return true
+	end
+	function self.setWeather(name)
+		if not RunService:IsStudio() or (name~=nil and not Clock.weather[name]) then return false end
+		if name==self.weather and not self.previewStart then return true end
+		transition.begin(os.clock()); self.weather=name; self.previewStart=nil; return true
 	end
 	function self.setPreview(enabled)
 		if RunService:IsStudio() and (enabled==true)~=(self.previewStart~=nil) then
@@ -229,9 +263,13 @@ function View.start(root,settings)
 		local lightOrigin=avatar and avatar.Position or camera.Focus.Position
 		local time=workspace:GetServerTimeNow(); local now=os.clock()
 		local target=self.previewStart and State.preview(Config,now-self.previewStart) or State.sample(Config,time,self.pose)
+		if not self.previewStart and (self.clockPhase or self.weather) then
+			local weather=self.weather and Clock.weather[self.weather] or target
+			target=State.at(Config,self.clockPhase or target.phase,weather.rain,weather)
+		end
 		local sample=transition.sample(target,now); local q=State.quality(Config,self.quality,self.reduceMotion)
 		local flow=State.wind(sample,time,self.reduceMotion)
-		apply(sample,q,flow)
+		apply(sample,q,flow,elapsed)
 		local sun=Lighting:GetSunDirection(); local sunlight=State.sunVisibility(sample,sun.Y)
 		celestialAnchor.Position=camera.CFrame.Position
 		moon.attachment.Position=Vector3.new(table.unpack(State.moon(sample.phase)))*Config.celestial.distance
@@ -368,11 +406,26 @@ function View.start(root,settings)
 		local nearPilot=(camera.CFrame.Position-Vector3.new(-142.5,5,-65)).Magnitude<q.distance
 		rainbow.image.ImageTransparency=1-(q.rainbow>0 and nearPilot and arc or 0)
 	end
+	local requests={}
+	if RunService:IsStudio() then
+		-- Local Studio review inputs feed this owner; no helper, remote or save.
+		-- Direct Lighting.ClockTime writes are intentionally not a second API.
+		local function request()
+			local command=Clock.request(Config,root:GetAttribute("EnvironmentReview"))
+			if not command then return end
+			local method=({pose=self.setPose,time=self.setTime,weather=self.setWeather,preview=self.setPreview})[command.kind]
+			method(command.value)
+		end
+		table.insert(requests,root:GetAttributeChangedSignal("EnvironmentReview"):Connect(request))
+		request()
+	end
 	function self.stop()
 		if active~=self then return end; active=nil
 		if connection then connection:Disconnect() end
 		added:Disconnect()
 		labelAdded:Disconnect()
+		for _,pending in pairs(pendingPanes) do pending:Disconnect() end
+		for _,request in ipairs(requests) do request:Disconnect() end
 		if not root:GetAttribute("WorldContextOwned") then
 			for _,l in ipairs(labels) do l.gui.Enabled=l.enabled end
 		end

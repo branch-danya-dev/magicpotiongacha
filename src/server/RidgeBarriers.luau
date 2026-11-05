@@ -13,6 +13,7 @@ function Barriers.attach(root)
 		p.CFrame=CFrame.lookAt((a+b)/2,b)
 		p.Anchored=true; p.CanCollide=true; p.CanTouch=false; p.CanQuery=true
 		p.Transparency=1; p.CastShadow=false; p.Parent=folder
+		p:SetAttribute("BarrierRole","IslandBoundary")
 	end
 	folder.Parent=root
 end

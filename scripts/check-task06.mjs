@@ -41,4 +41,4 @@ const old=JSON.parse(readFileSync('assets/environment/atmosphere/receipt.json'))
 const polish=JSON.parse(readFileSync('assets/environment/polish/receipt.json'));
 const resident=bark.texture_rgba8_mips_bytes+old.rgba8_mips_bytes-6*256*256*4*4/3+receipt.rgba8_mips_bytes+polish.rgba8_mips_bytes;
 assert(resident<=32*1024*1024,'Current runtime texture memory exceeds inherited cap');
-console.log(`19e sky PASS: six decoded faces, 3056 matching edge rays, opaque pixels, four distinct side faces; runtime textures ${(resident/1024**2).toFixed(3)} MiB`);
+console.log(`Historical 19e art integrity PASS: six decoded faces and original assumed topology; native topology is tested separately by check-07a.mjs; textures ${(resident/1024**2).toFixed(3)} MiB`);

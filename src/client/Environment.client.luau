@@ -8,7 +8,7 @@ local function reconcile()
 	if root:GetAttribute("EnvironmentArtEnabled")==true then
 		if not Controller.view and root:FindFirstChild("EnvironmentArt") then
 			Controller.view=View.start(root,{quality=Controller.quality}); Controller.view.setReduceMotion(Controller.reduceMotion)
-			stopCamera=CameraCollision.start()
+			stopCamera=CameraCollision.start(root)
 		end
 	elseif Controller.view then
 		Controller.view.stop(); Controller.view=nil

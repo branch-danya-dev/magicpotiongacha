@@ -1,0 +1,25 @@
+{
+  "name": "07a-native-adjacency-sky",
+  "version": 1,
+  "license": "CC0-1.0",
+  "generator": "scripts/create-stability-sky.py",
+  "generator_sha256": "0e175f9d322c9e2bf16a87b4fc9864d94033f0368da55cc931c03fc98f143684",
+  "art_generator": "scripts/create-fantasy-sky.py",
+  "art_generator_sha256": "38251fd0fec3c54714137c72e427c461e5d8ca20c1ab5415a38879f79df8fb2d",
+  "files": {
+    "bk.png": "3fbe2900abae1e541e0809a02386cf4234660daafdb24218f9ab2cfd73fc76a8",
+    "dn.png": "01bb83558a069651b4f736ece6aff21d07810714db7e7710f9d5bd8a58d3ecc6",
+    "ft.png": "b3332bb508e1b4694fdfb00fb31bdb1858f31205e551efc61c696ae15da9fb6c",
+    "lf.png": "843776e922610593fbfe25ed1f2dd0f56ebefacb45646043dd61fdaaf3593f11",
+    "LICENSE.txt": "d29dec100acb687afacca0be9015dd36232e6fadab535361661d0e5208de0bff",
+    "rt.png": "8bd5e51849b5de314439809ad9a6c6695a015bed8f8ec81451c2d886c34fcb97",
+    "up.png": "73a9acf9083403032bf224f670752e569e1b9137c70e7cc107954248f09df213"
+  },
+  "cube_size": 256,
+  "rgba8_mips_bytes": 2097152,
+  "local_prefix": "rbxasset://m7task07a-v1/",
+  "roblox_asset_ids": null,
+  "permissions": "LOCAL_STUDIO_ONLY; experience permissions BLOCKED",
+  "diagnosis": "docs/evidence/m7-07a-batch/sky-diagnosis.json",
+  "runtime_render_status": "NOT_VERIFIED; final ordinary Play required"
+}

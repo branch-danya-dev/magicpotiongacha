@@ -3,6 +3,7 @@
 local Players=game:GetService("Players")
 local RunService=game:GetService("RunService")
 local Recovery=require(game:GetService("ReplicatedStorage").PotionTycoon.Shared.CharacterRecovery)
+local Boundary=require(game:GetService("ReplicatedStorage").PotionTycoon.Shared.IslandBoundary)
 local root=workspace:WaitForChild("PotionTycoonWorld")
 local rescues=setmetatable({},{__mode="k"})
 local elapsed=0
@@ -19,7 +20,9 @@ RunService.Heartbeat:Connect(function(dt)
 		if not hrp or not humanoid or humanoid.Health<=0 or not spawn or not plot
 			or plot.Parent~=root or plot:GetAttribute("OwnerUserId")~=player.UserId then continue end
 		local now=os.clock()
-		if Recovery.needed(hrp.Position.Y,hrp.AssemblyLinearVelocity.Y,Recovery.interval,workspace.FallenPartsDestroyHeight,rescues[character] or -math.huge,now) then
+		local last=rescues[character] or -math.huge
+		local escaped=root:GetAttribute("EnvironmentArtEnabled")==true and Boundary.escaped(hrp.Position.X,hrp.Position.Z) and now-last>=Recovery.cooldown
+		if escaped or Recovery.needed(hrp.Position.Y,hrp.AssemblyLinearVelocity.Y,Recovery.interval,workspace.FallenPartsDestroyHeight,last,now) then
 			-- No yield between ownership/character validation and the move.
 			humanoid.Sit=false
 			hrp.AssemblyLinearVelocity=Vector3.zero; hrp.AssemblyAngularVelocity=Vector3.zero

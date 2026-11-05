@@ -18,4 +18,9 @@ function Boundary.contains(x,z,margin)
 	end
 	return true
 end
+function Boundary.escaped(x,z)
+	if x~=x or z~=z or math.abs(x)==math.huge or math.abs(z)==math.huge then return false end
+	-- Six studs of grace avoids fighting normal contact correction at the wall.
+	return not Boundary.contains(x,z,-6)
+end
 return Boundary

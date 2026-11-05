@@ -2,7 +2,18 @@
 
 CLI/CI passing is necessary but does not mark any item below as completed.
 
-## Current: 07A / #21 — partial candidate, gate OPEN
+## Current: 07A / #21 — integrated A1–A8 candidate, owner pass pending
+
+[Integrated batch result](M7_07A_BATCH_RESULT.md): A1–A8 code/asset changes are
+implemented; native rendering and ordinary Play remain NOT VERIFIED. A corrected
+sky pack now passes independent native-topology checks, with the old pack failing
+as a negative control. Camera initial overlap, physical boundaries/fences, lamp
+bodies, coherent time/weather and quality costs have been addressed as one package.
+1037 tests preserve all 1012 previous cases. One final build is handed over for one
+comprehensive owner pass; no intermediate owner Play or media requests. No 07B/07C,
+UX or 08. Phone/permission/load gates remain BLOCKED, PR Draft, no merge/publishing.
+
+## Historical: 07A / #21 — partial candidate, gate OPEN
 
 [07A report](M7_TASK07A.md): avatar-based bounded light slots, continuous cyclic
 retargeting, an ordinary-camera collision guard and eight outer-ridge colliders.

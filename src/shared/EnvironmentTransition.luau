@@ -20,7 +20,7 @@ function Transition.blend(a,b,progress)
 	end
 	return result
 end
-function Transition.new()
+function Transition.new(options)
 	local self={last=nil,from=nil,started=0,unwrapped={}}
 	function self.begin(now)
 		self.from=self.last; self.started=now; self.unwrapped={}
@@ -34,10 +34,14 @@ function Transition.new()
 			local t=math.clamp(elapsed/Transition.seconds,0,1); t=t*t*(3-2*t)
 			for key,period in pairs({clock=24,phase=1}) do
 				local previous=self.unwrapped[key] or self.from[key]
-				local value=previous+(target[key]-previous+period/2)%period-period/2
+				local value
+				if options and options.forward and self.unwrapped[key]==nil then
+					value=previous+(target[key]-previous)%period
+				else value=previous+(target[key]-previous+period/2)%period-period/2 end
 				self.unwrapped[key]=value
 				self.last[key]=(self.from[key]+(value-self.from[key])*t)%period
 			end
+			if options and options.clockAtPhase then self.last.clock=options.clockAtPhase(self.last.phase) end
 		end
 		if elapsed>=Transition.seconds then self.from=nil end
 		return self.last
