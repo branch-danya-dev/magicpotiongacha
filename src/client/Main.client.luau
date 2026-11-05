@@ -178,6 +178,7 @@ local function updateContext(entry,count,region)
 	end
 end
 panel:GetPropertyChangedSignal("Visible"):Connect(function()
+	toggle.Visible=not panel.Visible or toggle.Parent==hud
 	if context then context.refresh() end
 	if panel.Visible and UserInputService.GamepadEnabled then GuiService.SelectedObject=close end
 end)
@@ -235,6 +236,7 @@ local function resize()
 		toggle.Size,toggle.Position=UDim2.fromOffset(layout.factory.w,layout.factory.h),UDim2.fromOffset(layout.factory.x,layout.factory.y)
 		balance.Size=UDim2.new(1,-24,0,36)
 	else toggle.Parent=hud end
+	toggle.Visible=not panel.Visible or not layout.compact
 	status.Visible=false
 	guide.Position,guide.Size=UDim2.fromOffset(layout.compact and 12 or layout.left,58),UDim2.fromOffset(layout.hudWidth,44)
 	regionLabel.Position,regionLabel.Size=UDim2.fromOffset(layout.compact and 12 or layout.left,106),UDim2.fromOffset(layout.hudWidth,24)
