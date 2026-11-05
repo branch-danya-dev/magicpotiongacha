@@ -40,7 +40,7 @@ end
 Input.InputBegan:Connect(function(key,handled)
 	if handled then return end
 	if key.KeyCode==Enum.KeyCode.F6 then routeIndex=routeIndex%#route+1; move()
-	elseif key.KeyCode==Enum.KeyCode.F7 then
+	elseif key.KeyCode==Enum.KeyCode.L then
 		poseIndex=poseIndex%#poses+1
 		if Controller.view then Controller.view.setPose(poses[poseIndex]) end
 		task.delay(1,audit)
