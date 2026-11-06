@@ -5,6 +5,7 @@ World.__index = World
 local Access = require(game:GetService("ReplicatedStorage").PotionTycoon.Shared.Access)
 local EnvironmentArt = require(script.Parent.EnvironmentArt)
 local PropArt = require(script.Parent.PropArt)
+local SessionReveal = require(script.Parent.FirstSessionReveal)
 
 local OFFSETS = {
 	warehouse = Vector3.new(-8,2,-30), orders = Vector3.new(10,2,-30),
@@ -286,6 +287,7 @@ function World:update(player, profile)
 	local order = self.callbacks.orderProgress(profile)
 	plot.labels.orders.Text = profile.order and ("Заказ NPC: " .. order.delivered .. "/" .. profile.order.count
 		.. "\nУ котла: " .. order.queued .. " · В пути: " .. order.travelling .. " · " .. order.remainingSeconds .. " сек.") or "Доска заказов · выбери контракт"
+	SessionReveal.apply(self, plot, profile)
 	if self.environmentArtEnabled then EnvironmentArt.update(plot,profile.rebirths,profile.entitlements.aurora_theme==true) end
 	if self.environmentArtEnabled then PropArt.update(plot,profile,production) end
 end

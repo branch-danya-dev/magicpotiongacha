@@ -75,6 +75,8 @@
   "worldSha256": "5e94b7d206c7feeb5d0c86bc26ccdb03bc40ec583bc46764ddcf195859cdd500",
   "worldPresentationLines": [
     "local EnvironmentArt = require(script.Parent.EnvironmentArt)\n",
+    "local SessionReveal = require(script.Parent.FirstSessionReveal)\n",
+    "\tSessionReveal.apply(self, plot, profile)\n",
     "\tself.environmentArtEnabled=environmentArtEnabled==true\n",
     "\troot:SetAttribute(\"EnvironmentArtEnabled\",false)\n",
     "\tif self.environmentArtEnabled then EnvironmentArt.attach(self) end\n",

@@ -18,6 +18,8 @@ local Monetization = require(shared.Monetization)
 local shopUI = require(script.Parent.ShopUI).new()
 local shopPreview = require(script.Parent.ShopPreview)
 local environment = require(script.Parent.EnvironmentController)
+local Session = require(shared.FirstSessionView)
+local ContextActionService = game:GetService("ContextActionService")
 local MarketplaceService = game:GetService("MarketplaceService")
 local remotes = ReplicatedStorage.PotionTycoon:WaitForChild("Remotes")
 local Action, State, Notice, Focus = remotes:WaitForChild("Action"), remotes:WaitForChild("State"), remotes:WaitForChild("Notice"), remotes:WaitForChild("Focus")
@@ -375,6 +377,40 @@ draw = function()
 			preview=function(style) order+=1; local view=shopPreview.create(contents,style); view.LayoutOrder=order end})
 		refresh(); return
 	end
+	if selected=="supplies" then
+		title.Text="Магазин участка"
+		text("Покупку подтверждает сервер. Кнопки повторяют уже существующие действия и не начисляют Gold или Essence сами.",64)
+		action("Семена · "..compact(state.firstSession.seedCost).." Gold",function() send("buySeed",{amount=1}) end)
+		if state.stations.garden.level==0 then action("Грядка · "..compact(state.firstSession.bedCost).." Gold",function() send("buyStarterStation",{stationId="garden"}) end) end
+		if state.stations.cauldron.level==0 then action("Котёл · "..compact(state.firstSession.cauldronCost).." Gold",function() send("buyStarterStation",{stationId="cauldron"}) end) end
+		if state.stations.cauldron.level>0 and not (state.automation and state.automation.brew) then
+			action("Автоматизация · "..compact(state.firstSession.automationCost).." Gold",function() send("buyAutomation",{feature="basic"}) end)
+		end
+		local crystalPrice=upgradePrice("crystal")
+		if crystalPrice then action("Кристалл · "..compact(crystalPrice).." Gold",function() send("buy",{upgradeId="crystal"}) end) end
+		refresh(); return
+	end
+	if selected=="inventory" then
+		title.Text="Инвентарь"
+		text("Семена: "..names(state.seeds),48)
+		text("Склад: "..names(state.inventory),48)
+		text("Для заказа: "..names(state.questStock),48)
+		refresh(); return
+	end
+	if selected=="familiars" then
+		title.Text="Фамильяры"
+		local choice=state.starter and state.starter.choice
+		text(choice and ("Стартовый выбор: "..(Config.petSpecies[choice] and Config.petSpecies[choice].name or choice)) or "Стартовый фамильяр ещё не выбран.",48)
+		local ids={}
+		for id in pairs(state.pets) do table.insert(ids,id) end
+		table.sort(ids)
+		if #ids==0 then text("Фамильяров пока нет.",36) end
+		for _,id in ipairs(ids) do
+			local pet=state.pets[id]
+			text(pet.name.." · "..tostring(pet.species or ""),36)
+		end
+		refresh(); return
+	end
 	if selected=="rebirth" or selected=="dailies" or selected=="shards" then
 		title.Text=selected=="rebirth" and "Rebirth · новая эпоха" or (selected=="dailies" and "Ежедневные награды" or "Time Shards · магазин")
 		longTermUI.draw({state=state,currentState=function() return state end,bindText=bindText,mode=selected,text=text,action=action,send=send,redraw=draw}); refresh(); return
@@ -650,6 +686,81 @@ for _, tab in ipairs(tabList) do
 	tabButton.Size = UDim2.fromOffset(104, 44)
 end
 
+local coach=Instance.new("Frame")
+coach.Name,coach.AnchorPoint="FirstSession",Vector2.new(0.5,1)
+coach.Position,coach.Size=UDim2.new(0.5,0,1,-12),UDim2.new(0.92,0,0,168)
+coach.BackgroundColor3,coach.BackgroundTransparency=SURFACE,0.08
+coach.Visible=false
+coach.Parent=gui
+local coachCorner=Instance.new("UICorner")
+coachCorner.CornerRadius=UDim.new(0,12)
+coachCorner.Parent=coach
+local coachTitle=label(coach,"",28)
+coachTitle.Position,coachTitle.Size=UDim2.fromOffset(16,10),UDim2.new(1,-32,0,28)
+coachTitle.TextXAlignment=Enum.TextXAlignment.Left
+coachTitle.Font=Enum.Font.GothamBold
+local coachBody=label(coach,"",64)
+coachBody.Position,coachBody.Size=UDim2.fromOffset(16,40),UDim2.new(1,-32,0,64)
+coachBody.TextXAlignment,coachBody.TextYAlignment=Enum.TextXAlignment.Left,Enum.TextYAlignment.Top
+coachBody.TextWrapped=true
+local coachActions=Instance.new("Frame")
+coachActions.BackgroundTransparency=1
+coachActions.Position,coachActions.Size=UDim2.fromOffset(12,112),UDim2.new(1,-24,0,46)
+coachActions.Parent=coach
+local coachLayout=Instance.new("UIListLayout")
+coachLayout.FillDirection,coachLayout.Padding=Enum.FillDirection.Horizontal,UDim.new(0,8)
+coachLayout.Parent=coachActions
+local quick=Instance.new("Frame")
+quick.Name,quick.AnchorPoint="QuickAccess",Vector2.new(1,0)
+quick.Position,quick.Size=UDim2.new(1,-12,0,92),UDim2.fromOffset(148,150)
+quick.BackgroundTransparency,quick.Visible=1,false
+quick.Parent=gui
+local quickLayout=Instance.new("UIListLayout")
+quickLayout.Padding=UDim.new(0,6)
+quickLayout.Parent=quick
+local function openMenu(menuId)
+	if not state or Session.intro(state) then return end
+	selected,petPicker,selectedUpgrade,panel.Visible=menuId,false,false,true
+	draw()
+end
+for _,menu in ipairs({{"supplies","Магазин"},{"inventory","Инвентарь"},{"familiars","Фамильяры"}}) do
+	local menuButton=button(quick,menu[2],function() openMenu(menu[1]) end)
+	menuButton.Size=UDim2.fromOffset(148,44)
+end
+local acknowledged=nil
+local renderCoach
+local function perform(entry)
+	if entry.kind=="acknowledge" then acknowledged=entry.id; renderCoach(); return end
+	if entry.kind=="brew" then
+		send("setRecipe",{stationId="cauldron",recipeId="healing"})
+		send("load",{stationId="cauldron"})
+		send("brew",{stationId="cauldron"})
+	else send(entry.action,entry.payload) end
+end
+function renderCoach()
+	if not state then coach.Visible,quick.Visible=false,false; return end
+	local view=Session.present(state,Config,acknowledged)
+	coach.Visible=view.visible
+	coachTitle.Text,coachBody.Text=view.title,view.text
+	for _,child in ipairs(coachActions:GetChildren()) do if child:IsA("TextButton") then child:Destroy() end end
+	for _,entry in ipairs(view.actions) do
+		local choice=button(coachActions,entry.label,function() perform(entry) end)
+		choice.Size=UDim2.new(view.intro and 0.32 or 0.7,0,0,44)
+	end
+	quick.Visible=#view.menus>0
+end
+local function bindMenu(name,menuId,keys)
+	ContextActionService:BindAction(name,function(_,inputState)
+		if inputState~=Enum.UserInputState.Begin or UserInputService:GetFocusedTextBox() then return Enum.ContextActionResult.Pass end
+		if not state or Session.intro(state) then return Enum.ContextActionResult.Pass end
+		openMenu(menuId)
+		return Enum.ContextActionResult.Sink
+	end,false,table.unpack(keys))
+end
+bindMenu("PotionShop","supplies",{Enum.KeyCode.M,Enum.KeyCode.DPadLeft})
+bindMenu("PotionInventory","inventory",{Enum.KeyCode.I,Enum.KeyCode.DPadDown})
+bindMenu("PotionFamiliars","familiars",{Enum.KeyCode.P,Enum.KeyCode.DPadRight})
+
 local toastGeneration = 0
 local function showToast(message, duration)
 	toastGeneration += 1
@@ -660,6 +771,7 @@ end
 
 State.OnClientEvent:Connect(function(value)
 	local first = state == nil
+	local previousEssence = state and state.essence
 	local shopChanged=state and Codec.encode(state.shop)~=Codec.encode(value.shop)
 	local longTermChanged=state and (state.longTerm.requestId~=value.longTerm.requestId or state.longTerm.day~=value.longTerm.day)
 	local longTermPanel=selected=="rebirth" or selected=="dailies" or selected=="shards"
@@ -670,7 +782,11 @@ State.OnClientEvent:Connect(function(value)
 		or table.concat(state.orderOffers,"|")~=table.concat(value.orderOffers,"|"))
 	if state and (state.collection.sequence ~= value.collection.sequence or state.progression.sequence~=value.progression.sequence or state.shop.sequence~=value.shop.sequence or longTermChanged) then collectionPending = false end
 	state = value
-	if first or progressionChanged or longTermChanged or longTermViewChanged or (selected=="shop" and shopChanged) or (selected == "altar" and collectionChanged) then draw() else refresh() end
+	if first and Session.intro(value) then panel.Visible=false end
+	local gained=Session.essenceDelta(previousEssence,value.essence)
+	if gained>0 then showToast("+"..gained.." Essence") end
+	renderCoach()
+	if first or progressionChanged or longTermChanged or longTermViewChanged or (selected=="shop" and shopChanged) or (selected == "altar" and collectionChanged) or selected=="supplies" or selected=="inventory" or selected=="familiars" then draw() else refresh() end
 	if not hasReport and value.offlineReport and value.offlineReport.processedSeconds > 5 then
 		hasReport = true
 		showToast("С возвращением! Учтено " .. value.offlineReport.processedSeconds .. " сек. работы. Gold: +" .. math.floor(value.offlineReport.goldEarned or 0) .. ". Уже сохранено.", 8)
@@ -716,12 +832,20 @@ task.spawn(function()
 	context=require(script.Parent.WorldContext).start(updateContext,function() return panel.Visible or not gui.Enabled end,function()
 		local inset=GuiService:GetGuiInset(); local rectangles={}
 		if chatRect then table.insert(rectangles,chatRect) end
-		for _,widget in ipairs({hud,guide,rail,toggle}) do
+		for _,widget in ipairs({hud,guide,rail,toggle,coach,quick}) do
 			local p,s=widget.AbsolutePosition,widget.AbsoluteSize
 			table.insert(rectangles,{x=p.X+inset.X,y=p.Y+inset.Y,w=s.X,h=s.Y})
 		end
 		return rectangles
 	end,function() return state end)
+	local world=workspace:WaitForChild("PotionTycoonWorld")
+	local function crystalFlash(object)
+		if object:IsA("ProximityPrompt") and object.Parent and object.Parent:GetAttribute("StationId")=="crystal" and string.sub(object.Parent.Name,1,4)~="Buy_" then
+			object.Triggered:Connect(function() showToast("Кристалл вспыхнул") end)
+		end
+	end
+	for _,object in ipairs(world:GetDescendants()) do crystalFlash(object) end
+	world.DescendantAdded:Connect(crystalFlash)
 end)
 Ready:FireServer()
 task.spawn(function()

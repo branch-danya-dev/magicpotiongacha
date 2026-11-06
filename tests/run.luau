@@ -23,6 +23,7 @@ if selected == nil or selected == "m1" then
 	require("./v8_migration.spec")(Test)
 	require("./c01_first_session.spec")(Test)
 	require("./c01_economy_v2.spec")(Test)
+	require("./c01_session_ux.spec")(Test)
 end
 
 if selected == nil or selected == "m2" then

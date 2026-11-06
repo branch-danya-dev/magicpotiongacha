@@ -27,9 +27,10 @@ function Context.start(onChanged,isPanelOpen,blockedRects,currentState)
 			labels[object]=object.Enabled; object.Enabled=false
 		elseif object:IsA("ProximityPrompt") and object.Parent:IsA("BasePart") then
 			local anchor=object.Parent; local plot=anchor.Parent
-			prompts[object]={enabled=object.Enabled,objectText=object.ObjectText,actionText=object.ActionText,
+			local record={enabled=object.Enabled,objectText=object.ObjectText,actionText=object.ActionText,
 				anchor=anchor,plot=plot,id=anchor:GetFullName(),station=anchor:GetAttribute("StationId") or string.gsub(anchor.Name,"^Buy_",""),
 				upgrade=string.sub(anchor.Name,1,4)=="Buy_",public=anchor.Name=="TradePost"}
+			prompts[object]=record
 			object.Enabled=false
 		elseif object:IsA("BasePart") then
 			if string.sub(object.Name,1,4)=="Buy_" then
@@ -69,7 +70,7 @@ function Context.start(onChanged,isPanelOpen,blockedRects,currentState)
 			ray.FilterDescendantsInstances=ignored
 			for prompt,record in pairs(prompts) do
 				local anchor=record.anchor
-				if prompt.Parent and anchor:IsDescendantOf(root) then
+				if prompt.Parent and anchor:IsDescendantOf(root) and (record.public or anchor:GetAttribute("FirstSessionHidden")==false) then
 					local distance=(anchor.Position-hrp.Position).Magnitude
 					local point,visible=cam:WorldToViewportPoint(anchor.Position)
 					local clear=false
@@ -90,17 +91,21 @@ function Context.start(onChanged,isPanelOpen,blockedRects,currentState)
 		if pinned and os.clock()<pinnedUntil then
 			for _,entry in ipairs(candidates) do if entry.id==pinned then current=entry; break end end
 		end
+		local snapshot=currentState and currentState()
+		local clickEssence=snapshot and snapshot.starter and snapshot.starter.legacyGrant~=true and Config.economyV2 and Config.economyV2.clickEssence
 		for prompt,record in pairs(prompts) do
 			if prompt.Parent then
-				prompt.Enabled=current~=nil and current.prompt==prompt
+				local hidden=not record.public and record.anchor:GetAttribute("FirstSessionHidden")~=false
+				prompt.Enabled=not hidden and current~=nil and current.prompt==prompt
+				if not record.upgrade and record.anchor.Parent then record.anchor.LocalTransparencyModifier=hidden and 1 or 0 end
 				-- Keep Roblox's native keyboard/gamepad/touch control and hold semantics.
 				prompt.ObjectText=Policy.description(record,Config)
-				prompt.ActionText=record.upgrade and "Улучшить" or (record.station=="crystal" and "Собрать" or "Открыть")
+				prompt.ActionText=record.upgrade and "Улучшить" or (record.station=="crystal" and (clickEssence and ("+"..clickEssence.." Essence") or "Собрать") or "Открыть")
 			end
 		end
 		for gui in pairs(labels) do if gui.Parent then gui.Enabled=false end end
 		local integrated=root:GetAttribute("FarmGroundVersion")==1
-		for pad,record in pairs(pads) do if pad.Parent then pad.LocalTransparencyModifier=integrated and 1 or record.transparency end end
+		for pad,record in pairs(pads) do if pad.Parent then pad.LocalTransparencyModifier=(pad:GetAttribute("FirstSessionHidden")~=false or integrated) and 1 or record.transparency end end
 		highlight.Adornee=current and not (integrated and current.upgrade) and current.anchor or nil
 		-- Task 07: highlight the visible authored model; retain the original
 		-- invisible anchor for distance, raycast, ownership and native prompts.

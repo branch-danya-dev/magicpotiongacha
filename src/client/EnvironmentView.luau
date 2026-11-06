@@ -14,6 +14,8 @@ local ForestLOD=require(Shared.ForestLOD)
 local Meadow=require(Shared.MeadowPlan)
 local MeadowMotion=require(Shared.MeadowMotion)
 local LightSlots=require(Shared.EnvironmentLights)
+local Boundary=require(Shared.IslandBoundary)
+local RainField=require(Shared.RainField)
 local Vista=require(Shared.VistaPlan)
 local Players=game:GetService("Players")
 local View={}
@@ -67,7 +69,12 @@ function View.start(root,settings)
 		p.Transparency=1; return p
 	end
 	local ground=RaycastParams.new(); ground.FilterType=Enum.RaycastFilterType.Include
-	ground.FilterDescendantsInstances={workspace.Terrain,root.ForestFloor,root.Plot_1.Floor}
+	local groundTargets={workspace.Terrain,root.ForestFloor}
+	for _,child in ipairs(root:GetChildren()) do
+		local floor=child:FindFirstChild("Floor")
+		if string.sub(child.Name,1,5)=="Plot_" and floor then table.insert(groundTargets,floor) end
+	end
+	ground.FilterDescendantsInstances=groundTargets
 	local function surface(x,z)
 		local hit=workspace:Raycast(Vector3.new(x,70,z),Vector3.new(0,-120,0),ground)
 		return hit and hit.Position.Y or .5
@@ -332,7 +339,7 @@ function View.start(root,settings)
 			table.sort(meadowWind,function(a,b) return a.rank<b.rank end)
 			local center=camera.CFrame.Position
 			for i,p in ipairs(self.rain) do
-				local x=math.clamp(center.X,-181,-104)+(i*17%47)-23; local z=math.clamp(center.Z,-109,-36)+(i*29%43)-21
+				local x,z=RainField.world(i,center.X,center.Z)
 				p:SetAttribute("GroundY",surface(x,z)); p:SetAttribute("RainX",x); p:SetAttribute("RainZ",z)
 			end
 		end
@@ -386,13 +393,17 @@ function View.start(root,settings)
 			p.Transparency=visible and 1-m.alpha or 1; if visible then p.Position=position end
 			p.Color=m.firefly and color({168+70*sample.warm,224,181-50*sample.warm}) or color({235,229-33*sample.warm,213-55*sample.warm})
 		end
+		local cameraPosition=camera.CFrame.Position
 		for i,p in ipairs(self.rain) do
-			local pilotDistance=(camera.CFrame.Position-Vector3.new(-142.5,5,-65)).Magnitude
-			local visible=i<=q.rain and sample.rain>0 and pilotDistance<q.distance
+			local x,z=RainField.world(i,cameraPosition.X,cameraPosition.Z)
+			if math.abs(x-(p:GetAttribute("RainX") or x))>2 or math.abs(z-(p:GetAttribute("RainZ") or z))>2 or p:GetAttribute("GroundY")==nil then
+				p:SetAttribute("GroundY",surface(x,z))
+			end
+			p:SetAttribute("RainX",x); p:SetAttribute("RainZ",z)
+			local visible=RainField.visible(i,q.rain,sample.rain,Boundary.contains(x,z,8))
 			p.Transparency=visible and (1-sample.rain*.52) or 1
 			if visible then
 				local fall=(time*1.15+i*.173)%1; local y=p:GetAttribute("GroundY") or .5
-				local x,z=p:GetAttribute("RainX") or -142.5,p:GetAttribute("RainZ") or -65
 				-- Splashes reuse the same rain slots; no emitters or additional pool.
 				if fall>.91 then
 					local radius=.08+(fall-.91)*3; p.Size=Vector3.new(radius,.025,radius)
