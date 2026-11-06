@@ -13,7 +13,7 @@
     "src/shared/Config.luau": "8394bad37f2d67cafe6fde3f8c2c08caf249f9aeef67e4352ecfdee1d683e7fd",
     "src/shared/Dailies.luau": "5f99bc048e5c11499850ba337b544ad49623909ce542de816b2126c495e46558",
     "src/shared/Epochs.luau": "d970ab148feaaf86e097f9cfca26d8f9349fd213c418f409ae5dfc611051f8fe",
-    "src/shared/Factory.luau": "3600fb391883d85a7b0698874d7c1ccd773968074f18a649894f2d5627564b8b",
+    "src/shared/Factory.luau": "9c3b145fbb021344563fe3f2720184d7ad7afd7c63f4164d841e8fcbacad850f",
     "src/shared/Familiars.luau": "00ecb837d732c7973b79a4b13e5f3b4a192da031c08cb66d15c8d1673d622c8a",
     "src/shared/ItemOrigin.luau": "2a162db30c3a9fd87439ff8ab4a396328a79305aade8a1f93030fda8282f94f3",
     "src/shared/LegacyConfig.luau": "84adb79239db028b04b06f27169248f544bc8b8c9e45b1c58ccbf7c88842fd35",

@@ -22,18 +22,21 @@ local function integer(value, minimum, maximum)
 	return finite(value) and value % 1 == 0 and value >= minimum and value <= maximum
 end
 
-local function maxBrewQuantity(rules)
-	local cap = 1
-	for _, recipe in pairs(rules.recipes) do
-		if type(recipe.quantity) == "number" and recipe.quantity > cap then cap = recipe.quantity end
-	end
+-- A paid batch stays valid after an upgrade, so every configured batch from level 1
+-- through the station's current level is legal. A larger or unconfigured count is not.
+local function legalOutputQuantity(rules, profile, stationId, recipe, amount)
+	if amount == nil then return true end
+	if not recipe or not integer(amount, 1, rules.maxCount) then return false end
+	local station = profile.stations and profile.stations[stationId]
 	local batches = rules.economyV2 and rules.economyV2.cauldron and rules.economyV2.cauldron.batch
-	if type(batches) == "table" then
-		for _, value in ipairs(batches) do
-			if type(value) == "number" and value > cap then cap = value end
+	local modern = type(profile.starter) == "table" and profile.starter.legacyGrant ~= true
+	if modern and recipe.output == "healing" and type(batches) == "table" and type(station) == "table" and type(station.level) == "number" then
+		for index = 1, station.level do
+			if batches[index] == amount then return true end
 		end
+		return false
 	end
-	return cap
+	return amount == recipe.quantity
 end
 
 local function plain(value)
@@ -500,7 +503,7 @@ function Factory.new(config)
 					if not recipe or not compatible(cfg, stationId, recipe) or station.recipeId ~= job.recipeId
 						or not finite(job.doubleChance) or job.doubleChance < 0 or job.doubleChance > (legacy and 0.25 or cfg.maxDoubleChance)
 						or (not legacy and type(job.automatic) ~= "boolean")
-						or (job.outputQuantity ~= nil and not integer(job.outputQuantity, 1, maxBrewQuantity(cfg))) then
+						or not legalOutputQuantity(cfg, profile, stationId, recipe, job.outputQuantity) then
 						return false, "Invalid brewing job"
 					end
 				elseif job.kind == "haul" then
@@ -1480,7 +1483,7 @@ function Factory.new(config)
 				local produced = recipe and recipe.quantity or 0
 				local legalBatch = true
 				if job.outputQuantity ~= nil then
-					if integer(job.outputQuantity, 1, maxBrewQuantity(config)) then
+					if legalOutputQuantity(config, profile, stationId, config.recipes[job.recipeId], job.outputQuantity) then
 						produced = job.outputQuantity
 					else
 						legalBatch = false

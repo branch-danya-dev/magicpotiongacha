@@ -522,6 +522,11 @@ return function(T)
 		T.equal(profile.stations.cauldron2.job.outputQuantity, 1)
 		T.equal(profile.stations.cauldron2.job.duration, 6)
 		profile.stations.cauldron.level = 1
+		T.falsy(engine.validate(profile))
+		profile.stations.cauldron.level = 4
+		profile.phase = 3
+		profile.stations.cauldron2.level = 2
+		T.truthy(engine.validate(profile))
 		T.truthy(engine.advance(profile, profile.lastSimulatedAt + 6, false).ok)
 		T.equal(profile.gold, 1000 + 250 * 11)
 		local legacyEngine = Factory.new(Config)
@@ -587,6 +592,111 @@ return function(T)
 		T.truthy(reason)
 		T.equal(persisted.profile.stations.cauldron.job.outputQuantity, "6")
 		T.equal(persisted.profile.gold, profile.gold)
+	end)
+
+	T.test("C01 fix: brew quantity must be possible for that station", function()
+		local batches = { 1, 3, 6, 10 }
+		for level = 1, 4 do
+			local engine, profile = opened(110 + level, 60000)
+			local shown = fillCauldron(engine, profile, "cauldron", level)
+			T.truthy(engine.act(profile, "brew", { stationId = "cauldron" }, profile.lastSimulatedAt))
+			T.equal(profile.stations.cauldron.job.outputQuantity, batches[level])
+			local valid = engine.validate(profile)
+			T.truthy(valid)
+			profile.stations.cauldron.job.outputQuantity = batches[level]
+			T.truthy(engine.validate(profile))
+			if level == 1 then
+				profile.stations.cauldron.job.outputQuantity = 10
+				T.falsy(engine.validate(profile))
+				local gold = profile.gold
+				local report = engine.advance(profile, profile.lastSimulatedAt + shown.duration, false)
+				T.falsy(report.ok)
+				T.equal(profile.gold, gold)
+				T.equal(profile.stations.cauldron.job.outputQuantity, 10)
+			end
+			if level == 4 then
+				for _, batch in ipairs(batches) do
+					profile.stations.cauldron.job.outputQuantity = batch
+					T.truthy(engine.validate(profile))
+				end
+				profile.stations.cauldron.job.outputQuantity = 7
+				T.falsy(engine.validate(profile))
+			end
+			profile.stations.cauldron.job.outputQuantity = 1
+			T.truthy(engine.validate(profile))
+		end
+		local engine, profile = opened(120, 61000)
+		profile.phase = 2
+		profile.stations.cauldron2.level = 1
+		profile.stations.cauldron2.recipeId = "healing"
+		fillCauldron(engine, profile, "cauldron", 4)
+		fillCauldron(engine, profile, "cauldron2", 1)
+		T.truthy(engine.act(profile, "brew", { stationId = "cauldron" }, profile.lastSimulatedAt))
+		T.truthy(engine.act(profile, "brew", { stationId = "cauldron2" }, profile.lastSimulatedAt))
+		T.equal(profile.stations.cauldron.job.outputQuantity, 10)
+		T.equal(profile.stations.cauldron2.job.outputQuantity, 1)
+		T.truthy(engine.validate(profile))
+		profile.stations.cauldron2.job.outputQuantity = 10
+		T.falsy(engine.validate(profile))
+		profile.stations.cauldron2.job.outputQuantity = 1
+		T.truthy(engine.validate(profile))
+		local paidEngine, paidProfile = opened(121, 62000)
+		fillCauldron(paidEngine, paidProfile, "cauldron", 1)
+		T.truthy(paidEngine.act(paidProfile, "brew", { stationId = "cauldron" }, paidProfile.lastSimulatedAt))
+		T.equal(paidProfile.stations.cauldron.job.outputQuantity, 1)
+		paidProfile.stations.cauldron.level = 2
+		T.truthy(paidEngine.validate(paidProfile))
+		local gold = paidProfile.gold
+		T.truthy(paidEngine.advance(paidProfile, paidProfile.lastSimulatedAt + 6, false).ok)
+		T.equal(paidProfile.gold, gold + Config.economyV2.healing.goldValue)
+		T.truthy(paidEngine.advance(paidProfile, paidProfile.lastSimulatedAt + 6, false).ok)
+		T.equal(paidProfile.gold, gold + Config.economyV2.healing.goldValue)
+		local legacyEngine = Factory.new(Config)
+		local legacy = legacyEngine.grantHistoricalStarters(legacyEngine.newProfile(122, 63000))
+		legacy.stations.cauldron.essence = Config.recipes.healing.essenceCost
+		legacy.stations.cauldron.input.mandrake = Config.recipes.healing.inputs.mandrake
+		T.truthy(legacyEngine.act(legacy, "brew", { stationId = "cauldron" }, legacy.lastSimulatedAt))
+		legacy.stations.cauldron.job.outputQuantity = 10
+		T.falsy(legacyEngine.validate(legacy))
+		local legacyGold = legacy.gold
+		T.falsy(legacyEngine.advance(legacy, legacy.lastSimulatedAt + 6, false).ok)
+		T.equal(legacy.gold, legacyGold)
+		legacy.stations.cauldron.job.outputQuantity = nil
+		T.truthy(legacyEngine.validate(legacy))
+		T.truthy(legacyEngine.advance(legacy, legacy.lastSimulatedAt + Config.recipes.healing.duration, false).ok)
+		T.equal(legacy.gold, legacyGold + Config.recipes.healing.goldValue)
+		T.truthy(legacyEngine.advance(legacy, legacy.lastSimulatedAt, false).ok)
+		T.equal(legacy.gold, legacyGold + Config.recipes.healing.goldValue)
+		local storeEngine, stored = opened(123, 64000)
+		fillCauldron(storeEngine, stored, "cauldron", 1)
+		T.truthy(storeEngine.act(stored, "brew", { stationId = "cauldron" }, stored.lastSimulatedAt))
+		local persisted = nil
+		local now = 65000
+		local fake = {}
+		function fake:UpdateAsync(_key, transform)
+			local updated = transform(persisted and copy(persisted) or nil)
+			if updated == nil then return nil end
+			persisted = copy(updated)
+			return copy(persisted)
+		end
+		local store = ProfileStore.new({
+			dataStore = fake, now = function() return now end, owner = "qty-a",
+			validate = storeEngine.validate, migrate = storeEngine.migrate, sleep = function() end,
+		})
+		local saved = store:load(123, function() return copy(stored) end)
+		T.truthy(store:save(123))
+		saved.stations.cauldron.job.outputQuantity = 10
+		T.falsy(store:save(123))
+		T.equal(persisted.profile.stations.cauldron.job.outputQuantity, 1)
+		persisted.profile.stations.cauldron.job.outputQuantity = 10
+		local blocked = ProfileStore.new({
+			dataStore = fake, now = function() return now end, owner = "qty-b",
+			validate = storeEngine.validate, migrate = storeEngine.migrate, sleep = function() end,
+		})
+		local replaced = blocked:load(123, function() return storeEngine.newProfile(123, now) end)
+		T.equal(replaced, nil)
+		T.equal(persisted.profile.stations.cauldron.job.outputQuantity, 10)
+		T.equal(persisted.profile.gold, stored.gold)
 	end)
 
 	T.test("C01 economy: Sprout Owl, Green Slime and Magic Cat stay inside the measured hour", function()
