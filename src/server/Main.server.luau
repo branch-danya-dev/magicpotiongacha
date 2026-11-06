@@ -39,6 +39,10 @@ local TradeState = remote("TradeState")
 local PurchasePrompt = remote("PurchasePrompt")
 local memoryMode = RunService:IsStudio() and Settings.UseMemoryInStudio
 
+-- The published game stays behind Gate A until the owner accepts M7.
+-- In-memory Studio sessions preview the preserved pilot inside real C01 gameplay.
+local studioVisualPreview = memoryMode
+
 local function copy(value)
 	if type(value) ~= "table" then return value end
 	local result = {}
@@ -315,7 +319,7 @@ world = World.new(Config, Settings.PlotCount, {
 	focus = function(player, stationId)
 		if active(player) then Focus:FireClient(player, stationId) end
 	end,
-}, Settings.EnvironmentArtEnabled)
+}, Settings.EnvironmentArtEnabled or studioVisualPreview)
 trade = TradeRuntime.new({config=Config,settings=Settings,store=store,backend=dataStore,engine=Factory,policy=policy,
 	memoryMode=memoryMode,remote=TradeState,active=active,closing=function() return closing end,
 	inBazaar=function(player) return world:inBazaar(player) end,
