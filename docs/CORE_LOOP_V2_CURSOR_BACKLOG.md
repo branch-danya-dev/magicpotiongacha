@@ -16,6 +16,8 @@
 
 ## C00 — Architecture inventory, save migration plan, playable baseline (P0)
 
+Written inventory and the V8 migration contract: [CORE_LOOP_V2_C00.md](CORE_LOOP_V2_C00.md). That document does not bump `schemaVersion` and does not add executable fixtures. Checkboxes stay open until the schema PR lands the tests in that contract.
+
 - [ ] Trace actual Factories, Protocol, Config, ProfileStore, World, UI, M1–M6 progression and 13 fixed slots; identify every direct slot-ID coordinate or forced auto-export dependency.
 - [ ] Publish current→target invariant map for profile fields, items, active contracts, stored/timed work, RNG, receipts, locked/traded/reserved items, paid provenance and Rebirth.
 - [ ] Design additive V8+ schema: owned instance placements, temple level and build polygon, seed stock/plants, output routing, potion inventory, starter choice, active pet slots, trained skill XP, charm registry.
@@ -128,6 +130,7 @@ Each PR reports: code diff, migration/receipt implications, what changed/what wa
 
 ## Existing references
 
+- [CORE_LOOP_V2_C00.md](CORE_LOOP_V2_C00.md) — M0–M7 inventory and additive V8 migration contract (plan only).
 - [DESIGN.md](DESIGN.md) — historical implemented baseline (fixed-slot).
 - [ROADMAP.md](ROADMAP.md) — M0–M7 accepted scheduling and separate V2 target.
 - [M7_REWORK_PLAN.md](M7_REWORK_PLAN.md) — 07D and 08 visual gates.

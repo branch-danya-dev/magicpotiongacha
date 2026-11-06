@@ -1,6 +1,6 @@
 > [!IMPORTANT]
 > **New product direction / Cursor handoff (owner, 2026-11-06):** the intended next core loop is documented in [CORE_LOOP_V2_SPEC.md](CORE_LOOP_V2_SPEC.md) and scheduled in [CORE_LOOP_V2_CURSOR_BACKLOG.md](CORE_LOOP_V2_CURSOR_BACKLOG.md). It retains the clicker -> Essence -> potion -> Gold -> tycoon upgrade -> idle production loop, and adds temple-based freely placed construction, bought seeds, one chosen starter familiar, skill growth, owned/displayable potions, extended orders, optional rare synthesis and Rebirth charms.
-> **Nothing in V2 is implemented or live yet.** The M0–M6 decisions and fixed-slot production described below are the current historical/implemented contract, not a declaration that V2 already works. Do not rewrite those rules without additive migrations, owner decisions and regressions. M7 #17 stays Draft; 07D/UX/08 art gates remain independent.
+> **Nothing in V2 is implemented or live yet.** The M0–M6 decisions and fixed-slot production described below are the current historical/implemented contract, not a declaration that V2 already works. Do not rewrite those rules without additive migrations, owner decisions and regressions. The C00 inventory and V8 migration contract is [CORE_LOOP_V2_C00.md](CORE_LOOP_V2_C00.md); it does not change schema 7. M7 #17 stays Draft; 07D/UX/08 art gates remain independent.
 
 # Design decisions — agreed baseline
 
