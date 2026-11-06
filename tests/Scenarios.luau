@@ -10,6 +10,7 @@ return function(strategy, observe, initial)
 	local engine, gate = initial and initial.engine or Factory.new(Config), Protocol.new()
 	local start, now = initial and initial.now or 100000, initial and initial.now or 100000
 	local profile = initial and initial.profile or engine.newProfile(-1, now)
+	engine.grantHistoricalStarters(profile)
 	local actions, clicks, harvests = 0, 0, 0
 	local function waitFor(seconds)
 		now += seconds

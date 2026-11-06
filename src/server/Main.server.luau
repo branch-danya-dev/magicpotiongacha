@@ -144,6 +144,15 @@ local function snapshot(player)
 		offlineReport = offlineReports[player.UserId],
 		writable = store:isWritable(player.UserId) and not sessions[player.UserId].collectionBusy and not (trade and trade.busy(player.UserId)),
 		mode = memoryMode and "STUDIO_MEMORY" or "DATASTORE",
+		starter = { claimed = profile.starter.claimed, legacyGrant = profile.starter.legacyGrant, choice = profile.starter.choice },
+		seeds = copy(profile.seeds), plants = copy(profile.plants),
+		automation = copy(profile.automation or { replant = false, harvest = false, supply = false, brew = false }),
+		firstSession = {
+			ownerApproved = Config.firstSession.ownerApproved, starterGold = Config.firstSession.starterGold,
+			seedCost = Config.firstSession.seedCost, seedItem = Config.firstSession.seedItem,
+			growSeconds = Config.firstSession.growSeconds, bedId = Config.firstSession.bedId,
+			automationCost = Config.firstSession.automationCost,
+		},
 	})
 end
 
@@ -412,6 +421,7 @@ local function onPlayer(player)
 		closeSession(session)
 		return
 	end
+	Factory.claimStarterBudget(profile)
 	if profile.trade.pending then
 		local recovered=trade.recoverPlayer(player)
 		profile=store:get(userId)

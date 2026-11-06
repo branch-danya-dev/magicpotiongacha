@@ -157,6 +157,18 @@ local Config = {
 		{ id = "starter_slime", species = "slime", name = "Green slime", stats = { Farming = 2, Hauling = 10, Brewing = 1 } },
 		{ id = "starter_brewer", species = "brewer", name = "Magic cat", stats = { Farming = 3, Hauling = 2, Brewing = 25 } },
 	},
+	-- Recommended first-session numbers. ownerApproved stays false until the owner
+	-- accepts docs/C01_BALANCE.md. The server does not grant or charge them before that.
+	firstSession = {
+		ownerApproved = false,
+		starterGold = 40,
+		seedItem = "mandrake",
+		seedCost = 2,
+		seedYield = 1,
+		growSeconds = 8,
+		bedId = "legacy:garden",
+		automationCost = 28,
+	},
 }
 
 -- Fixed slot instances. Existing IDs and prices are deliberately unchanged.

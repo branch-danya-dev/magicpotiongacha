@@ -172,6 +172,14 @@ function Factory.new(config)
 			and value.minX == expected.minX and value.maxX == expected.maxX
 			and value.minZ == expected.minZ and value.maxZ == expected.maxZ
 	end
+	local function starterDefinition(species)
+		for _, definition in ipairs(config.starterPets) do
+			if definition.species == species then return definition end
+		end
+	end
+	local function starterPetId(userId, definition)
+		return string.format("%.0f", userId) .. ":" .. definition.id
+	end
 	local function projectV8(profile)
 		local placements = {}
 		for _, id in ipairs(config.stationOrder) do
@@ -190,10 +198,11 @@ function Factory.new(config)
 		end
 		profile.layout = { legacy = true, placements = placements }
 		profile.temple = { level = profile.phase, tracksPhase = true, envelope = copyBox(templeEnvelope), buildable = copyBox(templeBuildable) }
-		profile.seeds, profile.plants = {}, {}
+		if profile.seeds == nil then profile.seeds = {} end
+		if profile.plants == nil then profile.plants = {} end
 		profile.outputMode, profile.potionStacks, profile.uniquePotions = outputMode, {}, {}
 		profile.atlas = { discovered = discovered }
-		profile.starter = { claimed = true, legacyGrant = true }
+		if profile.starter == nil then profile.starter = { claimed = true, legacyGrant = true } end
 		profile.workforce = { ownedCap = config.maxPets }
 		profile.charms = { active = {} }
 		profile.schemaVersion = config.schemaVersion
@@ -228,9 +237,31 @@ function Factory.new(config)
 			or not exactBox(profile.temple.buildable, templeBuildable) then
 			return false, "Invalid temple projection"
 		end
-		if not emptyTable(profile.seeds) or not emptyTable(profile.plants)
+		if not plain(profile.seeds) or not plain(profile.plants)
 			or not emptyTable(profile.potionStacks) or not emptyTable(profile.uniquePotions) then
 			return false, "Invalid empty V8 container"
+		end
+		local session = config.firstSession
+		local seedItem = type(session) == "table" and session.seedItem or nil
+		local bedId = type(session) == "table" and session.bedId or nil
+		local growSeconds = type(session) == "table" and session.growSeconds or nil
+		for id, count in pairs(profile.seeds) do
+			if id ~= seedItem or not integer(count, 1, config.maxCount) then return false, "Invalid seed inventory" end
+		end
+		for id, plant in pairs(profile.plants) do
+			if id ~= bedId or not exactKeys(plant, { seedId = true, plantedAt = true, duration = true, progress = true })
+				or plant.seedId ~= seedItem or not integer(plant.plantedAt, 0, config.maxTimestamp)
+				or plant.duration ~= growSeconds or not integer(plant.progress, 0, plant.duration) then
+				return false, "Invalid planted crop"
+			end
+		end
+		if profile.automation ~= nil then
+			if not exactKeys(profile.automation, { replant = true, harvest = true, supply = true, brew = true }) then
+				return false, "Invalid automation flags"
+			end
+			for _, flag in pairs(profile.automation) do
+				if type(flag) ~= "boolean" then return false, "Invalid automation flags" end
+			end
 		end
 		if not plain(profile.outputMode) then return false, "Invalid output mode" end
 		for id, mode in pairs(profile.outputMode) do
@@ -247,12 +278,33 @@ function Factory.new(config)
 			if discovered ~= true or profile.discoveredRecipes[id] ~= true then return false, "Invalid atlas projection" end
 		end
 		local starter = profile.starter
-		if not exactKeys(starter, { claimed = true, legacyGrant = true }, { choice = true })
+		if not exactKeys(starter, { claimed = true, legacyGrant = true }, { choice = true, budgetGranted = true })
 			or type(starter.claimed) ~= "boolean" or type(starter.legacyGrant) ~= "boolean" then
 			return false, "Invalid starter marker"
 		end
-		if starter.choice ~= nil and starter.choice ~= "farmer" and starter.choice ~= "slime" and starter.choice ~= "brewer" then
+		if starter.budgetGranted ~= nil and type(starter.budgetGranted) ~= "boolean" then
 			return false, "Invalid starter marker"
+		end
+		if starter.legacyGrant then
+			if starter.choice ~= nil or starter.budgetGranted == true then return false, "Invalid starter marker" end
+		elseif starter.choice ~= nil and starter.choice ~= "farmer" and starter.choice ~= "slime" and starter.choice ~= "brewer" then
+			return false, "Invalid starter marker"
+		elseif not starter.claimed then
+			if starter.choice ~= nil then return false, "Invalid starter marker" end
+			for _, definition in ipairs(config.starterPets) do
+				if profile.pets[starterPetId(profile.userId, definition)] then return false, "Invalid starter marker" end
+			end
+		else
+			local definition = starterDefinition(starter.choice)
+			local pet = definition and profile.pets[starterPetId(profile.userId, definition)]
+			if not pet or pet.species ~= starter.choice or pet.provenance.source ~= "starter" then
+				return false, "Invalid starter marker"
+			end
+			for _, other in ipairs(config.starterPets) do
+				if other.species ~= starter.choice and profile.pets[starterPetId(profile.userId, other)] then
+					return false, "Invalid starter marker"
+				end
+			end
 		end
 		if not exactKeys(profile.workforce, { ownedCap = true }) or profile.workforce.ownedCap ~= config.maxPets then
 			return false, "Invalid workforce projection"
@@ -635,11 +687,10 @@ function Factory.new(config)
 			phase = 1, progression = {sequence=0}, cauldrons = {}, nextCauldronSerial = 1, inputCursors = {},
 			pipeCursor = 1, tutorial = {}, telemetry = { first = {}, stalls = {} },
 			warehouseLevel = 0, pipes = false, manualReadyAt = { garden = now, mine = now }, slimeWorkSeconds = {},
+			seeds = {}, plants = {},
+			starter = { claimed = false, legacyGrant = false },
+			automation = { replant = false, harvest = false, supply = false, brew = false },
 		}
-		for _, definition in ipairs(config.starterPets) do
-			local petId = string.format("%.0f", userId) .. ":" .. definition.id
-			profile.pets[petId] = familiars.create(petId, definition.species, definition.stats, "starter", false)
-		end
 		for _, stationId in ipairs(config.stationOrder) do
 			local definition = config.stations[stationId]
 			if definition.outputItem then profile.manualReadyAt[stationId] = now end
@@ -654,6 +705,33 @@ function Factory.new(config)
 		profile.monetization=Monetization.initial()
 		projectV8(profile)
 		return profile
+	end
+
+	function engine.grantHistoricalStarters(profile)
+		for _, definition in ipairs(config.starterPets) do
+			local petId = starterPetId(profile.userId, definition)
+			if not profile.pets[petId] then
+				profile.pets[petId] = familiars.create(petId, definition.species, definition.stats, "starter", false)
+			end
+		end
+		profile.starter.claimed = true
+		profile.starter.legacyGrant = true
+		profile.starter.choice = nil
+		profile.starter.budgetGranted = nil
+		return profile
+	end
+
+	function engine.claimStarterBudget(profile)
+		local starter = profile.starter
+		if type(starter) ~= "table" or starter.legacyGrant then return false, "Historical profile" end
+		if starter.budgetGranted == true then return true, "Starter Gold already granted" end
+		local session = config.firstSession
+		if type(session) ~= "table" or session.ownerApproved ~= true or not integer(session.starterGold, 0, config.maxBalance) then
+			return false, "Starter Gold is not approved"
+		end
+		profile.gold = profile.gold + math.min(session.starterGold, config.maxBalance - profile.gold)
+		starter.budgetGranted = true
+		return true, "Starter Gold granted"
 	end
 
 	local function report()
@@ -674,6 +752,7 @@ function Factory.new(config)
 	local function updateTutorial(profile, now)
 		local t = profile.tutorial
 		if profile.stations.garden.workerId and profile.stations.logistics.workerId and profile.stations.cauldron.workerId then t.workers = true end
+		if profile.starter and not profile.starter.legacyGrant and profile.starter.claimed then t.workers = true end
 		if profile.pipes then t.pipes = true end
 		if profile.stations.crystal.level >= 2 then t.upgrade = true end
 		for _, id in ipairs(config.tutorialSteps) do if not t[id] then return end end
@@ -1078,6 +1157,9 @@ function Factory.new(config)
 			orderAccepted = { "orders", "У доски NPC прими Healer's request: изготовь и доставь 5 Healing." },
 			orderClaimed = { "orders", "Слайм везёт ящики от котла на квестовый склад. Когда доставлено 5/5, сдай заказ у доски. Истёкший заказ можно принять снова." },
 		}
+		if not (profile.starter and profile.starter.legacyGrant) then
+			hints.workers = { "altar", "Выбери одного фамильяра. Сбор, варка и базовая автоматизация не требуют специалиста." }
+		end
 		for index, id in ipairs(config.tutorialSteps) do
 			if not profile.tutorial[id] then
 				local hint = hints[id]
@@ -1093,6 +1175,50 @@ function Factory.new(config)
 		return { step = #config.tutorialSteps, total = #config.tutorialSteps, id = "complete", target = "orders", text = "Обучение завершено: фабрика и доставка работают!", complete = true }
 	end
 
+	local function automationOn(profile, feature)
+		return type(profile.automation) == "table" and profile.automation[feature] == true
+	end
+
+	local function approvedSession()
+		local session = config.firstSession
+		if type(session) ~= "table" or session.ownerApproved ~= true then return nil, "Starter prices are not approved" end
+		return session
+	end
+
+	local function growBed(profile)
+		local session = config.firstSession
+		if type(session) ~= "table" then return end
+		local plant = profile.plants[session.bedId]
+		if plant and plant.progress < plant.duration then plant.progress += 1 end
+	end
+
+	local function harvestBed(profile, summary)
+		local session = config.firstSession
+		if type(session) ~= "table" then return 0, "No starter bed" end
+		local plant = profile.plants[session.bedId]
+		if not plant then return 0, "Nothing planted" end
+		if plant.progress < plant.duration then return 0, "Crop is still growing" end
+		if inventoryRoom(profile, session.seedItem) < session.seedYield then return 0, "Raw storage is full" end
+		profile.plants[session.bedId] = nil
+		change(profile.inventory, session.seedItem, session.seedYield)
+		if summary then change(summary.produced, session.seedItem, session.seedYield) end
+		if session.seedItem == "mandrake" then profile.tutorial.ingredients = true end
+		return session.seedYield, "Crop harvested"
+	end
+
+	local function plantBed(profile, now)
+		local session = config.firstSession
+		if type(session) ~= "table" then return false, "No starter bed" end
+		if profile.plants[session.bedId] then return false, "Bed is occupied" end
+		if quantity(profile.seeds, session.seedItem) < 1 then return false, "No seeds" end
+		if not integer(session.growSeconds, 1, config.maxOfflineSeconds) then return false, "Invalid grow duration" end
+		change(profile.seeds, session.seedItem, -1)
+		profile.plants[session.bedId] = {
+			seedId = session.seedItem, plantedAt = math.floor(now), duration = session.growSeconds, progress = 0,
+		}
+		return true, "Seed planted"
+	end
+
 	local function tick(profile, now, summary, petIds, isOffline)
 		expireOrder(profile, now, summary)
 		local crystal = profile.stations.crystal
@@ -1104,6 +1230,9 @@ function Factory.new(config)
 			end
 			earn(profile, "essence", gain, summary)
 		end
+		growBed(profile)
+		if automationOn(profile, "harvest") then harvestBed(profile, summary) end
+		if automationOn(profile, "replant") then plantBed(profile, now) end
 		local deployed = {}
 		for _, stationId in ipairs(config.stationOrder) do
 			local station = profile.stations[stationId]
@@ -1150,10 +1279,19 @@ function Factory.new(config)
 			pipeInputs(profile)
 		end
 		tickHauler(profile)
+		if automationOn(profile, "supply") then
+			for _, stationId in ipairs(config.machineOrder) do
+				local supplied = profile.stations[stationId]
+				if supplied.level > 0 then
+					loadInputs(profile, stationId)
+					refill(profile, stationId, nil)
+				end
+			end
+		end
 		for _, stationId in ipairs(config.machineOrder) do
 			local station = profile.stations[stationId]
 			local job = station.job
-			if job and (not job.automatic or station.workerId) then
+			if job and (not job.automatic or station.workerId or automationOn(profile, "brew")) then
 				station.progress = math.min(job.duration, station.progress + 1)
 				if station.progress >= job.duration and not outputBlocked(profile, station, config.recipes[job.recipeId]) then
 					local recipe = config.recipes[job.recipeId]
@@ -1176,7 +1314,7 @@ function Factory.new(config)
 					station.progress = 0
 				end
 			end
-			if not station.job and station.auto and station.workerId then
+			if not station.job and station.auto and (station.workerId or automationOn(profile, "brew")) then
 				startBrew(profile, stationId, true)
 			end
 		end
@@ -1222,7 +1360,9 @@ function Factory.new(config)
 	end
 
 	local payloadFields = {
-		click = {}, assign = { stationId = true, petId = true }, harvest = { stationId = true },
+		click = {}, chooseStarter = { speciesId = true }, plantSeed = { bedId = true }, harvestCrop = { bedId = true },
+		buySeed = { amount = true }, buyAutomation = { feature = true },
+		assign = { stationId = true, petId = true }, harvest = { stationId = true },
 		collect = { stationId = true }, load = { stationId = true }, brew = { stationId = true },
 		setRecipe = { stationId = true, recipeId = true }, setAuto = { stationId = true, enabled = true },
 		prioritize = { stationId = true }, buy = { upgradeId = true, expectedLevel = true }, hire = { speciesId = true }, acceptOrder = { orderId = true }, claimOrder = {},
@@ -1250,6 +1390,9 @@ function Factory.new(config)
 				return false
 			end
 		end
+		if fields.bedId and (type(config.firstSession) ~= "table" or payload.bedId ~= config.firstSession.bedId) then return false end
+		if fields.feature and payload.feature ~= "replant" and payload.feature ~= "harvest"
+			and payload.feature ~= "supply" and payload.feature ~= "brew" then return false end
 		if fields.stationId and not config.stations[payload.stationId] then return false end
 		if fields.recipeId and not config.recipes[payload.recipeId] then return false end
 		if fields.orderId and not config.orders[payload.orderId] then return false end
@@ -1275,7 +1418,55 @@ function Factory.new(config)
 		local stationId = payload.stationId
 		local station = stationId and profile.stations[stationId]
 		if station and station.level == 0 then return false, "Build this station first" end
-		if action == "prioritize" then
+		if action == "chooseStarter" then
+			local starter = profile.starter
+			if starter.legacyGrant then return false, "Historical roster already granted" end
+			local definition = starterDefinition(payload.speciesId)
+			if not definition then return false, "Unknown starter" end
+			local petId = starterPetId(profile.userId, definition)
+			if starter.claimed then
+				if starter.choice == payload.speciesId and profile.pets[petId] then return true, "Starter already chosen" end
+				return false, "Starter already chosen"
+			end
+			if profile.pets[petId] then return false, "Familiar identity already exists" end
+			if #keys(profile.pets) >= config.maxPets then return false, "Familiar inventory is full" end
+			profile.pets[petId] = familiars.create(petId, definition.species, definition.stats, "starter", false)
+			starter.claimed = true
+			starter.choice = payload.speciesId
+			profile.tutorial.workers = true
+			return true, "Starter chosen"
+		elseif action == "plantSeed" then
+			return plantBed(profile, now)
+		elseif action == "harvestCrop" then
+			local amount, message = harvestBed(profile, nil)
+			if amount < 1 then return false, message end
+			return true, message
+		elseif action == "buySeed" then
+			local session, rejection = approvedSession()
+			if not session then return false, rejection end
+			if not integer(session.seedCost, 0, config.maxBalance) or not integer(session.seedYield, 1, config.maxCount) then
+				return false, "Starter prices are not approved"
+			end
+			if payload.amount > math.floor(config.maxBalance / math.max(1, session.seedCost)) then return false, "Invalid seed price" end
+			local cost = session.seedCost * payload.amount
+			if profile.gold < cost then return false, "Not enough gold" end
+			if quantity(profile.seeds, session.seedItem) + payload.amount > config.maxCount then return false, "Seed limit reached" end
+			profile.gold -= cost
+			change(profile.seeds, session.seedItem, payload.amount)
+			return true, "Seeds purchased"
+		elseif action == "buyAutomation" then
+			local session, rejection = approvedSession()
+			if not session then return false, rejection end
+			if not integer(session.automationCost, 0, config.maxBalance) then return false, "Starter prices are not approved" end
+			if profile.automation == nil then
+				profile.automation = { replant = false, harvest = false, supply = false, brew = false }
+			end
+			if profile.automation[payload.feature] then return false, "Automation already unlocked" end
+			if profile.gold < session.automationCost then return false, "Not enough gold" end
+			profile.gold -= session.automationCost
+			profile.automation[payload.feature] = true
+			return true, "Automation unlocked"
+		elseif action == "prioritize" then
 			for index, route in ipairs(config.routes) do if route.slot == stationId then profile.stations.logistics.routeCursor = index; break end end
 			local index = table.find(config.machineOrder, stationId)
 			if index then
@@ -1341,7 +1532,7 @@ function Factory.new(config)
 			return true, "Recipe selected"
 		elseif action == "setAuto" then
 			if not config.stations[stationId].defaultRecipe then return false, "Not a brewing machine" end
-			if payload.enabled and not station.workerId then return false, "Assign a brewer first" end
+			if payload.enabled and not station.workerId and not automationOn(profile, "brew") then return false, "Assign a brewer first" end
 			if payload.enabled and not profile.discoveredRecipes[station.recipeId] then return false, "Brew this recipe manually once first" end
 			station.auto = payload.enabled
 			return true, "Automation updated"

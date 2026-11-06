@@ -15,6 +15,7 @@ function H.new(options)
 	local familiar=Familiars.new(Config)
 	for _,userId in ipairs(options.users or {101,202,303}) do
 		local p=h.engine.newProfile(userId,h.now)
+		h.engine.grantHistoricalStarters(p)
 		for i,species in ipairs({"slime","brewer"}) do
 			local id=tostring(userId)..":pet:"..i
 			p.pets[id]=familiar.create(id,species,Config.familiarShop[species].stats,"shop",false)

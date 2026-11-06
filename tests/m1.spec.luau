@@ -17,7 +17,9 @@ return function(T: any)
 	local START = 100000
 	local function fresh(config)
 		local engine = Factory.new(config or Config)
-		return engine, engine.newProfile(123, START)
+		local profile = engine.newProfile(123, START)
+		engine.grantHistoricalStarters(profile)
+		return engine, profile
 	end
 	local function act(engine, p, action, payload)
 		payload = payload or {}

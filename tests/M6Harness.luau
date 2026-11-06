@@ -15,6 +15,7 @@ function H.new(config)
 	local h={now=config.events.spectral_2026.startAtUtc,calls=0,records={},journals={},events={},identities={[101]={}},owns=true}
 	h.engine,h.model=Factory.new(config),Model.new(config)
 	h.records["p:101"]={schemaVersion=1,revision=1,profile=h.engine.newProfile(101,h.now)}
+	h.engine.grantHistoricalStarters(h.records["p:101"].profile)
 	h.skus={ghost_wolf_v1=1001,spectral_cauldron_v1=1002,aurora_theme_v1=2001}
 	h.catalog=Catalog.new(config,h.skus)
 	h.receipt={PlayerId=101,ProductId=1001,PurchaseId="purchase-0001"}

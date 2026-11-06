@@ -13,6 +13,7 @@ function H.new()
 	local h = { now = 100000, draws = 0, calls = 0, revisionWrites = 0, beforeFailures = 0, afterFailures = 0 }
 	h.engine, h.collection = Factory.new(Config), Collection.new(Config)
 	h.profile = h.engine.newProfile(123, h.now)
+	h.engine.grantHistoricalStarters(h.profile)
 	-- Funding is ONLY for isolated command/failure fixtures. F2P scenarios use earned income.
 	h.profile.gold, h.profile.essence = 100000, 100000
 	function h.context(preview)

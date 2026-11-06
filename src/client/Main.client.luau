@@ -365,6 +365,12 @@ draw = function()
 		local tutorial = text("", 54)
 		bindText(tutorial, function() return state.tutorial.text end)
 	end
+	if state.starter and not state.starter.legacyGrant and not state.starter.claimed then
+		text("Новый участок уже содержит храм и кристалл. Выбери ровно одного фамильяра у алтаря. Повторный выбор не создаст второго.", 72)
+		for _, speciesId in ipairs({ "farmer", "slime", "brewer" }) do
+			action("Выбрать: " .. Config.petSpecies[speciesId].name, function() send("chooseStarter", { speciesId = speciesId }) end)
+		end
+	end
 	if petPicker then
 		title.Text = "Назначить рабочего"
 		action("Назад", function() petPicker = false; draw() end)
@@ -515,6 +521,20 @@ draw = function()
 			bindText(output, function() return "У источника: " .. names(getStation().output) end)
 			action("Собрать вручную", function() send("harvest", { stationId = stationId }) end)
 			action("Забрать выращенное / добытое", function() send("collect", { stationId = stationId }) end)
+			if stationId == "garden" and state.firstSession then
+				local bed = text("", 72)
+				bindText(bed, function()
+					local session = state.firstSession
+					local plant = state.plants[session.bedId]
+					local seeds = state.seeds[session.seedItem] or 0
+					local growth = plant and (plant.progress .. "/" .. plant.duration) or "пусто"
+					local price = session.ownerApproved and (session.seedCost .. " Gold") or "цена не утверждена"
+					return "Семена: " .. seeds .. " · грядка: " .. growth .. "\nПокупка семени: " .. price .. ". Автопосадка тратит семена из запаса."
+				end)
+				action("Посадить семя", function() send("plantSeed", { bedId = state.firstSession.bedId }) end)
+				action("Собрать урожай с грядки", function() send("harvestCrop", { bedId = state.firstSession.bedId }) end)
+				action("Купить 1 семя", function() send("buySeed", { amount = 1 }) end)
+			end
 		elseif stationId == "logistics" then
 			local cargo = text("", 76)
 			bindText(cargo, function()
@@ -541,6 +561,16 @@ draw = function()
 			action("Сварить одну партию", function() send("brew", { stationId = stationId }) end)
 			local auto = action("", function() send("setAuto", { stationId = stationId, enabled = not getStation().auto }) end)
 			bindText(auto, function() return "Автоварка: " .. (getStation().auto and "ВКЛ" or "ВЫКЛ") end)
+			if stationId == "cauldron" and state.firstSession then
+				local session = state.firstSession
+				text(session.ownerApproved and "Автоматизация открывается за Gold. Она не создаёт ингредиенты." or "Цены автоматизации ещё не утверждены. Кнопки ниже вернут отказ сервера, пока владелец не примет таблицу.", 72)
+				local labels = { replant = "Автопосадка", harvest = "Автосбор", supply = "Автоподача", brew = "Повтор Healing" }
+				for _, feature in ipairs({ "replant", "harvest", "supply", "brew" }) do
+					action(labels[feature] .. (state.automation[feature] and " · открыто" or (" · " .. (session.ownerApproved and (session.automationCost .. " Gold") or "не утверждено"))), function()
+						send("buyAutomation", { feature = feature })
+					end)
+				end
+			end
 			action("Забрать полуфабрикаты", function() send("collect", { stationId = stationId }) end)
 			local buffers = text("", 108)
 			bindText(buffers, function()

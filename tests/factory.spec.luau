@@ -34,6 +34,7 @@ return function(T: any)
 	local function fresh(): (any, any)
 		local engine = Factory.new(Config)
 		local profile = engine.newProfile(123, START)
+		engine.grantHistoricalStarters(profile)
 		return engine, profile
 	end
 
@@ -93,16 +94,22 @@ return function(T: any)
 		return amount
 	end
 
-	T.test("factory: fresh profile validates with three fixed free starters", function()
-		local engine, profile = fresh()
+	T.test("factory: a new profile has no familiars; historical fixtures keep three", function()
+		local engine = Factory.new(Config)
+		local profile = engine.newProfile(123, START)
 		T.truthy(engine.validate(profile))
 		T.equal(profile.schemaVersion, Config.schemaVersion)
-		T.equal(size(profile.pets), 3)
+		T.equal(size(profile.pets), 0)
+		T.equal(profile.starter.claimed, false)
+		T.equal(profile.starter.legacyGrant, false)
 		T.equal(profile.gold, 0)
 		T.equal(profile.essence, 0)
-		T.equal(profile.lastSimulatedAt, START)
-		T.truthy(profile.tutorialGranted)
-		for _, pet in pairs(profile.pets) do T.falsy(pet.paidOrigin) end
+		local _, historical = fresh()
+		T.equal(size(historical.pets), 3)
+		T.equal(historical.starter.legacyGrant, true)
+		T.equal(historical.lastSimulatedAt, START)
+		T.truthy(historical.tutorialGranted)
+		for _, pet in pairs(historical.pets) do T.falsy(pet.paidOrigin) end
 	end)
 
 	T.test("factory: Studio and regular user identities have valid deterministic profiles", function()
@@ -117,6 +124,7 @@ return function(T: any)
 	T.test("factory: profile data does not alias configuration or another player", function()
 		local engine, profile = fresh()
 		local other = engine.newProfile(456, START)
+		engine.grantHistoricalStarters(other)
 		local id = petId(profile, "farmer")
 		local original = profile.pets[id].stats.Farming
 		profile.pets[id].stats.Farming = original + 1
@@ -127,6 +135,7 @@ return function(T: any)
 	T.test("factory: starter instance IDs are unique across owners", function()
 		local engine, profile = fresh()
 		local other = engine.newProfile(456, START)
+		engine.grantHistoricalStarters(other)
 		for id in pairs(profile.pets) do T.equal(other.pets[id], nil) end
 	end)
 
@@ -166,6 +175,7 @@ return function(T: any)
 		config.maxPets = #config.starterPets
 		local engine = Factory.new(config)
 		local profile = engine.newProfile(123, START)
+		engine.grantHistoricalStarters(profile)
 		profile.gold = 1000
 		local before = clone(profile)
 		T.falsy(engine.act(profile, "hire", { speciesId = "farmer" }, START))
@@ -695,6 +705,7 @@ return function(T: any)
 		config.slimeChance = 1
 		local engine = Factory.new(config)
 		local profile = engine.newProfile(123, START)
+		engine.grantHistoricalStarters(profile)
 		assign(engine, profile, "logistics", "slime")
 		advance(engine, profile, START + config.slimePeriod - 1)
 		T.equal(count(profile.inventory, "slime"), 0)

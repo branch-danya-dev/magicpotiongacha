@@ -17,6 +17,7 @@ return function(T)
 		local engine, gate = Factory.new(Config), Protocol.new()
 		local now = 100000
 		local profile = engine.newProfile(-1, now)
+		engine.grantHistoricalStarters(profile)
 		local function waitFor(seconds)
 			now += seconds
 			local report = engine.advance(profile, now, false)
