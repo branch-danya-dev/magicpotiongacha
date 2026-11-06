@@ -150,10 +150,11 @@ local function snapshot(player)
 		firstSession = {
 			ownerApproved = Config.firstSession.ownerApproved, starterGold = Config.firstSession.starterGold,
 			seedCost = Config.firstSession.seedCost, seedItem = Config.firstSession.seedItem,
+			seedYield = Config.firstSession.seedYield, openingSeeds = Config.firstSession.openingSeeds,
 			growSeconds = Config.firstSession.growSeconds, bedId = Config.firstSession.bedId,
 			bedCost = Config.firstSession.bedCost, cauldronCost = Config.firstSession.cauldronCost,
 			automationCost = Config.firstSession.automationCost, restockTarget = Config.firstSession.restockTarget,
-			essencePerGold = Config.firstSession.essencePerGold,
+			clickEssence = Config.economyV2.clickEssence,
 		},
 	})
 end

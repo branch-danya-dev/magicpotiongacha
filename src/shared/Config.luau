@@ -16,7 +16,7 @@ local Config = {
 	machineInputCapacity = 20,
 	machineOutputCapacity = 20,
 	manualHarvestCooldown = 4,
-	manualClickEssence = 1,
+	manualClickEssence = 1, -- Historical click. Economy V2 profiles use economyV2.clickEssence.
 	crystalSkillPerEssence = 5,
 	gatherSpeedPerSkill = 0.04,
 	brewSpeedPerSkill = 0.035,
@@ -157,21 +157,40 @@ local Config = {
 		{ id = "starter_slime", species = "slime", name = "Green slime", stats = { Farming = 2, Hauling = 10, Brewing = 1 } },
 		{ id = "starter_brewer", species = "brewer", name = "Magic cat", stats = { Farming = 3, Hauling = 2, Brewing = 25 } },
 	},
-	-- Recommended first-session numbers. ownerApproved stays false until the owner
-	-- accepts docs/C01_BALANCE.md. The server does not grant or charge them before that.
+	-- Economy V2 v0.1, the prototype balance specified for the first cycle.
+	-- Historical recipes, station prices and accepted contracts stay on the tables above.
 	firstSession = {
-		ownerApproved = false,
-		starterGold = 40,
+		ownerApproved = true,
+		starterGold = 1000,
 		seedItem = "mandrake",
-		seedCost = 2,
-		seedYield = 1,
+		seedCost = 20,
+		seedYield = 2,
 		growSeconds = 8,
 		bedId = "legacy:garden",
-		bedCost = 16,
-		cauldronCost = 16,
-		automationCost = 28,
-		restockTarget = 2,
-		essencePerGold = 10,
+		bedCost = 200,
+		cauldronCost = 300,
+		automationCost = 500,
+		restockTarget = 5,
+		openingSeeds = 5,
+		tutorialSteps = { "familiar", "essence", "garden", "seeds", "crop", "cauldron", "brew", "sale", "automation", "passive" },
+	},
+	economyV2 = {
+		clickEssence = 5,
+		healing = { essenceCost = 15, goldValue = 250, mandrake = 2 },
+		crystal = {
+			upgradeCosts = { 0, 900, 4500, 20000, 80000 },
+			passiveEssence = { 0, 2, 6, 18, 48 },
+		},
+		garden = {
+			upgradeCosts = { 0, 5000, 24000, 100000 },
+			yield = { 2, 6, 12, 18 },
+			growSeconds = { 8, 8, 5, 3 },
+		},
+		cauldron = {
+			upgradeCosts = { 0, 6500, 32000, 140000 },
+			batch = { 1, 3, 6, 10 },
+			brewSeconds = { 6, 8, 5, 3 },
+		},
 	},
 }
 
@@ -238,6 +257,10 @@ Config.orders.healing_quick={name="Forest first aid",recipeId="healing",itemId="
 Config.orders.healing_small.priority=30
 Config.orders.healing_large.priority=20
 Config.orders.healing_quick.priority=10
+-- New early contracts. The original healing orders stay so an accepted receipt still matches its stored reward.
+Config.orders.healing_quick_v2={name="Forest first aid",recipeId="healing",itemId="healing",count=3,rewardGold=1125,duration=480,priority=12,economy="v2"}
+Config.orders.healing_small_v2={name="Healer's request",recipeId="healing",itemId="healing",count=5,rewardGold=2000,duration=600,priority=32,economy="v2"}
+Config.orders.healing_large_v2={name="Clinic supplies",recipeId="healing",itemId="healing",count=12,rewardGold=4500,duration=1200,priority=22,economy="v2"}
 Config.orders.flare_small={name="Lantern supply",recipeId="flare",itemId="flare",count=4,rewardGold=680,duration=1800,phase=3}
 Config.orders.ascension_small={name="Final experiment",recipeId="ascension",itemId="ascension",count=3,rewardGold=1500,duration=3600,phase=4}
 Config.cauldronTypes={resonant={name="Resonant copper cauldron",bonus=0.05}}

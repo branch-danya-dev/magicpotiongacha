@@ -22,9 +22,15 @@ function Progression.new(config)
 		local def=slotId=="warehouse" and config.warehouse or config.stations[slotId]
 		if not def then return {available=false,reason="Unknown fixed slot"} end
 		local level=slotId=="warehouse" and p.warehouseLevel or p.stations[slotId].level
-		local cost=Epochs.cost(config,p,def.upgradeCosts[level+1])
+		local costs=def.upgradeCosts
+		local track=config.economyV2 and config.economyV2[slotId]
+		if p.starter and p.starter.legacyGrant ~= true and track and track.upgradeCosts then costs=track.upgradeCosts end
+		local cost=Epochs.cost(config,p,costs[level+1])
 		local phase=def.tierPhases and def.tierPhases[level+1] or def.phase or 1
 		local reason=not cost and "Maximum tier" or (p.phase<phase and ("Requires phase "..phase) or "")
+		if reason=="" and p.starter and p.starter.legacyGrant ~= true and not (p.tutorial and p.tutorial.sale) then
+			reason="Finish the first Healing sale first"
+		end
 		return {available=reason=="",reason=reason,cost=cost,level=level,requiredPhase=phase}
 	end
 	function service.phaseState(p)
@@ -88,6 +94,7 @@ function Progression.new(config)
 			if not ok then return false,reason end
 			result.message="Built/upgraded "..payload.upgradeId
 		elseif action=="advancePhase" then
+			if p.starter and p.starter.legacyGrant ~= true and not (p.tutorial and p.tutorial.sale) then return false,"Finish the first Healing sale first" end
 			if payload.expectedPhase~=p.phase then return false,"Phase already changed" end
 			local state=service.phaseState(p)
 			if not state.available then return false,#state.reasons>0 and table.concat(state.reasons,"; ") or "Final phase already built" end

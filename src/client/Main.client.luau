@@ -67,6 +67,24 @@ local function button(parent, text, callback)
 	value.Activated:Connect(callback)
 	return value
 end
+local function compact(value)
+	if type(value) ~= "number" then return tostring(value) end
+	local amount = math.floor(math.abs(value))
+	local text = tostring(amount)
+	if amount >= 1000 then
+		local scaled, unit = amount, ""
+		for _, name in ipairs({ "K", "M", "B", "T" }) do
+			if scaled < 1000 then break end
+			scaled /= 1000
+			unit = name
+		end
+		text = string.format("%.2f", scaled)
+		text = string.gsub(text, "0+$", "")
+		text = string.gsub(text, "%.$", "")
+		text = text .. unit
+	end
+	return (value < 0 and "-" or "") .. text
+end
 local function send(action, payload)
 	if string.sub(action,1,5)=="trade" then Action:FireServer(action,payload or {}); return end
 	if not state or not state.writable or collectionPending then return end
@@ -527,9 +545,7 @@ draw = function()
 			local click=action("",function() send("click",{}) end)
 			bindText(click,function() return "Собрать эссенцию +"..state.longTerm.manualClickEssence end)
 			if state.firstSession and state.starter and not state.starter.legacyGrant then
-				local rate = state.firstSession.essencePerGold
-				action("Обменять " .. rate .. " Essence на 1 Gold", function() send("exchangeEssence", { gold = 1 }) end)
-				text(state.firstSession.ownerApproved and "Обмен слабее продажи Healing и тратит только уже собранную Essence." or "Курс обмена ещё не утверждён.", 48)
+				text("Essence нужна для варки. Gold приносят зелья и заказы.", 36)
 			end
 		elseif definition.outputItem then
 			local output = text("", 44)
@@ -546,11 +562,12 @@ draw = function()
 					local seeds = state.seeds[session.seedItem] or 0
 					local growth = plant and (plant.progress .. "/" .. plant.duration) or "пусто"
 					local price = session.ownerApproved and (session.seedCost .. " Gold") or "цена не утверждена"
-					return "Семена: " .. seeds .. " · грядка: " .. growth .. "\nПокупка семени: " .. price .. ". Автопосадка тратит семена из запаса."
+					return "Семена: " .. seeds .. " · грядка: " .. growth .. "\nСемя: " .. price .. " · урожай: " .. session.seedYield
 				end)
 				action("Посадить семя", function() send("plantSeed", { bedId = state.firstSession.bedId }) end)
 				action("Собрать урожай с грядки", function() send("harvestCrop", { bedId = state.firstSession.bedId }) end)
 				action("Купить 1 семя", function() send("buySeed", { amount = 1 }) end)
+				action("Купить " .. state.firstSession.openingSeeds .. " семян", function() send("buySeed", { amount = state.firstSession.openingSeeds }) end)
 			end
 		elseif stationId == "logistics" then
 			local cargo = text("", 76)
@@ -578,15 +595,13 @@ draw = function()
 			action("Сварить одну партию", function() send("brew", { stationId = stationId }) end)
 			local auto = action("", function() send("setAuto", { stationId = stationId, enabled = not getStation().auto }) end)
 			bindText(auto, function() return "Автоварка: " .. (getStation().auto and "ВКЛ" or "ВЫКЛ") end)
-			if stationId == "cauldron" and state.firstSession then
+			if stationId == "cauldron" and state.firstSession and state.starter and not state.starter.legacyGrant then
 				local session = state.firstSession
-				text(session.ownerApproved and "Автоматизация открывается за Gold. Она не создаёт ингредиенты." or "Цены автоматизации ещё не утверждены. Кнопки ниже вернут отказ сервера, пока владелец не примет таблицу.", 72)
-				local labels = { replant = "Автопосадка", harvest = "Автосбор", supply = "Автоподача", brew = "Повтор Healing", restock = "Автопокупка семян" }
-				for _, feature in ipairs({ "replant", "harvest", "supply", "brew", "restock" }) do
-					action(labels[feature] .. (state.automation[feature] and " · открыто" or (" · " .. (session.ownerApproved and (session.automationCost .. " Gold") or "не утверждено"))), function()
-						send("buyAutomation", { feature = feature })
-					end)
-				end
+				local ready = state.automation.replant and state.automation.harvest and state.automation.supply and state.automation.brew and state.automation.restock
+				text("Базовая автоматизация сажает, собирает, докупает семена, загружает котёл, варит Healing и продаёт его. Она тратит обычные ресурсы и сама продолжится, когда Essence или Gold снова появятся.", 96)
+				action((ready and "Базовая автоматизация · открыто" or ("Базовая автоматизация · " .. compact(session.automationCost) .. " Gold")), function()
+					send("buyAutomation", { feature = "basic" })
+				end)
 			end
 			action("Забрать полуфабрикаты", function() send("collect", { stationId = stationId }) end)
 			local buffers = text("", 108)
@@ -608,7 +623,10 @@ draw = function()
 		action("Снабдить этот слот следующим",function() send("prioritize",{stationId=stationId}) end)
 		action("Назначить фамильяра", function() petPicker = true; draw() end)
 		local upgrade = action("", function() send("buy", { upgradeId = stationId }) end)
-		bindText(upgrade, function() return "Улучшить · " .. tostring(upgradePrice(stationId) or "MAX") .. " Gold · " .. state.builds[stationId].reason end)
+		bindText(upgrade, function()
+			local price = upgradePrice(stationId)
+			return "Улучшить · " .. (price and (compact(price) .. " Gold") or "MAX") .. " · " .. state.builds[stationId].reason
+		end)
 		text("Действия доступны рядом с этим объектом на твоём участке. Питомца можно снять и назначить на другое место.", 58)
 	end
 	refresh()
@@ -616,7 +634,7 @@ end
 
 refresh = function()
 	if not state then return end
-	balance.Text = "Gold: " .. math.floor(state.gold) .. "  |  Essence: " .. math.floor(state.essence)
+	balance.Text = "Gold: " .. compact(state.gold) .. "  |  Essence: " .. compact(state.essence)
 	guide.Text = not state.writable and "Сохранение приостановлено" or (state.tutorial.complete and ("Моя ферма · "..state.phase.name) or ("Шаг "..state.tutorial.step.."/"..state.tutorial.total.." · "..ContextPolicy.description({station=state.tutorial.target},Config)))
 	for _, update in ipairs(bindings) do update() end
 end

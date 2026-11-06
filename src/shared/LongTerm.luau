@@ -66,7 +66,7 @@ function LongTerm.new(config)
 		local step=day<=cal.lastDay and cal.step or ((day==cal.lastDay+1 and cal.step<7) and cal.step+1 or 1)
 		return {rebirths=p.rebirths,epoch=epoch.name,epochId=Epochs.id(p),nextEpoch=config.epochRules[(p.rebirths+1)%3].name,
 			finalRecipe=epoch.finalRecipe,available=#reasons==0,reasons=reasons,shards=t.shards,perks=C.copy(t.perks),requestId=t.sequence+1,
-			manualClickEssence=config.manualClickEssence+Epochs.essence(p),
+			manualClickEssence=(p.starter and p.starter.legacyGrant ~= true and config.economyV2 and config.economyV2.clickEssence or config.manualClickEssence)+Epochs.essence(p),
 			daily=daily,day=day,calendarStep=step,calendarClaimed=cal.lastDay>=day,calendarPending=cal.pendingPet,
 			calendarSpecial=step==7 and (not cal.uniqueAwarded or (day==cal.lastDay and cal.series==1)),
 			calendarUnique=cal.uniqueAwarded,calendarReward=C.copy(rules.calendar[step]),last=t.last and {requestId=t.last.requestId,action=t.last.action,result=C.copy(t.last.result)}}

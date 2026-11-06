@@ -1,6 +1,6 @@
 --!nonstrict
--- C01 first session. Prices below are test parameters on a copied config.
--- Live Config.firstSession.ownerApproved stays false.
+-- C01 first session. Economy V2 v0.1 is the live prototype balance.
+-- A copied config can still turn ownerApproved off to prove the server gate.
 local Config = require("../src/shared/Config")
 local Factory = require("../src/shared/Factory")
 local Protocol = require("../src/shared/Protocol")
@@ -35,19 +35,34 @@ end
 return function(T)
 	local BED = Config.firstSession.bedId
 
-	T.test("C01: live prices stay unapproved and are not charged", function()
+	T.test("C01: Economy V2 grants starter Gold once and a closed gate still refuses", function()
 		T.equal(Config.schemaVersion, 8)
-		T.equal(Config.firstSession.ownerApproved, false)
+		T.equal(Config.firstSession.ownerApproved, true)
+		T.equal(Config.firstSession.starterGold, 1000)
+		T.equal(Config.firstSession.bedCost, 200)
+		T.equal(Config.firstSession.cauldronCost, 300)
+		T.equal(Config.firstSession.seedCost, 20)
+		T.equal(Config.firstSession.automationCost, 500)
+		T.equal(Config.economyV2.healing.goldValue, 250)
+		T.equal(Config.economyV2.healing.essenceCost, 15)
+		T.equal(Config.economyV2.clickEssence, 5)
+		T.equal(Config.stations.crystal.upgradeCosts[2], 140)
+		T.equal(Config.recipes.healing.goldValue, 14)
 		local engine = Factory.new(Config)
 		local profile = engine.newProfile(14, 1000)
-		profile.gold = 1000
-		local before = copy(profile)
-		T.falsy(engine.claimStarterBudget(profile))
-		T.falsy(engine.act(profile, "buySeed", { amount = 1 }, 1000))
-		T.falsy(engine.act(profile, "buyStarterStation", { stationId = "garden" }, 1000))
-		T.falsy(engine.act(profile, "exchangeEssence", { gold = 1 }, 1000))
-		T.falsy(engine.act(profile, "buyAutomation", { feature = "brew" }, 1000))
-		T.same(profile, before)
+		T.truthy(engine.claimStarterBudget(profile))
+		T.equal(profile.gold, 1000)
+		profile.gold = 25
+		T.truthy(engine.claimStarterBudget(profile))
+		T.equal(profile.gold, 25)
+		local blocked = approved()
+		blocked.firstSession.ownerApproved = false
+		local denied = Factory.new(blocked)
+		local other = denied.newProfile(15, 1000)
+		local before = copy(other)
+		T.falsy(denied.claimStarterBudget(other))
+		T.falsy(denied.act(other, "buyStarterStation", { stationId = "garden" }, 1000))
+		T.same(other, before)
 	end)
 
 	T.test("C01: a new profile has no familiars until one starter is chosen", function()
@@ -173,10 +188,10 @@ return function(T)
 		T.equal(rejoined.seeds.mandrake, nil)
 		T.truthy(engine.advance(rejoined, now + 5, true).ok)
 		T.truthy(engine.act(rejoined, "harvestCrop", { bedId = BED }, now + 5))
-		T.equal(rejoined.inventory.mandrake, 1)
+		T.equal(rejoined.inventory.mandrake, Config.firstSession.seedYield)
 		T.equal(rejoined.plants[BED], nil)
 		T.falsy(engine.act(rejoined, "harvestCrop", { bedId = BED }, now + 5))
-		T.equal(rejoined.inventory.mandrake, 1)
+		T.equal(rejoined.inventory.mandrake, Config.firstSession.seedYield)
 		T.truthy(second:save(41))
 	end)
 
@@ -192,7 +207,7 @@ return function(T)
 		T.equal(profile.gold, 0)
 		T.equal(profile.seeds.mandrake, nil)
 		profile.inventory.mandrake = 2
-		profile.essence = 3
+		profile.essence = Config.economyV2.healing.essenceCost
 		T.truthy(engine.act(profile, "load", { stationId = "cauldron" }, 6000))
 		T.truthy(engine.act(profile, "brew", { stationId = "cauldron" }, 6000))
 		T.truthy(profile.stations.cauldron.job)
@@ -207,24 +222,22 @@ return function(T)
 		T.truthy(engine.claimStarterBudget(profile))
 		T.truthy(engine.act(profile, "buyStarterStation", { stationId = "garden" }, profile.lastSimulatedAt))
 		T.truthy(engine.act(profile, "buyStarterStation", { stationId = "cauldron" }, profile.lastSimulatedAt))
-		T.truthy(engine.act(profile, "buySeed", { amount = 2 }, profile.lastSimulatedAt))
+		T.truthy(engine.act(profile, "buySeed", { amount = 1 }, profile.lastSimulatedAt))
 		T.falsy(engine.act(profile, "harvest", { stationId = "garden" }, profile.lastSimulatedAt))
 		T.equal(profile.inventory.mandrake, nil)
 		T.truthy(engine.act(profile, "plantSeed", { bedId = BED }, profile.lastSimulatedAt))
 		T.truthy(engine.advance(profile, profile.lastSimulatedAt + session.growSeconds, false).ok)
 		T.truthy(engine.act(profile, "harvestCrop", { bedId = BED }, profile.lastSimulatedAt))
-		T.truthy(engine.act(profile, "plantSeed", { bedId = BED }, profile.lastSimulatedAt))
-		T.truthy(engine.advance(profile, profile.lastSimulatedAt + session.growSeconds, false).ok)
-		T.truthy(engine.act(profile, "harvestCrop", { bedId = BED }, profile.lastSimulatedAt))
+		T.equal(profile.inventory.mandrake, session.seedYield)
 		for _ = 1, 3 do
 			T.truthy(engine.act(profile, "click", {}, profile.lastSimulatedAt))
 		end
-		T.equal(profile.essence, 3)
+		T.equal(profile.essence, Config.economyV2.clickEssence * 3)
 		T.truthy(engine.act(profile, "load", { stationId = "cauldron" }, profile.lastSimulatedAt))
 		T.truthy(engine.act(profile, "brew", { stationId = "cauldron" }, profile.lastSimulatedAt))
-		local report = engine.advance(profile, profile.lastSimulatedAt + Config.recipes.healing.duration, false)
+		local report = engine.advance(profile, profile.lastSimulatedAt + Config.economyV2.cauldron.brewSeconds[1], false)
 		T.equal(report.sold.healing, 1)
-		T.equal(profile.gold, session.starterGold - session.bedCost - session.cauldronCost - session.seedCost * 2 + Config.recipes.healing.goldValue)
+		T.equal(profile.gold, session.starterGold - session.bedCost - session.cauldronCost - session.seedCost + Config.economyV2.healing.goldValue)
 		T.truthy(profile.discoveredRecipes.healing)
 		local again = engine.advance(profile, profile.lastSimulatedAt + Config.recipes.healing.duration, false)
 		T.equal(again.sold.healing, nil)
@@ -246,15 +259,12 @@ return function(T)
 		T.truthy(engine.act(profile, "buySeed", { amount = 2 }, profile.lastSimulatedAt))
 		T.equal(profile.gold, session.starterGold - session.seedCost * 2)
 		T.equal(profile.seeds.mandrake, 2)
-		profile.gold = session.automationCost * 2
-		T.truthy(engine.act(profile, "buyAutomation", { feature = "harvest" }, profile.lastSimulatedAt))
-		T.truthy(engine.act(profile, "buyAutomation", { feature = "replant" }, profile.lastSimulatedAt))
+		profile.automation.harvest = true
+		profile.automation.replant = true
 		local spent = profile.gold
-		T.falsy(engine.act(profile, "buyAutomation", { feature = "harvest" }, profile.lastSimulatedAt))
-		T.equal(profile.gold, spent)
 		local report = engine.advance(profile, profile.lastSimulatedAt + 7200, true)
 		T.equal(report.processedSeconds, 7200)
-		T.equal(profile.inventory.mandrake, 2)
+		T.equal(profile.inventory.mandrake, session.seedYield * 2)
 		T.equal(profile.seeds.mandrake, nil)
 		T.equal(profile.essence, 0)
 		T.equal(profile.gold, spent)
@@ -300,7 +310,7 @@ return function(T)
 		T.same(first, second)
 		T.equal(first.processed, 7200)
 		T.equal(first.skipped, 2800)
-		T.equal(first.item, 3)
+		T.equal(first.item, Config.firstSession.seedYield * 3)
 		T.equal(first.seeds, nil)
 		T.equal(first.gold, 0)
 		T.equal(first.essence, 0)
@@ -332,9 +342,12 @@ return function(T)
 		T.truthy(engine.act(profile, "harvestCrop", { bedId = BED }, profile.lastSimulatedAt))
 		T.falsy(engine.act(profile, "harvestCrop", { bedId = BED }, profile.lastSimulatedAt))
 		T.equal(profile.inventory.mandrake, config.firstSession.seedYield)
-		T.truthy(engine.act(profile, "buyAutomation", { feature = "brew" }, profile.lastSimulatedAt))
+		T.falsy(engine.act(profile, "buyAutomation", { feature = "basic" }, profile.lastSimulatedAt))
+		T.equal(profile.gold, config.firstSession.automationCost)
+		profile.tutorial.sale = true
+		T.truthy(engine.act(profile, "buyAutomation", { feature = "basic" }, profile.lastSimulatedAt))
 		T.equal(profile.gold, 0)
-		T.falsy(engine.act(profile, "buyAutomation", { feature = "brew" }, profile.lastSimulatedAt))
+		T.truthy(engine.act(profile, "buyAutomation", { feature = "basic" }, profile.lastSimulatedAt))
 		T.equal(profile.gold, 0)
 		profile.plants[BED] = { seedId = "mandrake", plantedAt = 1, duration = 8, progress = 0, watered = true }
 		T.falsy(engine.validate(profile))
@@ -348,24 +361,27 @@ return function(T)
 		T.truthy(engine.act(profile, "chooseStarter", { speciesId = "farmer" }, 12000))
 		T.equal(profile.stations.cauldron.workerId, nil)
 		profile.inventory.mandrake = 2
-		profile.essence = 3
+		profile.essence = Config.economyV2.healing.essenceCost
 		T.truthy(engine.act(profile, "load", { stationId = "cauldron" }, profile.lastSimulatedAt))
 		T.truthy(engine.act(profile, "brew", { stationId = "cauldron" }, profile.lastSimulatedAt))
-		T.truthy(engine.advance(profile, profile.lastSimulatedAt + Config.recipes.healing.duration, false).ok)
-		T.equal(profile.gold, Config.recipes.healing.goldValue)
-		profile.gold += config.firstSession.automationCost * 2
-		T.truthy(engine.act(profile, "buyAutomation", { feature = "brew" }, profile.lastSimulatedAt))
-		T.truthy(engine.act(profile, "buyAutomation", { feature = "supply" }, profile.lastSimulatedAt))
-		T.truthy(engine.act(profile, "setAuto", { stationId = "cauldron", enabled = true }, profile.lastSimulatedAt))
+		T.truthy(engine.advance(profile, profile.lastSimulatedAt + Config.economyV2.cauldron.brewSeconds[1], false).ok)
+		T.equal(profile.gold, Config.economyV2.healing.goldValue)
+		profile.gold = config.firstSession.automationCost
+		T.truthy(engine.act(profile, "buyAutomation", { feature = "basic" }, profile.lastSimulatedAt))
+		T.equal(profile.gold, 0)
+		T.equal(profile.stations.cauldron.auto, true)
 		profile.inventory.mandrake = 2
-		profile.essence = 3
-		local gold = profile.gold
-		local report = engine.advance(profile, profile.lastSimulatedAt + Config.recipes.healing.duration + 2, false)
+		profile.essence = Config.economyV2.healing.essenceCost
+		local report = engine.advance(profile, profile.lastSimulatedAt + Config.economyV2.cauldron.brewSeconds[1] + 2, false)
 		T.equal(report.sold.healing, 1)
-		T.equal(profile.gold, gold + Config.recipes.healing.goldValue)
+		local seeded = (profile.seeds.mandrake or 0) + (profile.plants[BED] and 1 or 0)
+		T.equal(profile.gold, Config.economyV2.healing.goldValue - config.firstSession.seedCost * seeded)
+		profile.gold = 0
+		profile.essence = 0
+		profile.inventory.mandrake = nil
 		local idle = engine.advance(profile, profile.lastSimulatedAt + 30, false)
 		T.equal(idle.goldEarned, 0)
-		T.equal(profile.gold, gold + Config.recipes.healing.goldValue)
+		T.equal(profile.gold, 0)
 	end)
 
 	T.test("C01: starter stations are bought once at the fixed placement", function()
@@ -403,16 +419,10 @@ return function(T)
 		T.truthy(engine.advance(profile, profile.lastSimulatedAt + 30, false).ok)
 		T.equal(profile.inventory.mandrake, nil)
 		T.equal(profile.stations.garden.output.mandrake, nil)
-		profile.essence = session.essencePerGold - 1
+		profile.essence = 50
 		T.falsy(engine.act(profile, "exchangeEssence", { gold = 1 }, profile.lastSimulatedAt))
 		T.equal(profile.gold, 0)
-		T.equal(profile.essence, session.essencePerGold - 1)
-		profile.essence = session.essencePerGold
-		T.truthy(engine.act(profile, "exchangeEssence", { gold = 1 }, profile.lastSimulatedAt))
-		T.falsy(engine.act(profile, "exchangeEssence", { gold = 1 }, profile.lastSimulatedAt))
-		T.equal(profile.gold, 1)
-		T.equal(profile.essence, 0)
-		T.truthy(session.essencePerGold > Config.recipes.healing.essenceCost)
+		T.equal(profile.essence, 50)
 	end)
 
 	T.test("C01: full storage keeps the crop, and a previous C01 save keeps its stations", function()
@@ -422,11 +432,11 @@ return function(T)
 		profile.seeds.mandrake = 1
 		T.truthy(engine.act(profile, "plantSeed", { bedId = BED }, 15000))
 		T.truthy(engine.advance(profile, 15000 + Config.firstSession.growSeconds, false).ok)
-		profile.inventory.mandrake = 50
+		profile.inventory.mandrake = 49
 		T.falsy(engine.act(profile, "harvestCrop", { bedId = BED }, profile.lastSimulatedAt))
 		T.equal(profile.plants[BED].progress, Config.firstSession.growSeconds)
-		T.equal(profile.inventory.mandrake, 50)
-		profile.inventory.mandrake = 49
+		T.equal(profile.inventory.mandrake, 49)
+		profile.inventory.mandrake = 48
 		T.truthy(engine.act(profile, "harvestCrop", { bedId = BED }, profile.lastSimulatedAt))
 		T.equal(profile.inventory.mandrake, 50)
 		T.equal(profile.plants[BED], nil)
@@ -452,23 +462,17 @@ return function(T)
 		T.truthy(engine.claimStarterBudget(profile))
 		T.truthy(engine.act(profile, "buyStarterStation", { stationId = "garden" }, profile.lastSimulatedAt))
 		T.truthy(engine.act(profile, "buyStarterStation", { stationId = "cauldron" }, profile.lastSimulatedAt))
-		T.truthy(engine.act(profile, "buySeed", { amount = 2 }, profile.lastSimulatedAt))
-		T.truthy(engine.act(profile, "plantSeed", { bedId = BED }, profile.lastSimulatedAt))
-		T.truthy(engine.advance(profile, profile.lastSimulatedAt + session.growSeconds, false).ok)
-		T.truthy(engine.act(profile, "harvestCrop", { bedId = BED }, profile.lastSimulatedAt))
+		T.truthy(engine.act(profile, "buySeed", { amount = 1 }, profile.lastSimulatedAt))
 		T.truthy(engine.act(profile, "plantSeed", { bedId = BED }, profile.lastSimulatedAt))
 		T.truthy(engine.advance(profile, profile.lastSimulatedAt + session.growSeconds, false).ok)
 		T.truthy(engine.act(profile, "harvestCrop", { bedId = BED }, profile.lastSimulatedAt))
 		for _ = 1, 3 do T.truthy(engine.act(profile, "click", {}, profile.lastSimulatedAt)) end
 		T.truthy(engine.act(profile, "load", { stationId = "cauldron" }, profile.lastSimulatedAt))
 		T.truthy(engine.act(profile, "brew", { stationId = "cauldron" }, profile.lastSimulatedAt))
-		T.truthy(engine.advance(profile, profile.lastSimulatedAt + Config.recipes.healing.duration, false).ok)
-		local saleGold = profile.gold
-		profile.gold = saleGold + session.automationCost * 5 + Config.stations.crystal.upgradeCosts[2]
-		for _, feature in ipairs({ "replant", "harvest", "supply", "brew", "restock" }) do
-			T.truthy(engine.act(profile, "buyAutomation", { feature = feature }, profile.lastSimulatedAt))
-		end
-		T.truthy(engine.act(profile, "setAuto", { stationId = "cauldron", enabled = true }, profile.lastSimulatedAt))
+		T.truthy(engine.advance(profile, profile.lastSimulatedAt + Config.economyV2.cauldron.brewSeconds[1], false).ok)
+		profile.inventory.mandrake = nil
+		profile.gold = profile.gold + session.automationCost + config.economyV2.crystal.upgradeCosts[2]
+		T.truthy(engine.act(profile, "buyAutomation", { feature = "basic" }, profile.lastSimulatedAt))
 		T.truthy(engine.act(profile, "buy", { upgradeId = "crystal", expectedLevel = 1 }, profile.lastSimulatedAt))
 		T.equal(profile.stations.crystal.level, 2)
 		T.equal(profile.seeds.mandrake, nil)
@@ -478,13 +482,14 @@ return function(T)
 		local seedsLeft = profile.seeds.mandrake or 0
 		local planted = profile.plants[BED] and 1 or 0
 		local held = (profile.inventory.mandrake or 0) + (profile.stations.cauldron.input.mandrake or 0)
-		local brewing = profile.stations.cauldron.job and 2 or 0
-		local bought = seedsLeft + planted + held + brewing + 2 * potions
+		local brewing = profile.stations.cauldron.job and config.economyV2.healing.mandrake or 0
+		local yield = config.economyV2.garden.yield[1]
+		local bought = seedsLeft + planted + (held + brewing) / yield + potions
 		T.truthy(potions > 1)
-		T.equal(profile.gold, startGold - session.seedCost * bought + Config.recipes.healing.goldValue * potions)
+		T.equal(profile.gold, startGold - session.seedCost * bought + config.economyV2.healing.goldValue * potions)
 		T.truthy(profile.gold > startGold)
 		T.equal(report.processedSeconds, 7200)
-		T.equal(profile.essence <= 7200, true)
+		T.equal(profile.essence <= config.economyV2.crystal.passiveEssence[2] * 7200, true)
 		local second = engine.advance(profile, profile.lastSimulatedAt + 30, true)
 		T.equal(second.processedSeconds, 30)
 	end)

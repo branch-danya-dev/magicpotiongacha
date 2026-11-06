@@ -1,36 +1,76 @@
-# C01 first-session balance — NOT APPROVED
+# Economy V2 v0.1 — рабочий баланс первого цикла
 
-Owner chose variant A: a new profile starts with the temple, the Essence crystal, one familiar choice, and a one-time Gold grant. The garden and cauldron are bought and installed on their existing fixed spots. Free placement stays in C02.
+Этот баланс задан для прототипа. `Config.firstSession.ownerApproved` включён, сервер выдаёт стартовое Gold и проводит покупки. Исторические рецепты, цены станций M1 и уже принятые контракты не переписываются: новый цикл читает `Config.economyV2` и новые заказы `healing_*_v2`.
 
-`Config.firstSession.ownerApproved` stays **false**. These numbers are a proposal. The server does not grant Gold, sell the garden, the cauldron, or seeds, exchange Essence, or sell automation until the owner turns that flag on.
+Новый профиль получает храм, кристалл и 1000 Gold. Грядка и котёл покупаются и встают на прежние фиксированные точки. Обмен Essence на Gold удалён.
 
-Historical profiles, and profiles already saved by the previous C01 build with a built garden or cauldron, keep those stations, pets, balances, timers, quests, and receipts. Rebirth still restores the historical station levels from `initialLevel`. The hauler stays at its existing starter level; it does not produce ingredients. Its configured first upgrade price is 0, so making it a paid starter station needs a separate decision.
+## Стартовые числа
 
-| Parameter | Proposal | Role |
-| --- | ---: | --- |
-| Starter Gold | 40, once | Pays for the garden, the cauldron, and two seeds, with 4 Gold left. |
-| First garden | 16 | Installed at the existing `legacy:garden` placement. A second purchase does not charge again. |
-| First cauldron | 16 | Installed at the existing cauldron placement. Same replay rule. |
-| Mandrake seed | 2 Gold, 1 crop, 8 seconds | Two seeds make one Healing. |
-| Automation, each | 28 | Replant, harvest, supply, brew, and seed restock. Each flag is bought once. |
-| Restock target | 2 seeds | Buys one seed per second while Gold can pay and the stock is below two. |
-| Essence exchange | 10 Essence → 1 Gold | Active click recovery only. Offline simulation does not exchange. |
+| Параметр | Значение |
+| --- | ---: |
+| Стартовый Gold | 1000, один раз |
+| Первая грядка | 200 |
+| Первый котёл | 300 |
+| Семя Mandrake | 20 |
+| Первая закупка семян | 5 |
+| Рост на 1 уровне | 8 секунд |
+| Урожай семени на 1 уровне | 2 Mandrake |
+| Essence за клик | 5 |
+| Essence на Healing | 15 за порцию |
+| Варка Healing на 1 уровне | 6 секунд, 1 порция |
+| Продажа Healing | 250 за порцию |
+| Базовая автоматизация | 500, одна покупка |
+| Кристалл 2 уровня | 900 |
+| Пассивная Essence кристалла 2 уровня | 2 в секунду |
 
-Healing still sells for the existing 14 Gold and still needs 2 Mandrake and 3 Essence. Crystal level 1 still gives no passive Essence. Crystal level 2 still costs 140 Gold and gives 1 Essence per second. That upgrade is the existing M1 price, not a new proposal.
+Healing по-прежнему требует 2 Mandrake на порцию. Один урожай 1 уровня закрывает одну порцию. Операционная прибыль порции — 250 − 20 = 230 Gold.
 
-## First cycle and the self-sustaining floor
+Проверка бюджета: 1000 − 200 − 300 − 5×20 = 400 Gold. После первой продажи 650 Gold, после автоматизации 150 Gold.
 
-| Question | Proposal |
-| --- | --- |
-| First cycle, normal | 16 + 16 + 2×2 = 36 Gold. Two crops take 16 seconds, the brew takes 6 seconds, and three clicks supply Essence. The sale returns 14 Gold. Operating profit after the equipment is already owned is 14 − 4 = 10 Gold per potion. |
-| Minimum Gold to reach that sale | 36. The proposed grant is 40. |
-| Minimum to leave the loop running by itself | Equipment 32, five automation flags 140, and crystal level 2 at its existing 140. That is 312 Gold, plus 4 Gold of seed stock. Sales after the first potion fund it: each potion nets 10 Gold once seeds are the only repeating cost. |
-| Bad purchases | Seeds already bought stay in the inventory. A second station purchase does not charge. Spending the whole grant on seeds leaves the garden and cauldron unbought; the crops cannot be grown until the garden is bought, and the seeds are not deleted. |
-| Zero Gold | Ten clicked Essence convert to 1 Gold. Nine Essence convert to nothing and are not consumed. Rebuilding a 16 Gold station from zero takes 160 clicks. One Healing returns 14 Gold for 3 Essence plus two seeds, so the exchange is much weaker and cannot replace the potion. |
-| Empty seed stock | Restock spends earned Gold on real seeds. With no Gold it waits. A full raw store leaves the mature plant in the bed. Neither case deletes Gold, seeds, or a crop, and neither mints a crop. |
+До первой продажи недоступны шахта, найм, заказы, фазы, трубы, склад и улучшения. Так стартовые 1000 Gold не уходят в сторону от грядки, семян и котла.
 
-The manual garden harvest and an assigned farmer no longer create Mandrake on a new profile. A historical profile with `starter.legacyGrant` keeps the old harvest.
+## Дальнейшие уровни кристалла, грядки и котла
 
-## Studio check
+Ранние цены оставлены как в задании. Следующие уровни подобраны так, чтобы цепочка не упиралась в котёл или Essence, а время накопления росло. Стоимость ступени примерно в 4,5–5 раз выше предыдущей крупной покупки, выпуск растёт примерно в 2,5–3 раза. Одна формула на все 13 станций не применялась.
 
-Not run here. In a memory Studio session, a new user should see an empty familiar list, a crystal, and an unbuilt garden and cauldron. Buying them, seeds, and the Essence exchange answers that the price is not approved. A profile that already owns those stations keeps them. Historical free harvest remains only for the old three-familiar grant.
+| Уровень | Кристалл | Грядка | Котёл |
+| --- | --- | --- | --- |
+| 1 | 0 Essence/с, клик 5 | 2 Mandrake за 8 с | 1 порция за 6 с, 15 Essence |
+| 2 | 900 Gold, 2 Essence/с | 5000 Gold, 6 Mandrake за 8 с | 6500 Gold, 3 порции за 8 с, 45 Essence |
+| 3 | 4500 Gold, 6 Essence/с | 24000 Gold, 12 Mandrake за 5 с | 32000 Gold, 6 порций за 5 с, 90 Essence |
+| 4 | 20000 Gold, 18 Essence/с | 100000 Gold, 18 Mandrake за 3 с | 140000 Gold, 10 порций за 3 с, 150 Essence |
+| 5 | 80000 Gold, 48 Essence/с | — | — |
+
+На 2 уровне кристалла 2 Essence/с хватает на непрерывную базовую цепочку: порция раз в 8 секунд требует 1,875 Essence/с. На 3 уровне котёл просит 5,625 Essence/с, кристалл даёт 6. На 4 уровне обе стороны сходятся на 18 Essence/с. На 5 уровне кристалл покрывает ускоренный выпуск грядки.
+
+Логистика остаётся на историческом уровне 1. Её первое улучшение в старой таблице стоит 0, поэтому отдельной ценой она не закрывалась.
+
+## Симуляция нового игрока
+
+Детерминированный прогон назначает стартового фермера на грядку, кликает только до кристалла 2 уровня и покупает следующее звено цепочки, когда хватает Gold и Essence. Стартовые 1000 Gold в заработок не входят.
+
+| Время | Gold заработано | Gold потрачено | Доход/мин | Постройки и улучшения |
+| --- | ---: | ---: | ---: | --- |
+| 12 с | первая продажа и базовая автоматизация | — | — | грядка, котёл, автоматизация |
+| 37 с | — | — | — | кристалл 2 уровня, цепочка идёт без кликов |
+| 5 мин | 10990 | 7440 | 2198 | грядка 1, котёл 1, кристалл 3 |
+| 15 мин | 56950 | 40280 | 3797 | грядка 2, котёл 2, кристалл 4 |
+| 30 мин | 240700 | 178820 | 8023 | грядка 3, котёл 3, кристалл 5 |
+| 60 мин | 1418820 | 428580 | 23647 | грядка 4, котёл 4, кристалл 5 |
+
+Первая продажа уложилась в 90 секунд, автоматизация — в 3 минуты, пассивная цепочка — в 5 минут. К 15 минуте уже есть следующие уровни. С 30 до 60 минуты кристалл на последнем рассчитанном уровне, а грядка и котёл добирают 4 уровень: это ближайшая цель. После неё остаётся фаза 2 и остальные станции прежнего цикла.
+
+Отдельные 7200 секунд offline после этого часа продают зелья, не кликают и не создают Essence сверх пассива текущего уровня кристалла.
+
+## Совместимость
+
+- Профиль с `starter.legacyGrant` варит и продаёт Healing по старым 3 Essence и 14 Gold. Клик даёт 1 Essence. Старые заказы `healing_small`, `healing_quick`, `healing_large` сохраняют награды 110, 60 и 280.
+- Уже принятый заказ хранит свой `rewardGold`. Повторная выплата идёт из этой записи.
+- Новому профилю вместо старых ранних заказов предлагаются `healing_quick_v2` (1125), `healing_small_v2` (2000) и `healing_large_v2` (4500).
+- Частично купленные флаги автоматизации прежнего C01 не снимаются. Покупка «базовая автоматизация» добирает недостающие и второй раз Gold не списывает.
+- Повторный вход и Rebirth не выдают стартовые 1000 Gold ещё раз. Rebirth по-прежнему возвращает исторические `initialLevel` станций.
+- Схема сохранений остаётся 8.
+
+## Проверка в Roblox Studio
+
+Не запускалась в этой среде. В памяти Studio новый игрок должен увидеть пустой список фамильяров, кристалл и непостроенные грядку и котёл, а в кошельке 1000 Gold. Дальше: выбрать одного фамильяра, кликнуть кристалл, купить грядку и 5 семян, дождаться урожая, купить котёл, сварить и продать Healing, купить одну кнопку базовой автоматизации и улучшить кристалл. Обмена Essence на Gold на кристалле больше нет. Старый профиль с тремя фамильярами и уже построенными станциями должен сохранить их, баланс и заказ с прежней наградой.
