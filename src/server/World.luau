@@ -114,6 +114,7 @@ function World.new(config, count, callbacks, environmentArtEnabled)
 			local title = station and station.name or (id == "warehouse" and "Склад" or (id == "altar" and "Алтарь · фамильяры" or (id == "blueprint" and "Развитие / Rebirth / Daily" or "Доска заказов")))
 			local size = id == "crystal" and Vector3.new(4, 6, 4) or Vector3.new(8, 3, 7)
 			local anchor = part(model, id, size, origin + offset, COLORS[id] or COLORS[station and station.archetype] or Color3.fromRGB(140,140,150))
+			anchor.CanCollide, anchor.CanTouch, anchor.CanQuery = false, false, false
 			anchor:SetAttribute("StationId", id)
 			if station then
 				anchor:SetAttribute("InputWaypoint",origin+Vector3.new(table.unpack(station.waypoints.input)))
@@ -134,6 +135,7 @@ function World.new(config, count, callbacks, environmentArtEnabled)
 				local pad = part(model, "Buy_" .. id, Vector3.new(5, 0.25, 4), origin + offset + Vector3.new(0, -offset.Y + 0.8, 7), Color3.fromRGB(182, 157, 70))
 				pad.Material = Enum.Material.Neon
 				pad.CanCollide = false
+				pad.CanTouch, pad.CanQuery = false, false
 				plot.pads[id], plot.padLabels[id] = pad, billboard(pad, "Улучшить", Vector3.new(0, 2.5, 0))
 				-- Body-part contacts can recur while a player stays on a pad.
 				-- Spend Gold only after an explicit keyboard/gamepad/touch activation.

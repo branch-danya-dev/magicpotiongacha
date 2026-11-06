@@ -20,7 +20,7 @@
     "src/shared/Protocol.luau": "394a6fc4b571e086fe3cabfe60ce520a90a8b6d23bef7f63a353c42b716129e3",
     "src/client/CameraCollision.luau": "5e54a451803e1a0a02061220684127d12e796191ee7058db63c55b8086a930a0",
     "src/client/CameraTerrain.luau": "a26ae4a18ce6082d9535bd99f0a9dd27c5d0b9fb4b4d079d4c008528cccb8d8f",
-    "src/server/World.luau": "856d27e838a6a3c1ec746ec619eabed6df0aa49ae6944bb9218839286bd8db9e",
+    "src/server/World.luau": "31ec03e47c44fb442b2738a4f68ee62433cec75f21ebc346cdc617265fa998b8",
     "src/server/IslandLandscape.luau": "bdc3d5753f549b411678d9b7d97a8f8118197b5ad91640409466c164667ae9f7",
     "src/server/RidgeBarriers.luau": "9ccc238d734d17d08bdb90c9c5ef83fde1a3e2ba74c85009149a488074455509",
     "src/server/FenceBarriers.luau": "66290dcf20ce3606bf098ead3830796bd93530f28fa49b5d0c3a619b9c1e08b7",

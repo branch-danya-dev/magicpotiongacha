@@ -26,6 +26,7 @@ local Settings = require(script.Parent.ServerSettings)
 local World = require(script.Parent.World)
 local TradeRuntime = require(script.Parent.TradeRuntime)
 local TradeSession = require(Shared.TradeSession)
+local Guide = require(Shared.FirstSessionView)
 
 local folder = Instance.new("Folder")
 folder.Name, folder.Parent = "Remotes", ReplicatedStorage.PotionTycoon
@@ -229,7 +230,7 @@ local function handleAction(player, action, payload)
 	end
 	if sessions[player.UserId].collectionBusy then notice(player, "Коллекция сохраняется. Дождись результата.", "collection_busy"); return end
 	if trade.busy(player.UserId) then notice(player,"Обмен сохраняется. Дождись результата.","trade_pending"); return end
-	if not world:inRange(player, action, payload, Settings.InteractDistance) then
+	if not Guide.remoteShop(action) and not world:inRange(player, action, payload, Settings.InteractDistance) then
 		notice(player, "Подойди к нужному объекту на своём участке.", "out_of_range")
 		return
 	end
@@ -282,8 +283,8 @@ local function handleAction(player, action, payload)
 		return
 	end
 	if not success then notice(player, tostring(message), "action_failed")
-	elseif action ~= "click" then
-		notice(player, tostring(message or "Готово"), "ok")
+	else
+		if action ~= "click" then notice(player, tostring(message or "Готово"), "ok") end
 		snapshot(player)
 		world:update(player, profile)
 	end

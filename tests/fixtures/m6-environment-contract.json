@@ -77,6 +77,8 @@
     "local EnvironmentArt = require(script.Parent.EnvironmentArt)\n",
     "local SessionReveal = require(script.Parent.FirstSessionReveal)\n",
     "\tSessionReveal.apply(self, plot, profile)\n",
+    "\t\t\tanchor.CanCollide, anchor.CanTouch, anchor.CanQuery = false, false, false\n",
+    "\t\t\t\tpad.CanTouch, pad.CanQuery = false, false\n",
     "\tself.environmentArtEnabled=environmentArtEnabled==true\n",
     "\troot:SetAttribute(\"EnvironmentArtEnabled\",false)\n",
     "\tif self.environmentArtEnabled then EnvironmentArt.attach(self) end\n",

@@ -19,6 +19,7 @@ local shopUI = require(script.Parent.ShopUI).new()
 local shopPreview = require(script.Parent.ShopPreview)
 local environment = require(script.Parent.EnvironmentController)
 local Session = require(shared.FirstSessionView)
+local Glance = require(script.Parent.TutorialGlance)
 local ContextActionService = game:GetService("ContextActionService")
 local MarketplaceService = game:GetService("MarketplaceService")
 local remotes = ReplicatedStorage.PotionTycoon:WaitForChild("Remotes")
@@ -378,16 +379,26 @@ draw = function()
 		refresh(); return
 	end
 	if selected=="supplies" then
-		title.Text="Магазин участка"
-		text("Покупку подтверждает сервер. Кнопки повторяют уже существующие действия и не начисляют Gold или Essence сами.",64)
-		action("Семена · "..compact(state.firstSession.seedCost).." Gold",function() send("buySeed",{amount=1}) end)
-		if state.stations.garden.level==0 then action("Грядка · "..compact(state.firstSession.bedCost).." Gold",function() send("buyStarterStation",{stationId="garden"}) end) end
-		if state.stations.cauldron.level==0 then action("Котёл · "..compact(state.firstSession.cauldronCost).." Gold",function() send("buyStarterStation",{stationId="cauldron"}) end) end
+		title.Text="Магазин ресурсов"
+		text("Семена и постройки. Обмен с другими игроками — отдельно, на базаре.",48)
+		local guideStep=Session.present(state,Config).step
+		local seedCost=state.firstSession.seedCost
+		if guideStep=="seeds" then
+			action("Купить 5 семян · "..compact(seedCost*state.firstSession.openingSeeds).." Gold",function() send("buySeed",{amount=state.firstSession.openingSeeds}) end)
+		else
+			action("Купить 1 семя · "..compact(seedCost).." Gold",function() send("buySeed",{amount=1}) end)
+			action("Купить 5 семян · "..compact(seedCost*state.firstSession.openingSeeds).." Gold",function() send("buySeed",{amount=state.firstSession.openingSeeds}) end)
+		end
+		if Session.offersStation(state,"garden") then action("Грядка · "..compact(state.firstSession.bedCost).." Gold",function() send("buyStarterStation",{stationId="garden"}) end)
+		else text("Грядка уже построена.",32) end
+		if Session.offersStation(state,"cauldron") then action("Котёл · "..compact(state.firstSession.cauldronCost).." Gold",function() send("buyStarterStation",{stationId="cauldron"}) end)
+		else text("Котёл уже построен.",32) end
 		if state.stations.cauldron.level>0 and not (state.automation and state.automation.brew) then
 			action("Автоматизация · "..compact(state.firstSession.automationCost).." Gold",function() send("buyAutomation",{feature="basic"}) end)
-		end
+		elseif state.automation and state.automation.brew then text("Автоматизация уже включена.",32) end
 		local crystalPrice=upgradePrice("crystal")
-		if crystalPrice then action("Кристалл · "..compact(crystalPrice).." Gold",function() send("buy",{upgradeId="crystal"}) end) end
+		if crystalPrice then action("Кристалл · "..compact(crystalPrice).." Gold",function() send("buy",{upgradeId="crystal"}) end)
+		else text("Кристалл уже максимального уровня.",32) end
 		refresh(); return
 	end
 	if selected=="inventory" then
@@ -729,12 +740,31 @@ for _,menu in ipairs({{"supplies","Магазин"},{"inventory","Инвента
 end
 local acknowledged=nil
 local renderCoach
+local skipGlance=button(coach,"Пропустить показ",function() Glance.stop() end)
+skipGlance.Position,skipGlance.Size=UDim2.new(1,-150,0,8),UDim2.fromOffset(136,28)
+skipGlance.Visible=false
+Glance.onRunning(function(active) skipGlance.Visible=active end)
+local aimed=nil
+local function aim(targetId)
+	if targetId==nil then Glance.clear(); return true end
+	local world=workspace:FindFirstChild("PotionTycoonWorld")
+	local plot=nil
+	if world then
+		for _,child in ipairs(world:GetChildren()) do
+			if child:GetAttribute("OwnerUserId")==player.UserId then plot=child break end
+		end
+	end
+	local part=plot and plot:FindFirstChild(targetId)
+	if not part then return false end
+	Glance.play(part, environment.reduceMotion)
+	return true
+end
 local function perform(entry)
 	if entry.kind=="acknowledge" then acknowledged=entry.id; renderCoach(); return end
-	if entry.kind=="brew" then
-		send("setRecipe",{stationId="cauldron",recipeId="healing"})
-		send("load",{stationId="cauldron"})
-		send("brew",{stationId="cauldron"})
+	if entry.intents then
+		for _,intent in ipairs(entry.intents) do send(intent.action,intent.payload) end
+	elseif entry.action=="build" then
+		send("buy",{upgradeId=entry.payload.upgradeId})
 	else send(entry.action,entry.payload) end
 end
 function renderCoach()
@@ -748,6 +778,11 @@ function renderCoach()
 		choice.Size=UDim2.new(view.intro and 0.32 or 0.7,0,0,44)
 	end
 	quick.Visible=#view.menus>0
+	if view.focus~=aimed then
+		if aim(view.focus) then aimed=view.focus end
+	elseif not view.visible then
+		Glance.clear(); aimed=nil
+	end
 end
 local function bindMenu(name,menuId,keys)
 	ContextActionService:BindAction(name,function(_,inputState)
@@ -781,12 +816,25 @@ State.OnClientEvent:Connect(function(value)
 	local progressionChanged = state and (state.progression.sequence~=value.progression.sequence or state.phase.complete~=value.phase.complete
 		or table.concat(state.orderOffers,"|")~=table.concat(value.orderOffers,"|"))
 	if state and (state.collection.sequence ~= value.collection.sequence or state.progression.sequence~=value.progression.sequence or state.shop.sequence~=value.shop.sequence or longTermChanged) then collectionPending = false end
+	local function guideSignature(snapshot)
+		if not snapshot or not snapshot.stations then return "" end
+		local session=snapshot.firstSession or {}
+		local plant=snapshot.plants and snapshot.plants[session.bedId]
+		local seeds=snapshot.seeds and snapshot.seeds[session.seedItem] or 0
+		return table.concat({
+			tostring(snapshot.tutorial and snapshot.tutorial.id), tostring(snapshot.tutorial and snapshot.tutorial.complete),
+			tostring(snapshot.gold), tostring(snapshot.essence), tostring(seeds),
+			tostring(snapshot.stations.garden.level), tostring(snapshot.stations.cauldron.level), tostring(snapshot.stations.crystal.level),
+			plant and tostring(plant.progress) or "0", tostring(snapshot.automation and snapshot.automation.brew),
+		}, "|")
+	end
+	local guideChanged=state and guideSignature(state)~=guideSignature(value)
 	state = value
 	if first and Session.intro(value) then panel.Visible=false end
 	local gained=Session.essenceDelta(previousEssence,value.essence)
 	if gained>0 then showToast("+"..gained.." Essence") end
 	renderCoach()
-	if first or progressionChanged or longTermChanged or longTermViewChanged or (selected=="shop" and shopChanged) or (selected == "altar" and collectionChanged) or selected=="supplies" or selected=="inventory" or selected=="familiars" then draw() else refresh() end
+	if first or guideChanged or progressionChanged or longTermChanged or longTermViewChanged or (selected=="shop" and shopChanged) or (selected == "altar" and collectionChanged) or selected=="supplies" or selected=="inventory" or selected=="familiars" then draw() else refresh() end
 	if not hasReport and value.offlineReport and value.offlineReport.processedSeconds > 5 then
 		hasReport = true
 		showToast("С возвращением! Учтено " .. value.offlineReport.processedSeconds .. " сек. работы. Gold: +" .. math.floor(value.offlineReport.goldEarned or 0) .. ". Уже сохранено.", 8)
@@ -818,7 +866,7 @@ TradeState.OnClientEvent:Connect(function(value)
 end)
 Notice.OnClientEvent:Connect(function(value)
 	collectionPending = false
-	showToast(value.text)
+	showToast(Session.explain(value.text))
 end)
 Focus.OnClientEvent:Connect(function(stationId)
 	if Config.stations[stationId] or stationId == "warehouse" or stationId == "orders" or stationId == "altar" or stationId == "blueprint" or stationId=="bazaar" then

@@ -62,6 +62,84 @@ function View.stationVisible(profile, config, stationId)
 	return allowed[stationId] == true
 end
 
+function View.collision(kind, visible, built)
+	if kind == "barrier" then return { collide = true, query = true, touch = false } end
+	if kind == "decoration" then return { collide = false, query = false, touch = false } end
+	if kind == "pad" or kind == "marker" then
+		return { collide = false, query = visible == true, touch = false }
+	end
+	if visible ~= true then return { collide = false, query = false, touch = false } end
+	return { collide = built == true, query = true, touch = false }
+end
+
+function View.remoteShop(action)
+	return action == "buySeed"
+end
+
+function View.offersStation(profile, stationId)
+	local station = type(profile) == "table" and profile.stations and profile.stations[stationId]
+	return type(station) == "table" and (tonumber(station.level) or 0) < 1
+end
+
+function View.glance(reduceMotion, skipped)
+	local move = reduceMotion ~= true and skipped ~= true
+	return { moveCamera = move, highlight = skipped ~= true, seconds = move and 1.2 or 0 }
+end
+
+local focusTarget = {
+	familiar = "altar", essence = "crystal", garden = "garden", seeds = "garden", crop = "garden",
+	cauldron = "cauldron", brew = "cauldron", sale = "cauldron", automation = "cauldron", passive = "crystal",
+}
+local shortLine = {
+	familiar = "Выбери одного фамильяра.",
+	essence = "Собери Essence с кристалла.",
+	garden = "Купи грядку.",
+	seeds = "Купи 5 семян.",
+	crop = "Посади семя и собери урожай.",
+	cauldron = "Купи котёл.",
+	brew = "Свари Healing.",
+	sale = "Зелье продано. Gold уже на счёте.",
+	automation = "Включи автоматизацию.",
+	passive = "Улучши кристалл.",
+}
+
+function View.focus(profile, config, acknowledged)
+	local step = View.displayStep(acknowledged, profile, config)
+	return focusTarget[step]
+end
+
+function View.line(profile, config, acknowledged)
+	local step = View.displayStep(acknowledged, profile, config)
+	if View.intro(profile) then return shortLine.familiar end
+	if step == "crop" then
+		local session = type(config) == "table" and config.firstSession or {}
+		local plant = type(profile) == "table" and profile.plants and profile.plants[session.bedId or "legacy:garden"]
+		if type(plant) == "table" and (tonumber(plant.progress) or 0) < (tonumber(plant.duration) or 1) then
+			return "Подожди, пока урожай созреет."
+		end
+	end
+	return shortLine[step] or ""
+end
+
+function View.explain(message)
+	local known = {
+		["Not enough gold"] = "Не хватает Gold.",
+		["Buy the garden first"] = "Сначала купи грядку.",
+		["Starter already chosen"] = "Фамильяр уже выбран.",
+		["Finish the first Healing sale first"] = "Сначала продай первое зелье Healing.",
+		["Upgrade already changed"] = "Уровень уже изменился.",
+		["Stale progression request"] = "Запрос устарел. Повтори действие.",
+		["Build this station first"] = "Сначала построй эту станцию.",
+		["Seed limit reached"] = "Больше семян купить нельзя.",
+		["Invalid seed price"] = "Такое количество семян купить нельзя.",
+		["Starter station already built"] = "Эта станция уже построена.",
+		["Automation already unlocked"] = "Автоматизация уже включена.",
+		["Essence limit reached"] = "Essence уже на пределе.",
+	}
+	if type(message) ~= "string" or message == "" then return "Действие отклонено." end
+	return known[message] or message
+end
+
 function View.padVisible(profile, config, stationId)
 	if not v2(profile) then return true end
 	if not View.stationVisible(profile, config, stationId) then return false end
@@ -93,10 +171,13 @@ function View.actions(profile, config, acknowledged)
 	local step = View.displayStep(acknowledged, profile, config)
 	local session = config.firstSession or {}
 	local bed = session.bedId or "legacy:garden"
-	if step == "garden" then
+	if step == "essence" then
+		return { { id = "essence", label = "Собрать Essence", action = "click", payload = {} } }
+	elseif step == "garden" then
+		if not View.offersStation(profile, "garden") then return {} end
 		return { { id = "garden", label = "Купить грядку", action = "buyStarterStation", payload = { stationId = "garden" } } }
 	elseif step == "seeds" then
-		return { { id = "seeds", label = "Купить семена", action = "buySeed", payload = { amount = session.openingSeeds or 5 } } }
+		return { { id = "seeds", label = "Купить 5 семян", action = "buySeed", payload = { amount = session.openingSeeds or 5 } } }
 	elseif step == "crop" then
 		local plant = profile.plants and profile.plants[bed]
 		if type(plant) == "table" and (tonumber(plant.progress) or 0) >= (tonumber(plant.duration) or 1) then
@@ -105,9 +186,14 @@ function View.actions(profile, config, acknowledged)
 			return { { id = "plant", label = "Посадить семя", action = "plantSeed", payload = { bedId = bed } } }
 		end
 	elseif step == "cauldron" then
+		if not View.offersStation(profile, "cauldron") then return {} end
 		return { { id = "cauldron", label = "Купить котёл", action = "buyStarterStation", payload = { stationId = "cauldron" } } }
 	elseif step == "brew" then
-		return { { id = "brew", label = "Загрузить и сварить", kind = "brew" } }
+		return { { id = "brew", label = "Сварить Healing", kind = "brew", intents = {
+			{ action = "setRecipe", payload = { stationId = "cauldron", recipeId = "healing" } },
+			{ action = "load", payload = { stationId = "cauldron" } },
+			{ action = "brew", payload = { stationId = "cauldron" } },
+		} } }
 	elseif step == "sale" and acknowledged == "brew" then
 		return { { id = "sale", label = "Дальше", kind = "acknowledge" } }
 	elseif step == "sale" then
@@ -116,7 +202,7 @@ function View.actions(profile, config, acknowledged)
 		return { { id = "automation", label = "Включить автоматизацию", action = "buyAutomation", payload = { feature = "basic" } } }
 	elseif step == "passive" then
 		local level = profile.stations and profile.stations.crystal and profile.stations.crystal.level or 1
-		return { { id = "passive", label = "Улучшить кристалл", action = "buy", payload = { upgradeId = "crystal", expectedLevel = level } } }
+		return { { id = "passive", label = "Улучшить кристалл", action = "build", payload = { upgradeId = "crystal", expectedLevel = level } } }
 	end
 	return {}
 end
@@ -146,15 +232,13 @@ function View.present(profile, config, acknowledged)
 	local _, presentation = guide(profile)
 	local intro = View.intro(profile)
 	local title = intro and "Выберите одного фамильяра" or (presentation and ("Шаг " .. tostring(presentation.step) .. "/" .. tostring(presentation.total)) or ("Шаг " .. index .. "/" .. #list))
-	local text = intro and "Короткое знакомство: один спутник помогает в саду, добыче или варке. Повторный выбор ничего не добавит." or (presentation and presentation.text or "")
-	if step == "sale" and acknowledged == "brew" then
-		text = "Партия Healing уже продана сервером, Gold на счёте. Дальше можно включить автоматизацию."
-	end
+	local text = View.line(profile, config, acknowledged)
 	return {
 		visible = v2(profile) and (intro or not done),
 		intro = intro,
 		step = step,
 		index = index,
+		focus = View.focus(profile, config, acknowledged),
 		title = title,
 		text = text,
 		actions = View.actions(profile, config, acknowledged),
