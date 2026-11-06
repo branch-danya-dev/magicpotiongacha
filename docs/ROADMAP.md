@@ -24,7 +24,9 @@ form the exact Cursor handoff.
 
 1. **C00:** inventory existing code invariants, establish V8+ migration plan,
    define safe behaviour for legacy fixed stations, three granted starters,
-   in-flight cargo and persistent inventory.
+   in-flight cargo and persistent inventory. The written contract is
+   [CORE_LOOP_V2_C00.md](CORE_LOOP_V2_C00.md). Schema 7 and the release switches
+   stay as they are until a later schema PR.
 2. **C01:** preserve early clicker + Gold/Essence progression while adding starter
    Gold, exactly one selected new-profile familiar, seed market/plant timers,
    first cauldron and affordable automation. No required manual resource chore
