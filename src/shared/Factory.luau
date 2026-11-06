@@ -143,6 +143,126 @@ function Factory.new(config)
 		return amount <= maximum
 	end
 
+	local projectionKeys = { "layout", "temple", "seeds", "plants", "outputMode", "potionStacks", "uniquePotions", "atlas", "starter", "workforce", "charms" }
+	-- Plot-local clearance centred on the floor at z=-8. Half-extents 42.5 x 41.5.
+	-- buildable is the current 77 x 75 floor. Both are recorded, not sold.
+	local templeEnvelope = { minX = -42.5, maxX = 42.5, minZ = -49.5, maxZ = 33.5 }
+	local templeBuildable = { minX = -38.5, maxX = 38.5, minZ = -45.5, maxZ = 29.5 }
+	local function emptyTable(value)
+		return plain(value) and next(value) == nil
+	end
+	local function exactKeys(value, required, optional)
+		if not plain(value) then return false end
+		optional = optional or {}
+		local seen = {}
+		for key in pairs(value) do
+			if not required[key] and not optional[key] then return false end
+			seen[key] = true
+		end
+		for key in pairs(required) do
+			if not seen[key] then return false end
+		end
+		return true
+	end
+	local function copyBox(box)
+		return { minX = box.minX, maxX = box.maxX, minZ = box.minZ, maxZ = box.maxZ }
+	end
+	local function exactBox(value, expected)
+		return exactKeys(value, { minX = true, maxX = true, minZ = true, maxZ = true })
+			and value.minX == expected.minX and value.maxX == expected.maxX
+			and value.minZ == expected.minZ and value.maxZ == expected.maxZ
+	end
+	local function projectV8(profile)
+		local placements = {}
+		for _, id in ipairs(config.stationOrder) do
+			local definition = config.stations[id]
+			local offset = definition.offset
+			placements[id] = {
+				instanceId = "legacy:" .. id, slotId = id, archetype = definition.archetype,
+				x = offset[1], y = offset[2], z = offset[3], rotation = 0, legacy = true,
+			}
+		end
+		local discovered = {}
+		for id, value in pairs(profile.discoveredRecipes) do discovered[id] = value end
+		local outputMode = {}
+		for _, id in ipairs(config.stationOrder) do
+			if config.stations[id].defaultRecipe then outputMode[id] = "auto-sell" end
+		end
+		profile.layout = { legacy = true, placements = placements }
+		profile.temple = { level = profile.phase, tracksPhase = true, envelope = copyBox(templeEnvelope), buildable = copyBox(templeBuildable) }
+		profile.seeds, profile.plants = {}, {}
+		profile.outputMode, profile.potionStacks, profile.uniquePotions = outputMode, {}, {}
+		profile.atlas = { discovered = discovered }
+		profile.starter = { claimed = true, legacyGrant = true }
+		profile.workforce = { ownedCap = config.maxPets }
+		profile.charms = { active = {} }
+		profile.schemaVersion = config.schemaVersion
+	end
+	local function projectionValid(profile)
+		if profile.nextPotionSerial ~= nil then return false, "Potion serials are not in this schema" end
+		for _, pet in pairs(profile.pets) do
+			if pet.xp ~= nil then return false, "Familiar training is not in this schema" end
+		end
+		if not exactKeys(profile.layout, { legacy = true, placements = true }) or profile.layout.legacy ~= true then
+			return false, "Invalid legacy layout"
+		end
+		local placements = profile.layout.placements
+		if not plain(placements) then return false, "Invalid legacy layout" end
+		for id in pairs(placements) do
+			if not config.stations[id] then return false, "Invalid legacy layout" end
+		end
+		for _, id in ipairs(config.stationOrder) do
+			local definition = config.stations[id]
+			local place = placements[id]
+			local offset = definition.offset
+			if not exactKeys(place, { instanceId = true, slotId = true, archetype = true, x = true, y = true, z = true, rotation = true, legacy = true })
+				or place.instanceId ~= "legacy:" .. id or place.slotId ~= id or place.archetype ~= definition.archetype
+				or place.x ~= offset[1] or place.y ~= offset[2] or place.z ~= offset[3]
+				or place.rotation ~= 0 or place.legacy ~= true then
+				return false, "Invalid legacy placement"
+			end
+		end
+		if not exactKeys(profile.temple, { level = true, tracksPhase = true, envelope = true, buildable = true })
+			or not integer(profile.temple.level, 1, 4) or profile.temple.tracksPhase ~= true
+			or not exactBox(profile.temple.envelope, templeEnvelope)
+			or not exactBox(profile.temple.buildable, templeBuildable) then
+			return false, "Invalid temple projection"
+		end
+		if not emptyTable(profile.seeds) or not emptyTable(profile.plants)
+			or not emptyTable(profile.potionStacks) or not emptyTable(profile.uniquePotions) then
+			return false, "Invalid empty V8 container"
+		end
+		if not plain(profile.outputMode) then return false, "Invalid output mode" end
+		for id, mode in pairs(profile.outputMode) do
+			local definition = config.stations[id]
+			if not definition or not definition.defaultRecipe or mode ~= "auto-sell" then return false, "Invalid output mode" end
+		end
+		for _, id in ipairs(config.stationOrder) do
+			if config.stations[id].defaultRecipe and profile.outputMode[id] ~= "auto-sell" then return false, "Invalid output mode" end
+		end
+		if not exactKeys(profile.atlas, { discovered = true }) or not plain(profile.atlas.discovered) then
+			return false, "Invalid atlas projection"
+		end
+		for id, discovered in pairs(profile.atlas.discovered) do
+			if discovered ~= true or profile.discoveredRecipes[id] ~= true then return false, "Invalid atlas projection" end
+		end
+		local starter = profile.starter
+		if not exactKeys(starter, { claimed = true, legacyGrant = true }, { choice = true })
+			or type(starter.claimed) ~= "boolean" or type(starter.legacyGrant) ~= "boolean" then
+			return false, "Invalid starter marker"
+		end
+		if starter.choice ~= nil and starter.choice ~= "farmer" and starter.choice ~= "slime" and starter.choice ~= "brewer" then
+			return false, "Invalid starter marker"
+		end
+		if not exactKeys(profile.workforce, { ownedCap = true }) or profile.workforce.ownedCap ~= config.maxPets then
+			return false, "Invalid workforce projection"
+		end
+		if not exactKeys(profile.charms, { active = true }) or not emptyTable(profile.charms.active) then
+			return false, "Invalid charm registry"
+		end
+		return true, nil
+	end
+
 	local function validate(profile, version)
 		local legacy = version == 1
 		local modern = not version or version >= 4
@@ -194,7 +314,7 @@ function Factory.new(config)
 				end
 			end
 			if (modern or version == 3) and not familiars.validatePet(pet) then return false, "Invalid familiar metadata or range" end
-			if version and (config.petSpecies[pet.species].visual=="ghost" or pet.provenance and (pet.provenance.source=="event_gold" or pet.provenance.source=="developer_product")) then return false,"Future historical familiar" end
+			if version and version < 7 and (config.petSpecies[pet.species].visual=="ghost" or pet.provenance and (pet.provenance.source=="event_gold" or pet.provenance.source=="developer_product")) then return false,"Future historical familiar" end
 		end
 		if petCount > cfg.maxPets then
 			return false, "Pet capacity exceeded"
@@ -410,11 +530,15 @@ function Factory.new(config)
 					or (not beforeEpochs and not Epochs.available(config,profile,cfg.items[itemId])) or not integer(cursor,1,#cfg.machineOrder) then return false,"Invalid input fairness cursor" end
 			end
 			if not progression.validate(profile) then return false, "Invalid phase/equipment state" end
-			if version then for _,item in pairs(profile.cauldrons) do if item.type~="resonant" then return false,"Future historical cauldron" end end end
+			if version and version < 7 then for _,item in pairs(profile.cauldrons) do if item.type~="resonant" then return false,"Future historical cauldron" end end end
 		end
 		if (not version or version>=5) and not Trading.validateProfile(profile,config.maxBalance) then return false,"Invalid trade reservation/receipt" end
 		if (not version or version>=6) and not longTerm.validate(profile) then return false,"Invalid long-term progression" end
-		if not version and not monetization.validate(profile) then return false,"Invalid monetization metadata" end
+		if (not version or version >= 7) and not monetization.validate(profile) then return false,"Invalid monetization metadata" end
+		if not version or version >= 8 then
+			local projected, projectionReason = projectionValid(profile)
+			if not projected then return false, projectionReason end
+		end
 		return true, nil
 	end
 
@@ -428,23 +552,37 @@ function Factory.new(config)
 	end
 
 	-- ProfileStore supplies a serializable isolated copy; this migration is pure.
+	local function acceptV8(migrated)
+		local projected = copy(migrated)
+		projectV8(projected)
+		local valid, reason = engine.validate(projected)
+		return valid and projected or nil, reason
+	end
 	function engine.migrate(profile)
 		if plain(profile) and profile.schemaVersion == config.schemaVersion then
 			local valid, reason = engine.validate(profile)
 			return valid and profile or nil, reason
 		end
-		if not plain(profile) or not integer(profile.schemaVersion,1,6) then return nil, "Unsupported profile schema" end
+		if not plain(profile) or not integer(profile.schemaVersion, 1, config.schemaVersion - 1) then return nil, "Unsupported profile schema" end
+		for _, key in ipairs(projectionKeys) do
+			if profile[key] ~= nil then return nil, "Unexpected future layout state" end
+		end
+		if profile.nextPotionSerial ~= nil then return nil, "Unexpected future layout state" end
 		local version = profile.schemaVersion
-		if profile.monetization~=nil then return nil,"Unexpected historical monetization state" end
-		if version<6 and profile.longTerm~=nil then return nil,"Unexpected historical long-term state" end
-		if version<5 and profile.trade~=nil then return nil,"Unexpected historical trading state" end
-		if version>=4 then
-			local valid,reason=validate(profile,version); if not valid then return nil,reason end
-			local migrated=copy(profile); migrated.schemaVersion=config.schemaVersion
-			if version<5 then migrated.trade={sequence=0} end
-			if version<6 then migrated.longTerm=longTerm.initial(migrated) end
-			migrated.monetization=Monetization.initial()
-			valid,reason=engine.validate(migrated); return valid and migrated or nil,reason
+		if version < 7 and profile.monetization ~= nil then return nil, "Unexpected historical monetization state" end
+		if version < 6 and profile.longTerm ~= nil then return nil, "Unexpected historical long-term state" end
+		if version < 5 and profile.trade ~= nil then return nil, "Unexpected historical trading state" end
+		if version >= 4 then
+			local valid, reason = validate(profile, version)
+			if not valid then return nil, reason end
+			local migrated = copy(profile)
+			migrated.schemaVersion = 7
+			if version < 5 then migrated.trade = {sequence=0} end
+			if version < 6 then migrated.longTerm = longTerm.initial(migrated) end
+			if version < 7 then migrated.monetization = Monetization.initial() end
+			valid, reason = validate(migrated, 7)
+			if not valid then return nil, reason end
+			return acceptV8(migrated)
 		end
 		if profile.phase ~= nil or profile.progression ~= nil or profile.cauldrons ~= nil or profile.nextCauldronSerial ~= nil or profile.inputCursors ~= nil then return nil, "Unexpected future progression fields" end
 		local valid, reason = validate(profile, version)
@@ -462,7 +600,7 @@ function Factory.new(config)
 			if migrated.stations.crystal.level >= 2 then migrated.tutorial.upgrade = true end
 			if migrated.order then migrated.tutorial.orderAccepted = true end
 		end
-		migrated.schemaVersion = config.schemaVersion
+		migrated.schemaVersion = 7
 		migrated.trade = {sequence=0}
 		if version < 3 then
 			migrated.collection, migrated.currencyPaid = { sequence = 0 }, { gold = false, essence = false }
@@ -476,10 +614,11 @@ function Factory.new(config)
 				if config.stations[id].outputItem then migrated.manualReadyAt[id] = migrated.lastSimulatedAt end
 			end
 		end
-		migrated.longTerm=longTerm.initial(migrated)
-		migrated.monetization=Monetization.initial()
-		valid, reason = engine.validate(migrated)
-		return valid and migrated or nil, reason
+		migrated.longTerm = longTerm.initial(migrated)
+		migrated.monetization = Monetization.initial()
+		valid, reason = validate(migrated, 7)
+		if not valid then return nil, reason end
+		return acceptV8(migrated)
 	end
 
 	function engine.newProfile(userId, now)
@@ -513,6 +652,7 @@ function Factory.new(config)
 		end
 		profile.longTerm=longTerm.initial(profile)
 		profile.monetization=Monetization.initial()
+		projectV8(profile)
 		return profile
 	end
 

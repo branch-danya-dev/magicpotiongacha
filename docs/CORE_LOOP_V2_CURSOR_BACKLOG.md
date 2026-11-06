@@ -16,14 +16,14 @@
 
 ## C00 — Architecture inventory, save migration plan, playable baseline (P0)
 
-Written inventory and the V8 migration contract: [CORE_LOOP_V2_C00.md](CORE_LOOP_V2_C00.md). That document does not bump `schemaVersion` and does not add executable fixtures. Checkboxes stay open until the schema PR lands the tests in that contract.
+Written inventory and the V8 migration contract: [CORE_LOOP_V2_C00.md](CORE_LOOP_V2_C00.md). C00b implements sections 6–7 and adds `tests/v8_migration.spec.luau`. `Config.schemaVersion` is 8. Owner numbers in that contract stay `TBD`; the sign-off checkbox stays open.
 
 - [ ] Trace actual Factories, Protocol, Config, ProfileStore, World, UI, M1–M6 progression and 13 fixed slots; identify every direct slot-ID coordinate or forced auto-export dependency.
 - [ ] Publish current→target invariant map for profile fields, items, active contracts, stored/timed work, RNG, receipts, locked/traded/reserved items, paid provenance and Rebirth.
 - [ ] Design additive V8+ schema: owned instance placements, temple level and build polygon, seed stock/plants, output routing, potion inventory, starter choice, active pet slots, trained skill XP, charm registry.
 - [ ] Identify migration path for existing owners: original fixed stations get deterministic safe placements and durable IDs; old 3 starters stay intact without claiming a new starter. No occupied/locked/in-flight object is lost.
 - [ ] Owner sign-off gates: active cap vs owned cap, temple vs phases, seed starter budget, potion rarity order. Use explicit TODOs/config for unresolved values, not invention.
-- [ ] Baseline tests/CI unchanged prior to runtime edits; add schema migration fixtures for all versions and malformed/future/ambiguous DataStore states.
+- [x] Baseline tests/CI unchanged prior to runtime edits; add schema migration fixtures for all versions and malformed/future/ambiguous DataStore states.
 
 **Done when:** written interfaces and migration tests show no old-data loss; all release flags still disabled. This task may produce design-code scaffolding but no gameplay behaviour change.
 
