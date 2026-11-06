@@ -37,6 +37,7 @@ run(process.execPath, ['scripts/check-task06.mjs']);
 run(process.execPath, ['scripts/check-07a.mjs']);
 run(process.execPath, ['scripts/check-07b.mjs']);
 run(process.execPath, ['scripts/check-07c.mjs']);
+run(process.execPath, ['scripts/check-visual-preservation.mjs']);
 run(process.execPath, ['scripts/check-ui.mjs']);
 run(process.execPath, ['scripts/check-18a-evidence.mjs']);
 run(process.execPath, ['scripts/check-19a-evidence.mjs']);
@@ -52,5 +53,6 @@ run(tool('rojo', 'rojo'), ['build', 'default.project.json', '-o', 'build/PotionT
 run(tool('rojo', 'rojo'), ['sourcemap', 'default.project.json', '-o', 'build/sourcemap.json']);
 run(tool('rojo', 'rojo'), ['build', 'qa/environment.project.json', '-o', 'build/M7PilotReview.rbxlx']);
 run(tool('rojo', 'rojo'), ['sourcemap', 'qa/environment.project.json', '-o', 'build/environment-sourcemap.json']);
+run(process.execPath, ['scripts/check-visual-preservation.mjs', '--built']);
 console.log(`Verified ${all.length} Luau sources and built build/PotionTycoon.rbxlx`);
 appendFileSync(log, `PASS: ${all.length} Luau sources; compile, portable analysis, tests, Rojo build and sourcemap.\n`);
