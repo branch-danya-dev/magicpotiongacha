@@ -1,10 +1,10 @@
 # C00 — Architecture inventory and V8 migration contract
 
-**Status: WRITTEN PLAN ONLY. NOT IMPLEMENTED.** Recorded against `design/core-loop-v2-cursor` at `5779c902b3d31f1163c04faffb56dd76e35a82a9`.
+**Status: CONTRACT, with sections 6–7 implemented by C00b.** Recorded against `design/core-loop-v2-cursor` at `5779c902b3d31f1163c04faffb56dd76e35a82a9`.
 **Product target:** [CORE_LOOP_V2_SPEC.md](CORE_LOOP_V2_SPEC.md). **Task order:** [CORE_LOOP_V2_CURSOR_BACKLOG.md](CORE_LOOP_V2_CURSOR_BACKLOG.md).
-**Implemented truth until a later schema PR ships:** M0–M6 rules in [DESIGN.md](DESIGN.md), [PERSISTENCE.md](PERSISTENCE.md), [ARCHITECTURE.md](ARCHITECTURE.md), and the M1–M6 rule documents. M7 art stays on Draft PR #17 and is not accepted here.
+**Implemented gameplay truth:** M0–M6 rules in [DESIGN.md](DESIGN.md), [PERSISTENCE.md](PERSISTENCE.md), [ARCHITECTURE.md](ARCHITECTURE.md), and the M1–M6 rule documents. M7 art stays on Draft PR #17 and is not accepted here.
 
-This document does not change `schemaVersion`, Factory simulation, Protocol, profiles, flags, art, or tests. `Config.schemaVersion` remains **7**. `Factory.migrate` still accepts only gameplay V1–V7 and rejects every other version. Release switches stay off.
+C00b implements sections 6–7 only. `Config.schemaVersion` is **8**. `Factory.migrate` accepts gameplay V1–V8 and rejects every other version. Simulation, Protocol, prices, flags, art, and the three-familiar `newProfile` grant are unchanged. Release switches stay off.
 
 Unresolved owner numbers are written as `TBD`. They are not provisional prices.
 
@@ -332,7 +332,7 @@ Work stays on new branches off the accepted V2 base. Nothing here merges to `mai
 | Step | PR contents | Runtime |
 | --- | --- | --- |
 | **C00 (this change)** | This contract. Backlog/roadmap pointers. | None. Schema 7. Flags off. Existing tests unchanged |
-| **C00b schema PR** (next, still no new loop) | Implement section 6–7 in `Factory.migrate` / `validate` only. Add the fixtures in section 10. No new intents, no `newProfile` change, no World move | Migrated profiles gain empty projections. Simulation results for one tick match pre-V8 given the same inputs, because `dispatch` is untouched and new fields are unread |
+| **C00b schema PR** | Sections 6–7 in `Factory.migrate` / `validate`, plus `tests/v8_migration.spec.luau`. No new intents and no World move. `newProfile` still grants the historical three familiars and only stamps the V8 projection so a current save validates | Migrated profiles gain empty projections. Simulation results for one tick match pre-V8 given the same inputs, because `dispatch` is untouched and new fields are unread |
 | **C01** | New-profile choice, starter Gold `TBD` once set, first bed/seed/cauldron, auto-sell still the default | Must not run the three-starter grant on a `legacyGrant` profile |
 | **C02** | Server placement commands. Client preview cannot spend | Legacy placements load at the offsets in section 2. Cargo stays on `stations` until a dedicated idle move |
 | **C03–C08** | As the backlog states | Each one keeps the conservation rows in section 5 |
@@ -382,4 +382,4 @@ Release flags in `ServerSettings.luau` are asserted unchanged by reading the sou
 - Enabling trade, purchases, or environment art
 - Comments, pushes, or retargets of Draft PR #17
 - Merge to `main` or publication
-- Executable migration tests (section 10), which are the first commit of the schema PR
+- Executable migration tests were out of scope for the C00 document commit. C00b adds them in `tests/v8_migration.spec.luau`

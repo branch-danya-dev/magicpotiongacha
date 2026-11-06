@@ -20,6 +20,7 @@ end
 if selected == nil or selected == "m1" then
 	require("./m1.spec")(Test)
 	require("./migration.spec")(Test)
+	require("./v8_migration.spec")(Test)
 end
 
 if selected == nil or selected == "m2" then

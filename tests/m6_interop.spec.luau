@@ -62,15 +62,17 @@ return function(T:any)
 		end end
 		T.truthy(h.process()); T.truthy(attempted); T.equal(h.profile().rebirths,0)
 	end)
-	T.test("M6 migration: authentic V6 progressed profile gains empty V7 rights only",function()
+	T.test("M6 migration: authentic V6 progressed profile gains empty V7 rights and the V8 projection",function()
 		local h=H.new(); local old=H.copy(fixture.progressed); T.equal(old.schemaVersion,6); T.equal(old.rebirths,1)
-		local p=assert(h.engine.migrate(old)); T.equal(p.schemaVersion,7); T.same(p.monetization,Model.initial())
-		p.schemaVersion=6; p.monetization=nil; T.same(p,fixture.progressed); T.same(old,fixture.progressed)
+		local p=assert(h.engine.migrate(old)); T.equal(p.schemaVersion,Config.schemaVersion); T.same(p.monetization,Model.initial())
+		local body=H.copy(p); body.schemaVersion=6; body.monetization=nil
+		for _,key in ipairs({"layout","temple","seeds","plants","outputMode","potionStacks","uniquePotions","atlas","starter","workforce","charms"}) do body[key]=nil end
+		T.same(body,fixture.progressed); T.same(old,fixture.progressed)
 	end)
 	T.test("M6 migration: authentic V6 pending M4 commit recovers without losing inventory",function()
 		local h=M4.new(); h.records["p:101"]={schemaVersion=1,revision=1,profile=H.copy(fixture.pending)}
 		h.records["p:202"]={schemaVersion=1,revision=1,profile=H.copy(fixture.other)}; h.journals["t:trade-uuid-1"]=H.copy(fixture.journal)
-		h.restart(); T.truthy(h.recover()); T.truthy(h.checkOutcome()); h.load(101); T.equal(h.profile(101).schemaVersion,7)
+		h.restart(); T.truthy(h.recover()); T.truthy(h.checkOutcome()); h.load(101); T.equal(h.profile(101).schemaVersion,Config.schemaVersion)
 	end)
 	for _,version in ipairs({1,2,3,4,5,6}) do
 		T.test("M6 migration: V"..version.." cannot smuggle V7 payment state",function()
@@ -78,7 +80,7 @@ return function(T:any)
 		end)
 	end
 	T.test("M6 persistence: future/invalid V7 saved record is never overwritten by default",function()
-		local h=H.new(); h.records["p:101"].profile.schemaVersion=8; local before=H.copy(h.records); h.now+=181
+		local h=H.new(); h.records["p:101"].profile.schemaVersion=Config.schemaVersion+1; local before=H.copy(h.records); h.now+=181
 		local store=h.newStore("new"); T.falsy(store:loadExisting(101,function() error("no reset") end)); T.same(h.records,before)
 	end)
 end
