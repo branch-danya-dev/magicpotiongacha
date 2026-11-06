@@ -562,7 +562,8 @@ draw = function()
 					local seeds = state.seeds[session.seedItem] or 0
 					local growth = plant and (plant.progress .. "/" .. plant.duration) or "пусто"
 					local price = session.ownerApproved and (session.seedCost .. " Gold") or "цена не утверждена"
-					return "Семена: " .. seeds .. " · грядка: " .. growth .. "\nСемя: " .. price .. " · урожай: " .. session.seedYield
+					local crop = state.crop or {}
+					return "Семена: " .. seeds .. " · грядка: " .. growth .. "\nСемя: " .. price .. " · урожай: " .. (crop.yield or session.seedYield) .. " · рост: " .. (crop.duration or session.growSeconds) .. " с"
 				end)
 				action("Посадить семя", function() send("plantSeed", { bedId = state.firstSession.bedId }) end)
 				action("Собрать урожай с грядки", function() send("harvestCrop", { bedId = state.firstSession.bedId }) end)
@@ -583,8 +584,10 @@ draw = function()
 			bindText(recipe, function()
 				local station = getStation()
 				local def = Config.recipes[station.recipeId]
-				return def and (def.name .. " · " .. names(def.inputs) .. " · Essence: " .. def.essenceCost
-					.. " · Выпуск: " .. def.quantity .. " · Продажа: " .. state.recipes[stationId][station.recipeId].saleValue .. " Gold") or "Рецепт не выбран"
+				local live = def and state.recipes[stationId][station.recipeId]
+				return live and (def.name .. " · " .. names(live.inputs) .. " · Essence: " .. live.essenceCost
+					.. " · Партия: " .. live.quantity .. " · " .. live.duration .. " с"
+					.. " · Выручка: " .. live.saleValue .. " Gold") or "Рецепт не выбран"
 			end)
 			local recipeIds={}; for id in pairs(state.recipes[stationId]) do table.insert(recipeIds,id) end; table.sort(recipeIds)
 			for _,recipeId in ipairs(recipeIds) do

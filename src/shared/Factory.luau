@@ -22,6 +22,20 @@ local function integer(value, minimum, maximum)
 	return finite(value) and value % 1 == 0 and value >= minimum and value <= maximum
 end
 
+local function maxBrewQuantity(rules)
+	local cap = 1
+	for _, recipe in pairs(rules.recipes) do
+		if type(recipe.quantity) == "number" and recipe.quantity > cap then cap = recipe.quantity end
+	end
+	local batches = rules.economyV2 and rules.economyV2.cauldron and rules.economyV2.cauldron.batch
+	if type(batches) == "table" then
+		for _, value in ipairs(batches) do
+			if type(value) == "number" and value > cap then cap = value end
+		end
+	end
+	return cap
+end
+
 local function plain(value)
 	return type(value) == "table" and getmetatable(value) == nil
 end
@@ -110,6 +124,35 @@ function Factory.new(config)
 		return math.min(pet.stats[definition.skill], cap)
 	end
 
+	local function v2(profile)
+		return type(profile.starter) == "table" and profile.starter.legacyGrant ~= true
+	end
+
+	local function automationOn(profile, feature)
+		return type(profile.automation) == "table" and profile.automation[feature] == true
+	end
+
+	local function trackAt(list, level)
+		if type(list) ~= "table" then return nil end
+		return list[level] or list[#list]
+	end
+
+	local function liveRecipe(profile, recipe, stationId)
+		if not recipe or not v2(profile) or recipe.output ~= "healing" then return recipe end
+		local econ = config.economyV2
+		local station = profile.stations[stationId or recipe.station]
+		local level = math.max(1, station and station.level or 1)
+		local batch = trackAt(econ.cauldron.batch, level) or 1
+		local brew = trackAt(econ.cauldron.brewSeconds, level) or recipe.duration
+		local healing = econ.healing
+		return {
+			name = recipe.name, station = recipe.station, requiredLevel = recipe.requiredLevel, phase = recipe.phase,
+			kind = recipe.kind, output = recipe.output, goldValue = healing.goldValue, quantity = batch,
+			essenceCost = healing.essenceCost * batch, duration = brew,
+			inputs = { mandrake = healing.mandrake * batch },
+		}
+	end
+
 	-- A source pickup must not always feed the first downstream route. Persist a
 	-- turn per material so competing machines share even a one-item supply stream.
 	local function preferredInput(profile, itemId)
@@ -117,7 +160,7 @@ function Factory.new(config)
 		for offset=0,#config.machineOrder-1 do
 			local index=(start-1+offset)%#config.machineOrder+1
 			local slotId=config.machineOrder[index]; local station=profile.stations[slotId]
-			local recipe=station.recipeId and config.recipes[station.recipeId]
+			local recipe = liveRecipe(profile, station.recipeId and config.recipes[station.recipeId], slotId)
 			if station.level>0 and recipe and (recipe.inputs[itemId] or 0)>quantity(station.input,itemId)
 				and total(station.input)<config.machineInputCapacity then return slotId,index end
 		end
@@ -438,7 +481,7 @@ function Factory.new(config)
 			if not legacy then
 				local essenceLimit = definition.defaultRecipe and station.level > 0 and cfg.essenceBufferCapacity or 0
 				local econ = config.economyV2
-				if stationId == "cauldron" and profile.starter and profile.starter.legacyGrant ~= true and econ and econ.healing and econ.cauldron then
+				if station.level > 0 and definition.archetype == "cauldron" and profile.starter and profile.starter.legacyGrant ~= true and econ and econ.healing and econ.cauldron then
 					local batch = econ.cauldron.batch[station.level] or econ.cauldron.batch[#econ.cauldron.batch] or 1
 					essenceLimit = math.max(essenceLimit, econ.healing.essenceCost * batch)
 				end
@@ -456,7 +499,8 @@ function Factory.new(config)
 					local recipe = cfg.recipes[job.recipeId]
 					if not recipe or not compatible(cfg, stationId, recipe) or station.recipeId ~= job.recipeId
 						or not finite(job.doubleChance) or job.doubleChance < 0 or job.doubleChance > (legacy and 0.25 or cfg.maxDoubleChance)
-						or (not legacy and type(job.automatic) ~= "boolean") then
+						or (not legacy and type(job.automatic) ~= "boolean")
+						or (job.outputQuantity ~= nil and not integer(job.outputQuantity, 1, maxBrewQuantity(cfg))) then
 						return false, "Invalid brewing job"
 					end
 				elseif job.kind == "haul" then
@@ -781,32 +825,8 @@ function Factory.new(config)
 		if not profile.telemetry.first[id] then profile.telemetry.first[id] = now end
 	end
 
-	local function v2(profile)
-		return type(profile.starter) == "table" and profile.starter.legacyGrant ~= true
-	end
-
 	local function cycleOpen(profile)
 		return not v2(profile) or profile.tutorial.sale == true
-	end
-
-	local function trackAt(list, level)
-		if type(list) ~= "table" then return nil end
-		return list[level] or list[#list]
-	end
-
-	local function liveRecipe(profile, recipe)
-		if not recipe or not v2(profile) or recipe.output ~= "healing" then return recipe end
-		local econ = config.economyV2
-		local level = math.max(1, profile.stations.cauldron.level)
-		local batch = trackAt(econ.cauldron.batch, level) or 1
-		local brew = trackAt(econ.cauldron.brewSeconds, level) or recipe.duration
-		local healing = econ.healing
-		return {
-			name = recipe.name, station = recipe.station, requiredLevel = recipe.requiredLevel, phase = recipe.phase,
-			kind = recipe.kind, output = recipe.output, goldValue = healing.goldValue, quantity = batch,
-			essenceCost = healing.essenceCost * batch, duration = brew,
-			inputs = { mandrake = healing.mandrake * batch },
-		}
 	end
 
 	local function gardenPlan(profile)
@@ -890,7 +910,7 @@ function Factory.new(config)
 
 	local function expireOrder(profile, now, summary)
 		if profile.order and profile.order.expiresAt <= now then
-			local recipe = config.recipes[profile.order.recipeId]
+			local recipe = liveRecipe(profile, config.recipes[profile.order.recipeId])
 			sell(profile, recipe, engine.orderState(profile).reserved, summary)
 			for _, id in ipairs(config.machineOrder) do profile.stations[id].questQueue = {} end
 			local logistics = profile.stations.logistics
@@ -903,13 +923,17 @@ function Factory.new(config)
 	local function outputBlocked(profile, station, recipe)
 		if recipe.kind == "intermediate" then return total(station.output) + recipe.quantity * 2 > config.machineOutputCapacity end
 		local order = profile.order
-		local reserve = order and order.itemId == recipe.output and math.min(recipe.quantity * 2, order.count - engine.orderState(profile).reserved) or 0
-		return total(station.questQueue) + reserve > config.questQueueCapacity
+		if not (order and order.itemId == recipe.output) then return false end
+		local remaining = order.count - engine.orderState(profile).reserved
+		if remaining <= 0 then return false end
+		-- Queue only what fits. A batch larger than the queue still brews: dispatch keeps the
+		-- order's share and the existing sale rule takes the surplus.
+		return config.questQueueCapacity - total(station.questQueue) < 1
 	end
 
 	local function startBrew(profile, stationId, automatic)
 		local station = profile.stations[stationId]
-		local recipe = liveRecipe(profile, station.recipeId and config.recipes[station.recipeId])
+		local recipe = liveRecipe(profile, station.recipeId and config.recipes[station.recipeId], stationId)
 		if not Epochs.available(config,profile,recipe) or not compatible(config, stationId, recipe) or profile.phase < (recipe.phase or 1)
 			or station.level < recipe.requiredLevel or station.job then
 			return false, "Machine unavailable"
@@ -942,9 +966,11 @@ function Factory.new(config)
 	local function refill(profile, stationId, limit)
 		local station = profile.stations[stationId]
 		if station.level == 0 or not station.recipeId then return 0 end
-		local recipe = liveRecipe(profile, config.recipes[station.recipeId])
+		local recipe = liveRecipe(profile, config.recipes[station.recipeId], stationId)
 		local room = config.essenceBufferCapacity
-		if v2(profile) and stationId == "cauldron" then room = math.max(room, recipe.essenceCost) end
+		if v2(profile) and config.stations[stationId].archetype == "cauldron" and recipe.output == "healing" then
+			room = math.max(room, recipe.essenceCost)
+		end
 		local target = limit and room or recipe.essenceCost
 		local amount = math.min(profile.essence, math.max(0, target - station.essence), limit or room)
 		profile.essence -= amount
@@ -954,7 +980,7 @@ function Factory.new(config)
 
 	local function loadInputs(profile, stationId)
 		local station = profile.stations[stationId]
-		local recipe = liveRecipe(profile, station.recipeId and config.recipes[station.recipeId])
+		local recipe = liveRecipe(profile, station.recipeId and config.recipes[station.recipeId], stationId)
 		if not recipe then
 			return 0
 		end
@@ -982,7 +1008,7 @@ function Factory.new(config)
 				for offset=0,#config.machineOrder-1 do
 					local index=(start-1+offset)%#config.machineOrder+1
 					local station=profile.stations[config.machineOrder[index]]
-					local recipe=station.recipeId and config.recipes[station.recipeId]
+					local recipe = liveRecipe(profile, station.recipeId and config.recipes[station.recipeId], config.machineOrder[index])
 					if station.level>0 and recipe then
 						local needed=math.max(0,(recipe.inputs[itemId] or 0)-quantity(station.input,itemId))
 						local amount=math.min(needed,quantity(profile.inventory,itemId),config.machineInputCapacity-total(station.input))
@@ -1028,7 +1054,7 @@ function Factory.new(config)
 			if route.kind == "input" then
 				local targetId = route.slot
 				local target = profile.stations[targetId]
-				local recipe = target.recipeId and config.recipes[target.recipeId]
+				local recipe = liveRecipe(profile, target.recipeId and config.recipes[target.recipeId], targetId)
 				if recipe and target.level > 0 then
 					for _, itemId in ipairs(itemIds) do
 						local needed = (recipe.inputs[itemId] or 0) - quantity(target.input, itemId)
@@ -1135,7 +1161,7 @@ function Factory.new(config)
 
 	function engine.stationState(profile, stationId)
 		local station, definition = profile.stations[stationId], config.stations[stationId]
-		local recipe, job = config.recipes[station.recipeId], station.job
+		local recipe, job = liveRecipe(profile, config.recipes[station.recipeId], stationId), station.job
 		local code, missing = "working", {}
 		if recipe then
 			for itemId, amount in pairs(recipe.inputs) do
@@ -1150,10 +1176,10 @@ function Factory.new(config)
 		elseif definition.defaultRecipe then
 			if not recipe then code = "recipe_unavailable"
 			elseif job then
-				if job.automatic and not station.workerId then code = "no_master"
+				if job.automatic and not station.workerId and not automationOn(profile, "brew") then code = "no_master"
 				elseif station.progress >= job.duration and outputBlocked(profile, station, recipe) then code = "queue_full" end
 			elseif outputBlocked(profile, station, recipe) then code = "queue_full"
-			elseif station.auto and not station.workerId then code = "no_master"
+			elseif station.auto and not station.workerId and not automationOn(profile, "brew") then code = "no_master"
 			elseif station.essence < recipe.essenceCost then code = profile.essence > 0 and not profile.pipes and "no_path" or "waiting_essence"
 			elseif total(missing) > 0 then
 				code = "waiting_ingredient"
@@ -1169,7 +1195,7 @@ function Factory.new(config)
 		elseif stationId == "crystal" and not station.workerId and definition.passiveEssence[station.level] == 0 then code = "manual_mode" end
 		local duration = job and job.duration or (definition.growDuration and math.max(1, Epochs.duration(config,profile,definition.growDuration) / (1 + effectiveSkill(profile, stationId) * config.gatherSpeedPerSkill)))
 		return { code = code, text = statusText[code], missingInputs = missing,
-			essence = station.essence, essenceRequired = recipe and liveRecipe(profile, recipe).essenceCost or 0,
+			essence = station.essence, essenceRequired = recipe and recipe.essenceCost or 0,
 			progress = duration and math.min(1, station.progress / duration) or 0,
 			effectiveSkill = effectiveSkill(profile, stationId), queued = total(station.questQueue) }
 	end
@@ -1186,8 +1212,21 @@ function Factory.new(config)
 			or (not Epochs.available(config,profile,recipe) and "Recipe belongs to another epoch")
 			or (profile.phase < (recipe.phase or 1) and ("Requires phase " .. recipe.phase))
 			or (station.level < recipe.requiredLevel and ("Requires tier " .. recipe.requiredLevel)) or ""
-		local shown = liveRecipe(profile, recipe)
-		return { available = reason == "", reason = reason, saleValue=shown and Epochs.sale(config,profile,shown.goldValue) * shown.quantity or 0 }
+		local shown = liveRecipe(profile, recipe, slotId)
+		return {
+			available = reason == "", reason = reason,
+			saleValue = shown and Epochs.sale(config, profile, shown.goldValue) * shown.quantity or 0,
+			quantity = shown and shown.quantity or 0,
+			essenceCost = shown and shown.essenceCost or 0,
+			duration = shown and shown.duration or 0,
+			goldValue = shown and shown.goldValue or 0,
+			inputs = shown and shown.inputs or {},
+		}
+	end
+
+	function engine.gardenState(profile)
+		local yield, duration = gardenPlan(profile)
+		return { yield = yield, duration = duration }
 	end
 
 	function engine.orderEligible(profile, orderId)
@@ -1299,10 +1338,6 @@ function Factory.new(config)
 			end
 		end
 		return { step = #config.tutorialSteps, total = #config.tutorialSteps, id = "complete", target = "orders", text = "Обучение завершено: фабрика и доставка работают!", complete = true }
-	end
-
-	local function automationOn(profile, feature)
-		return type(profile.automation) == "table" and profile.automation[feature] == true
 	end
 
 	local function approvedSession()
@@ -1441,9 +1476,17 @@ function Factory.new(config)
 			local job = station.job
 			if job and (not job.automatic or station.workerId or automationOn(profile, "brew")) then
 				station.progress = math.min(job.duration, station.progress + 1)
-				if station.progress >= job.duration and not outputBlocked(profile, station, liveRecipe(profile, config.recipes[job.recipeId])) then
-					local recipe = liveRecipe(profile, config.recipes[job.recipeId])
-					local produced = job.outputQuantity or recipe.quantity
+				local recipe = liveRecipe(profile, config.recipes[job.recipeId], stationId)
+				local produced = recipe and recipe.quantity or 0
+				local legalBatch = true
+				if job.outputQuantity ~= nil then
+					if integer(job.outputQuantity, 1, maxBrewQuantity(config)) then
+						produced = job.outputQuantity
+					else
+						legalBatch = false
+					end
+				end
+				if legalBatch and recipe and station.progress >= job.duration and not outputBlocked(profile, station, recipe) then
 					if nextRandom(profile) < job.doubleChance then
 						produced = produced * 2
 					end

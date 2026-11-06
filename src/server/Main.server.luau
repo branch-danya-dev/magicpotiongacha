@@ -146,6 +146,7 @@ local function snapshot(player)
 		mode = memoryMode and "STUDIO_MEMORY" or "DATASTORE",
 		starter = { claimed = profile.starter.claimed, legacyGrant = profile.starter.legacyGrant, choice = profile.starter.choice },
 		seeds = copy(profile.seeds), plants = copy(profile.plants),
+		crop = Factory.gardenState(profile),
 		automation = copy(profile.automation or { replant = false, harvest = false, supply = false, brew = false, restock = false }),
 		firstSession = {
 			ownerApproved = Config.firstSession.ownerApproved, starterGold = Config.firstSession.starterGold,
