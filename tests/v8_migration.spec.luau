@@ -74,7 +74,7 @@ return function(T: any)
 			T.equal(profile.starter.claimed, false)
 			T.equal(profile.starter.legacyGrant, false)
 			T.equal(profile.starter.choice, nil)
-			T.same(profile.automation, { replant = false, harvest = false, supply = false, brew = false })
+			T.same(profile.automation, { replant = false, harvest = false, supply = false, brew = false, restock = false })
 			T.equal(count(profile.pets), 0)
 		end
 		T.same(profile.workforce, { ownedCap = Config.maxPets })

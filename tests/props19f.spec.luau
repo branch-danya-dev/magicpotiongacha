@@ -52,9 +52,10 @@ return function(T:any)
 		local profile=Factory.newProfile(1,0)
 		for id,def in pairs(Config.stations) do
 			local state=Plan.state(Config,profile,id,Factory.productionState(profile)); local shown=visible(Plan.station(Config,id),state)
-			T.equal(state.level,def.initialLevel)
-			T.equal(shown.SitePlan==true,def.initialLevel==0)
-			T.equal(shown.StatusInlay==true,def.initialLevel>0)
+			local level=(id=="garden" or id=="cauldron") and 0 or def.initialLevel
+			T.equal(state.level,level)
+			T.equal(shown.SitePlan==true,level==0)
+			T.equal(shown.StatusInlay==true,level>0)
 		end
 	end)
 	T.test("19f: rendering reads do not mutate economy, inventory or production jobs",function()

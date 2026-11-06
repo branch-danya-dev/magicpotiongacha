@@ -59,6 +59,8 @@ local SCHEMAS: { [string]: { [string]: string } } = {
 	plantSeed = { bedId = "id" },
 	harvestCrop = { bedId = "id" },
 	buySeed = { amount = "count" },
+	buyStarterStation = { stationId = "id" },
+	exchangeEssence = { gold = "count" },
 	buyAutomation = { feature = "id" },
 	assign = { stationId = "id", petId = "id-or-empty" },
 	harvest = { stationId = "id" },

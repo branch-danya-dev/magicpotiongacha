@@ -167,7 +167,11 @@ local Config = {
 		seedYield = 1,
 		growSeconds = 8,
 		bedId = "legacy:garden",
+		bedCost = 16,
+		cauldronCost = 16,
 		automationCost = 28,
+		restockTarget = 2,
+		essencePerGold = 10,
 	},
 }
 

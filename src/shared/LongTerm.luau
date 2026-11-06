@@ -102,6 +102,13 @@ function LongTerm.new(config)
 			local state=service.state(p,now); if not state.available then return false,table.concat(state.reasons,"; ") end
 			local reset=engine.newProfile(p.userId,now)
 			for _,field in ipairs({"gold","essence","inventory","questStock","order","phase","stations","warehouseLevel","pipes","manualReadyAt","slimeWorkSeconds","pipeCursor","inputCursors","lastSimulatedAt"}) do p[field]=reset[field] end
+			-- Rebirth still restores the historical starter layout. The empty C01 plot applies only to a brand-new profile.
+			for _,id in ipairs(config.stationOrder) do
+				local definition=config.stations[id]
+				local station=p.stations[id]
+				station.level=definition.initialLevel
+				station.recipeId=definition.initialLevel>0 and definition.defaultRecipe or nil
+			end
 			p.rebirths+=1; t.cycle={id=p.rebirths,finalProduced=false}; t.shards+=1; t.earned+=1
 			p.rngState=(p.rngState*48271+p.rebirths)%2147483647; if p.rngState==0 then p.rngState=1 end
 			result={message="Перерождение сохранено: +1 Time Shard",rebirths=p.rebirths,epoch=Epochs.rules(config,p).name,shards=t.shards,petsKept=count(p.pets),cauldronsKept=count(p.cauldrons)}

@@ -13,7 +13,9 @@ function Access.target(action: string, payload: any): string?
 	if action == "click" then return "crystal" end
 	if action == "chooseStarter" then return "altar" end
 	if action == "plantSeed" or action == "harvestCrop" then return "garden" end
-	if action == "buySeed" then return "warehouse" end
+	if action == "buySeed" then return "garden" end
+	if action == "exchangeEssence" then return "crystal" end
+	if action == "buyStarterStation" then return payload.stationId end
 	if action == "buyAutomation" then return "cauldron" end
 	if action == "buy" or action == "build" then return payload.upgradeId == "pipes" and "warehouse" or payload.upgradeId end
 	if action == "hire" or action == "discard" then return "warehouse" end

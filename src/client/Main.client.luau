@@ -513,15 +513,32 @@ draw = function()
 			local work = pet and (pet.name .. " · " .. definition.skill .. " " .. pet.stats[definition.skill] .. " → " .. math.min(pet.stats[definition.skill], cap)) or "Не назначен"
 			return "Уровень: " .. station.level .. "\nРабочий: " .. work
 		end)
+		if state.starter and not state.starter.legacyGrant and getStation().level < 1
+			and (stationId == "garden" or stationId == "cauldron") and state.firstSession then
+			local session = state.firstSession
+			local price = stationId == "garden" and session.bedCost or session.cauldronCost
+			local label = session.ownerApproved and (price .. " Gold") or "цена не утверждена"
+			text("Место уже отмечено на стартовом участке. Покупка ставит станцию сюда. Свободное перемещение появится позже.", 72)
+			action("Купить и установить · " .. label, function() send("buyStarterStation", { stationId = stationId }) end)
+			refresh()
+			return
+		end
 		if stationId == "crystal" then
 			local click=action("",function() send("click",{}) end)
 			bindText(click,function() return "Собрать эссенцию +"..state.longTerm.manualClickEssence end)
+			if state.firstSession and state.starter and not state.starter.legacyGrant then
+				local rate = state.firstSession.essencePerGold
+				action("Обменять " .. rate .. " Essence на 1 Gold", function() send("exchangeEssence", { gold = 1 }) end)
+				text(state.firstSession.ownerApproved and "Обмен слабее продажи Healing и тратит только уже собранную Essence." or "Курс обмена ещё не утверждён.", 48)
+			end
 		elseif definition.outputItem then
 			local output = text("", 44)
 			bindText(output, function() return "У источника: " .. names(getStation().output) end)
-			action("Собрать вручную", function() send("harvest", { stationId = stationId }) end)
+			if not (stationId == "garden" and state.starter and not state.starter.legacyGrant) then
+				action("Собрать вручную", function() send("harvest", { stationId = stationId }) end)
+			end
 			action("Забрать выращенное / добытое", function() send("collect", { stationId = stationId }) end)
-			if stationId == "garden" and state.firstSession then
+			if stationId == "garden" and state.firstSession and state.starter and not state.starter.legacyGrant then
 				local bed = text("", 72)
 				bindText(bed, function()
 					local session = state.firstSession
@@ -564,8 +581,8 @@ draw = function()
 			if stationId == "cauldron" and state.firstSession then
 				local session = state.firstSession
 				text(session.ownerApproved and "Автоматизация открывается за Gold. Она не создаёт ингредиенты." or "Цены автоматизации ещё не утверждены. Кнопки ниже вернут отказ сервера, пока владелец не примет таблицу.", 72)
-				local labels = { replant = "Автопосадка", harvest = "Автосбор", supply = "Автоподача", brew = "Повтор Healing" }
-				for _, feature in ipairs({ "replant", "harvest", "supply", "brew" }) do
+				local labels = { replant = "Автопосадка", harvest = "Автосбор", supply = "Автоподача", brew = "Повтор Healing", restock = "Автопокупка семян" }
+				for _, feature in ipairs({ "replant", "harvest", "supply", "brew", "restock" }) do
 					action(labels[feature] .. (state.automation[feature] and " · открыто" or (" · " .. (session.ownerApproved and (session.automationCost .. " Gold") or "не утверждено"))), function()
 						send("buyAutomation", { feature = feature })
 					end)

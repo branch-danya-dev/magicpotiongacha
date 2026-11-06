@@ -176,6 +176,7 @@ function Factory.new(config)
 		for _, definition in ipairs(config.starterPets) do
 			if definition.species == species then return definition end
 		end
+		return nil
 	end
 	local function starterPetId(userId, definition)
 		return string.format("%.0f", userId) .. ":" .. definition.id
@@ -256,7 +257,7 @@ function Factory.new(config)
 			end
 		end
 		if profile.automation ~= nil then
-			if not exactKeys(profile.automation, { replant = true, harvest = true, supply = true, brew = true }) then
+			if not exactKeys(profile.automation, { replant = true, harvest = true, supply = true, brew = true }, { restock = true }) then
 				return false, "Invalid automation flags"
 			end
 			for _, flag in pairs(profile.automation) do
@@ -689,14 +690,16 @@ function Factory.new(config)
 			warehouseLevel = 0, pipes = false, manualReadyAt = { garden = now, mine = now }, slimeWorkSeconds = {},
 			seeds = {}, plants = {},
 			starter = { claimed = false, legacyGrant = false },
-			automation = { replant = false, harvest = false, supply = false, brew = false },
+			automation = { replant = false, harvest = false, supply = false, brew = false, restock = false },
 		}
 		for _, stationId in ipairs(config.stationOrder) do
 			local definition = config.stations[stationId]
 			if definition.outputItem then profile.manualReadyAt[stationId] = now end
+			local level = definition.initialLevel
+			if not profile.starter.legacyGrant and (stationId == "garden" or stationId == "cauldron") then level = 0 end
 			profile.stations[stationId] = {
-				level = definition.initialLevel, workerId = nil,
-				recipeId = definition.initialLevel > 0 and definition.defaultRecipe or nil,
+				level = level, workerId = nil,
+				recipeId = level > 0 and definition.defaultRecipe or nil,
 				auto = false, input = {}, output = {}, essence = 0, questQueue = {}, progress = 0, job = nil,
 			}
 			if stationId == "logistics" then profile.stations[stationId].routeCursor = 1 end
@@ -718,6 +721,14 @@ function Factory.new(config)
 		profile.starter.legacyGrant = true
 		profile.starter.choice = nil
 		profile.starter.budgetGranted = nil
+		for _, stationId in ipairs(config.stationOrder) do
+			local definition = config.stations[stationId]
+			local station = profile.stations[stationId]
+			if station.level < definition.initialLevel then
+				station.level = definition.initialLevel
+				if station.level > 0 and not station.recipeId then station.recipeId = definition.defaultRecipe end
+			end
+		end
 		return profile
 	end
 
@@ -1210,6 +1221,7 @@ function Factory.new(config)
 		local session = config.firstSession
 		if type(session) ~= "table" then return false, "No starter bed" end
 		if profile.plants[session.bedId] then return false, "Bed is occupied" end
+		if profile.stations.garden.level < 1 then return false, "Buy the garden first" end
 		if quantity(profile.seeds, session.seedItem) < 1 then return false, "No seeds" end
 		if not integer(session.growSeconds, 1, config.maxOfflineSeconds) then return false, "Invalid grow duration" end
 		change(profile.seeds, session.seedItem, -1)
@@ -1217,6 +1229,22 @@ function Factory.new(config)
 			seedId = session.seedItem, plantedAt = math.floor(now), duration = session.growSeconds, progress = 0,
 		}
 		return true, "Seed planted"
+	end
+
+	local function restockSeeds(profile)
+		if not automationOn(profile, "restock") then return end
+		local session = config.firstSession
+		if type(session) ~= "table" or session.ownerApproved ~= true then return end
+		local price = session.seedCost
+		if type(price) ~= "number" then return end
+		local target = session.restockTarget
+		if type(target) ~= "number" then return end
+		if not integer(price, 0, config.maxBalance) or not integer(target, 1, config.maxCount) then return end
+		local owned = quantity(profile.seeds, session.seedItem)
+		if owned >= target or profile.gold < price then return end
+		if owned >= config.maxCount then return end
+		profile.gold -= price
+		change(profile.seeds, session.seedItem, 1)
 	end
 
 	local function tick(profile, now, summary, petIds, isOffline)
@@ -1232,6 +1260,7 @@ function Factory.new(config)
 		end
 		growBed(profile)
 		if automationOn(profile, "harvest") then harvestBed(profile, summary) end
+		restockSeeds(profile)
 		if automationOn(profile, "replant") then plantBed(profile, now) end
 		local deployed = {}
 		for _, stationId in ipairs(config.stationOrder) do
@@ -1240,7 +1269,8 @@ function Factory.new(config)
 				deployed[station.workerId] = true
 			end
 			local definition = config.stations[stationId]
-			if definition.outputItem and station.workerId and total(station.output) < config.sourceCapacity then
+			local seededGarden = stationId == "garden" and not (profile.starter and profile.starter.legacyGrant)
+			if definition.outputItem and station.workerId and not seededGarden and total(station.output) < config.sourceCapacity then
 				local duration = math.max(1, Epochs.duration(config,profile,definition.growDuration) / (1 + effectiveSkill(profile, stationId) * config.gatherSpeedPerSkill))
 				station.progress = station.progress + 1
 				if station.progress >= duration then
@@ -1361,7 +1391,8 @@ function Factory.new(config)
 
 	local payloadFields = {
 		click = {}, chooseStarter = { speciesId = true }, plantSeed = { bedId = true }, harvestCrop = { bedId = true },
-		buySeed = { amount = true }, buyAutomation = { feature = true },
+		buySeed = { amount = true }, buyStarterStation = { stationId = true }, exchangeEssence = { gold = true },
+		buyAutomation = { feature = true },
 		assign = { stationId = true, petId = true }, harvest = { stationId = true },
 		collect = { stationId = true }, load = { stationId = true }, brew = { stationId = true },
 		setRecipe = { stationId = true, recipeId = true }, setAuto = { stationId = true, enabled = true },
@@ -1384,7 +1415,7 @@ function Factory.new(config)
 				if type(payload[key]) ~= "boolean" then return false end
 			elseif key == "expectedLevel" then
 				if not integer(payload[key], 0, config.maxCount) then return false end
-			elseif key == "amount" then
+			elseif key == "amount" or key == "gold" then
 				if not integer(payload[key], 1, config.maxCount) then return false end
 			elseif type(payload[key]) ~= "string" or #payload[key] > 80 then
 				return false
@@ -1392,7 +1423,8 @@ function Factory.new(config)
 		end
 		if fields.bedId and (type(config.firstSession) ~= "table" or payload.bedId ~= config.firstSession.bedId) then return false end
 		if fields.feature and payload.feature ~= "replant" and payload.feature ~= "harvest"
-			and payload.feature ~= "supply" and payload.feature ~= "brew" then return false end
+			and payload.feature ~= "supply" and payload.feature ~= "brew" and payload.feature ~= "restock" then return false end
+		if action == "buyStarterStation" and payload.stationId ~= "garden" and payload.stationId ~= "cauldron" then return false end
 		if fields.stationId and not config.stations[payload.stationId] then return false end
 		if fields.recipeId and not config.recipes[payload.recipeId] then return false end
 		if fields.orderId and not config.orders[payload.orderId] then return false end
@@ -1417,7 +1449,7 @@ function Factory.new(config)
 		if not summary.ok then return false, summary.error end
 		local stationId = payload.stationId
 		local station = stationId and profile.stations[stationId]
-		if station and station.level == 0 then return false, "Build this station first" end
+		if station and station.level == 0 and action ~= "buyStarterStation" then return false, "Build this station first" end
 		if action == "chooseStarter" then
 			local starter = profile.starter
 			if starter.legacyGrant then return false, "Historical roster already granted" end
@@ -1441,6 +1473,35 @@ function Factory.new(config)
 			local amount, message = harvestBed(profile, nil)
 			if amount < 1 then return false, message end
 			return true, message
+		elseif action == "buyStarterStation" then
+			local session, rejection = approvedSession()
+			if not session then return false, rejection end
+			local cost = session.cauldronCost
+			if payload.stationId == "garden" then cost = session.bedCost end
+			if type(cost) ~= "number" then return false, "Starter prices are not approved" end
+			if not integer(cost, 0, config.maxBalance) then return false, "Starter prices are not approved" end
+			if station.level >= 1 then return true, "Starter station already built" end
+			if profile.gold < cost then return false, "Not enough gold" end
+			profile.gold -= cost
+			station.level = 1
+			if not station.recipeId then station.recipeId = config.stations[payload.stationId].defaultRecipe end
+			return true, "Starter station built"
+		elseif action == "exchangeEssence" then
+			local session, rejection = approvedSession()
+			if not session then return false, rejection end
+			local rate = tonumber(session.essencePerGold)
+			local goldWanted = tonumber(payload.gold)
+			if not rate or not goldWanted then return false, "Starter prices are not approved" end
+			if not integer(rate, 1, config.maxCount) or not integer(goldWanted, 1, config.maxCount) then
+				return false, "Starter prices are not approved"
+			end
+			if rate > 0 and goldWanted > math.floor(config.maxBalance / rate) then return false, "Invalid exchange" end
+			local cost = goldWanted * rate
+			if profile.essence < cost then return false, "Not enough essence" end
+			if profile.gold > config.maxBalance - goldWanted then return false, "Gold limit reached" end
+			profile.essence -= cost
+			profile.gold += goldWanted
+			return true, "Essence exchanged"
 		elseif action == "buySeed" then
 			local session, rejection = approvedSession()
 			if not session then return false, rejection end
@@ -1459,7 +1520,7 @@ function Factory.new(config)
 			if not session then return false, rejection end
 			if not integer(session.automationCost, 0, config.maxBalance) then return false, "Starter prices are not approved" end
 			if profile.automation == nil then
-				profile.automation = { replant = false, harvest = false, supply = false, brew = false }
+				profile.automation = { replant = false, harvest = false, supply = false, brew = false, restock = false }
 			end
 			if profile.automation[payload.feature] then return false, "Automation already unlocked" end
 			if profile.gold < session.automationCost then return false, "Not enough gold" end
@@ -1496,6 +1557,9 @@ function Factory.new(config)
 		elseif action == "harvest" then
 			local itemId = config.stations[stationId].outputItem
 			if not itemId then return false, "Not a gathering station" end
+			if stationId == "garden" and not (profile.starter and profile.starter.legacyGrant) then
+				return false, "Plant a seed and harvest the crop"
+			end
 			local timestamp = math.floor(now)
 			if timestamp > config.maxTimestamp - config.manualHarvestCooldown then return false, "Timestamp limit reached" end
 			if timestamp < profile.manualReadyAt[stationId] then return false, "Gathering is on cooldown" end
@@ -1558,6 +1622,10 @@ function Factory.new(config)
 			local level = upgradeId == "pipes" and (profile.pipes and 1 or 0)
 				or (upgradeId == "warehouse" and profile.warehouseLevel or profile.stations[upgradeId].level)
 			if payload.expectedLevel ~= level then return false, "Upgrade already changed; refresh first" end
+			if (upgradeId == "garden" or upgradeId == "cauldron") and level == 0
+				and not (profile.starter and profile.starter.legacyGrant) then
+				return false, "Buy this starter station from the first-session shop"
+			end
 			if upgradeId == "pipes" then
 				if profile.pipes then return false, "Pipes already purchased" end
 				cost = config.pipesCost
