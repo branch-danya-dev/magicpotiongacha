@@ -88,12 +88,115 @@ function Kit.host()
 	function self.watch(widget)
 		table.insert(self.widgets, widget)
 	end
-	function self.nextSelectable(current)
-		local order = {}
-		for _, widget in ipairs(self.controls) do
-			table.insert(order, { id = widget, disabled = widget.disabled() })
+	local inputKind = "Mouse"
+	local function rememberInput(last)
+		if last and last.Name then
+			inputKind = Interact.inputKind(last.Name)
 		end
-		return Interact.handoff(order, current)
+	end
+	function self.inputKind()
+		return inputKind
+	end
+	function self.controlFor(instance)
+		if instance == nil then
+			return nil
+		end
+		for _, widget in ipairs(self.controls) do
+			if widget.root == instance then
+				return widget
+			end
+		end
+		return nil
+	end
+	function self.windowOf(object)
+		local current = object
+		while current do
+			for id, modal in pairs(self.modals) do
+				if current == modal.window or current == modal.body then
+					return id
+				end
+			end
+			current = current.Parent
+		end
+		return nil
+	end
+	function self.describe(instance)
+		if instance == nil or instance.Parent == nil then
+			return {
+				id = instance,
+				present = instance ~= nil,
+				mounted = false,
+				visible = false,
+				ancestorsVisible = false,
+				selectable = false,
+				disabled = true,
+			}
+		end
+		local visible = true
+		if instance:IsA("GuiObject") then
+			visible = instance.Visible
+		end
+		local ancestors = true
+		local parent = instance.Parent
+		while parent and parent ~= game do
+			if parent:IsA("GuiObject") and parent.Visible == false then
+				ancestors = false
+				break
+			end
+			if parent:IsA("LayerCollector") and parent.Enabled == false then
+				ancestors = false
+				break
+			end
+			parent = parent.Parent
+		end
+		local widget = self.controlFor(instance)
+		return {
+			id = widget or instance,
+			present = true,
+			mounted = true,
+			visible = visible,
+			ancestorsVisible = ancestors,
+			selectable = (not instance:IsA("GuiObject")) or instance.Selectable ~= false,
+			disabled = widget ~= nil and widget.disabled() or false,
+			window = widget and widget.windowId or nil,
+			prefer = widget and widget.prefer,
+		}
+	end
+	function self.order()
+		local list = {}
+		for _, widget in ipairs(self.controls) do
+			table.insert(list, self.describe(widget.root))
+		end
+		return list
+	end
+	function self.nextSelectable(current)
+		return Interact.handoff(self.order(), current, self.windows.current())
+	end
+	function self.firstInside(windowId)
+		return Interact.firstInside(self.order(), windowId)
+	end
+	function self.retarget(windowId)
+		for _, widget in ipairs(self.controls) do
+			if widget.windowId == windowId and widget.apply then
+				widget.apply()
+			end
+		end
+	end
+	function self.releaseHiddenSelection()
+		local selected = GuiService.SelectedObject
+		local described = self.describe(selected)
+		if selected ~= nil and not Interact.available(described, self.windows.current()) then
+			GuiService.SelectedObject = nil
+		end
+	end
+	function self.assignSelection(choice)
+		if typeof(choice) == "Instance" then
+			GuiService.SelectedObject = choice
+		elseif type(choice) == "table" and choice.root then
+			GuiService.SelectedObject = choice.root
+		else
+			GuiService.SelectedObject = nil
+		end
 	end
 	function self.setTheme(name)
 		self.theme = Theme.resolve(name)
@@ -108,6 +211,10 @@ function Kit.host()
 		for _, widget in ipairs(self.widgets) do widget.apply() end
 	end
 	function self.destroy()
+		local selected = GuiService.SelectedObject
+		if self.controlFor(selected) then
+			GuiService.SelectedObject = nil
+		end
 		for _, widget in ipairs(self.widgets) do
 			if widget.destroy then widget.destroy() end
 		end
@@ -119,6 +226,13 @@ function Kit.host()
 		table.clear(self.controls)
 		table.clear(self.modals)
 	end
+	local ok, lastInput = pcall(function()
+		return UserInputService:GetLastInputType()
+	end)
+	if ok then
+		rememberInput(lastInput)
+	end
+	self.connect(UserInputService.LastInputTypeChanged, rememberInput)
 	return self
 end
 
@@ -166,7 +280,7 @@ local function control(host, className, parent, label, icon)
 	local id = key()
 	local flags = { disabled = false, pressed = false, hover = false, focused = false, selected = false }
 	local forced = nil
-	local widget = { root = root, navigable = true }
+	local widget = { root = root, navigable = true, prefer = true, windowId = host.windowOf(parent) }
 	function widget.disabled()
 		return flags.disabled
 	end
@@ -176,7 +290,8 @@ local function control(host, className, parent, label, icon)
 		local visual = Interact.visual(state, host.reduceMotion)
 		local background, line, text, thickness = palette(host, state, marks)
 		local motion = state == "Pressed" and "press" or "hover"
-		local selectable = forced ~= "Disabled" and marks.selectable
+		local shown = widget.windowId == nil or host.windows.isOpen(widget.windowId)
+		local selectable = shown and forced ~= "Disabled" and marks.selectable
 		root.Selectable = selectable
 		root.Active = selectable
 		root.Font = font(host.theme.font.body)
@@ -194,8 +309,7 @@ local function control(host, className, parent, label, icon)
 		end
 		widget.apply()
 		if flags.disabled and wasFocused then
-			local nxt = host.nextSelectable(widget)
-			GuiService.SelectedObject = nxt and nxt.root or nil
+			host.assignSelection(host.nextSelectable(widget))
 		end
 	end
 	function widget.setSelected(value)
@@ -435,39 +549,53 @@ function Kit.modal(host, parent)
 	title.root.ZIndex = 7
 	title.root.TextYAlignment = Enum.TextYAlignment.Center
 	title.root.AutomaticSize = Enum.AutomaticSize.None
+	local opened = false
+	local dismiss = nil
+	local widget = { root = window, window = window, title = title.root }
+	host.modals[id] = widget
 	local close = Kit.iconButton(host, window, "x")
+	close.prefer = false
 	close.root.ZIndex = 8
 	local body = Kit.scroller(host, window)
 	body.root.ZIndex = 7
 	body.root.Position = UDim2.fromOffset(0, tokens.size.chrome)
-	local opened = false
-	local previous = nil
-	local dismiss = nil
-	local widget = { root = window, window = window, body = body.root, close = close, title = title.root }
+	widget.body = body.root
+	widget.close = close
 	local function unbind()
 		if dismiss then
 			dismiss:Disconnect()
 			dismiss = nil
 		end
 	end
-	local function restoreFocus()
-		local target = previous
-		previous = nil
-		if target == nil then
-			return
+	function widget.peekFocus()
+		return host.windows.peek(id)
+	end
+	local function focusInstance(focus)
+		if typeof(focus) == "Instance" then
+			return focus
 		end
-		if target.Parent and target.Selectable then
-			GuiService.SelectedObject = target
-			return
+		if type(focus) == "table" and focus.root ~= nil then
+			return focus.root
 		end
-		local fallback = host.nextSelectable(nil)
-		GuiService.SelectedObject = fallback and fallback.root or nil
+		return nil
+	end
+	local function restoreFocus(focus)
+		local instance = focusInstance(focus)
+		local described = if instance ~= nil then host.describe(instance) else nil
+		host.assignSelection(Interact.restore(described, host.order(), nil))
 	end
 	local function animateClose(ticket, restore)
 		opened = false
 		unbind()
+		host.retarget(id)
 		host.cancel(ticket.keys.group)
 		host.cancel(ticket.keys.scale)
+		if restore == false then
+			window.Visible = false
+			window.GroupTransparency = 1
+			scale.Scale = 0.98
+			return
+		end
 		local duration = Motion.seconds("close", host.reduceMotion)
 		if duration <= 0 then
 			window.Visible = false
@@ -482,11 +610,7 @@ function Kit.modal(host, parent)
 				end
 			end)
 		end
-		if restore ~= false then
-			restoreFocus()
-		else
-			previous = nil
-		end
+		restoreFocus(ticket.focus)
 	end
 	function widget.apply()
 		local now = host.theme
@@ -513,14 +637,25 @@ function Kit.modal(host, parent)
 	function widget.open()
 		if opened then return end
 		local remembered = GuiService.SelectedObject
-		local ticket, displaced = host.windows.open(id, nil)
+		local ownerWidget = host.controlFor(remembered)
+		local ownerId = ownerWidget and ownerWidget.windowId or nil
+		local focusTarget = remembered
+		if ownerId ~= nil then
+			local ownerModal = host.modals[ownerId]
+			focusTarget = ownerModal and ownerModal.peekFocus() or nil
+		elseif ownerWidget then
+			focusTarget = ownerWidget
+		end
+		local ticket, displaced = host.windows.open(id, focusTarget, ownerId)
 		if displaced then
 			local other = host.modals[displaced.id]
-			if other then other.finishClose(displaced, false) end
+			if other and other ~= widget then
+				other.finishClose(displaced, false)
+			end
 		end
-		previous = remembered
 		opened = true
 		window.Visible = true
+		host.retarget(id)
 		if not dismiss then
 			dismiss = UserInputService.InputBegan:Connect(function(input)
 				if Windows.dismiss(input.KeyCode.Name) and opened then
@@ -530,6 +665,11 @@ function Kit.modal(host, parent)
 		end
 		host.play(ticket.keys.group, window, "open", { GroupTransparency = 0 })
 		host.play(ticket.keys.scale, scale, "open", { Scale = 1 })
+		if Interact.claimsFocus(host.inputKind()) then
+			host.assignSelection(host.firstInside(id))
+		else
+			host.releaseHiddenSelection()
+		end
 	end
 	function widget.finishClose(ticket, restore)
 		animateClose(ticket, restore)
@@ -550,7 +690,6 @@ function Kit.modal(host, parent)
 	close.onActivated = function()
 		widget.close()
 	end
-	host.modals[id] = widget
 	host.watch(widget)
 	return widget
 end

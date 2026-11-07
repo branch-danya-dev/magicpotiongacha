@@ -11,7 +11,17 @@ export type Flags = {
 }
 export type Visual = { state: string, scale: number, textTransparency: number }
 export type Marks = { selected: boolean, focused: boolean, selectable: boolean }
-export type Target = { id: any, disabled: boolean? }
+export type Target = {
+	id: any,
+	disabled: boolean?,
+	present: boolean?,
+	mounted: boolean?,
+	visible: boolean?,
+	ancestorsVisible: boolean?,
+	selectable: boolean?,
+	window: string?,
+	prefer: boolean?,
+}
 
 function Interact.resolve(flags: Flags): string
 	if flags.disabled == true then
@@ -45,7 +55,40 @@ function Interact.selectable(flags: Flags): boolean
 	return Interact.marks(flags).selectable
 end
 
-function Interact.handoff(order: { Target }, current: any): any
+function Interact.inputKind(name: string): string
+	if string.sub(name, 1, 7) == "Gamepad" then
+		return "Gamepad"
+	end
+	if name == "Touch" then
+		return "Touch"
+	end
+	return "Mouse"
+end
+
+function Interact.claimsFocus(kind: string): boolean
+	return kind == "Gamepad"
+end
+
+function Interact.available(candidate: Target?, openWindow: string?): boolean
+	if type(candidate) ~= "table" then
+		return false
+	end
+	if candidate.present == false or candidate.mounted == false then
+		return false
+	end
+	if candidate.visible == false or candidate.ancestorsVisible == false then
+		return false
+	end
+	if candidate.disabled == true or candidate.selectable == false then
+		return false
+	end
+	if candidate.window ~= nil and candidate.window ~= openWindow then
+		return false
+	end
+	return true
+end
+
+function Interact.handoff(order: { Target }, current: any, openWindow: string?): any
 	local index = 0
 	for cursor, item in ipairs(order) do
 		if item.id == current then
@@ -54,7 +97,7 @@ function Interact.handoff(order: { Target }, current: any): any
 		end
 	end
 	local function enabled(item: Target): boolean
-		return item.disabled ~= true
+		return Interact.available(item, openWindow)
 	end
 	if index == 0 then
 		for _, item in ipairs(order) do
@@ -75,6 +118,37 @@ function Interact.handoff(order: { Target }, current: any): any
 		end
 	end
 	return nil
+end
+
+function Interact.restore(previous: Target?, order: { Target }, openWindow: string?): any
+	if previous == nil then
+		return nil
+	end
+	if Interact.available(previous, openWindow) then
+		return previous.id
+	end
+	for _, item in ipairs(order) do
+		if Interact.available(item, openWindow) then
+			return item.id
+		end
+	end
+	return nil
+end
+
+function Interact.firstInside(order: { Target }, windowId: string): any
+	local reserve = nil
+	for _, item in ipairs(order) do
+		if item.window == windowId and Interact.available(item, windowId) then
+			if item.prefer == false then
+				if reserve == nil then
+					reserve = item.id
+				end
+			else
+				return item.id
+			end
+		end
+	end
+	return reserve
 end
 
 function Interact.visual(state: string, reduceMotion: boolean?): Visual

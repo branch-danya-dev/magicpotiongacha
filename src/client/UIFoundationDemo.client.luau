@@ -7,8 +7,8 @@
 -- UIFoundationDemo, set it to true, then press Play. Set it back to false
 -- to remove the preview. A published server never shows this screen.
 --
--- Engine checks left for Studio: scrolling a clipped column, Activated on
--- touch and a gamepad, and returning selection to the previous control.
+-- Engine checks left for Studio: GuiService selection on a gamepad, Button B,
+-- a hidden or disabled previous target, and scrolling a clipped column.
 local RunService = game:GetService("RunService")
 if not RunService:IsStudio() then
 	return
@@ -177,6 +177,17 @@ local function show()
 	windowToggle.onActivated = function()
 		if modal.isOpen() then modal.close() else modal.open() end
 	end
+	local note = Kit.modal(host, gui)
+	note.setTitle("Заметка")
+	local noteCopy = Kit.prompt(host, note.body, "Второе окно для проверки фокуса. Игровых действий нет.")
+	local back = Kit.button(host, note.body, "Назад")
+	back.onActivated = function()
+		note.close()
+	end
+	local noteToggle = own("note", Kit.button(host, inspectorScroll.root, "Note"))
+	noteToggle.onActivated = function()
+		if note.isOpen() then note.close() else note.open() end
+	end
 
 	local function layout()
 		local size = gui.AbsoluteSize
@@ -194,9 +205,21 @@ local function show()
 		local plan = Layout.demo(width, height)
 		place(hud, plan.hud)
 		place(modal, plan.window)
+		place(note, plan.window)
 		place(inspector, plan.inspector)
 		modal.placeChrome(plan.chrome)
 		modal.placeBody(plan.body)
+		note.placeChrome(plan.chrome)
+		local noteHeight = tokens.size.pad + tokens.size.prompt + tokens.size.gap + tokens.size.touch + tokens.size.pad
+		note.placeBody({
+			viewportH = plan.body.viewportH,
+			contentH = math.max(plan.body.viewportH, noteHeight),
+			scrolls = plan.body.viewportH + 0.5 < noteHeight,
+		})
+		noteCopy.root.Position = UDim2.fromOffset(tokens.size.pad, tokens.size.pad)
+		noteCopy.root.Size = UDim2.new(1, -(tokens.size.pad * 2 + tokens.size.scroll), 0, tokens.size.prompt)
+		back.root.Position = UDim2.fromOffset(tokens.size.pad, tokens.size.pad + tokens.size.prompt + tokens.size.gap)
+		back.root.Size = UDim2.fromOffset(math.min(tokens.size.button, math.max(tokens.size.touch, plan.window.w - tokens.size.pad * 2 - tokens.size.scroll)), tokens.size.touch)
 		inspectorScroll.setCanvas(plan.inspectorColumn.contentH, plan.inspectorColumn.viewportH, plan.inspectorColumn.scrolls)
 		local function move(items)
 			for _, item in ipairs(items) do

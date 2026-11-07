@@ -198,7 +198,7 @@ function Layout.demo(viewportW: number, viewportH: number, inset: Insets?): Scre
 	for _, name in ipairs(Theme.names()) do
 		table.insert(inspectorBlocks, { id = "theme-" .. name, w = choice, h = touch, interactive = true })
 	end
-	local inspectorNames = { "sample", "state-Default", "state-Hover", "state-Pressed", "state-Disabled", "state-Focused", "motion", "window" }
+	local inspectorNames = { "sample", "state-Default", "state-Hover", "state-Pressed", "state-Disabled", "state-Focused", "motion", "window", "note" }
 	for _, name in ipairs(inspectorNames) do
 		table.insert(inspectorBlocks, { id = name, w = choice, h = touch, interactive = true })
 	end

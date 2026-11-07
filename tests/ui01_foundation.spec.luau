@@ -327,4 +327,71 @@ return function(T: typeof(Test))
 		T.truthy(soul.color.accent[1] ~= plain.color.accent[1])
 		T.equal(Theme.textStyle(soul, "heading").color[1], Theme.textStyle(plain, "heading").color[1])
 	end)
+
+	-- GuiService.SelectedObject itself is a Roblox Studio check. These cases decide the target.
+	T.test("UI-01C: focus returns only to a control that is still available", function()
+		local gold = { id = "gold" }
+		local order = { gold, { id = "shop" } }
+		T.equal(Interact.restore(nil, order, nil), nil)
+		T.equal(Interact.restore({ id = "gone", present = false }, order, nil), "gold")
+		T.equal(Interact.restore({ id = "removed", mounted = false }, order, nil), "gold")
+		T.equal(Interact.restore({ id = "hidden", visible = false }, order, nil), "gold")
+		T.equal(Interact.restore({ id = "child", ancestorsVisible = false }, order, nil), "gold")
+		T.equal(Interact.restore({ id = "locked", disabled = true }, order, nil), "gold")
+		T.equal(Interact.restore({ id = "a-close", window = "a" }, {
+			{ id = "a-close", window = "a" },
+			gold,
+		}, nil), "gold")
+		T.equal(Interact.restore({ id = "gone", present = false }, { { id = "locked", disabled = true } }, nil), nil)
+		T.falsy(Interact.available({ id = "x", selectable = false }))
+		T.truthy(Interact.available({ id = "close", window = "note" }, "note"))
+		T.equal(Interact.handoff({
+			{ id = "hidden", visible = false },
+			{ id = "locked", disabled = true },
+			{ id = "ok" },
+		}, "hidden"), "ok")
+		T.equal(Interact.firstInside({
+			{ id = "close", window = "demo", prefer = false },
+			{ id = "tab", window = "demo" },
+			{ id = "locked", window = "demo", disabled = true },
+			gold,
+		}, "demo"), "tab")
+		T.equal(Interact.inputKind("Gamepad1"), "Gamepad")
+		T.equal(Interact.inputKind("Touch"), "Touch")
+		T.equal(Interact.inputKind("MouseButton1"), "Mouse")
+		T.truthy(Interact.claimsFocus("Gamepad"))
+		T.falsy(Interact.claimsFocus("Mouse"))
+		T.falsy(Interact.claimsFocus("Touch"))
+	end)
+
+	T.test("UI-01C: switching windows does not keep the hidden window as the restore target", function()
+		local windows = Windows.new()
+		windows.open("a", "gold")
+		local _, displaced = windows.open("b", "a-close", "a")
+		T.truthy(displaced ~= nil)
+		if displaced then
+			T.equal(displaced.focus, "gold")
+		end
+		T.equal(windows.current(), "b")
+		T.equal(windows.count(), 1)
+		T.equal(windows.listeners(), 1)
+		T.falsy(windows.isOpen("a"))
+		local back = windows.open("a", "b-close", "b")
+		T.equal(back.focus, "gold")
+		T.equal(windows.listeners(), 1)
+		T.equal(windows.count(), 1)
+		local closed = windows.close("a")
+		T.equal(closed.focus, "gold")
+		T.equal(windows.count(), 0)
+		T.equal(windows.listeners(), 0)
+		T.falsy(windows.shouldHide("a", back.generation))
+		local again = windows.open("a", "a-button", "a")
+		T.equal(again.focus, "gold")
+		T.equal(windows.close("a").focus, "gold")
+		T.equal(windows.listeners(), 0)
+		local bare = windows.open("a", nil)
+		T.equal(bare.focus, nil)
+		T.equal(windows.close("a").focus, nil)
+		T.equal(windows.listeners(), 0)
+	end)
 end

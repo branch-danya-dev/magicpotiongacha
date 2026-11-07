@@ -3,7 +3,7 @@
 local Windows = {}
 
 export type Keys = { group: string, scale: string }
-export type Ticket = { id: string, generation: number, keys: Keys, focus: string? }
+export type Ticket = { id: string, generation: number, keys: Keys, focus: any }
 
 local function keys(id: string): Keys
 	return { group = id .. ":group", scale = id .. ":scale" }
@@ -15,7 +15,7 @@ end
 
 function Windows.new()
 	local generation: { [string]: number } = {}
-	local savedFocus: { [string]: string? } = {}
+	local savedFocus: { [string]: any } = {}
 	local openId: string? = nil
 	local dismiss = 0
 	local self = {}
@@ -40,6 +40,10 @@ function Windows.new()
 		return dismiss
 	end
 
+	function self.peek(id: string): any
+		return savedFocus[id]
+	end
+
 	function self.close(id: string): Ticket
 		generation[id] = (generation[id] or 0) + 1
 		local focus = savedFocus[id]
@@ -50,13 +54,19 @@ function Windows.new()
 		return { id = id, generation = generation[id], keys = keys(id), focus = focus }
 	end
 
-	function self.open(id: string, focus: string?): (Ticket, Ticket?)
+	function self.open(id: string, focus: any, focusOwner: string?): (Ticket, Ticket?)
 		local displaced: Ticket? = nil
 		if openId ~= nil and openId ~= id then
 			displaced = self.close(openId)
 		end
 		if openId ~= id then
-			savedFocus[id] = focus
+			local remembered = focus
+			if focusOwner ~= nil and displaced ~= nil and focusOwner == displaced.id then
+				remembered = displaced.focus
+			elseif focusOwner ~= nil and focusOwner == id then
+				remembered = savedFocus[id]
+			end
+			savedFocus[id] = remembered
 			openId = id
 			dismiss = 1
 		end
