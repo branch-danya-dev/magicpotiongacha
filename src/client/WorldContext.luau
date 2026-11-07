@@ -110,8 +110,10 @@ function Context.start(onChanged,isPanelOpen,blockedRects,currentState)
 		-- Task 07: highlight the visible authored model; retain the original
 		-- invisible anchor for distance, raycast, ownership and native prompts.
 		if highlight.Adornee then
+			local lectern=highlight.Adornee:FindFirstChild("SpellbookVisual")
 			local presentation=highlight.Adornee:FindFirstChild("PresentationModel")
-			if presentation and presentation.Value then highlight.Adornee=presentation.Value end
+			if lectern and lectern.Value then highlight.Adornee=lectern.Value
+			elseif presentation and presentation.Value then highlight.Adornee=presentation.Value end
 		end
 		affordance.update(current,currentState and currentState(),hrp and hrp.Position)
 		onChanged(current,#candidates,region)

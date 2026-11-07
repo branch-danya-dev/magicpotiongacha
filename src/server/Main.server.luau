@@ -24,6 +24,7 @@ local summonRandom = Random.new() -- Separate server-only RNG; never seeded from
 local ProfileStore = require(script.Parent.ProfileStore)
 local Settings = require(script.Parent.ServerSettings)
 local World = require(script.Parent.World)
+local Lectern = require(script.Parent.SpellbookLectern)
 local TradeRuntime = require(script.Parent.TradeRuntime)
 local TradeSession = require(Shared.TradeSession)
 local Guide = require(Shared.FirstSessionView)
@@ -321,6 +322,7 @@ world = World.new(Config, Settings.PlotCount, {
 		if active(player) then Focus:FireClient(player, stationId) end
 	end,
 }, Settings.EnvironmentArtEnabled or studioVisualPreview)
+Lectern.install(world)
 trade = TradeRuntime.new({config=Config,settings=Settings,store=store,backend=dataStore,engine=Factory,policy=policy,
 	memoryMode=memoryMode,remote=TradeState,active=active,closing=function() return closing end,
 	inBazaar=function(player) return world:inBazaar(player) end,
