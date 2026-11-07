@@ -77,7 +77,7 @@
     "tests/profile_store.spec.luau": "96ed9e3851557c46be403d0a6c77e8fbecd4444178f0d2efb3e6b3bbd83a07f9",
     "tests/props19f.spec.luau": "858c549ff8d1f8047a8b2581dc5278cd69513ac4c02d31ec4672aaee5d735626",
     "tests/protocol.spec.luau": "132d67683ae9e870216c0297d5f9a6cb9835a6da7bd9c8ac9cf18785562fe6b2",
-    "tests/run.luau": "73b7670687706871561a5326f875ca96297d56f6720a14c8d7fe5398db5071af",
+    "tests/run.luau": "87f5f5c6cc3fb27e2be49655851dd68959881c766554bc5a708d421f0b03ce11",
     "tests/safety18a.spec.luau": "67202286ed71e6a5e2739108c39948bb766328702c8dfdcbc7d018385f2d193b",
     "tests/stability07a.spec.luau": "c508b38a9778a2dae9e619058b200eadab881f827e7ddc1514111a2978cb0079",
     "tests/trade_durable.spec.luau": "a042b53d422973f311223e66fea24fcadb12ab97ec9101d588f5831ea6921a71",

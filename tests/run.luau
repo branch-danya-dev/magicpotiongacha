@@ -24,6 +24,7 @@ if selected == nil or selected == "m1" then
 	require("./c01_first_session.spec")(Test)
 	require("./c01_economy_v2.spec")(Test)
 	require("./c01_session_ux.spec")(Test)
+	require("./ui01_foundation.spec")(Test)
 end
 
 if selected == nil or selected == "m2" then
