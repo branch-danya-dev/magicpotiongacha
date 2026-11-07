@@ -1,10 +1,14 @@
 --!nonstrict
 -- Studio developer preview for the UI foundation.
 -- It does not replace PotionTycoonUI, bind M / I / P, or send a remote.
+-- Escape and gamepad B close only this preview window.
 --
 -- In Roblox Studio: select Workspace, add a boolean attribute named
 -- UIFoundationDemo, set it to true, then press Play. Set it back to false
 -- to remove the preview. A published server never shows this screen.
+--
+-- Engine checks left for Studio: scrolling a clipped column, Activated on
+-- touch and a gamepad, and returning selection to the previous control.
 local RunService = game:GetService("RunService")
 if not RunService:IsStudio() then
 	return
@@ -24,6 +28,7 @@ local player = Players.LocalPlayer
 local surface = Host.new()
 local host = nil
 local gui = nil
+local mounted = {}
 
 local function playerGui()
 	return player:FindFirstChildOfClass("PlayerGui")
@@ -34,6 +39,7 @@ local function hide()
 		host.destroy()
 		host = nil
 	end
+	table.clear(mounted)
 	local existing = playerGui()
 	if existing then
 		local previous = existing:FindFirstChild("UIFoundationDemo")
@@ -49,19 +55,9 @@ local function place(widget, rect)
 	widget.root.Size = UDim2.fromOffset(rect.w, rect.h)
 end
 
-local function row(parent)
-	local frame = Instance.new("Frame")
-	frame.BackgroundTransparency = 1
-	frame.Size = UDim2.new(1, 0, 0, 0)
-	frame.AutomaticSize = Enum.AutomaticSize.Y
-	frame.Parent = parent
-	local list = Instance.new("UIListLayout")
-	list.FillDirection = Enum.FillDirection.Horizontal
-	list.Padding = UDim.new(0, 6)
-	list.Wraps = true
-	list.SortOrder = Enum.SortOrder.LayoutOrder
-	list.Parent = frame
-	return frame
+local function own(id, widget)
+	mounted[id] = widget
+	return widget
 end
 
 local function show()
@@ -85,6 +81,7 @@ local function show()
 	host.setReduceMotion(environment.reduceMotion == true)
 	local sample = Binding.demo()
 	local resources = Binding.resources(sample)
+	local tokens = host.theme
 	local folder = player:WaitForChild("PlayerGui")
 	if not Gate.allowed(RunService:IsStudio(), workspace:GetAttribute("UIFoundationDemo") == true) then
 		hide()
@@ -99,166 +96,87 @@ local function show()
 	gui.Parent = folder
 
 	local hud = Kit.panel(host, gui)
-	hud.setPadding(4)
+	hud.setPadding(0)
 	hud.root.ClipsDescendants = true
 	hud.root.ZIndex = 4
-	local hudList = Instance.new("UIListLayout")
-	hudList.FillDirection = Enum.FillDirection.Horizontal
-	hudList.VerticalAlignment = Enum.VerticalAlignment.Center
-	hudList.Padding = UDim.new(0, 8)
-	hudList.SortOrder = Enum.SortOrder.LayoutOrder
-	hudList.Parent = hud.root
-	local gold = Kit.resourceCounter(host, hud.root, "Gold")
-	gold.setPadding(6)
+	local gold = own("gold", Kit.resourceCounter(host, hud.root, "Gold"))
 	gold.setValue(resources.goldText)
-	gold.root.LayoutOrder = 1
-	local essence = Kit.resourceCounter(host, hud.root, "Essence")
-	essence.setPadding(6)
+	local essence = own("essence", Kit.resourceCounter(host, hud.root, "Essence"))
 	essence.setValue(resources.essenceText)
-	essence.root.LayoutOrder = 2
 	local tooltip = Kit.tooltip(host, gui)
 	tooltip.root.ZIndex = 30
-	local icons = {}
-	for index, item in ipairs({ { "M", "Магазин" }, { "I", "Инвентарь" }, { "P", "Фамильяры" } }) do
-		local icon = Kit.iconButton(host, hud.root, item[1])
-		icon.root.LayoutOrder = 2 + index
+	for _, item in ipairs({ { "nav-m", "M", "Магазин" }, { "nav-i", "I", "Инвентарь" }, { "nav-p", "P", "Фамильяры" } }) do
+		local icon = own(item[1], Kit.iconButton(host, hud.root, item[2]))
 		icon.root.ZIndex = 5
-		host.connect(icon.root.MouseEnter, function()
-			tooltip.setText(item[2])
+		local function showTip()
+			tooltip.setText(item[3])
 			tooltip.show(icon.root)
-		end)
-		host.connect(icon.root.MouseLeave, function()
-			tooltip.hide()
-		end)
-		host.connect(icon.root.SelectionGained, function()
-			tooltip.setText(item[2])
-			tooltip.show(icon.root)
-		end)
-		host.connect(icon.root.SelectionLost, function()
-			tooltip.hide()
-		end)
-		icons[index] = icon
+		end
+		host.connect(icon.root.MouseEnter, showTip)
+		host.connect(icon.root.SelectionGained, showTip)
+		host.connect(icon.root.MouseLeave, function() tooltip.hide() end)
+		host.connect(icon.root.SelectionLost, function() tooltip.hide() end)
 	end
 
 	local modal = Kit.modal(host, gui)
 	modal.setTitle("Foundation")
-	local column = Instance.new("UIListLayout")
-	column.FillDirection = Enum.FillDirection.Vertical
-	column.Padding = UDim.new(0, 8)
-	column.SortOrder = Enum.SortOrder.LayoutOrder
-	column.Parent = modal.body
-	local tabs = row(modal.body)
-	tabs.LayoutOrder = 1
-	local tabButtons = {}
 	for index, name in ipairs({ "Обзор", "Запасы", "Заметки" }) do
-		local tab = Kit.button(host, tabs, name)
-		tab.root.LayoutOrder = index
-		tab.root.Size = UDim2.fromOffset(104, 44)
-		tabButtons[index] = tab
-	end
-	local function selectTab(chosen)
-		for index, tab in ipairs(tabButtons) do
-			if index == chosen then tab.force("Focused") else tab.clearForce() end
+		local tab = own("tab-" .. index, Kit.button(host, modal.body, name))
+		tab.onActivated = function()
+			for other = 1, 3 do
+				mounted["tab-" .. other].setSelected(other == index)
+			end
 		end
 	end
-	for index, tab in ipairs(tabButtons) do
-		host.connect(tab.root.MouseButton1Click, function()
-			selectTab(index)
-		end)
-	end
-	selectTab(1)
-	local cards = row(modal.body)
-	cards.LayoutOrder = 2
-	local cardRoots = {}
+	mounted["tab-1"].setSelected(true)
 	for index, card in ipairs(sample.cards) do
-		local panel = Kit.panel(host, cards)
-		panel.root.LayoutOrder = index
-		panel.root.Size = UDim2.fromOffset(128, 108)
-		local heading = Instance.new("TextLabel")
-		heading.BackgroundTransparency = 1
-		heading.Size = UDim2.new(1, 0, 0, 20)
-		heading.Font = Enum.Font.GothamMedium
-		heading.TextSize = 14
-		heading.TextXAlignment = Enum.TextXAlignment.Left
-		heading.TextColor3 = Color3.fromRGB(226, 221, 212)
-		heading.Text = card.title
-		heading.Parent = panel.root
-		local body = Instance.new("TextLabel")
-		body.BackgroundTransparency = 1
-		body.Position = UDim2.fromOffset(0, 24)
-		body.Size = UDim2.new(1, 0, 1, -24)
-		body.Font = Enum.Font.Gotham
-		body.TextSize = 13
-		body.TextWrapped = true
-		body.TextYAlignment = Enum.TextYAlignment.Top
-		body.TextXAlignment = Enum.TextXAlignment.Left
-		body.TextColor3 = Color3.fromRGB(154, 148, 140)
-		body.Text = card.body
-		body.Parent = panel.root
-		cardRoots[index] = panel.root
+		local panel = own("card-" .. index, Kit.panel(host, modal.body))
+		panel.setPadding(tokens.size.inset)
+		local heading = Kit.label(host, panel.root, card.title, "heading")
+		heading.root.Size = UDim2.new(1, 0, 0, tokens.size.title)
+		heading.root.AutomaticSize = Enum.AutomaticSize.None
+		local copy = Kit.label(host, panel.root, card.body, "body")
+		copy.root.Position = UDim2.fromOffset(0, tokens.size.title + tokens.size.hudPad)
+		copy.root.Size = UDim2.new(1, 0, 1, -(tokens.size.title + tokens.size.hudPad))
+		copy.root.AutomaticSize = Enum.AutomaticSize.None
 	end
-	local progress = Kit.progress(host, modal.body)
-	progress.root.LayoutOrder = 3
+	local progress = own("progress", Kit.progress(host, modal.body))
 	progress.setRatio(sample.progress)
-	local actions = row(modal.body)
-	actions.LayoutOrder = 4
-	local accept = Kit.button(host, actions, "Принять")
-	accept.root.LayoutOrder = 1
-	accept.root.Size = UDim2.fromOffset(148, 44)
-	local locked = Kit.button(host, actions, "Закрыто")
-	locked.root.LayoutOrder = 2
-	locked.root.Size = UDim2.fromOffset(148, 44)
+	local accept = own("accept", Kit.button(host, modal.body, "Принять"))
+	accept.onActivated = function() end
+	local locked = own("locked", Kit.button(host, modal.body, "Закрыто"))
 	locked.setDisabled(true)
-	local prompt = Kit.prompt(host, modal.body, "Демонстрационные данные. Игровые действия не отправляются.")
-	prompt.root.LayoutOrder = 5
-	prompt.root.Size = UDim2.new(1, 0, 0, 36)
+	own("prompt", Kit.prompt(host, modal.body, "Демонстрационные данные. Игровые действия не отправляются."))
 
 	local inspector = Kit.panel(host, gui)
-	inspector.setPadding(8)
+	inspector.setPadding(0)
 	inspector.root.ClipsDescendants = true
 	inspector.root.ZIndex = 12
-	local inspectorList = Instance.new("UIListLayout")
-	inspectorList.FillDirection = Enum.FillDirection.Vertical
-	inspectorList.Padding = UDim.new(0, 6)
-	inspectorList.SortOrder = Enum.SortOrder.LayoutOrder
-	inspectorList.Parent = inspector.root
-	local themeRow = row(inspector.root)
-	themeRow.LayoutOrder = 1
-	for index, name in ipairs(Theme.names()) do
-		local choice = Kit.button(host, themeRow, name)
-		choice.root.LayoutOrder = index
-		choice.root.Size = UDim2.fromOffset(80, 44)
-		host.connect(choice.root.MouseButton1Click, function()
+	local inspectorScroll = Kit.scroller(host, inspector.root)
+	inspectorScroll.root.Size = UDim2.fromScale(1, 1)
+	inspectorScroll.root.ZIndex = 13
+	for _, name in ipairs(Theme.names()) do
+		local choice = own("theme-" .. name, Kit.button(host, inspectorScroll.root, name))
+		choice.onActivated = function()
 			host.setTheme(name)
-		end)
+		end
 	end
-	local stateRow = row(inspector.root)
-	stateRow.LayoutOrder = 2
-	local sampleButton = Kit.button(host, stateRow, "Sample")
-	sampleButton.root.LayoutOrder = 1
-	sampleButton.root.Size = UDim2.fromOffset(80, 44)
-	local states = { "Default", "Hover", "Pressed", "Disabled", "Focused" }
-	for index, state in ipairs(states) do
-		local choice = Kit.button(host, stateRow, state)
-		choice.root.LayoutOrder = index + 1
-		choice.root.Size = UDim2.fromOffset(80, 44)
-		host.connect(choice.root.MouseButton1Click, function()
+	local sampleButton = own("sample", Kit.button(host, inspectorScroll.root, "Sample"))
+	for _, state in ipairs({ "Default", "Hover", "Pressed", "Disabled", "Focused" }) do
+		local choice = own("state-" .. state, Kit.button(host, inspectorScroll.root, state))
+		choice.onActivated = function()
 			if state == "Default" then sampleButton.clearForce() else sampleButton.force(state) end
-		end)
+		end
 	end
-	local motion = Kit.button(host, stateRow, host.reduceMotion and "Reduced" or "Motion")
-	motion.root.LayoutOrder = 8
-	motion.root.Size = UDim2.fromOffset(80, 44)
-	host.connect(motion.root.MouseButton1Click, function()
+	local motion = own("motion", Kit.button(host, inspectorScroll.root, host.reduceMotion and "Reduced" or "Motion"))
+	motion.onActivated = function()
 		host.setReduceMotion(not host.reduceMotion)
 		motion.root.Text = host.reduceMotion and "Reduced" or "Motion"
-	end)
-	local windowToggle = Kit.button(host, stateRow, "Window")
-	windowToggle.root.LayoutOrder = 9
-	windowToggle.root.Size = UDim2.fromOffset(80, 44)
-	host.connect(windowToggle.root.MouseButton1Click, function()
+	end
+	local windowToggle = own("window", Kit.button(host, inspectorScroll.root, "Window"))
+	windowToggle.onActivated = function()
 		if modal.isOpen() then modal.close() else modal.open() end
-	end)
+	end
 
 	local function layout()
 		local size = gui.AbsoluteSize
@@ -272,28 +190,30 @@ local function show()
 				width, height = 1280, 720
 			end
 		end
+		-- AbsoluteSize is already inside CoreUISafeInsets, so no second inset is added.
 		local plan = Layout.demo(width, height)
 		place(hud, plan.hud)
 		place(modal, plan.window)
 		place(inspector, plan.inspector)
-		local inner = math.max(0, plan.window.w - 24)
-		local tabW = math.max(72, math.floor((inner - 12) / 3))
-		for _, tab in ipairs(tabButtons) do
-			tab.root.Size = UDim2.fromOffset(tabW, 44)
+		modal.placeChrome(plan.chrome)
+		modal.placeBody(plan.body)
+		inspectorScroll.setCanvas(plan.inspectorColumn.contentH, plan.inspectorColumn.viewportH, plan.inspectorColumn.scrolls)
+		local function move(items)
+			for _, item in ipairs(items) do
+				local widget = mounted[item.id]
+				if widget then
+					widget.root.Position = UDim2.fromOffset(item.x, item.y)
+					widget.root.Size = UDim2.fromOffset(item.w, item.h)
+				end
+			end
 		end
-		local cardW = math.floor((inner - 12) / 3)
-		if cardW < 96 then cardW = math.max(72, inner) end
-		for _, cardRoot in ipairs(cardRoots) do
-			cardRoot.Size = UDim2.fromOffset(cardW, 108)
-		end
-		local counterW = math.max(72, math.floor((plan.hud.w - 8 - 44 * 3 - 8 * 4) / 2))
-		gold.root.Size = UDim2.fromOffset(counterW, 44)
-		essence.root.Size = UDim2.fromOffset(counterW, 44)
+		move(plan.hudItems)
+		move(plan.body.items)
+		move(plan.inspectorColumn.items)
 	end
 	layout()
 	host.connect(gui:GetPropertyChangedSignal("AbsoluteSize"), layout)
 	modal.open()
-	surface.track(function() end)
 end
 
 local function refresh()

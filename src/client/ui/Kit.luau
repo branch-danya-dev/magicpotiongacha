@@ -2,10 +2,12 @@
 -- Roblox mount for the shared UI tokens. No remotes and no profile mutation.
 local TweenService = game:GetService("TweenService")
 local GuiService = game:GetService("GuiService")
+local UserInputService = game:GetService("UserInputService")
 local Shared = game:GetService("ReplicatedStorage").PotionTycoon.Shared
 local Theme = require(Shared.ui.Theme)
 local Motion = require(Shared.ui.Motion)
 local Interact = require(Shared.ui.Interact)
+local Windows = require(Shared.ui.Windows)
 
 local Kit = {}
 local nextId = 0
@@ -23,6 +25,16 @@ local function font(name)
 	if name == "GothamMedium" then return Enum.Font.GothamMedium end
 	if name == "GothamBold" then return Enum.Font.GothamBold end
 	return Enum.Font.Gotham
+end
+
+local function pointer(input)
+	local kind = input.UserInputType
+	return kind == Enum.UserInputType.MouseButton1
+		or kind == Enum.UserInputType.Touch
+		or kind == Enum.UserInputType.Gamepad1
+		or kind == Enum.UserInputType.Gamepad2
+		or kind == Enum.UserInputType.Gamepad3
+		or kind == Enum.UserInputType.Gamepad4
 end
 
 local function corner(parent, radius)
@@ -48,21 +60,24 @@ function Kit.host()
 		tweens = {},
 		connections = {},
 		widgets = {},
+		controls = {},
+		modals = {},
+		windows = Windows.new(),
 	}
-	function self.cancel(key)
-		local old = self.tweens[key]
+	function self.cancel(name)
+		local old = self.tweens[name]
 		if old then old:Cancel() end
-		self.tweens[key] = nil
+		self.tweens[name] = nil
 	end
-	function self.play(key, instance, kind, props)
-		self.cancel(key)
+	function self.play(name, instance, kind, props)
+		self.cancel(name)
 		local duration = Motion.seconds(kind, self.reduceMotion)
 		if duration <= 0 then
 			for field, value in pairs(props) do instance[field] = value end
 			return
 		end
 		local animation = TweenService:Create(instance, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), props)
-		self.tweens[key] = animation
+		self.tweens[name] = animation
 		animation:Play()
 	end
 	function self.connect(signal, callback)
@@ -73,42 +88,61 @@ function Kit.host()
 	function self.watch(widget)
 		table.insert(self.widgets, widget)
 	end
+	function self.nextSelectable(current)
+		local order = {}
+		for _, widget in ipairs(self.controls) do
+			table.insert(order, { id = widget, disabled = widget.disabled() })
+		end
+		return Interact.handoff(order, current)
+	end
 	function self.setTheme(name)
 		self.theme = Theme.resolve(name)
 		for _, widget in ipairs(self.widgets) do widget.apply() end
 	end
 	function self.setReduceMotion(value)
 		self.reduceMotion = value == true
+		if self.reduceMotion then
+			for _, animation in pairs(self.tweens) do animation:Cancel() end
+			table.clear(self.tweens)
+		end
 		for _, widget in ipairs(self.widgets) do widget.apply() end
 	end
 	function self.destroy()
+		for _, widget in ipairs(self.widgets) do
+			if widget.destroy then widget.destroy() end
+		end
 		for _, animation in pairs(self.tweens) do animation:Cancel() end
 		for _, connection in ipairs(self.connections) do connection:Disconnect() end
 		table.clear(self.tweens)
 		table.clear(self.connections)
 		table.clear(self.widgets)
+		table.clear(self.controls)
+		table.clear(self.modals)
 	end
 	return self
 end
 
-local function palette(host, state)
+local function palette(host, state, marks)
 	local color = host.theme.color
 	local background = rgb(color.raised)
 	local line = rgb(color.line)
 	local text = rgb(color.ink)
-	if state == "Hover" then
-		background = rgb(color.raised):Lerp(rgb(color.accent), 0.16)
-		line = rgb(color.accent)
+	local thickness = host.theme.stroke.thickness
+	if state == "Disabled" then
+		background = rgb(color.surface)
+		text = rgb(color.muted)
 	elseif state == "Pressed" then
 		background = rgb(color.surface)
 		line = rgb(color.accent)
-	elseif state == "Focused" then
+	elseif state == "Hover" or state == "Selected" or marks.selected then
+		background = rgb(color.raised):Lerp(rgb(color.accent), if state == "Selected" then 0.24 else 0.16)
 		line = rgb(color.accent)
-	elseif state == "Disabled" then
-		background = rgb(color.surface)
-		text = rgb(color.muted)
 	end
-	return background, line, text
+	if state == "Focused" or marks.focused then
+		line = rgb(color.accent)
+		thickness = 1.5
+	end
+	return background, line, text, thickness
 end
 
 local function control(host, className, parent, label, icon)
@@ -120,7 +154,7 @@ local function control(host, className, parent, label, icon)
 	root.Text = label
 	root.TextColor3 = rgb(tokens.color.ink)
 	root.Font = font(tokens.font.body)
-	root.TextSize = tokens.size.text
+	root.TextSize = icon and tokens.size.title or tokens.size.text
 	root.TextWrapped = true
 	root.Selectable = true
 	root.Size = icon and UDim2.fromOffset(tokens.size.icon, tokens.size.icon) or UDim2.fromOffset(tokens.size.button, tokens.size.touch)
@@ -130,21 +164,42 @@ local function control(host, className, parent, label, icon)
 	local scale = Instance.new("UIScale")
 	scale.Parent = root
 	local id = key()
-	local flags = { disabled = false, pressed = false, hover = false, focused = false }
+	local flags = { disabled = false, pressed = false, hover = false, focused = false, selected = false }
 	local forced = nil
-	local widget = { root = root }
+	local widget = { root = root, navigable = true }
+	function widget.disabled()
+		return flags.disabled
+	end
 	function widget.apply()
 		local state = forced or Interact.resolve(flags)
+		local marks = Interact.marks(flags)
 		local visual = Interact.visual(state, host.reduceMotion)
-		local background, line, text = palette(host, state)
+		local background, line, text, thickness = palette(host, state, marks)
 		local motion = state == "Pressed" and "press" or "hover"
+		local selectable = forced ~= "Disabled" and marks.selectable
+		root.Selectable = selectable
+		root.Active = selectable
+		root.Font = font(host.theme.font.body)
+		root.TextSize = icon and host.theme.size.title or host.theme.size.text
 		host.play(id, root, motion, { BackgroundColor3 = background, TextColor3 = text, TextTransparency = visual.textTransparency })
-		host.play(id .. ":line", border, motion, { Color = line, Thickness = state == "Focused" and 1.5 or host.theme.stroke.thickness })
+		host.play(id .. ":line", border, motion, { Color = line, Thickness = thickness })
 		host.play(id .. ":scale", scale, motion, { Scale = visual.scale })
-		root.Active = not flags.disabled
 	end
 	function widget.setDisabled(value)
+		local wasFocused = GuiService.SelectedObject == root
 		flags.disabled = value == true
+		if flags.disabled then
+			flags.pressed = false
+			flags.hover = false
+		end
+		widget.apply()
+		if flags.disabled and wasFocused then
+			local nxt = host.nextSelectable(widget)
+			GuiService.SelectedObject = nxt and nxt.root or nil
+		end
+	end
+	function widget.setSelected(value)
+		flags.selected = value == true
 		widget.apply()
 	end
 	function widget.force(state)
@@ -156,6 +211,7 @@ local function control(host, className, parent, label, icon)
 		widget.apply()
 	end
 	host.connect(root.MouseEnter, function()
+		if flags.disabled then return end
 		flags.hover = true
 		widget.apply()
 	end)
@@ -164,19 +220,25 @@ local function control(host, className, parent, label, icon)
 		flags.pressed = false
 		widget.apply()
 	end)
-	host.connect(root.MouseButton1Down, function()
-		if flags.disabled then return end
+	host.connect(root.InputBegan, function(input)
+		if flags.disabled or not pointer(input) then return end
 		flags.pressed = true
 		widget.apply()
 	end)
-	host.connect(root.MouseButton1Up, function()
+	host.connect(root.InputEnded, function(input)
+		if not pointer(input) then return end
 		flags.pressed = false
 		widget.apply()
+	end)
+	host.connect(root.Activated, function()
+		if flags.disabled then return end
+		if widget.onActivated then widget.onActivated() end
 	end)
 	host.connect(GuiService:GetPropertyChangedSignal("SelectedObject"), function()
 		flags.focused = GuiService.SelectedObject == root
 		widget.apply()
 	end)
+	table.insert(host.controls, widget)
 	host.watch(widget)
 	widget.apply()
 	return widget
@@ -187,9 +249,7 @@ function Kit.button(host, parent, label)
 end
 
 function Kit.iconButton(host, parent, mark)
-	local widget = control(host, "TextButton", parent, mark, true)
-	widget.root.TextSize = host.theme.size.title
-	return widget
+	return control(host, "TextButton", parent, mark, true)
 end
 
 function Kit.panel(host, parent)
@@ -225,36 +285,47 @@ function Kit.panel(host, parent)
 	return widget
 end
 
+function Kit.label(host, parent, text, role)
+	local style = Theme.textStyle(host.theme, role)
+	local label = Instance.new("TextLabel")
+	label.BackgroundTransparency = 1
+	label.Size = UDim2.fromScale(1, 0)
+	label.AutomaticSize = Enum.AutomaticSize.Y
+	label.Font = font(style.font)
+	label.TextSize = style.text
+	label.TextColor3 = rgb(style.color)
+	label.TextXAlignment = Enum.TextXAlignment.Left
+	label.TextYAlignment = Enum.TextYAlignment.Top
+	label.TextWrapped = true
+	label.Text = text
+	label.Parent = parent
+	local widget = { root = label }
+	function widget.apply()
+		local nextStyle = Theme.textStyle(host.theme, role)
+		label.Font = font(nextStyle.font)
+		label.TextSize = nextStyle.text
+		label.TextColor3 = rgb(nextStyle.color)
+	end
+	function widget.setText(value)
+		label.Text = value
+	end
+	host.watch(widget)
+	return widget
+end
+
 function Kit.resourceCounter(host, parent, title)
 	local panel = Kit.panel(host, parent)
-	panel.root.Size = UDim2.fromOffset(132, host.theme.size.hud)
-	local caption = Instance.new("TextLabel")
-	caption.BackgroundTransparency = 1
-	caption.Size = UDim2.new(1, 0, 0, 16)
-	caption.Font = font(host.theme.font.body)
-	caption.TextSize = 12
-	caption.TextXAlignment = Enum.TextXAlignment.Left
-	caption.TextColor3 = rgb(host.theme.color.muted)
-	caption.Text = title
-	caption.Parent = panel.root
-	local value = Instance.new("TextLabel")
-	value.BackgroundTransparency = 1
-	value.Position = UDim2.fromOffset(0, 16)
-	value.Size = UDim2.new(1, 0, 1, -16)
-	value.Font = font(host.theme.font.title)
-	value.TextSize = host.theme.size.title
-	value.TextXAlignment = Enum.TextXAlignment.Left
-	value.TextColor3 = rgb(host.theme.color.ink)
-	value.Text = "0"
-	value.Parent = panel.root
+	panel.setPadding(6)
+	panel.root.Size = UDim2.fromOffset(host.theme.size.counterMin, host.theme.size.touch)
+	local caption = Kit.label(host, panel.root, title, "caption")
+	caption.root.Size = UDim2.new(1, 0, 0, host.theme.size.caption)
+	caption.root.AutomaticSize = Enum.AutomaticSize.None
+	local value = Kit.label(host, panel.root, "0", "heading")
+	value.root.Position = UDim2.fromOffset(0, host.theme.size.caption)
+	value.root.Size = UDim2.new(1, 0, 1, -host.theme.size.caption)
+	value.root.AutomaticSize = Enum.AutomaticSize.None
 	function panel.setValue(text)
-		value.Text = tostring(text)
-	end
-	local paint = panel.apply
-	function panel.apply()
-		paint()
-		caption.TextColor3 = rgb(host.theme.color.muted)
-		value.TextColor3 = rgb(host.theme.color.ink)
+		value.setText(tostring(text))
 	end
 	return panel
 end
@@ -264,25 +335,18 @@ function Kit.tooltip(host, parent)
 	panel.root.Visible = false
 	panel.root.AutomaticSize = Enum.AutomaticSize.XY
 	panel.root.ZIndex = 20
-	local label = Instance.new("TextLabel")
-	label.BackgroundTransparency = 1
-	label.AutomaticSize = Enum.AutomaticSize.XY
-	label.Font = font(host.theme.font.body)
-	label.TextSize = 13
-	label.TextColor3 = rgb(host.theme.color.ink)
-	label.TextWrapped = true
-	label.TextXAlignment = Enum.TextXAlignment.Left
-	label.Parent = panel.root
+	local label = Kit.label(host, panel.root, "", "body")
+	label.root.AutomaticSize = Enum.AutomaticSize.XY
 	local limit = Instance.new("UISizeConstraint")
 	limit.MaxSize = Vector2.new(220, 80)
-	limit.Parent = label
+	limit.Parent = label.root
 	function panel.setText(text)
-		label.Text = text
+		label.setText(text)
 	end
 	function panel.show(owner)
 		panel.root.Visible = true
 		local origin = owner.AbsolutePosition - parent.AbsolutePosition
-		panel.root.Position = UDim2.fromOffset(origin.X, origin.Y + owner.AbsoluteSize.Y + 6)
+		panel.root.Position = UDim2.fromOffset(origin.X, origin.Y + owner.AbsoluteSize.Y + host.theme.size.gap)
 	end
 	function panel.hide()
 		panel.root.Visible = false
@@ -292,17 +356,17 @@ end
 
 function Kit.progress(host, parent)
 	local track = Instance.new("Frame")
-	track.Size = UDim2.new(1, 0, 0, 8)
+	track.Size = UDim2.new(1, 0, 0, host.theme.size.progress)
 	track.BackgroundColor3 = rgb(host.theme.color.canvas)
 	track.BorderSizePixel = 0
 	track.Parent = parent
-	corner(track, 4)
+	corner(track, math.floor(host.theme.size.radius / 2))
 	local fill = Instance.new("Frame")
 	fill.Size = UDim2.fromScale(0, 1)
 	fill.BackgroundColor3 = rgb(host.theme.color.accent)
 	fill.BorderSizePixel = 0
 	fill.Parent = track
-	corner(fill, 4)
+	corner(fill, math.floor(host.theme.size.radius / 2))
 	local widget = { root = track, ratio = 0 }
 	function widget.setRatio(ratio)
 		widget.ratio = math.clamp(tonumber(ratio) or 0, 0, 1)
@@ -317,22 +381,33 @@ function Kit.progress(host, parent)
 end
 
 function Kit.prompt(host, parent, text)
-	local label = Instance.new("TextLabel")
-	label.BackgroundTransparency = 1
-	label.Size = UDim2.new(1, 0, 0, 18)
-	label.Font = font(host.theme.font.body)
-	label.TextSize = 13
-	label.TextXAlignment = Enum.TextXAlignment.Left
-	label.TextColor3 = rgb(host.theme.color.muted)
-	label.Text = text
-	label.TextWrapped = true
-	label.Parent = parent
-	local widget = { root = label }
-	function widget.setText(value)
-		label.Text = value
-	end
+	local widget = Kit.label(host, parent, text, "body")
+	widget.root.Size = UDim2.new(1, 0, 0, host.theme.size.prompt)
+	widget.root.AutomaticSize = Enum.AutomaticSize.None
+	return widget
+end
+
+function Kit.scroller(host, parent)
+	local frame = Instance.new("ScrollingFrame")
+	frame.BackgroundTransparency = 1
+	frame.BorderSizePixel = 0
+	frame.ScrollBarThickness = 4
+	frame.ScrollBarImageColor3 = rgb(host.theme.color.line)
+	frame.ScrollingDirection = Enum.ScrollingDirection.Y
+	frame.AutomaticCanvasSize = Enum.AutomaticSize.None
+	frame.CanvasSize = UDim2.fromOffset(0, 0)
+	frame.Parent = parent
+	local widget = { root = frame }
 	function widget.apply()
-		label.TextColor3 = rgb(host.theme.color.muted)
+		frame.ScrollBarImageColor3 = rgb(host.theme.color.line)
+	end
+	function widget.setCanvas(height, viewport, scrolls)
+		frame.CanvasSize = UDim2.fromOffset(0, height)
+		frame.ScrollingEnabled = scrolls == true
+		if not scrolls then
+			frame.CanvasPosition = Vector2.zero
+		end
+		widget.viewport = viewport
 	end
 	host.watch(widget)
 	return widget
@@ -340,6 +415,7 @@ end
 
 function Kit.modal(host, parent)
 	local tokens = host.theme
+	local id = "modal-" .. key()
 	local window = Instance.new("CanvasGroup")
 	window.Name = "FoundationWindow"
 	window.BackgroundColor3 = rgb(tokens.color.surface)
@@ -355,66 +431,126 @@ function Kit.modal(host, parent)
 	local scale = Instance.new("UIScale")
 	scale.Scale = 0.98
 	scale.Parent = window
-	local title = Instance.new("TextLabel")
-	title.BackgroundTransparency = 1
-	title.Position = UDim2.fromOffset(tokens.size.pad, 8)
-	title.Size = UDim2.new(1, -88, 0, 28)
-	title.Font = font(tokens.font.title)
-	title.TextSize = tokens.size.title
-	title.TextXAlignment = Enum.TextXAlignment.Left
-	title.TextColor3 = rgb(tokens.color.ink)
-	title.Text = ""
-	title.ZIndex = 7
-	title.Parent = window
+	local title = Kit.label(host, window, "", "heading")
+	title.root.ZIndex = 7
+	title.root.TextYAlignment = Enum.TextYAlignment.Center
+	title.root.AutomaticSize = Enum.AutomaticSize.None
 	local close = Kit.iconButton(host, window, "x")
-	close.root.Position = UDim2.new(1, -tokens.size.icon - 8, 0, 8)
 	close.root.ZIndex = 8
-	local body = Instance.new("Frame")
-	body.BackgroundTransparency = 1
-	body.Position = UDim2.fromOffset(tokens.size.pad, 48)
-	body.Size = UDim2.new(1, -tokens.size.pad * 2, 1, -60)
-	body.ZIndex = 7
-	body.Parent = window
+	local body = Kit.scroller(host, window)
+	body.root.ZIndex = 7
+	body.root.Position = UDim2.fromOffset(0, tokens.size.chrome)
 	local opened = false
-	local widget = { root = window, window = window, body = body, close = close }
+	local previous = nil
+	local dismiss = nil
+	local widget = { root = window, window = window, body = body.root, close = close, title = title.root }
+	local function unbind()
+		if dismiss then
+			dismiss:Disconnect()
+			dismiss = nil
+		end
+	end
+	local function restoreFocus()
+		local target = previous
+		previous = nil
+		if target == nil then
+			return
+		end
+		if target.Parent and target.Selectable then
+			GuiService.SelectedObject = target
+			return
+		end
+		local fallback = host.nextSelectable(nil)
+		GuiService.SelectedObject = fallback and fallback.root or nil
+	end
+	local function animateClose(ticket, restore)
+		opened = false
+		unbind()
+		host.cancel(ticket.keys.group)
+		host.cancel(ticket.keys.scale)
+		local duration = Motion.seconds("close", host.reduceMotion)
+		if duration <= 0 then
+			window.Visible = false
+			window.GroupTransparency = 1
+			scale.Scale = 0.98
+		else
+			host.play(ticket.keys.group, window, "close", { GroupTransparency = 1 })
+			host.play(ticket.keys.scale, scale, "close", { Scale = 0.98 })
+			task.delay(duration, function()
+				if window.Parent and host.windows.shouldHide(id, ticket.generation) then
+					window.Visible = false
+				end
+			end)
+		end
+		if restore ~= false then
+			restoreFocus()
+		else
+			previous = nil
+		end
+	end
 	function widget.apply()
 		local now = host.theme
 		window.BackgroundColor3 = rgb(now.color.surface)
 		border.Color = rgb(now.color.line)
-		title.TextColor3 = rgb(now.color.ink)
+		body.root.Position = UDim2.fromOffset(0, now.size.chrome)
 	end
 	function widget.setTitle(text)
-		title.Text = text
+		title.setText(text)
+	end
+	function widget.placeChrome(chrome)
+		title.root.Position = UDim2.fromOffset(chrome.title.x, chrome.title.y)
+		title.root.Size = UDim2.fromOffset(chrome.title.w, chrome.title.h)
+		close.root.Position = UDim2.fromOffset(chrome.close.x, chrome.close.y)
+		close.root.Size = UDim2.fromOffset(chrome.close.w, chrome.close.h)
+	end
+	function widget.placeBody(plan)
+		body.root.Size = UDim2.new(1, 0, 0, plan.viewportH)
+		body.setCanvas(plan.contentH, plan.viewportH, plan.scrolls)
 	end
 	function widget.isOpen()
 		return opened
 	end
 	function widget.open()
 		if opened then return end
+		local remembered = GuiService.SelectedObject
+		local ticket, displaced = host.windows.open(id, nil)
+		if displaced then
+			local other = host.modals[displaced.id]
+			if other then other.finishClose(displaced, false) end
+		end
+		previous = remembered
 		opened = true
 		window.Visible = true
-		host.play("modal-group", window, "open", { GroupTransparency = 0 })
-		host.play("modal-scale", scale, "open", { Scale = 1 })
+		if not dismiss then
+			dismiss = UserInputService.InputBegan:Connect(function(input)
+				if Windows.dismiss(input.KeyCode.Name) and opened then
+					widget.close()
+				end
+			end)
+		end
+		host.play(ticket.keys.group, window, "open", { GroupTransparency = 0 })
+		host.play(ticket.keys.scale, scale, "open", { Scale = 1 })
+	end
+	function widget.finishClose(ticket, restore)
+		animateClose(ticket, restore)
 	end
 	function widget.close()
 		if not opened then return end
-		opened = false
-		host.cancel("modal-group")
-		host.cancel("modal-scale")
-		local duration = Motion.seconds("close", host.reduceMotion)
-		if duration <= 0 then
-			window.Visible = false
-			window.GroupTransparency = 1
-			scale.Scale = 0.98
-			return
-		end
-		host.play("modal-group", window, "close", { GroupTransparency = 1 })
-		host.play("modal-scale", scale, "close", { Scale = 0.98 })
-		task.delay(duration, function()
-			if window.Parent and not opened then window.Visible = false end
-		end)
+		animateClose(host.windows.close(id), true)
 	end
-	host.connect(close.root.MouseButton1Click, function() widget.close() end)
+	function widget.destroy()
+		unbind()
+		if opened then
+			host.windows.close(id)
+			opened = false
+		end
+		host.cancel(id .. ":group")
+		host.cancel(id .. ":scale")
+	end
+	close.onActivated = function()
+		widget.close()
+	end
+	host.modals[id] = widget
 	host.watch(widget)
 	return widget
 end

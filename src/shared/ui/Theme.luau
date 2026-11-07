@@ -34,6 +34,17 @@ function Theme.names(): { string }
 	return copy
 end
 
+export type TextStyle = { font: string, color: RGB, text: number }
+
+function Theme.textStyle(tokens: Tokens, role: string): TextStyle
+	if role == "heading" then
+		return { font = tokens.font.title, color = tokens.color.ink, text = tokens.size.title }
+	elseif role == "caption" then
+		return { font = tokens.font.body, color = tokens.color.muted, text = tokens.size.caption }
+	end
+	return { font = tokens.font.body, color = tokens.color.muted, text = tokens.size.small }
+end
+
 function Theme.resolve(name: string?): Tokens
 	local themeName = "Default"
 	if type(name) == "string" and accents[name] ~= nil then
@@ -54,8 +65,12 @@ function Theme.resolve(name: string?): Tokens
 		transparency = { panel = 0.08, scrim = 0.35, tooltip = 0.04 },
 		font = { body = "Gotham", title = "GothamMedium" },
 		size = {
-			text = 15, title = 18, touch = 44, icon = 44, radius = 8,
-			pad = 12, gap = 8, hud = 52, button = 148,
+			text = 15, title = 18, caption = 12, small = 13,
+			touch = 44, icon = 44, radius = 8,
+			pad = 12, gap = 8, margin = 8, inset = 8, hudPad = 4,
+			hud = 52, button = 148, choice = 80,
+			chrome = 44, card = 108, cardMin = 96, counterMin = 88,
+			prompt = 36, progress = 8, window = 340, scroll = 6,
 		},
 		stroke = { thickness = 1 },
 	}
