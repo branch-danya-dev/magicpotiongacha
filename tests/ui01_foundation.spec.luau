@@ -1,6 +1,7 @@
 --!strict
 -- UI foundation rules. Roblox instances stay in the client kit; these tests cover the shared contract.
 local Theme = require("../src/shared/ui/Theme")
+local Decor = require("../src/shared/ui/Decor")
 local Motion = require("../src/shared/ui/Motion")
 local Interact = require("../src/shared/ui/Interact")
 local Layout = require("../src/shared/ui/Layout")
@@ -502,5 +503,58 @@ return function(T: typeof(Test))
 		T.equal(screens[1].screen.window.h, 340)
 		T.equal(screens[2].screen.window.h, 340)
 		T.truthy(find(screens[4].screen.hudItems, "nav-p").y > find(screens[4].screen.hudItems, "nav-m").y)
+	end)
+
+	T.test("UI-02A: decoration stays inside the component when content padding changes", function()
+		local roles = { "panel", "card", "counter", "tooltip", "modal" }
+		local samples = {
+			{ role = "panel", w = 460, h = 52, pad = 0 },
+			{ role = "card", w = 128, h = 108, pad = 8 },
+			{ role = "counter", w = 88, h = 44, pad = 6 },
+			{ role = "tooltip", w = 160, h = 40, pad = 12 },
+			{ role = "modal", w = 340, h = 340, pad = 0 },
+		}
+		for _, sample in ipairs(samples) do
+			local plate = Decor.engraving(sample.w, sample.h)
+			local band = Decor.sheen(sample.w, sample.h)
+			local body = Decor.content(sample.w, sample.h, sample.pad)
+			local line = Decor.strokeBounds(plate, 1)
+			T.truthy(Decor.contains(sample.w, sample.h, plate), sample.role)
+			T.truthy(Decor.contains(sample.w, sample.h, band), sample.role)
+			T.truthy(Decor.contains(sample.w, sample.h, line), sample.role)
+			T.truthy(Decor.contains(sample.w, sample.h, body), sample.role)
+			local shifted = Decor.engraving(sample.w, sample.h)
+			local padded = Decor.content(sample.w, sample.h, sample.pad + 16)
+			T.equal(shifted.x, plate.x, sample.role)
+			T.equal(shifted.y, plate.y, sample.role)
+			T.equal(Decor.sheen(sample.w, sample.h).y, band.y, sample.role)
+			T.truthy(padded.x >= body.x, sample.role)
+			T.truthy(Decor.contains(sample.w, sample.h, padded), sample.role)
+			local layers = Decor.layers(sample.role)
+			T.equal(layers[1], "engraving", sample.role)
+			if sample.role == "panel" or sample.role == "modal" then
+				T.equal(layers[2], "sheen", sample.role)
+			else
+				T.equal(#layers, 1, sample.role)
+			end
+		end
+		for _, role in ipairs(roles) do
+			T.truthy(Decor.layers(role)[1] == "engraving", role)
+		end
+		for _, viewport in ipairs({ { 1366, 768 }, { 390, 844 } }) do
+			local screen = Layout.demo(viewport[1], viewport[2])
+			local window = screen.window
+			local card = find(screen.body.items, "card-1")
+			local gold = find(screen.hudItems, "gold")
+			T.truthy(Decor.contains(window.w, window.h, Decor.strokeBounds(Decor.engraving(window.w, window.h), 1)), "modal")
+			T.truthy(Decor.contains(window.w, window.h, Decor.sheen(window.w, window.h)), "modal")
+			T.truthy(Decor.contains(card.w, card.h, Decor.strokeBounds(Decor.engraving(card.w, card.h), 1)), "card")
+			T.truthy(Decor.contains(gold.w, gold.h, Decor.strokeBounds(Decor.engraving(gold.w, gold.h), 1)), "counter")
+			T.truthy(Decor.contains(screen.hud.w, screen.hud.h, Decor.sheen(screen.hud.w, screen.hud.h)), "panel")
+		end
+		local cramped = Decor.engraving(10, 10)
+		T.truthy(Decor.contains(10, 10, Decor.strokeBounds(cramped, 1)))
+		T.truthy(Decor.contains(10, 10, Decor.content(10, 10, 24)))
+		T.equal(cramped.x, Decor.inset)
 	end)
 end

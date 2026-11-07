@@ -132,10 +132,10 @@ local function show()
 	for index, card in ipairs(sample.cards) do
 		local panel = own("card-" .. index, Kit.panel(host, modal.body, "card"))
 		panel.setPadding(tokens.size.inset)
-		local heading = Kit.label(host, panel.root, card.title, "heading")
+		local heading = Kit.label(host, panel.content, card.title, "heading")
 		heading.root.Size = UDim2.new(1, 0, 0, tokens.size.title)
 		heading.root.AutomaticSize = Enum.AutomaticSize.None
-		local copy = Kit.label(host, panel.root, card.body, "body")
+		local copy = Kit.label(host, panel.content, card.body, "body")
 		copy.root.Position = UDim2.fromOffset(0, tokens.size.title + tokens.size.hudPad)
 		copy.root.Size = UDim2.new(1, 0, 1, -(tokens.size.title + tokens.size.hudPad))
 		copy.root.AutomaticSize = Enum.AutomaticSize.None

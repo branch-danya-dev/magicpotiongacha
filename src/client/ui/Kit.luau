@@ -8,6 +8,7 @@ local Theme = require(Shared.ui.Theme)
 local Motion = require(Shared.ui.Motion)
 local Interact = require(Shared.ui.Interact)
 local Windows = require(Shared.ui.Windows)
+local Decor = require(Shared.ui.Decor)
 
 local Kit = {}
 local nextId = 0
@@ -72,40 +73,35 @@ local function dormant(parent, name)
 	return frame
 end
 
-local function engraving(parent, color, radius, inset)
+local function engraving(parent, color, radius)
+	local inset = Decor.inset
 	local guide = Instance.new("Frame")
 	guide.Name = "engraving"
 	guide.BackgroundTransparency = 1
 	guide.BorderSizePixel = 0
 	guide.Active = false
+	guide.Position = UDim2.fromOffset(inset, inset)
+	guide.Size = UDim2.new(1, -inset * 2, 1, -inset * 2)
 	guide.ZIndex = 2
 	guide.Parent = parent
 	corner(guide, math.max(0, radius - inset))
-	local line = stroke(guide, color, 1)
-	local function place(pad)
-		local shift = inset - pad
-		guide.Position = UDim2.fromOffset(shift, shift)
-		guide.Size = UDim2.new(1, (pad - inset) * 2, 1, (pad - inset) * 2)
-	end
-	place(0)
-	return line, place
+	return stroke(guide, color, 1)
 end
 
-local function sheen(parent, color, transparency)
+local function sheen(parent, color, transparency, radius)
+	local inset = Decor.inset
 	local band = Instance.new("Frame")
 	band.Name = "sheen"
 	band.BackgroundColor3 = color
 	band.BackgroundTransparency = transparency
 	band.BorderSizePixel = 0
 	band.Active = false
+	band.Position = UDim2.fromOffset(inset, inset)
+	band.Size = UDim2.new(1, -inset * 2, 0, Decor.sheenHeight)
 	band.ZIndex = 1
 	band.Parent = parent
-	local function place(pad)
-		band.Position = UDim2.fromOffset(-pad, -pad)
-		band.Size = UDim2.new(1, pad * 2, 0, 8)
-	end
-	place(0)
-	return band, place
+	corner(band, math.max(0, radius - inset))
+	return band
 end
 
 function Kit.host()
@@ -444,22 +440,27 @@ function Kit.panel(host, parent, role)
 	root.Parent = parent
 	corner(root, tokens.size.radius)
 	local border = stroke(root, rgb(paint.line), tokens.stroke.thickness)
+	local inner = engraving(root, rgb(tokens.color.engraving), tokens.size.radius)
+	local lift = nil
+	if kind == "panel" then
+		lift = sheen(root, rgb(tokens.color.veil), tokens.transparency.sheen, tokens.size.radius)
+	end
+	local content = Instance.new("Frame")
+	content.Name = "content"
+	content.BackgroundTransparency = 1
+	content.BorderSizePixel = 0
+	content.Size = UDim2.fromScale(1, 1)
+	content.ZIndex = 3
+	content.Active = false
+	content.Parent = root
 	local padding = Instance.new("UIPadding")
 	local pad = tokens.size.pad
 	padding.PaddingTop = UDim.new(0, pad)
 	padding.PaddingBottom = UDim.new(0, pad)
 	padding.PaddingLeft = UDim.new(0, pad)
 	padding.PaddingRight = UDim.new(0, pad)
-	padding.Parent = root
-	local inner, placeInner = engraving(root, rgb(tokens.color.engraving), tokens.size.radius, 2)
-	placeInner(pad)
-	local lift = nil
-	local placeLift = nil
-	if kind == "panel" then
-		lift, placeLift = sheen(root, rgb(tokens.color.veil), tokens.transparency.sheen)
-		placeLift(pad)
-	end
-	local widget = { root = root, fx = {} }
+	padding.Parent = content
+	local widget = { root = root, content = content, fx = {} }
 	function widget.apply()
 		local tokensNow = host.theme
 		local nextPaint = Theme.paint(tokensNow, kind, "Default")
@@ -478,10 +479,6 @@ function Kit.panel(host, parent, role)
 		padding.PaddingBottom = px
 		padding.PaddingLeft = px
 		padding.PaddingRight = px
-		placeInner(amount)
-		if placeLift then
-			placeLift(amount)
-		end
 	end
 	host.watch(widget)
 	return widget
@@ -528,15 +525,15 @@ function Kit.resourceCounter(host, parent, title)
 	mark.Size = UDim2.fromOffset(socket, socket)
 	mark.Position = UDim2.fromOffset(0, 4)
 	mark.ZIndex = 3
-	mark.Parent = panel.root
+	mark.Parent = panel.content
 	circle(mark)
 	local markLine = stroke(mark, rgb(host.theme.color.engraving), 1)
 	panel.fx.glyph = mark
-	local caption = Kit.label(host, panel.root, title, "caption")
+	local caption = Kit.label(host, panel.content, title, "caption")
 	caption.root.Position = UDim2.fromOffset(socket + 4, 0)
 	caption.root.Size = UDim2.new(1, -(socket + 4), 0, host.theme.size.caption)
 	caption.root.AutomaticSize = Enum.AutomaticSize.None
-	local value = Kit.label(host, panel.root, "0", "heading")
+	local value = Kit.label(host, panel.content, "0", "heading")
 	value.root.Position = UDim2.fromOffset(socket + 4, host.theme.size.caption)
 	value.root.Size = UDim2.new(1, -(socket + 4), 1, -host.theme.size.caption)
 	value.root.AutomaticSize = Enum.AutomaticSize.None
@@ -556,7 +553,9 @@ function Kit.tooltip(host, parent)
 	panel.root.Visible = false
 	panel.root.AutomaticSize = Enum.AutomaticSize.XY
 	panel.root.ZIndex = 20
-	local label = Kit.label(host, panel.root, "", "body")
+	panel.content.AutomaticSize = Enum.AutomaticSize.XY
+	panel.content.Size = UDim2.fromOffset(0, 0)
+	local label = Kit.label(host, panel.content, "", "body")
 	label.root.AutomaticSize = Enum.AutomaticSize.XY
 	local limit = Instance.new("UISizeConstraint")
 	limit.MaxSize = Vector2.new(220, 80)
@@ -656,8 +655,8 @@ function Kit.modal(host, parent)
 	window.Parent = parent
 	corner(window, tokens.size.radius)
 	local border = stroke(window, rgb(tokens.color.line), tokens.stroke.thickness)
-	local inner = engraving(window, rgb(tokens.color.engraving), tokens.size.radius, 2)
-	local lift = sheen(window, rgb(tokens.color.veil), tokens.transparency.sheen)
+	local inner = engraving(window, rgb(tokens.color.engraving), tokens.size.radius)
+	local lift = sheen(window, rgb(tokens.color.veil), tokens.transparency.sheen, tokens.size.radius)
 	local smoke = dormant(window, "fx-smoke")
 	local pulse = dormant(window, "fx-pulse")
 	local scale = Instance.new("UIScale")
