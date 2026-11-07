@@ -1,5 +1,5 @@
 --!nonstrict
--- Studio developer preview for the UI foundation.
+-- Studio developer preview for the Alchemy / Arcane Matte skin on the UI foundation.
 -- It does not replace PotionTycoonUI, bind M / I / P, or send a remote.
 -- Escape and gamepad B close only this preview window.
 --
@@ -119,9 +119,9 @@ local function show()
 	end
 
 	local modal = Kit.modal(host, gui)
-	modal.setTitle("Foundation")
+	modal.setTitle("Алхимия")
 	for index, name in ipairs({ "Обзор", "Запасы", "Заметки" }) do
-		local tab = own("tab-" .. index, Kit.button(host, modal.body, name))
+		local tab = own("tab-" .. index, Kit.button(host, modal.body, name, "tab"))
 		tab.onActivated = function()
 			for other = 1, 3 do
 				mounted["tab-" .. other].setSelected(other == index)
@@ -130,7 +130,7 @@ local function show()
 	end
 	mounted["tab-1"].setSelected(true)
 	for index, card in ipairs(sample.cards) do
-		local panel = own("card-" .. index, Kit.panel(host, modal.body))
+		local panel = own("card-" .. index, Kit.panel(host, modal.body, "card"))
 		panel.setPadding(tokens.size.inset)
 		local heading = Kit.label(host, panel.root, card.title, "heading")
 		heading.root.Size = UDim2.new(1, 0, 0, tokens.size.title)

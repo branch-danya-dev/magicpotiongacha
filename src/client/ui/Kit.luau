@@ -53,6 +53,61 @@ local function stroke(parent, color, thickness)
 	return object
 end
 
+local function circle(parent)
+	local object = Instance.new("UICorner")
+	object.CornerRadius = UDim.new(1, 0)
+	object.Parent = parent
+	return object
+end
+
+local function dormant(parent, name)
+	local frame = Instance.new("Frame")
+	frame.Name = name
+	frame.BackgroundTransparency = 1
+	frame.BorderSizePixel = 0
+	frame.Active = false
+	frame.Size = UDim2.fromScale(1, 1)
+	frame.ZIndex = 1
+	frame.Parent = parent
+	return frame
+end
+
+local function engraving(parent, color, radius, inset)
+	local guide = Instance.new("Frame")
+	guide.Name = "engraving"
+	guide.BackgroundTransparency = 1
+	guide.BorderSizePixel = 0
+	guide.Active = false
+	guide.ZIndex = 2
+	guide.Parent = parent
+	corner(guide, math.max(0, radius - inset))
+	local line = stroke(guide, color, 1)
+	local function place(pad)
+		local shift = inset - pad
+		guide.Position = UDim2.fromOffset(shift, shift)
+		guide.Size = UDim2.new(1, (pad - inset) * 2, 1, (pad - inset) * 2)
+	end
+	place(0)
+	return line, place
+end
+
+local function sheen(parent, color, transparency)
+	local band = Instance.new("Frame")
+	band.Name = "sheen"
+	band.BackgroundColor3 = color
+	band.BackgroundTransparency = transparency
+	band.BorderSizePixel = 0
+	band.Active = false
+	band.ZIndex = 1
+	band.Parent = parent
+	local function place(pad)
+		band.Position = UDim2.fromOffset(-pad, -pad)
+		band.Size = UDim2.new(1, pad * 2, 0, 8)
+	end
+	place(0)
+	return band, place
+end
+
 function Kit.host()
 	local self = {
 		theme = Theme.resolve("Default"),
@@ -236,30 +291,16 @@ function Kit.host()
 	return self
 end
 
-local function palette(host, state, marks)
-	local color = host.theme.color
-	local background = rgb(color.raised)
-	local line = rgb(color.line)
-	local text = rgb(color.ink)
-	local thickness = host.theme.stroke.thickness
-	if state == "Disabled" then
-		background = rgb(color.surface)
-		text = rgb(color.muted)
-	elseif state == "Pressed" then
-		background = rgb(color.surface)
-		line = rgb(color.accent)
-	elseif state == "Hover" or state == "Selected" or marks.selected then
-		background = rgb(color.raised):Lerp(rgb(color.accent), if state == "Selected" then 0.24 else 0.16)
-		line = rgb(color.accent)
-	end
-	if state == "Focused" or marks.focused then
-		line = rgb(color.accent)
-		thickness = 1.5
-	end
-	return background, line, text, thickness
+local function palette(host, role, state, marks)
+	local paint = Theme.paint(host.theme, role, state, {
+		selected = marks.selected == true,
+		focused = marks.focused == true,
+	})
+	return rgb(paint.background), rgb(paint.line), rgb(paint.text), paint.thickness
 end
 
-local function control(host, className, parent, label, icon)
+local function control(host, className, parent, label, role)
+	local icon = role == "icon"
 	local tokens = host.theme
 	local root = Instance.new(className)
 	root.AutoButtonColor = false
@@ -273,14 +314,37 @@ local function control(host, className, parent, label, icon)
 	root.Selectable = true
 	root.Size = icon and UDim2.fromOffset(tokens.size.icon, tokens.size.icon) or UDim2.fromOffset(tokens.size.button, tokens.size.touch)
 	root.Parent = parent
-	corner(root, tokens.size.radius)
-	local border = stroke(root, rgb(tokens.color.line), tokens.stroke.thickness)
+	corner(root, icon and math.floor(tokens.size.icon / 2) or tokens.size.radius)
+	local border = stroke(root, rgb(tokens.color.engraving), tokens.stroke.thickness)
 	local scale = Instance.new("UIScale")
 	scale.Parent = root
+	local halo = dormant(root, "fx-halo")
+	local ring = nil
+	local ringStroke = nil
+	if icon then
+		ring = Instance.new("Frame")
+		ring.Name = "ring"
+		ring.BackgroundTransparency = 1
+		ring.BorderSizePixel = 0
+		ring.Active = false
+		ring.AnchorPoint = Vector2.new(0.5, 0.5)
+		ring.Position = UDim2.fromScale(0.5, 0.5)
+		ring.Size = UDim2.new(1, -10, 1, -10)
+		ring.ZIndex = 2
+		ring.Parent = root
+		circle(ring)
+		ringStroke = stroke(ring, rgb(tokens.color.engraving), 1)
+	end
 	local id = key()
 	local flags = { disabled = false, pressed = false, hover = false, focused = false, selected = false }
 	local forced = nil
-	local widget = { root = root, navigable = true, prefer = true, windowId = host.windowOf(parent) }
+	local widget = {
+		root = root,
+		navigable = true,
+		prefer = true,
+		windowId = host.windowOf(parent),
+		fx = { halo = halo, glyph = ring },
+	}
 	function widget.disabled()
 		return flags.disabled
 	end
@@ -288,7 +352,7 @@ local function control(host, className, parent, label, icon)
 		local state = forced or Interact.resolve(flags)
 		local marks = Interact.marks(flags)
 		local visual = Interact.visual(state, host.reduceMotion)
-		local background, line, text, thickness = palette(host, state, marks)
+		local background, line, text, thickness = palette(host, role, state, marks)
 		local motion = state == "Pressed" and "press" or "hover"
 		local shown = widget.windowId == nil or host.windows.isOpen(widget.windowId)
 		local selectable = shown and forced ~= "Disabled" and marks.selectable
@@ -298,6 +362,9 @@ local function control(host, className, parent, label, icon)
 		root.TextSize = icon and host.theme.size.title or host.theme.size.text
 		host.play(id, root, motion, { BackgroundColor3 = background, TextColor3 = text, TextTransparency = visual.textTransparency })
 		host.play(id .. ":line", border, motion, { Color = line, Thickness = thickness })
+		if ringStroke then
+			host.play(id .. ":ring", ringStroke, motion, { Color = line })
+		end
 		host.play(id .. ":scale", scale, motion, { Scale = visual.scale })
 	end
 	function widget.setDisabled(value)
@@ -358,35 +425,52 @@ local function control(host, className, parent, label, icon)
 	return widget
 end
 
-function Kit.button(host, parent, label)
-	return control(host, "TextButton", parent, label, false)
+function Kit.button(host, parent, label, role)
+	return control(host, "TextButton", parent, label, role or "button")
 end
 
 function Kit.iconButton(host, parent, mark)
-	return control(host, "TextButton", parent, mark, true)
+	return control(host, "TextButton", parent, mark, "icon")
 end
 
-function Kit.panel(host, parent)
+function Kit.panel(host, parent, role)
+	local kind = role or "panel"
 	local tokens = host.theme
+	local paint = Theme.paint(tokens, kind, "Default")
 	local root = Instance.new("Frame")
-	root.BackgroundColor3 = rgb(tokens.color.surface)
-	root.BackgroundTransparency = tokens.transparency.panel
+	root.BackgroundColor3 = rgb(paint.background)
+	root.BackgroundTransparency = paint.transparency
 	root.BorderSizePixel = 0
 	root.Parent = parent
 	corner(root, tokens.size.radius)
-	local border = stroke(root, rgb(tokens.color.line), tokens.stroke.thickness)
+	local border = stroke(root, rgb(paint.line), tokens.stroke.thickness)
 	local padding = Instance.new("UIPadding")
-	padding.PaddingTop = UDim.new(0, tokens.size.pad)
-	padding.PaddingBottom = UDim.new(0, tokens.size.pad)
-	padding.PaddingLeft = UDim.new(0, tokens.size.pad)
-	padding.PaddingRight = UDim.new(0, tokens.size.pad)
+	local pad = tokens.size.pad
+	padding.PaddingTop = UDim.new(0, pad)
+	padding.PaddingBottom = UDim.new(0, pad)
+	padding.PaddingLeft = UDim.new(0, pad)
+	padding.PaddingRight = UDim.new(0, pad)
 	padding.Parent = root
-	local widget = { root = root }
+	local inner, placeInner = engraving(root, rgb(tokens.color.engraving), tokens.size.radius, 2)
+	placeInner(pad)
+	local lift = nil
+	local placeLift = nil
+	if kind == "panel" then
+		lift, placeLift = sheen(root, rgb(tokens.color.veil), tokens.transparency.sheen)
+		placeLift(pad)
+	end
+	local widget = { root = root, fx = {} }
 	function widget.apply()
 		local tokensNow = host.theme
-		root.BackgroundColor3 = rgb(tokensNow.color.surface)
-		root.BackgroundTransparency = tokensNow.transparency.panel
-		border.Color = rgb(tokensNow.color.line)
+		local nextPaint = Theme.paint(tokensNow, kind, "Default")
+		root.BackgroundColor3 = rgb(nextPaint.background)
+		root.BackgroundTransparency = nextPaint.transparency
+		border.Color = rgb(nextPaint.line)
+		inner.Color = rgb(tokensNow.color.engraving)
+		if lift then
+			lift.BackgroundColor3 = rgb(tokensNow.color.veil)
+			lift.BackgroundTransparency = tokensNow.transparency.sheen
+		end
 	end
 	function widget.setPadding(amount)
 		local px = UDim.new(0, amount)
@@ -394,6 +478,10 @@ function Kit.panel(host, parent)
 		padding.PaddingBottom = px
 		padding.PaddingLeft = px
 		padding.PaddingRight = px
+		placeInner(amount)
+		if placeLift then
+			placeLift(amount)
+		end
 	end
 	host.watch(widget)
 	return widget
@@ -428,16 +516,35 @@ function Kit.label(host, parent, text, role)
 end
 
 function Kit.resourceCounter(host, parent, title)
-	local panel = Kit.panel(host, parent)
+	local panel = Kit.panel(host, parent, "counter")
 	panel.setPadding(6)
 	panel.root.Size = UDim2.fromOffset(host.theme.size.counterMin, host.theme.size.touch)
+	local socket = host.theme.size.socket
+	local mark = Instance.new("Frame")
+	mark.Name = "fx-glyph"
+	mark.BackgroundTransparency = 1
+	mark.BorderSizePixel = 0
+	mark.Active = false
+	mark.Size = UDim2.fromOffset(socket, socket)
+	mark.Position = UDim2.fromOffset(0, 4)
+	mark.ZIndex = 3
+	mark.Parent = panel.root
+	circle(mark)
+	local markLine = stroke(mark, rgb(host.theme.color.engraving), 1)
+	panel.fx.glyph = mark
 	local caption = Kit.label(host, panel.root, title, "caption")
-	caption.root.Size = UDim2.new(1, 0, 0, host.theme.size.caption)
+	caption.root.Position = UDim2.fromOffset(socket + 4, 0)
+	caption.root.Size = UDim2.new(1, -(socket + 4), 0, host.theme.size.caption)
 	caption.root.AutomaticSize = Enum.AutomaticSize.None
 	local value = Kit.label(host, panel.root, "0", "heading")
-	value.root.Position = UDim2.fromOffset(0, host.theme.size.caption)
-	value.root.Size = UDim2.new(1, 0, 1, -host.theme.size.caption)
+	value.root.Position = UDim2.fromOffset(socket + 4, host.theme.size.caption)
+	value.root.Size = UDim2.new(1, -(socket + 4), 1, -host.theme.size.caption)
 	value.root.AutomaticSize = Enum.AutomaticSize.None
+	local previous = panel.apply
+	function panel.apply()
+		previous()
+		markLine.Color = rgb(host.theme.color.engraving)
+	end
 	function panel.setValue(text)
 		value.setText(tostring(text))
 	end
@@ -445,7 +552,7 @@ function Kit.resourceCounter(host, parent, title)
 end
 
 function Kit.tooltip(host, parent)
-	local panel = Kit.panel(host, parent)
+	local panel = Kit.panel(host, parent, "tooltip")
 	panel.root.Visible = false
 	panel.root.AutomaticSize = Enum.AutomaticSize.XY
 	panel.root.ZIndex = 20
@@ -469,26 +576,33 @@ function Kit.tooltip(host, parent)
 end
 
 function Kit.progress(host, parent)
+	local trackPaint = Theme.paint(host.theme, "progressTrack", "Default")
+	local fillPaint = Theme.paint(host.theme, "progressFill", "Default")
 	local track = Instance.new("Frame")
 	track.Size = UDim2.new(1, 0, 0, host.theme.size.progress)
-	track.BackgroundColor3 = rgb(host.theme.color.canvas)
+	track.BackgroundColor3 = rgb(trackPaint.background)
 	track.BorderSizePixel = 0
 	track.Parent = parent
 	corner(track, math.floor(host.theme.size.radius / 2))
+	local trackLine = stroke(track, rgb(trackPaint.line), 1)
 	local fill = Instance.new("Frame")
 	fill.Size = UDim2.fromScale(0, 1)
-	fill.BackgroundColor3 = rgb(host.theme.color.accent)
+	fill.BackgroundColor3 = rgb(fillPaint.background)
 	fill.BorderSizePixel = 0
 	fill.Parent = track
 	corner(fill, math.floor(host.theme.size.radius / 2))
-	local widget = { root = track, ratio = 0 }
+	local liquid = dormant(fill, "fx-liquid")
+	local widget = { root = track, ratio = 0, fx = { liquid = liquid } }
 	function widget.setRatio(ratio)
 		widget.ratio = math.clamp(tonumber(ratio) or 0, 0, 1)
 		fill.Size = UDim2.fromScale(widget.ratio, 1)
 	end
 	function widget.apply()
-		track.BackgroundColor3 = rgb(host.theme.color.canvas)
-		fill.BackgroundColor3 = rgb(host.theme.color.accent)
+		local trackNow = Theme.paint(host.theme, "progressTrack", "Default")
+		local fillNow = Theme.paint(host.theme, "progressFill", "Default")
+		track.BackgroundColor3 = rgb(trackNow.background)
+		trackLine.Color = rgb(trackNow.line)
+		fill.BackgroundColor3 = rgb(fillNow.background)
 	end
 	host.watch(widget)
 	return widget
@@ -542,6 +656,10 @@ function Kit.modal(host, parent)
 	window.Parent = parent
 	corner(window, tokens.size.radius)
 	local border = stroke(window, rgb(tokens.color.line), tokens.stroke.thickness)
+	local inner = engraving(window, rgb(tokens.color.engraving), tokens.size.radius, 2)
+	local lift = sheen(window, rgb(tokens.color.veil), tokens.transparency.sheen)
+	local smoke = dormant(window, "fx-smoke")
+	local pulse = dormant(window, "fx-pulse")
 	local scale = Instance.new("UIScale")
 	scale.Scale = 0.98
 	scale.Parent = window
@@ -551,7 +669,7 @@ function Kit.modal(host, parent)
 	title.root.AutomaticSize = Enum.AutomaticSize.None
 	local opened = false
 	local dismiss = nil
-	local widget = { root = window, window = window, title = title.root }
+	local widget = { root = window, window = window, title = title.root, fx = { smoke = smoke, pulse = pulse } }
 	host.modals[id] = widget
 	local close = Kit.iconButton(host, window, "x")
 	close.prefer = false
@@ -614,8 +732,13 @@ function Kit.modal(host, parent)
 	end
 	function widget.apply()
 		local now = host.theme
-		window.BackgroundColor3 = rgb(now.color.surface)
-		border.Color = rgb(now.color.line)
+		local paint = Theme.paint(now, "modal", "Default")
+		window.BackgroundColor3 = rgb(paint.background)
+		window.BackgroundTransparency = paint.transparency
+		border.Color = rgb(paint.line)
+		inner.Color = rgb(now.color.engraving)
+		lift.BackgroundColor3 = rgb(now.color.veil)
+		lift.BackgroundTransparency = now.transparency.sheen
 		body.root.Position = UDim2.fromOffset(0, now.size.chrome)
 	end
 	function widget.setTitle(text)

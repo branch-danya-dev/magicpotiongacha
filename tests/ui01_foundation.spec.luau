@@ -394,4 +394,108 @@ return function(T: typeof(Test))
 		T.equal(windows.close("a").focus, nil)
 		T.equal(windows.listeners(), 0)
 	end)
+
+	local function channels(color: { number }): number
+		return color[1] + color[2] + color[3]
+	end
+
+	T.test("UI-02A: themes share the matte base and differ by accent", function()
+		local plain = Theme.resolve("Default")
+		T.equal(plain.color.canvas[1], 16)
+		T.equal(plain.color.ink[1], 236)
+		T.equal(plain.stroke.focus, 1.5)
+		T.equal(plain.transparency.sheen, 0.9)
+		local alchemy = Theme.resolve("Alchemy")
+		T.truthy(alchemy.color.accent[2] <= alchemy.color.accent[3])
+		for _, name in ipairs(Theme.names()) do
+			local tokens = Theme.resolve(name)
+			T.equal(tokens.color.canvas[1], plain.color.canvas[1])
+			T.equal(tokens.color.surface[1], plain.color.surface[1])
+			T.equal(tokens.color.ink[1], plain.color.ink[1])
+			T.equal(tokens.color.line[1], plain.color.line[1])
+			T.equal(tokens.color.engraving[1], plain.color.engraving[1])
+			T.equal(tokens.stroke.focus, plain.stroke.focus)
+		end
+		local dormant = 0
+		local seen: { [string]: boolean } = {}
+		for _, effect in ipairs(Theme.effects()) do
+			T.falsy(effect.active, effect.id)
+			T.falsy(seen[effect.id], effect.id)
+			seen[effect.id] = true
+			dormant += 1
+		end
+		T.equal(dormant, 5)
+		T.truthy(seen.liquid)
+		T.truthy(seen.pulse)
+		T.truthy(seen.smoke)
+		T.truthy(seen.glyph)
+		T.truthy(seen.halo)
+	end)
+
+	T.test("UI-02A: component states stay distinct and readable", function()
+		local tokens = Theme.resolve("Default")
+		local idle = Theme.paint(tokens, "button", "Default")
+		local hover = Theme.paint(tokens, "button", "Hover")
+		local pressed = Theme.paint(tokens, "button", "Pressed")
+		local focused = Theme.paint(tokens, "button", "Focused")
+		local selected = Theme.paint(tokens, "button", "Selected")
+		local disabled = Theme.paint(tokens, "button", "Disabled")
+		T.truthy(channels(hover.background) > channels(idle.background))
+		T.truthy(channels(pressed.background) < channels(idle.background))
+		T.truthy(channels(selected.background) ~= channels(hover.background))
+		T.equal(hover.line[1], tokens.color.accent[1])
+		T.equal(selected.line[1], tokens.color.accent[1])
+		T.truthy(focused.thickness > idle.thickness)
+		T.equal(disabled.text[1], tokens.color.muted[1])
+		T.truthy(channels(disabled.text) > channels(tokens.color.surface))
+		local tab = Theme.paint(tokens, "tab", "Default")
+		local tabOn = Theme.paint(tokens, "tab", "Selected")
+		T.truthy(channels(tabOn.background) ~= channels(tab.background))
+		T.equal(tab.text[1], tokens.color.muted[1])
+		T.equal(tabOn.text[1], tokens.color.ink[1])
+		local held = Theme.paint(tokens, "tab", "Focused", { selected = true, focused = true })
+		T.equal(held.thickness, tokens.stroke.focus)
+		T.equal(held.background[1], tabOn.background[1])
+		local track = Theme.paint(tokens, "progressTrack", "Default")
+		local fill = Theme.paint(tokens, "progressFill", "Default")
+		T.equal(track.background[1], tokens.color.well[1])
+		T.equal(fill.background[1], tokens.color.accent[1])
+		local card = Theme.paint(tokens, "card", "Default")
+		local panel = Theme.paint(tokens, "panel", "Default")
+		T.truthy(channels(card.background) ~= channels(panel.background))
+		T.equal(panel.transparency, tokens.transparency.panel)
+		local soul = Theme.resolve("Soul")
+		local soulSelected = Theme.paint(soul, "button", "Selected")
+		T.truthy(soulSelected.background[1] ~= selected.background[1])
+		T.equal(Theme.paint(soul, "button", "Default").background[1], idle.background[1])
+	end)
+
+	T.test("UI-02A: the review sizes still keep every control reachable", function()
+		local screens = {
+			{ name = "1920x1080", screen = Layout.demo(1920, 1080), scrolls = false },
+			{ name = "1366x768", screen = Layout.demo(1366, 768), scrolls = false },
+			{ name = "390x844", screen = Layout.demo(390, 844), scrolls = false },
+			{ name = "360x640", screen = Layout.demo(360, 640), scrolls = true },
+		}
+		for _, entry in ipairs(screens) do
+			local screen = entry.screen
+			T.truthy(Layout.inside(screen.safe, screen.hud), entry.name)
+			T.truthy(Layout.inside(screen.safe, screen.window), entry.name)
+			T.truthy(Layout.inside(screen.safe, screen.inspector), entry.name)
+			T.truthy(separated(screen.hud, screen.window), entry.name)
+			T.truthy(separated(screen.window, screen.inspector), entry.name)
+			T.falsy(Layout.overlaps(screen.chrome.title, screen.chrome.close), entry.name)
+			T.equal(screen.chrome.close.w, 44, entry.name)
+			T.equal(screen.body.scrolls, entry.scrolls, entry.name)
+			for _, item in ipairs(screen.body.items) do
+				T.truthy(Layout.reachable(item, screen.body.viewportH, screen.body.contentH), entry.name .. " " .. item.id)
+			end
+			for _, item in ipairs(screen.hudItems) do
+				T.truthy(item.w >= 44 and item.h >= 44, item.id)
+			end
+		end
+		T.equal(screens[1].screen.window.h, 340)
+		T.equal(screens[2].screen.window.h, 340)
+		T.truthy(find(screens[4].screen.hudItems, "nav-p").y > find(screens[4].screen.hudItems, "nav-m").y)
+	end)
 end
