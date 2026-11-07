@@ -3,9 +3,9 @@
 -- It does not replace PotionTycoonUI, bind M / I / P, or send a remote.
 -- Escape and gamepad B close only this preview window.
 --
--- In Roblox Studio: select Workspace, add a boolean attribute named
--- UIFoundationDemo, set it to true, then press Play. Set it back to false
--- to remove the preview. A published server never shows this screen.
+-- In Roblox Studio the preview is already on. Press Play to see it.
+-- Workspace.UIFoundationDemo is true in the place; set it to false to hide
+-- the preview. A published server never shows this screen.
 --
 -- Engine checks left for Studio: GuiService selection on a gamepad, Button B,
 -- a hidden or disabled previous target, and scrolling a clipped column.
@@ -61,7 +61,7 @@ local function own(id, widget)
 end
 
 local function show()
-	if not Gate.allowed(RunService:IsStudio(), workspace:GetAttribute("UIFoundationDemo") == true) then
+	if not Gate.preview(RunService:IsStudio(), workspace:GetAttribute("UIFoundationDemo")) then
 		hide()
 		return
 	end
@@ -83,7 +83,7 @@ local function show()
 	local resources = Binding.resources(sample)
 	local tokens = host.theme
 	local folder = player:WaitForChild("PlayerGui")
-	if not Gate.allowed(RunService:IsStudio(), workspace:GetAttribute("UIFoundationDemo") == true) then
+	if not Gate.preview(RunService:IsStudio(), workspace:GetAttribute("UIFoundationDemo")) then
 		hide()
 		return
 	end
@@ -240,7 +240,7 @@ local function show()
 end
 
 local function refresh()
-	if Gate.allowed(RunService:IsStudio(), workspace:GetAttribute("UIFoundationDemo") == true) then
+	if Gate.preview(RunService:IsStudio(), workspace:GetAttribute("UIFoundationDemo")) then
 		show()
 	else
 		hide()
