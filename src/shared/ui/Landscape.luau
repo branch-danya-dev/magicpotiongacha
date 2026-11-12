@@ -65,7 +65,7 @@ function HUD.layout(width,height,touch,chatRight)
  local right=math.max(margin,listReserve,compact and thumb or 0)
  local dockW=compact and 64 or 92*scale
  local dockH=compact and 192 or 288*scale
- local top=compact and 66 or 76*scale
+ local top=compact and (height<300 and 62 or 66) or 76*scale
  local dock=rect(width-right-dockW,top,dockW,math.min(dockH,height-top-(touch and not compact and 148 or 12)))
  local chipW=compact and math.clamp((width-380)/2,116,154) or 172*scale
  local chipH=compact and 52 or 58*scale
@@ -73,7 +73,8 @@ function HUD.layout(width,height,touch,chatRight)
  local resourcesX=math.min(settings.x-20-(2*chipW+10),math.max(width*.41,left+220))
  local title=rect(left,12,math.max(0,math.min(260*scale,resourcesX-left-16)),40*scale)
  local questW=compact and math.min(238,width*.34) or 260*scale
- local questH=compact and 82 or 104*scale
+ -- Some 360px phones reserve a 20px status bar in addition to CoreGui's 58px.
+ local questH=compact and math.min(82,math.max(64,height-218)) or 104*scale
  local quest=rect(left,top,questW,questH)
  local shop=rect(left,top+questH+6,48*scale,Layout.touch(45*scale))
  if compact and touch and shop.y+shop.h>height-140 then shop.x=math.max(left,thumb) end

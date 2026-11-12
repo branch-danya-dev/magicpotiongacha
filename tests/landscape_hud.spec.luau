@@ -81,6 +81,16 @@ return function(T)
   T.equal(p.book.y+p.book.h<=510,true)
   T.equal(Layout.overlaps(p.book,{x=0,y=510,w=220,h=200}),false)
  end)
+ T.test("AG64 phone status bar plus CoreGui leaves all buttons clear at 740x282",function()
+  local p=HUD.layout(740,282,true,nil)
+  local boxes={p.gold,p.essence,p.settings,p.quest,p.shop,p.rewards,p.book,p.dock}
+  for i,a in ipairs(boxes) do
+   T.equal(Layout.inside({x=0,y=0,w=740,h=282},a),true)
+   T.equal(Layout.overlaps(a,p.touchLeft),false); T.equal(Layout.overlaps(a,p.touchRight),false)
+   for j,b in ipairs(boxes) do if j>i then T.equal(Layout.overlaps(a,b),false) end end
+  end
+  T.equal(p.quest.h-40>=24,true)
+ end)
  T.test("AG64 mobile center retains the native book interaction clearance",function()
   for _,size in ipairs({{750,332},{740,302}}) do
    local w,h=size[1],size[2]; local p=HUD.layout(w,h,true,nil); local blocked={}
