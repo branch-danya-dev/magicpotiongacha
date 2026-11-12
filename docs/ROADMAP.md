@@ -1,5 +1,7 @@
 # Milestones
 
+> **Live status corrected 2026-11-12:** This file keeps historical M0–M7 planning and evidence. Use [PROJECT_AUDIT_2026-11-12.md](PROJECT_AUDIT_2026-11-12.md) for the verified last task and implemented-vs-live state, [RELEASE_ROADMAP_V2.md](RELEASE_ROADMAP_V2.md) for the v1.0 product goal/stages, and [AGENT_WORK_QUEUE.md](AGENT_WORK_QUEUE.md) for current agent task IDs. C00/C00b and C01 **are implemented as code candidates** on downstream Cursor branches; they are not published or fully live-accepted.
+
 | Stage | Scope | Exit gate |
 | --- | --- | --- |
 | M0 / M0.1 (dependency) | Repository/toolchain, deterministic core, validated requests, safe profile adapter, greybox playable chain | CLI/CI passed; Issue #2 live gates still BLOCKED |
@@ -13,24 +15,27 @@
 
 This is sequencing, not a promised completion date. Fixed-slot art can be replaced without rewriting the domain model. Trading Plaza, inter-player Robux transactions and additional themes need separate product/platform review; they are not part of M0.
 
-## Next product redesign — Core Loop V2 (design only, Cursor)
+## Next product redesign — Core Loop V2 (C00/C01 code candidate; C02–C08 pending)
 
-Owner direction dated 2026-11-06. **Status: SPECIFIED / NOT IMPLEMENTED.**
-The existing M0–M6 implementation and M7 Draft PR #17 remain intact; there is no
-new gameplay build, updated save schema, approved balance, monetization, merge or
-publication from this plan. [Target mechanics](CORE_LOOP_V2_SPEC.md) and
-[ordered implementation / acceptance tasks C00–C08](CORE_LOOP_V2_CURSOR_BACKLOG.md)
-form the exact Cursor handoff.
+Owner direction dated 2026-11-06. **Status as of 2026-11-12: C00/C00b and C01
+IMPLEMENTED/CODE CANDIDATE; C02–C08 OPEN; live acceptance BLOCKED.** V8 schema,
+C01 gameplay and first-session economy are now present on downstream Cursor
+branches, but this does **not** constitute merge, full Studio acceptance,
+monetization approval or publication. Preserve the M0–M6 baseline and separate
+M7 07D art gate. [Target mechanics](CORE_LOOP_V2_SPEC.md) and
+[the original C00–C08 task definitions](CORE_LOOP_V2_CURSOR_BACKLOG.md) remain the
+design contract; use [AGENT_WORK_QUEUE.md](AGENT_WORK_QUEUE.md) for *current*
+implementation status and next tasks.
 
-1. **C00:** inventory existing code invariants, establish V8+ migration plan,
-   define safe behaviour for legacy fixed stations, three granted starters,
-   in-flight cargo and persistent inventory. The written contract is
-   [CORE_LOOP_V2_C00.md](CORE_LOOP_V2_C00.md). C00b persists that projection at
-   schema 8. Release switches stay off. C01 has not started.
-2. **C01:** preserve early clicker + Gold/Essence progression while adding starter
-   Gold, exactly one selected new-profile familiar, seed market/plant timers,
-   first cauldron and affordable automation. No required manual resource chore
-   after upgrades; no softlocks after an unwise purchase.
+1. **C00/C00b — code candidate:** inventory existing invariants and establish V8
+   migration for legacy fixed stations, three granted starters, in-flight cargo
+   and persistent inventory. The written contract is
+   [CORE_LOOP_V2_C00.md](CORE_LOOP_V2_C00.md). Runtime V8 migration and portable
+   tests exist; live DataStore migration remains unverified. Release switches stay off.
+2. **C01 — code candidate, live QA open:** starter Gold, exactly one selected
+   new-profile familiar, seed market/plant timers, first cauldron, Healing sale,
+   affordable automation and recovery routes are implemented and portable-tested.
+   The normal Studio/mobile/reconnect/economy acceptance remains open.
 3. **C02:** server-validated free station placement, quick build mode, temple
    upgrades and build-area expansion inside unchanged eight-plot ownership.
 4. **C03:** keep/sell/contract potion routing; physical bottle inspection,

@@ -1,5 +1,11 @@
 # Cursor delivery backlog — Core Loop V2
 
+> **Historical task contract (2026-11-06):** The unchecked C00/C01 boxes below are
+> no longer a live progress tracker. C00/C00b V8 and C01 now exist as code
+> candidates on the Spellbook HEAD. See the [2026-11-12 audit](PROJECT_AUDIT_2026-11-12.md),
+> [release roadmap](RELEASE_ROADMAP_V2.md) and [current agent queue](AGENT_WORK_QUEUE.md).
+> Do not redo the implemented steps merely because an old checkbox is open.
+
 **Purpose:** implement the owner-directed gameplay redesign without silently replacing the working M0–M6 engine or unfinished M7 environment work.
 **Design contract:** [CORE_LOOP_V2_SPEC.md](CORE_LOOP_V2_SPEC.md). **Status:** tasks only; no V2 gameplay code implemented by this document.
 **Review base:** new design branch from M7 #17 head at 34f617b5f36975d5f71638746494c0341e88bf45. Do not amend/merge Draft PR #17. Later Cursor work may stack new Draft PRs from the accepted code base; verify branch HEAD, docs and active art gates first.
