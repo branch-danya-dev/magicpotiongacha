@@ -8,6 +8,8 @@ local Plan = require(shared.SpellbookLecternPlan)
 local LoadGate = require(shared.SpellbookLoadGate)
 local records = {}
 local state = "loading"
+local loadStarted = false
+local startLoad
 local function restore(model)
 	local record = records[model]
 	if not record then return end
@@ -15,6 +17,7 @@ local function restore(model)
 		if part.Parent then part.LocalTransparencyModifier = value end
 	end
 	for _, part in ipairs(record.parts) do if part.Parent then part.Transparency = 1 end end
+	model:SetAttribute("SpellbookLoadState", "fallback")
 	for _, connection in ipairs(record.connections) do connection:Disconnect() end
 	records[model] = nil
 end
@@ -61,17 +64,18 @@ local function watch(model)
 		local link = anchor:WaitForChild("SpellbookVisual", 10)
 		if records[model] ~= record or not link or not link:IsA("ObjectValue") or link.Value ~= model then restore(model); return end
 		table.insert(record.connections, link:GetPropertyChangedSignal("Value"):Connect(function() restore(model) end))
+		table.insert(record.connections, link.AncestryChanged:Connect(function(_, parent)
+			if parent ~= anchor then restore(model) end
+		end))
+		table.insert(record.connections, back:GetPropertyChangedSignal("Value"):Connect(function() restore(model) end))
 		table.insert(record.connections, model.AncestryChanged:Connect(function(_, parent)
 			if parent ~= anchor.Parent then restore(model) end
 		end))
 		model:SetAttribute("SpellbookLoadState", state)
+		startLoad(record.parts)
 		reveal(model, record)
 	end)
 end
-CollectionService:GetInstanceAddedSignal(Plan.tag):Connect(watch)
-CollectionService:GetInstanceRemovedSignal(Plan.tag):Connect(restore)
-for _, model in ipairs(CollectionService:GetTagged(Plan.tag)) do watch(model) end
-
 local function finish(success, reason)
 	if state ~= "loading" then return end -- timeout is terminal for this client session
 	state = LoadGate.finish(state, success and Plan.meshCount or 0, Plan.meshCount, success)
@@ -82,15 +86,24 @@ local function finish(success, reason)
 	end
 end
 task.delay(Plan.loadTimeout, function() finish(false, "timeout") end)
-task.spawn(function()
-	local ids, successful = {}, {}
-	for _, id in pairs(Plan.assets) do table.insert(ids, id) end
-	local ok, failure = pcall(function()
-		ContentProvider:PreloadAsync(ids, function(id, status)
-			if status == Enum.AssetFetchStatus.Success then successful[id] = true end
+startLoad = function(parts)
+	if loadStarted or state ~= "loading" then return end
+	loadStarted = true
+	task.spawn(function()
+		local expected, successful = {}, {}
+		for _, id in pairs(Plan.assets) do expected[id] = true end
+		local ok, failure = pcall(function()
+			-- Bare content strings resolve as textures in Studio. MeshPart instances
+			-- preserve the resource type; share this one validated set across plots.
+			ContentProvider:PreloadAsync(parts, function(id, status)
+				if expected[id] and status == Enum.AssetFetchStatus.Success then successful[id] = true end
+			end)
 		end)
+		local count = 0
+		for _ in pairs(successful) do count += 1 end
+		finish(ok and count == Plan.meshCount, failure or (tostring(count) .. "/" .. Plan.meshCount .. " meshes"))
 	end)
-	local count = 0
-	for _ in pairs(successful) do count += 1 end
-	finish(ok and count == Plan.meshCount, failure or (tostring(count) .. "/" .. Plan.meshCount .. " meshes"))
-end)
+end
+CollectionService:GetInstanceAddedSignal(Plan.tag):Connect(watch)
+CollectionService:GetInstanceRemovedSignal(Plan.tag):Connect(restore)
+for _, model in ipairs(CollectionService:GetTagged(Plan.tag)) do watch(model) end
