@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AG-63 — сравнение атмосферы</title>
+<style>
+body{margin:0;padding:24px;background:#161d23;color:#edf1ed;font:16px/1.5 system-ui,sans-serif}header{max-width:1000px;margin-bottom:24px}h1{font-size:28px;margin:0 0 8px}p{color:#b7c6c8}button{font:inherit;padding:8px 22px;border:1px solid #688789;background:#253438;color:inherit;border-radius:8px;margin:4px 6px 4px 0;cursor:pointer}button[aria-pressed=true]{background:#b9d6cc;color:#132721}main{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}figure{margin:0;background:#243037;border-radius:10px;overflow:hidden}figcaption{padding:12px 16px;font-weight:650}img{display:block;width:100%;height:auto}a{color:inherit}footer{margin-top:24px;color:#b7c6c8}@media(max-width:850px){main{grid-template-columns:1fr}body{padding:12px}}
+</style>
+<header><h1>AG-63 · Четыре варианта атмосферы</h1>
+<p>Настоящие кадры обычного Play в Roblox Studio. Одна камера, одинаковое время суток, умеренное качество и графика 5. Изображения без цветовой или генеративной обработки. Нажмите на кадр, чтобы открыть оригинал.</p>
+<nav aria-label="Время суток"><button data-pose="day" aria-pressed="true">День</button><button data-pose="sunset" aria-pressed="false">Закат</button><button data-pose="night" aria-pressed="false">Ночь</button></nav></header>
+<main id="frames"></main>
+<footer>Это эксперимент для художественного выбора. По умолчанию в игре остаётся OFF. Наследованные ограничения текстур неба M7 не исправлялись. <a href="../../AG63_POSTFX_LOOKDEV.md">Параметры и проверки</a>.</footer>
+<script>
+const looks=[['OFF','OFF — Original'],['A','A — Cozy Fantasy'],['B','B — Arcane Forest'],['C','C — Cinematic Fantasy']];
+const frames=document.getElementById('frames');
+for(const [id,label] of looks){const figure=document.createElement('figure');const caption=document.createElement('figcaption');caption.textContent=label;const link=document.createElement('a');link.target='_blank';link.rel='noopener';const img=document.createElement('img');img.alt=label;img.dataset.look=id;link.append(img);figure.append(caption,link);frames.append(figure);}
+function show(pose){for(const img of frames.querySelectorAll('img')){const file=pose+'-'+img.dataset.look+'.jpg';img.src=file;img.parentElement.href=file;}for(const button of document.querySelectorAll('button'))button.setAttribute('aria-pressed',String(button.dataset.pose===pose));}
+for(const button of document.querySelectorAll('button'))button.addEventListener('click',()=>show(button.dataset.pose));
+show('day');
+</script></html>

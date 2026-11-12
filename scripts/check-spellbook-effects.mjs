@@ -23,7 +23,9 @@ const old=execFileSync('git',['show',`${base}:src/server/Main.server.luau`],{enc
 assert.deepEqual([...main.matchAll(/remote\("([^"]+)"\)/g)].map(m=>m[1]),[...old.matchAll(/remote\("([^"]+)"\)/g)].map(m=>m[1]),'No new remote');
 const revisionBase='f1882ad0ffc7a5e4803dc13f75d752ba01df229a';
 const unchanged=['src/server/Main.server.luau','src/shared/SpellbookFeedback.luau',
-  ...execFileSync('git',['ls-tree','-r','--name-only',revisionBase,'src'],{encoding:'utf8'}).trim().split('\n').filter(p=>/Environment|Weather|Lighting/.test(p))];
+  // AG63 explicitly owns only EnvironmentView; check-postfx verifies its exact
+  // original source after removing the bounded AG63 additions. Other files stay pinned.
+  ...execFileSync('git',['ls-tree','-r','--name-only',revisionBase,'src'],{encoding:'utf8'}).trim().split('\n').filter(p=>/Environment|Weather|Lighting/.test(p) && p!=='src/client/EnvironmentView.luau')];
 for(const path of unchanged) {
   assert.equal(readFileSync(path,'utf8').replace(/\r\n/g,'\n'),execFileSync('git',['show',`${revisionBase}:${path}`],{encoding:'utf8'}).replace(/\r\n/g,'\n'),`${path}: R1 must preserve receipt/global environment`);
 }
