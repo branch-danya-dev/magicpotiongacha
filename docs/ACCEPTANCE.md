@@ -1,3 +1,12 @@
+# AG-00 acceptance addendum — 2026-11-12
+
+Current development base: `integration/ag00-base`; see
+[AG00_INTEGRATION_BASE.md](AG00_INTEGRATION_BASE.md) for exact source/build hashes,
+ancestry, ordinary Studio Play observations and limitations. Portable/build
+baseline: 1142/0, 168 sources. Minimal boot/spawn/Factory-menu check only; full
+C01, Spellbook, native assets, mobile, backend and 2–8-client gates remain open.
+No historical acceptance below is upgraded by this addendum. No merge/publish.
+
 # Manual acceptance checklist
 
 CLI/CI passing is necessary but does not mark any item below as completed.
