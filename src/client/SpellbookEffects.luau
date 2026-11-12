@@ -8,6 +8,7 @@ local Feedback=require(Shared.SpellbookFeedback)
 local Lifecycle=require(Shared.SpellbookEffectLifecycle)
 local Controller=require(script.Parent.EnvironmentController)
 local Effects={current=nil}
+local black,white=Color3.new(0,0,0),Color3.new(1,1,1)
 local glowNames={ ["Rune0.001"]=true, RingOuter=true, Crystal=true, Paw04=true, Page03=true, Cover5=true }
 
 function Effects.start()
@@ -93,8 +94,8 @@ function Effects.start()
 					else CFrame.new(0,sample.pageY,0)*CFrame.Angles(0,0,sample.pageRoll)
 				part.CFrame=center*delta*center:Inverse()*entry.frame
 			end
-			if entry.glow then part.Color=(entry.color*sample.glow):Lerp(Color3.new(1,1,1),pulse*0.12)
-			elseif entry.flame then part.Color=entry.color*sample.flame end
+			if entry.glow then part.Color=entry.color:Lerp(black,1-sample.glow):Lerp(white,pulse*0.12)
+			elseif entry.flame then part.Color=entry.color:Lerp(black,1-sample.flame) end
 		end
 		if cfg.idleRate>0 and #record.emitters==0 then
 			emitter(record,record.particle,"SpellbookIdle",false)
