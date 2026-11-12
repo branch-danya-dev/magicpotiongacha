@@ -1,0 +1,453 @@
+{
+  "manifestVersion": 1,
+  "task": "AG-01",
+  "status": "BLOCKED_OWNER_IMPORT_AND_ACQUISITION_RECEIPT",
+  "integrationBase": "7d6d47826e919683ee991c911185215cda0d3d2e",
+  "source": {
+    "file": "assets/props/spellbook-lectern.glb",
+    "bytes": 239260,
+    "sha256": "ff12f9f121daa74d444601240d3601a16849e1c9ee69dbf83a83c5db22b76a52",
+    "url": "https://shuriken.studio/models/props/spellbook-lectern",
+    "introducedCommit": "fd49911f7b72653e15e02c567e648a126d07954a",
+    "introducedCommitDate": "2026-11-07T17:22:05Z",
+    "downloadedAt": null
+  },
+  "license": {
+    "url": "https://shuriken.studio/legal/models",
+    "reviewedAt": "2026-11-12",
+    "currentPublishedVersion": "2026-11-12",
+    "applicableAcquisitionVersion": null,
+    "receiptStatus": "missing; obtain original acquisition terms or verify a new download under current terms",
+    "standaloneDistributionAllowed": false,
+    "creatorStoreListingAllowed": false
+  },
+  "inspection": {
+    "glbVersion": 2,
+    "nodeCount": 10,
+    "meshCount": 9,
+    "materialPrimitiveCount": 23,
+    "triangles": 4194,
+    "imageCount": 0,
+    "textureCount": 0,
+    "externalUris": [],
+    "animationCount": 0,
+    "skinCount": 0,
+    "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+    ],
+    "meshes": [
+      {
+        "index": 0,
+        "name": "CandleDish",
+        "nodeNames": [
+          "Candle"
+        ],
+        "primitives": [
+          {
+            "material": "Gold",
+            "mode": 4,
+            "vertices": 156,
+            "triangles": 80
+          },
+          {
+            "material": "Cream",
+            "mode": 4,
+            "vertices": 96,
+            "triangles": 56
+          },
+          {
+            "material": "Rubber",
+            "mode": 4,
+            "vertices": 24,
+            "triangles": 12
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "name": "CandleFlame",
+        "nodeNames": [
+          "CandleFlame"
+        ],
+        "primitives": [
+          {
+            "material": "Fire",
+            "mode": 4,
+            "vertices": 60,
+            "triangles": 20
+          },
+          {
+            "material": "Cream",
+            "mode": 4,
+            "vertices": 60,
+            "triangles": 20
+          }
+        ]
+      },
+      {
+        "index": 2,
+        "name": "Crystal",
+        "nodeNames": [
+          "Crystal"
+        ],
+        "primitives": [
+          {
+            "material": "Crystal",
+            "mode": 4,
+            "vertices": 36,
+            "triangles": 12
+          }
+        ]
+      },
+      {
+        "index": 3,
+        "name": "Rune0.001",
+        "nodeNames": [
+          "FloatingRunes"
+        ],
+        "primitives": [
+          {
+            "material": "Magic",
+            "mode": 4,
+            "vertices": 1344,
+            "triangles": 672
+          }
+        ]
+      },
+      {
+        "index": 4,
+        "name": "RingOuter",
+        "nodeNames": [
+          "FloorCircle"
+        ],
+        "primitives": [
+          {
+            "material": "Magic",
+            "mode": 4,
+            "vertices": 1968,
+            "triangles": 1144
+          }
+        ]
+      },
+      {
+        "index": 5,
+        "name": "InkPotBody",
+        "nodeNames": [
+          "InkPot"
+        ],
+        "primitives": [
+          {
+            "material": "Rubber",
+            "mode": 4,
+            "vertices": 96,
+            "triangles": 56
+          },
+          {
+            "material": "Gold",
+            "mode": 4,
+            "vertices": 48,
+            "triangles": 28
+          },
+          {
+            "material": "Cream",
+            "mode": 4,
+            "vertices": 90,
+            "triangles": 36
+          }
+        ]
+      },
+      {
+        "index": 6,
+        "name": "Paw0",
+        "nodeNames": [
+          "Lectern"
+        ],
+        "primitives": [
+          {
+            "material": "WoodDark",
+            "mode": 4,
+            "vertices": 1008,
+            "triangles": 456
+          },
+          {
+            "material": "Gold",
+            "mode": 4,
+            "vertices": 312,
+            "triangles": 136
+          },
+          {
+            "material": "Wood",
+            "mode": 4,
+            "vertices": 576,
+            "triangles": 288
+          },
+          {
+            "material": "Magic",
+            "mode": 4,
+            "vertices": 120,
+            "triangles": 60
+          }
+        ]
+      },
+      {
+        "index": 7,
+        "name": "Page0",
+        "nodeNames": [
+          "LoosePages"
+        ],
+        "primitives": [
+          {
+            "material": "Cream",
+            "mode": 4,
+            "vertices": 120,
+            "triangles": 60
+          },
+          {
+            "material": "Rubber",
+            "mode": 4,
+            "vertices": 360,
+            "triangles": 180
+          },
+          {
+            "material": "Magic",
+            "mode": 4,
+            "vertices": 336,
+            "triangles": 168
+          }
+        ]
+      },
+      {
+        "index": 8,
+        "name": "Cover",
+        "nodeNames": [
+          "Spellbook"
+        ],
+        "primitives": [
+          {
+            "material": "PaintRed",
+            "mode": 4,
+            "vertices": 220,
+            "triangles": 114
+          },
+          {
+            "material": "Gold",
+            "mode": 4,
+            "vertices": 384,
+            "triangles": 176
+          },
+          {
+            "material": "Cream",
+            "mode": 4,
+            "vertices": 108,
+            "triangles": 72
+          },
+          {
+            "material": "Rubber",
+            "mode": 4,
+            "vertices": 432,
+            "triangles": 216
+          },
+          {
+            "material": "Magic",
+            "mode": 4,
+            "vertices": 264,
+            "triangles": 132
+          }
+        ]
+      }
+    ],
+    "sourceMaterials": [
+      {
+        "doubleSided": true,
+        "name": "Gold",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.8879231214523315,
+            0.533276379108429,
+            0.07618538290262222,
+            1
+          ],
+          "roughnessFactor": 0.30000001192092896
+        }
+      },
+      {
+        "doubleSided": true,
+        "name": "Cream",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.8879231214523315,
+            0.8468732237815857,
+            0.7681511640548706,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.699999988079071
+        }
+      },
+      {
+        "doubleSided": true,
+        "name": "Rubber",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.024157632142305374,
+            0.026241222396492958,
+            0.03071344457566738,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.8999999761581421
+        }
+      },
+      {
+        "doubleSided": true,
+        "emissiveFactor": [
+          1,
+          0.1946178376674652,
+          0.01032982300966978
+        ],
+        "extensions": {
+          "KHR_materials_emissive_strength": {
+            "emissiveStrength": 2
+          }
+        },
+        "name": "Fire",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            1,
+            0.32314321398735046,
+            0.027320891618728638,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.5
+        }
+      },
+      {
+        "doubleSided": true,
+        "emissiveFactor": [
+          0.04194363604019559,
+          0.7187445707717616,
+          1
+        ],
+        "extensions": {
+          "KHR_materials_emissive_strength": {
+            "emissiveStrength": 1.1040228605270386
+          }
+        },
+        "name": "Crystal",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.07818742096424103,
+            0.637596845626831,
+            0.8069522380828857,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.15000000596046448
+        }
+      },
+      {
+        "doubleSided": true,
+        "emissiveFactor": [
+          0.2834163348861368,
+          0.11386208247646751,
+          1
+        ],
+        "extensions": {
+          "KHR_materials_emissive_strength": {
+            "emissiveStrength": 1.37337064743042
+          }
+        },
+        "name": "Magic",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.3277781009674072,
+            0.14702726900577545,
+            0.8069522380828857,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.30000001192092896
+        }
+      },
+      {
+        "doubleSided": true,
+        "name": "WoodDark",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.2541520893573761,
+            0.10224173218011856,
+            0.03310476616024971,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.8500000238418579
+        }
+      },
+      {
+        "doubleSided": true,
+        "name": "Wood",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.577580451965332,
+            0.30054378509521484,
+            0.10224173218011856,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.800000011920929
+        }
+      },
+      {
+        "doubleSided": true,
+        "name": "PaintRed",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.7454041838645935,
+            0.08650045841932297,
+            0.04666508734226227,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.6000000238418579
+        }
+      }
+    ]
+  },
+  "proposedImport": {
+    "unit": "Studs",
+    "mergeMeshes": false,
+    "anchored": true,
+    "preserveImportedPivots": true,
+    "rootName": "SpellbookLectern",
+    "exportPath": "assets/props/SpellbookLectern.rbxmx",
+    "rojoPath": "ServerStorage.SpellbookLectern",
+    "targetHeightStuds": 6.5,
+    "logicalStation": "crystal",
+    "attachments": [
+      "EnergyPoint",
+      "ParticlePoint"
+    ],
+    "newParticleEmitters": 0,
+    "newLights": 0
+  },
+  "native": {
+    "verified": false,
+    "exportSha256": null,
+    "creatorType": null,
+    "creatorId": null,
+    "universeId": null,
+    "placeId": null,
+    "assetIds": [],
+    "meshParts": null,
+    "materials": null,
+    "permissionReceipt": null,
+    "drawCalls": null,
+    "phonePerformance": null
+  },
+  "notes": [
+    "Source primitives are not measured native MeshParts or draw calls.",
+    "No import, upload, permission change or new asset admission performed.",
+    "No runtime integration, logical hitbox fix or fallback implementation in this partial PR."
+  ]
+}

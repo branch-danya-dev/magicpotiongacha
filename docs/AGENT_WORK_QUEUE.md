@@ -35,7 +35,13 @@
 
 ### AG-01 — Spellbook Lectern как воспроизводимый игровой ассет
 
-**Статус: GATED (AG-00).** **Depends:** AG-00. **Files:** `assets/props/`, `src/server/SpellbookLectern.luau`, `SpellbookLecternPlan.luau`, импорт/manifest/tests.
+**Статус: GATED / BLOCKED (owner import + permissions/license receipt).** **Depends:** AG-00 подтверждён на `7d6d47826e919683ee991c911185215cda0d3d2e`, Draft PR #29, Windows/Ubuntu PASS. **Files:** `assets/props/`, `src/server/SpellbookLectern.luau`, `SpellbookLecternPlan.luau`, импорт/manifest/tests.
+
+Preflight и выбранный путь: [AG01_SPELLBOOK_INTEGRATION.md](AG01_SPELLBOOK_INTEGRATION.md).
+Нужны владелец/experience, приватный импорт с проверенными ссылками, экспорт
+`SpellbookLectern.rbxmx` и подтверждение применимой лицензии. Реализация остановлена
+до этого шага по указанию пользователя. Частичный Draft PR содержит аудит и
+manifest; новая runtime-интеграция и новые runtime-тесты ещё не выполнены.
 
 - Устранить зависимость от исчезающего после сборки ручного `ServerStorage.SpellbookLectern`, не подставляя фальшивую геометрию. Выбрать поддерживаемый воспроизводимый путь GLB → private Roblox asset/проверяемый package → загрузка в game/Studio, с проверкой прав и при необходимости явным ручным владельческим шагом. **Не** публиковать исходный модельный файл отдельным Creator Store item.
 - Записать source URL/license/SHA-256, точные вложенные MeshParts и материалы, pivot/scale, anchors. Не добавлять скрипты из Toolbox и не ломать конфиг `crystal`/`Essence`.
