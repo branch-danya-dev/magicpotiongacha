@@ -6,6 +6,9 @@ local ContentProvider=game:GetService("ContentProvider")
 local Shared=game:GetService("ReplicatedStorage").PotionTycoon.Shared
 local Config=require(Shared.EnvironmentConfig)
 local State=require(Shared.EnvironmentState)
+-- AG63_BEGIN_IMPORT
+local Look=require(Shared.PostFXLook)
+-- AG63_END_IMPORT
 local Style=require(Shared.AtmosphereStyle)
 local Transition=require(Shared.EnvironmentTransition)
 local Clock=require(Shared.EnvironmentClock)
@@ -25,6 +28,10 @@ function View.start(root,settings)
 	assert(not active,"Environment lighting already has an owner")
 	local self={quality=settings and settings.quality or "reduced",reduceMotion=false,pose=settings and settings.pose,root=root,parts={},rain={}}
 	active=self
+	-- AG63_BEGIN_STATE
+	local look=Look.default
+	local lookInspect
+	-- AG63_END_STATE
 	local saved={}; local savedWind=workspace.GlobalWind
 	for _,key in ipairs({"ClockTime","Brightness","Ambient","OutdoorAmbient","GlobalShadows","ExposureCompensation","GeographicLatitude","ColorShift_Top","ColorShift_Bottom","EnvironmentDiffuseScale","EnvironmentSpecularScale","ShadowSoftness"}) do saved[key]=Lighting[key] end
 	local displaced={}
@@ -221,10 +228,29 @@ function View.start(root,settings)
 		-- take effect immediately. No extra sources during a fade.
 		bloom.Intensity=fx.bloom; bloom.Enabled=fx.bloom>.0001
 		rays.Intensity=fx.rays*(1-sample.rain)*(1-sample.night); rays.Enabled=fx.rays>.0001
+		-- AG63_BEGIN_APPLY
+		-- Project from this frame's unmodified M7 sample, never the previous look.
+		-- OFF executes none of these writes; the original apply above owns baseline.
+		local post=Look.project(sample,look,self.quality,fx.bloom)
+		if post then
+			Lighting.Brightness=post.brightness; Lighting.ExposureCompensation=post.exposure
+			Lighting.Ambient=color(post.ambient); Lighting.OutdoorAmbient=color(post.outdoor)
+			Lighting.ColorShift_Top=color(post.sun):Lerp(Color3.new(),.65)
+			atmosphere.Density=post.density; atmosphere.Haze=post.haze*q.haze
+			correction.TintColor=color(post.tint); correction.Saturation=post.saturation; correction.Contrast=post.contrast
+			bloom.Intensity=post.bloom; bloom.Enabled=post.bloom>.0001
+		end
+		-- AG63_END_APPLY
 	end
 	local lod=0; local step=0; local connection
 	local transition=Transition.new({forward=true,clockAtPhase=function(phase) return Clock.at(Config,phase) end})
 	function self.setQuality(name) if Config.quality[name] then self.quality=name; lod=1 end end
+	-- AG63_BEGIN_METHOD
+	function self.setLook(name)
+		if not RunService:IsStudio() or not Look.valid(name) then return false end
+		look=name; return true
+	end
+	-- AG63_END_METHOD
 	function self.setReduceMotion(enabled) self.reduceMotion=enabled==true; lod=1 end
 	function self.setPose(name)
 		if RunService:IsStudio() and (name==nil or Config.poses[name]) and (name~=self.pose or self.previewStart or self.clockPhase or self.weather) then
@@ -269,6 +295,9 @@ function View.start(root,settings)
 		for _,f in ipairs(forestParts) do if f.alpha<.99 then counts.forestVisible+=1 end end
 		counts.vista=#vistaParts; counts.vistaVisible=0
 		for _,v in ipairs(vistaParts) do if v.alpha<.99 then counts.vistaVisible+=1 end end
+		-- AG63_BEGIN_STATS
+		counts.postFXLook=look
+		-- AG63_END_STATS
 		return counts
 	end
 	function self.setAnnotationsEnabled(enabled) annotations=enabled~=false; labelsDirty=1 end
@@ -437,9 +466,20 @@ function View.start(root,settings)
 	end
 	local requests={}
 	if RunService:IsStudio() then
+		-- AG63_BEGIN_INSPECT
+		-- Read-only native QA bridge to the actual owner (Command Bar has a
+		-- separate require cache). It never changes quality, weather or rewards.
+		lookInspect=Instance.new("BindableFunction"); lookInspect.Name="PostFXInspect"
+		lookInspect.OnInvoke=function() return self.stats(),self.quality,self.reduceMotion end
+		lookInspect.Parent=root
+		-- AG63_END_INSPECT
 		-- Local Studio review inputs feed this owner; no helper, remote or save.
 		-- Direct Lighting.ClockTime writes are intentionally not a second API.
 		local function request()
+			-- AG63_BEGIN_REQUEST
+			local requestedLook=Look.request(root:GetAttribute("EnvironmentReview"))
+			if requestedLook then self.setLook(requestedLook); return end
+			-- AG63_END_REQUEST
 			local command=Clock.request(Config,root:GetAttribute("EnvironmentReview"))
 			if not command then return end
 			local method=({pose=self.setPose,time=self.setTime,weather=self.setWeather,preview=self.setPreview})[command.kind]
@@ -450,6 +490,9 @@ function View.start(root,settings)
 	end
 	function self.stop()
 		if active~=self then return end; active=nil
+		-- AG63_BEGIN_STOP
+		if lookInspect then lookInspect:Destroy(); lookInspect=nil end
+		-- AG63_END_STOP
 		if connection then connection:Disconnect() end
 		added:Disconnect()
 		labelAdded:Disconnect()

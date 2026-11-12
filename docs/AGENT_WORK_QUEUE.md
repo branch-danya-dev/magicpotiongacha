@@ -77,6 +77,19 @@
 
 ## Art, UX, safety, rollout
 
+### AG-63 — reversible global PostFX look development
+
+**Status: IN PROGRESS / owner comparison OPEN.** Issue #32, explicitly requested.
+Base: Draft PR #33 `feat/ag62a-spellbook-idle-vfx` @
+`081bf33ba88178312207f8ad4f3a21b698511766`, Windows/Ubuntu CI 43233181998 PASS.
+Branch: `feat/ag63-postfx-lookdev`. AG00 and AG01 ancestry confirmed.
+Scope: OFF/A/B/C inside the existing EnvironmentView owner; Studio-only opt-in,
+default OFF. No economy, save migration, server/remote, local Spellbook VFX,
+sky assets or release flags. OFF restores the evolving baseline; reverting this
+branch removes the experiment. Deliver comparable native Studio captures,
+quality/restoration/20-switch checks, tests, clean build and stacked Draft PR.
+No next UI task, merge, publication or final look selection is authorized.
+
 ### AG-62A-R1 — enhanced Spellbook ambient / interaction VFX
 
 **Status: IMPLEMENTED / scoped STUDIO VERIFIED / OWNER GATE OPEN.**
