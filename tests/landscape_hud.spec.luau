@@ -76,6 +76,11 @@ return function(T)
  T.test("AG64 desktop chat reservation moves left panels away from chat",function()
   local p=HUD.layout(1920,1022,false,620); T.equal(p.quest.x>=632,true); T.equal(p.book.x>=632,true)
  end)
+ T.test("AG64 tablet upgrade clears the larger native joystick footprint",function()
+  local p=HUD.layout(1024,710,true,nil)
+  T.equal(p.book.y+p.book.h<=510,true)
+  T.equal(Layout.overlaps(p.book,{x=0,y=510,w=220,h=200}),false)
+ end)
  T.test("AG64 mobile center retains the native book interaction clearance",function()
   for _,size in ipairs({{750,332},{740,302}}) do
    local w,h=size[1],size[2]; local p=HUD.layout(w,h,true,nil); local blocked={}

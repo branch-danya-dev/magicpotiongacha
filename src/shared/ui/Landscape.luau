@@ -81,7 +81,8 @@ function HUD.layout(width,height,touch,chatRight)
  local bookW=compact and 238 or 260*scale
  local bookH=compact and 90 or 101*scale
  local bookX=compact and touch and math.max(left,thumb+8) or left
- local bookY=height-bookH-(touch and not compact and 156 or 12)
+ -- Tablet Roblox controls have a larger footprint than phone controls.
+ local bookY=height-bookH-(touch and not compact and 200 or 12)
  local book=rect(bookX,bookY,bookW,bookH)
  -- Existing internal sheet stays between touch controls and the navigation dock.
  local panelLeft=math.max(left,touch and 156 or left)
@@ -93,6 +94,7 @@ function HUD.layout(width,height,touch,chatRight)
   gold=rect(resourcesX,6,chipW,chipH),essence=rect(resourcesX+chipW+10,6,chipW,chipH),panel=panel,rail=rail,
   notice=rect(panel.x,top,math.min(400,panel.w),64),
   coach=rect(panel.x,top,math.min(450,panel.w),math.min(230,height-top-12)),
-  touchLeft=rect(0,height-140,148,140),touchRight=rect(width-148,height-140,148,140)}
+  touchLeft=rect(0,height-(compact and 140 or 200),compact and 148 or 220,compact and 140 or 200),
+  touchRight=rect(width-(compact and 148 or 220),height-(compact and 140 or 200),compact and 148 or 220,compact and 140 or 200)}
 end
 return HUD
