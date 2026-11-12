@@ -4,6 +4,7 @@ local Feedback=require("../src/shared/SpellbookFeedback")
 local Lifecycle=require("../src/shared/SpellbookEffectLifecycle")
 local Factory=require("../src/shared/Factory")
 local Config=require("../src/shared/Config")
+local PaperBurst=require("../src/shared/SpellbookPaperBurst")
 return function(T: any)
 	T.test("AG62A first snapshot seeds cursor without replaying historical feedback",function()
 		local n,show=Feedback.consume(nil,{sequence=7,plotIndex=1},1)
@@ -47,7 +48,7 @@ return function(T: any)
 	T.test("AG62A quality caps strictly decrease without hiding the book",function()
 		local f,r,m=Policy.quality("full",false),Policy.quality("reduced",false),Policy.quality("minimal",false)
 		T.equal(f.active,3); T.equal(r.active,2); T.equal(m.active,1)
-		T.equal(f.idleRate,0.6); T.equal(r.idleRate,0.2); T.equal(m.idleRate,0)
+		T.equal(f.idleRate,3); T.equal(r.idleRate,1.2); T.equal(m.idleRate,0)
 		T.equal(f.hz,30); T.equal(r.hz,20); T.equal(m.hz,10)
 		T.equal(m.burst,0); T.falsy(m.motion)
 	end)
@@ -124,5 +125,74 @@ return function(T: any)
 		local life,stats=fixture(); life.add({ready=true}); life.step(0,0,{})
 		life.stop(); life.stop(); T.equal(stats(),0); T.equal(life.count,0)
 		T.falsy(life.add({ready=true}))
+	end)
+	T.test("R1 paper trajectories rise within two studs and fully dissolve",function()
+		for i=1,5 do
+			local previous=0
+			for frame=0,125 do
+				local s=Policy.paper(frame/125,i,5)
+				T.truthy(s.y>=previous and s.y<=2); previous=s.y
+				T.truthy(math.sqrt(s.x*s.x+s.z*s.z)<=1.20001)
+				T.truthy(s.transparency>=0.0999 and s.transparency<=1)
+			end
+			T.equal(Policy.paper(0,i,5).transparency,1); T.equal(Policy.paper(1,i,5).transparency,1)
+		end
+	end)
+	T.test("R1 quality limits papers, aura and one local shadowless light",function()
+		for _,q in ipairs({"full","reduced","minimal"}) do
+			local cfg=Policy.quality(q,false)
+			T.truthy(cfg.paperCount<=5); T.truthy(cfg.paperSeconds>=0.8 and cfg.paperSeconds<=1.4)
+			T.truthy(cfg.auraRate<=0.75); T.truthy(cfg.lightBrightness<=0.65)
+			local quiet=Policy.quality(q,true)
+			T.equal(quiet.paperCount,0); T.equal(quiet.auraRate,0); T.equal(quiet.idleRate,0)
+		end
+		T.equal(Policy.quality("reduced",false).paperCount,3)
+		T.falsy(Policy.quality("minimal",false).light)
+	end)
+	local function papers()
+		local live=0; local ops={}
+		ops.allocate=function() live+=1; return {} end
+		ops.setup=function(item,owner,i) item.owner=owner; if owner.failAt==i then error("setup failed") end end
+		ops.pose=function(item,_,pose) if item.owner.failPose then error("removed") end; item.pose=pose end
+		ops.destroy=function(item) T.falsy(item.dead); item.dead=true; live-=1 end
+		return PaperBurst.new(ops),function() return live end
+	end
+	T.test("R1 rapid receipts coalesce without extending or queueing paper batches",function()
+		local burst,live=papers(); local owner={}; local cfg=Policy.quality("full",false)
+		T.truthy(burst.trigger(owner,0,cfg,{}))
+		for i=1,1000 do T.falsy(burst.trigger(owner,i/1000,cfg,{})) end
+		T.equal(live(),5); T.equal(burst.bursts,1); T.equal(burst.peak,5)
+		burst.step(cfg.paperSeconds); T.equal(live(),0)
+		burst.step(100); T.equal(live(),0); T.truthy(burst.trigger(owner,101,cfg,{}))
+	end)
+	T.test("R1 owner removal cancels papers, unrelated fallback does not",function()
+		local burst,live=papers(); local owner={}; burst.trigger(owner,0,Policy.quality("reduced",false),{})
+		burst.cancel({}); T.equal(live(),3)
+		burst.cancel(owner); burst.cancel(owner); T.equal(live(),0); T.equal(burst.owner,nil)
+	end)
+	T.test("R1 quality reset destroys current batch and quiet modes allocate nothing",function()
+		local burst,live=papers(); burst.trigger({},0,Policy.quality("full",false),{})
+		burst.cancel(); T.equal(live(),0)
+		T.falsy(burst.trigger({},2,Policy.quality("minimal",false),{}))
+		T.falsy(burst.trigger({},2,Policy.quality("full",true),{})); T.equal(live(),0)
+	end)
+	T.test("R1 partial paper setup failure owns and cleans every allocated object",function()
+		local burst,live=papers()
+		T.falsy(burst.trigger({failAt=3},0,Policy.quality("full",false),{}))
+		T.equal(live(),0); T.equal(burst.errors,1); T.equal(burst.bursts,0)
+	end)
+	T.test("R1 removed paper during flight cleans batch and allows later recovery",function()
+		local burst,live=papers(); burst.trigger({failPose=true},0,Policy.quality("full",false),{})
+		burst.step(.2); T.equal(live(),0); T.equal(burst.errors,1)
+		T.truthy(burst.trigger({},1,Policy.quality("reduced",false),{})); burst.step(1.5); T.equal(live(),3)
+		burst.cancel(); T.equal(live(),0)
+	end)
+	T.test("R1 expired batches and long frame stalls never accumulate paper objects",function()
+		local burst,live=papers(); local cfg=Policy.quality("full",false)
+		for n=1,100 do
+			T.truthy(burst.trigger({},n*10,cfg,{})); T.equal(live(),5)
+			burst.step(n*10+9); T.equal(live(),0)
+		end
+		T.equal(burst.peak,5)
 	end)
 end

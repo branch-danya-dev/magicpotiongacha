@@ -2,15 +2,31 @@
 -- Bounded, deterministic cosmetic policy; no currency or gameplay state.
 local Policy = {}
 Policy.maxBooks = 8
+Policy.maxSheets = 5
 function Policy.quality(name: string, reduceMotion: boolean): any
 	local full, minimal = name == "full", name == "minimal"
 	return { hz = if full then 30 else if minimal then 10 else 20,
 		active = if full then 3 else if minimal then 1 else 2,
 		range = if full then 100 else if minimal then 28 else 72,
 		motion = not minimal and not reduceMotion,
-		idleRate = if minimal or reduceMotion then 0 else if full then 0.6 else 0.2,
+		idleRate = if minimal or reduceMotion then 0 else if full then 3 else 1.2,
+		auraRate = if minimal or reduceMotion then 0 else if full then 0.75 else 0.4,
+		paperCount = if minimal or reduceMotion then 0 else if full then 5 else 3,
+		paperSeconds = if full then 1.25 else 1.1,
+		light = not minimal, lightBrightness = if full then 0.65 else 0.45,
 		burst = if minimal or reduceMotion then 0 else if full then 6 else 3,
-		refill = if full then 12 else 4, pulseSeconds = if reduceMotion then 0.9 else 0.65 }
+		refill = if full then 12 else 4, pulseSeconds = if reduceMotion then 1.2 else 1.1 }
+end
+-- Temporary paper geometry follows this bounded, world-up spiral; original pages
+-- keep their existing sample() motion. No tweens, physics or per-sheet tasks.
+function Policy.paper(t: number, index: number, count: number): any
+	local u=math.clamp(t,0,1)
+	local theta=(index-1)*2*math.pi/count+u*2.8
+	local radius=0.25+0.95*math.sin(u*math.pi/2)
+	local opacity=math.min(1,u/0.10,(1-u)/0.35)
+	return {x=math.cos(theta)*radius,y=0.15+1.85*u,z=math.sin(theta)*radius,
+		yaw=theta,pitch=0.5+0.25*math.sin(u*math.pi+index),roll=0.25*math.sin(theta),
+		transparency=1-0.9*opacity}
 end
 function Policy.sample(t: number, phase: number, motion: boolean): any
 	if not motion then return { runeY=0, runeYaw=0, pageY=0, pageRoll=0, glow=1, flame=1 } end

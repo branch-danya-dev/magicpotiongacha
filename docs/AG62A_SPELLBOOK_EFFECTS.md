@@ -1,5 +1,10 @@
 # AG-62A — Spellbook idle and confirmed Essence feedback
 
+This is the **initial AG-62A delivery record**. The owner requested stronger VFX
+after viewing it; current R1 behavior/budgets and validation are recorded in
+[AG62A_R1_ENHANCED_VFX.md](AG62A_R1_ENHANCED_VFX.md). Historical measurements below
+apply to the original runtime, not the revised particle/light/paper budgets.
+
 Issue #31. Stacked branch `feat/ag62a-spellbook-idle-vfx` on PR #30,
 `feat/ag01-spellbook-reproducible` @ `341b7f6dd9ac1692781f865bf25fed63a05e9d8a`.
 That exact base passed Windows/Ubuntu CI 43201487244. This task is only the bounded
