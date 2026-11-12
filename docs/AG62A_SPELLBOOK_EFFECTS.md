@@ -64,12 +64,14 @@ color feedback remains. Each visited active book owns at most two reused emitter
 enabled in Full/Reduced, zero lights. Culled emitters are disabled and cleared.
 Idle lifetime ≤2 s, burst lifetime ≤0.9 s, particle size ≤0.12 stud, speed ≤1.8
 stud/s, no acceleration, 18° spread, drag 0.8. Conservative live particle bound:
-Full ≤24, Reduced ≤8 including the global burst bucket and idle populations.
+Full ≤26, Reduced ≤10 including the global burst bucket and idle populations.
 Quality changes clear existing particles; no catch-up emission after a long frame.
 
 The single update scope is marked `AG62A Spellbook effects` for MicroProfiler.
-`require(PlayerScripts.PotionTycoon.SpellbookEffects).current.stats()` exposes
-local counts and observed scheduler CPU duration for native diagnostics. These
+`PlayerScripts.PotionTycoon.SpellbookEffects.Inspect:Invoke()` exposes local counts,
+actual quality/motion settings and observed scheduler CPU duration in Studio only.
+This read-only local BindableFunction bridges Studio's separate Command Bar module
+cache; it cannot change settings, emit feedback or send an economic intent. These
 are desktop measurements, not phone FPS or GPU/draw-call evidence.
 
 ## Verification and delivery status

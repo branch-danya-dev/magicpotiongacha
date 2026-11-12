@@ -15,7 +15,7 @@ function Effects.start()
 	if Effects.current then return Effects.current end
 	local player=Players.LocalPlayer
 	local time, elapsed, lastSettings=0,0,""
-	local cursor, connection, stateConnection
+	local cursor, connection, stateConnection, inspect
 	local config=Policy.quality(Controller.quality,Controller.reduceMotion)
 	local tokens,lastBurst=config.burst,0
 	local measurements={updates=0,totalMs=0,maxMs=0,feedback=0,emitted=0,errors=0}
@@ -122,6 +122,7 @@ function Effects.start()
 	function self.stop()
 		if connection then connection:Disconnect(); connection=nil end
 		if stateConnection then stateConnection:Disconnect(); stateConnection=nil end
+		if inspect then inspect:Destroy(); inspect=nil end
 		registry.stop(); table.clear(active)
 		if Effects.current==self then Effects.current=nil end
 	end
@@ -175,6 +176,13 @@ function Effects.start()
 		local cost=(os.clock()-started)*1000
 		measurements.updates+=1; measurements.totalMs+=cost; measurements.maxMs=math.max(measurements.maxMs,cost)
 	end)
+	-- Studio Command Bar has a separate ModuleScript cache. Read-only local bridge
+	-- reports the running controller, rather than creating a second controller.
+	if RunService:IsStudio() then
+		inspect=Instance.new("BindableFunction"); inspect.Name="Inspect"
+		inspect.OnInvoke=function() return self.stats(),Controller.quality,Controller.reduceMotion end
+		inspect.Parent=script
+	end
 	Effects.current=self
 	return self
 end
