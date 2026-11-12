@@ -79,7 +79,8 @@
 
 ### AG-62A — bounded Spellbook idle/VFX slice
 
-**Status: IN PROGRESS.** Issue #31; branch `feat/ag62a-spellbook-idle-vfx`.
+**Status: IMPLEMENTED / scoped STUDIO VERIFIED / OWNER GATE OPEN.** Issue #31;
+stacked Draft PR #33, branch `feat/ag62a-spellbook-idle-vfx`.
 Base: CI-green PR #30, `341b7f6dd9ac1692781f865bf25fed63a05e9d8a`.
 Only client presentation of the imported book: rigid loose pages/runes, gentle
 glow/flame and bounded particles, quality/motion settings, full fallback cleanup.
@@ -87,8 +88,11 @@ Successful manual Essence feedback uses a session-only server receipt in existin
 State snapshots; no new remote, permissions, rewards, save fields or migration.
 The full AG-62 remains gated on AG-60; AG-01 owner acceptance stays open.
 Rollback: revert this stacked feature; AG-01 static book and fallback remain intact.
-Acceptance: inherited tests + lifecycle/quality/receipt regressions, exact-head
-Windows/Ubuntu CI, ordinary Play and separate native-input/device review.
+Verification: 1155 inherited + 18 new tests PASS; Windows/Ubuntu CI and clean
+repeat-build PASS. Ordinary Play: eight books, static anchors, quality/motion,
+fallback/reappearance, native E/mouse and upgrade button verified. Phone, second
+account, 2–8 real players, backend and low-end performance NOT RUN. Exact build,
+runtime measurements and remaining owner gates: `docs/AG62A_SPELLBOOK_EFFECTS.md`.
 
 | ID | Stage | Status / dependencies | Проверяемый результат |
 | --- | --- | --- | --- |
