@@ -1,0 +1,15 @@
+{
+  "task": "AG-00",
+  "integrationBranch": "integration/ag00-base",
+  "codeBase": "fd49911f7b72653e15e02c567e648a126d07954a",
+  "documentationBase": "2c04c8dbf3dc20af1112c69b785fc0b72a1ab4e0",
+  "ancestors": {
+    "C00b V8": "d847b5b4e2fdf2603d8091e0f75d66ab37c1ceb1",
+    "C01 economy fix": "0f852333910a98300f4dd27b7388eadc5564efd1",
+    "C01 first-session UX": "a2a0dafb199e9a132c74ad2b80f4f8936a2b64ba",
+    "UI-01 foundation": "ff3c56929a13650a02071275d6e76ddb3144a9f1",
+    "UI-02A skin": "9082d48c115d3237b1a12da1192a779e15ca83b3",
+    "Spellbook adapter": "fd49911f7b72653e15e02c567e648a126d07954a",
+    "Current task documentation": "2c04c8dbf3dc20af1112c69b785fc0b72a1ab4e0"
+  }
+}

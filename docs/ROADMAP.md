@@ -1,5 +1,10 @@
 # Milestones
 
+> **AG-00 update:** use `integration/ag00-base` for new work; [exact provenance,
+> ordinary-Play scope and remaining gates](AG00_INTEGRATION_BASE.md). Historical
+> milestone evidence below is preserved. AG-00 does not accept the missing
+> Spellbook template, production UI, backend, phone or multiplayer behavior.
+
 > **Live status corrected 2026-11-12:** This file keeps historical M0–M7 planning and evidence. Use [PROJECT_AUDIT_2026-11-12.md](PROJECT_AUDIT_2026-11-12.md) for the verified last task and implemented-vs-live state, [RELEASE_ROADMAP_V2.md](RELEASE_ROADMAP_V2.md) for the v1.0 product goal/stages, and [AGENT_WORK_QUEUE.md](AGENT_WORK_QUEUE.md) for current agent task IDs. C00/C00b and C01 **are implemented as code candidates** on downstream Cursor branches; they are not published or fully live-accepted.
 
 | Stage | Scope | Exit gate |
