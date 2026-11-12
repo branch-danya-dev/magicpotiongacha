@@ -1,0 +1,910 @@
+{
+  "manifestVersion": 1,
+  "task": "AG-01",
+  "status": "IMPLEMENTED_SCOPED_STUDIO_VERIFIED_OWNER_GATE_OPEN",
+  "integrationBase": "7d6d47826e919683ee991c911185215cda0d3d2e",
+  "source": {
+    "file": "assets/props/spellbook-lectern.glb",
+    "bytes": 239260,
+    "sha256": "ff12f9f121daa74d444601240d3601a16849e1c9ee69dbf83a83c5db22b76a52",
+    "url": "https://shuriken.studio/models/props/spellbook-lectern",
+    "introducedCommit": "fd49911f7b72653e15e02c567e648a126d07954a",
+    "introducedCommitDate": "2026-11-07T17:22:05Z",
+    "downloadedAt": "2026-11-12T09:31:30Z",
+    "reacquisitionEvidence": {
+      "localPath": "C:/Users/keara/Downloads/spellbook-lectern.glb",
+      "creationTimeUtc": "2026-11-12T09:31:30Z",
+      "lastWriteTimeUtc": "2026-11-12T09:31:30Z",
+      "windowsZoneId": 3,
+      "referrerUrl": "https://shuriken.studio/",
+      "hostUrl": "https://media.shuriken.studio/library/spellbook-lectern/ff12f9f121da/spellbook-lectern.glb",
+      "byteIdenticalToRepository": true,
+      "method": "Read local file, parse GLB, compare bytes/hash, inspect NTFS Zone.Identifier; owner supplied renewed download."
+    }
+  },
+  "license": {
+    "url": "https://shuriken.studio/legal/models",
+    "reviewedAt": "2026-11-12",
+    "currentPublishedVersion": "2026-11-12",
+    "applicableAcquisitionVersion": "2026-11-12",
+    "receiptStatus": "verified renewed download metadata/hash and current publisher license on 2026-11-12",
+    "standaloneDistributionAllowed": false,
+    "creatorStoreListingAllowed": false
+  },
+  "inspection": {
+    "glbVersion": 2,
+    "nodeCount": 10,
+    "meshCount": 9,
+    "materialPrimitiveCount": 23,
+    "triangles": 4194,
+    "imageCount": 0,
+    "textureCount": 0,
+    "externalUris": [],
+    "animationCount": 0,
+    "skinCount": 0,
+    "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+    ],
+    "meshes": [
+      {
+        "index": 0,
+        "name": "CandleDish",
+        "nodeNames": [
+          "Candle"
+        ],
+        "primitives": [
+          {
+            "material": "Gold",
+            "mode": 4,
+            "vertices": 156,
+            "triangles": 80
+          },
+          {
+            "material": "Cream",
+            "mode": 4,
+            "vertices": 96,
+            "triangles": 56
+          },
+          {
+            "material": "Rubber",
+            "mode": 4,
+            "vertices": 24,
+            "triangles": 12
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "name": "CandleFlame",
+        "nodeNames": [
+          "CandleFlame"
+        ],
+        "primitives": [
+          {
+            "material": "Fire",
+            "mode": 4,
+            "vertices": 60,
+            "triangles": 20
+          },
+          {
+            "material": "Cream",
+            "mode": 4,
+            "vertices": 60,
+            "triangles": 20
+          }
+        ]
+      },
+      {
+        "index": 2,
+        "name": "Crystal",
+        "nodeNames": [
+          "Crystal"
+        ],
+        "primitives": [
+          {
+            "material": "Crystal",
+            "mode": 4,
+            "vertices": 36,
+            "triangles": 12
+          }
+        ]
+      },
+      {
+        "index": 3,
+        "name": "Rune0.001",
+        "nodeNames": [
+          "FloatingRunes"
+        ],
+        "primitives": [
+          {
+            "material": "Magic",
+            "mode": 4,
+            "vertices": 1344,
+            "triangles": 672
+          }
+        ]
+      },
+      {
+        "index": 4,
+        "name": "RingOuter",
+        "nodeNames": [
+          "FloorCircle"
+        ],
+        "primitives": [
+          {
+            "material": "Magic",
+            "mode": 4,
+            "vertices": 1968,
+            "triangles": 1144
+          }
+        ]
+      },
+      {
+        "index": 5,
+        "name": "InkPotBody",
+        "nodeNames": [
+          "InkPot"
+        ],
+        "primitives": [
+          {
+            "material": "Rubber",
+            "mode": 4,
+            "vertices": 96,
+            "triangles": 56
+          },
+          {
+            "material": "Gold",
+            "mode": 4,
+            "vertices": 48,
+            "triangles": 28
+          },
+          {
+            "material": "Cream",
+            "mode": 4,
+            "vertices": 90,
+            "triangles": 36
+          }
+        ]
+      },
+      {
+        "index": 6,
+        "name": "Paw0",
+        "nodeNames": [
+          "Lectern"
+        ],
+        "primitives": [
+          {
+            "material": "WoodDark",
+            "mode": 4,
+            "vertices": 1008,
+            "triangles": 456
+          },
+          {
+            "material": "Gold",
+            "mode": 4,
+            "vertices": 312,
+            "triangles": 136
+          },
+          {
+            "material": "Wood",
+            "mode": 4,
+            "vertices": 576,
+            "triangles": 288
+          },
+          {
+            "material": "Magic",
+            "mode": 4,
+            "vertices": 120,
+            "triangles": 60
+          }
+        ]
+      },
+      {
+        "index": 7,
+        "name": "Page0",
+        "nodeNames": [
+          "LoosePages"
+        ],
+        "primitives": [
+          {
+            "material": "Cream",
+            "mode": 4,
+            "vertices": 120,
+            "triangles": 60
+          },
+          {
+            "material": "Rubber",
+            "mode": 4,
+            "vertices": 360,
+            "triangles": 180
+          },
+          {
+            "material": "Magic",
+            "mode": 4,
+            "vertices": 336,
+            "triangles": 168
+          }
+        ]
+      },
+      {
+        "index": 8,
+        "name": "Cover",
+        "nodeNames": [
+          "Spellbook"
+        ],
+        "primitives": [
+          {
+            "material": "PaintRed",
+            "mode": 4,
+            "vertices": 220,
+            "triangles": 114
+          },
+          {
+            "material": "Gold",
+            "mode": 4,
+            "vertices": 384,
+            "triangles": 176
+          },
+          {
+            "material": "Cream",
+            "mode": 4,
+            "vertices": 108,
+            "triangles": 72
+          },
+          {
+            "material": "Rubber",
+            "mode": 4,
+            "vertices": 432,
+            "triangles": 216
+          },
+          {
+            "material": "Magic",
+            "mode": 4,
+            "vertices": 264,
+            "triangles": 132
+          }
+        ]
+      }
+    ],
+    "sourceMaterials": [
+      {
+        "doubleSided": true,
+        "name": "Gold",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.8879231214523315,
+            0.533276379108429,
+            0.07618538290262222,
+            1
+          ],
+          "roughnessFactor": 0.30000001192092896
+        }
+      },
+      {
+        "doubleSided": true,
+        "name": "Cream",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.8879231214523315,
+            0.8468732237815857,
+            0.7681511640548706,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.699999988079071
+        }
+      },
+      {
+        "doubleSided": true,
+        "name": "Rubber",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.024157632142305374,
+            0.026241222396492958,
+            0.03071344457566738,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.8999999761581421
+        }
+      },
+      {
+        "doubleSided": true,
+        "emissiveFactor": [
+          1,
+          0.1946178376674652,
+          0.01032982300966978
+        ],
+        "extensions": {
+          "KHR_materials_emissive_strength": {
+            "emissiveStrength": 2
+          }
+        },
+        "name": "Fire",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            1,
+            0.32314321398735046,
+            0.027320891618728638,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.5
+        }
+      },
+      {
+        "doubleSided": true,
+        "emissiveFactor": [
+          0.04194363604019559,
+          0.7187445707717616,
+          1
+        ],
+        "extensions": {
+          "KHR_materials_emissive_strength": {
+            "emissiveStrength": 1.1040228605270386
+          }
+        },
+        "name": "Crystal",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.07818742096424103,
+            0.637596845626831,
+            0.8069522380828857,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.15000000596046448
+        }
+      },
+      {
+        "doubleSided": true,
+        "emissiveFactor": [
+          0.2834163348861368,
+          0.11386208247646751,
+          1
+        ],
+        "extensions": {
+          "KHR_materials_emissive_strength": {
+            "emissiveStrength": 1.37337064743042
+          }
+        },
+        "name": "Magic",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.3277781009674072,
+            0.14702726900577545,
+            0.8069522380828857,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.30000001192092896
+        }
+      },
+      {
+        "doubleSided": true,
+        "name": "WoodDark",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.2541520893573761,
+            0.10224173218011856,
+            0.03310476616024971,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.8500000238418579
+        }
+      },
+      {
+        "doubleSided": true,
+        "name": "Wood",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.577580451965332,
+            0.30054378509521484,
+            0.10224173218011856,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.800000011920929
+        }
+      },
+      {
+        "doubleSided": true,
+        "name": "PaintRed",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.7454041838645935,
+            0.08650045841932297,
+            0.04666508734226227,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.6000000238418579
+        }
+      }
+    ]
+  },
+  "proposedImport": {
+    "unit": "Studs",
+    "mergeMeshes": false,
+    "anchored": true,
+    "preserveImportedPivots": true,
+    "rootName": "SpellbookLectern",
+    "exportPath": "assets/props/SpellbookLectern.rbxmx",
+    "rojoPath": "ServerStorage.SpellbookLectern",
+    "targetHeightStuds": 6.5,
+    "logicalStation": "crystal",
+    "attachments": [
+      "EnergyPoint",
+      "ParticlePoint"
+    ],
+    "newParticleEmitters": 0,
+    "newLights": 0
+  },
+  "native": {
+    "verified": true,
+    "exportSha256": "c541c02e6d91099a3297de9919f2d3f52bca8a183f277af4f0dcf17a38ba59a2",
+    "creatorType": "Group",
+    "creatorId": 925845207,
+    "universeId": 10776120489,
+    "placeId": 125724638469407,
+    "assetIds": [
+      "rbxassetid://92973868112960",
+      "rbxassetid://132959566136120",
+      "rbxassetid://96968891999807",
+      "rbxassetid://81459105124278",
+      "rbxassetid://89771412745333",
+      "rbxassetid://99780103231215",
+      "rbxassetid://109188288921960",
+      "rbxassetid://109946376033981",
+      "rbxassetid://133436862452468",
+      "rbxassetid://134367322049600",
+      "rbxassetid://94148985942232",
+      "rbxassetid://76770741438140",
+      "rbxassetid://90370639747465",
+      "rbxassetid://90524766157477",
+      "rbxassetid://133718296106071",
+      "rbxassetid://138386361699294",
+      "rbxassetid://107319023796846",
+      "rbxassetid://110856837337371",
+      "rbxassetid://137978977969458",
+      "rbxassetid://111954150769718",
+      "rbxassetid://103016093980875",
+      "rbxassetid://70655948924007",
+      "rbxassetid://100113691987749"
+    ],
+    "meshParts": 23,
+    "materials": 9,
+    "permissionReceipt": {
+      "checkedAt": "2026-11-12",
+      "method": "Studio MarketplaceService GetProductInfo for all 23 mesh IDs; importer creator selection; typed PreloadAsync and ordinary local Play under importing account",
+      "creatorType": "Group",
+      "creatorId": 925845207,
+      "creatorName": "addout studio",
+      "all23MeshCreatorsMatched": true,
+      "localDelivery": "PASS",
+      "permissionSettingsChanged": false,
+      "creatorStoreListed": false,
+      "otherAccountDelivery": "NOT_RUN",
+      "publishedExperienceRuntime": "NOT_RUN",
+      "evidence": "docs/evidence/ag01/import-owner.log"
+    },
+    "drawCalls": null,
+    "phonePerformance": null,
+    "creatorName": "addout studio",
+    "identitySource": "Studio command bar: AG01_IDENTITY 10776120489 125724638469407 Group 925845207 on 2026-11-12",
+    "rawExportSha256": "cba079ba469e3774f94b141d75e6c73b63c5814b7434e2dded3c9feb04129052",
+    "modelAssetId": 92876851534007,
+    "parts": [
+      {
+        "name": "CandleDish",
+        "sourceMaterial": "Gold",
+        "sourcePrimitive": 0,
+        "sourceMesh": "CandleDish",
+        "triangles": 80,
+        "rgb": [
+          242,
+          193,
+          78
+        ],
+        "color": 4294099278,
+        "nativeMaterial": 1088,
+        "meshId": "rbxassetid://92973868112960"
+      },
+      {
+        "name": "CandleDish2",
+        "sourceMaterial": "Cream",
+        "sourcePrimitive": 1,
+        "sourceMesh": "CandleDish",
+        "triangles": 56,
+        "rgb": [
+          242,
+          237,
+          227
+        ],
+        "color": 4294110691,
+        "nativeMaterial": 272,
+        "meshId": "rbxassetid://132959566136120"
+      },
+      {
+        "name": "CandleDish3",
+        "sourceMaterial": "Rubber",
+        "sourcePrimitive": 2,
+        "sourceMesh": "CandleDish",
+        "triangles": 12,
+        "rgb": [
+          43,
+          45,
+          49
+        ],
+        "color": 4281019697,
+        "nativeMaterial": 272,
+        "meshId": "rbxassetid://96968891999807"
+      },
+      {
+        "name": "CandleFlame",
+        "sourceMaterial": "Fire",
+        "sourcePrimitive": 0,
+        "sourceMesh": "CandleFlame",
+        "triangles": 20,
+        "rgb": [
+          255,
+          154,
+          46
+        ],
+        "color": 4294941230,
+        "nativeMaterial": 288,
+        "meshId": "rbxassetid://81459105124278"
+      },
+      {
+        "name": "CandleFlame2",
+        "sourceMaterial": "Cream",
+        "sourcePrimitive": 1,
+        "sourceMesh": "CandleFlame",
+        "triangles": 20,
+        "rgb": [
+          242,
+          237,
+          227
+        ],
+        "color": 4294110691,
+        "nativeMaterial": 272,
+        "meshId": "rbxassetid://89771412745333"
+      },
+      {
+        "name": "Crystal",
+        "sourceMaterial": "Crystal",
+        "sourcePrimitive": 0,
+        "sourceMesh": "Crystal",
+        "triangles": 12,
+        "rgb": [
+          79,
+          209,
+          232
+        ],
+        "color": 4283421160,
+        "nativeMaterial": 288,
+        "meshId": "rbxassetid://99780103231215"
+      },
+      {
+        "name": "Rune0.001",
+        "sourceMaterial": "Magic",
+        "sourcePrimitive": 0,
+        "sourceMesh": "Rune0.001",
+        "triangles": 672,
+        "rgb": [
+          155,
+          107,
+          232
+        ],
+        "color": 4288375784,
+        "nativeMaterial": 288,
+        "meshId": "rbxassetid://109188288921960"
+      },
+      {
+        "name": "RingOuter",
+        "sourceMaterial": "Magic",
+        "sourcePrimitive": 0,
+        "sourceMesh": "RingOuter",
+        "triangles": 1144,
+        "rgb": [
+          155,
+          107,
+          232
+        ],
+        "color": 4288375784,
+        "nativeMaterial": 288,
+        "meshId": "rbxassetid://109946376033981"
+      },
+      {
+        "name": "InkPotBody",
+        "sourceMaterial": "Rubber",
+        "sourcePrimitive": 0,
+        "sourceMesh": "InkPotBody",
+        "triangles": 56,
+        "rgb": [
+          43,
+          45,
+          49
+        ],
+        "color": 4281019697,
+        "nativeMaterial": 272,
+        "meshId": "rbxassetid://133436862452468"
+      },
+      {
+        "name": "InkPotBody2",
+        "sourceMaterial": "Gold",
+        "sourcePrimitive": 1,
+        "sourceMesh": "InkPotBody",
+        "triangles": 28,
+        "rgb": [
+          242,
+          193,
+          78
+        ],
+        "color": 4294099278,
+        "nativeMaterial": 1088,
+        "meshId": "rbxassetid://134367322049600"
+      },
+      {
+        "name": "InkPotBody3",
+        "sourceMaterial": "Cream",
+        "sourcePrimitive": 2,
+        "sourceMesh": "InkPotBody",
+        "triangles": 36,
+        "rgb": [
+          242,
+          237,
+          227
+        ],
+        "color": 4294110691,
+        "nativeMaterial": 272,
+        "meshId": "rbxassetid://94148985942232"
+      },
+      {
+        "name": "Paw0",
+        "sourceMaterial": "WoodDark",
+        "sourcePrimitive": 0,
+        "sourceMesh": "Paw0",
+        "triangles": 456,
+        "rgb": [
+          138,
+          90,
+          51
+        ],
+        "color": 4287257139,
+        "nativeMaterial": 272,
+        "meshId": "rbxassetid://76770741438140"
+      },
+      {
+        "name": "Paw02",
+        "sourceMaterial": "Gold",
+        "sourcePrimitive": 1,
+        "sourceMesh": "Paw0",
+        "triangles": 136,
+        "rgb": [
+          242,
+          193,
+          78
+        ],
+        "color": 4294099278,
+        "nativeMaterial": 1088,
+        "meshId": "rbxassetid://90370639747465"
+      },
+      {
+        "name": "Paw03",
+        "sourceMaterial": "Wood",
+        "sourcePrimitive": 2,
+        "sourceMesh": "Paw0",
+        "triangles": 288,
+        "rgb": [
+          200,
+          149,
+          90
+        ],
+        "color": 4291335514,
+        "nativeMaterial": 272,
+        "meshId": "rbxassetid://90524766157477"
+      },
+      {
+        "name": "Paw04",
+        "sourceMaterial": "Magic",
+        "sourcePrimitive": 3,
+        "sourceMesh": "Paw0",
+        "triangles": 60,
+        "rgb": [
+          155,
+          107,
+          232
+        ],
+        "color": 4288375784,
+        "nativeMaterial": 288,
+        "meshId": "rbxassetid://133718296106071"
+      },
+      {
+        "name": "Page0",
+        "sourceMaterial": "Cream",
+        "sourcePrimitive": 0,
+        "sourceMesh": "Page0",
+        "triangles": 60,
+        "rgb": [
+          242,
+          237,
+          227
+        ],
+        "color": 4294110691,
+        "nativeMaterial": 272,
+        "meshId": "rbxassetid://138386361699294"
+      },
+      {
+        "name": "Page02",
+        "sourceMaterial": "Rubber",
+        "sourcePrimitive": 1,
+        "sourceMesh": "Page0",
+        "triangles": 180,
+        "rgb": [
+          43,
+          45,
+          49
+        ],
+        "color": 4281019697,
+        "nativeMaterial": 272,
+        "meshId": "rbxassetid://107319023796846"
+      },
+      {
+        "name": "Page03",
+        "sourceMaterial": "Magic",
+        "sourcePrimitive": 2,
+        "sourceMesh": "Page0",
+        "triangles": 168,
+        "rgb": [
+          155,
+          107,
+          232
+        ],
+        "color": 4288375784,
+        "nativeMaterial": 288,
+        "meshId": "rbxassetid://110856837337371"
+      },
+      {
+        "name": "Cover",
+        "sourceMaterial": "PaintRed",
+        "sourcePrimitive": 0,
+        "sourceMesh": "Cover",
+        "triangles": 114,
+        "rgb": [
+          224,
+          83,
+          61
+        ],
+        "color": 4292891453,
+        "nativeMaterial": 272,
+        "meshId": "rbxassetid://137978977969458"
+      },
+      {
+        "name": "Cover2",
+        "sourceMaterial": "Gold",
+        "sourcePrimitive": 1,
+        "sourceMesh": "Cover",
+        "triangles": 176,
+        "rgb": [
+          242,
+          193,
+          78
+        ],
+        "color": 4294099278,
+        "nativeMaterial": 1088,
+        "meshId": "rbxassetid://111954150769718"
+      },
+      {
+        "name": "Cover3",
+        "sourceMaterial": "Cream",
+        "sourcePrimitive": 2,
+        "sourceMesh": "Cover",
+        "triangles": 72,
+        "rgb": [
+          242,
+          237,
+          227
+        ],
+        "color": 4294110691,
+        "nativeMaterial": 272,
+        "meshId": "rbxassetid://103016093980875"
+      },
+      {
+        "name": "Cover4",
+        "sourceMaterial": "Rubber",
+        "sourcePrimitive": 3,
+        "sourceMesh": "Cover",
+        "triangles": 216,
+        "rgb": [
+          43,
+          45,
+          49
+        ],
+        "color": 4281019697,
+        "nativeMaterial": 272,
+        "meshId": "rbxassetid://70655948924007"
+      },
+      {
+        "name": "Cover5",
+        "sourceMaterial": "Magic",
+        "sourcePrimitive": 4,
+        "sourceMesh": "Cover",
+        "triangles": 132,
+        "rgb": [
+          155,
+          107,
+          232
+        ],
+        "color": 4288375784,
+        "nativeMaterial": 288,
+        "meshId": "rbxassetid://100113691987749"
+      }
+    ],
+    "materialConversion": "Studio 0.747 omitted all factors/doubleSided. Restore glTF linear baseColorFactor as sRGB bytes and doubleSided=true. Gold=Metal, emissive Fire/Crystal/Magic=Neon, others=SmoothPlastic. Native roughness and emission are approximations, not exact glTF PBR reproduction; no maps/textures/lights added.",
+    "importSettings": {
+      "studioVersion": "0.747.0.7471481",
+      "creator": "addout studio",
+      "uploadToRoblox": true,
+      "importOnlyAsModel": true,
+      "importAsPackage": false,
+      "addToWorkspace": true,
+      "setPivotToSceneOrigin": true,
+      "scaleUnit": "Stud",
+      "scaleFactor": 1,
+      "mergeMeshes": false,
+      "anchored": true,
+      "invertNegativeFaces": false,
+      "importerDimensions": [
+        6.24,
+        5.65,
+        6.24
+      ],
+      "importerPolygons": 4194
+    },
+    "budget": {
+      "perPlotMeshParts": 23,
+      "eightPlotMeshParts": 184,
+      "perPlotTriangles": 4194,
+      "eightPlotTriangles": 33552,
+      "textureCount": 0,
+      "newLights": 0,
+      "newEmitters": 0,
+      "attachmentsPerPlot": 2,
+      "textureChurn": false,
+      "motion": false,
+      "quality": "same static geometry on Full/Reduced/Minimal and Reduce Motion"
+    },
+    "verificationScope": "Actual group import/export, all mesh creator identities, typed local asset delivery, ordinary one-client/eight-plot Studio Play. Not owner art acceptance, other-account permissions or published runtime.",
+    "runtimeEvidence": {
+      "sourceSha": "2ebd71b16515879eb8a4e66ef20611c4d2e23ac6",
+      "placeSha256": "d9ed643247df26c3d6bd5cf91c943adebd0b89d6cec9b665ed3292d6224ee15f",
+      "report": "docs/evidence/ag01/README.md",
+      "context": "ordinary F5 full game, STUDIO_MEMORY, local GameId/PlaceId 0",
+      "readyPlots": 8,
+      "realClients": 1,
+      "nativeKeyboardEssenceDelta": 5,
+      "qualityModes": [
+        "Full",
+        "Reduced",
+        "Minimal + Reduce Motion"
+      ],
+      "ownerAccepted": false,
+      "validatedIntentUpgrade": {
+        "goldBefore": 940,
+        "goldAfter": 40,
+        "levelBefore": 1,
+        "levelAfter": 2,
+        "essenceAfterUpgrade": 15,
+        "essenceFiveSecondsLater": 25,
+        "nativeUpgradeButton": "NOT_RUN"
+      }
+    }
+  },
+  "notes": [
+    "Reacquisition/license and authorized native group import completed 2026-11-12. No Creator Store listing or game publishing.",
+    "Material colors/double-sided flags deterministically restored after importer omission; roughness/emission are native approximations.",
+    "1155 portable tests; clean and repeat builds match. Scoped Studio evidence is separate from unperformed owner, phone, real multi-client, backend and cross-account permission gates."
+  ]
+}

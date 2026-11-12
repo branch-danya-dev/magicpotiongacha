@@ -8,6 +8,11 @@ local Shared=game.ReplicatedStorage.PotionTycoon.Shared
 local Policy=require(Shared.ContextUI)
 local Config=require(Shared.Config)
 local Context={}
+local function loadedLectern(anchor)
+	local link=anchor:FindFirstChild("SpellbookVisual")
+	local model=link and link:IsA("ObjectValue") and link.Value
+	return model and model.Parent==anchor.Parent and model:GetAttribute("SpellbookLoadState")=="ready" and model or nil
+end
 function Context.start(onChanged,isPanelOpen,blockedRects,currentState)
 	local player=Players.LocalPlayer
 	local root=workspace:WaitForChild("PotionTycoonWorld")
@@ -97,7 +102,9 @@ function Context.start(onChanged,isPanelOpen,blockedRects,currentState)
 			if prompt.Parent then
 				local hidden=not record.public and record.anchor:GetAttribute("FirstSessionHidden")~=false
 				prompt.Enabled=not hidden and current~=nil and current.prompt==prompt
-				if not record.upgrade and record.anchor.Parent then record.anchor.LocalTransparencyModifier=hidden and 1 or 0 end
+				if not record.upgrade and record.anchor.Parent then
+					record.anchor.LocalTransparencyModifier=(hidden or loadedLectern(record.anchor)) and 1 or 0
+				end
 				-- Keep Roblox's native keyboard/gamepad/touch control and hold semantics.
 				prompt.ObjectText=Policy.description(record,Config)
 				prompt.ActionText=record.upgrade and "Улучшить" or (record.station=="crystal" and (clickEssence and ("+"..clickEssence.." Essence") or "Собрать") or "Открыть")
@@ -110,9 +117,9 @@ function Context.start(onChanged,isPanelOpen,blockedRects,currentState)
 		-- Task 07: highlight the visible authored model; retain the original
 		-- invisible anchor for distance, raycast, ownership and native prompts.
 		if highlight.Adornee then
-			local lectern=highlight.Adornee:FindFirstChild("SpellbookVisual")
+			local lectern=loadedLectern(highlight.Adornee)
 			local presentation=highlight.Adornee:FindFirstChild("PresentationModel")
-			if lectern and lectern.Value then highlight.Adornee=lectern.Value
+			if lectern then highlight.Adornee=lectern
 			elseif presentation and presentation.Value then highlight.Adornee=presentation.Value end
 		end
 		affordance.update(current,currentState and currentState(),hrp and hrp.Position)
