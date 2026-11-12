@@ -1,0 +1,94 @@
+2026-11-12T13:11:58.512Z,77.512413,5b0c,6,Info [FLog::CreatorOutput] AG62A_READY Plot_1 ready
+2026-11-12T13:11:58.512Z,77.512413,5b0c,6,Info [FLog::CreatorOutput] AG62A_READY Plot_2 ready
+2026-11-12T13:11:58.512Z,77.512413,5b0c,6,Info [FLog::CreatorOutput] AG62A_READY Plot_3 ready
+2026-11-12T13:11:58.512Z,77.512413,5b0c,6,Info [FLog::CreatorOutput] AG62A_READY Plot_4 ready
+2026-11-12T13:11:58.512Z,77.512413,5b0c,6,Info [FLog::CreatorOutput] AG62A_READY Plot_5 ready
+2026-11-12T13:11:58.512Z,77.512413,5b0c,6,Info [FLog::CreatorOutput] AG62A_READY Plot_6 ready
+2026-11-12T13:11:58.512Z,77.512413,5b0c,6,Info [FLog::CreatorOutput] AG62A_READY Plot_7 ready
+2026-11-12T13:11:58.512Z,77.512413,5b0c,6,Info [FLog::CreatorOutput] AG62A_READY Plot_8 ready
+2026-11-12T13:11:58.512Z,77.512413,5b0c,6,Info [FLog::CreatorOutput] AG62A_START reduced false
+2026-11-12T13:11:58.512Z,77.512413,5b0c,6,Info [FLog::CreatorOutput] AG62A_STAT active 1
+2026-11-12T13:11:58.512Z,77.512413,5b0c,6,Info [FLog::CreatorOutput] AG62A_STAT averageMs 0.10108455885796609
+2026-11-12T13:11:58.512Z,77.512413,5b0c,6,Info [FLog::CreatorOutput] AG62A_STAT emitted 0
+2026-11-12T13:11:58.512Z,77.512413,5b0c,6,Info [FLog::CreatorOutput] AG62A_STAT emitters 2
+2026-11-12T13:11:58.512Z,77.512413,5b0c,6,Info [FLog::CreatorOutput] AG62A_STAT enabled 1
+2026-11-12T13:11:58.512Z,77.512413,5b0c,6,Info [FLog::CreatorOutput] AG62A_STAT errors 0
+2026-11-12T13:11:58.512Z,77.512413,5b0c,6,Info [FLog::CreatorOutput] AG62A_STAT feedback 0
+2026-11-12T13:11:58.512Z,77.512413,5b0c,6,Info [FLog::CreatorOutput] AG62A_STAT maxMs 0.2829000004567206
+2026-11-12T13:11:58.512Z,77.512413,5b0c,6,Info [FLog::CreatorOutput] AG62A_STAT tracked 8
+2026-11-12T13:11:58.512Z,77.512413,5b0c,6,Info [FLog::CreatorOutput] AG62A_STAT updates 544
+2026-11-12T13:11:58.744Z,77.744385,56b8,6,Info [FLog::CreatorOutput] AG62A_CONFIRMED 0 0 0
+2026-11-12T13:15:25.986Z,284.986603,5ed0,6,Info [FLog::CreatorOutput] AG62A_CONFIRMED 5 1 1
+2026-11-12T13:15:46.969Z,305.969391,5ed0,6,Info [FLog::CreatorOutput] AG62A_CONFIRMED 10 2 2
+2026-11-12T13:16:17.401Z,336.401306,2d9c,6,Info [FLog::CreatorOutput] AG62A_QUALITY reduced false {"enabled":1,"tracked":8,"active":1,"emitted":6,"feedback":2,"updates":5001,"errors":0,"emitters":2,"averageMs":0.1108786241325096,"maxMs":0.4124999977648258}
+2026-11-12T13:16:17.917Z,336.917114,1f30,6,Info [FLog::CreatorOutput] AG62A_LIVE 10:1000:1:2 2
+2026-11-12T13:16:39.216Z,358.216370,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION CandleDish 0
+2026-11-12T13:16:39.216Z,358.216370,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION CandleDish2 0
+2026-11-12T13:16:39.216Z,358.216370,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION CandleDish3 0
+2026-11-12T13:16:39.216Z,358.216370,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION CandleFlame 0
+2026-11-12T13:16:39.216Z,358.216370,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION Cover 0
+2026-11-12T13:16:39.216Z,358.216370,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION Cover2 0
+2026-11-12T13:16:39.216Z,358.216370,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION Cover3 0
+2026-11-12T13:16:39.216Z,358.216370,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION Cover4 0
+2026-11-12T13:16:39.216Z,358.216370,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION Cover5 0
+2026-11-12T13:16:39.216Z,358.216370,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION Crystal 0
+2026-11-12T13:16:39.216Z,358.216370,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION InkPotBody 0
+2026-11-12T13:16:39.216Z,358.216370,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION InkPotBody2 0
+2026-11-12T13:16:39.216Z,358.216370,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION InkPotBody3 0
+2026-11-12T13:16:39.216Z,358.216370,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION Page0 0.034920308738946915
+2026-11-12T13:16:39.216Z,358.216370,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION Page02 0.034023869782686234
+2026-11-12T13:16:39.216Z,358.216370,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION Page03 0.010005072690546513
+2026-11-12T13:16:39.216Z,358.216370,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION Paw02 0
+2026-11-12T13:16:39.216Z,358.216370,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION RingOuter 0
+2026-11-12T13:16:39.216Z,358.216370,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION Rune0.001 0.18446636199951172
+2026-11-12T13:16:39.217Z,358.217377,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION CandleFlame2 0
+2026-11-12T13:16:39.217Z,358.217377,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION Paw0 0
+2026-11-12T13:16:39.217Z,358.217377,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION Paw03 0
+2026-11-12T13:16:39.217Z,358.217377,2d9c,6,Info [FLog::CreatorOutput] AG62A_MOTION Paw04 0
+2026-11-12T13:16:50.999Z,369.999542,36d4,6,Info [FLog::CreatorOutput] AG62A_MODE reduced false {"enabled":1,"tracked":8,"active":1,"emitted":6,"feedback":2,"updates":5582,"errors":0,"emitters":2,"averageMs":0.11101065910694436,"maxMs":0.4124999977648258}
+2026-11-12T13:16:53.016Z,372.016144,36d4,6,Info [FLog::CreatorOutput] AG62A_MODE_DELTA reduced false 1 7
+2026-11-12T13:16:54.033Z,373.033264,56b8,6,Info [FLog::CreatorOutput] AG62A_MODE full false {"enabled":1,"tracked":8,"active":1,"emitted":6,"feedback":2,"updates":5649,"errors":0,"emitters":2,"averageMs":0.11102589824609773,"maxMs":0.4124999977648258}
+2026-11-12T13:16:56.049Z,375.049164,56b8,6,Info [FLog::CreatorOutput] AG62A_MODE_DELTA full false 4 7
+2026-11-12T13:17:16.248Z,395.248230,5ed0,6,Info [FLog::CreatorOutput] AG62A_MODE minimal false {"enabled":0,"tracked":8,"active":1,"emitted":6,"feedback":2,"updates":6141,"errors":0,"emitters":0,"averageMs":0.11128884532413888,"maxMs":0.4124999977648258}
+2026-11-12T13:17:18.248Z,397.248871,5b0c,6,Info [FLog::CreatorOutput] AG62A_MODE_DELTA minimal false 0 0
+2026-11-12T13:17:35.397Z,414.397827,4c44,6,Info [FLog::CreatorOutput] AG62A_MODE reduced false {"enabled":1,"tracked":8,"active":1,"emitted":6,"feedback":2,"updates":6323,"errors":0,"emitters":2,"averageMs":0.11052494056757555,"maxMs":0.4124999977648258}
+2026-11-12T13:17:37.413Z,416.413361,56b8,6,Info [FLog::CreatorOutput] AG62A_MODE_DELTA reduced false 1 7
+2026-11-12T13:17:45.479Z,424.479706,5b0c,6,Info [FLog::CreatorOutput] AG62A_MODE reduced true {"enabled":0,"tracked":8,"active":1,"emitted":6,"feedback":2,"updates":6498,"errors":0,"emitters":0,"averageMs":0.11041794383881752,"maxMs":0.4124999977648258}
+2026-11-12T13:17:47.480Z,426.480316,4c44,6,Info [FLog::CreatorOutput] AG62A_MODE_DELTA reduced true 0 0
+2026-11-12T13:18:06.797Z,445.797028,4c44,6,Info [FLog::CreatorOutput] AG62A_FALLBACK fallback 0 {"enabled":0,"tracked":7,"active":0,"emitted":6,"feedback":2,"updates":6865,"errors":0,"emitters":0,"averageMs":0.10878059709977456,"maxMs":0.4124999977648258}
+2026-11-12T13:18:06.797Z,445.797028,4c44,6,Info [FLog::CreatorOutput] AG62A_FALLBACK_EMITTERS 0
+2026-11-12T13:18:17.796Z,456.796661,56b8,6,Info [FLog::CreatorOutput] AG62A_LIVE 15:1000:1:3 2
+2026-11-12T13:18:46.810Z,485.810730,2880,6,Info [FLog::CreatorOutput] AG62A_RETURN ready {"enabled":0,"tracked":8,"active":1,"emitted":6,"feedback":2,"updates":7552,"errors":0,"emitters":0,"averageMs":0.1035470867255923,"maxMs":0.4124999977648258}
+2026-11-12T13:18:55.644Z,494.644470,5b0c,6,Info [FLog::CreatorOutput] AG62A_POST_FALLBACK {"enabled":0,"tracked":8,"active":1,"emitted":6,"feedback":2,"updates":7704,"errors":0,"emitters":0,"averageMs":0.10315929373998187,"maxMs":0.4124999977648258}
+2026-11-12T13:18:57.261Z,496.261566,5ed0,6,Info [FLog::CreatorOutput] AG62A_CYCLED ready {"enabled":0,"tracked":8,"active":1,"emitted":6,"feedback":2,"updates":7732,"errors":0,"emitters":0,"averageMs":0.10304083018674804,"maxMs":0.4124999977648258}
+2026-11-12T13:19:35.975Z,534.975525,5ed0,6,Info [FLog::CreatorOutput] AG62A_WALK altar 5.764608860015869
+2026-11-12T13:19:36.575Z,535.575439,3f44,6,Info [FLog::CreatorOutput] AG62A_OUT_OF_RANGE 3 3 2
+2026-11-12T13:19:40.675Z,539.675842,56b8,6,Info [FLog::CreatorOutput] AG62A_WALK garden 5.034750938415527
+2026-11-12T13:19:40.843Z,539.843567,4c44,6,Info [FLog::CreatorOutput] AG62A_LIVE 15:800:1:3 2
+2026-11-12T13:19:54.575Z,553.575439,56b8,6,Info [FLog::CreatorOutput] AG62A_WALK cauldron 5.357907295227051
+2026-11-12T13:20:04.407Z,563.407410,4c44,6,Info [FLog::CreatorOutput] AG62A_SALE1 650 0
+2026-11-12T13:20:05.590Z,564.590881,2880,6,Info [FLog::CreatorOutput] AG62A_WALK crystal 5.217372894287109
+2026-11-12T13:20:07.608Z,566.608459,5ed0,6,Info [FLog::CreatorOutput] AG62A_SPAM_30 8 8
+2026-11-12T13:20:08.875Z,567.875366,5b0c,6,Info [FLog::CreatorOutput] AG62A_WALK garden 5.476472854614258
+2026-11-12T13:20:21.524Z,580.524475,5ed0,6,Info [FLog::CreatorOutput] AG62A_WALK cauldron 5.379255294799805
+2026-11-12T13:20:30.773Z,589.773438,56b8,6,Info [FLog::CreatorOutput] AG62A_SALE2 900 25 1
+2026-11-12T13:20:31.956Z,590.956360,56b8,6,Info [FLog::CreatorOutput] AG62A_READY_NATIVE_UPGRADE
+2026-11-12T13:20:31.956Z,590.956360,56b8,6,Info [FLog::CreatorOutput] AG62A_WALK crystal 5.197057723999023
+2026-11-12T13:20:50.873Z,609.873230,5b0c,6,Info [FLog::CreatorOutput] AG62A_LIVE 25:0:2:11 10
+2026-11-12T13:21:11.671Z,630.671265,3f44,6,Info [FLog::CreatorOutput] AG62A_LIVE 65:0:2:11 10
+2026-11-12T13:21:24.888Z,643.888000,4c44,6,Info [FLog::CreatorOutput] AG62A_PLOT 1 ready 0 {"enabled":1,"tracked":8,"active":1,"emitted":6,"feedback":10,"updates":10272,"errors":0,"emitters":2,"averageMs":0.10043567940315554,"maxMs":0.4124999977648258}
+2026-11-12T13:21:26.888Z,645.888977,3f44,6,Info [FLog::CreatorOutput] AG62A_PLOT 2 ready 0 {"enabled":1,"tracked":8,"active":1,"emitted":6,"feedback":10,"updates":10306,"errors":0,"emitters":4,"averageMs":0.1005029884351048,"maxMs":0.4124999977648258}
+2026-11-12T13:21:28.905Z,647.905334,2880,6,Info [FLog::CreatorOutput] AG62A_PLOT 3 ready 0 {"enabled":1,"tracked":8,"active":1,"emitted":6,"feedback":10,"updates":10340,"errors":0,"emitters":6,"averageMs":0.10055592831906933,"maxMs":0.4124999977648258}
+2026-11-12T13:21:30.904Z,649.904419,4c44,6,Info [FLog::CreatorOutput] AG62A_PLOT 4 ready 0 {"enabled":1,"tracked":8,"active":1,"emitted":6,"feedback":10,"updates":10376,"errors":0,"emitters":8,"averageMs":0.10059494976505494,"maxMs":0.4124999977648258}
+2026-11-12T13:21:32.906Z,651.906616,5ed0,6,Info [FLog::CreatorOutput] AG62A_PLOT 5 ready 0 {"enabled":1,"tracked":8,"active":1,"emitted":6,"feedback":10,"updates":10410,"errors":0,"emitters":10,"averageMs":0.10063836683899855,"maxMs":0.4124999977648258}
+2026-11-12T13:21:34.922Z,653.922302,2d9c,6,Info [FLog::CreatorOutput] AG62A_PLOT 6 ready 0 {"enabled":1,"tracked":8,"active":1,"emitted":6,"feedback":10,"updates":10444,"errors":0,"emitters":12,"averageMs":0.10068850045822775,"maxMs":0.4124999977648258}
+2026-11-12T13:21:36.938Z,655.938293,3f44,6,Info [FLog::CreatorOutput] AG62A_PLOT 7 ready 0 {"enabled":1,"tracked":8,"active":1,"emitted":6,"feedback":10,"updates":10480,"errors":0,"emitters":14,"averageMs":0.10073158385635102,"maxMs":0.4124999977648258}
+2026-11-12T13:21:38.939Z,657.939758,4c44,6,Info [FLog::CreatorOutput] AG62A_ALL_STATIC_CHANGED 0
+2026-11-12T13:21:38.939Z,657.939758,4c44,6,Info [FLog::CreatorOutput] AG62A_PLOT 8 ready 0 {"enabled":1,"tracked":8,"active":1,"emitted":6,"feedback":10,"updates":10514,"errors":0,"emitters":16,"averageMs":0.10080905448157636,"maxMs":0.4124999977648258}
+2026-11-12T13:21:39.954Z,658.954285,5b0c,6,Info [FLog::CreatorOutput] AG62A_BEFORE_PARTICLE_FALLBACK {"enabled":1,"tracked":8,"active":1,"emitted":6,"feedback":10,"updates":10532,"errors":0,"emitters":16,"averageMs":0.10084852817990026,"maxMs":0.4124999977648258}
+2026-11-12T13:21:40.470Z,659.470886,5ed0,6,Info [FLog::CreatorOutput] AG62A_PARTICLE_FALLBACK 0 {"enabled":0,"tracked":7,"active":0,"emitted":6,"feedback":10,"updates":10542,"errors":0,"emitters":14,"averageMs":0.10079764738917063,"maxMs":0.4124999977648258}
+2026-11-12T13:21:41.488Z,660.488281,4c44,6,Info [FLog::CreatorOutput] AG62A_FINAL_CLIENT {"enabled":1,"tracked":8,"active":1,"emitted":6,"feedback":10,"updates":10559,"errors":0,"emitters":16,"averageMs":0.10087173962810814,"maxMs":0.4124999977648258}
+2026-11-12T13:22:29.952Z,708.952209,5b0c,6,Info [FLog::CreatorOutput] AG62A_LIVE 223:0:2:11 10
+2026-11-12T13:22:30.884Z,709.884705,4c44,6,Info [FLog::CreatorOutput] AG62A_LIVE 230:0:2:12 11
+2026-11-12T13:23:08.587Z,747.587219,5b0c,6,Info [FLog::CreatorOutput] AG62A_SERVER_BOOKS 8
+2026-11-12T13:23:08.587Z,747.587219,5b0c,6,Info [FLog::CreatorOutput] AG62A_SERVER_OBJECTS 0 0

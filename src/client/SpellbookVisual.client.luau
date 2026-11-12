@@ -6,11 +6,13 @@ local ContentProvider = game:GetService("ContentProvider")
 local shared = game:GetService("ReplicatedStorage"):WaitForChild("PotionTycoon"):WaitForChild("Shared")
 local Plan = require(shared.SpellbookLecternPlan)
 local LoadGate = require(shared.SpellbookLoadGate)
+local effects = require(script.Parent.SpellbookEffects).start()
 local records = {}
 local state = "loading"
 local loadStarted = false
 local startLoad
 local function restore(model)
+	effects.detach(model)
 	local record = records[model]
 	if not record then return end
 	for part, value in pairs(record.hidden) do
@@ -38,6 +40,7 @@ local function reveal(model, record)
 	end
 	for _, part in ipairs(record.parts) do part.Transparency = 0 end
 	model:SetAttribute("SpellbookLoadState", "ready")
+	effects.attach(model)
 end
 local function watch(model)
 	if records[model] then return end
@@ -104,6 +107,11 @@ startLoad = function(parts)
 		finish(ok and count == Plan.meshCount, failure or (tostring(count) .. "/" .. Plan.meshCount .. " meshes"))
 	end)
 end
-CollectionService:GetInstanceAddedSignal(Plan.tag):Connect(watch)
-CollectionService:GetInstanceRemovedSignal(Plan.tag):Connect(restore)
+local added = CollectionService:GetInstanceAddedSignal(Plan.tag):Connect(watch)
+local removed = CollectionService:GetInstanceRemovedSignal(Plan.tag):Connect(restore)
+script.Destroying:Connect(function()
+	added:Disconnect(); removed:Disconnect()
+	for model in pairs(records) do restore(model) end
+	effects.stop()
+end)
 for _, model in ipairs(CollectionService:GetTagged(Plan.tag)) do watch(model) end

@@ -77,6 +77,37 @@
 
 ## Art, UX, safety, rollout
 
+### AG-62A-R1 — enhanced Spellbook ambient / interaction VFX
+
+**Status: IMPLEMENTED / scoped STUDIO VERIFIED / OWNER GATE OPEN.**
+Owner-requested revision in existing Draft PR #33.
+Base: `feat/ag62a-spellbook-idle-vfx` @ `f1882ad0ffc7a5e4803dc13f75d752ba01df229a`,
+remote HEAD and Windows/Ubuntu CI 43227213157 confirmed before edits.
+Client-only rune glow/aura, rising Essence, bounded transient paper spiral and at
+most one shadowless local light. Keep the existing server receipt and idle motion;
+no economy, assets, global Lighting or AG-63 changes. Owner art gate remains open.
+1181 tests PASS; clean repeat build and Windows/Ubuntu runtime CI PASS. Ordinary
+Play verifies E/mouse +5, 3/5-sheet caps, expiry, quality/motion, spam coalescing,
+fallback/recovery and eight ready books. Native evidence and limits:
+`docs/AG62A_R1_ENHANCED_VFX.md`. No new owner approval or release gate is implied.
+
+### AG-62A — bounded Spellbook idle/VFX slice
+
+**Status: IMPLEMENTED / scoped STUDIO VERIFIED / OWNER GATE OPEN.** Issue #31;
+stacked Draft PR #33, branch `feat/ag62a-spellbook-idle-vfx`.
+Base: CI-green PR #30, `341b7f6dd9ac1692781f865bf25fed63a05e9d8a`.
+Only client presentation of the imported book: rigid loose pages/runes, gentle
+glow/flame and bounded particles, quality/motion settings, full fallback cleanup.
+Successful manual Essence feedback uses a session-only server receipt in existing
+State snapshots; no new remote, permissions, rewards, save fields or migration.
+The full AG-62 remains gated on AG-60; AG-01 owner acceptance stays open.
+Rollback: revert this stacked feature; AG-01 static book and fallback remain intact.
+Verification: 1155 inherited + 18 new tests PASS; Windows/Ubuntu CI and clean
+repeat-build PASS. Ordinary Play: eight books, static anchors, quality/motion,
+fallback/reappearance, native E/mouse and upgrade button verified. Phone, second
+account, 2–8 real players, backend and low-end performance NOT RUN. Exact build,
+runtime measurements and remaining owner gates: `docs/AG62A_SPELLBOOK_EFFECTS.md`.
+
 | ID | Stage | Status / dependencies | Проверяемый результат |
 | --- | --- | --- | --- |
 | **AG-60** | R7 / UI | `GATED` AG-02, стабильный UI contract | Перенести UI-01/UI-02A из `UIFoundationDemo` в настоящие панели: компактная иконочная навигация, контекстные окна, читаемость, изменение магической палитры по действию; touch/gamepad/accessibility и Reduced Motion. |

@@ -25,6 +25,7 @@ local ProfileStore = require(script.Parent.ProfileStore)
 local Settings = require(script.Parent.ServerSettings)
 local World = require(script.Parent.World)
 local Lectern = require(script.Parent.SpellbookLectern)
+local SpellbookFeedback = require(Shared.SpellbookFeedback)
 local TradeRuntime = require(script.Parent.TradeRuntime)
 local TradeSession = require(Shared.TradeSession)
 local Guide = require(Shared.FirstSessionView)
@@ -131,6 +132,9 @@ local function snapshot(player)
 	end
 	-- Explicit allowlist: no PRNG state, receipts, session leases or future private metadata.
 	State:FireClient(player, {
+		-- Session-only visual acknowledgment; never stored in the player's profile.
+		presentation = { essenceClick = { sequence = sessions[player.UserId].essenceClickSequence or 0,
+			plotIndex = player:GetAttribute("PotionPlotIndex") } },
 		gold = profile.gold, essence = profile.essence,
 		pets = copy(profile.pets), stations = copy(profile.stations),
 		inventory = copy(profile.inventory), questStock = copy(profile.questStock),
@@ -285,6 +289,8 @@ local function handleAction(player, action, payload)
 	end
 	if not success then notice(player, tostring(message), "action_failed")
 	else
+		sessions[player.UserId].essenceClickSequence = SpellbookFeedback.accept(
+			sessions[player.UserId].essenceClickSequence, action, success)
 		if action ~= "click" then notice(player, tostring(message or "Готово"), "ok") end
 		snapshot(player)
 		world:update(player, profile)
