@@ -79,12 +79,17 @@
 
 ### AG-62A-R1 — enhanced Spellbook ambient / interaction VFX
 
-**Status: IN PROGRESS.** Owner-requested revision in existing Draft PR #33.
+**Status: IMPLEMENTED / scoped STUDIO VERIFIED / OWNER GATE OPEN.**
+Owner-requested revision in existing Draft PR #33.
 Base: `feat/ag62a-spellbook-idle-vfx` @ `f1882ad0ffc7a5e4803dc13f75d752ba01df229a`,
 remote HEAD and Windows/Ubuntu CI 43227213157 confirmed before edits.
 Client-only rune glow/aura, rising Essence, bounded transient paper spiral and at
 most one shadowless local light. Keep the existing server receipt and idle motion;
 no economy, assets, global Lighting or AG-63 changes. Owner art gate remains open.
+1181 tests PASS; clean repeat build and Windows/Ubuntu runtime CI PASS. Ordinary
+Play verifies E/mouse +5, 3/5-sheet caps, expiry, quality/motion, spam coalescing,
+fallback/recovery and eight ready books. Native evidence and limits:
+`docs/AG62A_R1_ENHANCED_VFX.md`. No new owner approval or release gate is implied.
 
 ### AG-62A — bounded Spellbook idle/VFX slice
 

@@ -3,7 +3,7 @@
 Owner-requested revision in existing Draft PR #33. Base HEAD verified remotely:
 `f1882ad0ffc7a5e4803dc13f75d752ba01df229a`, CI 43227213157 Windows/Ubuntu PASS.
 Branch remains `feat/ag62a-spellbook-idle-vfx`; stacked base remains AG01 PR #30.
-**Implementation candidate / native QA pending / owner art gate OPEN.**
+**IMPLEMENTED / scoped STUDIO VERIFIED / owner art gate OPEN.**
 
 ## Presentation
 
@@ -64,15 +64,64 @@ This is read-only, Studio-only; no synthetic reward or setting setter.
 
 ## Validation status
 
-Pending native Play and final exact-HEAD evidence. Initial AG62A results are kept
-in `AG62A_SPELLBOOK_EFFECTS.md`, not reused as proof for this revision.
+Runtime commit: `bbe1cb2aa0472d06d2779870fdf54acd6a2637a6`. Initial AG62A results
+are kept in `AG62A_SPELLBOOK_EFFECTS.md`, not reused as proof for this revision.
+R1 adds eight portable cases: **1181 PASS, zero failures** (1142 main + 13 AG01
++ 26 AG62A/R1). All 1173 inherited cases remain. Pinned tools, 181 Luau sources,
+both place builds/sourcemaps, asset/scope guards and clean repeat build PASS.
+Two inherited C01 lint warnings remain. Runtime candidate Windows/Ubuntu CI:
+[43230936507](https://github.com/branch-danya-dev/magicpotiongacha/actions/runs/43230936507), PASS.
+The final documentation/evidence commit and its exact CI are linked in PR #33;
+documentation-only changes must produce identical ordinary-place bytes.
+
+Native Studio **0.747.0.7471481**, 2026-11-12, ordinary F5 Play / STUDIO_MEMORY:
+
+- Opened `build/AG62A-R1-review.rbxlx`, not the environment-only preview.
+  SHA-256 `4c9c3329cf755cd2d4b3cc60e888de9bb146ccbfaa3a1b17c9c2a884fe5cac0d`;
+  identical to the clean runtime-commit `build/PotionTycoon.rbxlx`.
+- Default Reduced, ordinary avatar camera: glowing runes and successful-click
+  paper response visible. E: Essence 0→5, receipt/feedback/batch 0→1, 3 sheets;
+  native mouse on Roblox prompt: 5→10, each counter +1. Sheets zero after expiry.
+  Full diagnostic accepted click: 5 sheets at 0.4 s, zero after expiry.
+- Actual in-game quality buttons selected Full, Minimal and Reduce Motion.
+  Minimal: zero sheets/emitters/lights during accepted +5 and after it.
+  Full + Reduce Motion: zero sheets/emitters, one local light; accepted +5 still
+  increments feedback, without allocating a paper batch. Original idle movement
+  is disabled by the shared policy. Existing source flags were not changed.
+- 30 same-frame gameplay intents: 8 accepted receipts (+40 Essence), exactly
+  8 feedback increments; only one new paper batch, peak 5, 6 emitted click sparks.
+  No delayed paper replay; sheets zero at 1.7 s. Rejections add no feedback.
+- Native fallback forced by removing the owner's visual tag 0.3 s into a burst:
+  5 sheets → 0; emitters/light → 0; no owned transient descendants remain.
+  A further ordinary intent gives +5 with no hidden-book feedback. Re-adding
+  the tag restores `ready` without replaying that receipt or creating sheets.
+- Diagnostic camera tour of all eight plots (one actual player): every book
+  `ready`, ≤3 active books, ≤6 enabled / 24 retained emitters, ≤1 local light.
+  Returning to Minimal destroyed all 24 pooled emitters and the light.
+  Server Workspace/ServerStorage: **zero VFX objects**, eight source visuals.
+- Zero cosmetic faults. Observed scheduler CPU through final quality check:
+  average **0.130 ms**, max **0.967 ms**, 10,047 updates. Mixed desktop modes and
+  camera tour; this is not phone/GPU/full-game performance evidence.
+
+Only the live client's inherited `UIFoundationDemo` overlay was disabled to
+expose the actual gameplay HUD. Navigation used ordinary Humanoid walking;
+stress/fallback probes used existing validated intents and local presentation
+changes. No admin grants or persistent changes. Play stopped without saving or
+publishing. Filtered Output: `evidence/AG62A_R1_STUDIO_2026-11-12.log`.
+No screenshot/video deliverables were produced, per owner preference.
+
 Portable regressions exercise trajectories/dissolve, batch coalescing and expiry,
 quality/Reduce Motion, partial allocation failure, owner removal and recovery.
 The scope guard pins the R1 server Main/receipt and all Environment/Weather/Lighting
 sources byte-for-byte (line endings normalized) to the R1 base. Existing economic,
 permissions, hitbox, imported-asset, save and release-flag checks remain active.
 
-Owner art acceptance remains OPEN. Phone/touch, real 2–8 players, low-device GPU
+Owner art acceptance remains OPEN: the blue-violet rune tint appears pale under
+the inherited exposure/bloom; final color, aura contrast and paper styling need
+the owner's in-game review. Global lighting is deliberately unchanged. Exact
+in-flight quality-switch timing and source-object deletion were exercised through
+portable lifecycle/burst tests, not separately timed native Play scenarios.
+Phone/touch, real 2–8 players, low-device GPU
 performance and private backend/permissions are separate NOT RUN gates. Existing
 missing local M7 sky/celestial textures remain out of scope; AG-63 is untouched.
 No merge, publication, paid assets, trading or monetization activation.
