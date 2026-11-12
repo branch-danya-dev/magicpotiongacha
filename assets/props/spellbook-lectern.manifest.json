@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "task": "AG-01",
-  "status": "NATIVE_IMPORTED_INTEGRATION_IN_PROGRESS",
+  "status": "IMPLEMENTED_SCOPED_STUDIO_VERIFIED_OWNER_GATE_OPEN",
   "integrationBase": "7d6d47826e919683ee991c911185215cda0d3d2e",
   "source": {
     "file": "assets/props/spellbook-lectern.glb",
@@ -442,7 +442,7 @@
     "newLights": 0
   },
   "native": {
-    "verified": false,
+    "verified": true,
     "exportSha256": "c541c02e6d91099a3297de9919f2d3f52bca8a183f277af4f0dcf17a38ba59a2",
     "creatorType": "Group",
     "creatorId": 925845207,
@@ -475,7 +475,20 @@
     ],
     "meshParts": 23,
     "materials": 9,
-    "permissionReceipt": null,
+    "permissionReceipt": {
+      "checkedAt": "2026-11-12",
+      "method": "Studio MarketplaceService GetProductInfo for all 23 mesh IDs; importer creator selection; typed PreloadAsync and ordinary local Play under importing account",
+      "creatorType": "Group",
+      "creatorId": 925845207,
+      "creatorName": "addout studio",
+      "all23MeshCreatorsMatched": true,
+      "localDelivery": "PASS",
+      "permissionSettingsChanged": false,
+      "creatorStoreListed": false,
+      "otherAccountDelivery": "NOT_RUN",
+      "publishedExperienceRuntime": "NOT_RUN",
+      "evidence": "docs/evidence/ag01/import-owner.log"
+    },
     "drawCalls": null,
     "phonePerformance": null,
     "creatorName": "addout studio",
@@ -862,9 +875,36 @@
       "textureChurn": false,
       "motion": false,
       "quality": "same static geometry on Full/Reduced/Minimal and Reduce Motion"
+    },
+    "verificationScope": "Actual group import/export, all mesh creator identities, typed local asset delivery, ordinary one-client/eight-plot Studio Play. Not owner art acceptance, other-account permissions or published runtime.",
+    "runtimeEvidence": {
+      "sourceSha": "2ebd71b16515879eb8a4e66ef20611c4d2e23ac6",
+      "placeSha256": "d9ed643247df26c3d6bd5cf91c943adebd0b89d6cec9b665ed3292d6224ee15f",
+      "report": "docs/evidence/ag01/README.md",
+      "context": "ordinary F5 full game, STUDIO_MEMORY, local GameId/PlaceId 0",
+      "readyPlots": 8,
+      "realClients": 1,
+      "nativeKeyboardEssenceDelta": 5,
+      "qualityModes": [
+        "Full",
+        "Reduced",
+        "Minimal + Reduce Motion"
+      ],
+      "ownerAccepted": false,
+      "validatedIntentUpgrade": {
+        "goldBefore": 940,
+        "goldAfter": 40,
+        "levelBefore": 1,
+        "levelAfter": 2,
+        "essenceAfterUpgrade": 15,
+        "essenceFiveSecondsLater": 25,
+        "nativeUpgradeButton": "NOT_RUN"
+      }
     }
   },
   "notes": [
-    "Actual group import and native export completed 2026-11-12; runtime and fresh-build checks pending."
+    "Reacquisition/license and authorized native group import completed 2026-11-12. No Creator Store listing or game publishing.",
+    "Material colors/double-sided flags deterministically restored after importer omission; roughness/emission are native approximations.",
+    "1155 portable tests; clean and repeat builds match. Scoped Studio evidence is separate from unperformed owner, phone, real multi-client, backend and cross-account permission gates."
   ]
 }

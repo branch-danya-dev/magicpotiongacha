@@ -1,6 +1,6 @@
 # AG-01 — Reproducible Spellbook Lectern
 
-**Status: IMPLEMENTED / CODE CANDIDATE; native Play review in progress.**
+**Status: IMPLEMENTED / scoped STUDIO VERIFIED; OWNER ACCEPTANCE OPEN.**
 Task [#28](https://github.com/branch-danya-dev/magicpotiongacha/issues/28),
 [Draft PR #30](https://github.com/branch-danya-dev/magicpotiongacha/pull/30).
 Base `integration/ag00-base` @ `7d6d47826e919683ee991c911185215cda0d3d2e`
@@ -74,12 +74,16 @@ Repeated installation/placement is idempotent; foreign links cannot steal anothe
 plot's clone. Failed preparation/publication discards only the new visual and logs
 a bounded diagnostic, leaving the old crystal and its interactions intact.
 
-Client mesh loading is shared across all eight clones: 23 pinned references, one
+Client mesh loading is shared across all eight clones: 23 pinned MeshPart instances, one
 PreloadAsync attempt and a 15-second terminal timeout. A book is revealed only after
 all references succeed. The old crystal is hidden with LocalTransparencyModifier,
 so server updates cannot flash it back. Denied/missing/slow assets retain the ordinary
 crystal; late success after timeout does not cause a pop. Removing a visual/link
 restores the previous local transparency and disconnects its listeners.
+Passing the typed instances matters: bare ID strings were interpreted as texture
+requests by Studio and failed with IncorrectAssetType. The final implementation
+uses MeshParts and all 23 mesh requests succeeded. WorldContext keeps the old
+visual hidden and highlights the book only while its client load state is ready.
 
 Budget: 23 MeshParts / 4194 source triangles per plot; 184 / 33552 for eight plots;
 9 source materials, zero textures, zero emitters/lights, two attachments per plot.
@@ -94,7 +98,52 @@ runtime texture churn. Draw calls/device performance are not measured by CLI.
 - Asset check validates GLB/native hashes, primitive/material mapping, persistent
   IDs, hierarchy, inert physics, deterministic normalization and build inclusion.
 - Native import/export and identity: observed in Studio, completed 2026-11-12.
-- Ordinary Play/rebuild, owner/permission checks and engine fallback audit: results
-  will be recorded after the native run, separately from portable tests.
+- All 23 mesh IDs report Group 925845207 / addout studio through MarketplaceService.
+  An initial burst hit HTTP 429; the paced retry verified all 23. Local Studio
+  delivery succeeded under the importing account. This does **not** prove delivery
+  to another account or a published server; no permission settings were changed.
+- Ordinary F5 Play used runtime SHA `2ebd71b16515879eb8a4e66ef20611c4d2e23ac6`.
+  A separate clean detached checkout with pinned tools produced byte-identical
+  ordinary and repeat builds. Place SHA-256:
+  `d9ed643247df26c3d6bd5cf91c943adebd0b89d6cec9b665ed3292d6224ee15f`.
+  Final delivery changes only evidence and normalization receipt handling;
+  final-head CI/receipt must independently confirm the same place hash.
+- All eight plots: ready, 23 inert MeshParts, two attachments, no scripts/lights/
+  emitters, no overlap with the old crystal. Native measured height 6.4963 studs,
+  bottom Y 0.40625, original anchor Size (4,6,4), prompt distance 16 unchanged.
+  Avatar spawned, walked to the book, and native **E** credited **5 Essence**.
+  Highlight targeted the book; Full, Reduced and Minimal + Reduce Motion kept all
+  eight books ready. Removing/re-adding the visual tag restored the eight-part
+  old presentation / hid 23 book parts, then restored the book with eight clones
+  total. These are one-client/eight-plot checks, not eight-player checks.
+- Engine gameplay diagnostic, using the existing validated client intents and
+  ordinary movement: two Healing crops/brews/sales, then crystal level 1 → 2,
+  Gold 940 → 40 (900 cost), Essence 15 → 25 over the following five seconds.
+  No grants, profile mutation, time acceleration or prerequisite bypass. This
+  confirms the server upgrade/passive flow; the native upgrade-button gate is open.
+- Missing/invalid template, denied/slow/partial mesh delivery, late-success timeout,
+  rollback/idempotence and ownership isolation have portable regression coverage.
+  Native tag-removal restoration passed. An actual permission revocation was
+  deliberately not performed; denied-permission engine testing remains NOT RUN.
 - Phone, 2–8 real clients, real DataStore backend and performance: NOT RUN/BLOCKED.
 - AG-01 OWNER ACCEPTED / PUBLISHED: NO. AG-02 visual gate remains open.
+
+## Evidence and remaining review
+
+[Filtered native evidence](evidence/ag01/README.md) records only AG01 diagnostics,
+with raw output excerpts and their SHA-256 values. No screenshots/video deliverable
+was produced, following the owner's continuing instruction. The normal place was
+opened locally (GameId/PlaceId 0, STUDIO_MEMORY); the group experience was used for
+the authorized import and identity/creator checks, not a published runtime test.
+
+Existing environment warning: twelve M7 local-only CC0 sky files were unavailable
+in this Studio installation (`M7_19E_ASSETS failures=12`, LOCAL_ONLY). This is separate
+from the book's 23 successfully delivered Roblox mesh assets. Material roughness/
+emission approximation and owner art review remain open. The inherited UI foundation
+demo was disabled only in the local Play client to inspect the real HUD.
+
+Owner review must still exercise native mouse/touch controls, the upgrade button
+and complete onboarding without Command Bar assistance, approve material appearance,
+and arrange real-device/multi-account checks. No extra rights were requested or
+enabled. AG-02 may use this build as its visual candidate; its live acceptance and
+the AG-01 owner gate are not automatically closed by these technical checks.

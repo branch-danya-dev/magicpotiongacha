@@ -35,13 +35,17 @@
 
 ### AG-01 — Spellbook Lectern как воспроизводимый игровой ассет
 
-**Статус: CODE_CANDIDATE / native Play review pending.** **Depends:** AG-00 подтверждён на `7d6d47826e919683ee991c911185215cda0d3d2e`, Draft PR #29, Windows/Ubuntu PASS. **Files:** `assets/props/`, `src/server/SpellbookLectern.luau`, `SpellbookLecternPlan.luau`, импорт/manifest/tests.
+**Статус: IMPLEMENTED / scoped STUDIO VERIFIED / OWNER GATE OPEN.** **Depends:** AG-00 подтверждён на `7d6d47826e919683ee991c911185215cda0d3d2e`, Draft PR #29, Windows/Ubuntu PASS. **Files:** `assets/props/`, `src/server/SpellbookLectern.luau`, `SpellbookLecternPlan.luau`, импорт/manifest/tests.
 
-Preflight и выбранный путь: [AG01_SPELLBOOK_INTEGRATION.md](AG01_SPELLBOOK_INTEGRATION.md).
-Нужны владелец/experience, приватный импорт с проверенными ссылками, экспорт
-`SpellbookLectern.rbxmx` и подтверждение применимой лицензии. Реализация остановлена
-до этого шага по указанию пользователя. Частичный Draft PR содержит аудит и
-manifest; новая runtime-интеграция и новые runtime-тесты ещё не выполнены.
+Результат: [AG01_SPELLBOOK_INTEGRATION.md](AG01_SPELLBOOK_INTEGRATION.md), Draft PR #30.
+Повторное получение GLB и лицензия от 12.11.2026 проверены. Выполнен разрешённый
+приватный импорт от addout studio, сохранён нативный `SpellbookLectern.rbxmx`,
+23 MeshId подтверждены за группой. Чистая и повторная Rojo-сборки совпали;
+обычный Play показал книгу на восьми участках, E начисляет прежние 5 Essence,
+возврат старого визуала и режимы качества проверены. 1142 исходных + 13 новых
+тестов проходят. Точный HEAD/CI и границы нативных проверок записаны в PR и отчёте.
+Нативные mouse/touch/upgrade UI, телефон, реальные 2–8 клиентов, backend и
+художественная приёмка владельцем остаются открыты. Публикации/merge не было.
 
 - Устранить зависимость от исчезающего после сборки ручного `ServerStorage.SpellbookLectern`, не подставляя фальшивую геометрию. Выбрать поддерживаемый воспроизводимый путь GLB → private Roblox asset/проверяемый package → загрузка в game/Studio, с проверкой прав и при необходимости явным ручным владельческим шагом. **Не** публиковать исходный модельный файл отдельным Creator Store item.
 - Записать source URL/license/SHA-256, точные вложенные MeshParts и материалы, pivot/scale, anchors. Не добавлять скрипты из Toolbox и не ломать конфиг `crystal`/`Essence`.

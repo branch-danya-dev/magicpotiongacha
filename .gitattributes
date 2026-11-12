@@ -6,6 +6,7 @@ assets/environment/fantasy/** -text whitespace=cr-at-eol
 assets/environment/stability-sky/** -text whitespace=cr-at-eol
 assets/environment/woodland/** -text whitespace=cr-at-eol
 assets/props/*.rbxmx -text whitespace=cr-at-eol
+docs/evidence/ag01/*.log -text whitespace=cr-at-eol
 docs/evidence/m7-a2b/studio-audit.txt -text whitespace=cr-at-eol
 docs/evidence/m7-a2c/studio-audit.txt -text whitespace=cr-at-eol
 docs/evidence/m7-ui18/** -text whitespace=cr-at-eol

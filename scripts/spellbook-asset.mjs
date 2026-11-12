@@ -57,7 +57,9 @@ if (process.argv.includes('--normalize')) {
   manifest.native.rawExportSha256 ??= sha(Buffer.from(raw));
   const xml = normalize(raw);
   writeFileSync(assetPath, xml);
-  manifest.native.exportSha256 = sha(Buffer.from(xml));
+  const exportSha = sha(Buffer.from(xml));
+  const changed = manifest.native.exportSha256 !== exportSha;
+  manifest.native.exportSha256 = exportSha;
   manifest.native.meshParts = 23;
   manifest.native.modelAssetId = 92876851534007;
   const specs = new Map(sourceContract().map(p => [p.name, p]));
@@ -73,8 +75,16 @@ if (process.argv.includes('--normalize')) {
   manifest.native.budget = { perPlotMeshParts: 23, eightPlotMeshParts: 184, perPlotTriangles: 4194,
     eightPlotTriangles: 33552, textureCount: 0, newLights: 0, newEmitters: 0, attachmentsPerPlot: 2,
     textureChurn: false, motion: false, quality: 'same static geometry on Full/Reduced/Minimal and Reduce Motion' };
-  manifest.status = 'NATIVE_IMPORTED_INTEGRATION_IN_PROGRESS';
-  manifest.notes = ['Actual group import and native export completed 2026-11-12; runtime and fresh-build checks pending.'];
+  // Re-running normalization must not erase evidence for identical bytes, or
+  // carry a native verification receipt over to a changed export.
+  if (changed) {
+    manifest.native.verified = false;
+    manifest.native.permissionReceipt = null;
+    delete manifest.native.verificationScope;
+    delete manifest.native.runtimeEvidence;
+    manifest.status = 'NATIVE_IMPORTED_INTEGRATION_IN_PROGRESS';
+    manifest.notes = ['Export changed; repeat native creator, delivery and Play checks before accepting it.'];
+  }
   writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
   const rows = manifest.native.parts.map(p => `\t["${p.name}"] = "${p.meshId}",`).join('\n');
   writeFileSync('src/shared/SpellbookAssets.luau', `--!strict\n-- Generated from the inspected native export; scripts/spellbook-asset.mjs --normalize.\nlocal Assets: {[string]: string} = {\n${rows}\n}\nreturn Assets\n`);
