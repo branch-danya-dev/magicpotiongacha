@@ -76,7 +76,7 @@ function HUD.layout(width,height,touch,chatRight)
  local questH=compact and 82 or 104*scale
  local quest=rect(left,top,questW,questH)
  local shop=rect(left,top+questH+6,48*scale,Layout.touch(45*scale))
- if compact and touch and shop.y+shop.h>height-140 then shop.x=math.max(left,thumb+8) end
+ if compact and touch and shop.y+shop.h>height-140 then shop.x=math.max(left,thumb) end
  local rewards=rect(shop.x+shop.w+9,shop.y,shop.w,shop.h)
  local bookW=compact and 238 or 260*scale
  local bookH=compact and 90 or 101*scale

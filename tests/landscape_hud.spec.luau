@@ -2,6 +2,7 @@
 local HUD=require("../src/shared/ui/Landscape")
 local Layout=require("../src/shared/ui/Layout")
 local Theme=require("../src/shared/ui/Theme")
+local Context=require("../src/shared/ContextUI")
 return function(T)
  local function state()
   return {gold=945,essence=37,writable=true,stations={crystal={level=2}},longTerm={manualClickEssence=7},
@@ -74,6 +75,18 @@ return function(T)
  end
  T.test("AG64 desktop chat reservation moves left panels away from chat",function()
   local p=HUD.layout(1920,1022,false,620); T.equal(p.quest.x>=632,true); T.equal(p.book.x>=632,true)
+ end)
+ T.test("AG64 mobile center retains the native book interaction clearance",function()
+  for _,size in ipairs({{750,332},{740,302}}) do
+   local w,h=size[1],size[2]; local p=HUD.layout(w,h,true,nil); local blocked={}
+   for _,r in ipairs({p.title,p.gold,p.essence,p.settings,p.quest,p.shop,p.rewards,p.book,p.dock}) do
+    table.insert(blocked,{x=r.x,y=r.y+58,w=r.w,h=r.h})
+   end
+   -- Native prompt clearance is 240x100, larger than its visible icon.
+   local candidates=Context.candidates({{id="book",enabled=true,visible=true,clear=true,owner=1,
+    distance=5,maximum=16,z=24,x=w/2+5,y=200}},1,w,h+58,blocked)
+   T.equal(#candidates,1)
+  end
  end)
  for _,size in ipairs({{750,332},{646,302}}) do
   T.test("AG64 notched phone safe area "..size[1].."x"..size[2],function()
