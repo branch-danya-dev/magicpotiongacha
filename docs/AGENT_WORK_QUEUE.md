@@ -77,6 +77,27 @@
 
 ## Art, UX, safety, rollout
 
+### AG-64 — Figma Landscape Gameplay HUD
+
+**Status: IMPLEMENTED/CODE / scoped STUDIO VERIFIED / OWNER REVIEW OPEN / PUBLISHED: NO.** Base Draft PR #34,
+`feat/ag63-postfx-lookdev` @ `0457a87b5cbff1200d1e96889986198244918213`;
+Windows/Ubuntu CI 43243560877 PASS. Branch `feat/ag64-landscape-hud`.
+Approved design: Figma `4Qfq1mf8p4oNLVqQH85yfI`, node `7:21`, 844×390.
+This explicit request authorizes the HUD task despite the older AG63 next-UI gate;
+it does not select or approve a PostFX preset.
+Scope: native presentation inside the existing PotionTycoonUI, real snapshot data,
+existing menus/intents, receipt-only Essence feedback, responsive safe placement.
+No economy/profile/server/Spellbook/PostFX/asset changes. No new internal windows.
+Rollback: Workspace `LandscapeHUDEnabled=false` restores the inherited HUD.
+Draft PR #35. 1193 unchanged inherited + 26 new tests PASS; repeated Rojo build
+matches the native review build. Ordinary Play verified all seven menu routes,
+server-confirmed E/tap +5, actual safe book upgrade, bounded feedback, 20 rollback
+cycles, quality/motion and five screen sizes. Final runtime source:
+`99534d7ba1b9342eacb0cf19570369a798987f27`. Native captures, comparison, CI links
+and exact evidence provenance: [AG64_LANDSCAPE_HUD.md](AG64_LANDSCAPE_HUD.md).
+Real phones, physical gamepad, real backend and owner visual acceptance remain open.
+No merge, publication, paid asset upload or broader UI task is authorized.
+
 ### AG-63 — reversible global PostFX look development
 
 **Status: IMPLEMENTED/CODE; bounded STUDIO VERIFIED; OWNER comparison OPEN;

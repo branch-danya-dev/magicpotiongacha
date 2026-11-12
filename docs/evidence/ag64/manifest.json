@@ -1,0 +1,94 @@
+{
+  "task": "AG-64",
+  "baseSha": "0457a87b5cbff1200d1e96889986198244918213",
+  "runtimeSha": "99534d7ba1b9342eacb0cf19570369a798987f27",
+  "studioVersion": "0.747.0.7471481",
+  "serverMode": "STUDIO_MEMORY",
+  "quality": "Reduced",
+  "graphics": "Studio emulator Q21",
+  "placeSha256": "8af10476830037f0a12246bac2fd2452464fae637e30935a2bc8165b2752268e",
+  "repeatBuildMatches": true,
+  "tests": {
+    "added": 26,
+    "passed": 1219,
+    "failed": 0,
+    "inherited": 1193
+  },
+  "screenshots": [
+    {
+      "file": "studio-1024x768-window.jpg",
+      "bytes": 258784,
+      "sha256": "154bcc966d34583ef02c61e3e186798afc32c82530779dfe548752070dac1061",
+      "sourceSha": "99534d7ba1b9342eacb0cf19570369a798987f27",
+      "capturedUtc": "2026-11-12T16:47:40.4367144Z",
+      "processing": "Original native Studio full-window capture"
+    },
+    {
+      "file": "studio-1366x768-window.jpg",
+      "bytes": 344167,
+      "sha256": "7448c97512206974aacc4fd5ab4d49c850de83713640235e02d967dd0d5087bc",
+      "sourceSha": "f5242a55e9886976fd9c4ed93a901f93fe75da31",
+      "capturedUtc": "2026-11-12T16:38:24.7072442Z",
+      "processing": "Original native Studio full-window capture"
+    },
+    {
+      "file": "studio-1920x1080-window.jpg",
+      "bytes": 559889,
+      "sha256": "09ba7ddb3818c70f3fdb341dbcf6b4af79e4c65167c56a52fea3f51c2a2950a5",
+      "sourceSha": "f5242a55e9886976fd9c4ed93a901f93fe75da31",
+      "capturedUtc": "2026-11-12T16:37:03.3204886Z",
+      "processing": "Original native Studio full-window capture"
+    },
+    {
+      "file": "studio-1920x1080.png",
+      "bytes": 4219703,
+      "sha256": "0f8fd2501d13e8b81814c8b3646ec7e5a33588dd46df602b9884a83715bea445",
+      "sourceSha": "f5242a55e9886976fd9c4ed93a901f93fe75da31",
+      "capturedUtc": "2026-11-12T16:37:03.9634337Z",
+      "processing": "Pixel crop only; no scaling, recoloring, enhancement or generation",
+      "source": "studio-1920x1080-window.jpg",
+      "crop": {
+        "x": 99,
+        "height": 1080,
+        "width": 1920,
+        "y": 224
+      }
+    },
+    {
+      "file": "studio-740x360-window.jpg",
+      "bytes": 184243,
+      "sha256": "d9fcedf66e2da8a825bc01b2ebb29d4d0b65225e32fab499f6a3260ef8103cd1",
+      "sourceSha": "99534d7ba1b9342eacb0cf19570369a798987f27",
+      "capturedUtc": "2026-11-12T16:47:18.4576048Z",
+      "processing": "Original native Studio full-window capture"
+    },
+    {
+      "file": "studio-844x390-window.jpg",
+      "bytes": 229584,
+      "sha256": "40b9ad8c7fa212a8d6c63623c820b9f0ad45468e62b1ecb1e2647cbd0990ed29",
+      "sourceSha": "f5242a55e9886976fd9c4ed93a901f93fe75da31",
+      "capturedUtc": "2026-11-12T16:35:54.9000054Z",
+      "processing": "Original native Studio full-window capture"
+    },
+    {
+      "file": "studio-844x390.png",
+      "bytes": 665209,
+      "sha256": "dcb0e8af859825c061bc07ab4580f818354f1b69e1bdfa2fe9fa80d0d7885429",
+      "sourceSha": "f5242a55e9886976fd9c4ed93a901f93fe75da31",
+      "capturedUtc": "2026-11-12T16:36:06.9650114Z",
+      "processing": "Pixel crop only; no scaling, recoloring, enhancement or generation",
+      "source": "studio-844x390-window.jpg",
+      "crop": {
+        "x": 637,
+        "height": 390,
+        "width": 844,
+        "y": 569
+      }
+    }
+  ],
+  "logs": {
+    "file": "studio-qa.log",
+    "sha256": "8f6e87e9923115b4b88b907664f680f1a7ee214b01b908a8c88603f73f18daa6",
+    "filter": "AG64 CreatorOutput records and inherited M7 image-load errors only; excludes input command echoes and unrelated application/account logs"
+  }
+}

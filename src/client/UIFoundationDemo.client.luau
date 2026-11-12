@@ -61,6 +61,9 @@ local function own(id, widget)
 end
 
 local function show()
+-- AG64_BEGIN_HIDE_DEMO
+	if workspace:GetAttribute("LandscapeHUDEnabled")~=false then hide(); return end
+-- AG64_END_HIDE_DEMO
 	if not Gate.preview(RunService:IsStudio(), workspace:GetAttribute("UIFoundationDemo")) then
 		hide()
 		return
@@ -248,4 +251,7 @@ local function refresh()
 end
 
 workspace:GetAttributeChangedSignal("UIFoundationDemo"):Connect(refresh)
+-- AG64_BEGIN_DEMO_ROLLBACK
+workspace:GetAttributeChangedSignal("LandscapeHUDEnabled"):Connect(refresh)
+-- AG64_END_DEMO_ROLLBACK
 refresh()

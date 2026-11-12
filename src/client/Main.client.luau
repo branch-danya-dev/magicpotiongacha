@@ -36,6 +36,11 @@ gui.Parent = player:WaitForChild("PlayerGui")
 
 local BG, SURFACE, TEXT, ACCENT = Color3.fromRGB(27, 40, 43), Color3.fromRGB(51, 68, 65), Color3.fromRGB(242, 238, 220), Color3.fromRGB(78, 101, 91)
 local state, selected, petPicker, hasReport = nil, "crystal", false, false
+-- AG64_BEGIN_IMPORT
+local LandscapeModel=require(shared.ui.Landscape)
+local LandscapeView=require(script.Parent.LandscapeHUD)
+local landscape,syncLandscape,coachOpen=nil,nil,false
+-- AG64_END_IMPORT
 local selectedUpgrade = false
 local context, currentContext
 local scrollPositions = {}
@@ -197,11 +202,20 @@ local function updateContext(entry,count,region)
 		details.Size=UDim2.new(1,count>1 and -104 or -8,1,-8)
 		nextObject.Text=UserInputService.TouchEnabled and ("Далее · "..count) or (UserInputService.GamepadEnabled and "Далее · RB" or "Далее · X")
 	end
+-- AG64_BEGIN_CONTEXT
+	if landscape then
+		rail.Visible=entry~=nil and entry.station~="crystal" and not panel.Visible and not coachOpen
+		regionLabel.Visible=false
+	end
+-- AG64_END_CONTEXT
 end
 panel:GetPropertyChangedSignal("Visible"):Connect(function()
 	toggle.Visible=not panel.Visible or toggle.Parent==hud
 	if context then context.refresh() end
 	if panel.Visible and UserInputService.GamepadEnabled then GuiService.SelectedObject=close end
+-- AG64_BEGIN_PANEL
+	if syncLandscape then syncLandscape() end
+-- AG64_END_PANEL
 end)
 local prices={}
 local function shopPrice(card)
@@ -276,6 +290,9 @@ local function resize()
 	toast.AnchorPoint=Vector2.new(.5,0)
 	toast.Position,toast.Size=UDim2.new(.5,0,0,136),UDim2.fromOffset(layout.hudWidth,64)
 	if not layout.compact then toast.AnchorPoint=Vector2.zero; toast.Position=UDim2.fromOffset(layout.left,136) end
+-- AG64_BEGIN_RESIZE
+	if syncLandscape then syncLandscape(true) end
+-- AG64_END_RESIZE
 end
 task.spawn(function()
 	while gui.Parent do task.wait(.5); if readChat() then resize() end end
@@ -687,6 +704,9 @@ refresh = function()
 	balance.Text = "Gold: " .. compact(state.gold) .. "  |  Essence: " .. compact(state.essence)
 	guide.Text = not state.writable and "Сохранение приостановлено" or (state.tutorial.complete and ("Моя ферма · "..state.phase.name) or ("Шаг "..state.tutorial.step.."/"..state.tutorial.total.." · "..ContextPolicy.description({station=state.tutorial.target},Config)))
 	for _, update in ipairs(bindings) do update() end
+-- AG64_BEGIN_REFRESH
+	if syncLandscape then syncLandscape() end
+-- AG64_END_REFRESH
 end
 
 local tabList={{"blueprint","Развитие"},{"shop","Событие"},{"rebirth","Rebirth"},{"dailies","Daily"},{"shards","Осколки"},{"bazaar","Обмен"},{"quality","Качество"}}
@@ -783,7 +803,80 @@ function renderCoach()
 	elseif not view.visible then
 		Glance.clear(); aimed=nil
 	end
+-- AG64_BEGIN_COACH
+	if syncLandscape then syncLandscape() end
+-- AG64_END_COACH
 end
+-- AG64_BEGIN_MOUNT
+local legacyCoach={position=coach.Position,size=coach.Size,anchor=coach.AnchorPoint,actions=coachActions.Position,title=coachTitle.Size,body=coachBody.Size}
+local coachClose=button(coach,"×",function() coachOpen=false; if syncLandscape then syncLandscape() end end)
+coachClose.Name="CloseTutorial"; coachClose.Size=UDim2.fromOffset(44,44); coachClose.Position=UDim2.new(1,-48,0,0); coachClose.Visible=false
+local function bookAnchor()
+	local world=workspace:FindFirstChild("PotionTycoonWorld")
+	local index=player:GetAttribute("PotionPlotIndex")
+	local plot=world and index and world:FindFirstChild("Plot_"..index)
+	return plot and plot:GetAttribute("OwnerUserId")==player.UserId and plot:FindFirstChild("crystal") or nil
+end
+syncLandscape=function(forceLayout)
+	local camera=workspace.CurrentCamera; if not camera then return end
+	local enabled=LandscapeModel.enabled(workspace:GetAttribute("LandscapeHUDEnabled"),camera.ViewportSize.X,camera.ViewportSize.Y)
+	if not enabled then
+		if landscape then
+			landscape.destroy(); landscape=nil; coachOpen=false
+			coach.Position,coach.Size,coach.AnchorPoint=legacyCoach.position,legacyCoach.size,legacyCoach.anchor
+			coachActions.Position,coachTitle.Size,coachBody.Size=legacyCoach.actions,legacyCoach.title,legacyCoach.body
+			hud.Visible=true; guide.Visible=true; resize(); renderCoach()
+		end
+		coachClose.Visible=false
+		return
+	end
+	if not landscape then
+		landscape=LandscapeView.new(gui,{
+			anchor=bookAnchor,
+			open=function(id)
+				if not state then return end
+				coachOpen=false; selected,petPicker,selectedUpgrade=id,false,false; panel.Visible=true; draw()
+			end,
+			quest=function()
+				if not state then return end
+				coachOpen=not coachOpen; panel.Visible=false; renderCoach()
+			end,
+			upgrade=function()
+				if not LandscapeModel.upgrade(state,collectionPending).enabled then return end
+				send("buy",{upgradeId="crystal"}); syncLandscape()
+			end,
+		})
+		landscape.receipt(state,player:GetAttribute("PotionPlotIndex"),Config.maxBalance)
+		forceLayout=true
+	end
+	if forceLayout then
+		local p=landscape.layout(gui.AbsoluteSize.X,gui.AbsoluteSize.Y,UserInputService.TouchEnabled,chatRight)
+		local function position(o,r) o.AnchorPoint=Vector2.zero; o.Position=UDim2.fromOffset(r.x,r.y); o.Size=UDim2.fromOffset(r.w,r.h) end
+		position(panel,p.panel); position(toast,p.notice); position(coach,p.coach)
+		if p.rail.w>=104 then position(rail,p.rail) end
+		coachActions.Position=UDim2.new(0,12,1,-52)
+		coachTitle.Size=UDim2.new(1,-68,0,28)
+		coachBody.Size=UDim2.new(1,-32,1,-106)
+	end
+	hud.Visible=false; guide.Visible=false; toggle.Visible=false; quick.Visible=false; regionLabel.Visible=false
+	coach.Visible=state~=nil and not panel.Visible and (Session.intro(state) or coachOpen)
+	coachClose.Visible=coach.Visible and not Session.intro(state)
+	if currentContext and currentContext.station=="crystal" then rail.Visible=false end
+	landscape.update(state,collectionPending,selected,panel.Visible or coach.Visible,environment.reduceMotion)
+end
+workspace:GetAttributeChangedSignal("LandscapeHUDEnabled"):Connect(function() resize(); renderCoach() end)
+ContextActionService:BindAction("LandscapeHUDBack",function(_,inputState)
+	if not landscape or inputState~=Enum.UserInputState.Begin then return Enum.ContextActionResult.Pass end
+	if panel.Visible then panel.Visible=false; return Enum.ContextActionResult.Sink end
+	if coachOpen then coachOpen=false; syncLandscape(); return Enum.ContextActionResult.Sink end
+	return Enum.ContextActionResult.Pass
+end,false,Enum.KeyCode.ButtonB)
+script.Destroying:Connect(function()
+	if landscape then landscape.destroy(); landscape=nil end
+	ContextActionService:UnbindAction("LandscapeHUDBack")
+end)
+syncLandscape(true)
+-- AG64_END_MOUNT
 local function bindMenu(name,menuId,keys)
 	ContextActionService:BindAction(name,function(_,inputState)
 		if inputState~=Enum.UserInputState.Begin or UserInputService:GetFocusedTextBox() then return Enum.ContextActionResult.Pass end
@@ -830,9 +923,18 @@ State.OnClientEvent:Connect(function(value)
 	end
 	local guideChanged=state and guideSignature(state)~=guideSignature(value)
 	state = value
+-- AG64_BEGIN_RECEIPT
+	if landscape then landscape.receipt(value,player:GetAttribute("PotionPlotIndex"),Config.maxBalance) end
+-- AG64_END_RECEIPT
 	if first and Session.intro(value) then panel.Visible=false end
 	local gained=Session.essenceDelta(previousEssence,value.essence)
+-- AG64_BEGIN_NO_DELTA_POPUP
+	if not landscape then
+-- AG64_END_NO_DELTA_POPUP
 	if gained>0 then showToast("+"..gained.." Essence") end
+-- AG64_BEGIN_END_DELTA_POPUP
+	end
+-- AG64_END_END_DELTA_POPUP
 	renderCoach()
 	if first or guideChanged or progressionChanged or longTermChanged or longTermViewChanged or (selected=="shop" and shopChanged) or (selected == "altar" and collectionChanged) or selected=="supplies" or selected=="inventory" or selected=="familiars" then draw() else refresh() end
 	if not hasReport and value.offlineReport and value.offlineReport.processedSeconds > 5 then
@@ -867,6 +969,9 @@ end)
 Notice.OnClientEvent:Connect(function(value)
 	collectionPending = false
 	showToast(Session.explain(value.text))
+-- AG64_BEGIN_NOTICE
+	if syncLandscape then syncLandscape() end
+-- AG64_END_NOTICE
 end)
 Focus.OnClientEvent:Connect(function(stationId)
 	if Config.stations[stationId] or stationId == "warehouse" or stationId == "orders" or stationId == "altar" or stationId == "blueprint" or stationId=="bazaar" then
@@ -878,6 +983,9 @@ end)
 draw()
 task.spawn(function()
 	context=require(script.Parent.WorldContext).start(updateContext,function() return panel.Visible or not gui.Enabled end,function()
+-- AG64_BEGIN_OCCLUSION
+		if landscape then return landscape.blocked({panel,coach,rail,toast},chatRect) end
+-- AG64_END_OCCLUSION
 		local inset=GuiService:GetGuiInset(); local rectangles={}
 		if chatRect then table.insert(rectangles,chatRect) end
 		for _,widget in ipairs({hud,guide,rail,toggle,coach,quick}) do
@@ -888,6 +996,10 @@ task.spawn(function()
 	end,function() return state end)
 	local world=workspace:WaitForChild("PotionTycoonWorld")
 	local function crystalFlash(object)
+-- AG64_BEGIN_NO_UNCONFIRMED_POPUP
+		local inheritedToast=showToast
+		local function showToast(...) if not landscape then inheritedToast(...) end end
+-- AG64_END_NO_UNCONFIRMED_POPUP
 		if object:IsA("ProximityPrompt") and object.Parent and object.Parent:GetAttribute("StationId")=="crystal" and string.sub(object.Parent.Name,1,4)~="Buy_" then
 			object.Triggered:Connect(function() showToast("Кристалл вспыхнул") end)
 		end
