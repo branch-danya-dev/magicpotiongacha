@@ -1,0 +1,196 @@
+{
+  "baseSha": "081bf33ba88178312207f8ad4f3a21b698511766",
+  "runtimeSha": "6fe6649868420cfc7a8bb73e4d6cc894d8c2a271",
+  "runtimeBuildSha256": "31048c4aa3487036395142aa570eebd5a0dc37bbc93172484b4a99fc5377242e",
+  "nativeRuntimeCi": "https://github.com/branch-danya-dev/magicpotiongacha/actions/runs/43239583185",
+  "captureSource": "Native Roblox Studio ordinary Play window captures; original JPEG bytes, no cropping, re-encoding or generative processing.",
+  "scene": {
+    "studio": "0.747.0.7471481",
+    "lightingStyle": "Soft",
+    "graphics": "Enum.QualityLevel.Level05",
+    "comparisonQuality": "reduced",
+    "comparisonReduceMotion": false,
+    "viewport": [
+      2113,
+      1115
+    ],
+    "camera": [
+      -129.5,
+      12,
+      -46,
+      0.9070090055465698,
+      -0.0931238979101181,
+      0.41068562865257263,
+      0,
+      0.9752424955368042,
+      0.22113841772079468,
+      -0.4211113452911377,
+      -0.20057453215122223,
+      0.8845536708831787
+    ],
+    "fov": 65,
+    "poses": {
+      "day": "Config.poses.day (phase 0)",
+      "sunsetClock": 17.649999618530273,
+      "nightClock": 22.5,
+      "rainClock": 13.980555534362793
+    },
+    "localQAOnly": [
+      "fixed camera",
+      "existing review time/weather poses",
+      "UIFoundationDemo hidden",
+      "graphics level restored after check"
+    ]
+  },
+  "checks": {
+    "tests": 1193,
+    "compiledLuauSources": 185,
+    "creatorErrors": 0,
+    "switchSeries": [
+      "reduced day",
+      "full night",
+      "minimal night + Reduce Motion",
+      "reduced rain"
+    ],
+    "switchesPerSeries": 20,
+    "unchangedLightingDescendants": 5,
+    "offRestorationTolerance": 0.000001,
+    "cleanup": "weather folder/probe removed; zero M7 Lighting children; disabled look request inert"
+  },
+  "unresolved": [
+    "Owner look choice and art acceptance",
+    "Real smartphone performance",
+    "Multi-client load",
+    "12 inherited local M7 texture failures / separate asset-permission gates"
+  ],
+  "screenshots": [
+    {
+      "file": "day-A.jpg",
+      "bytes": 514618,
+      "sha256": "f13745447f41ef9465038252f2b33fd99ca98a4c730aa8a383745bd4685323b3",
+      "format": "image/jpeg",
+      "width": 2560,
+      "height": 1392
+    },
+    {
+      "file": "day-B.jpg",
+      "bytes": 514389,
+      "sha256": "e40842cf939ba115a264052658747d330f455f0b63de353ed2b96a24c57d2cd5",
+      "format": "image/jpeg",
+      "width": 2560,
+      "height": 1392
+    },
+    {
+      "file": "day-C.jpg",
+      "bytes": 527577,
+      "sha256": "9daef1bd88265b9025dc7b7d6ec688f1944554c83a3ffd3ac799f793c82142d5",
+      "format": "image/jpeg",
+      "width": 2560,
+      "height": 1392
+    },
+    {
+      "file": "day-OFF.jpg",
+      "bytes": 529259,
+      "sha256": "b80f9a0b102e01a64ac5750360d5b4139f8e14622d5fbf5260cb9dd7ab9cd0c3",
+      "format": "image/jpeg",
+      "width": 2560,
+      "height": 1392
+    },
+    {
+      "file": "night-A.jpg",
+      "bytes": 350607,
+      "sha256": "e0679d9311a7308c474522ef245494741981c9ca17c9df94f02e622dbe27fd4a",
+      "format": "image/jpeg",
+      "width": 2560,
+      "height": 1392
+    },
+    {
+      "file": "night-B.jpg",
+      "bytes": 349767,
+      "sha256": "d187acdc832b3a27a8539953675126e5dfdab652383338102074befc8d4f6f6c",
+      "format": "image/jpeg",
+      "width": 2560,
+      "height": 1392
+    },
+    {
+      "file": "night-C.jpg",
+      "bytes": 345226,
+      "sha256": "2aa414c9a497c708f5f79c5c113d1010ac5138a171959f89bd28b3849e9f8f22",
+      "format": "image/jpeg",
+      "width": 2560,
+      "height": 1392
+    },
+    {
+      "file": "night-OFF.jpg",
+      "bytes": 345642,
+      "sha256": "71c8a9fe4cbd5a75d366d38ce5c39aead6eec474ecbf4b8cfb5dd426c0b6078f",
+      "format": "image/jpeg",
+      "width": 2560,
+      "height": 1392
+    },
+    {
+      "file": "quality-full.jpg",
+      "bytes": 363335,
+      "sha256": "7dd187f0e447d571bb9ba4fe7316ac6854ce1356220bb6f220781a309a8c2170",
+      "format": "image/jpeg",
+      "width": 2560,
+      "height": 1392
+    },
+    {
+      "file": "quality-minimal.jpg",
+      "bytes": 349874,
+      "sha256": "9d6ad125adb27987bee235293b43b86580e6f747ef9c4a382d83d57471f032c8",
+      "format": "image/jpeg",
+      "width": 2560,
+      "height": 1392
+    },
+    {
+      "file": "quality-reduce-motion.jpg",
+      "bytes": 363323,
+      "sha256": "e06efd8c6d9d5c0f81bcb2b3f6ef2a4285dab52216e1927df5d51feb80970f70",
+      "format": "image/jpeg",
+      "width": 2560,
+      "height": 1392
+    },
+    {
+      "file": "rain-B.jpg",
+      "bytes": 481366,
+      "sha256": "a017f9e3c521b5848390cda657fb544f0501daae45158309eed14cfcebcf9d3e",
+      "format": "image/jpeg",
+      "width": 2560,
+      "height": 1392
+    },
+    {
+      "file": "sunset-A.jpg",
+      "bytes": 430196,
+      "sha256": "f5da927473880487147e33763192a514fc72af01cddefb883d032d970aa410cd",
+      "format": "image/jpeg",
+      "width": 2560,
+      "height": 1392
+    },
+    {
+      "file": "sunset-B.jpg",
+      "bytes": 423631,
+      "sha256": "6ab800626fdd17fe4a6b1ba8334c9d68531a06f6c4d9972a1e0d2ac4658b7ee1",
+      "format": "image/jpeg",
+      "width": 2560,
+      "height": 1392
+    },
+    {
+      "file": "sunset-C.jpg",
+      "bytes": 438648,
+      "sha256": "011812192e2db97d0e715b3d4fad69ee4ed99815e1648f9ddabab50767cbc594",
+      "format": "image/jpeg",
+      "width": 2560,
+      "height": 1392
+    },
+    {
+      "file": "sunset-OFF.jpg",
+      "bytes": 438591,
+      "sha256": "3cdc878bceb8409e832064276f1982aec62bb03777ca6b4c1990cd80168d4a3a",
+      "format": "image/jpeg",
+      "width": 2560,
+      "height": 1392
+    }
+  ]
+}
