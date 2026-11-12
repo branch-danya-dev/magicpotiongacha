@@ -43,6 +43,7 @@ run(process.execPath, ['scripts/check-18a-evidence.mjs']);
 run(process.execPath, ['scripts/check-19a-evidence.mjs']);
 run(process.execPath, ['scripts/check-19b-evidence.mjs']);
 run(process.execPath, ['scripts/check-spellbook.mjs']);
+run(process.execPath, ['scripts/check-spellbook-effects.mjs']);
 run(tool('luau', 'luau-compile'), ['--null', ...all]);
 // Roblox engine scripts require Studio's type environment. The portable domain and
 // persistence modules are checked here; the runtime scripts are compiled above.
@@ -50,6 +51,7 @@ const portable = all.filter(file => file.startsWith('src/shared/') || file.start
 run(tool('luau', 'luau-analyze'), portable);
 run(tool('luau', 'luau'), ['tests/run.luau']);
 run(tool('luau', 'luau'), ['tests/run_ag01.luau']);
+run(tool('luau', 'luau'), ['tests/run_ag62a.luau']);
 await mkdir(resolve(root, 'build'), { recursive: true });
 run(tool('rojo', 'rojo'), ['build', 'default.project.json', '-o', 'build/PotionTycoon.rbxlx']);
 run(tool('rojo', 'rojo'), ['sourcemap', 'default.project.json', '-o', 'build/sourcemap.json']);

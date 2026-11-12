@@ -77,6 +77,19 @@
 
 ## Art, UX, safety, rollout
 
+### AG-62A — bounded Spellbook idle/VFX slice
+
+**Status: IN PROGRESS.** Issue #31; branch `feat/ag62a-spellbook-idle-vfx`.
+Base: CI-green PR #30, `341b7f6dd9ac1692781f865bf25fed63a05e9d8a`.
+Only client presentation of the imported book: rigid loose pages/runes, gentle
+glow/flame and bounded particles, quality/motion settings, full fallback cleanup.
+Successful manual Essence feedback uses a session-only server receipt in existing
+State snapshots; no new remote, permissions, rewards, save fields or migration.
+The full AG-62 remains gated on AG-60; AG-01 owner acceptance stays open.
+Rollback: revert this stacked feature; AG-01 static book and fallback remain intact.
+Acceptance: inherited tests + lifecycle/quality/receipt regressions, exact-head
+Windows/Ubuntu CI, ordinary Play and separate native-input/device review.
+
 | ID | Stage | Status / dependencies | Проверяемый результат |
 | --- | --- | --- | --- |
 | **AG-60** | R7 / UI | `GATED` AG-02, стабильный UI contract | Перенести UI-01/UI-02A из `UIFoundationDemo` в настоящие панели: компактная иконочная навигация, контекстные окна, читаемость, изменение магической палитры по действию; touch/gamepad/accessibility и Reduced Motion. |
