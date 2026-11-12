@@ -22,6 +22,7 @@ const additions=view.match(/-- AG63_BEGIN_\w+[\s\S]*?-- AG63_END_\w+/g).join('\n
 assert.deepEqual([...additions.matchAll(/Instance\.new\("([^"]+)"\)/g)].map(m=>m[1]),['BindableFunction'],'Only a Studio inspection endpoint; no new render effects');
 assert(additions.includes('if not RunService:IsStudio() or not Look.valid(name) then return false end'));
 assert(additions.includes('if lookInspect then lookInspect:Destroy(); lookInspect=nil end'));
+assert(additions.includes('lookInspect.Parent=folder') && !additions.includes('lookInspect.Parent=root'),'QA endpoint must not re-enter the root ChildAdded reconcile during startup');
 assert(!/SetAttribute\("EnvironmentArtEnabled"|FireServer|InvokeServer|BlurEffect|DepthOfFieldEffect|Skybox/.test(additions));
 const look=current('src/shared/PostFXLook.luau');
 assert(!/GetService|Instance\.new|task\.|os\.|rbxasset|require\(/.test(look),'Projection must stay portable, stateless and asset-free');

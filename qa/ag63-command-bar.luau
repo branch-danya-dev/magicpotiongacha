@@ -7,7 +7,8 @@ local Lighting=game:GetService("Lighting")
 local Stats=game:GetService("Stats")
 local Http=game:GetService("HttpService")
 local root=workspace:WaitForChild("PotionTycoonWorld")
-local inspect=root:FindFirstChild("PostFXInspect")
+local weather=workspace:FindFirstChild("M7ClientWeather")
+local inspect=weather and weather:FindFirstChild("PostFXInspect")
 assert(inspect,"Existing EnvironmentView must be running; do not enable a release flag")
 local q={}
 local function report(label,value) print("AG63 "..label.." "..Http:JSONEncode(value)) end

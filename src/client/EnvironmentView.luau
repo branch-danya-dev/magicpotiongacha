@@ -471,7 +471,9 @@ function View.start(root,settings)
 		-- separate require cache). It never changes quality, weather or rewards.
 		lookInspect=Instance.new("BindableFunction"); lookInspect.Name="PostFXInspect"
 		lookInspect.OnInvoke=function() return self.stats(),self.quality,self.reduceMotion end
-		lookInspect.Parent=root
+		-- Keep diagnostics under the existing client folder: adding a child to
+		-- root during start() can re-enter Environment.client's reconcile.
+		lookInspect.Parent=folder
 		-- AG63_END_INSPECT
 		-- Local Studio review inputs feed this owner; no helper, remote or save.
 		-- Direct Lighting.ClockTime writes are intentionally not a second API.
