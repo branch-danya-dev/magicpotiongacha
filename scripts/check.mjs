@@ -42,17 +42,20 @@ run(process.execPath, ['scripts/check-ui.mjs']);
 run(process.execPath, ['scripts/check-18a-evidence.mjs']);
 run(process.execPath, ['scripts/check-19a-evidence.mjs']);
 run(process.execPath, ['scripts/check-19b-evidence.mjs']);
+run(process.execPath, ['scripts/check-spellbook.mjs']);
 run(tool('luau', 'luau-compile'), ['--null', ...all]);
 // Roblox engine scripts require Studio's type environment. The portable domain and
 // persistence modules are checked here; the runtime scripts are compiled above.
 const portable = all.filter(file => file.startsWith('src/shared/') || file.startsWith('tests/') || ['src/server/ProfileStore.luau', 'src/server/TradeJournal.luau', 'src/server/TradeCoordinator.luau', 'src/server/ReceiptJournal.luau', 'src/server/PurchaseCoordinator.luau'].includes(file));
 run(tool('luau', 'luau-analyze'), portable);
 run(tool('luau', 'luau'), ['tests/run.luau']);
+run(tool('luau', 'luau'), ['tests/run_ag01.luau']);
 await mkdir(resolve(root, 'build'), { recursive: true });
 run(tool('rojo', 'rojo'), ['build', 'default.project.json', '-o', 'build/PotionTycoon.rbxlx']);
 run(tool('rojo', 'rojo'), ['sourcemap', 'default.project.json', '-o', 'build/sourcemap.json']);
 run(tool('rojo', 'rojo'), ['build', 'qa/environment.project.json', '-o', 'build/M7PilotReview.rbxlx']);
 run(tool('rojo', 'rojo'), ['sourcemap', 'qa/environment.project.json', '-o', 'build/environment-sourcemap.json']);
 run(process.execPath, ['scripts/check-visual-preservation.mjs', '--built']);
+run(process.execPath, ['scripts/check-spellbook.mjs', '--built']);
 console.log(`Verified ${all.length} Luau sources and built build/PotionTycoon.rbxlx`);
 appendFileSync(log, `PASS: ${all.length} Luau sources; compile, portable analysis, tests, Rojo build and sourcemap.\n`);

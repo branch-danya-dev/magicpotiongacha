@@ -35,7 +35,7 @@
 
 ### AG-01 — Spellbook Lectern как воспроизводимый игровой ассет
 
-**Статус: GATED / BLOCKED (owner import + permissions/license receipt).** **Depends:** AG-00 подтверждён на `7d6d47826e919683ee991c911185215cda0d3d2e`, Draft PR #29, Windows/Ubuntu PASS. **Files:** `assets/props/`, `src/server/SpellbookLectern.luau`, `SpellbookLecternPlan.luau`, импорт/manifest/tests.
+**Статус: CODE_CANDIDATE / native Play review pending.** **Depends:** AG-00 подтверждён на `7d6d47826e919683ee991c911185215cda0d3d2e`, Draft PR #29, Windows/Ubuntu PASS. **Files:** `assets/props/`, `src/server/SpellbookLectern.luau`, `SpellbookLecternPlan.luau`, импорт/manifest/tests.
 
 Preflight и выбранный путь: [AG01_SPELLBOOK_INTEGRATION.md](AG01_SPELLBOOK_INTEGRATION.md).
 Нужны владелец/experience, приватный импорт с проверенными ссылками, экспорт
