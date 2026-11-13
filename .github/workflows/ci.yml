@@ -38,6 +38,9 @@ jobs:
           name: PotionTycoon-${{ matrix.os }}-${{ github.event.pull_request.head.sha || github.sha }}
           path: |
             build/PotionTycoon.rbxlx
+            build/AG67-Prototype.rbxlx
+            assets/vfx/ag67/
+            scripts/install-ag67-preview.mjs
             build/PotionTycoon-M7-LocalPreview.rbxlx
             build/sourcemap.json
             build/verification.log

@@ -1,0 +1,30 @@
+{
+  "origin": "Original project-authored vector paths; no third-party model, glyph, stock circle or provider",
+  "source": "scripts/build-ag67-art.mjs; editable SVGs and design.json",
+  "localPrefix": "rbxasset://ag67-soul-v2/",
+  "publishedAssetIds": [],
+  "approval": "ART PENDING; private local Studio preview only",
+  "runtimeTextureBytesRGBA": 3932160,
+  "files": {
+    "SoulAbsorptionSigil.svg": "a4b04417ed54ea51bb80c6fecb64d1c564158ea30d7b535caea4be4a238b3618",
+    "SoulAbsorptionSigil.png": "7b0a5e39ef7d3af39e2691d33973ac05ae2753a3f46a4377daca13d76811d1bf",
+    "sector.svg": "e195bf831632026aa745b5719359c7c2a828c62b96b8f836a70b52f59a3371f7",
+    "sector.png": "78ac01b24a381acf43dc071148b25645d389ca1807f1ae2d0826abb8deb2fa1a",
+    "inner.svg": "621d78b3a7164b6dde9381a10ce5678783668c00982a5e87ffec07cac516568f",
+    "inner.png": "187c728700bd0117786adbc1bf0153d8c132d32c35a0f4efaadc45e6b7af9624",
+    "channels.svg": "10c5dade1fbb08094a3c7a8983a7017beaff9ef09f6904750235e12cbc1a0a99",
+    "channels.png": "68c0cbc367b6e7ba72c92d8b7bf0e00178d2b70392e11abff45cdb8e54e8e704",
+    "glyph0.svg": "c2e5c9bef30c1ea0446ce23ca07f2ce0228fc157a9dd68f8c7ad333365c9023d",
+    "glyph0.png": "b2d7664606dc8f5606d75b1ebc06e774db7330b239adae0f712fcf44b5911754",
+    "glyph1.svg": "1c796756f0a900bc995c6004ac7ab05ec4b58460eea74de7c945dcaa1fcc2677",
+    "glyph1.png": "470680415de58e634730a6284b047ccf098ebc7a2f3b6f1fbe532a2b52ee8f89",
+    "glyph2.svg": "2359d63d2cee19b989d79ddab613b5bf0e47b266301e5fedaac23be2b6ffb751",
+    "glyph2.png": "0de2e62084370bda847bf2f9540d07283ed0cbb2bbff38d741cb4174cb5a675c",
+    "glyph3.svg": "43555b667b04342a03cefaaf6421faab2cddb93fcf6fb9a3c5e3bae7cb4c3423",
+    "glyph3.png": "86e37ea4997d8c9948f4db2460c1b10484702c0938b80ae68a812fe47a0fc340",
+    "page.svg": "2bfa5086e32f055e5e76e7ffa22b6e51c9f29b1da53519b6b582a2964fd41cc8",
+    "page.png": "fab65a9f4ffe3773d9fa1b3c89604fc3933a4200bff3c35fead69482ad645d88",
+    "page-edge.svg": "0a9e9ddc3a57f99379c746b6c508ecd28f6a1e6b9a63ecccad65cbcab7df4e89",
+    "page-edge.png": "20a14e6cf537ac4639b0ec288963dbff6576333f35a3358f423710669dc4e533"
+  }
+}

@@ -77,6 +77,25 @@
 
 ## Art, UX, safety, rollout
 
+### AG-67 — Spellbook Soul Absorption VFX 2.0
+
+**Status: IMPLEMENTED/CODE (Stage A only) / scoped STUDIO VERIFIED; OWNER ART GATE OPEN.**
+Explicit owner specification, 2026-11-13. Base Draft PR #35,
+`feat/ag64-landscape-hud` @ `d026c02a3aa56b87e0883d6c9aac0f0854a81cb1`;
+Windows/Ubuntu CI 43263392408 PASS, remote HEAD verified unchanged.
+Branch: `feat/ag67-soul-absorption-prototype`.
+Scope now: original editable sigil + transparent raster, independent rune orbits,
+pooled burning pages and chest-targeted soul streams in an opt-in Studio prototype.
+The default ordinary Rojo game and all inherited production modules stay unchanged.
+No economy/profile/remote/physics/imported mesh edits; old/new comparison required.
+Deliver real Studio idle/ritual clips and seal/budget evidence before owner review.
+Delivered: [Stage A report and recordings](AG67_STAGE_A.md), original SVG/PNG,
+12-second idle and 13.5-second ritual videos at two cameras, 1233 passing tests,
+native quality caps / 20 switches / simulated fallback diagnostics. Default game
+build remains byte-identical to the base; no production integration yet.
+Stage B integration is BLOCKED until explicit artistic approval; CI cannot unlock it.
+No merge, publication or external asset upload is authorized.
+
 ### AG-64 — Figma Landscape Gameplay HUD
 
 **Status: IMPLEMENTED/CODE / scoped STUDIO VERIFIED / OWNER REVIEW OPEN / PUBLISHED: NO.** Base Draft PR #34,
