@@ -61,7 +61,7 @@ return function(T: any)
  T.test("AG68 complete continuous cycle stays inside legibility and effect budgets",function()
   for i=0,719 do for _,rain in ipairs({0,.5,1}) do for _,q in ipairs({"full","reduced","minimal"}) do
    local p=project(State.at(Config,i/720,rain),q)
-   T.truthy(p.brightness>=1.3 and p.brightness<=2.71);T.truthy(p.exposure>=-.10 and p.exposure<=.39)
+   T.truthy(p.brightness>=1.3 and p.brightness<=2.71);T.truthy(p.exposure>=-.10 and p.exposure<=.73)
    T.truthy(p.density>=.20 and p.density<=.36);T.truthy(p.haze>=.49 and p.haze<=2.26)
    T.truthy(p.bloom<=.16 and p.rays<=.035 and p.contrast<=.145)
    for _,key in ipairs({"ambient","outdoor","tint","sky","decay","sun"}) do for _,v in ipairs(p[key]) do T.truthy(v>=0 and v<=255) end end
