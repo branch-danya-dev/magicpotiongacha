@@ -6,6 +6,10 @@ assets/environment/fantasy/** -text whitespace=cr-at-eol
 assets/environment/stability-sky/** -text whitespace=cr-at-eol
 assets/environment/woodland/** -text whitespace=cr-at-eol
 assets/props/*.rbxmx -text whitespace=cr-at-eol
+# AG-67 original art and capture receipts are hashed byte-for-byte on both CI hosts.
+assets/vfx/ag67/** -text
+docs/evidence/ag67/** -text
+qa/ag67/** text eol=lf
 docs/evidence/ag01/*.log -text whitespace=cr-at-eol
 docs/evidence/m7-a2b/studio-audit.txt -text whitespace=cr-at-eol
 docs/evidence/m7-a2c/studio-audit.txt -text whitespace=cr-at-eol

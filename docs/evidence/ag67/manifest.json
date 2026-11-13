@@ -1,0 +1,125 @@
+{
+  "task": "AG-67 Stage A — owner art gate pending",
+  "date": "2026-11-13",
+  "baseSha": "d026c02a3aa56b87e0883d6c9aac0f0854a81cb1",
+  "captureRevision": "Uncommitted Stage A working tree based on baseSha; runtime hashes and exact rebuilt place below identify the capture. Final PR HEAD includes the identical runtime.",
+  "studio": "0.747.0.7471481",
+  "placeId": 0,
+  "backend": "STUDIO_MEMORY",
+  "rig": "R15",
+  "vfxQuality": "full",
+  "studioRenderQuality": "Q21",
+  "camera": {
+    "wide": {
+      "positionRelativeToBookPivot": [
+        13,
+        10,
+        14
+      ],
+      "targetRelativeToBookPivot": [
+        -1,
+        4,
+        0
+      ],
+      "fieldOfView": 70
+    },
+    "close": {
+      "positionRelativeToBookPivot": [
+        8,
+        7,
+        10
+      ],
+      "targetRelativeToBookPivot": [
+        -1,
+        4,
+        0
+      ],
+      "fieldOfView": 55
+    }
+  },
+  "scene": "Ordinary full-game Play, HUD temporarily detached and prompts hidden for art capture, existing EnvironmentReview=day. UI/camera/weather and original VFX restored, then Play stopped.",
+  "interaction": "QA helper sends the existing click intent at 3,6,9,9.18 seconds. Unchanged server validates and emits receipts. No direct visual trigger or reward injection.",
+  "capture": "Native Studio F12 recording, 2112x1104; edit is time trim, uniform resize to 1600x836, H.264 CRF19 and removal of empty audio. No generated frames, overlays, recoloring or VFX compositing.",
+  "clips": [
+    {
+      "file": "idle-full.mp4",
+      "sha256": "616ab643493fa84118635b8bbc73574bd14936ba8d9a4a242ef3fc5fc068f17f",
+      "bytes": 2685415,
+      "rawFile": "Roblox-2026-11-13T08_26_19.364Z.mp4",
+      "rawSha256": "5e952aeb48e27849bbee0f939800165463eeda21ae90ece59dec641765541621",
+      "startSeconds": 0,
+      "durationSeconds": 12,
+      "camera": "wide"
+    },
+    {
+      "file": "ritual-full.mp4",
+      "sha256": "238fc61a11a0cc9b3dbfd46ad16c5639e8d3ecc901fb02746bb8334339079163",
+      "bytes": 2730950,
+      "rawFile": "Roblox-2026-11-13T08_27_49.444Z.mp4",
+      "rawSha256": "791452122bbd8cdf3a5f691b52ef081adf86c5e7fda6478b32ee9d828a09cd75",
+      "startSeconds": 9,
+      "durationSeconds": 13.5,
+      "camera": "wide"
+    },
+    {
+      "file": "idle-close-full.mp4",
+      "sha256": "fbb753c399ca6bcc2cd9f1af12650a021047f045a1d3a12e51708330e3dee3de",
+      "bytes": 3602275,
+      "rawFile": "Roblox-2026-11-13T08_36_21.356Z.mp4",
+      "rawSha256": "d08a5f3591dbb21e65d8d4ef127d6a89fa182185cc7afb3207304948ef2d0516",
+      "startSeconds": 1,
+      "durationSeconds": 12,
+      "camera": "close"
+    },
+    {
+      "file": "ritual-close-full.mp4",
+      "sha256": "ea367b299b9a1519905009f5568c997594eea176b04442badee2cac4da30fe1c",
+      "bytes": 4304218,
+      "rawFile": "Roblox-2026-11-13T08_36_21.356Z.mp4",
+      "rawSha256": "d08a5f3591dbb21e65d8d4ef127d6a89fa182185cc7afb3207304948ef2d0516",
+      "startSeconds": 31.3,
+      "durationSeconds": 13.5,
+      "camera": "close"
+    }
+  ],
+  "capturedBuild": {
+    "file": "build/AG67-ArtReview.rbxlx",
+    "sha256": "63bff6a3562fbb2719d10342a441301d4f766fe3a0b0143b26eb1bf980687adc",
+    "bytes": 1006518,
+    "rebuiltFile": "build/AG67-Prototype.rbxlx",
+    "rebuiltSha256": "63bff6a3562fbb2719d10342a441301d4f766fe3a0b0143b26eb1bf980687adc"
+  },
+  "ordinaryBuild": {
+    "sha256": "8af10476830037f0a12246bac2fd2452464fae637e30935a2bc8165b2752268e",
+    "bytes": 985293
+  },
+  "capturedRuntime": {
+    "qa/ag67/Policy.luau": {
+      "sha256LfUtf8": "59a4401b9dc94590c1f642c4efa3aa02b75464a2fdea55ba508380645fc255a0"
+    },
+    "qa/ag67/View.luau": {
+      "sha256LfUtf8": "8129c60048d36f68fae09605e21eff08c1da80ea12453b42a902a825f9279a2f"
+    },
+    "qa/ag67/Adapter.luau": {
+      "sha256LfUtf8": "4876f1ad558e6d752eee7754bf097cc106d92570cecd2f33b8a3d96b1fb0baab"
+    }
+  },
+  "artManifest": {
+    "sha256": "def10ecc1bff18a4e87bbd0bc72a2ddff9fe9868ab0aadcf8f1d8177ea56c31f",
+    "bytes": 2126
+  },
+  "diagnostics": {
+    "sha256": "6e457215a994b01493c5f46f22d41bf1b1b45d00bee7598cf1fa6f2e5dd4c43d",
+    "bytes": 5917
+  },
+  "gates": {
+    "code": "IMPLEMENTED: Stage A prototype only",
+    "studio": "Scoped ordinary Play, capture, quality caps and diagnostics only",
+    "ownerArt": "PENDING",
+    "stageB": "BLOCKED until owner artistic approval",
+    "mobile": "NOT RUN",
+    "multiClient": "NOT RUN",
+    "liveBackend": "NOT RUN",
+    "published": "NO"
+  }
+}
