@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 const base='081bf33ba88178312207f8ad4f3a21b698511766';
 const normalize=text=>text.replace(/\r\n/g,'\n');
 const original=path=>normalize(execFileSync('git',['show',`${base}:${path}`],{encoding:'utf8',maxBuffer:16*1024*1024}));
-const current=path=>normalize(readFileSync(path,'utf8'));
+const current=path=>normalize(readFileSync(path==='src/client/SpellbookEffects.luau'?'src/client/LegacySpellbookEffects.luau':path,'utf8'));
 const inherited=execFileSync('git',['ls-tree','-r','--name-only',base,'src','tests'],{encoding:'utf8'}).trim().split('\n');
 for(const path of [...inherited,'default.project.json']) {
   // AG64 owns bounded HUD additions; check-landscape-hud strips them and pins

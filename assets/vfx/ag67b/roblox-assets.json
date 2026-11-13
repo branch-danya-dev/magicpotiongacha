@@ -1,0 +1,16 @@
+{
+  "status": "UPLOADED — TYPED IMAGE PRELOAD SUCCESS IN PRIVATE EXPERIENCE AND ORDINARY LOCAL PLAY",
+  "ownerApproval": "2026-11-13: owner approved the three named PNGs and manifest hashes, group addout studio, Restricted only, Experience 10776120489; no Creator Store/Open Use or game publication",
+  "privacyEvidence": "Owner explicitly confirmed Asset Privacy already enabled before Start Import; Studio importer has no privacy selector. All three imported as Images with creator addout studio. Separate resulting-asset permissions verification pending.",
+  "loadEvidence": "2026-11-13: unparented ImageLabel probes returned AssetFetchStatus.Success for all three in the existing private Experience 10776120489 / Place 125724638469407. Standard local Rojo Play also automatically loaded all three and selected soul mode. Bare-string generic preload failed; typed texture probes fixed that route. See docs/evidence/ag67b/asset-upload-check.log.",
+  "metadataEvidence": "MarketplaceService confirmed the exact three names, Group creator 925845207 and IsPublicDomain=false. This is not independent proof of Restricted permission settings; owner confirmation remains the privacy evidence. No game publishing or Creator Store listing performed.",
+  "creatorType": "Group",
+  "creatorId": 925845207,
+  "universeId": 10776120489,
+  "placeId": 125724638469407,
+  "assets": [
+    {"name":"AG67B_SigilAtlas","assetId":76491767385771,"type":"Image","sha256":"a32e46061a634a2c1e84d152bc552b06fbb987598827552189d2d836e93b6ad6"},
+    {"name":"AG67B_PageBurnAtlas","assetId":71524045190344,"type":"Image","sha256":"d32766cd8f50752b70b25924915a65bdf5fcc02ba51bb57f38f752a6ce40c29e"},
+    {"name":"AG67B_SoulWisp","assetId":79556416543344,"type":"Image","sha256":"6c48e3ea2f84afc80a57ef32dbf283fed6637d81ce8936b04aecc5c403c1fea5"}
+  ]
+}

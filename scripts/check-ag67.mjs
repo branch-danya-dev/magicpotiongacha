@@ -10,7 +10,8 @@ const normal=s=>s.replace(/\r\n/g,'\n');
 const files=execFileSync('git',['ls-tree','-r','--name-only',base,'src','tests','assets'],{encoding:'utf8'}).trim().split('\n');
 for(const file of [...files,'default.project.json']) {
  const old=execFileSync('git',['show',`${base}:${file}`],{maxBuffer:64*1024*1024});
- const current=readFileSync(file);
+ // AG67B moves the accepted original owner, retaining this byte comparison.
+ const current=readFileSync(file==='src/client/SpellbookEffects.luau'?'src/client/LegacySpellbookEffects.luau':file);
  if(/\.(luau|json|md|svg|rbxmx|txt)$/.test(file))assert.equal(normal(current.toString()),normal(old.toString()),`Stage A cannot change ${file}`);
  else assert(current.equals(old),`Stage A cannot change ${file}`);
 }

@@ -47,6 +47,7 @@ run(process.execPath, ['scripts/check-spellbook-effects.mjs']);
 run(process.execPath, ['scripts/check-postfx.mjs']);
 run(process.execPath, ['scripts/check-landscape-hud.mjs']);
 run(process.execPath, ['scripts/check-ag67.mjs']);
+run(process.execPath, ['scripts/check-ag67b.mjs']);
 run(tool('luau', 'luau-compile'), ['--null', ...all]);
 // Roblox engine scripts require Studio's type environment. The portable domain and
 // persistence modules are checked here; the runtime scripts are compiled above.
@@ -58,6 +59,7 @@ run(tool('luau', 'luau'), ['tests/run_ag62a.luau']);
 run(tool('luau', 'luau'), ['tests/run_ag63.luau']);
 run(tool('luau', 'luau'), ['tests/run_ag64.luau']);
 run(tool('luau', 'luau'), ['tests/run_ag67.luau']);
+run(tool('luau', 'luau'), ['tests/run_ag67b.luau']);
 run(process.execPath, ['scripts/build-ag67-preview.mjs']);
 await mkdir(resolve(root, 'build'), { recursive: true });
 run(tool('rojo', 'rojo'), ['build', 'default.project.json', '-o', 'build/PotionTycoon.rbxlx']);

@@ -12,7 +12,7 @@ for(const entry of readdirSync(resolve(root,'src/client'),{withFileTypes:true}))
  const name=entry.name.replace(/(?:\.client|\.server)?\.luau$/,'');
  client[name]={$path:resolve(root,'src/client',entry.name)};
 }
-client.LegacySpellbookEffects=client.SpellbookEffects;
+client.LegacySpellbookEffects ??= client.SpellbookEffects;
 client.SpellbookEffects={$path:resolve(root,'qa/ag67/Adapter.luau')};
 client.AG67={$className:'Folder',Policy:{$path:resolve(root,'qa/ag67/Policy.luau')},View:{$path:resolve(root,'qa/ag67/View.luau')}};
 project.tree.StarterPlayer.StarterPlayerScripts.PotionTycoon=client;

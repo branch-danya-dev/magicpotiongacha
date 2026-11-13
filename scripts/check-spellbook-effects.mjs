@@ -12,7 +12,8 @@ for(const path of protectedFiles) {
   const after=readFileSync(path);
   assert.equal(after.toString().replace(/\r\n/g,'\n'),before.toString().replace(/\r\n/g,'\n'),`${path}: AG62A scope regression`);
 }
-const client=readFileSync('src/client/SpellbookEffects.luau','utf8');
+// AG67B retains the entire accepted owner verbatim for instant rollback.
+const client=readFileSync('src/client/LegacySpellbookEffects.luau','utf8');
 assert(!/FireServer|InvokeServer|ServerStorage|SpotLight|SurfaceLight|GetService\("Lighting"\)/.test(client));
 assert.equal((client.match(/Instance\.new\("PointLight"\)/g)||[]).length,1);
 assert(client.includes('localLight.Shadows=false; localLight.Range=8'));

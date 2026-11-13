@@ -8,6 +8,8 @@ assets/environment/woodland/** -text whitespace=cr-at-eol
 assets/props/*.rbxmx -text whitespace=cr-at-eol
 # AG-67 original art and capture receipts are hashed byte-for-byte on both CI hosts.
 assets/vfx/ag67/** -text
+assets/vfx/ag67b/** -text
+docs/evidence/ag67b/** -text
 docs/evidence/ag67/** -text
 qa/ag67/** text eol=lf
 docs/evidence/ag01/*.log -text whitespace=cr-at-eol

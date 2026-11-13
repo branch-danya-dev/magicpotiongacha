@@ -4,7 +4,7 @@ import {execFileSync} from 'node:child_process';
 import assert from 'node:assert/strict';
 const base='0457a87b5cbff1200d1e96889986198244918213';
 const normal=s=>s.replace(/\r\n/g,'\n');
-const read=p=>normal(readFileSync(p,'utf8'));
+const read=p=>normal(readFileSync(p==='src/client/SpellbookEffects.luau'?'src/client/LegacySpellbookEffects.luau':p,'utf8'));
 const original=p=>normal(execFileSync('git',['show',`${base}:${p}`],{encoding:'utf8',maxBuffer:16*1024*1024}));
 const extended=new Set(['src/client/Main.client.luau','src/client/UIFoundationDemo.client.luau']);
 const files=execFileSync('git',['ls-tree','-r','--name-only',base,'src','tests'],{encoding:'utf8'}).trim().split('\n');

@@ -1,0 +1,60 @@
+{
+  "task": "AG-67B",
+  "status": "PREPARED — OWNER UPLOAD APPROVAL REQUIRED",
+  "source": "scripts/build-ag67b-art.mjs + original assets/vfx/ag67/design.json and page.png",
+  "license": "Original project-authored art; no external licensed or paid content",
+  "sourceSha256": "b708d4df971fbd9a43316073dd9b89557e9a47bfe6ac9e40bece9adff35f2076",
+  "creator": {
+    "type": "Group",
+    "name": "addout studio",
+    "id": 925845207
+  },
+  "universeId": 10776120489,
+  "placeId": 125724638469407,
+  "visibility": "Restricted; never Open Use or Creator Store",
+  "purpose": "Private game VFX textures for ordinary Rojo/Studio build",
+  "releaseEnabled": false,
+  "decodedRgbaBytes": 8650752,
+  "pageVisiblePixels": [
+    32128,
+    28906,
+    25671,
+    22517,
+    18530,
+    14014,
+    9270,
+    5342
+  ],
+  "files": [
+    {
+      "name": "AG67B_SigilAtlas.png",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 88433,
+      "sha256": "a32e46061a634a2c1e84d152bc552b06fbb987598827552189d2d836e93b6ad6",
+      "type": "Image",
+      "assetName": "AG67B_SigilAtlas",
+      "assetId": null
+    },
+    {
+      "name": "AG67B_PageBurnAtlas.png",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 190948,
+      "sha256": "d32766cd8f50752b70b25924915a65bdf5fcc02ba51bb57f38f752a6ce40c29e",
+      "type": "Image",
+      "assetName": "AG67B_PageBurnAtlas",
+      "assetId": null
+    },
+    {
+      "name": "AG67B_SoulWisp.png",
+      "width": 256,
+      "height": 256,
+      "bytes": 15775,
+      "sha256": "6c48e3ea2f84afc80a57ef32dbf283fed6637d81ce8936b04aecc5c403c1fea5",
+      "type": "Image",
+      "assetName": "AG67B_SoulWisp",
+      "assetId": null
+    }
+  ]
+}
