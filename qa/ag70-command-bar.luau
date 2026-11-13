@@ -24,14 +24,16 @@ local fields={
  ColorCorrectionEffect={"Enabled","Brightness","Contrast","Saturation","TintColor"},
  BloomEffect={"Enabled","Intensity","Size","Threshold"},SunRaysEffect={"Enabled","Intensity","Spread"},
  Clouds={"Enabled","Color","Cover","Density"},
+ PointLight={"Enabled","Color","Brightness","Range","Shadows"},SpotLight={"Enabled","Color","Brightness","Range","Shadows"},
 }
 function q.snapshot()
  local result={};local instances={L}
  for _,v in ipairs(L:GetChildren()) do table.insert(instances,v) end
  for _,v in ipairs(workspace.Terrain:GetChildren()) do table.insert(instances,v) end
+ for _,v in ipairs(workspace:GetDescendants()) do if v:IsA("Light") and (v.Name=="M7LocalLantern" or v.Name=="CanopySun") then table.insert(instances,v) end end
  for _,v in ipairs(instances) do if fields[v.ClassName] then
   local data={};for _,key in ipairs(fields[v.ClassName]) do data[key]=get(v,key) end
-  result[v.Name]=data
+  result[v:IsA("Light") and v:GetFullName() or v.Name]=data
  end end
  return result
 end

@@ -1,0 +1,23 @@
+{
+  "sourceSha": "14a68aee7890477a4a274b8839ef70101adf7723",
+  "buildSha256": "15f99ba5483be4951151a4823163d5aa344b285e069309dbb2b8f83e8df426c6",
+  "captures": [
+    {
+      "path": "docs/evidence/ag70/iteration1-day.jpg",
+      "sha256": "7a239b36913dba8e111b35e3829fa9e4dd716e0b6e1c97a37ef666b66fdecf0b"
+    },
+    {
+      "path": "docs/evidence/ag70/iteration1-night.jpg",
+      "sha256": "1494c32e6572a6552d36c293c6159225eaeeed08b6f486b1bbcbe2189da5e858"
+    },
+    {
+      "path": "docs/evidence/ag70/iteration1-rain.jpg",
+      "sha256": "791a3cff1adf49c095d913ac083de8d4b0e4e1a82b879d9cdda35cbd2995bca1"
+    },
+    {
+      "path": "docs/evidence/ag70/iteration1-sunset.jpg",
+      "sha256": "4a086108df9f200cec2be8952b9deb5fd5f828f87f8ce1fc28b6b9cb98a62f54"
+    }
+  ],
+  "finding": "Night too dark for forest/character detail. Day excessive green/white highlights. Sunset shadowed by hills; preserve hue without flattening. Native sky sun/moon content-representation errors also present in AG69 baseline."
+}

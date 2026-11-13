@@ -2,6 +2,7 @@
   "src/client/EnvironmentView.luau": {
     "IMPORT": "",
     "STATE": "",
+    "ANCHOR": "",
     "APPLY": "",
     "SELECT": "",
     "LIGHTS": "",

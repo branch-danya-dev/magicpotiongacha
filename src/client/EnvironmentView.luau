@@ -134,6 +134,12 @@ function View.start(root,settings)
 		light.Angle=75; light.Range=22; light.Shadows=false; light.Brightness=0; light.Enabled=false
 		light.Color=Color3.fromRGB(255,223,168); sunPools[i]=light
 	end
+-- AG70_BEGIN_ANCHOR
+	-- Reuse the nearest existing canopy light for the pilot's lectern/path.
+	-- Record its authored position for exact OFF and legacy-look restoration.
+	local forestPoolBase=sunPools[1].Parent.Position
+	local forestPoolFocus=Vector3.new(-148.5,surface(-148.5,-73)+14,-73)
+-- AG70_END_ANCHOR
 	local pollenGround={}
 	for i,pos in ipairs(Style.pollenAnchors) do pollenGround[i]=surface(pos[1],pos[2]) end
 	local rainbow=sprite("AfterRainArc","rainbow",Vector2.new(95,48),Vector3.new(-140,50,-160))
@@ -479,6 +485,7 @@ function View.start(root,settings)
 			e.light.Enabled=e.weight>0; e.light.Brightness=.42*sunlight*e.weight
 		end
 -- AG70_BEGIN_LIGHTS
+		sunPools[1].Parent.Position=look=="AG70" and forestPoolFocus or forestPoolBase
 		-- Reset color even when switching directly to OFF or a legacy look.
 		for _,e in ipairs(lanternSlots) do
 			e.light.Color=color(Config.palette.amber)
