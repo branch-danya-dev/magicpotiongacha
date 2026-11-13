@@ -2,6 +2,7 @@
 local Forest=require("../src/shared/ArcaneForest")
 local State=require("../src/shared/EnvironmentState")
 local Config=require("../src/shared/EnvironmentConfig")
+local function luma(rgb) return rgb[1]*.2126+rgb[2]*.7152+rgb[3]*.0722 end
 return function(T)
 	T.test("AG70 only opts Studio into review; legacy requests remain separate",function()
 		assert(Forest.default(true)=="AG70" and Forest.default(false)=="OFF" and Forest.default(nil)=="OFF")
@@ -31,7 +32,7 @@ return function(T)
 			local night=State.sample(Config,0,"night")
 			for _,cloud in ipairs({0,.5,1}) do
 				local p=Forest.project(State.at(Config,night.phase,cloud,{cloud=cloud,wet=cloud,afterRain=0}),"AG70",tier)
-				assert(p.ambient[1]<day.ambient[1] and p.outdoor[2]<day.outdoor[2])
+				assert(luma(p.ambient)<luma(day.ambient) and luma(p.outdoor)<luma(day.outdoor))
 				assert(p.diffuse<day.diffuse and p.exposure<.15)
 			end
 		end)
