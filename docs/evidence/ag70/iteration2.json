@@ -1,0 +1,19 @@
+{
+  "sourceSha": "955b7c15bfa6e7b7b2f327e77d31856343b77285",
+  "buildSha256": "04f2a5b43608100b406efa063410af8a9a7c54501b19b2f537005ac661e36221",
+  "captures": [
+    {
+      "path": "docs/evidence/ag70/iteration2-day-reduced-near-AG70.jpg",
+      "sha256": "7e4a7d1f49b2c05ad073f81f6cf2107229f32d9b409712819330bc0ad932a02f"
+    },
+    {
+      "path": "docs/evidence/ag70/iteration2-day-reduced-near-OFF.jpg",
+      "sha256": "b6f52ca1ece2cf4d91e535a9ba7ca1034df2109c3cdea8f2081aafb594551f4e"
+    },
+    {
+      "path": "docs/evidence/ag70/iteration2-night.jpg",
+      "sha256": "fb549940f12f0b848242b30bf80db6185c8800b1af74036524e65fba05183f7c"
+    }
+  ],
+  "finding": "Night detail and localized lectern light improved; day OFF/candidate still too similar. Third iteration lowers day exposure/fill and cools shadow palette."
+}

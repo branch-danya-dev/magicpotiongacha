@@ -1,7 +1,7 @@
 --!nonstrict
 -- AG70 review palette: projection of the existing continuous time/weather state.
 -- No clock, renderer, asset, reward, release flag or second lighting owner.
-local Forest={releaseEnabled=false,version="2.1-iteration2"}
+local Forest={releaseEnabled=false,version="2.1-iteration3"}
 function Forest.default(studio) return studio==true and "AG70" or "OFF" end
 function Forest.request(value) return value=="look:AG70" and "AG70" or nil end
 local function mix(a,b,t)
@@ -9,9 +9,9 @@ local function mix(a,b,t)
 	return a+(b-a)*t
 end
 local palette={
-	day={brightness=2.8,exposure=.02,ambient={50,75,82},outdoor={119,145,149},
-		tint={247,255,250},sky={135,196,214},decay={83,111,151},sun={255,219,165},
-		saturation=.035,contrast=.13,density=.30,haze=1.5,glare=.16,diffuse=.25},
+	day={brightness=2.7,exposure=-.12,ambient={37,69,92},outdoor={97,133,157},
+		tint={233,248,255},sky={135,196,214},decay={83,111,151},sun={255,219,165},
+		saturation=.02,contrast=.19,density=.30,haze=1.5,glare=.16,diffuse=.25},
 	sunset={brightness=3.0,exposure=.06,ambient={66,78,108},outdoor={124,137,172},
 		tint={255,247,237},sky={243,187,164},decay={77,95,151},sun={255,174,87},
 		saturation=.025,contrast=.11,density=.32,haze=1.8,glare=.24,diffuse=.18},

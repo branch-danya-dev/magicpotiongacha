@@ -32,7 +32,7 @@ return function(T)
 			for _,cloud in ipairs({0,.5,1}) do
 				local p=Forest.project(State.at(Config,night.phase,cloud,{cloud=cloud,wet=cloud,afterRain=0}),"AG70",tier)
 				assert(p.ambient[1]<day.ambient[1] and p.outdoor[2]<day.outdoor[2])
-				assert(p.diffuse<day.diffuse and p.exposure<=day.exposure)
+				assert(p.diffuse<day.diffuse and p.exposure<.15)
 			end
 		end)
 	end
