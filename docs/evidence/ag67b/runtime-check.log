@@ -1,0 +1,103 @@
+2026-11-13T09:49:59.101Z,74.101311,2d74,6,Info [FLog::CreatorOutput] AG67B_AUTO Players.<LocalPlayer>.PlayerScripts.PotionTycoon.SpellbookEffects.Inspect {"active":1,"emitted":212,"beams":0,"releaseEnabled":false,"mode":"soul","sheets":0,"runes":4,"connections":3,"tracked":8,"activeRitual":false,"emitters":4,"updates":1392,"sigilSparks":0,"batches":0,"feedback":0,"lights":1,"errors":0,"averageMs":0.14540229894344354,"maxMs":1.1206000017409679,"peakInstances":32,"content":"ready","instances":32}
+2026-11-13T09:49:59.101Z,74.101311,2d74,6,Info [FLog::CreatorOutput] AG67B_PLOT 2 -47.5, 0.40625, -67 ready
+2026-11-13T09:49:59.101Z,74.101311,2d74,6,Info [FLog::CreatorOutput] AG67B_PLOT 6 -47.5, 0.40625, 83 ready
+2026-11-13T09:49:59.101Z,74.101311,2d74,6,Info [FLog::CreatorOutput] AG67B_PLOT 3 47.5, 0.40625, -67 ready
+2026-11-13T09:49:59.101Z,74.101311,2d74,6,Info [FLog::CreatorOutput] AG67B_PLOT 7 47.5, 0.40625, 83 ready
+2026-11-13T09:49:59.101Z,74.101311,2d74,6,Info [FLog::CreatorOutput] AG67B_PLOT 4 142.5, 0.40625, -67 ready
+2026-11-13T09:49:59.101Z,74.101311,2d74,6,Info [FLog::CreatorOutput] AG67B_PLOT 8 142.5, 0.40625, 83 ready
+2026-11-13T09:49:59.101Z,74.101311,2d74,6,Info [FLog::CreatorOutput] AG67B_PLOT 1 -142.5, 0.40625, -67 ready
+2026-11-13T09:49:59.101Z,74.101311,2d74,6,Info [FLog::CreatorOutput] AG67B_PLOT 5 -142.5, 0.40625, 83 ready
+2026-11-13T09:51:46.664Z,181.664474,2d74,6,Info [FLog::CreatorOutput] AG67B_ANCHOR -142.5, 3, -67
+2026-11-13T09:51:47.368Z,182.368362,4928,6,Info [FLog::CreatorOutput] AG67B_STATE 0 true
+2026-11-13T09:52:08.260Z,203.260605,2d74,6,Info [FLog::CreatorOutput] AG67B_STATE 5 true
+2026-11-13T09:52:22.612Z,217.612213,2384,6,Info [FLog::CreatorOutput] AG67B_STATE 10 true
+2026-11-13T09:54:23.103Z,338.103485,2384,6,Info [FLog::CreatorOutput] AG67B_QA after-native-E-and-mouse {"active":1,"emitted":1414,"beams":12,"releaseEnabled":false,"mode":"soul","sheets":12,"runes":4,"connections":3,"tracked":8,"activeRitual":false,"emitters":6,"updates":8744,"sigilSparks":32,"batches":2,"feedback":2,"lights":1,"errors":0,"averageMs":0.15617575480410418,"maxMs":1.1206000017409679,"peakInstances":226,"content":"ready","instances":226}
+2026-11-13T09:54:23.404Z,338.404846,4770,6,Info [FLog::CreatorOutput] AG67B_QA full-idle {"active":2,"emitted":1418,"beams":0,"releaseEnabled":false,"mode":"soul","sheets":0,"runes":12,"connections":3,"tracked":8,"activeRitual":false,"emitters":4,"updates":8761,"sigilSparks":32,"batches":2,"feedback":2,"lights":1,"errors":0,"averageMs":0.15642851272846673,"maxMs":1.4303000025392976,"peakInstances":226,"content":"ready","instances":67}
+2026-11-13T09:54:23.420Z,338.420166,2384,6,Info [FLog::CreatorOutput] AG67B_STATE 15 true
+2026-11-13T09:54:24.057Z,339.057251,4770,6,Info [FLog::CreatorOutput] AG67B_QA full-ritual {"active":2,"emitted":1463,"beams":18,"releaseEnabled":false,"mode":"soul","sheets":22,"runes":12,"connections":3,"tracked":8,"activeRitual":true,"emitters":6,"updates":8795,"sigilSparks":64,"batches":3,"feedback":3,"lights":1,"errors":0,"averageMs":0.15814667425028446,"maxMs":1.4303000025392976,"peakInstances":411,"content":"ready","instances":411}
+2026-11-13T09:54:26.363Z,341.363434,2d74,6,Info [FLog::CreatorOutput] AG67B_QA reduced-idle {"active":1,"emitted":1495,"beams":0,"releaseEnabled":false,"mode":"soul","sheets":0,"runes":4,"connections":3,"tracked":8,"activeRitual":false,"emitters":4,"updates":8910,"sigilSparks":64,"batches":3,"feedback":3,"lights":1,"errors":0,"averageMs":0.16440937149293806,"maxMs":1.4303000025392976,"peakInstances":411,"content":"ready","instances":32}
+2026-11-13T09:54:26.378Z,341.378448,2d74,6,Info [FLog::CreatorOutput] AG67B_STATE 20 true
+2026-11-13T09:54:27.016Z,342.016144,2384,6,Info [FLog::CreatorOutput] AG67B_QA reduced-ritual {"active":1,"emitted":1520,"beams":12,"releaseEnabled":false,"mode":"soul","sheets":12,"runes":4,"connections":3,"tracked":8,"activeRitual":true,"emitters":6,"updates":8928,"sigilSparks":80,"batches":4,"feedback":4,"lights":1,"errors":0,"averageMs":0.16494219309971809,"maxMs":1.4303000025392976,"peakInstances":411,"content":"ready","instances":226}
+2026-11-13T09:54:29.322Z,344.322296,0528,6,Info [FLog::CreatorOutput] AG67B_QA minimal-idle {"active":1,"emitted":1534,"beams":0,"releaseEnabled":false,"mode":"soul","sheets":0,"runes":2,"connections":3,"tracked":8,"activeRitual":false,"emitters":0,"updates":8989,"sigilSparks":80,"batches":4,"feedback":4,"lights":0,"errors":0,"averageMs":0.16645323172850216,"maxMs":1.4303000025392976,"peakInstances":411,"content":"ready","instances":17}
+2026-11-13T09:54:29.334Z,344.334290,30dc,6,Info [FLog::CreatorOutput] AG67B_STATE 25 true
+2026-11-13T09:54:29.977Z,344.977386,0528,6,Info [FLog::CreatorOutput] AG67B_QA minimal-ritual {"active":1,"emitted":1534,"beams":0,"releaseEnabled":false,"mode":"soul","sheets":0,"runes":2,"connections":3,"tracked":8,"activeRitual":true,"emitters":0,"updates":9002,"sigilSparks":80,"batches":5,"feedback":5,"lights":0,"errors":0,"averageMs":0.16635288824809467,"maxMs":1.4303000025392976,"peakInstances":411,"content":"ready","instances":19}
+2026-11-13T09:54:32.300Z,347.300659,4770,6,Info [FLog::CreatorOutput] AG67B_STATE 30 true
+2026-11-13T09:54:32.934Z,347.934143,30dc,6,Info [FLog::CreatorOutput] AG67B_QA reduce-motion {"active":2,"emitted":1534,"beams":0,"releaseEnabled":false,"mode":"soul","sheets":0,"runes":12,"connections":3,"tracked":8,"activeRitual":true,"emitters":0,"updates":9091,"sigilSparks":80,"batches":6,"feedback":6,"lights":1,"errors":0,"averageMs":0.16605909141018944,"maxMs":1.4900999995006715,"peakInstances":411,"content":"ready","instances":62}
+2026-11-13T09:54:35.240Z,350.240875,2d74,6,Info [FLog::CreatorOutput] AG67B_QA before-invalid {"active":1,"emitted":1538,"beams":0,"releaseEnabled":false,"mode":"soul","sheets":0,"runes":4,"connections":3,"tracked":8,"activeRitual":false,"emitters":4,"updates":9209,"sigilSparks":80,"batches":6,"feedback":6,"lights":1,"errors":0,"averageMs":0.16596707568703918,"maxMs":1.4900999995006715,"peakInstances":411,"content":"ready","instances":32}
+2026-11-13T09:54:35.743Z,350.743469,5004,6,Info [FLog::CreatorOutput] AG67B_QA invalid-rejected {"active":1,"emitted":1538,"beams":0,"releaseEnabled":false,"mode":"soul","sheets":0,"runes":4,"connections":3,"tracked":8,"activeRitual":false,"emitters":4,"updates":9223,"sigilSparks":80,"batches":6,"feedback":6,"lights":1,"errors":0,"averageMs":0.16593799197712948,"maxMs":1.4900999995006715,"peakInstances":411,"content":"ready","instances":32}
+2026-11-13T09:54:36.748Z,351.748108,2384,6,Info [FLog::CreatorOutput] AG67B_QA distance-rejected {"active":1,"emitted":1542,"beams":0,"releaseEnabled":false,"mode":"soul","sheets":0,"runes":4,"connections":3,"tracked":8,"activeRitual":false,"emitters":4,"updates":9251,"sigilSparks":80,"batches":6,"feedback":6,"lights":1,"errors":0,"averageMs":0.16591086369001913,"maxMs":1.4900999995006715,"peakInstances":411,"content":"ready","instances":32}
+2026-11-13T09:54:37.274Z,352.274414,4770,6,Info [FLog::CreatorOutput] AG67B_STATE 35 true
+2026-11-13T09:54:37.284Z,352.284424,4770,6,Info [FLog::CreatorOutput] AG67B_STATE 40 true
+2026-11-13T09:54:37.291Z,352.291412,0abc,6,Info [FLog::CreatorOutput] AG67B_STATE 45 true
+2026-11-13T09:54:37.298Z,352.298431,2384,6,Info [FLog::CreatorOutput] AG67B_STATE 50 true
+2026-11-13T09:54:37.304Z,352.304443,2384,6,Info [FLog::CreatorOutput] AG67B_STATE 55 true
+2026-11-13T09:54:37.312Z,352.312469,2d74,6,Info [FLog::CreatorOutput] AG67B_STATE 60 true
+2026-11-13T09:54:37.319Z,352.319489,4928,6,Info [FLog::CreatorOutput] AG67B_STATE 65 true
+2026-11-13T09:54:37.327Z,352.327484,0abc,6,Info [FLog::CreatorOutput] AG67B_STATE 70 true
+2026-11-13T09:54:37.903Z,352.903412,2384,6,Info [FLog::CreatorOutput] AG67B_QA 100-rapid-intents {"active":1,"emitted":1571,"beams":12,"releaseEnabled":false,"mode":"soul","sheets":12,"runes":4,"connections":3,"tracked":8,"activeRitual":true,"emitters":6,"updates":9283,"sigilSparks":96,"batches":7,"feedback":14,"lights":1,"errors":0,"averageMs":0.16629761930525797,"maxMs":1.4900999995006715,"peakInstances":411,"content":"ready","instances":226}
+2026-11-13T09:54:40.904Z,355.904449,4770,6,Info [FLog::CreatorOutput] AG67B_QA pool-after-spam {"active":1,"emitted":1589,"beams":12,"releaseEnabled":false,"mode":"soul","sheets":12,"runes":4,"connections":3,"tracked":8,"activeRitual":false,"emitters":6,"updates":9366,"sigilSparks":96,"batches":7,"feedback":14,"lights":1,"errors":0,"averageMs":0.16791077300966104,"maxMs":1.4900999995006715,"peakInstances":411,"content":"ready","instances":226}
+2026-11-13T09:54:40.921Z,355.921417,2d74,6,Info [FLog::CreatorOutput] AG67B_STATE 75 true
+2026-11-13T09:54:41.557Z,356.557068,0abc,6,Info [FLog::CreatorOutput] AG67B_QA pool-reused {"active":1,"emitted":1614,"beams":12,"releaseEnabled":false,"mode":"soul","sheets":12,"runes":4,"connections":3,"tracked":8,"activeRitual":true,"emitters":6,"updates":9385,"sigilSparks":112,"batches":8,"feedback":15,"lights":1,"errors":0,"averageMs":0.16841195524839754,"maxMs":1.4900999995006715,"peakInstances":411,"content":"ready","instances":226}
+2026-11-13T09:54:41.861Z,356.861816,2384,6,Info [FLog::CreatorOutput] AG67B_QA fallback {"peakSheets":0,"errors":0,"emitted":0,"updates":6,"sheets":0,"paperBursts":0,"lights":1,"tracked":8,"averageMs":0.18014999962664056,"feedback":0,"mode":"original","active":1,"maxMs":0.24000000121304766,"enabled":2,"emitters":3,"content":"ready","releaseEnabled":false}
+2026-11-13T09:54:42.164Z,357.164459,0abc,6,Info [FLog::CreatorOutput] AG67B_QA restored {"active":1,"emitted":4,"beams":0,"releaseEnabled":false,"mode":"soul","sheets":0,"runes":4,"connections":3,"tracked":8,"activeRitual":false,"emitters":4,"updates":9,"sigilSparks":0,"batches":0,"feedback":0,"lights":1,"errors":0,"averageMs":0.1886888890617734,"maxMs":0.6031000011716969,"peakInstances":32,"content":"ready","instances":32}
+2026-11-13T09:54:43.831Z,358.831238,0528,6,Info [FLog::CreatorOutput] AG67B_QA 20-owner-quality-switches {"active":1,"emitted":4,"beams":0,"releaseEnabled":false,"mode":"soul","sheets":0,"runes":4,"connections":3,"tracked":8,"activeRitual":false,"emitters":4,"updates":3,"sigilSparks":0,"batches":0,"feedback":0,"lights":1,"errors":0,"averageMs":0.32606666718493218,"maxMs":0.6518000009236857,"peakInstances":32,"content":"ready","instances":32}
+2026-11-13T09:54:44.033Z,359.033203,0abc,6,Info [FLog::CreatorOutput] AG67B_FLOOR 1 -142.5, 0.5450000166893005, -67 0.13875001668930054
+2026-11-13T09:54:44.234Z,359.234406,0abc,6,Info [FLog::CreatorOutput] AG67B_FLOOR 2 -47.5, 0.5450000166893005, -67 0.13875001668930054
+2026-11-13T09:54:44.442Z,359.442200,2d74,6,Info [FLog::CreatorOutput] AG67B_FLOOR 3 47.5, 0.5450000166893005, -67 0.13875001668930054
+2026-11-13T09:54:44.651Z,359.651489,2d74,6,Info [FLog::CreatorOutput] AG67B_FLOOR 4 142.5, 0.5450000166893005, -67 0.13875001668930054
+2026-11-13T09:54:44.856Z,359.856415,2384,6,Info [FLog::CreatorOutput] AG67B_FLOOR 5 -142.5, 0.5450000166893005, 83 0.13875001668930054
+2026-11-13T09:54:45.062Z,360.062164,4770,6,Info [FLog::CreatorOutput] AG67B_FLOOR 6 -47.5, 0.5450000166893005, 83 0.13875001668930054
+2026-11-13T09:54:45.266Z,360.266388,4928,6,Info [FLog::CreatorOutput] AG67B_FLOOR 7 47.5, 0.5450000166893005, 83 0.13875001668930054
+2026-11-13T09:54:45.468Z,360.468536,2384,6,Info [FLog::CreatorOutput] AG67B_FLOOR 8 142.5, 0.5450000166893005, 83 0.13875001668930054
+2026-11-13T09:54:45.768Z,360.768524,0528,6,Info [FLog::CreatorOutput] AG67B_QA_COMPLETE
+2026-11-13T09:55:46.042Z,421.042114,0abc,6,Info [FLog::CreatorOutput] AG67B_RITUAL_VIDEO_START
+2026-11-13T09:55:46.061Z,421.061066,2384,6,Info [FLog::CreatorOutput] AG67B_STATE 80 true
+2026-11-13T09:55:49.059Z,424.059052,4928,6,Info [FLog::CreatorOutput] AG67B_STATE 85 true
+2026-11-13T09:55:52.074Z,427.074066,2d74,6,Info [FLog::CreatorOutput] AG67B_STATE 90 true
+2026-11-13T09:55:55.071Z,430.071411,0528,6,Info [FLog::CreatorOutput] AG67B_STATE 95 true
+2026-11-13T09:55:58.073Z,433.073120,2d74,6,Info [FLog::CreatorOutput] AG67B_STATE 100 true
+2026-11-13T09:56:01.070Z,436.070770,4928,6,Info [FLog::CreatorOutput] AG67B_STATE 105 true
+2026-11-13T09:56:04.058Z,439.058990,2d74,6,Info [FLog::CreatorOutput] AG67B_RITUAL_VIDEO_END {"active":2,"emitted":762,"beams":18,"releaseEnabled":false,"mode":"soul","sheets":22,"runes":12,"connections":3,"tracked":8,"activeRitual":false,"emitters":6,"updates":2933,"sigilSparks":192,"batches":6,"feedback":6,"lights":1,"errors":0,"averageMs":0.33795393792599356,"maxMs":1.9921999992220663,"peakInstances":411,"content":"ready","instances":411}
+2026-11-13T09:59:55.036Z,670.036804,2d74,6,Info [FLog::CreatorOutput] AG67B_LANDSCAPE 750, 382
+2026-11-13T10:03:30.075Z,885.075684,0abc,6,Info [FLog::CreatorOutput] AG67B_STATE 110 true
+2026-11-13T10:03:33.082Z,888.082581,0abc,6,Info [FLog::CreatorOutput] AG67B_STATE 115 true
+2026-11-13T10:03:36.093Z,891.093079,4770,6,Info [FLog::CreatorOutput] AG67B_STATE 120 true
+2026-11-13T10:03:39.072Z,894.072144,2d74,6,Info [FLog::CreatorOutput] AG67B_PERF full {"p95Ms":8.810699917376042,"seconds":9.01504169520922,"stats":{"active":2,"emitted":3565,"beams":18,"releaseEnabled":false,"mode":"soul","sheets":22,"runes":12,"connections":3,"tracked":8,"activeRitual":false,"emitters":6,"updates":19347,"sigilSparks":288,"batches":9,"feedback":9,"lights":1,"errors":0,"averageMs":0.22297233163039269,"maxMs":2.1541999994951768,"peakInstances":411,"content":"ready","instances":411},"samples":1577,"averageUpdateMs":0.6450955813539453,"fps":174.92986203691664}
+2026-11-13T10:03:40.093Z,895.093262,0abc,6,Info [FLog::CreatorOutput] AG67B_STATE 125 true
+2026-11-13T10:03:43.090Z,898.090637,0528,6,Info [FLog::CreatorOutput] AG67B_STATE 130 true
+2026-11-13T10:03:46.095Z,901.095337,2384,6,Info [FLog::CreatorOutput] AG67B_STATE 135 true
+2026-11-13T10:03:49.086Z,904.086243,0528,6,Info [FLog::CreatorOutput] AG67B_PERF reduced {"p95Ms":5.956599954515696,"seconds":9.008443794678897,"stats":{"active":1,"emitted":3690,"beams":12,"releaseEnabled":false,"mode":"soul","sheets":12,"runes":4,"connections":3,"tracked":8,"activeRitual":false,"emitters":6,"updates":19626,"sigilSparks":336,"batches":12,"feedback":12,"lights":1,"errors":0,"averageMs":0.22497600632013607,"maxMs":2.1541999994951768,"peakInstances":411,"content":"ready","instances":226},"samples":2031,"averageUpdateMs":0.38359123497804356,"fps":225.45514478312783}
+2026-11-13T10:03:50.103Z,905.103516,2384,6,Info [FLog::CreatorOutput] AG67B_STATE 140 true
+2026-11-13T10:03:53.106Z,908.106750,0528,6,Info [FLog::CreatorOutput] AG67B_STATE 145 true
+2026-11-13T10:03:56.110Z,911.110168,2384,6,Info [FLog::CreatorOutput] AG67B_STATE 150 true
+2026-11-13T10:03:59.102Z,914.102173,0528,6,Info [FLog::CreatorOutput] AG67B_PERF minimal {"p95Ms":5.512699950486422,"seconds":9.01170359365642,"stats":{"active":1,"emitted":3690,"beams":0,"releaseEnabled":false,"mode":"soul","sheets":0,"runes":2,"connections":3,"tracked":8,"activeRitual":false,"emitters":0,"updates":19819,"sigilSparks":336,"batches":15,"feedback":15,"lights":0,"errors":0,"averageMs":0.22375755588124983,"maxMs":2.1541999994951768,"peakInstances":411,"content":"ready","instances":19},"samples":2132,"averageUpdateMs":0.09941849703217501,"fps":236.5812388126893}
+2026-11-13T10:03:59.102Z,914.102173,0528,6,Info [FLog::CreatorOutput] AG67B_PERF_DONE R15 2113, 988
+2026-11-13T10:05:19.120Z,994.120239,2d74,6,Info [FLog::CreatorOutput] AG67B_CAPTURE_WIDE_START
+2026-11-13T10:05:19.192Z,994.192322,0528,6,Info [FLog::CreatorOutput] AG67B_STATE 155 true
+2026-11-13T10:05:22.136Z,997.136353,2d74,6,Info [FLog::CreatorOutput] AG67B_STATE 160 true
+2026-11-13T10:05:25.136Z,1000.136047,0528,6,Info [FLog::CreatorOutput] AG67B_STATE 165 true
+2026-11-13T10:05:28.142Z,1003.142456,2384,6,Info [FLog::CreatorOutput] AG67B_STATE 170 true
+2026-11-13T10:05:31.130Z,1006.130066,0528,6,Info [FLog::CreatorOutput] AG67B_CAPTURE_OLD_START
+2026-11-13T10:05:32.148Z,1007.148315,2384,6,Info [FLog::CreatorOutput] AG67B_STATE 175 true
+2026-11-13T10:05:35.152Z,1010.152344,0528,6,Info [FLog::CreatorOutput] AG67B_STATE 180 true
+2026-11-13T10:05:38.153Z,1013.153381,0740,6,Info [FLog::CreatorOutput] AG67B_STATE 185 true
+2026-11-13T10:05:41.144Z,1016.144409,4928,6,Info [FLog::CreatorOutput] AG67B_CAPTURE_NEW_START
+2026-11-13T10:05:42.164Z,1017.164795,0abc,6,Info [FLog::CreatorOutput] AG67B_STATE 190 true
+2026-11-13T10:05:45.164Z,1020.164307,2384,6,Info [FLog::CreatorOutput] AG67B_STATE 195 true
+2026-11-13T10:05:48.164Z,1023.164795,2d74,6,Info [FLog::CreatorOutput] AG67B_STATE 200 true
+2026-11-13T10:05:51.151Z,1026.151489,0abc,6,Info [FLog::CreatorOutput] AG67B_CAPTURE_DONE
+2026-11-13T10:07:30.198Z,1125.198364,2d74,6,Info [FLog::CreatorOutput] AG67B_RIG_OBSERVER_READY
+2026-11-13T10:08:35.529Z,1190.529053,4770,6,Info [FLog::CreatorOutput] AG67B_RIG_SERVER_CREATED R6
+2026-11-13T10:08:35.688Z,1190.688232,2d74,6,Info [FLog::CreatorOutput] AG67B_CHARACTER_REMOVING_PASS
+2026-11-13T10:08:38.457Z,1193.457764,5004,6,Info [FLog::CreatorOutput] AG67B_STATE 205 true
+2026-11-13T10:08:39.248Z,1194.248535,2d74,6,Info [FLog::CreatorOutput] AG67B_RIG_MOTION_PASS R6 Torso errorStuds 0.004385232925415039 {"active":1,"emitted":881,"beams":12,"releaseEnabled":false,"mode":"soul","sheets":12,"runes":4,"connections":3,"tracked":8,"activeRitual":true,"emitters":6,"updates":4945,"sigilSparks":64,"batches":4,"feedback":4,"lights":1,"errors":0,"averageMs":0.16786133469547019,"maxMs":0.9592999995220453,"peakInstances":226,"content":"ready","instances":226}
+2026-11-13T10:08:43.534Z,1198.534912,30dc,6,Info [FLog::CreatorOutput] AG67B_RIG_SERVER_CREATED R15
+2026-11-13T10:08:43.612Z,1198.612183,30dc,6,Info [FLog::CreatorOutput] AG67B_CHARACTER_REMOVING_PASS
+2026-11-13T10:08:46.478Z,1201.478760,2384,6,Info [FLog::CreatorOutput] AG67B_STATE 210 true
+2026-11-13T10:08:47.186Z,1202.186279,4770,6,Info [FLog::CreatorOutput] AG67B_RIG_MOTION_PASS R15 UpperTorso errorStuds 0.0009338120580650866 {"active":1,"emitted":941,"beams":12,"releaseEnabled":false,"mode":"soul","sheets":12,"runes":4,"connections":3,"tracked":8,"activeRitual":true,"emitters":6,"updates":5163,"sigilSparks":80,"batches":5,"feedback":5,"lights":1,"errors":0,"averageMs":0.1707369358990347,"maxMs":0.9592999995220453,"peakInstances":226,"content":"ready","instances":226}
+2026-11-13T10:08:51.534Z,1206.534912,4770,6,Info [FLog::CreatorOutput] AG67B_RIG_SERVER_DEATH
+2026-11-13T10:08:51.749Z,1206.749512,2384,6,Info [FLog::CreatorOutput] AG67B_RIG_DEATH_PASS R15 {"active":0,"emitted":967,"beams":0,"releaseEnabled":false,"mode":"soul","sheets":0,"runes":0,"connections":3,"tracked":8,"activeRitual":false,"emitters":0,"updates":5282,"sigilSparks":80,"batches":5,"feedback":5,"lights":0,"errors":0,"averageMs":0.17279062855430953,"maxMs":0.9592999995220453,"peakInstances":226,"content":"ready","instances":0}
+2026-11-13T10:08:56.972Z,1211.972168,4770,6,Info [FLog::CreatorOutput] AG67B_CHARACTER_REMOVING_PASS
+2026-11-13T10:08:59.539Z,1214.539429,2d74,6,Info [FLog::CreatorOutput] AG67B_RIG_SERVER_DONE
+2026-11-13T10:08:59.750Z,1214.750977,5004,6,Info [FLog::CreatorOutput] AG67B_STATE 215 true
+2026-11-13T10:09:00.542Z,1215.542603,2384,6,Info [FLog::CreatorOutput] AG67B_RIG_MOTION_PASS R15 UpperTorso errorStuds 0.0005058975657448173 {"active":1,"emitted":1007,"beams":12,"releaseEnabled":false,"mode":"soul","sheets":12,"runes":4,"connections":3,"tracked":8,"activeRitual":true,"emitters":6,"updates":5527,"sigilSparks":96,"batches":6,"feedback":6,"lights":1,"errors":0,"averageMs":0.1689580785230884,"maxMs":0.9592999995220453,"peakInstances":226,"content":"ready","instances":226}

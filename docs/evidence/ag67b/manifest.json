@@ -1,0 +1,117 @@
+{
+  "task": "AG-67B",
+  "baseSha": "4a158b96e2b679605e89e2b36fe3425208fea315",
+  "head": "See stacked Draft PR; captures preceded commit, runtime hashes below identify identical implementation.",
+  "capturedBuild": {
+    "path": "build/PotionTycoon.rbxlx",
+    "sha256": "1f9c67fcd5bd018170c58401e4c7542ea9b96806cea5ff2cdb6cd96c51cfaa1f",
+    "project": "default.project.json",
+    "play": "Ordinary full-game F5; automatic new effects, no activation command or QA project."
+  },
+  "captureDate": "2026-11-13",
+  "studioVersion": "0.747.0.7471481",
+  "runtime": [
+    {
+      "path": "src/client/SpellbookEffects.luau",
+      "normalizedSha256": "e2d0f1e4e88b5dfe3f71b4dcfd64017659570b717c65cc45907822eecc821c2a"
+    },
+    {
+      "path": "src/client/LegacySpellbookEffects.luau",
+      "normalizedSha256": "389ffb964aa6d922e1146c45f5b93e63137a4d637497098fd65c9c6c299e81cd"
+    },
+    {
+      "path": "src/client/SpellbookSoul/Primitives.luau",
+      "normalizedSha256": "bf190e19396b122b5b6611bc5c6b236985fd69e791adf81108ec4de5e6a0c040"
+    },
+    {
+      "path": "src/client/SpellbookSoul/View.luau",
+      "normalizedSha256": "5973bfffc53a1773a0cb17efc81f9754896030853b98413b82b1578d58cc0030"
+    },
+    {
+      "path": "src/shared/SpellbookSoulPolicy.luau",
+      "normalizedSha256": "b7a2caf7c86748ea67009679995e71738237da5dcd75b771bd72d56043715c78"
+    },
+    {
+      "path": "src/shared/SpellbookSoulAssets.luau",
+      "normalizedSha256": "5709694fd29f1ffe34b6be2780f1aa6d84872ae580e99675df7b0db1084b08e0"
+    },
+    {
+      "path": "src/shared/SpellbookSoulGate.luau",
+      "normalizedSha256": "ea415d626b747d9d3b81f52c7051027239b107c113c9eb283756f806d7bcebd2"
+    }
+  ],
+  "videoProcessing": "Native Studio F12; trim + H264 CRF23 encode + audio removal only. No generated/composited/retouched frames.",
+  "videos": [
+    {
+      "name": "idle-reduced-10s.mp4",
+      "source": "Roblox-2026-11-13T09_52_56.989Z.mp4",
+      "trimStart": 2,
+      "duration": 10
+    },
+    {
+      "name": "ritual-full-15s.mp4",
+      "source": "Roblox-2026-11-13T09_56_21.172Z.mp4",
+      "trimStart": 0,
+      "duration": 15
+    },
+    {
+      "name": "wide-reduced-10s.mp4",
+      "source": "Roblox-2026-11-13T10_06_57.995Z.mp4",
+      "trimStart": 11.5,
+      "duration": 10
+    },
+    {
+      "name": "old-vs-new-reduced-20s.mp4",
+      "source": "Roblox-2026-11-13T10_06_57.995Z.mp4",
+      "trimStart": 22.6,
+      "duration": 20,
+      "sequence": "First approximately 10 seconds legacy; next 10 seconds soul. Same camera, continuous live weather."
+    }
+  ],
+  "screenshots": "Native unedited Studio windows. Landscape emulator viewport750x382, not a physical phone.",
+  "privacy": "Owner confirmed Asset Privacy before authorized group upload. Resulting-asset permissions UI not independently reviewed.",
+  "results": "1254 standalone tests; scoped local Studio QA + R6/R15/death/respawn + performance; owner art, real phones, real multiplayer and published delivery pending.",
+  "files": [
+    {
+      "name": "asset-upload-check.log",
+      "bytes": 1076,
+      "sha256": "c736857bda64412dc7fedda926fee27bae3c6b960101506e8a2d97f97ac379ea"
+    },
+    {
+      "name": "desktop-full.png",
+      "bytes": 713719,
+      "sha256": "9fef9779289399b71f8b856928c5c1913622ecfa236860661005bb4000a012a0"
+    },
+    {
+      "name": "idle-reduced-10s.mp4",
+      "bytes": 1296980,
+      "sha256": "726ab32fa7dd567244a0fb6263db654d4ea1b510b9911b5263459c84c71d6fa1"
+    },
+    {
+      "name": "landscape-reduced.png",
+      "bytes": 249652,
+      "sha256": "4328be93d341c70fc4d332aa9b3a4f108cd9fbc4bcd90bc68ab09142eb3f756e"
+    },
+    {
+      "name": "old-vs-new-reduced-20s.mp4",
+      "bytes": 2815237,
+      "sha256": "6eeb696fdfd438d333824d23351cae83cad08a9b0e2194133fa975fc5a8b2739"
+    },
+    {
+      "name": "ritual-full-15s.mp4",
+      "bytes": 3332523,
+      "sha256": "cd83214d86728a1672336380fa22d37b208900fee87459b2572aeb8774c5fdbf"
+    },
+    {
+      "name": "runtime-check.log",
+      "bytes": 19625,
+      "sha256": "1c1032786eee90fc7d969f90ee69b60ff2b46bbac76e1598e9c8e76c3afe05f1"
+    },
+    {
+      "name": "wide-reduced-10s.mp4",
+      "bytes": 1579071,
+      "sha256": "1cc150f9928bb96667b0b7faf4cba7d8b78b087f85bf468717beb61a6246b51f"
+    }
+  ],
+  "logFiltering": "Only AG67B task events; repeated unchanged balance observations omitted; local player account name redacted; LF-normalized. Failures/retries are retained."
+}

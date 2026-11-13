@@ -77,6 +77,29 @@
 
 ## Art, UX, safety, rollout
 
+### AG-67B — Soul Absorption production integration and sigil VFX
+
+**Status: IMPLEMENTED/CODE / scoped STUDIO VERIFIED; owner art acceptance OPEN.**
+Explicit owner request AG-67B, 2026-11-13, authorizes continuing Stage B despite
+the earlier Stage A gate. Base Draft PR #36 `feat/ag67-soul-absorption-prototype`
+@ `4a158b96e2b679605e89e2b36fe3425208fea315`, CI 43395509209 Windows/Ubuntu PASS;
+remote HEAD verified, local diff empty. Branch `feat/ag67b-soul-absorption-integration`.
+Scope: production client VFX owner, stronger original sigil/spirits/pages,
+ordinary Studio build enabled automatically, published release disabled,
+immediate legacy rollback, finite quality/lifecycle budgets and new tests.
+No economy/profile/server/remotes/imported mesh edits or save migration.
+The owner approved the exact three-image manifest and confirmed Asset Privacy ON;
+all three uploaded to addout studio, typed loading verified in the private
+experience and ordinary local Play. Independent permissions UI review is open.
+Prior review evidence and legacy VFX are preserved byte-for-byte.
+Rollback and invalid-save handling remain unchanged; unavailable textures must
+fall back to legacy without hiding the book or replaying receipts. Native Play,
+quality, rejection, lifecycle, eight plots, recordings and performance PASS in
+ordinary local Play; moving R6/R15, death cleanup and normal respawn PASS.
+1254 tests (1233 inherited + 21 new); exact HEAD/CI in the stacked Draft PR.
+Real phone/backend/multiplayer remain NOT RUN. Report: `docs/AG67B_PRODUCTION_INTEGRATION.md`.
+No merge, game publication or automatic release enablement.
+
 ### AG-67 — Spellbook Soul Absorption VFX 2.0
 
 **Status: IMPLEMENTED/CODE (Stage A only) / scoped STUDIO VERIFIED; OWNER ART GATE OPEN.**
