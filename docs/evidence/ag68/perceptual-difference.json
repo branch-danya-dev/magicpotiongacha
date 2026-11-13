@@ -1,0 +1,194 @@
+{
+  "method": "sRGB D65 CIELAB Delta E 1976; every third pixel; native JPEG decoded by ffmpeg without transforms",
+  "viewport": [
+    2,
+    206,
+    2115,
+    1321
+  ],
+  "excludedRectangles": [
+    [
+      0,
+      206,
+      510,
+      620
+    ],
+    [
+      850,
+      260,
+      1325,
+      350
+    ],
+    [
+      1780,
+      260,
+      1930,
+      735
+    ],
+    [
+      710,
+      665,
+      1140,
+      1080
+    ],
+    [
+      0,
+      206,
+      220,
+      340
+    ],
+    [
+      1560,
+      1040,
+      1660,
+      1140
+    ]
+  ],
+  "caveats": "Auxiliary only, no acceptance threshold. Sky has inherited missing textures; avatar/HUD/local VFX/cursor masked. Tiny residual motion/renderer noise possible.",
+  "pairs": [
+    {
+      "off": "day-reduced-near-OFF",
+      "on": "day-reduced-near-AG68",
+      "samples": 204972,
+      "meanDeltaE76": 13.132665996715925,
+      "medianDeltaE76": 12.140915698061109,
+      "p95DeltaE76": 20.091987999435588,
+      "fractionAbove5": 0.9975801572897761
+    },
+    {
+      "off": "day-reduced-wide-OFF",
+      "on": "day-reduced-wide-AG68",
+      "samples": 204972,
+      "meanDeltaE76": 13.547058438192307,
+      "medianDeltaE76": 12.406800934315342,
+      "p95DeltaE76": 20.93286727398957,
+      "fractionAbove5": 0.9975508849989266
+    },
+    {
+      "off": "day-full-near-OFF",
+      "on": "day-full-near-AG68",
+      "samples": 204972,
+      "meanDeltaE76": 13.130590619930894,
+      "medianDeltaE76": 12.121443866246231,
+      "p95DeltaE76": 20.11086371070362,
+      "fractionAbove5": 0.9975508849989266
+    },
+    {
+      "off": "day-full-wide-OFF",
+      "on": "day-full-wide-AG68",
+      "samples": 204972,
+      "meanDeltaE76": 13.547629030667464,
+      "medianDeltaE76": 12.398762272470336,
+      "p95DeltaE76": 20.9395526178197,
+      "fractionAbove5": 0.9975362488535019
+    },
+    {
+      "off": "sunset-reduced-near-OFF",
+      "on": "sunset-reduced-near-AG68",
+      "samples": 204972,
+      "meanDeltaE76": 12.302771784355679,
+      "medianDeltaE76": 12.45633836577389,
+      "p95DeltaE76": 17.107780981256287,
+      "fractionAbove5": 0.9789678590246472
+    },
+    {
+      "off": "sunset-reduced-wide-OFF",
+      "on": "sunset-reduced-wide-AG68",
+      "samples": 204972,
+      "meanDeltaE76": 12.452785573356104,
+      "medianDeltaE76": 12.676935242092402,
+      "p95DeltaE76": 16.243811493153984,
+      "fractionAbove5": 0.9810217980992526
+    },
+    {
+      "off": "sunset-full-near-OFF",
+      "on": "sunset-full-near-AG68",
+      "samples": 204972,
+      "meanDeltaE76": 12.278958584034257,
+      "medianDeltaE76": 12.41925108406031,
+      "p95DeltaE76": 17.083663252830807,
+      "fractionAbove5": 0.9784019280682239
+    },
+    {
+      "off": "sunset-full-wide-OFF",
+      "on": "sunset-full-wide-AG68",
+      "samples": 204972,
+      "meanDeltaE76": 12.392641505546806,
+      "medianDeltaE76": 12.605764985668536,
+      "p95DeltaE76": 16.227738267557697,
+      "fractionAbove5": 0.9800070253498039
+    },
+    {
+      "off": "night-reduced-near-OFF",
+      "on": "night-reduced-near-AG68",
+      "samples": 204972,
+      "meanDeltaE76": 19.737623342339297,
+      "medianDeltaE76": 18.75459688011829,
+      "p95DeltaE76": 30.062978991504522,
+      "fractionAbove5": 0.9947212302168101
+    },
+    {
+      "off": "night-reduced-wide-OFF",
+      "on": "night-reduced-wide-AG68",
+      "samples": 204972,
+      "meanDeltaE76": 19.995954010759537,
+      "medianDeltaE76": 18.768167221390488,
+      "p95DeltaE76": 31.119790999722355,
+      "fractionAbove5": 0.9976826103077493
+    },
+    {
+      "off": "night-full-near-OFF",
+      "on": "night-full-near-AG68",
+      "samples": 204972,
+      "meanDeltaE76": 19.783519000917064,
+      "medianDeltaE76": 18.80125541242366,
+      "p95DeltaE76": 30.146519966428656,
+      "fractionAbove5": 0.9947407450773764
+    },
+    {
+      "off": "night-full-wide-OFF",
+      "on": "night-full-wide-AG68",
+      "samples": 204972,
+      "meanDeltaE76": 20.02336566983386,
+      "medianDeltaE76": 18.795221337051373,
+      "p95DeltaE76": 31.230232361314904,
+      "fractionAbove5": 0.997687489022891
+    },
+    {
+      "off": "rain-reduced-near-OFF",
+      "on": "rain-reduced-near-AG68",
+      "samples": 204972,
+      "meanDeltaE76": 11.66055305038904,
+      "medianDeltaE76": 10.99537819524364,
+      "p95DeltaE76": 18.960663845918113,
+      "fractionAbove5": 0.9972727982358566
+    },
+    {
+      "off": "rain-reduced-wide-OFF",
+      "on": "rain-reduced-wide-AG68",
+      "samples": 204972,
+      "meanDeltaE76": 11.860421878145726,
+      "medianDeltaE76": 11.13524346018071,
+      "p95DeltaE76": 19.080646086703137,
+      "fractionAbove5": 0.9974142809749624
+    },
+    {
+      "off": "rain-full-near-OFF",
+      "on": "rain-full-near-AG68",
+      "samples": 204972,
+      "meanDeltaE76": 11.641230999414265,
+      "medianDeltaE76": 10.966401026432237,
+      "p95DeltaE76": 18.939345042138612,
+      "fractionAbove5": 0.9970191050484944
+    },
+    {
+      "off": "rain-full-wide-OFF",
+      "on": "rain-full-wide-AG68",
+      "samples": 204972,
+      "meanDeltaE76": 11.841136622401782,
+      "medianDeltaE76": 11.102007346187328,
+      "p95DeltaE76": 19.051088388677986,
+      "fractionAbove5": 0.9972142536541576
+    }
+  ]
+}
