@@ -1,0 +1,29 @@
+import {readFileSync} from 'node:fs';
+import {execFileSync} from 'node:child_process';
+import assert from 'node:assert/strict';
+import {beforeAG68} from './ag68-preservation.mjs';
+const base='34db02c7a09a0208c881d04ad14c51d0a663e55e';
+const normal=s=>s.replace(/\r\n/g,'\n');
+const read=p=>normal(readFileSync(p,'utf8'));
+const inherited=execFileSync('git',['ls-tree','-r','--name-only',base,'src','tests','qa','assets'],{encoding:'utf8'}).trim().split('\n');
+for(const file of [...inherited,'default.project.json']) {
+  const old=execFileSync('git',['show',`${base}:${file}`],{maxBuffer:64*1024*1024});
+  const current=readFileSync(file);
+  if(file==='src/client/EnvironmentView.luau') assert.equal(beforeAG68(file,normal(current.toString())),normal(old.toString()),'Exact inherited lighting owner outside six bounded additions');
+  else if(/\.(luau|json|md|svg|rbxmx|txt)$/.test(file)) assert.equal(normal(current.toString()),normal(old.toString()),`AG68 scope violation: ${file}`);
+  else assert(current.equals(old),`AG68 asset drift: ${file}`);
+}
+const view=read('src/client/EnvironmentView.luau');
+const blocks=[...view.matchAll(/-- AG68_BEGIN_(\w+)\n([\s\S]*?)-- AG68_END_\1/g)];
+assert.deepEqual(blocks.map(x=>x[1]),['IMPORT','STATE','APPLY','SELECT','STATS','REQUEST']);
+const additions=blocks.map(x=>x[2]).join('\n');
+assert(!/Instance\.new|:Connect|task\.|GetService|SetAttribute|FireServer|InvokeServer|rbxasset|Skybox|Blur|DepthOfField|LightingStyle\s*=|PrioritizeLightingQuality\s*=/.test(additions),'No instances, owner, tasks, assets, release mutation or new render pipeline');
+assert(additions.includes('WorldLook.default(RunService:IsStudio())'));
+assert(additions.includes('if RunService:IsStudio() and name=="AG68"'));
+assert(additions.includes('bloom.Size=18; bloom.Threshold=2.3'),'Reset extended properties even in OFF');
+assert.equal((view.match(/RenderStepped:Connect/g)||[]).length,1);
+assert.equal((view.match(/:Connect\(/g)||[]).length,5);
+const model=read('src/shared/WorldLook.luau');
+assert(!/GetService|Instance|task\.|os\.|rbxasset|require\(/.test(model),'Pure art projection');
+assert(model.includes('releaseEnabled=false'));
+console.log('AG68 scope PASS: PR37 runtime/tests/assets byte-preserved outside bounded EnvironmentView additions; single owner, release OFF, zero extra render instances.');

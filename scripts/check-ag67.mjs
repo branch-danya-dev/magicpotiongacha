@@ -1,3 +1,4 @@
+import {beforeAG68} from './ag68-preservation.mjs';
 import {readFileSync,mkdtempSync,readdirSync,rmSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
@@ -12,7 +13,7 @@ for(const file of [...files,'default.project.json']) {
  const old=execFileSync('git',['show',`${base}:${file}`],{maxBuffer:64*1024*1024});
  // AG67B moves the accepted original owner, retaining this byte comparison.
  const current=readFileSync(file==='src/client/SpellbookEffects.luau'?'src/client/LegacySpellbookEffects.luau':file);
- if(/\.(luau|json|md|svg|rbxmx|txt)$/.test(file))assert.equal(normal(current.toString()),normal(old.toString()),`Stage A cannot change ${file}`);
+ if(/\.(luau|json|md|svg|rbxmx|txt)$/.test(file))assert.equal(beforeAG68(file,normal(current.toString())),normal(old.toString()),`Stage A cannot change ${file}`);
  else assert(current.equals(old),`Stage A cannot change ${file}`);
 }
 const dir='assets/vfx/ag67',manifest=JSON.parse(readFileSync(`${dir}/manifest.json`));

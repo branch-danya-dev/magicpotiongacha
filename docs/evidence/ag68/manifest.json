@@ -1,0 +1,349 @@
+{
+  "task": "AG-68 / Issue38 / Draft PR39",
+  "baseSHA": "34db02c7a09a0208c881d04ad14c51d0a663e55e",
+  "runtimeSHA": "52128f21c4daea9e3210a45b8d7b32482d1f142a",
+  "ordinaryBuildSHA256": "a74d142e1d7ee2a51068d449dcfb617c590d5cd96631c7f49d08f1e28508b562",
+  "format": "Native Sky Windows JPEG screenshots; native Roblox F12 H264/AAC videos, original bytes; no image/video edits",
+  "studio": "0.747.0.7471481",
+  "artifactCount": 63,
+  "nativeFinalCaptureCount": 49,
+  "baselineCaptureCount": 4,
+  "interactionCaptureCount": 2,
+  "videos": [
+    {
+      "name": "live-off-ag68.mp4",
+      "source": "Roblox-2026-11-13T18_20_13.567Z.mp4",
+      "durationSeconds": 19.49
+    },
+    {
+      "name": "farm-walk-day-night.mp4",
+      "source": "Roblox-2026-11-13T18_21_06.902Z.mp4",
+      "durationSeconds": 42.26
+    }
+  ],
+  "status": {
+    "code": "IMPLEMENTED",
+    "studio": "SCOPED VERIFIED",
+    "ownerArt": "BLOCKED",
+    "published": false,
+    "realPhones": "NOT RUN",
+    "multiclient": "NOT RUN"
+  },
+  "files": [
+    {
+      "name": "baseline-A.jpg",
+      "bytes": 675818,
+      "sha256": "23349304d42fe86f6ae616de755fa55267150cc9837a11bded133cfa9c854508"
+    },
+    {
+      "name": "baseline-B.jpg",
+      "bytes": 677024,
+      "sha256": "8c5aaf77c2d926084e4be40c09db682b2a81366e2f07483ed60a6ed1271644a3"
+    },
+    {
+      "name": "baseline-C.jpg",
+      "bytes": 695260,
+      "sha256": "a7b72106ca5b9c61fab53a2bec90be874a8f0dc2384b9fb2f6041afa0947f735"
+    },
+    {
+      "name": "baseline-OFF.jpg",
+      "bytes": 678422,
+      "sha256": "55a9674c5841bf9cdc57065a40409e802fee7ffa4f2487ba33e06d3414a2109d"
+    },
+    {
+      "name": "baseline.json",
+      "bytes": 6907,
+      "sha256": "731fc1362a8cc7f3f9f19ce85ecbd1bb04e7760135581e44856727f5b8f6ec91"
+    },
+    {
+      "name": "captures.json",
+      "bytes": 28059,
+      "sha256": "4dadaf31c068f69e72a564fb404f3df30367e5b2d40a8ab60228473b98550f03"
+    },
+    {
+      "name": "compare.html",
+      "bytes": 4095,
+      "sha256": "5f170ffe2c30c50532c0ac9f928e0ff2e0a77a469e99d5be288dc7ba1e2f2e54"
+    },
+    {
+      "name": "day-full-near-AG68.jpg",
+      "bytes": 667419,
+      "sha256": "d72d1a8fef49eb2c0377b164ba13257bf6268f212d4ec6819bf18c182acd5128"
+    },
+    {
+      "name": "day-full-near-OFF.jpg",
+      "bytes": 665603,
+      "sha256": "3ef6dd75e95423574b86ccd82af0447e5fd62df3b1e430789182a801946432fd"
+    },
+    {
+      "name": "day-full-wide-AG68.jpg",
+      "bytes": 661663,
+      "sha256": "2a26c02f02b2ad4d7d5016711fbb87ef0fab8e46678e7ee4e7fac60e84fd70c3"
+    },
+    {
+      "name": "day-full-wide-OFF.jpg",
+      "bytes": 661362,
+      "sha256": "c083dabde14a344d7d834ebfc84cf64f31629bf467e721bbb8fe4c1d2583d376"
+    },
+    {
+      "name": "day-reduced-near-AG68.jpg",
+      "bytes": 663814,
+      "sha256": "d01e16c9b3c16635a46564fc34709f307307d7e6311867ae840aabf980c87bed"
+    },
+    {
+      "name": "day-reduced-near-OFF.jpg",
+      "bytes": 661699,
+      "sha256": "e16a755556009706b47cc9c610cc8d473902ed15495575bc78a69f4ab8caf9a2"
+    },
+    {
+      "name": "day-reduced-wide-AG68.jpg",
+      "bytes": 658849,
+      "sha256": "1e971d48a2ebdf9029a1d2fa5921a96cb318faaf52daa8ace48f8dac21d37fd1"
+    },
+    {
+      "name": "day-reduced-wide-OFF.jpg",
+      "bytes": 658335,
+      "sha256": "87d2da075f36550024305338f511a01b1990de576e7bf5784dc57e656cadb674"
+    },
+    {
+      "name": "farm-walk-day-night.mp4",
+      "bytes": 99552207,
+      "sha256": "d0bd859cf2cb98f4fd1206baa30c9481d3b933788f3cfd5bc771d2fb9ec65eeb"
+    },
+    {
+      "name": "graphics5-night-full.jpg",
+      "bytes": 492096,
+      "sha256": "57dc364101991611797aed05faf5027f0b92956fd713f02604b16ceb933a6ac7"
+    },
+    {
+      "name": "graphics5-night-minimal.jpg",
+      "bytes": 476965,
+      "sha256": "732cb9f6430d57fc3bb6b09232ddee4eb0cb1b88e9b134297748cbb64fb8cf14"
+    },
+    {
+      "name": "graphics5-night-reduced.jpg",
+      "bytes": 485236,
+      "sha256": "8c5a0f6ffe58486a997d634a434da34f8f58c7529922f7255f9da6a62a5dbb9a"
+    },
+    {
+      "name": "graphics5-realistic-day.jpg",
+      "bytes": 581547,
+      "sha256": "c516116d155433a76313e36f64d1710d1e86ef7cbe8c1bd4c5f1121f47af832f"
+    },
+    {
+      "name": "graphics5-soft-day.jpg",
+      "bytes": 565134,
+      "sha256": "15e9377f96d3e84f2819e3feb6ba62209aaac2ec30f745379c3e589152b76ad3"
+    },
+    {
+      "name": "interaction-keyboard-plus5.jpg",
+      "bytes": 671756,
+      "sha256": "fe9e5eb6e896495d61ee45dab0f9033325b28afeb2305b0db018f64b2d4597a6"
+    },
+    {
+      "name": "interaction-mouse-plus5.jpg",
+      "bytes": 672057,
+      "sha256": "7ba58da560296da7d8b8559cbca5e3fcf6121c72b8dfb0eadb42d3acf8ecc356"
+    },
+    {
+      "name": "live-off-ag68.mp4",
+      "bytes": 44179633,
+      "sha256": "cb9ef27b120b0e81ac607e02308a284bcb557fb2164b358733d61f8e26c0feaf"
+    },
+    {
+      "name": "minimal-day-AG68.jpg",
+      "bytes": 663177,
+      "sha256": "85b2a92b34e89eb954e614ee71c0f1d102426408d45a4ce881222402e37aea2a"
+    },
+    {
+      "name": "minimal-day-OFF.jpg",
+      "bytes": 658533,
+      "sha256": "7c0d70ee1e89ebb0987afec7d5684b3046cb37d26a716758a2b872fefc7b1df3"
+    },
+    {
+      "name": "minimal-night-AG68.jpg",
+      "bytes": 558052,
+      "sha256": "554694e0d00587ef9cc8788140f494f375e21639c869e78729434e232bbcd516"
+    },
+    {
+      "name": "minimal-night-OFF.jpg",
+      "bytes": 424242,
+      "sha256": "327ef5b658f8d408df585218b6c3647e5e25eccfe15028a016541f21378a1c13"
+    },
+    {
+      "name": "mobile-day-AG68.jpg",
+      "bytes": 219926,
+      "sha256": "fcee251d98692f26089a95472e02b121515a55adc97fb606334385267ab0d608"
+    },
+    {
+      "name": "mobile-day-OFF.jpg",
+      "bytes": 220692,
+      "sha256": "59c1d11661c540d4220b26148424775e26b4e67760e95bd1c9e099908d15f4ec"
+    },
+    {
+      "name": "mobile-night-AG68.jpg",
+      "bytes": 202411,
+      "sha256": "9ef6ee0bbed7631e5ff273b5c6f10796809a2b60313f9b8e2325447edc6ea379"
+    },
+    {
+      "name": "mobile-night-OFF.jpg",
+      "bytes": 187703,
+      "sha256": "d584252c4bad648f02e7eebaf6cc47ff69baa311416adc937571f6856fa32050"
+    },
+    {
+      "name": "night-full-near-AG68.jpg",
+      "bytes": 563970,
+      "sha256": "fd8d2ea67aac42653676b47eb100d4e137792c29bd7d23f1638626db9ebba84a"
+    },
+    {
+      "name": "night-full-near-OFF.jpg",
+      "bytes": 430631,
+      "sha256": "f6e0b79a1e4cdca5b77ba3fb4a6e7dce81e5a8003bee08b3a855e51935835dee"
+    },
+    {
+      "name": "night-full-wide-AG68.jpg",
+      "bytes": 567162,
+      "sha256": "ef1b70e07a249cdd2f45b0581ea859829acb39cf3fb59c0de7d3f37d82a53284"
+    },
+    {
+      "name": "night-full-wide-OFF.jpg",
+      "bytes": 438488,
+      "sha256": "0910ba128531a8f55908974775e0d1742adf6b25c49e13f960864eedbbfcee34"
+    },
+    {
+      "name": "night-reduced-near-AG68.jpg",
+      "bytes": 559259,
+      "sha256": "57014b686d3c97786a757d3670f4bc46ef60aed68da019143389f9f9eaedae99"
+    },
+    {
+      "name": "night-reduced-near-OFF.jpg",
+      "bytes": 424673,
+      "sha256": "df09b7019bc38d4a018bc254b324670cd2ec3f1ee345752401e98f2c652b80b2"
+    },
+    {
+      "name": "night-reduced-wide-AG68.jpg",
+      "bytes": 562793,
+      "sha256": "22bad29774bfe60f7665aa138cf6f966628eab5eba47d795f3ad5f4e278b4497"
+    },
+    {
+      "name": "night-reduced-wide-OFF.jpg",
+      "bytes": 432708,
+      "sha256": "3ffd356ee657d1e596da0c564cb49fe818002469639477ffc52e9835d541bb9b"
+    },
+    {
+      "name": "perceptual-difference.json",
+      "bytes": 5234,
+      "sha256": "d356d284871cb269a8e4e0ca046b0114270b7a0121a4b4420bb383cd7c40fc82"
+    },
+    {
+      "name": "performance.json",
+      "bytes": 12033,
+      "sha256": "602d906e750f5a6a2f803bb67d0d33728e014d43781b2ebd103a56274eaeb300"
+    },
+    {
+      "name": "rain-full-near-AG68.jpg",
+      "bytes": 580553,
+      "sha256": "7afd7cc401479f9cd78e0cc5014a90305466c6a51c95ade6d16a0c980dbc4e3b"
+    },
+    {
+      "name": "rain-full-near-OFF.jpg",
+      "bytes": 589647,
+      "sha256": "3c28cba36e5668f3627cba7cd93cd58c3ee008861a5ca56fa01f2398fcaaf8f9"
+    },
+    {
+      "name": "rain-full-wide-AG68.jpg",
+      "bytes": 574765,
+      "sha256": "9a21f2904dc25543afd4881fba9301fee778dbe7222e34173b239a23e3979f17"
+    },
+    {
+      "name": "rain-full-wide-OFF.jpg",
+      "bytes": 584757,
+      "sha256": "1d21feaed3dc66362199b5e3d25fcde6d094c66e9acb2ddd886749eb07440185"
+    },
+    {
+      "name": "rain-reduced-near-AG68.jpg",
+      "bytes": 578585,
+      "sha256": "16c99ed16898b109bb1bec00dc2d2227f65d9527b1a858535a05ac2e5f9b385b"
+    },
+    {
+      "name": "rain-reduced-near-OFF.jpg",
+      "bytes": 587184,
+      "sha256": "9512c2cd3aa9ddd9c96c85d0939660165e7d85df6c4560360388bed47064752a"
+    },
+    {
+      "name": "rain-reduced-wide-AG68.jpg",
+      "bytes": 573383,
+      "sha256": "97caf63c1ac200cc5cb15128924ae09aeed2a45326cb3839aea392a7f15b4678"
+    },
+    {
+      "name": "rain-reduced-wide-OFF.jpg",
+      "bytes": 583340,
+      "sha256": "6d81a523952b3ddd25a0d48fabdb25a05244833fe776f29bdba76f84d46dd7b8"
+    },
+    {
+      "name": "reverse-day-AG68.jpg",
+      "bytes": 586327,
+      "sha256": "7e9a3889a00f1391753862612c4a7bdc5250c53b4b7c325053f11424344f7d47"
+    },
+    {
+      "name": "reverse-day-OFF.jpg",
+      "bytes": 575502,
+      "sha256": "f59ac42cf1b39812ca5b5b88bbdd0868ea1b8dddad7fe654b29748e186ed279f"
+    },
+    {
+      "name": "reverse-night-AG68.jpg",
+      "bytes": 535090,
+      "sha256": "64db2ce1e2c032c7473fdabdfa5f787309badbda2e79ebf7cc354ea7847da3f0"
+    },
+    {
+      "name": "reverse-night-OFF.jpg",
+      "bytes": 418782,
+      "sha256": "5ee95a4dc2dde743a0513a91a392e93ab60bf2033d5db8fe626ba5eb074d0a77"
+    },
+    {
+      "name": "runtime.json",
+      "bytes": 360349,
+      "sha256": "cf31e159005538c2d9bf19cef167ea15bff267d7e0cf8192b0570acfdb543687"
+    },
+    {
+      "name": "sunset-full-near-AG68.jpg",
+      "bytes": 546250,
+      "sha256": "c433a302c56858203edcef7e2e53a036c599ed67ab3a23fe1a30eb10b269e69e"
+    },
+    {
+      "name": "sunset-full-near-OFF.jpg",
+      "bytes": 549827,
+      "sha256": "7d06c0525b8cfec760b097d0aa044538b8e0f5efad63d64cb5c08c4cdc676b7d"
+    },
+    {
+      "name": "sunset-full-wide-AG68.jpg",
+      "bytes": 537102,
+      "sha256": "5a4ecc8d6a4199efe64a1e7fda0b9c1beb9e0e04d5bf831bf876bd47ec3a1dee"
+    },
+    {
+      "name": "sunset-full-wide-OFF.jpg",
+      "bytes": 542395,
+      "sha256": "f0a5421ec43a16f6bd0bf363e069b7c91ac78b35a2edcc0fd65846180ffa259e"
+    },
+    {
+      "name": "sunset-reduced-near-AG68.jpg",
+      "bytes": 544679,
+      "sha256": "074a3d51835e2cf03ba80240b17fb0d0aa23930b911a53f1cd346eaf0b4f2eff"
+    },
+    {
+      "name": "sunset-reduced-near-OFF.jpg",
+      "bytes": 545954,
+      "sha256": "80f4870b0511bfa8bf2c729f7433ba4dd701a387e11892b0aa60c96e11e0d96e"
+    },
+    {
+      "name": "sunset-reduced-wide-AG68.jpg",
+      "bytes": 535752,
+      "sha256": "ffd7834c0dc08b3430756b71fa82d1e6c5c062b2e2afb5ff09a0372131461fc7"
+    },
+    {
+      "name": "sunset-reduced-wide-OFF.jpg",
+      "bytes": 540849,
+      "sha256": "748276cc8a992b1b07e8a728b269a2c937825eac7e8609cfd15bb86d28c1d439"
+    }
+  ]
+}
