@@ -1,4 +1,5 @@
 import {beforeAG68} from './ag68-preservation.mjs';
+import {beforeAG69} from './ag69-preservation.mjs';
 // Freeze the inherited game; only bounded additions to its existing owner are allowed.
 import { readFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -11,7 +12,7 @@ const inherited=execFileSync('git',['ls-tree','-r','--name-only',base,'src','tes
 for(const path of [...inherited,'default.project.json']) {
   // AG64 owns bounded HUD additions; check-landscape-hud strips them and pins
   // every inherited file to the exact CI-green AG63 base (including this owner).
-  if(!['src/client/EnvironmentView.luau','src/client/Main.client.luau','src/client/UIFoundationDemo.client.luau'].includes(path)) assert.equal(current(path),original(path),`${path}: AG63 must preserve inherited code/tests`);
+  if(!['src/client/EnvironmentView.luau','src/client/Main.client.luau','src/client/UIFoundationDemo.client.luau'].includes(path)) assert.equal(beforeAG69(path,current(path)),original(path),`${path}: AG63 must preserve inherited code/tests`);
 }
 const view=beforeAG68('src/client/EnvironmentView.luau',current('src/client/EnvironmentView.luau'));
 const sections=[];

@@ -64,6 +64,7 @@ run(tool('luau', 'luau'), ['tests/run_ag64.luau']);
 run(tool('luau', 'luau'), ['tests/run_ag67.luau']);
 run(tool('luau', 'luau'), ['tests/run_ag67b.luau']);
 run(tool('luau', 'luau'), ['tests/run_ag68.luau']);
+run(tool('luau', 'luau'), ['tests/run_ag69.luau']);
 run(process.execPath, ['scripts/build-ag67-preview.mjs']);
 await mkdir(resolve(root, 'build'), { recursive: true });
 run(tool('rojo', 'rojo'), ['build', 'default.project.json', '-o', 'build/PotionTycoon.rbxlx']);

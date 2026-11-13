@@ -1,0 +1,6 @@
+Native Windows accessibility excerpt; unrelated browser UI omitted.
+									40746 text field (поле) (settable, string) Адресная строка и строка поиска Description: Спросите Google или введите URL Value: create.roblox.com/dashboard/creations/store/99406398694311/permissions?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll ID: view_1012
+								43281 document (документ) ######### / Permissions Value: https://create.roblox.com/dashboard/creations/store/99406398694311/permissions?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll ID: RootWebArea
+												43429 group (группа) Маг-производитель зелий: волшебный кликер 10776120489
+													43431 text (текстовый) 10776120489
+													43435 text (текстовый) Once saved, permission cannot be removed.

@@ -1,0 +1,339 @@
+{
+  "schemaVersion": 1,
+  "task": "AG-69",
+  "recordedDate": "2026-11-14 Europe/Moscow",
+  "target": {
+    "creatorType": "Group",
+    "creatorName": "addout studio",
+    "creatorId": 925845207,
+    "universeId": 10776120489,
+    "placeId": 125724638469407
+  },
+  "sourceIdentity": "DECODED_RGBA_SHA256_MATCH_12",
+  "runtimeAccess": "PASS_PRIVATE_EXPERIENCE_F5",
+  "notes": [
+    "Exactly twelve queued source PNGs were uploaded once in Studio; all twelve status icons completed green.",
+    "Creator Dashboard filtered the uploaded names to hashes. Each Image ID was subsequently matched by the exact SHA-256 of decoded RGBA8 pixels read with Studio EditableImage; no identity was inferred from names or inventory order.",
+    "All twelve configuration pages visibly selected Restricted; all twelve permanent grants used only Universe 10776120489 and returned Changes Saved.",
+    "Creator Dashboard states that saved Experience entries are not shown afterward; do not interpret the empty list as a failed grant or repeatedly grant.",
+    "Import created Image assets; no Decal wrapper has been identified or used.",
+    "All twelve Images returned Success in the approved private Experience client F5 probe and in the separately built ordinary full-game local F5. See runtimeEvidence and its explicit context limits."
+  ],
+  "images": [
+    {
+      "imageId": "83662321011462",
+      "assetType": "Image",
+      "sourceKey": "sky_dn",
+      "creatorGroupId": 925845207,
+      "restricted": true,
+      "grantedUniverseIds": [
+        10776120489
+      ],
+      "evidence": [
+        {
+          "path": "docs/evidence/ag69/restricted-83662321011462.jpg",
+          "sha256": "49fdddf926ce11ff6c0bcf1f16ba2682f668c7f199e5079d032d4e7be29e4962"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-target-83662321011462.jpg",
+          "sha256": "f2fd7462181d7327134e2f527bb2968c54349b774c10c3fffb640b67ec36c8d5"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-saved-83662321011462.txt",
+          "sha256": "fa02b24e8f82d37d4eccc68d3df35d41a5f5310a6baf7ae7469a9bdf6df7e9cd"
+        }
+      ],
+      "decodedSha256": "0d99bf2fa717786c71d3fc677090ea34839caac823eed831045aa9a8b6d0f2fd"
+    },
+    {
+      "imageId": "106481090533297",
+      "assetType": "Image",
+      "sourceKey": "sky_lf",
+      "creatorGroupId": 925845207,
+      "restricted": true,
+      "grantedUniverseIds": [
+        10776120489
+      ],
+      "evidence": [
+        {
+          "path": "docs/evidence/ag69/restricted-106481090533297.jpg",
+          "sha256": "b1375fae10266cdc665d2f30dc58b8d911f9ae4d664c625f594d68c7781cc7d6"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-target-106481090533297.txt",
+          "sha256": "9adf34ee0f4cc2ab4dd8ff3b5be0f63e350b4a3914bc15cf327ca1d1e2d93810"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-saved-106481090533297.txt",
+          "sha256": "3d666129c62c395285e768298f77bb856461fd1b7ad71fe5f0ee76a5c2e28140"
+        }
+      ],
+      "decodedSha256": "78149a60a32f69b770b0e32172209a25d13e955ff4f7b4deb4b61e957b08c376"
+    },
+    {
+      "imageId": "120296233207649",
+      "assetType": "Image",
+      "sourceKey": "moon",
+      "creatorGroupId": 925845207,
+      "restricted": true,
+      "grantedUniverseIds": [
+        10776120489
+      ],
+      "evidence": [
+        {
+          "path": "docs/evidence/ag69/restricted-120296233207649.jpg",
+          "sha256": "b27b8cfe6592385bb8a4d3b1ffa9a0c84ba69b49b85f4c479d5b1bc2a9e39bc6"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-target-120296233207649.txt",
+          "sha256": "70f83183b780484ee89e63a636112dfc87a74ae92700dd04e55d3bbe1963788a"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-saved-120296233207649.txt",
+          "sha256": "e5930c7afa285902f3eddfe2a534e41eaab4c7d75099fd65436e99cae2f91cfa"
+        }
+      ],
+      "decodedSha256": "4fbeb64c995a028c13c6062805eb54835c314e34a91f00b7551edcef221d268e"
+    },
+    {
+      "imageId": "106126272501921",
+      "assetType": "Image",
+      "sourceKey": "mist",
+      "creatorGroupId": 925845207,
+      "restricted": true,
+      "grantedUniverseIds": [
+        10776120489
+      ],
+      "evidence": [
+        {
+          "path": "docs/evidence/ag69/restricted-106126272501921.jpg",
+          "sha256": "4cfcf9a5f983cbe201524edc7d236d14ceb4ea3f5f6530cdfb52171827433f6d"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-target-106126272501921.txt",
+          "sha256": "6f8938043a2fc988ad264f2d35817f03cb9fade5a79feec6994863a3848c7f54"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-saved-106126272501921.txt",
+          "sha256": "47764e80ea968b0c8626ee9a9e68f5bd16672ca186c76cf6827b02e2ccb523c7"
+        }
+      ],
+      "decodedSha256": "a073b7217e249c17811a8b5ccec5087024e5b5dd35b824af7411b27130a7d8c3"
+    },
+    {
+      "imageId": "99406398694311",
+      "assetType": "Image",
+      "sourceKey": "star",
+      "creatorGroupId": 925845207,
+      "restricted": true,
+      "grantedUniverseIds": [
+        10776120489
+      ],
+      "evidence": [
+        {
+          "path": "docs/evidence/ag69/restricted-99406398694311.jpg",
+          "sha256": "5c38ac6285fcb66b61605d7400c00d5c081612343a7ca37db90054e508f9cfc7"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-target-99406398694311.txt",
+          "sha256": "098edf076ddaa942a01c2ca9d2501ed3874beaebfe15255b527bf08465ce7046"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-saved-99406398694311.txt",
+          "sha256": "148f52759b167cceb11254271a17f15af301f32ca70d2b18ba44fc1a03ec7c6d"
+        }
+      ],
+      "decodedSha256": "cfe5c948f4aa487970d49985db9ce0cd314543df43379954ed830baa3c3ba96c"
+    },
+    {
+      "imageId": "87150286021124",
+      "assetType": "Image",
+      "sourceKey": "sky_ft",
+      "creatorGroupId": 925845207,
+      "restricted": true,
+      "grantedUniverseIds": [
+        10776120489
+      ],
+      "evidence": [
+        {
+          "path": "docs/evidence/ag69/restricted-87150286021124.jpg",
+          "sha256": "39b3c09eef35051c0b87f38150241abda93f7ca248bf18751707b5f986536301"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-target-87150286021124.txt",
+          "sha256": "d809ffad3c3efb46be2a040f6ea25aca785585f52a2ab352e1cde312d73d7ed5"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-saved-87150286021124.txt",
+          "sha256": "9a18d4a0b891cbf8fffed0a5143f8d3619678fbdfd1c908fe2989f80ae27f3cd"
+        }
+      ],
+      "decodedSha256": "022592f61f0b46f0d4d7e4f93ce30f68f24ce0537ddda0be7f551cba9cf153dc"
+    },
+    {
+      "imageId": "104321131031052",
+      "assetType": "Image",
+      "sourceKey": "meadow",
+      "creatorGroupId": 925845207,
+      "restricted": true,
+      "grantedUniverseIds": [
+        10776120489
+      ],
+      "evidence": [
+        {
+          "path": "docs/evidence/ag69/restricted-104321131031052.jpg",
+          "sha256": "04f7a1814b57c2162d8ec2f4f8b729038490e732be209152477dd346e6eecf2b"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-target-104321131031052.txt",
+          "sha256": "80ca26b5c77f199fe75f8d0d1edc1c393700d1d235f6ac859daf91596be61910"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-saved-104321131031052.txt",
+          "sha256": "5b6e337234d24789ff03aa3c53d1e1fff2227be7d447a7551cf645f825d92eb4"
+        }
+      ],
+      "decodedSha256": "8ca8c9ab32ed65ae6cde3d057af5e3989e9e45a26226c8d2e55fa393f7fcff31"
+    },
+    {
+      "imageId": "130725840424597",
+      "assetType": "Image",
+      "sourceKey": "sky_bk",
+      "creatorGroupId": 925845207,
+      "restricted": true,
+      "grantedUniverseIds": [
+        10776120489
+      ],
+      "evidence": [
+        {
+          "path": "docs/evidence/ag69/restricted-130725840424597.jpg",
+          "sha256": "3dd504b9a9f1a5557e488974f98382f49601871b52a12adcf6369c69868e4d1c"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-target-130725840424597.txt",
+          "sha256": "c75150ea76b44557e920020fcc1593531df5e5cca8967ca222ad2d7f7a6a72cb"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-saved-130725840424597.txt",
+          "sha256": "fd5ec0b6ec4f8120655cc8c0cd472d065e8adc9bfbbf9ecb9ce888ad07ad2bfb"
+        }
+      ],
+      "decodedSha256": "07a30950316d83f272415d452d472bc720f84037480e745bf631fdb301c84433"
+    },
+    {
+      "imageId": "127569253577461",
+      "assetType": "Image",
+      "sourceKey": "sky_up",
+      "creatorGroupId": 925845207,
+      "restricted": true,
+      "grantedUniverseIds": [
+        10776120489
+      ],
+      "evidence": [
+        {
+          "path": "docs/evidence/ag69/restricted-127569253577461.jpg",
+          "sha256": "bfcd730e64ddfda74b4965f2b66026a37a873cdb0f814c35521643f9db6c1ada"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-target-127569253577461.txt",
+          "sha256": "f6ab1e3c1f70bf68ba542a4d5fa493c400235e194405752deaadf8ccd3d074c8"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-saved-127569253577461.txt",
+          "sha256": "d767282ddfc706fbfc1eaffa0c6117f3c789c749a6cf34530b5cabc8bf78c3e6"
+        }
+      ],
+      "decodedSha256": "88a6a54be34262f236cd3f67b57886c10ea352b6297237ee281f12704a456570"
+    },
+    {
+      "imageId": "96590033453082",
+      "assetType": "Image",
+      "sourceKey": "rainbow",
+      "creatorGroupId": 925845207,
+      "restricted": true,
+      "grantedUniverseIds": [
+        10776120489
+      ],
+      "evidence": [
+        {
+          "path": "docs/evidence/ag69/restricted-96590033453082.jpg",
+          "sha256": "a1e0c5a7c5423a5671f61dc3f6834261c7f2d89edd5cad065ff67e9fe874995b"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-target-96590033453082.txt",
+          "sha256": "4cc70560eb132657c46a7e769795a5b6b024130e5bf5b8d338c3ea60d6b42988"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-saved-96590033453082.txt",
+          "sha256": "1f272a7093d9d3407bd0ace6404f50a3e92b7dcaab2a972f67358fcdbf31bfa2"
+        }
+      ],
+      "decodedSha256": "9290630bd527652c61742f5eb30f792a350b9b7298d0abcd7649c36ddad277ac"
+    },
+    {
+      "imageId": "96243370555026",
+      "assetType": "Image",
+      "sourceKey": "sky_rt",
+      "creatorGroupId": 925845207,
+      "restricted": true,
+      "grantedUniverseIds": [
+        10776120489
+      ],
+      "evidence": [
+        {
+          "path": "docs/evidence/ag69/restricted-96243370555026.jpg",
+          "sha256": "0d082538193f8c66701b9a4990853f19779ae1f9e355812166db4c9ae144f06b"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-target-96243370555026.txt",
+          "sha256": "9b21158f97847f2cd2e61a13623240908384b262692dc8eca06b7ed72e1d9613"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-saved-96243370555026.txt",
+          "sha256": "1d55331525c5a21a2b6699a0318f95cfa51bf4a65a646835f3d1807c061457e6"
+        }
+      ],
+      "decodedSha256": "d4728050069af27fc14bd19b432de3c09541e42c912f4527ffd742a66969ed48"
+    },
+    {
+      "imageId": "127279777775296",
+      "assetType": "Image",
+      "sourceKey": "sun",
+      "creatorGroupId": 925845207,
+      "restricted": true,
+      "grantedUniverseIds": [
+        10776120489
+      ],
+      "evidence": [
+        {
+          "path": "docs/evidence/ag69/restricted-127279777775296.jpg",
+          "sha256": "0b0b0191ba329d02805349aa29a8a94b3279369010a3066da08d71e0bed36275"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-target-127279777775296.txt",
+          "sha256": "5c3063bed6e7f07abffb35c524401fdf868ce156922b7c4fc96ce50f87569e31"
+        },
+        {
+          "path": "docs/evidence/ag69/grant-saved-127279777775296.txt",
+          "sha256": "df4946a96b7cc94f62f85708f608569b0be05aeac125a9a1748bddee20f7a737"
+        }
+      ],
+      "decodedSha256": "bb3d534cd31c8b59206d6a20bdf13509cc9295760a3af2cd6c58f3154aab023b"
+    }
+  ],
+  "identityEvidence": {
+    "path": "docs/evidence/ag69/studio-image-identity.log",
+    "sha256": "eb69ac23f74fd2188d2fd8daf769efca9d654ca055c1fef2edf053c6c5c4bd90"
+  },
+  "runtimeEvidence": {
+    "privatePlay": {
+      "path": "docs/evidence/ag69/private-f5-access.log",
+      "sha256": "67a417362782bdcfe186a68403f1bdb8c8ed34beda5f2a7d52027837aed92968"
+    },
+    "ordinaryPlay": {
+      "path": "docs/evidence/ag69/ordinary-f5.log",
+      "sha256": "56e04886bfe36e9029cf84b061b4cdcbd905a913dba205188ef56951c96e42aa"
+    }
+  },
+  "runtimeContextNote": "Private Experience F5 ImageLabel delivery probe plus separate ordinary full-game local Rojo build (GameId 0). No place publication; no independent account or published server test."
+}

@@ -3,7 +3,7 @@
   "task": "AG-69",
   "issue": 40,
   "baseSha": "418d85f519232ea10e373a4b1944132ee389acd2",
-  "status": "BLOCKED_UPLOAD_APPROVAL",
+  "status": "STUDIO_VERIFIED_ART_OPEN",
   "provenance": "Original project-authored deterministic mathematical art; CC0-1.0; no external image sources",
   "target": {
     "creatorType": "Group",
@@ -14,12 +14,17 @@
   },
   "delivery": {
     "strategy": "Restricted Roblox Image assets with rbxassetid:// references; no Studio content installation",
-    "ownerApproval": null,
-    "uploadStatus": "NOT_STARTED",
-    "assetPrivacy": "REVERIFY_BEFORE_UPLOAD",
-    "runtimeIntegration": "NOT_STARTED",
-    "ordinaryPlay": "NOT_RUN",
-    "experienceAccess": "NOT_VERIFIED"
+    "ownerApproval": {
+      "received": "2026-11-13",
+      "source": "owner reply in project chat",
+      "scope": "exact 12 manifest PNGs; Restricted Group 925845207; permanent access only to Universe 10776120489"
+    },
+    "uploadStatus": "COMPLETED_IMAGE_IDS_VERIFIED",
+    "assetPrivacy": "RESTRICTED_VERIFIED_12",
+    "runtimeIntegration": "IMPLEMENTED",
+    "ordinaryPlay": "PASS_LOCAL_FULL_GAME",
+    "experienceAccess": "PASS_PRIVATE_EXPERIENCE_F5",
+    "uploadReceipt": "docs/evidence/ag69/upload-access-receipt.json"
   },
   "assets": [
     {
@@ -33,11 +38,12 @@
       "uploadName": "AG69_Sky_BK",
       "receipt": "assets/environment/stability-sky/receipt.json",
       "license": "assets/environment/stability-sky/LICENSE.txt",
-      "robloxImageId": null,
+      "robloxImageId": "130725840424597",
       "robloxDecalId": null,
-      "creatorVerified": false,
-      "restrictedVerified": false,
-      "experienceAccessVerified": false
+      "creatorVerified": true,
+      "restrictedVerified": true,
+      "experienceAccessVerified": true,
+      "decodedSha256": "07a30950316d83f272415d452d472bc720f84037480e745bf631fdb301c84433"
     },
     {
       "key": "sky_dn",
@@ -50,11 +56,12 @@
       "uploadName": "AG69_Sky_DN",
       "receipt": "assets/environment/stability-sky/receipt.json",
       "license": "assets/environment/stability-sky/LICENSE.txt",
-      "robloxImageId": null,
+      "robloxImageId": "83662321011462",
       "robloxDecalId": null,
-      "creatorVerified": false,
-      "restrictedVerified": false,
-      "experienceAccessVerified": false
+      "creatorVerified": true,
+      "restrictedVerified": true,
+      "experienceAccessVerified": true,
+      "decodedSha256": "0d99bf2fa717786c71d3fc677090ea34839caac823eed831045aa9a8b6d0f2fd"
     },
     {
       "key": "sky_ft",
@@ -67,11 +74,12 @@
       "uploadName": "AG69_Sky_FT",
       "receipt": "assets/environment/stability-sky/receipt.json",
       "license": "assets/environment/stability-sky/LICENSE.txt",
-      "robloxImageId": null,
+      "robloxImageId": "87150286021124",
       "robloxDecalId": null,
-      "creatorVerified": false,
-      "restrictedVerified": false,
-      "experienceAccessVerified": false
+      "creatorVerified": true,
+      "restrictedVerified": true,
+      "experienceAccessVerified": true,
+      "decodedSha256": "022592f61f0b46f0d4d7e4f93ce30f68f24ce0537ddda0be7f551cba9cf153dc"
     },
     {
       "key": "sky_lf",
@@ -84,11 +92,12 @@
       "uploadName": "AG69_Sky_LF",
       "receipt": "assets/environment/stability-sky/receipt.json",
       "license": "assets/environment/stability-sky/LICENSE.txt",
-      "robloxImageId": null,
+      "robloxImageId": "106481090533297",
       "robloxDecalId": null,
-      "creatorVerified": false,
-      "restrictedVerified": false,
-      "experienceAccessVerified": false
+      "creatorVerified": true,
+      "restrictedVerified": true,
+      "experienceAccessVerified": true,
+      "decodedSha256": "78149a60a32f69b770b0e32172209a25d13e955ff4f7b4deb4b61e957b08c376"
     },
     {
       "key": "sky_rt",
@@ -101,11 +110,12 @@
       "uploadName": "AG69_Sky_RT",
       "receipt": "assets/environment/stability-sky/receipt.json",
       "license": "assets/environment/stability-sky/LICENSE.txt",
-      "robloxImageId": null,
+      "robloxImageId": "96243370555026",
       "robloxDecalId": null,
-      "creatorVerified": false,
-      "restrictedVerified": false,
-      "experienceAccessVerified": false
+      "creatorVerified": true,
+      "restrictedVerified": true,
+      "experienceAccessVerified": true,
+      "decodedSha256": "d4728050069af27fc14bd19b432de3c09541e42c912f4527ffd742a66969ed48"
     },
     {
       "key": "sky_up",
@@ -118,11 +128,12 @@
       "uploadName": "AG69_Sky_UP",
       "receipt": "assets/environment/stability-sky/receipt.json",
       "license": "assets/environment/stability-sky/LICENSE.txt",
-      "robloxImageId": null,
+      "robloxImageId": "127569253577461",
       "robloxDecalId": null,
-      "creatorVerified": false,
-      "restrictedVerified": false,
-      "experienceAccessVerified": false
+      "creatorVerified": true,
+      "restrictedVerified": true,
+      "experienceAccessVerified": true,
+      "decodedSha256": "88a6a54be34262f236cd3f67b57886c10ea352b6297237ee281f12704a456570"
     },
     {
       "key": "sun",
@@ -135,11 +146,12 @@
       "uploadName": "AG69_Sun",
       "receipt": "assets/environment/atmosphere/receipt.json",
       "license": "assets/environment/atmosphere/LICENSE.txt",
-      "robloxImageId": null,
+      "robloxImageId": "127279777775296",
       "robloxDecalId": null,
-      "creatorVerified": false,
-      "restrictedVerified": false,
-      "experienceAccessVerified": false
+      "creatorVerified": true,
+      "restrictedVerified": true,
+      "experienceAccessVerified": true,
+      "decodedSha256": "bb3d534cd31c8b59206d6a20bdf13509cc9295760a3af2cd6c58f3154aab023b"
     },
     {
       "key": "moon",
@@ -152,11 +164,12 @@
       "uploadName": "AG69_Moon",
       "receipt": "assets/environment/atmosphere/receipt.json",
       "license": "assets/environment/atmosphere/LICENSE.txt",
-      "robloxImageId": null,
+      "robloxImageId": "120296233207649",
       "robloxDecalId": null,
-      "creatorVerified": false,
-      "restrictedVerified": false,
-      "experienceAccessVerified": false
+      "creatorVerified": true,
+      "restrictedVerified": true,
+      "experienceAccessVerified": true,
+      "decodedSha256": "4fbeb64c995a028c13c6062805eb54835c314e34a91f00b7551edcef221d268e"
     },
     {
       "key": "mist",
@@ -169,11 +182,12 @@
       "uploadName": "AG69_Mist",
       "receipt": "assets/environment/atmosphere/receipt.json",
       "license": "assets/environment/atmosphere/LICENSE.txt",
-      "robloxImageId": null,
+      "robloxImageId": "106126272501921",
       "robloxDecalId": null,
-      "creatorVerified": false,
-      "restrictedVerified": false,
-      "experienceAccessVerified": false
+      "creatorVerified": true,
+      "restrictedVerified": true,
+      "experienceAccessVerified": true,
+      "decodedSha256": "a073b7217e249c17811a8b5ccec5087024e5b5dd35b824af7411b27130a7d8c3"
     },
     {
       "key": "rainbow",
@@ -186,11 +200,12 @@
       "uploadName": "AG69_Rainbow",
       "receipt": "assets/environment/atmosphere/receipt.json",
       "license": "assets/environment/atmosphere/LICENSE.txt",
-      "robloxImageId": null,
+      "robloxImageId": "96590033453082",
       "robloxDecalId": null,
-      "creatorVerified": false,
-      "restrictedVerified": false,
-      "experienceAccessVerified": false
+      "creatorVerified": true,
+      "restrictedVerified": true,
+      "experienceAccessVerified": true,
+      "decodedSha256": "9290630bd527652c61742f5eb30f792a350b9b7298d0abcd7649c36ddad277ac"
     },
     {
       "key": "meadow",
@@ -203,11 +218,12 @@
       "uploadName": "AG69_Meadow",
       "receipt": "assets/environment/polish/receipt.json",
       "license": "assets/environment/polish/LICENSE.txt",
-      "robloxImageId": null,
+      "robloxImageId": "104321131031052",
       "robloxDecalId": null,
-      "creatorVerified": false,
-      "restrictedVerified": false,
-      "experienceAccessVerified": false
+      "creatorVerified": true,
+      "restrictedVerified": true,
+      "experienceAccessVerified": true,
+      "decodedSha256": "8ca8c9ab32ed65ae6cde3d057af5e3989e9e45a26226c8d2e55fa393f7fcff31"
     },
     {
       "key": "star",
@@ -220,11 +236,12 @@
       "uploadName": "AG69_Star",
       "receipt": "assets/environment/polish/receipt.json",
       "license": "assets/environment/polish/LICENSE.txt",
-      "robloxImageId": null,
+      "robloxImageId": "99406398694311",
       "robloxDecalId": null,
-      "creatorVerified": false,
-      "restrictedVerified": false,
-      "experienceAccessVerified": false
+      "creatorVerified": true,
+      "restrictedVerified": true,
+      "experienceAccessVerified": true,
+      "decodedSha256": "cfe5c948f4aa487970d49985db9ce0cd314543df43379954ed830baa3c3ba96c"
     }
   ]
 }

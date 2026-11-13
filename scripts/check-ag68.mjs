@@ -2,6 +2,7 @@ import {readFileSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
 import assert from 'node:assert/strict';
 import {beforeAG68} from './ag68-preservation.mjs';
+import {beforeAG69} from './ag69-preservation.mjs';
 const base='34db02c7a09a0208c881d04ad14c51d0a663e55e';
 const normal=s=>s.replace(/\r\n/g,'\n');
 const read=p=>normal(readFileSync(p,'utf8'));
@@ -10,7 +11,7 @@ for(const file of [...inherited,'default.project.json']) {
   const old=execFileSync('git',['show',`${base}:${file}`],{maxBuffer:64*1024*1024});
   const current=readFileSync(file);
   if(file==='src/client/EnvironmentView.luau') assert.equal(beforeAG68(file,normal(current.toString())),normal(old.toString()),'Exact inherited lighting owner outside six bounded additions');
-  else if(/\.(luau|json|md|svg|rbxmx|txt)$/.test(file)) assert.equal(normal(current.toString()),normal(old.toString()),`AG68 scope violation: ${file}`);
+  else if(/\.(luau|json|md|svg|rbxmx|txt)$/.test(file)) assert.equal(beforeAG69(file,normal(current.toString())),normal(old.toString()),`AG68 scope violation: ${file}`);
   else assert(current.equals(old),`AG68 asset drift: ${file}`);
 }
 const view=read('src/client/EnvironmentView.luau');
