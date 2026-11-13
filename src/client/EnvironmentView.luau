@@ -9,6 +9,9 @@ local State=require(Shared.EnvironmentState)
 -- AG63_BEGIN_IMPORT
 local Look=require(Shared.PostFXLook)
 -- AG63_END_IMPORT
+-- AG68_BEGIN_IMPORT
+local WorldLook=require(Shared.WorldLook)
+-- AG68_END_IMPORT
 local Style=require(Shared.AtmosphereStyle)
 local Transition=require(Shared.EnvironmentTransition)
 local Clock=require(Shared.EnvironmentClock)
@@ -32,6 +35,10 @@ function View.start(root,settings)
 	local look=Look.default
 	local lookInspect
 	-- AG63_END_STATE
+	-- AG68_BEGIN_STATE
+	look=WorldLook.default(RunService:IsStudio())
+	local worldLookSample
+	-- AG68_END_STATE
 	local saved={}; local savedWind=workspace.GlobalWind
 	for _,key in ipairs({"ClockTime","Brightness","Ambient","OutdoorAmbient","GlobalShadows","ExposureCompensation","GeographicLatitude","ColorShift_Top","ColorShift_Bottom","EnvironmentDiffuseScale","EnvironmentSpecularScale","ShadowSoftness"}) do saved[key]=Lighting[key] end
 	local displaced={}
@@ -241,12 +248,36 @@ function View.start(root,settings)
 			bloom.Intensity=post.bloom; bloom.Enabled=post.bloom>.0001
 		end
 		-- AG63_END_APPLY
+		-- AG68_BEGIN_APPLY
+		-- Reset the two properties not written by the inherited baseline on EVERY
+		-- frame, including OFF/A/B/C. All other overrides have baseline writes above.
+		bloom.Size=18; bloom.Threshold=2.3
+		local worldPost=WorldLook.project(sample,look,self.quality,fx.bloom,fx.rays)
+		worldLookSample={phase=sample.phase,clock=sample.clock,rain=sample.rain,cloud=sample.cloud,
+			wet=sample.wet,afterRain=sample.afterRain,night=sample.night,warm=sample.warm,dawn=sample.dawn}
+		if worldPost then
+			Lighting.Brightness=worldPost.brightness; Lighting.ExposureCompensation=worldPost.exposure
+			Lighting.Ambient=color(worldPost.ambient); Lighting.OutdoorAmbient=color(worldPost.outdoor)
+			Lighting.ColorShift_Top=color(worldPost.sun):Lerp(Color3.new(),.65)
+			Lighting.ColorShift_Bottom=color(worldPost.bottom)
+			Lighting.EnvironmentDiffuseScale=worldPost.diffuse; Lighting.EnvironmentSpecularScale=worldPost.specular
+			atmosphere.Color=color(worldPost.sky); atmosphere.Decay=color(worldPost.decay)
+			atmosphere.Density=worldPost.density; atmosphere.Haze=worldPost.haze*q.haze; atmosphere.Glare=worldPost.glare
+			correction.TintColor=color(worldPost.tint); correction.Saturation=worldPost.saturation; correction.Contrast=worldPost.contrast
+			bloom.Size=worldPost.bloomSize; bloom.Threshold=worldPost.bloomThreshold
+			bloom.Intensity=worldPost.bloom; bloom.Enabled=worldPost.bloom>.0001
+			rays.Intensity=worldPost.rays; rays.Enabled=worldPost.rays>.0001
+		end
+		-- AG68_END_APPLY
 	end
 	local lod=0; local step=0; local connection
 	local transition=Transition.new({forward=true,clockAtPhase=function(phase) return Clock.at(Config,phase) end})
 	function self.setQuality(name) if Config.quality[name] then self.quality=name; lod=1 end end
 	-- AG63_BEGIN_METHOD
 	function self.setLook(name)
+		-- AG68_BEGIN_SELECT
+		if RunService:IsStudio() and name=="AG68" then look=name; return true end
+		-- AG68_END_SELECT
 		if not RunService:IsStudio() or not Look.valid(name) then return false end
 		look=name; return true
 	end
@@ -298,6 +329,10 @@ function View.start(root,settings)
 		-- AG63_BEGIN_STATS
 		counts.postFXLook=look
 		-- AG63_END_STATS
+		-- AG68_BEGIN_STATS
+		counts.worldLookSample=worldLookSample and table.clone(worldLookSample) or nil
+		counts.worldLookReleaseEnabled=WorldLook.releaseEnabled
+		-- AG68_END_STATS
 		return counts
 	end
 	function self.setAnnotationsEnabled(enabled) annotations=enabled~=false; labelsDirty=1 end
@@ -478,6 +513,10 @@ function View.start(root,settings)
 		-- Local Studio review inputs feed this owner; no helper, remote or save.
 		-- Direct Lighting.ClockTime writes are intentionally not a second API.
 		local function request()
+			-- AG68_BEGIN_REQUEST
+			local worldRequest=WorldLook.request(root:GetAttribute("EnvironmentReview"))
+			if worldRequest then self.setLook(worldRequest); return end
+			-- AG68_END_REQUEST
 			-- AG63_BEGIN_REQUEST
 			local requestedLook=Look.request(root:GetAttribute("EnvironmentReview"))
 			if requestedLook then self.setLook(requestedLook); return end

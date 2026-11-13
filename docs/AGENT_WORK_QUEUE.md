@@ -77,6 +77,22 @@
 
 ## Art, UX, safety, rollout
 
+### AG-68 — World Look 2.0 / Arcane Forest 2.0
+
+**Status: IN PROGRESS; OWNER ART ACCEPTED: NO; PUBLISHED: NO.** Issue #38.
+Base Draft PR #37 `feat/ag67b-soul-absorption-integration` at
+`34db02c7a09a0208c881d04ad14c51d0a663e55e`; remote HEAD unchanged, CI
+43407466365 Windows/Ubuntu PASS, base worktree clean. Separate branch
+`feat/ag68-world-look`. First diagnose the actual ordinary Play AG63 owner,
+OFF/A/B/C and inherited texture failures; then implement one visible look within
+EnvironmentView. Automatic Studio review only, published release OFF; preserve
+time/weather, reversible baseline, quality/motion and original owner restoration.
+No server/economy/saves/remotes/HUD/Spellbook VFX/asset ID or rights changes.
+No migrations or changed invalid-save handling. Verify paired ordinary-camera
+captures, two directions, landscape emulator, live videos, bounded switching and
+same-scenario performance. Phone/multiplayer/owner art remain open until evidenced.
+No merge, publishing, asset upload or final release activation.
+
 ### AG-67B — Soul Absorption production integration and sigil VFX
 
 **Status: IMPLEMENTED/CODE / scoped STUDIO VERIFIED; owner art acceptance OPEN.**

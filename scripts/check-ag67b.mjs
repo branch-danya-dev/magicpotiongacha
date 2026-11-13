@@ -1,3 +1,4 @@
+import {beforeAG68} from './ag68-preservation.mjs';
 import {readFileSync,mkdtempSync,readdirSync,rmSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
@@ -12,7 +13,7 @@ const inherited=execFileSync('git',['ls-tree','-r','--name-only',base,'src','tes
 for(const file of [...inherited,'default.project.json']) {
   const old=execFileSync('git',['show',`${base}:${file}`],{maxBuffer:64*1024*1024});
   const current=readFileSync(file==='src/client/SpellbookEffects.luau'?'src/client/LegacySpellbookEffects.luau':file);
-  if(/\.(luau|json|md|svg|rbxmx|txt)$/.test(file))assert.equal(normal(current.toString()),normal(old.toString()),`Inherited behavior drift: ${file}`);
+  if(/\.(luau|json|md|svg|rbxmx|txt)$/.test(file))assert.equal(beforeAG68(file,normal(current.toString())),normal(old.toString()),`Inherited behavior drift: ${file}`);
   else assert(current.equals(old),`Inherited asset drift: ${file}`);
 }
 const dir='assets/vfx/ag67b';

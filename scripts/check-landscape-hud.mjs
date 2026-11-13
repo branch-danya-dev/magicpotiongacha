@@ -1,3 +1,4 @@
+import {beforeAG68} from './ag68-preservation.mjs';
 // AG64 extends two UI owners through removable blocks; the game stays pinned.
 import {readFileSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
@@ -9,7 +10,7 @@ const original=p=>normal(execFileSync('git',['show',`${base}:${p}`],{encoding:'u
 const extended=new Set(['src/client/Main.client.luau','src/client/UIFoundationDemo.client.luau']);
 const files=execFileSync('git',['ls-tree','-r','--name-only',base,'src','tests'],{encoding:'utf8'}).trim().split('\n');
 for(const p of [...files,'default.project.json']) {
- const source=read(p);
+ const source=beforeAG68(p,read(p));
  const stripped=extended.has(p)?source.replace(/^[\t ]*-- AG64_BEGIN_(\w+)\n[\s\S]*?^[\t ]*-- AG64_END_\1\n/gm,''):source;
  assert.equal(stripped,original(p),`${p}: AG64 must preserve inherited behavior outside explicit HUD additions`);
 }

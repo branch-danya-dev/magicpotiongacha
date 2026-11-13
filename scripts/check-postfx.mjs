@@ -1,3 +1,4 @@
+import {beforeAG68} from './ag68-preservation.mjs';
 // Freeze the inherited game; only bounded additions to its existing owner are allowed.
 import { readFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -12,7 +13,7 @@ for(const path of [...inherited,'default.project.json']) {
   // every inherited file to the exact CI-green AG63 base (including this owner).
   if(!['src/client/EnvironmentView.luau','src/client/Main.client.luau','src/client/UIFoundationDemo.client.luau'].includes(path)) assert.equal(current(path),original(path),`${path}: AG63 must preserve inherited code/tests`);
 }
-const view=current('src/client/EnvironmentView.luau');
+const view=beforeAG68('src/client/EnvironmentView.luau',current('src/client/EnvironmentView.luau'));
 const sections=[];
 const stripped=view.replace(/^[\t ]*-- AG63_BEGIN_(\w+)\n[\s\S]*?^[\t ]*-- AG63_END_\1\n/gm,(_,name)=>{sections.push(name);return '';});
 assert.deepEqual(sections,['IMPORT','STATE','APPLY','METHOD','STATS','INSPECT','REQUEST','STOP']);
