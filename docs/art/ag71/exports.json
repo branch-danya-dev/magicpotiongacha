@@ -1,0 +1,75 @@
+{
+  "kind": "DESIGN_CONCEPT_NOT_STUDIO_CAPTURE",
+  "outputs": [
+    {
+      "file": "A-hud.png",
+      "width": 844,
+      "height": 390,
+      "bytes": 653559,
+      "sha256": "24dbfa8b46ecc6d231b6b38441a7f3ae2968a5bb6ea513f993f887fd8277a1ff"
+    },
+    {
+      "file": "A-receipt.png",
+      "width": 844,
+      "height": 390,
+      "bytes": 654579,
+      "sha256": "0254a4b9336ec23577c47e9008dc372f453ad3481fc33683634ccda277e9bdff"
+    },
+    {
+      "file": "A-book.png",
+      "width": 844,
+      "height": 390,
+      "bytes": 567042,
+      "sha256": "14a2619c5579f7f330cef4e21bba464d9fbca0e01f6b8abd23fd4715a3653c6b"
+    },
+    {
+      "file": "A-chooser.png",
+      "width": 844,
+      "height": 390,
+      "bytes": 648671,
+      "sha256": "5f1d1ef1b084e18083d9e58bd903dba801d449c922c168b058c9f9d6f812d8ce"
+    },
+    {
+      "file": "A-board.png",
+      "width": 1740,
+      "height": 960,
+      "bytes": 1570807,
+      "sha256": "e4cb4d14bfe136a188400806ee23130b78acd7d6fc4c29e983ccbbb017f4a5a8"
+    },
+    {
+      "file": "B-hud.png",
+      "width": 844,
+      "height": 390,
+      "bytes": 653556,
+      "sha256": "baf0c32ffed83dfa5c1c91d22d886c4dc4d14db19d2d40a82a71971e521c8581"
+    },
+    {
+      "file": "B-receipt.png",
+      "width": 844,
+      "height": 390,
+      "bytes": 654787,
+      "sha256": "ad2fcc0614ddc218bbe332f19c36c7e3a2f91dfe725e688d3a3221b2a02ba2ff"
+    },
+    {
+      "file": "B-book.png",
+      "width": 844,
+      "height": 390,
+      "bytes": 566769,
+      "sha256": "07e4eed44afa1184379ad4c3329b08e68ae8b9e73e2d39fcb60d21afeeeec723"
+    },
+    {
+      "file": "B-chooser.png",
+      "width": 844,
+      "height": 390,
+      "bytes": 649527,
+      "sha256": "2ab215a3b8e84c2954e9d3bba7a1c630d7cbe6d7ae25779401cc8c02f0c001af"
+    },
+    {
+      "file": "B-board.png",
+      "width": 1740,
+      "height": 960,
+      "bytes": 1567009,
+      "sha256": "f98ae04211c161a3061c16250847d26df58ae8e639c02f16129598a3876442e1"
+    }
+  ]
+}

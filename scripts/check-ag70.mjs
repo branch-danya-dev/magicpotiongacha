@@ -3,6 +3,7 @@ import {readFileSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
 import {beforeAG70} from './ag70-preservation.mjs';
+import {beforeAG71} from './ag71-preservation.mjs';
 const base='6467bfd9b024dbf618496ca2901f5b6cac20abb1';
 const normal=b=>b.toString().replaceAll('\r\n','\n');
 const paths=execFileSync('git',['ls-tree','-r','--name-only',base,'src','tests','qa','assets'],{encoding:'utf8'}).trim().split('\n');
@@ -10,7 +11,7 @@ for(const path of [...paths,'default.project.json']) {
   const old=execFileSync('git',['show',`${base}:${path}`],{maxBuffer:64*1024*1024});
   const current=readFileSync(path);
   if(path==='src/client/EnvironmentView.luau'||path==='src/server/EnvironmentArt.luau') assert.equal(beforeAG70(path,normal(current)),normal(old),'AG69 owners exactly preserved outside reviewed AG70 presentation seams');
-  else if(/\.(luau|json|md|svg|rbxmx|txt|mjs)$/.test(path)) assert.equal(normal(current),normal(old),`Inherited source/asset/test changed: ${path}`);
+  else if(/\.(luau|json|md|svg|rbxmx|txt|mjs)$/.test(path)) assert.equal(beforeAG71(path,normal(current)),normal(old),`Inherited source/asset/test changed: ${path}`);
   else assert(current.equals(old),`Inherited bytes changed: ${path}`);
 }
 const view=normal(readFileSync('src/client/EnvironmentView.luau'));
@@ -48,7 +49,8 @@ for(const proof of receipt.files) {
 // R3 runtime files; CI cannot claim a new Studio/graphics5 art PASS.
 const r3Files=new Set(['src/client/EnvironmentView.luau','src/shared/ArcaneForest.luau','src/server/EnvironmentArt.luau','src/shared/PathSurface.luau']);
 const changed=execFileSync('git',['diff','--name-only',receipt.runtimeSourceSha,'--','src'],{encoding:'utf8'}).trim().split('\n').filter(Boolean);
-assert(changed.every(path=>r3Files.has(path)),'Unreviewed R3 runtime drift');
+const ag71Files=new Set(['src/client/Main.client.luau','src/client/LandscapeHUD.luau','src/client/ArcadeHUD.luau','src/shared/ui/Arcade.luau','src/shared/ui/ArcadeAssets.luau']);
+assert(changed.every(path=>r3Files.has(path)||ag71Files.has(path)),'Unreviewed R3/AG71 runtime drift');
 assert(view.includes('else light.Parent.CFrame=base.cf end'),'Restore both pool transforms before culling');
 assert(view.includes('e.light.Range=base.range; e.light.Angle=base.angle'),'Restore pool shape');
 assert(view.includes('e.light.Range=14'),'Restore lantern radius');

@@ -26,3 +26,5 @@ assets/environment/megakit/License_Standard.txt whitespace=cr-at-eol,-blank-at-e
 docs/evidence/ag69-r1/** -text whitespace=cr-at-eol,-blank-at-eol
 # AG70 native evidence is hashed byte-for-byte; preserve original log whitespace.
 docs/evidence/ag70/** -text whitespace=cr-at-eol,-blank-at-eol
+# Keep AG71 concept manifest hashes identical on Windows and Ubuntu checkouts.
+docs/art/ag71/** -text
