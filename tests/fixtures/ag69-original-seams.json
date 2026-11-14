@@ -7,6 +7,7 @@
     "STAR": "\t\tlocal d=State.star(i); stars[i]=celestialSprite(\"Star_\"..i,Config.polishPrefix..\"star.png\",d.size,Vector3.new(d.x,d.y,d.z)); stars[i].alpha=d.alpha\n",
     "REGISTER": "\tlocal function registerLabel(gui)\n",
     "STATS": "\t\treturn counts\n",
+    "SUN_UPDATE": "",
     "RESTORE": "\t\tfor k,v in pairs(saved) do Lighting[k]=v end\n",
     "PRELOAD": "\tself.update(1); connection=RunService.RenderStepped:Connect(self.update)\n"
   },

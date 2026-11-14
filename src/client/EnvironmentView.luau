@@ -7,6 +7,7 @@ local Shared=game:GetService("ReplicatedStorage").PotionTycoon.Shared
 -- AG69_BEGIN_IMPORT
 local Config=require(Shared.EnvironmentConfig)
 local Assets=require(Shared.EnvironmentAssets)
+local Celestial=require(Shared.EnvironmentCelestial)
 -- AG69_END_IMPORT
 local State=require(Shared.EnvironmentState)
 -- AG63_BEGIN_IMPORT
@@ -60,7 +61,10 @@ function View.start(root,settings)
 	local assets={}; for _,key in ipairs(Assets.keys) do table.insert(assets,Assets.uri(key)) end
 	local skyProperties={SkyboxBk="sky_bk",SkyboxDn="sky_dn",SkyboxFt="sky_ft",SkyboxLf="sky_lf",SkyboxRt="sky_rt",SkyboxUp="sky_up"}
 	-- Native sky remains a complete set until all six uploaded faces succeed.
-	sky.CelestialBodiesShown=true; sky.StarCount=0; sky.SunAngularSize=7; sky.MoonAngularSize=0
+	-- Sky's celestial loader requests a missing KTX representation for these
+	-- permitted Images. Use the existing Image-backed rig, not substitute assets.
+	sky.CelestialBodiesShown=true; sky.StarCount=0; sky.SunAngularSize=0; sky.MoonAngularSize=0
+	sky.SunTextureId=""; sky.MoonTextureId=""
 	sky.Parent=Lighting
 	self.assetFailures=0
 	local probes={}
@@ -140,6 +144,8 @@ function View.start(root,settings)
 -- AG69_BEGIN_MOON
 	local moon=celestialSprite("Moon",Assets.uri("moon"),Vista.moonSize,Vector3.new(0,1,0))
 	assetGui(moon.gui,"moon")
+	local sunDisk=celestialSprite("Sun",Assets.uri("sun"),Celestial.sunDiameter(Config.celestial.distance),Vector3.new(0,1,0))
+	assetGui(sunDisk.gui,"sun")
 -- AG69_END_MOON
 	local stars={}
 	for i=1,Config.celestial.stars do
@@ -352,6 +358,11 @@ function View.start(root,settings)
 -- AG69_BEGIN_STATS
 		counts.assetComplete=delivery.complete; counts.assetStatus=table.clone(delivery.status)
 		counts.skyFallback=not Assets.skyReady(delivery)
+		-- IsLoaded is sampled on the real consumers; a preload callback alone is
+		-- insufficient. Offscreen images may be deferred until first rendered.
+		counts.celestialConsumer="BillboardGui.ImageLabel"
+		counts.sunLoaded=sunDisk.image.IsLoaded; counts.moonLoaded=moon.image.IsLoaded
+		counts.sun=sunDisk.gui.Enabled and sunDisk.image.ImageTransparency<1 and 1 or 0
 		return counts
 -- AG69_END_STATS
 	end
@@ -373,6 +384,10 @@ function View.start(root,settings)
 		apply(sample,q,flow,elapsed)
 		local sun=Lighting:GetSunDirection(); local sunlight=State.sunVisibility(sample,sun.Y)
 		celestialAnchor.Position=camera.CFrame.Position
+-- AG69_BEGIN_SUN_UPDATE
+		sunDisk.attachment.Position=sun*Config.celestial.distance
+		sunDisk.image.ImageTransparency=1-Celestial.sunAlpha(sun.Y,sample.cloud,sample.rain)
+-- AG69_END_SUN_UPDATE
 		moon.attachment.Position=Vector3.new(table.unpack(State.moon(sample.phase)))*Config.celestial.distance
 		moon.image.ImageTransparency=1-sample.celestial*.94
 		for i,v in ipairs(stars) do v.image.ImageTransparency=1-(i<=q.stars and sample.celestial*v.alpha or 0) end
@@ -594,8 +609,6 @@ function View.start(root,settings)
 		if active~=self then return end
 		self.assetFailures=Assets.failures(delivery)
 		if Assets.skyReady(delivery) then for property,key in pairs(skyProperties) do sky[property]=Assets.uri(key) end end
-		if Assets.ready(delivery,"sun") then sky.SunTextureId=Assets.uri("sun") end
-		if Assets.ready(delivery,"moon") then sky.MoonTextureId=Assets.uri("moon") end
 		for gui,key in pairs(assetGuis) do gui.Enabled=Assets.ready(delivery,key) end
 		for texture,previous in pairs(meadowTextures) do if texture.Parent then texture.Transparency=Assets.ready(delivery,"meadow") and previous.transparency or 1 end end
 		if not ok then warn("AG69_PRELOAD_ERROR",err) end

@@ -18,7 +18,15 @@
 
 ### AG-69 — Восстановление 12 текстур M7 (Issue #40)
 
-**Статус: IMPLEMENTED / STUDIO VERIFIED (scoped); OWNER ART OPEN; NOT PUBLISHED.**
+**Статус: AG69-R1 IN PROGRESS — native Sun/Moon consumer repair; OWNER ART OPEN; NOT PUBLISHED.**
+Возобновлено 2026-11-14 по прямому поручению владельца. Точная база:
+`df5f3ee7f582764718390957d7234633bd6747e5` / Draft PR #42, clean worktree.
+AG70 Draft PR #43 (`b2b2d0b723e9f3a2b98beaf45dcce48859fb8ab6`) ожидает ремонта.
+Сначала диагностика фактических потребителей, затем исправление и native F5.
+Существующие 12 ID/исходники/права сохраняются. Новые загрузки или разрешения
+требуют отдельного согласования. Миграций, экономики, merge и публикации нет.
+Историческое описание ниже относится к исходному typed Image preload;
+оно не доказывает успешную загрузку Sun/Moon именно native Sky.
 Владелец: Codex, 2026-11-14. Единственная взятая задача; AG-70 Issue #41 не начата.
 Ветка `feat/ag69-m7-asset-restore`, Draft PR #42. База: CI-green PR #39
 `418d85f519232ea10e373a4b1944132ee389acd2`; AG-00

@@ -135,7 +135,12 @@ export function validateDelivery(manifest, readEvidence = read) {
   assert.equal(session.baseSha,manifest.baseSha);
   assert.equal(session.buildSha256,'8eb14671401c78a8ca15792be3ec0769a3cce9b3e887ed685a5575ba43260e56');
   assert.deepEqual(Object.keys(session.runtimeSourceSha256).sort(),['src/client/EnvironmentView.luau','src/server/EnvironmentArt.luau','src/shared/EnvironmentAssets.luau']);
-  for(const [path,sha] of Object.entries(session.runtimeSourceSha256)) assert.equal(digest(normal(read(path))),sha,'Runtime must match the native-tested build');
+  // Historical receipt proves the uploaded Images and then-tested source only.
+  // R1 changes the celestial consumer; do not relabel old preload as render proof.
+  for(const [path,sha] of Object.entries(session.runtimeSourceSha256)) {
+    const old=execFileSync('git',['show',`df5f3ee7f582764718390957d7234633bd6747e5:${path}`],{cwd:root});
+    assert.equal(digest(normal(old)),sha,'Historical runtime must match its tested revision');
+  }
   assert.equal(session.captures.length,8);
   const before=JSON.parse(readEvidence('docs/evidence/ag68/runtime.json'));
   for(const pose of ['day','sunset','night','rain']) for(const camera of ['near','wide']) {
@@ -210,6 +215,10 @@ export function validateRuntime(manifest) {
   assert(view.includes('if active~=self then return end'),'Late preload cannot mutate a stopped owner');
   assert(view.includes('if Assets.skyReady(delivery) then for property,key in pairs(skyProperties)'));
   assert(view.includes('counts.assetComplete=delivery.complete'),'Pending must remain distinguishable from success');
+  assert(view.includes('sky.SunTextureId=""; sky.MoonTextureId=""'),'No unsupported Sky celestial requests');
+  assert(!/sky\.(Sun|Moon)TextureId=Assets/.test(view),'Never send Image IDs to the failing Sky celestial consumer');
+  assert(view.includes('sunDisk.attachment.Position=sun*Config.celestial.distance'),'Sun tracks native lighting direction');
+  assert(view.includes('sunDisk.image.IsLoaded') && view.includes('moon.image.IsLoaded'),'Report real consumer state');
   assert(!/FireServer|InvokeServer|HttpService/.test(module));
 }
 
