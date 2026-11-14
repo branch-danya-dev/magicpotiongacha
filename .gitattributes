@@ -24,3 +24,5 @@ docs/evidence/m7-18a/recorded-to-final.diff whitespace=cr-at-eol,-space-before-t
 # Preserve the author's bundled license verbatim, including its trailing spaces.
 assets/environment/megakit/License_Standard.txt whitespace=cr-at-eol,-blank-at-eol
 docs/evidence/ag69-r1/** -text whitespace=cr-at-eol,-blank-at-eol
+# AG70 native evidence is hashed byte-for-byte; preserve original log whitespace.
+docs/evidence/ag70/** -text whitespace=cr-at-eol,-blank-at-eol

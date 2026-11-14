@@ -1,0 +1,397 @@
+{
+  "status": "GATED / BLOCKED ON AG69 SKY CONSUMER",
+  "baseSha": "df5f3ee7f582764718390957d7234633bd6747e5",
+  "runtimeSourceSha": "0f73e3003fe5342711be651c169c1747b467ed84",
+  "build": {
+    "path": "build/AG70-Review.rbxlx",
+    "sha256": "6935adaed0615f199bbfc3084ccb7034447a4aa3a2210deb7d91f1fe8d10962b"
+  },
+  "studio": "0.747.0.7471481",
+  "native": true,
+  "generatedOrRetouched": false,
+  "matchedPairs": [
+    {
+      "a": "day-reduced-near-OFF",
+      "b": "day-reduced-near-AG70",
+      "matched": true
+    },
+    {
+      "a": "day-reduced-wide-OFF",
+      "b": "day-reduced-wide-AG70",
+      "matched": true
+    },
+    {
+      "a": "day-full-near-OFF",
+      "b": "day-full-near-AG70",
+      "matched": true
+    },
+    {
+      "a": "day-full-wide-OFF",
+      "b": "day-full-wide-AG70",
+      "matched": true
+    },
+    {
+      "a": "sunset-reduced-near-OFF",
+      "b": "sunset-reduced-near-AG70",
+      "matched": true
+    },
+    {
+      "a": "sunset-reduced-wide-OFF",
+      "b": "sunset-reduced-wide-AG70",
+      "matched": true
+    },
+    {
+      "a": "sunset-full-near-OFF",
+      "b": "sunset-full-near-AG70",
+      "matched": true
+    },
+    {
+      "a": "sunset-full-wide-OFF",
+      "b": "sunset-full-wide-AG70",
+      "matched": true
+    },
+    {
+      "a": "night-reduced-near-OFF",
+      "b": "night-reduced-near-AG70",
+      "matched": true
+    },
+    {
+      "a": "night-reduced-wide-OFF",
+      "b": "night-reduced-wide-AG70",
+      "matched": true
+    },
+    {
+      "a": "night-full-near-OFF",
+      "b": "night-full-near-AG70",
+      "matched": true
+    },
+    {
+      "a": "night-full-wide-OFF",
+      "b": "night-full-wide-AG70",
+      "matched": true
+    },
+    {
+      "a": "rain-reduced-near-OFF",
+      "b": "rain-reduced-near-AG70",
+      "matched": true
+    },
+    {
+      "a": "rain-reduced-wide-OFF",
+      "b": "rain-reduced-wide-AG70",
+      "matched": true
+    },
+    {
+      "a": "rain-full-near-OFF",
+      "b": "rain-full-near-AG70",
+      "matched": true
+    },
+    {
+      "a": "rain-full-wide-OFF",
+      "b": "rain-full-wide-AG70",
+      "matched": true
+    }
+  ],
+  "perfRuns": 12,
+  "files": [
+    {
+      "path": "docs/evidence/ag70/afterrain-reduced-near-motion-false.jpg",
+      "bytes": 674198,
+      "sha256": "2d3ed5ce0a3d88d3aa22c359ec42f0d44d01932ed476eb25a01a6bd9da698a09"
+    },
+    {
+      "path": "docs/evidence/ag70/ag69-sky-consumer-errors.log",
+      "bytes": 2525,
+      "sha256": "3b83febe72b88df8152160692c8f5dec32bd3569ea0e06e2672344b619f4c86c"
+    },
+    {
+      "path": "docs/evidence/ag70/day-full-near-AG70.jpg",
+      "bytes": 683837,
+      "sha256": "5deed2ea96922da746db72017b56c5903d9ebd9943f5830e79fe24450275e379"
+    },
+    {
+      "path": "docs/evidence/ag70/day-full-near-OFF.jpg",
+      "bytes": 663976,
+      "sha256": "558b5fec253005e4b9a2337e187853f4a3ec629e1f2b55599a2b57fb7d006678"
+    },
+    {
+      "path": "docs/evidence/ag70/day-full-wide-AG70.jpg",
+      "bytes": 677525,
+      "sha256": "13d51cbe5e3180cd5ec5faaf222372f8057e07de0f1131636e6f0b82cdb679c6"
+    },
+    {
+      "path": "docs/evidence/ag70/day-full-wide-OFF.jpg",
+      "bytes": 658875,
+      "sha256": "032d830bce46f119e2e917cb3ae5c9e9ab6a41454e319d811c77a9070552b168"
+    },
+    {
+      "path": "docs/evidence/ag70/day-reduced-near-AG70.jpg",
+      "bytes": 679935,
+      "sha256": "e97cbc915a16da87a7346f347466046ce3ce50bb62f31c35a92b7d738f87cfbc"
+    },
+    {
+      "path": "docs/evidence/ag70/day-reduced-near-OFF.jpg",
+      "bytes": 660131,
+      "sha256": "ca1dadd5433d65af749e89dacae05ea6fa185c2131d5bc87d4e3d1d66c876505"
+    },
+    {
+      "path": "docs/evidence/ag70/day-reduced-wide-AG70.jpg",
+      "bytes": 674458,
+      "sha256": "23ae4dab30fe79dfb952b35391f3c28b0f9fa1ee5d9c841460db093a3c6c1df7"
+    },
+    {
+      "path": "docs/evidence/ag70/day-reduced-wide-OFF.jpg",
+      "bytes": 655901,
+      "sha256": "a6c59ee76391c12647db35cb1e544df98c22401e3cb53ac0cb96f0ead29a44cd"
+    },
+    {
+      "path": "docs/evidence/ag70/graphics5-day-OFF.jpg",
+      "bytes": 581355,
+      "sha256": "dd44a78e865b4615132b727e5b2893824ec74fb5af5f0f8127ef24a172692b5a"
+    },
+    {
+      "path": "docs/evidence/ag70/graphics5-night-full.jpg",
+      "bytes": 377373,
+      "sha256": "41881f3dc4095ec8744acebded690643cbdc25a7a4524839a9b68a56a068c3e0"
+    },
+    {
+      "path": "docs/evidence/ag70/graphics5-night-minimal.jpg",
+      "bytes": 345980,
+      "sha256": "c696e14b7874a12a7713a7ba9857968e5d5fa8665e1ecf7f2ca0308c417083a7"
+    },
+    {
+      "path": "docs/evidence/ag70/graphics5-night-reduced.jpg",
+      "bytes": 363609,
+      "sha256": "931fe0fe9ad2b8ceae4aa19c00894f071becd0d810c3a86f23578b39020f48af"
+    },
+    {
+      "path": "docs/evidence/ag70/graphics5-realistic-day.jpg",
+      "bytes": 591669,
+      "sha256": "06940283332b574d1a02e4320598b6b9e1dcace16a58b6953c38025097dc8ac0"
+    },
+    {
+      "path": "docs/evidence/ag70/graphics5-soft-day.jpg",
+      "bytes": 573808,
+      "sha256": "4eda2811a8c7054935681dd78371dabfc9dfc373f531a4f222892a052dcf3bb8"
+    },
+    {
+      "path": "docs/evidence/ag70/interaction-E-and-mouse.jpg",
+      "bytes": 453886,
+      "sha256": "217a0ef54be743ed05fda578f5a6219bbf003c4da870a9e8ada283dba015611e"
+    },
+    {
+      "path": "docs/evidence/ag70/iteration1-day.jpg",
+      "bytes": 699955,
+      "sha256": "7a239b36913dba8e111b35e3829fa9e4dd716e0b6e1c97a37ef666b66fdecf0b"
+    },
+    {
+      "path": "docs/evidence/ag70/iteration1-native.log",
+      "bytes": 20940,
+      "sha256": "5f94587dc91e572ffef22ff4f8f2205b46fb2a598b2c36cf964d72ed4d2a1426"
+    },
+    {
+      "path": "docs/evidence/ag70/iteration1-night.jpg",
+      "bytes": 305360,
+      "sha256": "1494c32e6572a6552d36c293c6159225eaeeed08b6f486b1bbcbe2189da5e858"
+    },
+    {
+      "path": "docs/evidence/ag70/iteration1-rain.jpg",
+      "bytes": 603222,
+      "sha256": "791a3cff1adf49c095d913ac083de8d4b0e4e1a82b879d9cdda35cbd2995bca1"
+    },
+    {
+      "path": "docs/evidence/ag70/iteration1-sunset.jpg",
+      "bytes": 457488,
+      "sha256": "4a086108df9f200cec2be8952b9deb5fd5f828f87f8ce1fc28b6b9cb98a62f54"
+    },
+    {
+      "path": "docs/evidence/ag70/iteration1.json",
+      "bytes": 1038,
+      "sha256": "cb51760608261129d056f9781f6b18d45361db71c93a200ee0f0b443ba85c6fc"
+    },
+    {
+      "path": "docs/evidence/ag70/iteration2-day-reduced-near-AG70.jpg",
+      "bytes": 644060,
+      "sha256": "7e4a7d1f49b2c05ad073f81f6cf2107229f32d9b409712819330bc0ad932a02f"
+    },
+    {
+      "path": "docs/evidence/ag70/iteration2-day-reduced-near-OFF.jpg",
+      "bytes": 625516,
+      "sha256": "b6f52ca1ece2cf4d91e535a9ba7ca1034df2109c3cdea8f2081aafb594551f4e"
+    },
+    {
+      "path": "docs/evidence/ag70/iteration2-night.jpg",
+      "bytes": 397622,
+      "sha256": "fb549940f12f0b848242b30bf80db6185c8800b1af74036524e65fba05183f7c"
+    },
+    {
+      "path": "docs/evidence/ag70/iteration2.json",
+      "bytes": 847,
+      "sha256": "dd7aba6cafa179446471c2469dd5cffa1b38675f874f8d66c102fcad7ac4f3fd"
+    },
+    {
+      "path": "docs/evidence/ag70/native-off-ag70-off.mp4",
+      "bytes": 42981566,
+      "sha256": "59dd69a3bbac72e67ced77a5064a4244f4bb481d476e0ae0b8733cea5568f409"
+    },
+    {
+      "path": "docs/evidence/ag70/native-records.json",
+      "bytes": 787330,
+      "sha256": "3f9936849e23d0d2410247c9fd9a06be93c79e66dc08efce47659fd02de0b767"
+    },
+    {
+      "path": "docs/evidence/ag70/native-session.log",
+      "bytes": 547430,
+      "sha256": "4a163da731c6a7a3161374b00bc989c064a4a2a70ee1143229acced743c2d773"
+    },
+    {
+      "path": "docs/evidence/ag70/night-full-near-AG70.jpg",
+      "bytes": 407454,
+      "sha256": "1afe5363f7e203758da91fd17f9a064d8066576ad19b2ccb23ee7b9c50023957"
+    },
+    {
+      "path": "docs/evidence/ag70/night-full-near-OFF.jpg",
+      "bytes": 432148,
+      "sha256": "a46ef1cd83ab3065a7f467f4bd56d40b4945bccf0931580001bd826a5d64ef1e"
+    },
+    {
+      "path": "docs/evidence/ag70/night-full-wide-AG70.jpg",
+      "bytes": 430804,
+      "sha256": "e788cb5c0bd063d973b8baab143f91edca7b649f6a67cf02da1687b9f18ae26e"
+    },
+    {
+      "path": "docs/evidence/ag70/night-full-wide-OFF.jpg",
+      "bytes": 439680,
+      "sha256": "14f619c442d4785c7a056a986acd74902e02a763ad02cfff2bddfc9e001f619b"
+    },
+    {
+      "path": "docs/evidence/ag70/night-minimal-near-motion-true.jpg",
+      "bytes": 389371,
+      "sha256": "7f9d33565b4a5925429cd7f5959d6e6a7bd6eb9f69993f58348082b6798dc035"
+    },
+    {
+      "path": "docs/evidence/ag70/night-reduced-near-AG70.jpg",
+      "bytes": 396276,
+      "sha256": "efb65cc70b1b7b0eb1bd24d0ecae46f19436065d1aea7ee5f7b5aaadb1ebe199"
+    },
+    {
+      "path": "docs/evidence/ag70/night-reduced-near-OFF.jpg",
+      "bytes": 426098,
+      "sha256": "aec5959cafb77eabb7d164a641fa886992ab801cbf89b4e75da5dffbe33667d3"
+    },
+    {
+      "path": "docs/evidence/ag70/night-reduced-reverse-motion-true.jpg",
+      "bytes": 412882,
+      "sha256": "919878f5039a10d694e28f7334db2679ae8c61a1c2c5e154bf6bb8214bb0afdf"
+    },
+    {
+      "path": "docs/evidence/ag70/night-reduced-wide-AG70.jpg",
+      "bytes": 419465,
+      "sha256": "20aa9a5c477063d636e2f0ae00a21e2722b3ab6cb4ab8bf7f1b384a2d8987e16"
+    },
+    {
+      "path": "docs/evidence/ag70/night-reduced-wide-OFF.jpg",
+      "bytes": 433897,
+      "sha256": "731324b73365fab15819f0f85da704f805f74e8ce425f8b8072261bbb2ca2b3c"
+    },
+    {
+      "path": "docs/evidence/ag70/performance.json",
+      "bytes": 9465,
+      "sha256": "26fe33344b5f01f4a945c3b52eab9cfbb5a2ea3af99d9dd0657759a6a303c350"
+    },
+    {
+      "path": "docs/evidence/ag70/rain-full-near-AG70.jpg",
+      "bytes": 580251,
+      "sha256": "93084477750f77cb2c8e66df51907173cca16735d9d29ba2318db7fbc9f7e8b1"
+    },
+    {
+      "path": "docs/evidence/ag70/rain-full-near-OFF.jpg",
+      "bytes": 589967,
+      "sha256": "125d0ee2b617a383c8656573dc3e80bf6e03a8a26becb9af87d5d4a745bdf9c8"
+    },
+    {
+      "path": "docs/evidence/ag70/rain-full-wide-AG70.jpg",
+      "bytes": 574532,
+      "sha256": "f66d81befafd9c89309689477a02c13bb35915db02660f54a617b817246fed21"
+    },
+    {
+      "path": "docs/evidence/ag70/rain-full-wide-OFF.jpg",
+      "bytes": 585541,
+      "sha256": "39d4bb4046b4bf03e44404389001a6518fbf30e41c20a6ff3b49cfc48f4ae2ce"
+    },
+    {
+      "path": "docs/evidence/ag70/rain-reduced-near-AG70.jpg",
+      "bytes": 577864,
+      "sha256": "ddb2b909924748546fb65fb231267d8d151e710ec86949bb1c3646ea33ee9f8c"
+    },
+    {
+      "path": "docs/evidence/ag70/rain-reduced-near-OFF.jpg",
+      "bytes": 588264,
+      "sha256": "bd96ca35ebf0861799aa62002f28606d4c72831ca66eae77455f63e866d1fcf7"
+    },
+    {
+      "path": "docs/evidence/ag70/rain-reduced-near-motion-false.jpg",
+      "bytes": 577301,
+      "sha256": "b778801b336596e9561a361dbbeaf7f90f8a26f25cd167128ed00893ff6b7ce5"
+    },
+    {
+      "path": "docs/evidence/ag70/rain-reduced-wide-AG70.jpg",
+      "bytes": 572710,
+      "sha256": "f00e1d8e804580bdcf0b5db4460525830de397407ae6e40c2595afb425986b54"
+    },
+    {
+      "path": "docs/evidence/ag70/rain-reduced-wide-OFF.jpg",
+      "bytes": 583825,
+      "sha256": "116ff424367c99c19cd1175111e2cce60b112d1bdf1cafeda10c327744bbc179"
+    },
+    {
+      "path": "docs/evidence/ag70/sky-consumer-errors.log",
+      "bytes": 2525,
+      "sha256": "1407d11c74d55ac4a6c55a9c36fe3da3fa704b620f5f8daddf02f207b6c08f30"
+    },
+    {
+      "path": "docs/evidence/ag70/sunset-full-near-AG70.jpg",
+      "bytes": 475314,
+      "sha256": "349c1f7a8acd30bf5454f7e1989140e29c4424d6ed5c6d010fb6c6edbe3b23d8"
+    },
+    {
+      "path": "docs/evidence/ag70/sunset-full-near-OFF.jpg",
+      "bytes": 551273,
+      "sha256": "71a0b505b977f0807c3430f9acef2049a2b45bd3f257d30fdd3beded1e593695"
+    },
+    {
+      "path": "docs/evidence/ag70/sunset-full-wide-AG70.jpg",
+      "bytes": 467164,
+      "sha256": "70ab07ab1534e8927037d348e4cfa802ca3d4c6ad9d2ef429cafc2b85abcabe3"
+    },
+    {
+      "path": "docs/evidence/ag70/sunset-full-wide-OFF.jpg",
+      "bytes": 543294,
+      "sha256": "811d90f0b259ea2417e3c31eee109d886d7cc0660bf1c0541bd695734cdf8ae8"
+    },
+    {
+      "path": "docs/evidence/ag70/sunset-reduced-near-AG70.jpg",
+      "bytes": 471611,
+      "sha256": "64fdd6053518dc1374b91d16826347b627fd1a9d55088d823331210c55514685"
+    },
+    {
+      "path": "docs/evidence/ag70/sunset-reduced-near-OFF.jpg",
+      "bytes": 549392,
+      "sha256": "67464ae55fd649afae7d41380b90ba9fd2bdd7ebf6ac36a82e615b5a8706bf98"
+    },
+    {
+      "path": "docs/evidence/ag70/sunset-reduced-reverse-motion-true.jpg",
+      "bytes": 453560,
+      "sha256": "66b6735c9c30331fc04a9baff6348216d2ef19bf0f1a2ae107c0be5e3f4aacc7"
+    },
+    {
+      "path": "docs/evidence/ag70/sunset-reduced-wide-AG70.jpg",
+      "bytes": 464094,
+      "sha256": "b56c4a86f1fd820d8af4f4ac7a555fc44ee1d1bcde5a72f0f03ca8b05a84d57f"
+    },
+    {
+      "path": "docs/evidence/ag70/sunset-reduced-wide-OFF.jpg",
+      "bytes": 541911,
+      "sha256": "0e1ba418971b224512bd7c71ca16076c60385e2cd8d139b247204ce76baa12ed"
+    }
+  ]
+}

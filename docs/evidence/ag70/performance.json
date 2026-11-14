@@ -1,0 +1,425 @@
+{
+  "scenario": "Ordinary full-game F5, fixed near camera/day, manual graphics5, Realistic, Reduce Motion false; 5s per sample after 3s settle, ABBA twice per tier; no video recording during samples",
+  "runs": [
+    {
+      "lights": 6,
+      "seconds": 5.000305900000967,
+      "triangles": {
+        "median": 270404,
+        "p95": 270412
+      },
+      "draws": {
+        "median": 371,
+        "p95": 374
+      },
+      "samples": 1161,
+      "rep": 1,
+      "effects": 5,
+      "frame": {
+        "median": 4.138899967074394,
+        "p95": 6.050399970263243
+      },
+      "memory": {
+        "median": 3137.546875,
+        "p95": 3137.80078125
+      },
+      "reduceMotion": false,
+      "graphics": "Enum.QualityLevel.Level05",
+      "cpu": {
+        "median": 3.0552002135664225,
+        "p95": 4.265999887138605
+      },
+      "look": "OFF",
+      "gpu": {
+        "median": 1.0045119561254978,
+        "p95": 1.5505600022152066
+      },
+      "quality": "full"
+    },
+    {
+      "lights": 6,
+      "seconds": 5.002399899996817,
+      "triangles": {
+        "median": 270404,
+        "p95": 270412
+      },
+      "draws": {
+        "median": 370,
+        "p95": 372
+      },
+      "samples": 1192,
+      "rep": 1,
+      "effects": 5,
+      "frame": {
+        "median": 4.044900182634592,
+        "p95": 5.86460018530488
+      },
+      "memory": {
+        "median": 3137.7421875,
+        "p95": 3137.90234375
+      },
+      "reduceMotion": false,
+      "graphics": "Enum.QualityLevel.Level05",
+      "cpu": {
+        "median": 3.0218998435884714,
+        "p95": 4.057700280100107
+      },
+      "look": "AG70",
+      "gpu": {
+        "median": 1.0343680623918772,
+        "p95": 1.6399039886891842
+      },
+      "quality": "full"
+    },
+    {
+      "lights": 6,
+      "seconds": 5.002820099995006,
+      "triangles": {
+        "median": 270404,
+        "p95": 270416
+      },
+      "draws": {
+        "median": 371,
+        "p95": 372
+      },
+      "samples": 1165,
+      "rep": 2,
+      "effects": 5,
+      "frame": {
+        "median": 4.141699988394976,
+        "p95": 6.142199970781803
+      },
+      "memory": {
+        "median": 3137.875,
+        "p95": 3138.1328125
+      },
+      "reduceMotion": false,
+      "graphics": "Enum.QualityLevel.Level05",
+      "cpu": {
+        "median": 3.0629001557826996,
+        "p95": 4.151199944317341
+      },
+      "look": "AG70",
+      "gpu": {
+        "median": 1.0602879337966442,
+        "p95": 1.6018879832699895
+      },
+      "quality": "full"
+    },
+    {
+      "lights": 6,
+      "seconds": 5.004442099991138,
+      "triangles": {
+        "median": 270404,
+        "p95": 270416
+      },
+      "draws": {
+        "median": 371,
+        "p95": 372
+      },
+      "samples": 1186,
+      "rep": 2,
+      "effects": 5,
+      "frame": {
+        "median": 4.078700207173824,
+        "p95": 5.751499906182289
+      },
+      "memory": {
+        "median": 3137.9140625,
+        "p95": 3138.09765625
+      },
+      "reduceMotion": false,
+      "graphics": "Enum.QualityLevel.Level05",
+      "cpu": {
+        "median": 2.929799957200885,
+        "p95": 4.017900209873915
+      },
+      "look": "OFF",
+      "gpu": {
+        "median": 0.9506880305707455,
+        "p95": 1.4918080996721983
+      },
+      "quality": "full"
+    },
+    {
+      "lights": 3,
+      "seconds": 5.004367499990622,
+      "triangles": {
+        "median": 255677,
+        "p95": 255685
+      },
+      "draws": {
+        "median": 339,
+        "p95": 340
+      },
+      "samples": 1192,
+      "rep": 1,
+      "effects": 5,
+      "frame": {
+        "median": 4.107799846678972,
+        "p95": 5.574699956923723
+      },
+      "memory": {
+        "median": 3138.01953125,
+        "p95": 3138.25390625
+      },
+      "reduceMotion": false,
+      "graphics": "Enum.QualityLevel.Level05",
+      "cpu": {
+        "median": 2.868400188162923,
+        "p95": 3.8493999745696783
+      },
+      "look": "OFF",
+      "gpu": {
+        "median": 0.8988800109364092,
+        "p95": 1.4305600197985768
+      },
+      "quality": "reduced"
+    },
+    {
+      "lights": 3,
+      "seconds": 5.005991800004267,
+      "triangles": {
+        "median": 255677,
+        "p95": 255685
+      },
+      "draws": {
+        "median": 338,
+        "p95": 339
+      },
+      "samples": 1193,
+      "rep": 1,
+      "effects": 5,
+      "frame": {
+        "median": 4.088799934834242,
+        "p95": 5.771600175648928
+      },
+      "memory": {
+        "median": 3138.08984375,
+        "p95": 3138.234375
+      },
+      "reduceMotion": false,
+      "graphics": "Enum.QualityLevel.Level05",
+      "cpu": {
+        "median": 2.8603998944163322,
+        "p95": 3.861800068989396
+      },
+      "look": "AG70",
+      "gpu": {
+        "median": 1.025375910103321,
+        "p95": 1.5790400793775916
+      },
+      "quality": "reduced"
+    },
+    {
+      "lights": 3,
+      "seconds": 5.004156299997703,
+      "triangles": {
+        "median": 255677,
+        "p95": 255685
+      },
+      "draws": {
+        "median": 340,
+        "p95": 343
+      },
+      "samples": 1198,
+      "rep": 2,
+      "effects": 5,
+      "frame": {
+        "median": 4.07399982213974,
+        "p95": 5.690299905836582
+      },
+      "memory": {
+        "median": 3137.91015625,
+        "p95": 3138.12109375
+      },
+      "reduceMotion": false,
+      "graphics": "Enum.QualityLevel.Level05",
+      "cpu": {
+        "median": 2.9476999770849943,
+        "p95": 3.9331000298261642
+      },
+      "look": "AG70",
+      "gpu": {
+        "median": 1.0208640014752746,
+        "p95": 1.589984050951898
+      },
+      "quality": "reduced"
+    },
+    {
+      "lights": 3,
+      "seconds": 5.002883900000597,
+      "triangles": {
+        "median": 255681,
+        "p95": 255685
+      },
+      "draws": {
+        "median": 340,
+        "p95": 342
+      },
+      "samples": 1183,
+      "rep": 2,
+      "effects": 5,
+      "frame": {
+        "median": 4.093000199645758,
+        "p95": 5.858100019395351
+      },
+      "memory": {
+        "median": 3137.91796875,
+        "p95": 3138.10546875
+      },
+      "reduceMotion": false,
+      "graphics": "Enum.QualityLevel.Level05",
+      "cpu": {
+        "median": 2.9741001781076193,
+        "p95": 4.165099933743477
+      },
+      "look": "OFF",
+      "gpu": {
+        "median": 0.9407679899595678,
+        "p95": 1.4876159839332104
+      },
+      "quality": "reduced"
+    },
+    {
+      "lights": 0,
+      "seconds": 5.00377200001094,
+      "triangles": {
+        "median": 228114,
+        "p95": 228114
+      },
+      "draws": {
+        "median": 304,
+        "p95": 304
+      },
+      "samples": 1185,
+      "rep": 1,
+      "effects": 5,
+      "frame": {
+        "median": 4.1518001817166805,
+        "p95": 5.474200006574392
+      },
+      "memory": {
+        "median": 3137.94140625,
+        "p95": 3138.19140625
+      },
+      "reduceMotion": false,
+      "graphics": "Enum.QualityLevel.Level05",
+      "cpu": {
+        "median": 2.78969993814826,
+        "p95": 3.882199991494417
+      },
+      "look": "OFF",
+      "gpu": {
+        "median": 0.8002240210771561,
+        "p95": 1.3431040570139885
+      },
+      "quality": "minimal"
+    },
+    {
+      "lights": 0,
+      "seconds": 5.004451300002984,
+      "triangles": {
+        "median": 228114,
+        "p95": 228114
+      },
+      "draws": {
+        "median": 304,
+        "p95": 304
+      },
+      "samples": 1202,
+      "rep": 1,
+      "effects": 5,
+      "frame": {
+        "median": 4.068200010806322,
+        "p95": 5.500299856066704
+      },
+      "memory": {
+        "median": 3138.078125,
+        "p95": 3138.265625
+      },
+      "reduceMotion": false,
+      "graphics": "Enum.QualityLevel.Level05",
+      "cpu": {
+        "median": 2.7501999866217375,
+        "p95": 3.604000201448798
+      },
+      "look": "AG70",
+      "gpu": {
+        "median": 0.8802239899523556,
+        "p95": 1.3895999873057008
+      },
+      "quality": "minimal"
+    },
+    {
+      "lights": 0,
+      "seconds": 5.000557699997444,
+      "triangles": {
+        "median": 228114,
+        "p95": 228114
+      },
+      "draws": {
+        "median": 304,
+        "p95": 304
+      },
+      "samples": 1196,
+      "rep": 2,
+      "effects": 5,
+      "frame": {
+        "median": 4.106100182980299,
+        "p95": 5.389700178056955
+      },
+      "memory": {
+        "median": 3138.08203125,
+        "p95": 3138.20703125
+      },
+      "reduceMotion": false,
+      "graphics": "Enum.QualityLevel.Level05",
+      "cpu": {
+        "median": 2.8092998545616865,
+        "p95": 3.7406000774353743
+      },
+      "look": "AG70",
+      "gpu": {
+        "median": 0.8887680014595389,
+        "p95": 1.4577279798686504
+      },
+      "quality": "minimal"
+    },
+    {
+      "lights": 0,
+      "seconds": 5.0006804000004195,
+      "triangles": {
+        "median": 228114,
+        "p95": 228114
+      },
+      "draws": {
+        "median": 304,
+        "p95": 304
+      },
+      "samples": 1200,
+      "rep": 2,
+      "effects": 5,
+      "frame": {
+        "median": 4.073199816048145,
+        "p95": 5.376799963414669
+      },
+      "memory": {
+        "median": 3139.97265625,
+        "p95": 3140.390625
+      },
+      "reduceMotion": false,
+      "graphics": "Enum.QualityLevel.Level05",
+      "cpu": {
+        "median": 2.702399855479598,
+        "p95": 3.6854001227766275
+      },
+      "look": "OFF",
+      "gpu": {
+        "median": 0.777728040702641,
+        "p95": 1.3452160637825727
+      },
+      "quality": "minimal"
+    }
+  ]
+}

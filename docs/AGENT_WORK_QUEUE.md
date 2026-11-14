@@ -18,17 +18,23 @@
 
 ### AG-70 — Arcane Forest 2.1 (Issue #41)
 
-**Статус: IN PROGRESS / art acceptance OPEN / NOT PUBLISHED.**
+**Статус: GATED / BLOCKED ON AG-69; CODE CANDIDATE / art acceptance OPEN / NOT PUBLISHED.**
 Владелец: Codex, 2026-11-14. Единственная текущая задача.
 Ветка `feat/ag70-arcane-forest-art-pass`; база Draft PR #42,
 `df5f3ee7f582764718390957d7234633bd6747e5`, CI Windows/Ubuntu PASS
-(run 43515825649), AG69 native delivery all 12 Success.
+(run 43515825649). Все 12 Image-проб AG69 дают Success, но native Sky
+не загружает Sun/Moon; preload не доказывает прохождение Sky consumer.
 Граница: чистая палитра + ограниченные дополнения единственного EnvironmentView,
 сохранение OFF/AG68/A/B/C, локальные существующие источники и лимиты.
 Без новых ассетов, прав, серверных изменений, экономики, сохранений и UI.
 Миграции нет; rollback — OFF, затем удаление ограниченных AG70 дополнений.
-Требуются две художественные итерации, обычный F5, нативные сравнения,
-80 переключений/restoration, тесты и Draft PR. Телефоны/мультиклиент — отдельно.
+Сохранены три предварительные итерации, обычный F5, 32 сравнения,
+80 переключений с восстановлением измеренных параметров, +5 Essence по E/мыши,
+36 quality/motion/look состояний и desktop diagnostics. Это не финальный art PASS.
+1292 Luau + 13 Node; отдельный Draft PR. Дальнейшая доводка остановлена до
+восстановления Sky в AG69. Stop/Restart, полный native weather matrix,
+телефоны/мультиклиент и художественная приёмка не закрыты.
+Подробности и точный captured SHA: [AG70_ARCANE_FOREST_ART_PASS.md](AG70_ARCANE_FOREST_ART_PASS.md).
 
 
 ### AG-69 — Восстановление 12 текстур M7 (Issue #40)
