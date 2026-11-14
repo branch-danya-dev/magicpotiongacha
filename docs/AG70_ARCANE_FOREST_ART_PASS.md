@@ -1,4 +1,68 @@
-# AG-70 — Arcane Forest 2.1, repaired-base review
+# AG-70 — Arcane Forest 2.1, R3 repairs
+
+**Current R3: CODE CANDIDATE. Native R3 Play/visual/performance checks NOT RUN;
+OWNER ART ACCEPTED: NO; PUBLISHED: NO.**
+
+Continued from CI-green Draft PR #43 `3b367481e8f621adbcd41f775203593c2ccbf82b`
+on 2026-11-14. Stacked base remains `6467bfd9b024dbf618496ca2901f5b6cac20abb1`.
+The owner requested these three repairs and explicitly waived further screenshots
+and video. No new media was captured. Exact delivery HEAD and CI are in PR #43.
+
+### R3 changes
+
+- **Path:** the imported stone mesh was already `RenderFidelity.Precise` (428
+  triangles). Raising LOD was therefore not a fix. The original 21 thin patches
+  have 23 overlapping conservative footprints. `PathSurface.fit` caps each
+  footprint using its nearest neighbour, giving at least 0.20 studs separation.
+  It keeps every center, yaw, id, vertical thickness and inert collision setting;
+  other decor is untouched. No mesh/texture replacement or new asset. This
+  removes the intersecting-surface risk in all looks, including OFF; graphics5
+  rendering still needs native confirmation, not a claimed visual PASS.
+- **Night:** unchanged exposure 0.02 and ambient RGB 43/61/95; reduced contrast
+  0.035 (Minimal 0.01925) avoids crushing dark materials. The existing two canopy
+  pools cover the central route and entrance, with 36-stud range, 105° cone and
+  1.55 intensity at full night. Existing lantern ranges grow from 14 to 20.
+  Reduced still selects only one canopy pool plus two lanterns by avatar
+  distance; Minimal has no local lights. No camera-following light or new owner.
+- **Sunset:** cool shadow fill RGB 70/83/113 and outdoor 129/145/174, more neutral
+  tint 255/246/237. The same canopy spots shift up to 18 studs toward the actual
+  sun's horizontal bearing and aim back at the route, supplying an oblique
+  amber key even where the ridge hides direct sunlight. Rain/clouds continuously
+  suppress this key; the actual clock, sun direction and terrain are unchanged.
+- **Restoration/budget:** both pool transforms are set before distance selection;
+  OFF restores both authored transforms, ranges, cone angles and colors, and
+  lantern radius 14. Existing stop cleanup destroys the owned lights. Still
+  6/3/0 active environment lights, same instances/connections, no shadows added.
+  Larger light volumes can cost more GPU time: R2 timings below do **not** prove
+  R3 performance. Reduce Motion adds no motion; solar tracking follows the
+  existing smooth time/weather state.
+
+### R3 checks and remaining gate
+
+Six new regression cases cover actual pilot footprint separation, unchanged
+vertical/collision descriptors, idempotence and invalid coincident centers,
+night exposure/contrast, sun bearing/rain suppression, route coverage and smooth
+pool transforms. All inherited tests, source/assets/economy preservation and
+exact-HEAD build checks remain required. Full local regression: **1302 Luau +
+14 Node PASS**, 236 compiled sources, portable analysis and ordinary Rojo build.
+Two inherited C01 lint warnings remain. Exact final HEAD, repeat-build and CI
+results are recorded in PR #43.
+
+The Studio window exposes its accessibility tree, but app input twice failed
+with `coordinate input geometry is unavailable`, including after refreshing
+the selected window and activation. No new diagnostic command output appeared.
+R3 ordinary F5, graphics5 Soft/Realistic, OFF restoration in-engine and updated
+GPU timing are **NOT RUN**. The code and rebuilt place are provided for testing;
+owner art approval and real phones/multiplayer remain open. No upload, permission
+change, economy change, merge or publication was performed.
+
+Open `build/PotionTycoon.rbxlx` (or the identical `build/AG70-R3-Review.rbxlx`)
+and press F5. Existing client review bridge accepts `day`, `sunset`, `night`,
+`look:OFF` and `look:AG70`; quality and Reduce Motion remain in Settings. Check
+the complete path at manual graphics5, avatar dark clothing between lamps, and
+the sunset foreground. No capture/recording is required.
+
+## Historical R2 report — not evidence for the R3 runtime
 
 **CODE candidate / scoped STUDIO VERIFIED; OWNER ART ACCEPTED: NO; PUBLISHED: NO.**
 

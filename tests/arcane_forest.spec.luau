@@ -48,7 +48,7 @@ return function(T)
 		for i=0,1500 do
 			local s=State.sample(Config,i)
 			local a=Forest.localLight(s,"lantern");local b=Forest.localLight(s,"canopy")
-			assert(a.brightness>=0 and a.brightness<=3.1 and b.brightness>=0 and b.brightness<=1.6)
+			assert(a.brightness>=0 and a.brightness<=3.1 and b.brightness>=0 and b.brightness<=2.4)
 			assert(a.color[1]>a.color[3])
 		end
 	end)
@@ -59,5 +59,45 @@ return function(T)
 			local p=Forest.project(s,"AG70","reduced");assert(p.exposure==first.exposure and p.ambient[2]==first.ambient[2])
 		end
 		for k,v in pairs(s) do assert(v==saved[k]) end
+	end)
+	T.test("AG70 shadow detail is retained without raising night exposure or ambient",function()
+		for _,tier in ipairs({"full","reduced","minimal"}) do
+			local n=Forest.project(State.sample(Config,0,"night"),"AG70",tier)
+			assert(math.abs(n.exposure-.02)<1e-9 and math.abs(n.ambient[2]-61)<1e-9 and n.contrast<=.035+1e-9)
+		end
+	end)
+	T.test("AG70 directional sunset key follows sun bearing and yields to rain",function()
+		local s=State.sample(Config,0,"sunset")
+		for i=1,2 do
+			local a=Forest.pool(s,i,1,0); local b=Forest.pool(s,i,-1,0)
+			assert(a.dx>15 and b.dx< -15 and a.dz==0 and a.x==b.x and a.z==b.z)
+			assert(Forest.pool(s,i,0,0).dx==0) -- vertical sun: no divide by zero
+		end
+		local wet=table.clone(s); wet.rain=1; wet.cloud=1
+		assert(Forest.pool(wet,1,1,0).dx==0)
+		assert(Forest.localLight(wet,"canopy").brightness<Forest.localLight(s,"canopy").brightness)
+		local p=Forest.project(s,"AG70","reduced")
+		assert(p.outdoor[3]>p.outdoor[1] and p.ambient[3]>p.ambient[1])
+	end)
+	T.test("AG70 night pools connect the entrance and production route within original slots",function()
+		local s=State.sample(Config,0,"night")
+		local a,b=Forest.pool(s,1,1,0),Forest.pool(s,2,1,0)
+		local l=Forest.localLight(s,"canopy")
+		assert(a.x==b.x and math.abs(a.z-b.z)==28 and a.dx==0 and b.dx==0)
+		local footprint=a.height*math.tan(math.rad(l.angle/2))
+		assert(footprint*2>math.abs(a.z-b.z) and l.range>=36)
+		assert(Forest.localLight(s,"lantern").range==20)
+		assert(State.sunSlots("full")==2 and State.sunSlots("reduced")==1 and State.sunSlots("minimal")==0)
+	end)
+	T.test("AG70 pool shape and transforms vary continuously through all weather",function()
+		local previous
+		for i=0,3000 do
+			local s=State.sample(Config,i); local p=Forest.pool(s,2,.8,.6); local l=Forest.localLight(s,"canopy")
+			assert(l.range<=42 and l.angle<=105 and p.height<=18)
+			if previous then
+				assert(math.abs(p.x-previous.x)<1 and math.abs(p.z-previous.z)<1 and math.abs(p.dx-previous.dx)<1)
+			end
+			previous=p
+		end
 	end)
 end

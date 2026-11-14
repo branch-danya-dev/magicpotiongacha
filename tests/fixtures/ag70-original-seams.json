@@ -5,7 +5,11 @@
     "ANCHOR": "",
     "APPLY": "",
     "SELECT": "",
+    "PLACEMENT": "",
     "LIGHTS": "",
     "REQUEST": ""
+  },
+  "src/server/EnvironmentArt.luau": {
+    "PATH": "\tfor _,d in ipairs(Plan.build(Config,Config.pilotPlot).parts) do\n"
   }
 }

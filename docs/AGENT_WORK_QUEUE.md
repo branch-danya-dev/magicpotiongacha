@@ -18,6 +18,19 @@
 
 ### AG-70 — Arcane Forest 2.1 (Issue #41)
 
+**R3 CODE_CANDIDATE, 2026-11-14:** continued as the only task from clean CI-green
+PR #43 HEAD `3b367481e8f621adbcd41f775203593c2ccbf82b`; stacked base remains
+`6467bfd9b024dbf618496ca2901f5b6cac20abb1`. Owner explicitly requested path
+graphics5, night readability and sunset repairs without screenshots/video.
+Scope expands only to presentation-only path spacing; no gameplay colliders,
+economy/schema/remotes/assets/rights. Native R3 QA currently blocked by the UI
+automation error `coordinate input geometry is unavailable` after one recovery.
+Local full regression PASS: 1302 Luau + 14 Node, 236 compiled sources and Rojo.
+R3 separates 21 stone footprints, expands existing night pools, reduces black
+crush and aims the sunset pools sunward. Same 6/3/0 light caps; no new lights.
+Exact final HEAD, repeat-build and CI results are in Draft PR #43.
+Previous R2 evidence below is historical, not proof of R3 art acceptance.
+
 **Статус: CODE_CANDIDATE / scoped STUDIO VERIFIED; OWNER ART OPEN / NOT PUBLISHED.**
 Владелец: Codex, 2026-11-14. Единственная текущая задача — AG70.
 Ветка `feat/ag70-arcane-forest-art-pass`; база Draft PR #42,

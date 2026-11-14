@@ -36,7 +36,10 @@ function Art.attach(world)
 	forestGround.FilterDescendantsInstances={workspace.Terrain}; forestGround.IgnoreWater=true
 	-- TASK05_FOREST_GROUND_END
 	local folder=Instance.new("Folder"); folder.Name="EnvironmentArt"; folder.Parent=world.root
-	for _,d in ipairs(Plan.build(Config,Config.pilotPlot).parts) do
+-- AG70_BEGIN_PATH
+	local pathParts=require(Shared.PathSurface).fit(Plan.build(Config,Config.pilotPlot).parts)
+	for _,d in ipairs(pathParts) do
+-- AG70_END_PATH
 		local position=Vector3.new(table.unpack(d.position)); local surfaceNormal
 		if d.template or d.forest then
 			local hit=workspace:Raycast(Vector3.new(position.X,60,position.Z),Vector3.new(0,-110,0),d.forest and forestGround or ground)

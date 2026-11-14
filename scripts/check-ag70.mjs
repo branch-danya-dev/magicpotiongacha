@@ -9,7 +9,7 @@ const paths=execFileSync('git',['ls-tree','-r','--name-only',base,'src','tests',
 for(const path of [...paths,'default.project.json']) {
   const old=execFileSync('git',['show',`${base}:${path}`],{maxBuffer:64*1024*1024});
   const current=readFileSync(path);
-  if(path==='src/client/EnvironmentView.luau') assert.equal(beforeAG70(path,normal(current)),normal(old),'AG69 owner exactly preserved outside reviewed AG70 seams');
+  if(path==='src/client/EnvironmentView.luau'||path==='src/server/EnvironmentArt.luau') assert.equal(beforeAG70(path,normal(current)),normal(old),'AG69 owners exactly preserved outside reviewed AG70 presentation seams');
   else if(/\.(luau|json|md|svg|rbxmx|txt|mjs)$/.test(path)) assert.equal(normal(current),normal(old),`Inherited source/asset/test changed: ${path}`);
   else assert(current.equals(old),`Inherited bytes changed: ${path}`);
 }
@@ -24,6 +24,13 @@ assert(added.includes('if RunService:IsStudio() and name=="AG70"'));
 const model=normal(readFileSync('src/shared/ArcaneForest.luau'));
 assert(!/GetService|Instance|task\.|os\.|rbxasset|require\(/.test(model),'Pure bounded projection');
 assert(model.includes('releaseEnabled=false'));
+const pathModel=normal(readFileSync('src/shared/PathSurface.luau'));
+assert(!/GetService|Instance|task\.|os\.|rbxasset|require\(/.test(pathModel),'Pure presentation-only path fitting');
+const art=normal(readFileSync('src/server/EnvironmentArt.luau'));
+const pathSeam=art.match(/^-- AG70_BEGIN_PATH\n([\s\S]*?)^-- AG70_END_PATH/gm);
+assert.equal(pathSeam?.length,1);
+assert(pathSeam[0].includes('require(Shared.PathSurface).fit(Plan.build(Config,Config.pilotPlot).parts)'));
+assert(!/Instance\.new|CanCollide|SetAttribute|FireClient|InvokeClient/.test(pathSeam[0]),'No gameplay authority or collision change');
 // Validate recorded evidence, never pretend that CI performs a fresh Studio run.
 const evidence='docs/evidence/ag70/r2/';
 const receipt=JSON.parse(readFileSync(evidence+'manifest.json'));
@@ -36,7 +43,16 @@ for(const proof of receipt.files) {
   assert.equal(bytes.length,proof.bytes);
   assert.equal(createHash('sha256').update(bytes).digest('hex'),proof.sha256,'Recorded native evidence integrity');
 }
-execFileSync('git',['diff','--exit-code',receipt.runtimeSourceSha,'--','src'],{maxBuffer:64*1024*1024});
+// R2 is historical evidence for its recorded revision, not proof of R3 visuals.
+// Bind unchanged source to that revision while explicitly reviewing the four
+// R3 runtime files; CI cannot claim a new Studio/graphics5 art PASS.
+const r3Files=new Set(['src/client/EnvironmentView.luau','src/shared/ArcaneForest.luau','src/server/EnvironmentArt.luau','src/shared/PathSurface.luau']);
+const changed=execFileSync('git',['diff','--name-only',receipt.runtimeSourceSha,'--','src'],{encoding:'utf8'}).trim().split('\n').filter(Boolean);
+assert(changed.every(path=>r3Files.has(path)),'Unreviewed R3 runtime drift');
+assert(view.includes('else light.Parent.CFrame=base.cf end'),'Restore both pool transforms before culling');
+assert(view.includes('e.light.Range=base.range; e.light.Angle=base.angle'),'Restore pool shape');
+assert(view.includes('e.light.Range=14'),'Restore lantern radius');
+assert(added.indexOf('ArcaneForest.pool(')<added.indexOf('ArcaneForest.localLight('),'Place before selecting lights');
 assert.equal(receipt.matchedPairs.length,16);
 assert(receipt.matchedPairs.every(p=>p.matched&&p.sameTimeWeather));
 for(const capture of receipt.captures) assert(receipt.files.some(p=>p.file===capture.name+'.jpg'),'Native image required for every capture');

@@ -135,10 +135,11 @@ function View.start(root,settings)
 		light.Color=Color3.fromRGB(255,223,168); sunPools[i]=light
 	end
 -- AG70_BEGIN_ANCHOR
-	-- Reuse the nearest existing canopy light for the pilot's lectern/path.
-	-- Record its authored position for exact OFF and legacy-look restoration.
-	local forestPoolBase=sunPools[1].Parent.Position
-	local forestPoolFocus=Vector3.new(-148.5,surface(-148.5,-73)+14,-73)
+	local forestPools={}
+	for i,light in ipairs(sunPools) do
+		forestPools[i]={cf=light.Parent.CFrame,range=light.Range,angle=light.Angle,
+			ground=surface(-142.5,i==1 and -71 or -43)}
+	end
 -- AG70_END_ANCHOR
 	local pollenGround={}
 	for i,pos in ipairs(Style.pollenAnchors) do pollenGround[i]=surface(pos[1],pos[2]) end
@@ -473,6 +474,16 @@ function View.start(root,settings)
 				p:SetAttribute("GroundY",surface(x,z)); p:SetAttribute("RainX",x); p:SetAttribute("RainZ",z)
 			end
 		end
+-- AG70_BEGIN_PLACEMENT
+		for i,light in ipairs(sunPools) do
+			local base=forestPools[i]
+			if look=="AG70" then
+				local p=ArcaneForest.pool(sample,i,sun.X,sun.Z)
+				local target=Vector3.new(p.x,base.ground,p.z)
+				light.Parent.CFrame=CFrame.lookAt(target+Vector3.new(p.dx,p.height,p.dz),target,Vector3.zAxis)*CFrame.Angles(math.pi/2,0,0)
+			else light.Parent.CFrame=base.cf end
+		end
+-- AG70_END_PLACEMENT
 		for _,group in ipairs({lanternSlots,sunSlots}) do
 			for _,e in ipairs(group) do e.distance=(e.light.Parent.Position-lightOrigin).Magnitude end
 		end
@@ -485,15 +496,15 @@ function View.start(root,settings)
 			e.light.Enabled=e.weight>0; e.light.Brightness=.42*sunlight*e.weight
 		end
 -- AG70_BEGIN_LIGHTS
-		sunPools[1].Parent.Position=look=="AG70" and forestPoolFocus or forestPoolBase
 		-- Reset color even when switching directly to OFF or a legacy look.
 		for _,e in ipairs(lanternSlots) do
-			e.light.Color=color(Config.palette.amber)
-			if look=="AG70" then local l=ArcaneForest.localLight(sample,"lantern"); e.light.Color=color(l.color); e.light.Brightness=l.brightness*e.weight end
+			e.light.Color=color(Config.palette.amber); e.light.Range=14
+			if look=="AG70" then local l=ArcaneForest.localLight(sample,"lantern"); e.light.Color=color(l.color); e.light.Brightness=l.brightness*e.weight; e.light.Range=l.range end
 		end
 		for _,e in ipairs(sunSlots) do
-			e.light.Color=Color3.fromRGB(255,223,168)
-			if look=="AG70" then local l=ArcaneForest.localLight(sample,"canopy"); e.light.Color=color(l.color); e.light.Brightness=l.brightness*e.weight end
+			local base=forestPools[e.id]
+			e.light.Color=Color3.fromRGB(255,223,168); e.light.Range=base.range; e.light.Angle=base.angle
+			if look=="AG70" then local l=ArcaneForest.localLight(sample,"canopy"); e.light.Color=color(l.color); e.light.Brightness=l.brightness*e.weight; e.light.Range=l.range; e.light.Angle=l.angle end
 		end
 -- AG70_END_LIGHTS
 		for _,p in ipairs(meadowParts) do
