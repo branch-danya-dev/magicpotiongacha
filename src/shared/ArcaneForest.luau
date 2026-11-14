@@ -1,7 +1,7 @@
 --!nonstrict
 -- AG70 review palette: projection of the existing continuous time/weather state.
 -- No clock, renderer, asset, reward, release flag or second lighting owner.
-local Forest={releaseEnabled=false,version="2.1-iteration3"}
+local Forest={releaseEnabled=false,version="2.1-iteration4"}
 function Forest.default(studio) return studio==true and "AG70" or "OFF" end
 function Forest.request(value) return value=="look:AG70" and "AG70" or nil end
 local function mix(a,b,t)
@@ -12,8 +12,10 @@ local palette={
 	day={brightness=2.7,exposure=-.12,ambient={37,69,92},outdoor={97,133,157},
 		tint={233,248,255},sky={135,196,214},decay={83,111,151},sun={255,219,165},
 		saturation=.02,contrast=.19,density=.30,haze=1.5,glare=.16,diffuse=.25},
-	sunset={brightness=3.0,exposure=.06,ambient={66,78,108},outdoor={124,137,172},
-		tint={255,247,237},sky={243,187,164},decay={77,95,151},sun={255,174,87},
+	-- The pilot ridge occludes the low sun: lift warm fill locally and retain
+	-- violet shadow separation instead of flattening the entire cycle.
+	sunset={brightness=3.0,exposure=.10,ambient={90,78,108},outdoor={150,140,166},
+		tint={255,236,226},sky={243,187,164},decay={77,95,151},sun={255,174,87},
 		saturation=.025,contrast=.11,density=.32,haze=1.8,glare=.24,diffuse=.18},
 	night={brightness=1.8,exposure=.02,ambient={43,61,95},outdoor={85,112,160},
 		tint={237,244,255},sky={78,102,157},decay={39,58,106},sun={146,187,255},
@@ -57,7 +59,7 @@ function Forest.project(sample,name,quality,baseBloom,baseRays)
 end
 -- Retune the existing bounded lamps and canopy pools, never add a light.
 function Forest.localLight(sample,kind)
-	if kind=="lantern" then return {brightness=.14+sample.night*2.9,color={255,191,105}} end
-	return {brightness=.7*sample.sunlight+sample.warm*.55+sample.night*1.45,color=mix({255,225,171},{128,177,255},sample.night)}
+	if kind=="lantern" then return {brightness=.14+sample.night*2.9+.55*sample.warm*(1-sample.night),color={255,191,105}} end
+	return {brightness=.7*sample.sunlight+sample.warm*.8+sample.night*1.45,color=mix({255,225,171},{128,177,255},sample.night)}
 end
 return Forest

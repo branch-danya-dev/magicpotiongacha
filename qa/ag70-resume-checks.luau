@@ -19,6 +19,7 @@ function q.coverage()
 	task.spawn(function()
 		q.camera("near");q.placeAvatar();q.pose("night");task.wait(9)
 		local switches=0
+		local expected=require(game.ReplicatedStorage.PotionTycoon.Shared.EnvironmentClock).weather
 		for _,weather in ipairs({"clear","buildup","rain","clearing","afterrain"}) do
 			q.pose("weather:"..weather);task.wait(9)
 			for _,tier in ipairs({"full","reduced","minimal"}) do for _,motion in ipairs({false,true}) do
@@ -29,11 +30,15 @@ function q.coverage()
 				local restored=same(before,q.snapshot());local identities=#refs==#L:GetChildren()
 				for _,v in ipairs(refs) do identities=identities and v.Parent==L end
 				local counts=inspect();local b=book:Invoke()
+				local actual=counts.worldLookSample;local weatherVerified=true
+				for _,key in ipairs({"rain","cloud","wet","afterRain"}) do
+					weatherVerified=weatherVerified and math.abs(actual[key]-expected[weather][key])<1e-6
+				end
 				local ok=restored and identities and pool.Position==pos and n==#workspace:GetDescendants()
-					and counts.assetComplete and counts.assetFailures==0 and counts.lights<=({full=6,reduced=3,minimal=0})[tier]
+					and weatherVerified and b.errors==0 and counts.assetComplete and counts.assetFailures==0 and counts.lights<=({full=6,reduced=3,minimal=0})[tier]
 				report("COVERAGE",{weather=weather,tier=tier,motion=motion,restored=restored,sameInstances=identities,
 					countBefore=n,countAfter=#workspace:GetDescendants(),poolRestored=pool.Position==pos,lights=counts.lights,
-					bookErrors=b.errors,ok=ok,switches=switches})
+					weatherVerified=weatherVerified,sample=actual,bookErrors=b.errors,ok=ok,switches=switches})
 				assert(ok,"Weather/tier/motion restoration")
 			end end
 		end
