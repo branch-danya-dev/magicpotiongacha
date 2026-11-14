@@ -18,11 +18,13 @@
 
 ### AG-69 — Восстановление 12 текстур M7 (Issue #40)
 
-**Статус: AG69-R1 IN PROGRESS — native Sun/Moon consumer repair; OWNER ART OPEN; NOT PUBLISHED.**
+**Статус: AG69-R1 CODE / STUDIO VERIFIED — celestial blocker repaired; OWNER ART OPEN; NOT PUBLISHED.**
 Возобновлено 2026-11-14 по прямому поручению владельца. Точная база:
 `df5f3ee7f582764718390957d7234633bd6747e5` / Draft PR #42, clean worktree.
 AG70 Draft PR #43 (`b2b2d0b723e9f3a2b98beaf45dcce48859fb8ab6`) ожидает ремонта.
-Сначала диагностика фактических потребителей, затем исправление и native F5.
+Проверены реальные Sun/Moon Image consumers: 12 tier/motion состояний, три
+stop/restart, ноль повторных ошибок Sky в чистом F5. Runtime `590e141094b0090804291d8b75b6b99df4bd871b`,
+Windows/Ubuntu CI PASS (43589975555). [Диагностика и доказательства](AG69_CELESTIAL_REPAIR.md).
 Существующие 12 ID/исходники/права сохраняются. Новые загрузки или разрешения
 требуют отдельного согласования. Миграций, экономики, merge и публикации нет.
 Историческое описание ниже относится к исходному typed Image preload;

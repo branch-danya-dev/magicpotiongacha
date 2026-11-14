@@ -2,10 +2,15 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { test } from 'node:test';
-import { validateSources, inspectOriginalPng, validateDelivery } from '../scripts/check-ag69.mjs';
+import { validateSources, inspectOriginalPng, validateDelivery, validateCelestialRepair } from '../scripts/check-ag69.mjs';
 
 const manifest = JSON.parse(readFileSync('assets/environment/ag69-delivery.json'));
 const copy = () => structuredClone(manifest);
+test('celestial repair requires actual consumer evidence rather than preload alone', () => {
+  validateCelestialRepair();
+  assert.throws(()=>validateCelestialRepair(path=>path.endsWith('ordinary-f5.log') && path.includes('ag69-r1')
+    ? Buffer.from('AG69_ASSET Success') : readFileSync(path)),/Celestial native evidence hash/);
+});
 test('all 12 original assets and recorded delivery proofs validate', () => {
   assert.deepEqual(validateSources(manifest), { textures: 12, totalBytes: 83181, decodedBytes: 1982464 });
   validateDelivery(manifest);

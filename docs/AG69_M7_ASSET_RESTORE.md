@@ -1,6 +1,12 @@
 # AG-69 — Restored M7 texture delivery
 
-**IMPLEMENTED / STUDIO VERIFIED (scope below). OWNER ART OPEN. NOT PUBLISHED.**
+**Historical upload/access report. OWNER ART OPEN. NOT PUBLISHED.**
+
+Update 2026-11-14: the original Image preload proof did not cover the native
+Sky Sun/Moon consumers, which failed despite those callbacks. See
+[AG69-R1 diagnosis and consumer repair](AG69_CELESTIAL_REPAIR.md) for the current
+runtime and verification. Original IDs, licenses and permission evidence below
+remain valid; the historical captures are not relabelled as repaired captures.
 
 Issue [#40](https://github.com/branch-danya-dev/magicpotiongacha/issues/40),
 Draft [PR #42](https://github.com/branch-danya-dev/magicpotiongacha/pull/42),
@@ -8,7 +14,7 @@ branch `feat/ag69-m7-asset-restore`. Base: CI-green PR #39 / `feat/ag68-world-lo
 at `418d85f519232ea10e373a4b1944132ee389acd2` (run 43482710612).
 AG-00 ancestor: `7d6d47826e919683ee991c911185215cda0d3d2e`.
 Exact delivery HEAD and its own Windows/Ubuntu CI are recorded in PR #42.
-AG-70 Issue #41 has not started; no merge or place publication.
+AG-70 Issue #41 is tracked separately in stacked Draft PR #43; no merge or place publication.
 
 ## Defect and fix
 

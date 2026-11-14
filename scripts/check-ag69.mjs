@@ -222,6 +222,23 @@ export function validateRuntime(manifest) {
   assert(!/FireServer|InvokeServer|HttpService/.test(module));
 }
 
+export function validateCelestialRepair(readEvidence=read) {
+  const receipt=JSON.parse(readEvidence('docs/evidence/ag69-r1/receipt.json'));
+  assert.equal(receipt.runtimeSha,'590e141094b0090804291d8b75b6b99df4bd871b');
+  assert.equal(receipt.buildSha256,'9181a356a0dbda6cc1f1ff24d7f56ca8b45862dc62b63587870f223ae003add7');
+  assert.equal(receipt.consumer,'BillboardGui.ImageLabel');
+  assert.equal(receipt.uploads,0); assert.equal(receipt.permissionChanges,0);
+  for(const proof of receipt.files) assert.equal(digest(readEvidence(proof.path)),proof.sha256,'Celestial native evidence hash');
+  for(const [path,sha] of Object.entries(receipt.runtimeSourceSha256)) assert.equal(digest(normal(read(path))),sha,'Celestial tested runtime hash');
+  const log=normal(readEvidence('docs/evidence/ag69-r1/ordinary-f5.log'));
+  for(const quality of ['full','reduced','minimal']) for(const motion of [false,true]) for(const [name,id] of [['Sun','127279777775296'],['Moon','120296233207649']]) {
+    assert(log.includes(`AG69_R1_BODY ${name} ${quality} ${motion} true rbxassetid://${id} `),'Actual consumer/quality/motion proof');
+  }
+  assert(log.includes('AG69_R1_MATRIX_COMPLETE 12'));
+  for(let i=1;i<=3;i++) assert(log.includes(`AG69_R1_RESTORE ${i} true`));
+  assert(!/load failed in sky\.(sun|moon)|No asset content representation found/.test(log),'No celestial loader errors in repaired session');
+}
+
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const args = process.argv.slice(2);
   assert(args.every(a => ['--stage', '--require-delivery'].includes(a)), 'Unknown preflight argument');
@@ -229,6 +246,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   const report = validateSources(manifest);
   validateDelivery(manifest);
   validateRuntime(manifest);
+  validateCelestialRepair();
   if (args.includes('--require-delivery')) {
     console.log('AG69 RECORDED DELIVERY PASS: source identity, Restricted grants, private Experience F5 and ordinary full-game F5 evidence verified. Art/mobile/multiclient remain open.');
   } else {
