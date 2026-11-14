@@ -16,6 +16,29 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### AG-72 — Starter cards / pedestal focus (Issue #46)
+
+**PHASE A DESIGN CANDIDATE / STUDIO PREVIEW VERIFIED / OWNER REVIEW REQUIRED / NOT PUBLISHED.**
+Claimed by Codex, 2026-11-14, as the only active task. Clean base: Draft PR #45
+`8dc804ab33e3f9d052dc4d15a97d90b3cd46a02b`, Windows/Ubuntu CI 43607496544 PASS.
+Branch `feat/ag72-starter-card-concept`, stacked on AG71, not main. Phase A is
+an isolated Studio composition using the actual game scene and existing approved
+atlas. Production runtime, server range/choice policy, saves and economy remain
+byte-unchanged. No new uploads. Static selection/confirmation poses are review
+illustrations, never grants. Phase B animation, interaction and server changes
+wait for explicit visual approval. Pedestal focus is temporary QA presentation;
+it must not be reported as a playable first-loop acceptance.
+Native desktop/landscape static cards, confirmation and clean pedestal scene
+are recorded in [the review](AG72_DESIGN_REVIEW.md). Three OFF/on cycles restored
+950 plot parts' parents and collision/touch/query flags. Inherited 1321 Luau +
+14 Node tests pass; exact-head CI/build receipts are in the stacked Draft PR.
+STOP for owner art review; no Phase B grant/range/input implementation yet.
+R1 owner correction, 2026-11-14: continue from PR #47
+`ba4df895c0ed6939d61380a285a144e4b73d8d8d`; cover the entire viewport with
+the backdrop and block underlying gameplay throughout the static chooser.
+Keep card content inside safe insets; restore original GUI properties on OFF.
+This correction is not visual approval or authorization to grant a starter.
+
 ### AG-71 — Arcane Arcade HUD + Storybook UI (Issue #44)
 
 **PHASE B CODE CANDIDATE / PARTIAL STUDIO VERIFIED / NOT PUBLISHED.**

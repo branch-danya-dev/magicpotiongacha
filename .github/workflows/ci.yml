@@ -32,6 +32,8 @@ jobs:
         run: node scripts/check-integration-base.mjs
       - name: Build plain Studio preview without diagnostic controls
         run: node scripts/build-local-preview.mjs
+      - name: Build isolated AG72 static design review
+        run: node scripts/build-ag72-design.mjs
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
@@ -42,6 +44,7 @@ jobs:
             assets/vfx/ag67/
             scripts/install-ag67-preview.mjs
             build/PotionTycoon-M7-LocalPreview.rbxlx
+            build/AG72-DesignReview.rbxlx
             build/sourcemap.json
             build/verification.log
             build/ag00-integration.json
