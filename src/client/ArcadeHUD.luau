@@ -131,6 +131,7 @@ function View.new(gui,callbacks)
   self.connection=RunService.Heartbeat:Connect(function()
    local camera=workspace.CurrentCamera; local anchor=callbacks.anchor(); local remaining=self.untilTime-os.clock()
    if remaining<=0 or not root.Parent or not root.Visible or not gui.Enabled or not camera or not anchor then self.hideFeedback(); return end
+   if remaining<=.82 then counters.essence.TextColor3=pale end
    local point,visible=camera:WorldToViewportPoint(anchor.Position+Vector3.new(0,3.8,0))
    local offset=GuiService:GetInsetArea(Enum.ScreenInsets.DeviceSafeInsets).Min-root.AbsolutePosition
    local x,y=point.X+offset.X+18,point.Y+offset.Y-20-(reduceMotion and 0 or (1-remaining)*12)
