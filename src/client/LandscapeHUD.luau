@@ -13,6 +13,9 @@ local function rounded(object,radius,color,opacity)
  if color then local line=Instance.new("UIStroke"); line.ApplyStrokeMode=Enum.ApplyStrokeMode.Border; line.Color=rgb(color); line.Transparency=opacity or .28; line.Parent=object end
 end
 function HUD.new(gui,callbacks)
+-- AG71_BEGIN_FACTORY
+ if callbacks.arcade then return require(script.Parent.ArcadeHUD).new(gui,callbacks) end
+-- AG71_END_FACTORY
  local self={root=nil,plan=nil,cursor=nil,connection=nil,untilTime=0,shown=false,popupCount=0}
  local host=Kit.host(); host.theme=Model.tokens()
  local root=Instance.new("Frame"); root.Name="LandscapeHUD"; root.BackgroundTransparency=1; root.BorderSizePixel=0

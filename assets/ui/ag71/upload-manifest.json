@@ -1,0 +1,228 @@
+{
+  "task": "AG71",
+  "variant": "B",
+  "status": "UPLOADED_RESTRICTED_ACCESS_GRANTED",
+  "source": {
+    "path": "docs/art/ag71/concept-atlas.png",
+    "sha256": "821cd5e9416217fa9e5bdcea657822db12f985430db5a379843c2efbf1b31984",
+    "origin": "Original built-in image_gen illustration; approved B 2026-11-14",
+    "prompt": "docs/art/ag71/imagegen-prompt.txt"
+  },
+  "transform": "Approved 1280-space SVG crops, aspect-fit to 232px inside padded 256px tiles; no redrawing",
+  "creator": {
+    "type": "Group",
+    "id": 925845207,
+    "name": "addout studio"
+  },
+  "universeId": 10776120489,
+  "privacy": "Restricted",
+  "creatorStore": false,
+  "files": [
+    {
+      "name": "AG71_ArcadeAtlas.png",
+      "bytes": 937548,
+      "sha256": "35acd2d7ca5fab36ee89e93db34fcad3f8140d982ceaddfb77e7092f64b645d5",
+      "width": 1024,
+      "height": 1024,
+      "rgba": true
+    }
+  ],
+  "sprites": [
+    {
+      "name": "gold",
+      "sourceCrop": [
+        25,
+        110,
+        285,
+        285
+      ],
+      "rect": [
+        0,
+        0,
+        256,
+        256
+      ]
+    },
+    {
+      "name": "essence",
+      "sourceCrop": [
+        336,
+        76,
+        260,
+        320
+      ],
+      "rect": [
+        256,
+        0,
+        256,
+        256
+      ]
+    },
+    {
+      "name": "book",
+      "sourceCrop": [
+        616,
+        110,
+        326,
+        278
+      ],
+      "rect": [
+        512,
+        0,
+        256,
+        256
+      ]
+    },
+    {
+      "name": "owl",
+      "sourceCrop": [
+        958,
+        72,
+        302,
+        320
+      ],
+      "rect": [
+        768,
+        0,
+        256,
+        256
+      ]
+    },
+    {
+      "name": "cat",
+      "sourceCrop": [
+        27,
+        436,
+        286,
+        355
+      ],
+      "rect": [
+        0,
+        256,
+        256,
+        256
+      ]
+    },
+    {
+      "name": "slime",
+      "sourceCrop": [
+        317,
+        474,
+        287,
+        316
+      ],
+      "rect": [
+        256,
+        256,
+        256,
+        256
+      ]
+    },
+    {
+      "name": "brew",
+      "sourceCrop": [
+        617,
+        433,
+        327,
+        363
+      ],
+      "rect": [
+        512,
+        256,
+        256,
+        256
+      ]
+    },
+    {
+      "name": "lab",
+      "sourceCrop": [
+        972,
+        433,
+        258,
+        365
+      ],
+      "rect": [
+        768,
+        256,
+        256,
+        256
+      ]
+    },
+    {
+      "name": "shop",
+      "sourceCrop": [
+        18,
+        860,
+        296,
+        305
+      ],
+      "rect": [
+        0,
+        512,
+        256,
+        256
+      ]
+    },
+    {
+      "name": "rewards",
+      "sourceCrop": [
+        327,
+        860,
+        286,
+        310
+      ],
+      "rect": [
+        256,
+        512,
+        256,
+        256
+      ]
+    },
+    {
+      "name": "settings",
+      "sourceCrop": [
+        627,
+        855,
+        282,
+        312
+      ],
+      "rect": [
+        512,
+        512,
+        256,
+        256
+      ]
+    },
+    {
+      "name": "more",
+      "sourceCrop": [
+        943,
+        841,
+        311,
+        325
+      ],
+      "rect": [
+        768,
+        512,
+        256,
+        256
+      ]
+    }
+  ],
+  "uploadPerformed": true,
+  "permissionGranted": true,
+  "ownerAuthorization": {
+    "date": "2026-11-14",
+    "scope": "Exact PNG, Restricted group upload, access only to Experience 10776120489; owner confirmed in chat"
+  },
+  "robloxImageId": "127092357608242",
+  "observedPrivacy": "Restricted",
+  "moderation": "In Review",
+  "accessReceipt": {
+    "date": "2026-11-14",
+    "assetId": "127092357608242",
+    "universeId": 10776120489,
+    "observed": "Creator Dashboard Permissions > Experiences: only 10776120489 selected; Done completed and dialog closed without error",
+    "configureUrl": "https://create.roblox.com/dashboard/creations/store/127092357608242/configure"
+  }
+}

@@ -18,7 +18,20 @@
 
 ### AG-71 — Arcane Arcade HUD + Storybook UI (Issue #44)
 
-**PHASE A DELIVERED / OWNER DESIGN GATE OPEN / PHASE B NOT STARTED.**
+**PHASE B CODE CANDIDATE / PARTIAL STUDIO VERIFIED / NOT PUBLISHED.**
+Owner explicitly selected B on 2026-11-14 and authorized HUD, Book and starter
+chooser implementation. Phase B base: PR #45 HEAD
+`18b300ca2c7f7a7c67202e270d50602e4ad7ffd0`, CI 43602762059 PASS.
+Only AG71 is claimed. Scope: client presentation, existing snapshots/intents;
+no economy/schema/remote changes. Owner approved the exact atlas upload and
+Experience access; Restricted image 127092357608242 loads in ordinary Play.
+Desktop and landscape phone emulator checks, seven routes, starter confirmation,
+manual +5, worker assignment and 20 rollback cycles passed. See
+[implementation and remaining gates](AG71_IMPLEMENTATION.md). Final exact HEAD,
+CI and build receipt are recorded in Draft PR #45. Final art acceptance, real
+phones, physical gamepad, backend and multi-client checks remain open.
+
+Historical Phase A delivery:
 Claimed by Codex on 2026-11-14 as the only current task. Clean base: Draft PR #43
 `c8b546bc1734cc435159cfa6b1122f9a23b806a5`, Windows/Ubuntu CI 43596253360 PASS.
 Branch: `feat/ag71-ui-art-concepts`. Scope: two 844x390 design compositions,
@@ -30,7 +43,7 @@ Eight 844x390 PNGs, two review boards, original concept atlas and editable HTML
 are delivered with [art direction](AG71_UI_ART_DIRECTION.md). HTML geometry audit
 passes 44px targets, safe edges and touch reserves; native device QA NOT RUN.
 Final SHA/inherited checks are recorded in the separate Draft PR. STOP for the
-owner's A/B selection or corrections; no Phase B implementation is authorized.
+owner's A/B selection or corrections (resolved by the explicit B approval above).
 
 ### AG-70 — Arcane Forest 2.1 (Issue #41)
 

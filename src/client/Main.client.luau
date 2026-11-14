@@ -40,6 +40,11 @@ local state, selected, petPicker, hasReport = nil, "crystal", false, false
 local LandscapeModel=require(shared.ui.Landscape)
 local LandscapeView=require(script.Parent.LandscapeHUD)
 local landscape,syncLandscape,coachOpen=nil,nil,false
+-- AG71_BEGIN_IMPORT
+local ArcadeModel=require(shared.ui.Arcade)
+local ArcadeAssets=require(shared.ui.ArcadeAssets)
+local arcadeReady=false
+-- AG71_END_IMPORT
 -- AG64_END_IMPORT
 local selectedUpgrade = false
 local context, currentContext
@@ -448,10 +453,16 @@ draw = function()
 		bindText(tutorial, function() return state.tutorial.text end)
 	end
 	if state.starter and not state.starter.legacyGrant and not state.starter.claimed then
+-- AG71_BEGIN_STARTER
+		if not (landscape and landscape.arcade and landscape.plan and landscape.plan.chooserFits) then
+-- AG71_END_STARTER
 		text("Новый участок уже содержит храм и кристалл. Выбери ровно одного фамильяра у алтаря. Повторный выбор не создаст второго.", 72)
 		for _, speciesId in ipairs({ "farmer", "slime", "brewer" }) do
 			action("Выбрать: " .. Config.petSpecies[speciesId].name, function() send("chooseStarter", { speciesId = speciesId }) end)
 		end
+-- AG71_BEGIN_STARTER_END
+		end
+-- AG71_END_STARTER_END
 	end
 	if petPicker then
 		title.Text = "Назначить рабочего"
@@ -819,10 +830,23 @@ local function bookAnchor()
 end
 syncLandscape=function(forceLayout)
 	local camera=workspace.CurrentCamera; if not camera then return end
+-- AG71_BEGIN_SWITCH
+	local arcade=ArcadeModel.enabled(game:GetService("RunService"):IsStudio(),workspace:GetAttribute("ArcadeHUDEnabled"),arcadeReady,camera.ViewportSize.X,camera.ViewportSize.Y)
+	local function bookPresentation(active)
+		panel.BackgroundTransparency=active and 1 or 0
+		for _,o in ipairs({title,close,tabs,contents}) do o.Visible=not active end
+	end
+	if landscape and landscape.arcade~=nil and not arcade or landscape and not landscape.arcade and arcade then
+		landscape.destroy(); landscape=nil; bookPresentation(false); forceLayout=true
+	end
+-- AG71_END_SWITCH
 	local enabled=LandscapeModel.enabled(workspace:GetAttribute("LandscapeHUDEnabled"),camera.ViewportSize.X,camera.ViewportSize.Y)
 	if not enabled then
 		if landscape then
 			landscape.destroy(); landscape=nil; coachOpen=false
+-- AG71_BEGIN_RESTORE
+			bookPresentation(false)
+-- AG71_END_RESTORE
 			coach.Position,coach.Size,coach.AnchorPoint=legacyCoach.position,legacyCoach.size,legacyCoach.anchor
 			coachActions.Position,coachTitle.Size,coachBody.Size=legacyCoach.actions,legacyCoach.title,legacyCoach.body
 			hud.Visible=true; guide.Visible=true; resize(); renderCoach()
@@ -832,6 +856,16 @@ syncLandscape=function(forceLayout)
 	end
 	if not landscape then
 		landscape=LandscapeView.new(gui,{
+-- AG71_BEGIN_CALLBACKS
+			arcade=arcade,config=Config,
+			close=function() coachOpen=false; panel.Visible=false; renderCoach() end,
+			collect=function() send("click",{}) end,
+			choose=function(id)
+				if not ArcadeModel.choice(id) or not Session.intro(state) then return end
+				send("chooseStarter",{speciesId=id})
+			end,
+			manage=function() petPicker=true; selectedUpgrade=false; draw() end,
+-- AG71_END_CALLBACKS
 			anchor=bookAnchor,
 			open=function(id)
 				if not state then return end
@@ -862,11 +896,41 @@ syncLandscape=function(forceLayout)
 	coach.Visible=state~=nil and not panel.Visible and (Session.intro(state) or coachOpen)
 	coachClose.Visible=coach.Visible and not Session.intro(state)
 	if currentContext and currentContext.station=="crystal" then rail.Visible=false end
+-- AG71_BEGIN_PRESENT
+	local storybook=landscape.arcade and panel.Visible and selected=="crystal" and not petPicker
+	bookPresentation(storybook)
+	if landscape.arcade then
+		landscape.bookActive=storybook
+		if Session.intro(state) and landscape.plan.chooserFits then coach.Visible=false; coachClose.Visible=false end
+	end
+-- AG71_END_PRESENT
 	landscape.update(state,collectionPending,selected,panel.Visible or coach.Visible,environment.reduceMotion)
 end
+-- AG71_BEGIN_ASSET_GATE
+local arcadeFlagConnection=workspace:GetAttributeChangedSignal("ArcadeHUDEnabled"):Connect(function() resize(); renderCoach(); draw() end)
+script.Destroying:Connect(function() arcadeFlagConnection:Disconnect() end)
+task.defer(function()
+	if not game:GetService("RunService"):IsStudio() or ArcadeAssets.image=="" then return end
+	local loaded=false
+	-- Image instances select the texture loader; an untyped content string can
+	-- return without a callback in Studio. Keep the probe outside the live GUI.
+	local probe=Instance.new("ImageLabel"); probe.Image=ArcadeAssets.image
+	local ok=pcall(function()
+		game:GetService("ContentProvider"):PreloadAsync({probe},function(_,status) loaded=status==Enum.AssetFetchStatus.Success end)
+	end)
+	probe:Destroy()
+	if not gui.Parent then return end
+	arcadeReady=ok and loaded
+	gui:SetAttribute("AG71AssetStatus",arcadeReady and "LOADED" or "FAILED_USING_AG64")
+	resize(); renderCoach(); draw()
+end)
+-- AG71_END_ASSET_GATE
 workspace:GetAttributeChangedSignal("LandscapeHUDEnabled"):Connect(function() resize(); renderCoach() end)
 ContextActionService:BindAction("LandscapeHUDBack",function(_,inputState)
 	if not landscape or inputState~=Enum.UserInputState.Begin then return Enum.ContextActionResult.Pass end
+-- AG71_BEGIN_BACK
+	if landscape.back and landscape.back() then return Enum.ContextActionResult.Sink end
+-- AG71_END_BACK
 	if panel.Visible then panel.Visible=false; return Enum.ContextActionResult.Sink end
 	if coachOpen then coachOpen=false; syncLandscape(); return Enum.ContextActionResult.Sink end
 	return Enum.ContextActionResult.Pass
