@@ -18,24 +18,19 @@
 
 ### AG-70 — Arcane Forest 2.1 (Issue #41)
 
-**Статус: GATED / BLOCKED ON AG-69; CODE CANDIDATE / art acceptance OPEN / NOT PUBLISHED.**
-Владелец: Codex, 2026-11-14. Единственная текущая задача.
+**Статус: IN PROGRESS / AG69-R1 dependency verified; OWNER ART OPEN / NOT PUBLISHED.**
+Владелец: Codex, 2026-11-14. Единственная текущая задача — AG70.
 Ветка `feat/ag70-arcane-forest-art-pass`; база Draft PR #42,
-`df5f3ee7f582764718390957d7234633bd6747e5`, CI Windows/Ubuntu PASS
-(run 43515825649). Все 12 Image-проб AG69 дают Success, но native Sky
-не загружает Sun/Moon; preload не доказывает прохождение Sky consumer.
-Граница: чистая палитра + ограниченные дополнения единственного EnvironmentView,
-сохранение OFF/AG68/A/B/C, локальные существующие источники и лимиты.
-Без новых ассетов, прав, серверных изменений, экономики, сохранений и UI.
-Миграции нет; rollback — OFF, затем удаление ограниченных AG70 дополнений.
-Сохранены три предварительные итерации, обычный F5, 32 сравнения,
-80 переключений с восстановлением измеренных параметров, +5 Essence по E/мыши,
-36 quality/motion/look состояний и desktop diagnostics. Это не финальный art PASS.
-1292 Luau + 13 Node; отдельный Draft PR. Дальнейшая доводка остановлена до
-восстановления Sky в AG69. Stop/Restart, полный native weather matrix,
-телефоны/мультиклиент и художественная приёмка не закрыты.
-Подробности и точный captured SHA: [AG70_ARCANE_FOREST_ART_PASS.md](AG70_ARCANE_FOREST_ART_PASS.md).
-
+`6467bfd9b024dbf618496ca2901f5b6cac20abb1`, CI Windows/Ubuntu PASS
+(run 43590430411). Sun/Moon используют проверенный Image consumer;
+12 нативных tier/motion проверок и три stop/restart — PASS. Новых загрузок/прав нет.
+AG70 перенесён с `b2b2d0b723e9f3a2b98beaf45dcce48859fb8ab6` на исправленную базу.
+Граница: палитра и существующие локальные источники единственного EnvironmentView.
+Экономика, HUD, Spellbook, ассеты и права сохраняются; опубликованный default OFF.
+Повторяются ordinary F5, weather/quality/motion restoration, взаимодействия,
+сравнения и desktop timings. Исторические три итерации и 32 кадра сохранены отдельно.
+Телефоны/мультиклиент и художественная приёмка не закрыты.
+[Отчёт](AG70_ARCANE_FOREST_ART_PASS.md). Миграции, merge и публикации нет.
 
 ### AG-69 — Восстановление 12 текстур M7 (Issue #40)
 

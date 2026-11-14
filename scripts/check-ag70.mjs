@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
 import {beforeAG70} from './ag70-preservation.mjs';
-const base='df5f3ee7f582764718390957d7234633bd6747e5';
+const base='6467bfd9b024dbf618496ca2901f5b6cac20abb1';
 const normal=b=>b.toString().replaceAll('\r\n','\n');
 const paths=execFileSync('git',['ls-tree','-r','--name-only',base,'src','tests','qa','assets'],{encoding:'utf8'}).trim().split('\n');
 for(const path of [...paths,'default.project.json']) {

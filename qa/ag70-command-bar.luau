@@ -7,7 +7,7 @@ local L=game:GetService("Lighting")
 local Http=game:GetService("HttpService")
 local Stats=game:GetService("Stats")
 local root=workspace.PotionTycoonWorld
-local inspect=assert(workspace.M7ClientWeather.PostFXInspect)
+local function inspect() return workspace.M7ClientWeather.PostFXInspect:Invoke() end
 local book=game.Players.LocalPlayer.PlayerScripts.PotionTycoon.SpellbookEffects.Inspect
 local q={}
 local function report(tag,value) print("AG70 "..tag.." "..Http:JSONEncode(value)) end
@@ -38,7 +38,7 @@ function q.snapshot()
  return result
 end
 function q.status(label)
- local counts,quality,motion=inspect:Invoke()
+ local counts,quality,motion=inspect()
  report("STATE",{label=label,art=root:GetAttribute("EnvironmentArtEnabled"),counts=counts,quality=quality,reduceMotion=motion,
   graphics=get(settings().Rendering,"QualityLevel"),gameId=game.GameId,placeId=game.PlaceId})
  for name,properties in pairs(q.snapshot()) do report("PROPERTIES",{label=label,object=name,properties=properties}) end
@@ -78,7 +78,7 @@ function q.switch20(pose,quality,motion)
  local after=q.snapshot();local same=#refs==#L:GetChildren() and #terrainRefs==#workspace.Terrain:GetChildren()
  for _,v in ipairs(refs) do if v.Parent~=L then same=false end end
  for _,v in ipairs(terrainRefs) do if v.Parent~=workspace.Terrain then same=false end end
- local counts,tier,reduce=inspect:Invoke();local bookAfter=book:Invoke()
+ local counts,tier,reduce=inspect();local bookAfter=book:Invoke()
  report("SWITCH20",{pose=pose,quality=tier,reduceMotion=reduce,restored=near(before,after),sameInstances=same,
   countBefore=instances,countAfter=#workspace:GetDescendants(),look=counts.postFXLook,
   bookInstancesBefore=bookBefore.instances,bookInstancesAfter=bookAfter.instances,bookErrors=bookAfter.errors,
@@ -105,7 +105,7 @@ function q.measure(name,seconds,rep)
   local ok,memory=pcall(function() return Stats:GetTotalMemoryUsageMb() end)
   if ok then table.insert(values.memory,memory) end
  end
- local counts,quality,motion=inspect:Invoke()
+ local counts,quality,motion=inspect()
  local result={look=name,quality=quality,reduceMotion=motion,rep=rep,seconds=os.clock()-start,samples=#values.frame,
   lights=counts.lights,effects=#L:GetChildren(),graphics=get(settings().Rendering,"QualityLevel")}
  for key,list in pairs(values) do table.sort(list)
