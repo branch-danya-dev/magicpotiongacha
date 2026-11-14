@@ -4,7 +4,11 @@ local Lighting=game:GetService("Lighting")
 local RunService=game:GetService("RunService")
 local ContentProvider=game:GetService("ContentProvider")
 local Shared=game:GetService("ReplicatedStorage").PotionTycoon.Shared
+-- AG69_BEGIN_IMPORT
 local Config=require(Shared.EnvironmentConfig)
+local Assets=require(Shared.EnvironmentAssets)
+local Celestial=require(Shared.EnvironmentCelestial)
+-- AG69_END_IMPORT
 local State=require(Shared.EnvironmentState)
 -- AG63_BEGIN_IMPORT
 local Look=require(Shared.PostFXLook)
@@ -52,26 +56,30 @@ function View.start(root,settings)
 	end
 	local atmosphere=effect("Atmosphere","M7Atmosphere",Lighting)
 	local sky=effect("Sky","M7Sky",nil)
-	local assets={}
-	for property,face in pairs({SkyboxBk="bk",SkyboxDn="dn",SkyboxFt="ft",SkyboxLf="lf",SkyboxRt="rt",SkyboxUp="up"}) do
-		local uri=Style.skyPrefix..face..".png"; sky[property]=uri; table.insert(assets,uri)
-	end
-	sky.SunTextureId=Config.skyPrefix.."sun.png"; sky.MoonTextureId=Config.skyPrefix.."moon.png"
-	for _,name in ipairs({"sun","moon","mist","rainbow"}) do table.insert(assets,Config.skyPrefix..name..".png") end
-	for _,name in ipairs({"meadow","star"}) do table.insert(assets,Config.polishPrefix..name..".png") end
-	-- The sky retains its sun; a single owned celestial rig supplies a low moon
-	-- and legible stars. Native zenith moon/stars are disabled, never duplicated.
-	sky.CelestialBodiesShown=true; sky.StarCount=0; sky.SunAngularSize=7; sky.MoonAngularSize=0
-	-- A single asset set for the entire session. No texture swaps at time/weather keys.
+-- AG69_BEGIN_DELIVERY
+	local delivery=Assets.new()
+	local assets={}; for _,key in ipairs(Assets.keys) do table.insert(assets,Assets.uri(key)) end
+	local skyProperties={SkyboxBk="sky_bk",SkyboxDn="sky_dn",SkyboxFt="sky_ft",SkyboxLf="sky_lf",SkyboxRt="sky_rt",SkyboxUp="sky_up"}
+	-- Native sky remains a complete set until all six uploaded faces succeed.
+	-- Sky's celestial loader requests a missing KTX representation for these
+	-- permitted Images. Use the existing Image-backed rig, not substitute assets.
+	sky.CelestialBodiesShown=true; sky.StarCount=0; sky.SunAngularSize=0; sky.MoonAngularSize=0
+	sky.SunTextureId=""; sky.MoonTextureId=""
 	sky.Parent=Lighting
 	self.assetFailures=0
-	task.spawn(function()
-		local ok=pcall(function() ContentProvider:PreloadAsync(assets,function(_,status)
-			if status~=Enum.AssetFetchStatus.Success then self.assetFailures+=1 end
-		end) end)
-		if not ok then self.assetFailures+=1 end
-		if active==self and RunService:IsStudio() then print("M7_19E_ASSETS failures="..self.assetFailures.." source=original-CC0-local permissions=LOCAL_ONLY") end
-	end)
+	local probes={}
+	local function clearProbes() for _,probe in ipairs(probes) do probe:Destroy() end; table.clear(probes) end
+	local assetGuis={}; local meadowTextures={}
+	local function assetGui(gui,key)
+		gui.Enabled=Assets.ready(delivery,key); assetGuis[gui]=key
+	end
+	local function meadowTexture(v)
+		if v:IsA("Texture") and v.Name=="M7Meadow" and not meadowTextures[v] then
+			meadowTextures[v]={transparency=v.Transparency}
+			if not Assets.ready(delivery,"meadow") then v.Transparency=1 end
+		end
+	end
+-- AG69_END_DELIVERY
 	local clouds=effect("Clouds","M7Clouds",workspace.Terrain)
 	local correction=effect("ColorCorrectionEffect","M7Color",Lighting)
 	local bloom=effect("BloomEffect","M7Bloom",Lighting); bloom.Size=18; bloom.Threshold=2.3
@@ -96,7 +104,10 @@ function View.start(root,settings)
 	local function sprite(name,texture,size,position)
 		local p=localPart(name,Vector3.new(.1,.1,.1)); p.Position=position
 		local gui=effect("BillboardGui",name.."Sprite",p); gui.Size=UDim2.fromScale(size.X,size.Y); gui.LightInfluence=0; gui.AlwaysOnTop=false
-		local img=effect("ImageLabel","Image",gui); img.BackgroundTransparency=1; img.Size=UDim2.fromScale(1,1); img.Image=Config.skyPrefix..texture..".png"; img.ImageTransparency=1
+-- AG69_BEGIN_SPRITE
+		local img=effect("ImageLabel","Image",gui); img.BackgroundTransparency=1; img.Size=UDim2.fromScale(1,1); img.Image=Assets.uri(texture); img.ImageTransparency=1
+		assetGui(gui,texture)
+-- AG69_END_SPRITE
 		return {part=p,gui=gui,image=img}
 	end
 	local fog={}
@@ -130,10 +141,18 @@ function View.start(root,settings)
 		local img=effect("ImageLabel","Image",gui); img.BackgroundTransparency=1; img.Size=UDim2.fromScale(1,1); img.Image=uri; img.ImageTransparency=1
 		return {attachment=attachment,gui=gui,image=img}
 	end
-	local moon=celestialSprite("Moon",Config.skyPrefix.."moon.png",Vista.moonSize,Vector3.new(0,1,0))
+-- AG69_BEGIN_MOON
+	local moon=celestialSprite("Moon",Assets.uri("moon"),Vista.moonSize,Vector3.new(0,1,0))
+	assetGui(moon.gui,"moon")
+	local sunDisk=celestialSprite("Sun",Assets.uri("sun"),Celestial.sunDiameter(Config.celestial.distance),Vector3.new(0,1,0))
+	assetGui(sunDisk.gui,"sun")
+-- AG69_END_MOON
 	local stars={}
 	for i=1,Config.celestial.stars do
-		local d=State.star(i); stars[i]=celestialSprite("Star_"..i,Config.polishPrefix.."star.png",d.size,Vector3.new(d.x,d.y,d.z)); stars[i].alpha=d.alpha
+-- AG69_BEGIN_STAR
+		local d=State.star(i); stars[i]=celestialSprite("Star_"..i,Assets.uri("star"),d.size,Vector3.new(d.x,d.y,d.z)); stars[i].alpha=d.alpha
+		assetGui(stars[i].gui,"star")
+-- AG69_END_STAR
 	end
 	local lights={}; local lanternSlots={}; local sunSlots={}; local lampPanes={}; local lampsById={}
 	for i,l in ipairs(sunPools) do sunSlots[i]={id=i,light=l,distance=math.huge} end
@@ -147,7 +166,10 @@ function View.start(root,settings)
 		lampPanes[id]=p; if lampsById[id] then lampsById[id].Parent=p end
 		return true
 	end
+-- AG69_BEGIN_REGISTER
 	local function registerLabel(gui)
+		meadowTexture(gui)
+-- AG69_END_REGISTER
 		if gui:IsA("BillboardGui") then table.insert(labels,{gui=gui,enabled=gui.Enabled}) end
 		if gui:IsA("BasePart") and string.find(gui.Name,"AmberPane",1,true) then
 			-- Attributes may replicate after ancestry; six bounded one-shot hooks.
@@ -333,7 +355,16 @@ function View.start(root,settings)
 		counts.worldLookSample=worldLookSample and table.clone(worldLookSample) or nil
 		counts.worldLookReleaseEnabled=WorldLook.releaseEnabled
 		-- AG68_END_STATS
+-- AG69_BEGIN_STATS
+		counts.assetComplete=delivery.complete; counts.assetStatus=table.clone(delivery.status)
+		counts.skyFallback=not Assets.skyReady(delivery)
+		-- IsLoaded is sampled on the real consumers; a preload callback alone is
+		-- insufficient. Offscreen images may be deferred until first rendered.
+		counts.celestialConsumer="BillboardGui.ImageLabel"
+		counts.sunLoaded=sunDisk.image.IsLoaded; counts.moonLoaded=moon.image.IsLoaded
+		counts.sun=sunDisk.gui.Enabled and sunDisk.image.ImageTransparency<1 and 1 or 0
 		return counts
+-- AG69_END_STATS
 	end
 	function self.setAnnotationsEnabled(enabled) annotations=enabled~=false; labelsDirty=1 end
 	function self.update(dt)
@@ -353,6 +384,10 @@ function View.start(root,settings)
 		apply(sample,q,flow,elapsed)
 		local sun=Lighting:GetSunDirection(); local sunlight=State.sunVisibility(sample,sun.Y)
 		celestialAnchor.Position=camera.CFrame.Position
+-- AG69_BEGIN_SUN_UPDATE
+		sunDisk.attachment.Position=sun*Config.celestial.distance
+		sunDisk.image.ImageTransparency=1-Celestial.sunAlpha(sun.Y,sample.cloud,sample.rain)
+-- AG69_END_SUN_UPDATE
 		moon.attachment.Position=Vector3.new(table.unpack(State.moon(sample.phase)))*Config.celestial.distance
 		moon.image.ImageTransparency=1-sample.celestial*.94
 		for i,v in ipairs(stars) do v.image.ImageTransparency=1-(i<=q.stars and sample.celestial*v.alpha or 0) end
@@ -542,7 +577,11 @@ function View.start(root,settings)
 		if not root:GetAttribute("WorldContextOwned") then
 			for _,l in ipairs(labels) do l.gui.Enabled=l.enabled end
 		end
+-- AG69_BEGIN_RESTORE
+		clearProbes()
+		for texture,previous in pairs(meadowTextures) do if texture.Parent then texture.Transparency=previous.transparency end end
 		for k,v in pairs(saved) do Lighting[k]=v end
+-- AG69_END_RESTORE
 		workspace.GlobalWind=savedWind
 		for _,p in ipairs(self.parts) do p.LocalTransparencyModifier=0 end
 		for _,f in ipairs(forestParts) do f.part.LocalTransparencyModifier=f.saved end
@@ -554,7 +593,30 @@ function View.start(root,settings)
 		atmosphere:Destroy(); sky:Destroy(); clouds:Destroy(); correction:Destroy(); bloom:Destroy(); rays:Destroy(); folder:Destroy()
 		for _,v in ipairs(displaced) do v.object.Parent=v.parent end
 	end
+-- AG69_BEGIN_PRELOAD
+	-- One bounded preload call for this owner, with no retries or texture churn.
+	task.spawn(function()
+		-- Typed probes select the image loader; the generic string route can fail
+		-- for permitted Images. At most 12 unparented probes, destroyed after loading.
+		for _,uri in ipairs(assets) do local probe=Instance.new("ImageLabel"); probe.Image=uri; table.insert(probes,probe) end
+		local ok,err=pcall(function() ContentProvider:PreloadAsync(probes,function(uri,status)
+			Assets.record(delivery,uri,status==Enum.AssetFetchStatus.Success)
+			if RunService:IsStudio() then print("AG69_ASSET",uri,status.Name) end
+		end) end)
+		clearProbes()
+		if not ok then for _,uri in ipairs(assets) do Assets.record(delivery,uri,false) end end
+		Assets.finish(delivery)
+		if active~=self then return end
+		self.assetFailures=Assets.failures(delivery)
+		if Assets.skyReady(delivery) then for property,key in pairs(skyProperties) do sky[property]=Assets.uri(key) end end
+		for gui,key in pairs(assetGuis) do gui.Enabled=Assets.ready(delivery,key) end
+		for texture,previous in pairs(meadowTextures) do if texture.Parent then texture.Transparency=Assets.ready(delivery,"meadow") and previous.transparency or 1 end end
+		if not ok then warn("AG69_PRELOAD_ERROR",err) end
+		for _,key in ipairs(Assets.keys) do if not Assets.ready(delivery,key) then warn("AG69_ASSET_FAILED",key,Assets.uri(key)) end end
+		if RunService:IsStudio() then print("M7_19E_ASSETS failures="..self.assetFailures.." complete=true source=original-CC0-Roblox universe="..game.GameId) end
+	end)
 	self.update(1); connection=RunService.RenderStepped:Connect(self.update)
+-- AG69_END_PRELOAD
 	return self
 end
 return View

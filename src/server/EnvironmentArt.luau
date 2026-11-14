@@ -1,6 +1,9 @@
 --!nonstrict
 local Shared=game:GetService("ReplicatedStorage").PotionTycoon.Shared
+-- AG69_BEGIN_IMPORT
 local Config=require(Shared.EnvironmentConfig)
+local Assets=require(game:GetService("ReplicatedStorage").PotionTycoon.Shared.EnvironmentAssets)
+-- AG69_END_IMPORT
 local Plan=require(Shared.EnvironmentPlan)
 local State=require(Shared.EnvironmentState)
 local Art={}
@@ -12,7 +15,9 @@ local function meadow(floor,enabled)
 	local texture=floor:FindFirstChild("M7Meadow")
 	if not texture then
 		texture=Instance.new("Texture"); texture.Name="M7Meadow"; texture.Face=Enum.NormalId.Top
-		texture.Texture=Config.polishPrefix.."meadow.png"; texture.StudsPerTileU=14; texture.StudsPerTileV=14; texture.Parent=floor
+-- AG69_BEGIN_MEADOW
+		texture.Texture=Assets.uri("meadow"); texture.StudsPerTileU=14; texture.StudsPerTileV=14; texture.Parent=floor
+-- AG69_END_MEADOW
 	end
 	texture.Color3=floor.Color; texture.Transparency=enabled and 0 or 1
 	if enabled then floor.Material=Enum.Material.SmoothPlastic end

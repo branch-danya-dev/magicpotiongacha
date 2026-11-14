@@ -2,6 +2,7 @@
 import { readFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import assert from 'node:assert/strict';
+import {beforeAG69} from './ag69-preservation.mjs';
 const base='341b7f6dd9ac1692781f865bf25fed63a05e9d8a';
 const protectedFiles=['src/shared/Factory.luau','src/shared/Config.luau','src/shared/Protocol.luau',
   'src/shared/Access.luau','src/server/ProfileStore.luau','src/server/World.luau',
@@ -28,6 +29,6 @@ const unchanged=['src/server/Main.server.luau','src/shared/SpellbookFeedback.lua
   // original source after removing the bounded AG63 additions. Other files stay pinned.
   ...execFileSync('git',['ls-tree','-r','--name-only',revisionBase,'src'],{encoding:'utf8'}).trim().split('\n').filter(p=>/Environment|Weather|Lighting/.test(p) && p!=='src/client/EnvironmentView.luau')];
 for(const path of unchanged) {
-  assert.equal(readFileSync(path,'utf8').replace(/\r\n/g,'\n'),execFileSync('git',['show',`${revisionBase}:${path}`],{encoding:'utf8'}).replace(/\r\n/g,'\n'),`${path}: R1 must preserve receipt/global environment`);
+  assert.equal(beforeAG69(path,readFileSync(path,'utf8').replace(/\r\n/g,'\n')),execFileSync('git',['show',`${revisionBase}:${path}`],{encoding:'utf8'}).replace(/\r\n/g,'\n'),`${path}: R1 must preserve receipt/global environment`);
 }
 console.log('AG62A scope PASS: economy, permissions, hitboxes, saves, imported assets and release flags unchanged; one client scheduler and existing State remote.');

@@ -1,0 +1,45 @@
+{
+  "task": "AG69-R1",
+  "runtimeSha": "590e141094b0090804291d8b75b6b99df4bd871b",
+  "buildSha256": "9181a356a0dbda6cc1f1ff24d7f56ca8b45862dc62b63587870f223ae003add7",
+  "consumer": "BillboardGui.ImageLabel",
+  "uploads": 0,
+  "permissionChanges": 0,
+  "studio": "0.747.0.7471481",
+  "gameId": 0,
+  "nativeLog": "0.747.0.7471481_20261114T112352Z_Studio_13DDD_last.log",
+  "matrixStates": 12,
+  "restoreCycles": 3,
+  "runtimeSourceSha256": {
+    "src/client/EnvironmentView.luau": "bb06a9eee0005b964854999c69a69f2965530b87af7869edc1dc53e8975ace27",
+    "src/shared/EnvironmentCelestial.luau": "e7d03a46c6060a53f3e9920f0d20941c8020bb7bacf2b307d57d2584f69fa9ae",
+    "src/shared/EnvironmentAssets.luau": "ed2762527f26dd34e8a4e200e49f378b8cdedcae4c8b48dfff3ef4695979c335",
+    "src/server/EnvironmentArt.luau": "e05a451797df8bafaf540a75bc127522346ffaf9c562bd5582f6e71353bbbd87"
+  },
+  "files": [
+    {
+      "path": "docs/evidence/ag69-r1/baseline-moon.jpg",
+      "sha256": "a5b43d2cc65c94751a2d2a1b8ef3d86de3f011ad50aed54416c21f468f3e1475"
+    },
+    {
+      "path": "docs/evidence/ag69-r1/baseline-sun.jpg",
+      "sha256": "d2db39c64c56a3a1f83a923814234a0a3dd0747866006ce010844ab7dc8c60bf"
+    },
+    {
+      "path": "docs/evidence/ag69-r1/baseline.log",
+      "sha256": "bc267a213a94d10ba636270eaab40761acca93b3989e30d354e3097880a296d2"
+    },
+    {
+      "path": "docs/evidence/ag69-r1/moon-minimal.jpg",
+      "sha256": "7c69d91877e1ea9f2a8ac15d37a74afd295fe55b5385967d5cc58c73783cc7f6"
+    },
+    {
+      "path": "docs/evidence/ag69-r1/ordinary-f5.log",
+      "sha256": "8a86b2073e5f28960c205958609de1c17400f77a0ef6b71a230eb159f4948b4d"
+    },
+    {
+      "path": "docs/evidence/ag69-r1/sun-reduced.jpg",
+      "sha256": "db2dac9c8c3dbd3731d75320c9152e8d1a8cf927bbc0f34aebca1280ce0b0f59"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+2026-11-14T11:19:12.334Z,335.334808,2cd4,6,Info [FLog::CreatorOutput] AG69_ASSET rbxassetid://130725840424597 Success
+2026-11-14T11:19:12.334Z,335.334808,2cd4,6,Info [FLog::CreatorOutput] AG69_ASSET rbxassetid://83662321011462 Success
+2026-11-14T11:19:12.334Z,335.334808,2cd4,6,Info [FLog::CreatorOutput] AG69_ASSET rbxassetid://104321131031052 Success
+2026-11-14T11:19:12.334Z,335.334808,2cd4,6,Info [FLog::CreatorOutput] AG69_ASSET rbxassetid://120296233207649 Success
+2026-11-14T11:19:12.334Z,335.334808,2cd4,6,Info [FLog::CreatorOutput] AG69_ASSET rbxassetid://127279777775296 Success
+2026-11-14T11:19:12.334Z,335.334808,2cd4,6,Info [FLog::CreatorOutput] AG69_ASSET rbxassetid://106126272501921 Success
+2026-11-14T11:19:12.334Z,335.334808,2cd4,6,Info [FLog::CreatorOutput] AG69_ASSET rbxassetid://99406398694311 Success
+2026-11-14T11:19:12.343Z,335.343811,4a04,6,Info [FLog::CreatorOutput] AG69_ASSET rbxassetid://96590033453082 Success
+2026-11-14T11:19:12.343Z,335.343811,4a04,6,Info [FLog::CreatorOutput] AG69_ASSET rbxassetid://87150286021124 Success
+2026-11-14T11:19:12.343Z,335.343811,4a04,6,Info [FLog::CreatorOutput] AG69_ASSET rbxassetid://96243370555026 Success
+2026-11-14T11:19:12.344Z,335.344818,4a04,6,Info [FLog::CreatorOutput] AG69_ASSET rbxassetid://106481090533297 Success
+2026-11-14T11:19:12.344Z,335.344818,4a04,6,Info [FLog::CreatorOutput] AG69_ASSET rbxassetid://127569253577461 Success
+2026-11-14T11:19:12.351Z,335.351837,5b28,6,Info [FLog::CreatorOutput] M7_19E_ASSETS failures=0 complete=true source=original-CC0-Roblox universe=0
+2026-11-14T11:19:12.818Z,335.818115,43c8,6,Warning [FLog::CreatorWarning] Warning: ContentId: rbxassetid://120296233207649 failed due to: No asset content representation found while do_not_fallback_to_baseline is set to true.
+2026-11-14T11:19:12.819Z,335.819122,21fc,6,Warning [FLog::CreatorWarning] Warning: ContentId: rbxassetid://127279777775296 failed due to: No asset content representation found while do_not_fallback_to_baseline is set to true.
+2026-11-14T11:19:12.819Z,335.819122,43c8,6 [FLog::Error] Asset (Image) "https://assetdelivery.roblox.com/v1/asset?id=120296233207649" load failed in sky.moon: No asset content representation found while do_not_fallback_to_baseline is set to true.
+2026-11-14T11:19:12.819Z,335.819122,21fc,6 [FLog::Error] Asset (Image) "https://assetdelivery.roblox.com/v1/asset?id=127279777775296" load failed in sky.sun: No asset content representation found while do_not_fallback_to_baseline is set to true.
+2026-11-14T11:19:12.819Z,335.819122,3aec,6,Error [DFLog::AssetProvider] AssetResolutionWorkflow to get assetid: https://assetdelivery.roblox.com/v1/asset?id=127279777775296&contentRepresentationPriorityList=W3siZm9ybWF0Ijoia3R4MiIsIm1ham9yVmVyc2lvbiI6IjgiLCJmaWRlbGl0eSI6Ii8vLy8vQWs9In0seyJmb3JtYXQiOiJrdHgyIiwibWFqb3JWZXJzaW9uIjoiN3JkbyIsImZpZGVsaXR5IjoiLy8vLy9Baz0ifV0%3D&doNotFallbackToBaselineRepresentation=true failed!! adIndividualItemFailureReason: Unknown adBatchHttpStatusCode: 0 adBatchHttpErrorCode: OK adIndividualItemCode: 200 contentRepresentationSpecifier:  wasModerated: true adResolutionErrorMessage: No asset content representation found while do_not_fallback_to_baseline is set to true. adBatchJsonParsingError:  cdnHttpStatusCode: 0 cdnHttpErrorCode: OK cdnErrorMessage: 
+2026-11-14T11:19:12.819Z,335.819122,3aec,6,Error [DFLog::AssetProvider] AssetResolutionWorkflow to get assetid: https://assetdelivery.roblox.com/v1/asset?id=120296233207649&contentRepresentationPriorityList=W3siZm9ybWF0Ijoia3R4MiIsIm1ham9yVmVyc2lvbiI6IjgiLCJmaWRlbGl0eSI6Ii8vLy8vQWs9In0seyJmb3JtYXQiOiJrdHgyIiwibWFqb3JWZXJzaW9uIjoiN3JkbyIsImZpZGVsaXR5IjoiLy8vLy9Baz0ifV0%3D&doNotFallbackToBaselineRepresentation=true failed!! adIndividualItemFailureReason: Unknown adBatchHttpStatusCode: 0 adBatchHttpErrorCode: OK adIndividualItemCode: 200 contentRepresentationSpecifier:  wasModerated: true adResolutionErrorMessage: No asset content representation found while do_not_fallback_to_baseline is set to true. adBatchJsonParsingError:  cdnHttpStatusCode: 0 cdnHttpErrorCode: OK cdnErrorMessage: 
+2026-11-14T11:20:12.580Z,395.580627,5b28,6,Info [FLog::CreatorOutput] AG69_R1_BASELINE 14 false rbxassetid://127279777775296 rbxassetid://120296233207649
+2026-11-14T11:21:02.766Z,445.766083,18c8,6,Info [FLog::CreatorOutput] AG69_R1_SPRITE_SUN true true
+2026-11-14T11:22:11.448Z,514.448303,21cc,6,Info [FLog::CreatorOutput] AG69_R1_MOON true true 0.05999999865889549

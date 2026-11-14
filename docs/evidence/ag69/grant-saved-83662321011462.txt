@@ -1,0 +1,6 @@
+Native Windows accessibility excerpt; unrelated browser UI omitted.
+									40746 text field (поле) (settable, string) Адресная строка и строка поиска Description: Спросите Google или введите URL Value: create.roblox.com/dashboard/creations/store/83662321011462/permissions?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll ID: view_1012
+								40998 document (документ) ########### / Permissions Value: https://create.roblox.com/dashboard/creations/store/83662321011462/permissions?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll ID: RootWebArea
+												42395 combo box (поле со списком) (settable, string) addout studio addout studio Value: addout studio addout studio
+													42397 text (текстовый) addout studio
+												42478 text (текстовый) Changes Saved

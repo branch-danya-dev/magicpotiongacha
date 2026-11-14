@@ -1,0 +1,18 @@
+{
+  "src/client/EnvironmentView.luau": {
+    "IMPORT": "local Config=require(Shared.EnvironmentConfig)\n",
+    "DELIVERY": "\tlocal assets={}\n\tfor property,face in pairs({SkyboxBk=\"bk\",SkyboxDn=\"dn\",SkyboxFt=\"ft\",SkyboxLf=\"lf\",SkyboxRt=\"rt\",SkyboxUp=\"up\"}) do\n\t\tlocal uri=Style.skyPrefix..face..\".png\"; sky[property]=uri; table.insert(assets,uri)\n\tend\n\tsky.SunTextureId=Config.skyPrefix..\"sun.png\"; sky.MoonTextureId=Config.skyPrefix..\"moon.png\"\n\tfor _,name in ipairs({\"sun\",\"moon\",\"mist\",\"rainbow\"}) do table.insert(assets,Config.skyPrefix..name..\".png\") end\n\tfor _,name in ipairs({\"meadow\",\"star\"}) do table.insert(assets,Config.polishPrefix..name..\".png\") end\n\t-- The sky retains its sun; a single owned celestial rig supplies a low moon\n\t-- and legible stars. Native zenith moon/stars are disabled, never duplicated.\n\tsky.CelestialBodiesShown=true; sky.StarCount=0; sky.SunAngularSize=7; sky.MoonAngularSize=0\n\t-- A single asset set for the entire session. No texture swaps at time/weather keys.\n\tsky.Parent=Lighting\n\tself.assetFailures=0\n\ttask.spawn(function()\n\t\tlocal ok=pcall(function() ContentProvider:PreloadAsync(assets,function(_,status)\n\t\t\tif status~=Enum.AssetFetchStatus.Success then self.assetFailures+=1 end\n\t\tend) end)\n\t\tif not ok then self.assetFailures+=1 end\n\t\tif active==self and RunService:IsStudio() then print(\"M7_19E_ASSETS failures=\"..self.assetFailures..\" source=original-CC0-local permissions=LOCAL_ONLY\") end\n\tend)\n",
+    "SPRITE": "\t\tlocal img=effect(\"ImageLabel\",\"Image\",gui); img.BackgroundTransparency=1; img.Size=UDim2.fromScale(1,1); img.Image=Config.skyPrefix..texture..\".png\"; img.ImageTransparency=1\n",
+    "MOON": "\tlocal moon=celestialSprite(\"Moon\",Config.skyPrefix..\"moon.png\",Vista.moonSize,Vector3.new(0,1,0))\n",
+    "STAR": "\t\tlocal d=State.star(i); stars[i]=celestialSprite(\"Star_\"..i,Config.polishPrefix..\"star.png\",d.size,Vector3.new(d.x,d.y,d.z)); stars[i].alpha=d.alpha\n",
+    "REGISTER": "\tlocal function registerLabel(gui)\n",
+    "STATS": "\t\treturn counts\n",
+    "SUN_UPDATE": "",
+    "RESTORE": "\t\tfor k,v in pairs(saved) do Lighting[k]=v end\n",
+    "PRELOAD": "\tself.update(1); connection=RunService.RenderStepped:Connect(self.update)\n"
+  },
+  "src/server/EnvironmentArt.luau": {
+    "IMPORT": "local Config=require(Shared.EnvironmentConfig)\n",
+    "MEADOW": "\t\ttexture.Texture=Config.polishPrefix..\"meadow.png\"; texture.StudsPerTileU=14; texture.StudsPerTileV=14; texture.Parent=floor\n"
+  }
+}

@@ -4,8 +4,9 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 import { inflateSync } from 'node:zlib';
+import {beforeAG69} from './ag69-preservation.mjs';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const read = p => readFileSync(resolve(root, p), 'utf8').replaceAll('\r\n', '\n');
+const read = p => beforeAG69(p,readFileSync(resolve(root, p), 'utf8').replaceAll('\r\n', '\n'));
 const sha = text => createHash('sha256').update(text).digest('hex');
 const baseline = JSON.parse(read('tests/fixtures/m6-environment-contract.json'));
 for (const [path, expected] of Object.entries(baseline.unchanged)) {

@@ -1,0 +1,68 @@
+{
+  "baseSha": "418d85f519232ea10e373a4b1944132ee389acd2",
+  "method": "Unmodified repository generators copied into isolated build/AG69-regeneration; no originals overwritten; PNG bytes compared to original receipt and manifest",
+  "files": [
+    {
+      "source": "assets/environment/stability-sky/bk.png",
+      "regeneratedSha256": "3fbe2900abae1e541e0809a02386cf4234660daafdb24218f9ab2cfd73fc76a8",
+      "identical": true
+    },
+    {
+      "source": "assets/environment/stability-sky/dn.png",
+      "regeneratedSha256": "01bb83558a069651b4f736ece6aff21d07810714db7e7710f9d5bd8a58d3ecc6",
+      "identical": true
+    },
+    {
+      "source": "assets/environment/stability-sky/ft.png",
+      "regeneratedSha256": "b3332bb508e1b4694fdfb00fb31bdb1858f31205e551efc61c696ae15da9fb6c",
+      "identical": true
+    },
+    {
+      "source": "assets/environment/stability-sky/lf.png",
+      "regeneratedSha256": "843776e922610593fbfe25ed1f2dd0f56ebefacb45646043dd61fdaaf3593f11",
+      "identical": true
+    },
+    {
+      "source": "assets/environment/stability-sky/rt.png",
+      "regeneratedSha256": "8bd5e51849b5de314439809ad9a6c6695a015bed8f8ec81451c2d886c34fcb97",
+      "identical": true
+    },
+    {
+      "source": "assets/environment/stability-sky/up.png",
+      "regeneratedSha256": "73a9acf9083403032bf224f670752e569e1b9137c70e7cc107954248f09df213",
+      "identical": true
+    },
+    {
+      "source": "assets/environment/atmosphere/sun.png",
+      "regeneratedSha256": "9c834ecb7e3b579e49f4464922f357f7a3a2dbb292819a8d2450fd9616100ee8",
+      "identical": true
+    },
+    {
+      "source": "assets/environment/atmosphere/moon.png",
+      "regeneratedSha256": "2256701b5acc81ac6ed67326fd069e9362e2396cae27418b140c0a4c6fe86ea2",
+      "identical": true
+    },
+    {
+      "source": "assets/environment/atmosphere/mist.png",
+      "regeneratedSha256": "585839ad1177b7cfbcbacca3d684018a981ac4618346e90f8415222b4b09aa76",
+      "identical": true
+    },
+    {
+      "source": "assets/environment/atmosphere/rainbow.png",
+      "regeneratedSha256": "73800f9fefefd0f5280304bb5887be836fbcf53f38cf47c1305e3dcdd8125136",
+      "identical": true
+    },
+    {
+      "source": "assets/environment/polish/meadow.png",
+      "regeneratedSha256": "96ed909ec0fd840a75694681721395fa84d744556156b79785dbd3b3a23dc9fe",
+      "identical": true
+    },
+    {
+      "source": "assets/environment/polish/star.png",
+      "regeneratedSha256": "1ab214fbbe9b85402defdd9431eccf6b1677c3e3b0a17dd9f45bec3eea9deb4c",
+      "identical": true
+    }
+  ],
+  "robloxUpload": "NOT_STARTED",
+  "studioPlay": "NOT_RUN"
+}

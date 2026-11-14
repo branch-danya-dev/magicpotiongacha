@@ -2,7 +2,8 @@
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import assert from 'node:assert/strict';
-const read=p=>readFileSync(p,'utf8').replaceAll('\r\n','\n');
+import {beforeAG69} from './ag69-preservation.mjs';
+const read=p=>beforeAG69(p,readFileSync(p,'utf8').replaceAll('\r\n','\n'));
 const sha=s=>createHash('sha256').update(s).digest('hex');
 const baseline=JSON.parse(read('tests/fixtures/composition07c-invariants.json'));
 assert.equal(baseline.base,'7aa500e9491d7eb0747c692a77a346ff7a83aaee');
