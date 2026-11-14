@@ -15,6 +15,9 @@ local Look=require(Shared.PostFXLook)
 -- AG63_END_IMPORT
 -- AG68_BEGIN_IMPORT
 local WorldLook=require(Shared.WorldLook)
+-- AG70_BEGIN_IMPORT
+local ArcaneForest=require(Shared.ArcaneForest)
+-- AG70_END_IMPORT
 -- AG68_END_IMPORT
 local Style=require(Shared.AtmosphereStyle)
 local Transition=require(Shared.EnvironmentTransition)
@@ -42,6 +45,9 @@ function View.start(root,settings)
 	-- AG68_BEGIN_STATE
 	look=WorldLook.default(RunService:IsStudio())
 	local worldLookSample
+-- AG70_BEGIN_STATE
+	look=ArcaneForest.default(RunService:IsStudio())
+-- AG70_END_STATE
 	-- AG68_END_STATE
 	local saved={}; local savedWind=workspace.GlobalWind
 	for _,key in ipairs({"ClockTime","Brightness","Ambient","OutdoorAmbient","GlobalShadows","ExposureCompensation","GeographicLatitude","ColorShift_Top","ColorShift_Bottom","EnvironmentDiffuseScale","EnvironmentSpecularScale","ShadowSoftness"}) do saved[key]=Lighting[key] end
@@ -128,6 +134,13 @@ function View.start(root,settings)
 		light.Angle=75; light.Range=22; light.Shadows=false; light.Brightness=0; light.Enabled=false
 		light.Color=Color3.fromRGB(255,223,168); sunPools[i]=light
 	end
+-- AG70_BEGIN_ANCHOR
+	local forestPools={}
+	for i,light in ipairs(sunPools) do
+		forestPools[i]={cf=light.Parent.CFrame,range=light.Range,angle=light.Angle,
+			ground=surface(-142.5,i==1 and -71 or -43)}
+	end
+-- AG70_END_ANCHOR
 	local pollenGround={}
 	for i,pos in ipairs(Style.pollenAnchors) do pollenGround[i]=surface(pos[1],pos[2]) end
 	local rainbow=sprite("AfterRainArc","rainbow",Vector2.new(95,48),Vector3.new(-140,50,-160))
@@ -291,12 +304,31 @@ function View.start(root,settings)
 			rays.Intensity=worldPost.rays; rays.Enabled=worldPost.rays>.0001
 		end
 		-- AG68_END_APPLY
+-- AG70_BEGIN_APPLY
+		local forestPost=ArcaneForest.project(sample,look,self.quality,fx.bloom,fx.rays)
+		if forestPost then
+			Lighting.Brightness=forestPost.brightness; Lighting.ExposureCompensation=forestPost.exposure
+			Lighting.Ambient=color(forestPost.ambient); Lighting.OutdoorAmbient=color(forestPost.outdoor)
+			Lighting.ColorShift_Top=color(forestPost.sun):Lerp(Color3.new(),.65)
+			Lighting.ColorShift_Bottom=color(forestPost.bottom)
+			Lighting.EnvironmentDiffuseScale=forestPost.diffuse; Lighting.EnvironmentSpecularScale=forestPost.specular
+			atmosphere.Color=color(forestPost.sky); atmosphere.Decay=color(forestPost.decay)
+			atmosphere.Density=forestPost.density; atmosphere.Haze=forestPost.haze*q.haze; atmosphere.Glare=forestPost.glare
+			correction.TintColor=color(forestPost.tint); correction.Saturation=forestPost.saturation; correction.Contrast=forestPost.contrast
+			bloom.Size=forestPost.bloomSize; bloom.Threshold=forestPost.bloomThreshold
+			bloom.Intensity=forestPost.bloom; bloom.Enabled=forestPost.bloom>.0001
+			rays.Intensity=forestPost.rays; rays.Enabled=forestPost.rays>.0001
+		end
+-- AG70_END_APPLY
 	end
 	local lod=0; local step=0; local connection
 	local transition=Transition.new({forward=true,clockAtPhase=function(phase) return Clock.at(Config,phase) end})
 	function self.setQuality(name) if Config.quality[name] then self.quality=name; lod=1 end end
 	-- AG63_BEGIN_METHOD
 	function self.setLook(name)
+-- AG70_BEGIN_SELECT
+		if RunService:IsStudio() and name=="AG70" then look=name; return true end
+-- AG70_END_SELECT
 		-- AG68_BEGIN_SELECT
 		if RunService:IsStudio() and name=="AG68" then look=name; return true end
 		-- AG68_END_SELECT
@@ -442,6 +474,16 @@ function View.start(root,settings)
 				p:SetAttribute("GroundY",surface(x,z)); p:SetAttribute("RainX",x); p:SetAttribute("RainZ",z)
 			end
 		end
+-- AG70_BEGIN_PLACEMENT
+		for i,light in ipairs(sunPools) do
+			local base=forestPools[i]
+			if look=="AG70" then
+				local p=ArcaneForest.pool(sample,i,sun.X,sun.Z)
+				local target=Vector3.new(p.x,base.ground,p.z)
+				light.Parent.CFrame=CFrame.lookAt(target+Vector3.new(p.dx,p.height,p.dz),target,Vector3.zAxis)*CFrame.Angles(math.pi/2,0,0)
+			else light.Parent.CFrame=base.cf end
+		end
+-- AG70_END_PLACEMENT
 		for _,group in ipairs({lanternSlots,sunSlots}) do
 			for _,e in ipairs(group) do e.distance=(e.light.Parent.Position-lightOrigin).Magnitude end
 		end
@@ -453,6 +495,18 @@ function View.start(root,settings)
 		for _,e in ipairs(sunSlots) do
 			e.light.Enabled=e.weight>0; e.light.Brightness=.42*sunlight*e.weight
 		end
+-- AG70_BEGIN_LIGHTS
+		-- Reset color even when switching directly to OFF or a legacy look.
+		for _,e in ipairs(lanternSlots) do
+			e.light.Color=color(Config.palette.amber); e.light.Range=14
+			if look=="AG70" then local l=ArcaneForest.localLight(sample,"lantern"); e.light.Color=color(l.color); e.light.Brightness=l.brightness*e.weight; e.light.Range=l.range end
+		end
+		for _,e in ipairs(sunSlots) do
+			local base=forestPools[e.id]
+			e.light.Color=Color3.fromRGB(255,223,168); e.light.Range=base.range; e.light.Angle=base.angle
+			if look=="AG70" then local l=ArcaneForest.localLight(sample,"canopy"); e.light.Color=color(l.color); e.light.Brightness=l.brightness*e.weight; e.light.Range=l.range; e.light.Angle=l.angle end
+		end
+-- AG70_END_LIGHTS
 		for _,p in ipairs(meadowParts) do
 			local target=p:GetAttribute("MeadowTargetAlpha") or 0; local alpha=p.LocalTransparencyModifier
 			if alpha~=target then p.LocalTransparencyModifier=alpha+math.clamp(target-alpha,-elapsed*2,elapsed*2) end
@@ -548,6 +602,10 @@ function View.start(root,settings)
 		-- Local Studio review inputs feed this owner; no helper, remote or save.
 		-- Direct Lighting.ClockTime writes are intentionally not a second API.
 		local function request()
+-- AG70_BEGIN_REQUEST
+			local forestRequest=ArcaneForest.request(root:GetAttribute("EnvironmentReview"))
+			if forestRequest then self.setLook(forestRequest); return end
+-- AG70_END_REQUEST
 			-- AG68_BEGIN_REQUEST
 			local worldRequest=WorldLook.request(root:GetAttribute("EnvironmentReview"))
 			if worldRequest then self.setLook(worldRequest); return end

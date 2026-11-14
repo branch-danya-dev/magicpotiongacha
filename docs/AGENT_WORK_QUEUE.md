@@ -16,6 +16,40 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### AG-70 — Arcane Forest 2.1 (Issue #41)
+
+**R3 CODE_CANDIDATE, 2026-11-14:** continued as the only task from clean CI-green
+PR #43 HEAD `3b367481e8f621adbcd41f775203593c2ccbf82b`; stacked base remains
+`6467bfd9b024dbf618496ca2901f5b6cac20abb1`. Owner explicitly requested path
+graphics5, night readability and sunset repairs without screenshots/video.
+Scope expands only to presentation-only path spacing; no gameplay colliders,
+economy/schema/remotes/assets/rights. Native R3 QA currently blocked by the UI
+automation error `coordinate input geometry is unavailable` after one recovery.
+Local full regression PASS: 1302 Luau + 14 Node, 236 compiled sources and Rojo.
+R3 separates 21 stone footprints, expands existing night pools, reduces black
+crush and aims the sunset pools sunward. Same 6/3/0 light caps; no new lights.
+Exact final HEAD, repeat-build and CI results are in Draft PR #43.
+Previous R2 evidence below is historical, not proof of R3 art acceptance.
+
+**Статус: CODE_CANDIDATE / scoped STUDIO VERIFIED; OWNER ART OPEN / NOT PUBLISHED.**
+Владелец: Codex, 2026-11-14. Единственная текущая задача — AG70.
+Ветка `feat/ag70-arcane-forest-art-pass`; база Draft PR #42,
+`6467bfd9b024dbf618496ca2901f5b6cac20abb1`, CI Windows/Ubuntu PASS
+(run 43590430411). Sun/Moon используют проверенный Image consumer;
+12 нативных tier/motion проверок и три stop/restart — PASS. Новых загрузок/прав нет.
+AG70 перенесён с `b2b2d0b723e9f3a2b98beaf45dcce48859fb8ab6` на исправленную базу.
+Граница: палитра и существующие локальные источники единственного EnvironmentView.
+Экономика, HUD, Spellbook, ассеты и права сохраняются; опубликованный default OFF.
+Runtime `89804f0ea070b3b685a9939b00872fa0b5fe2b55`, CI Windows/Ubuntu PASS
+(43591968246). После ремонта выполнены две итерации: 120 переключений по всем
+weather/tier/motion комбинациям, восстановление owner, три fallback, E/mouse +5,
+8 привязок и 12 desktop замеров. 1296 Luau + 14 Node тестов.
+Владелец остановил дальнейшие скриншоты/видео; уже полученные материалы сохранены
+в evidence/ag70/r1 и r2. Phone emulation NOT RUN, реальные телефоны/мультиклиент
+и художественная приёмка открыты. Рябь дорожки graphics5, тёмная одежда ночью
+и перекрытый холмом закат остаются замечаниями. Финальный HEAD/checks — Draft PR #43.
+[Отчёт](AG70_ARCANE_FOREST_ART_PASS.md). Миграции, merge и публикации нет.
+
 ### AG-69 — Восстановление 12 текстур M7 (Issue #40)
 
 **Статус: AG69-R1 CODE / STUDIO VERIFIED — celestial blocker repaired; OWNER ART OPEN; NOT PUBLISHED.**

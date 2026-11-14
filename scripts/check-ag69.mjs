@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { inflateSync } from 'node:zlib';
 import {execFileSync} from 'node:child_process';
 import {beforeAG69} from './ag69-preservation.mjs';
+import {beforeAG70} from './ag70-preservation.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -229,7 +230,7 @@ export function validateCelestialRepair(readEvidence=read) {
   assert.equal(receipt.consumer,'BillboardGui.ImageLabel');
   assert.equal(receipt.uploads,0); assert.equal(receipt.permissionChanges,0);
   for(const proof of receipt.files) assert.equal(digest(readEvidence(proof.path)),proof.sha256,'Celestial native evidence hash');
-  for(const [path,sha] of Object.entries(receipt.runtimeSourceSha256)) assert.equal(digest(normal(read(path))),sha,'Celestial tested runtime hash');
+  for(const [path,sha] of Object.entries(receipt.runtimeSourceSha256)) assert.equal(digest(beforeAG70(path,normal(read(path)))),sha,'Celestial tested runtime hash outside reviewed AG70 seams');
   const log=normal(readEvidence('docs/evidence/ag69-r1/ordinary-f5.log'));
   for(const quality of ['full','reduced','minimal']) for(const motion of [false,true]) for(const [name,id] of [['Sun','127279777775296'],['Moon','120296233207649']]) {
     assert(log.includes(`AG69_R1_BODY ${name} ${quality} ${motion} true rbxassetid://${id} `),'Actual consumer/quality/motion proof');
