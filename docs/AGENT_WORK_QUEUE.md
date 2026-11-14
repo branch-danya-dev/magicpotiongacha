@@ -16,6 +16,21 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### AG-70 — Arcane Forest 2.1 (Issue #41)
+
+**Статус: IN PROGRESS / art acceptance OPEN / NOT PUBLISHED.**
+Владелец: Codex, 2026-11-14. Единственная текущая задача.
+Ветка `feat/ag70-arcane-forest-art-pass`; база Draft PR #42,
+`df5f3ee7f582764718390957d7234633bd6747e5`, CI Windows/Ubuntu PASS
+(run 43515825649), AG69 native delivery all 12 Success.
+Граница: чистая палитра + ограниченные дополнения единственного EnvironmentView,
+сохранение OFF/AG68/A/B/C, локальные существующие источники и лимиты.
+Без новых ассетов, прав, серверных изменений, экономики, сохранений и UI.
+Миграции нет; rollback — OFF, затем удаление ограниченных AG70 дополнений.
+Требуются две художественные итерации, обычный F5, нативные сравнения,
+80 переключений/restoration, тесты и Draft PR. Телефоны/мультиклиент — отдельно.
+
+
 ### AG-69 — Восстановление 12 текстур M7 (Issue #40)
 
 **Статус: AG69-R1 CODE / STUDIO VERIFIED — celestial blocker repaired; OWNER ART OPEN; NOT PUBLISHED.**

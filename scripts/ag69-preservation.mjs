@@ -1,8 +1,10 @@
 // Historical guards still compare the original source outside AG69 URI/delivery seams.
 import {readFileSync} from 'node:fs';
 import assert from 'node:assert/strict';
+import {beforeAG70} from './ag70-preservation.mjs';
 const originals=JSON.parse(readFileSync(new URL('../tests/fixtures/ag69-original-seams.json',import.meta.url)));
 export function beforeAG69(path,source) {
+  source=beforeAG70(path,source);
   const seams=originals[path]; if(!seams) return source;
   const seen=[];
   const restored=source.replace(/^-- AG69_BEGIN_(\w+)\n[\s\S]*?^-- AG69_END_\1\n/gm,(_,tag)=>{

@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { inflateSync } from 'node:zlib';
 import {execFileSync} from 'node:child_process';
 import {beforeAG69} from './ag69-preservation.mjs';
+import {beforeAG70} from './ag70-preservation.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
