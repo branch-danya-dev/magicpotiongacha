@@ -42,8 +42,8 @@ does not contain the AG72 layer. All publication/commerce/trading flags retain
 their inherited values. The review uses Studio memory profiles.
 
 The builder produces SHA-256
-`64cdcb4ab39ef0d0ea20aa4e6b53ef545869b79d031e0eeded0ccf85b6056c60`.
-The locally opened `AG72-PhaseA-Final.rbxlx` is a byte-identical convenience copy.
+`2b2bc3256660873d586df66339bcd0cb0e8d584029171ecc88ff572478ad9577`.
+The locally opened `AG72-PhaseA-R1-Final.rbxlx` is a byte-identical convenience copy.
 
 In the **client** command bar during Play, set one of these workspace attributes:
 
@@ -89,10 +89,42 @@ flowers, rocks, paths, sky/weather owner, ridge/fence safety and all six pilot
 
 ## Evidence and limits
 
+### R1: full viewport backdrop and input shield
+
+The owner's 2026-11-14 correction continues from PR #47 at
+`ba4df895c0ed6939d61380a285a144e4b73d8d8d`. The backdrop previously inherited
+the card content's safe-area bounds, leaving the top strip and phone edges
+undimmed. The same existing ScreenGui now covers the full viewport while the
+cards retain the CoreUI safe-area layout. A modal, active backdrop and the
+existing focus input sink prevent background clicks, touches and gameplay
+shortcuts. Clicking outside the cards does not dismiss the layer. Roblox's
+system menu remains available.
+
+The current [desktop capture](evidence/ag72/r1/cards-desktop.jpg),
+[phone-landscape capture](evidence/ag72/r1/cards-mobile-landscape.jpg),
+[native assertion log](evidence/ag72/r1/studio-observations.log) and
+[hash receipt](evidence/ag72/r1/manifest.json) correspond to the R1 build above.
+In ordinary F5 on that build, assertions verified full-viewport backdrop bounds
+and safe-content bounds on desktop and the iPhone 17 Pro landscape emulator.
+Actual native clicks in the previously uncovered areas and a gameplay shortcut
+did not reach a lower-priority gameplay input observer. The observer received
+input again after OFF. Three OFF/on cycles restored ScreenInsets,
+ClipToDeviceSafeArea and SafeAreaCompatibility, and removed the input binding.
+The temporary diagnostic bindings were removed after verification.
+
+This is a correction to the static Phase A review, not a functional starter
+selection. Dismissal after a server-confirmed grant remains Phase B. No server,
+economy, save or ordinary production UI code changed.
+
+### Original Phase A evidence (before R1)
+
 Native Studio captures and their receipt are in `docs/evidence/ag72/`.
 They are unmodified captures of the actual local game with a deliberately
 static QA overlay, not generated gameplay images. Phone frames are the Studio
 iPhone 17 Pro landscape emulator, not evidence from a physical phone.
+These original captures use build SHA-256
+`64cdcb4ab39ef0d0ea20aa4e6b53ef545869b79d031e0eeded0ccf85b6056c60`;
+the R1 captures above supersede their backdrop coverage.
 
 | Review | Desktop | Phone landscape |
 | --- | --- | --- |
@@ -110,6 +142,9 @@ The session log also contains an asset-type error for unrelated ID `203785492`,
 a `CloudsUpsampleNoHistoryFS` shader warning, and the disconnected Rojo plugin's
 localhost retries. The three approved portraits rendered. These broader Studio
 warnings were not fixed or certified resolved by this static design task.
+The R1 session additionally logged local-file asset resolution requests without
+a PlaceId and Roblox social/chat HTTP errors. Native R1 geometry/input/restore
+assertions passed; this scoped fix does not certify those unrelated services.
 
 The inherited CLI suite, ordinary build, repeat review build and platform CI
 are reported separately in the Draft PR. This design review is not full-game

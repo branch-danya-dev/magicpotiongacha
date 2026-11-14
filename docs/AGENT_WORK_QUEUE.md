@@ -33,6 +33,11 @@ are recorded in [the review](AG72_DESIGN_REVIEW.md). Three OFF/on cycles restore
 950 plot parts' parents and collision/touch/query flags. Inherited 1321 Luau +
 14 Node tests pass; exact-head CI/build receipts are in the stacked Draft PR.
 STOP for owner art review; no Phase B grant/range/input implementation yet.
+R1 owner correction, 2026-11-14: continue from PR #47
+`ba4df895c0ed6939d61380a285a144e4b73d8d8d`; cover the entire viewport with
+the backdrop and block underlying gameplay throughout the static chooser.
+Keep card content inside safe insets; restore original GUI properties on OFF.
+This correction is not visual approval or authorization to grant a starter.
 
 ### AG-71 — Arcane Arcade HUD + Storybook UI (Issue #44)
 

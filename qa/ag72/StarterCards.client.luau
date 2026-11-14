@@ -6,6 +6,7 @@ if not Run:IsStudio() then return end
 local Players=game:GetService("Players")
 local CAS=game:GetService("ContextActionService")
 local Prompts=game:GetService("ProximityPromptService")
+local GuiService=game:GetService("GuiService")
 local Shared=game.ReplicatedStorage:WaitForChild("PotionTycoon"):WaitForChild("Shared")
 local Config=require(Shared.Config)
 local Atlas=require(Shared.ui.ArcadeAssets)
@@ -25,10 +26,18 @@ local savedCamera={kind=camera.CameraType,cf=camera.CFrame,fov=camera.FieldOfVie
 local savedMotion=Controller.reduceMotion
 local savedPrompts=Prompts.Enabled
 local savedEnvironment={}
+local savedGui={}
 local hidden,alpha,ui,physical={}, {}, {}, {}
-local root=Instance.new("Frame"); root.Name="AG72DesignReview"; root.Size=UDim2.fromScale(1,1)
-root.BackgroundTransparency=1; root.ZIndex=100; root.Parent=gui
-root:SetAttribute("Phase","A_STATIC_NO_GRANT")
+-- Backdrop and input shield cover the viewport; only card content uses safe insets.
+local layer=Instance.new("Frame"); layer.Name="AG72DesignReview"; layer.Size=UDim2.fromScale(1,1)
+layer.BackgroundTransparency=1; layer.ZIndex=100; layer.Active=true; layer.Parent=gui
+layer:SetAttribute("Phase","A_STATIC_NO_GRANT")
+local backdrop=Instance.new("TextButton"); backdrop.Name="Backdrop"; backdrop.Size=UDim2.fromScale(1,1)
+backdrop.BackgroundColor3=Color3.fromRGB(12,18,29); backdrop.BackgroundTransparency=.38; backdrop.BorderSizePixel=0
+backdrop.Text=""; backdrop.AutoButtonColor=false; backdrop.Active=true; backdrop.Selectable=false; backdrop.Modal=true
+backdrop.ZIndex=101; backdrop.Parent=layer
+local root=Instance.new("Frame"); root.Name="SafeContent"; root.BackgroundTransparency=1
+root.ZIndex=102; root.Parent=layer
 local running=false
 local function stash(o)
  if o and o.Parent and not hidden[o] then hidden[o]=o.Parent; o.Parent=nil end
@@ -39,6 +48,9 @@ end
 local function focus()
  savedCamera={kind=camera.CameraType,cf=camera.CFrame,fov=camera.FieldOfView}
  savedMotion=Controller.reduceMotion; savedPrompts=Prompts.Enabled
+ savedGui={insets=gui.ScreenInsets,clip=gui.ClipToDeviceSafeArea,compatibility=gui.SafeAreaCompatibility,selected=GuiService.SelectedObject}
+ gui.ScreenInsets=Enum.ScreenInsets.None; gui.ClipToDeviceSafeArea=false
+ gui.SafeAreaCompatibility=Enum.SafeAreaCompatibility.None; GuiService.SelectedObject=nil
  savedEnvironment={pose=Controller.view.pose,hour=Controller.view.clockHour,weather=Controller.view.weather,preview=Controller.view.previewStart~=nil}
  -- Remove whole inert presentations from the local world, preserving instances
  -- and their original parents. Server FirstSessionReveal stays authoritative.
@@ -55,13 +67,15 @@ local function focus()
  stash(world:FindFirstChild("TradePost"))
  stash(workspace:FindFirstChild("FarmAffordance"))
  if player.Character then for _,o in ipairs(player.Character:GetDescendants()) do invisible(o) end end
- for _,o in ipairs(gui:GetChildren()) do if o:IsA("GuiObject") and o~=root then
+ for _,o in ipairs(gui:GetChildren()) do if o:IsA("GuiObject") and o~=layer then
   ui[o]=o.Visible; o.Visible=false
  end end
  Prompts.Enabled=false; controls:Disable()
  CAS:BindActionAtPriority("AG72StaticReviewInput",function() return Enum.ContextActionResult.Sink end,false,5000,
   Enum.UserInputType.MouseButton1,Enum.UserInputType.MouseButton2,Enum.UserInputType.Touch,
-  Enum.KeyCode.E,Enum.KeyCode.F,Enum.KeyCode.Space,Enum.KeyCode.ButtonA,Enum.KeyCode.ButtonX)
+  Enum.KeyCode.E,Enum.KeyCode.F,Enum.KeyCode.X,Enum.KeyCode.Space,Enum.KeyCode.ButtonA,Enum.KeyCode.ButtonB,Enum.KeyCode.ButtonX,Enum.KeyCode.ButtonY,Enum.KeyCode.ButtonR1,
+  Enum.KeyCode.M,Enum.KeyCode.I,Enum.KeyCode.P,Enum.KeyCode.DPadLeft,Enum.KeyCode.DPadRight,Enum.KeyCode.DPadUp,Enum.KeyCode.DPadDown,
+  Enum.KeyCode.W,Enum.KeyCode.A,Enum.KeyCode.S,Enum.KeyCode.D,Enum.KeyCode.Up,Enum.KeyCode.Down,Enum.KeyCode.Left,Enum.KeyCode.Right)
  Controller.setReduceMotion(true); Controller.view.setPreview(false); Controller.view.setPose("day")
  camera.CameraType=Enum.CameraType.Scriptable; camera.FieldOfView=49
  camera.CFrame=CFrame.lookAt(crystal.Position+Vector3.new(18,9,29),crystal.Position+Vector3.new(0,1,0))
@@ -71,6 +85,8 @@ local function restore()
  for o,value in pairs(alpha) do if o.Parent then o.LocalTransparencyModifier=value end end; table.clear(alpha)
  for o,value in pairs(physical) do if o.Parent then o.CanCollide=value[1]; o.CanTouch=value[2]; o.CanQuery=value[3] end end; table.clear(physical)
  for o,value in pairs(ui) do if o.Parent then o.Visible=value end end; table.clear(ui)
+ gui.ScreenInsets=savedGui.insets; gui.ClipToDeviceSafeArea=savedGui.clip; gui.SafeAreaCompatibility=savedGui.compatibility
+ if savedGui.selected and savedGui.selected.Parent then GuiService.SelectedObject=savedGui.selected end
  Prompts.Enabled=savedPrompts; controls:Enable(); CAS:UnbindAction("AG72StaticReviewInput")
  Controller.setReduceMotion(savedMotion==true); Controller.view.setPose(savedEnvironment.pose)
  if savedEnvironment.hour~=nil then Controller.view.setTime(savedEnvironment.hour) end
@@ -105,14 +121,16 @@ end
 local function rebuild()
  for _,o in ipairs(root:GetChildren()) do o:Destroy() end
  local pose=workspace:GetAttribute("AG72DesignPose") or "cards"
- if pose=="off" then if running then running=false; restore() end; root.Visible=false; return end
+ if pose=="off" then if running then running=false; restore() end; layer.Visible=false; return end
  if not running then running=true; focus() end
- root.Visible=true
- local w,h=root.AbsoluteSize.X,root.AbsoluteSize.Y; if w<1 or h<1 then return end
- root:SetAttribute("Pose",pose)
+ layer.Visible=true; backdrop.Visible=pose~="scene"
+ local safe=GuiService:GetInsetArea(Enum.ScreenInsets.CoreUISafeInsets)
+ local offset=safe.Min-layer.AbsolutePosition
+ root.Position=UDim2.fromOffset(offset.X,offset.Y); root.Size=UDim2.fromOffset(safe.Width,safe.Height)
+ local w,h=safe.Width,safe.Height; if w<1 or h<1 then return end
+ layer:SetAttribute("Pose",pose)
  label(root,"AG-72 · ХУДОЖЕСТВЕННЫЙ МАКЕТ · ВЫДАЧА НЕ ПОДКЛЮЧЕНА",0,h-20,w,18,10,muted)
  if pose=="scene" then return end
- local scrim=frame(root,"Backdrop",0,0,w,h,C(12,18,29),.38); scrim.Active=true
  local compact=h<440; local narrow=w<h
  local selected=workspace:GetAttribute("AG72DesignSelected") or "farmer"
  local confirmation=pose=="confirm"
@@ -166,15 +184,16 @@ local function rebuild()
  print("AG72 DESIGN",pose,selected,w,h,"STATIC / NO GRANT")
 end
 local connections={}
-table.insert(connections,root:GetPropertyChangedSignal("AbsoluteSize"):Connect(rebuild))
+table.insert(connections,layer:GetPropertyChangedSignal("AbsoluteSize"):Connect(rebuild))
+table.insert(connections,GuiService:GetPropertyChangedSignal("TopbarInset"):Connect(rebuild))
 for _,key in ipairs({"AG72DesignPose","AG72DesignSelected"}) do table.insert(connections,workspace:GetAttributeChangedSignal(key):Connect(rebuild)) end
 -- Keep only the review layer visible while the inherited snapshot UI updates.
 table.insert(connections,Run.RenderStepped:Connect(function()
  if not running then return end
- for _,o in ipairs(gui:GetChildren()) do if o:IsA("GuiObject") and o~=root then
+ for _,o in ipairs(gui:GetChildren()) do if o:IsA("GuiObject") and o~=layer then
   if ui[o]==nil then ui[o]=o.Visible end; o.Visible=false
  end end
  camera.CameraType=Enum.CameraType.Scriptable
 end))
-script.Destroying:Connect(function() for _,c in ipairs(connections) do c:Disconnect() end; if running then restore() end; root:Destroy() end)
+script.Destroying:Connect(function() for _,c in ipairs(connections) do c:Disconnect() end; if running then restore() end; layer:Destroy() end)
 rebuild()

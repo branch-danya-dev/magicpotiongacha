@@ -1,0 +1,39 @@
+{
+  "task": "AG72 Phase A R1 — full-viewport backdrop and input blocking",
+  "correctionBase": "ba4df895c0ed6939d61380a285a144e4b73d8d8d",
+  "stackedBase": "8dc804ab33e3f9d052dc4d15a97d90b3cd46a02b",
+  "capturedReviewBuildSha256": "2b2bc3256660873d586df66339bcd0cb0e8d584029171ecc88ff572478ad9577",
+  "sources": {
+    "qa/ag72/StarterCards.client.luau": "3b95058cdc580bc3d22b65bbccc4a7e0b88cafa606bca164953df50f627f616b",
+    "scripts/build-ag72-design.mjs": "110e503154802e00cc39241c8464ef67d4651fbf6d5c56e7cdda55b3852ed470"
+  },
+  "studio": "0.747.0.7471481",
+  "evidenceKind": "Unmodified native Studio window captures and filtered native assertion results; static QA layer, no starter grant",
+  "files": {
+    "cards-desktop.jpg": {
+      "sha256": "4911dd9e3c87a35e1e6700695bf100a045474d3e95c14bf38f554f1ff59bc1c5",
+      "bytes": 404115
+    },
+    "cards-mobile-landscape.jpg": {
+      "sha256": "554740fa78ccabaf1dcf95daa88b7990a7758719bf347e84526942fee4d1b40b",
+      "bytes": 278657
+    },
+    "studio-observations.log": {
+      "sha256": "c046e96b9de236365e2e7959bba70cb1f2777865312fbb37df532d5b19c37e36",
+      "bytes": 1124
+    }
+  },
+  "nativeResults": {
+    "fullViewportAndSafeContent": "PASS desktop and iPhone 17 Pro landscape emulator",
+    "backgroundInput": "PASS native edge clicks and M; lower-priority observer received zero inputs while active",
+    "inputRestoration": "PASS lower-priority observer received two native inputs after OFF",
+    "guiRestoration": "PASS three OFF/on cycles restored all three saved ScreenGui properties and removed focus binding",
+    "phoneLandscapeInput": "PASS native emulator edge clicks did not reach lower-priority observer",
+    "diagnosticCleanup": "Temporary observer removed; preview left open in desktop cards pose",
+    "artApproval": "PENDING",
+    "phaseB": "NOT STARTED",
+    "realPhone": "NOT RUN",
+    "multiClient": "NOT RUN",
+    "liveBackend": "NOT RUN"
+  }
+}
