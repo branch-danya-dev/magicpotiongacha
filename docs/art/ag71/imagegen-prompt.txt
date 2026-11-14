@@ -1,0 +1,15 @@
+Create an original professional game UI illustration atlas, 4 columns by 3 rows, square canvas. Exactly 12 isolated icons, each centered in one equally sized square cell, with ample transparent padding in each cell. Actual transparent background, no contact sheet lines, no text, no labels, no watermark. Each icon must occupy about 65 percent of its cell width/height, never cross cell edges. View all symbols straight-on, consistent scale and tactile hand-painted 2.5D fantasy arcade art, clean bold silhouettes readable at 32 pixels, softly beveled shapes and ink-dark edges, delicate gold/ivory highlights, restrained cyan/lilac magic, no realistic textures or noisy glow. NOT emoji, not monochrome wireframe, not SaaS symbols.
+Order is essential:
+row 1 column 1: one warm gold coin with an embossed small four-point alchemist star;
+row 1 column 2: a luminous lilac-to-cyan Essence flame with a small white inner spark;
+row 1 column 3: open ivory-page grimoire with violet leather cover, gold corner fittings and cyan bookmark;
+row 1 column 4: adorable round forest owl, cream face, sage-green feathers, tiny leaf crest, large amber eyes, full portrait including wings.
+row 2 column 1: adorable pointed-ear midnight-purple magic cat with gold eyes, sitting portrait, tiny crescent collar;
+row 2 column 2: cute translucent emerald-green slime with rounded silhouette, large friendly eyes and small leaf tip;
+row 2 column 3: squat purple iron cauldron with lilac potion and one soft vapor curl;
+row 2 column 4: glass alchemy flask containing turquoise liquid, brass stopper and a tiny violet stopper gem.
+row 3 column 1: small violet velvet merchant pouch with gold drawstring and single coin;
+row 3 column 2: lavender gift box with gold ribbon and a tiny cyan star;
+row 3 column 3: tactile bronze settings cog with a purple central gemstone;
+row 3 column 4: a small four-point cyan/gold arcane compass medallion for the secondary menu.
+All assets original. Cohesive Arcane Arcade / illustrated Storybook game vocabulary. No copyrighted game imagery. Keep all 12 separate on transparent pixels.

@@ -16,6 +16,22 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### AG-71 — Arcane Arcade HUD + Storybook UI (Issue #44)
+
+**PHASE A DELIVERED / OWNER DESIGN GATE OPEN / PHASE B NOT STARTED.**
+Claimed by Codex on 2026-11-14 as the only current task. Clean base: Draft PR #43
+`c8b546bc1734cc435159cfa6b1122f9a23b806a5`, Windows/Ubuntu CI 43596253360 PASS.
+Branch: `feat/ag71-ui-art-concepts`. Scope: two 844x390 design compositions,
+four states each, review PNGs and art direction only. No runtime/UI/economy,
+schema, remotes, assets admitted to Roblox, release flags, merge or publication.
+Backdrop: existing ordinary Play evidence from AG70 R2, exact source/crop and
+asset hashes recorded in docs/art/ag71/manifest.json; not a new R3 Studio claim.
+Eight 844x390 PNGs, two review boards, original concept atlas and editable HTML
+are delivered with [art direction](AG71_UI_ART_DIRECTION.md). HTML geometry audit
+passes 44px targets, safe edges and touch reserves; native device QA NOT RUN.
+Final SHA/inherited checks are recorded in the separate Draft PR. STOP for the
+owner's A/B selection or corrections; no Phase B implementation is authorized.
+
 ### AG-70 — Arcane Forest 2.1 (Issue #41)
 
 **R3 CODE_CANDIDATE, 2026-11-14:** continued as the only task from clean CI-green
