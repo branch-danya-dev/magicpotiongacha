@@ -1,0 +1,56 @@
+{
+  "task": "AG72 Phase A",
+  "base": "8dc804ab33e3f9d052dc4d15a97d90b3cd46a02b",
+  "capturedReviewBuildSha256": "64cdcb4ab39ef0d0ea20aa4e6b53ef545869b79d031e0eeded0ccf85b6056c60",
+  "sources": {
+    "qa/ag72/StarterCards.client.luau": "f652d1675b1694012b9173485c85f930ca0f2b4d241a31b546dbe0ee64b9bdb5",
+    "scripts/build-ag72-design.mjs": "110e503154802e00cc39241c8464ef67d4651fbf6d5c56e7cdda55b3852ed470"
+  },
+  "studio": "0.747.0.7471481",
+  "evidenceKind": "Unmodified native Studio window captures, static QA overlay; no gameplay grant",
+  "files": {
+    "base-scene-inventory.log": {
+      "sha256": "4bac4be93b7f53489b4dac3791359bf087020050df8534603a0c60da039acd70",
+      "bytes": 8344
+    },
+    "cards-desktop.jpg": {
+      "sha256": "1c3cafbbb0af8953862c8cf257757a9f736764a322b652e77d8097e60918c503",
+      "bytes": 336798
+    },
+    "cards-mobile-landscape.jpg": {
+      "sha256": "321e2105e584f26d7bbe8e81001d2b296e25791b9f330b300a621db5ad5b9a52",
+      "bytes": 273614
+    },
+    "confirm-desktop.jpg": {
+      "sha256": "2cc3d4d47b62a37e29108318f77a12ba128b474cb087785e981ec0b5b2a4b8a2",
+      "bytes": 401840
+    },
+    "confirm-mobile-landscape.jpg": {
+      "sha256": "e217d51047e9ae3d7bedd71b1e52bcd7df29b559cf23392cd8af64edc524671d",
+      "bytes": 274944
+    },
+    "scene-desktop.jpg": {
+      "sha256": "05b2490b8b49efe64facb5a86d9db5d96deb39975bba0bd1f65981d82df3809f",
+      "bytes": 564289
+    },
+    "scene-mobile-landscape.jpg": {
+      "sha256": "2253982ccb36ccfac661cf682c6d4c2746bd48471d5bf9137c5d1b603b3a9095",
+      "bytes": 302592
+    },
+    "studio-observations.log": {
+      "sha256": "3a47fd57d80974012a9d48315fe5b2b471df4f1b47554ecca1e7d6a57fd8ee8f",
+      "bytes": 1597
+    }
+  },
+  "nativeResults": {
+    "desktop": "PASS static presentation",
+    "phoneLandscape": "PASS Studio emulator only",
+    "reduceMotion": "Static poses",
+    "restoration": "PASS 950 parts, 3 cycles",
+    "artApproval": "PENDING",
+    "phaseB": "NOT STARTED",
+    "realPhone": "NOT RUN",
+    "multiClient": "NOT RUN",
+    "liveBackend": "NOT RUN"
+  }
+}

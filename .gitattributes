@@ -28,3 +28,6 @@ docs/evidence/ag69-r1/** -text whitespace=cr-at-eol,-blank-at-eol
 docs/evidence/ag70/** -text whitespace=cr-at-eol,-blank-at-eol
 # Keep AG71 concept manifest hashes identical on Windows and Ubuntu checkouts.
 docs/art/ag71/** -text
+qa/ag72/** text eol=lf
+scripts/build-ag72-design.mjs text eol=lf
+docs/evidence/ag72/** -text
