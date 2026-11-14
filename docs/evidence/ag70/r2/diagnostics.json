@@ -1,0 +1,10 @@
+{
+  "skySunMoonFailures": 0,
+  "otherObservedWarnings": [
+    "Local PlaceId=0 hashed asset requests: Request must have a PlaceId set (10 at startup).",
+    "Inherited/native asset 203785492: requested asset type mismatch (2 at startup).",
+    "Graphics5: CloudsUpsampleNoHistoryFS is not available (1).",
+    "Rojo plugin reconnect attempts fail while no serve process runs."
+  ],
+  "scope": "Not a zero-all-Studio-warnings claim; AG69 celestial failures absent. No source cause assumed for unrelated native warnings."
+}

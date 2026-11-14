@@ -1,0 +1,454 @@
+{
+  "status": "INTERMEDIATE iteration3 after repaired celestial base; not final art",
+  "baseSha": "6467bfd9b024dbf618496ca2901f5b6cac20abb1",
+  "runtimeSourceSha": "a609e1253c272f8f67ae12c321607802c9aedf87",
+  "build": {
+    "path": "build/AG70-R1-Review.rbxlx",
+    "sha256": "7929d30cd4de71589ef4af99450c606275f4ee30b9f731f869b64c7fe3ad4e5f"
+  },
+  "studio": "0.747.0.7471481",
+  "native": true,
+  "generatedOrRetouched": false,
+  "captures": [
+    {
+      "index": 1,
+      "reduceMotion": true,
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "camera": "near",
+      "name": "day-reduced-near-OFF",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "OFF",
+      "pose": "day",
+      "quality": "reduced"
+    },
+    {
+      "index": 2,
+      "reduceMotion": true,
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "camera": "near",
+      "name": "day-reduced-near-AG70",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "AG70",
+      "pose": "day",
+      "quality": "reduced"
+    },
+    {
+      "index": 3,
+      "reduceMotion": true,
+      "cframe": [
+        -119.5,
+        17,
+        -36,
+        0.8555001020431519,
+        -0.1350470334291458,
+        0.49988189339637756,
+        0,
+        0.965390682220459,
+        0.26080793142318726,
+        -0.5178026556968689,
+        -0.22312121093273163,
+        0.8258918523788452
+      ],
+      "camera": "wide",
+      "name": "day-reduced-wide-OFF",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "OFF",
+      "pose": "day",
+      "quality": "reduced"
+    },
+    {
+      "index": 4,
+      "reduceMotion": true,
+      "cframe": [
+        -119.5,
+        17,
+        -36,
+        0.8555001020431519,
+        -0.1350470334291458,
+        0.49988189339637756,
+        0,
+        0.965390682220459,
+        0.26080793142318726,
+        -0.5178026556968689,
+        -0.22312121093273163,
+        0.8258918523788452
+      ],
+      "camera": "wide",
+      "name": "day-reduced-wide-AG70",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "AG70",
+      "pose": "day",
+      "quality": "reduced"
+    },
+    {
+      "index": 5,
+      "reduceMotion": true,
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "camera": "near",
+      "name": "day-full-near-OFF",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "OFF",
+      "pose": "day",
+      "quality": "full"
+    },
+    {
+      "index": 6,
+      "reduceMotion": true,
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "camera": "near",
+      "name": "day-full-near-AG70",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "AG70",
+      "pose": "day",
+      "quality": "full"
+    },
+    {
+      "index": 7,
+      "reduceMotion": true,
+      "cframe": [
+        -119.5,
+        17,
+        -36,
+        0.8555001020431519,
+        -0.1350470334291458,
+        0.49988189339637756,
+        0,
+        0.965390682220459,
+        0.26080793142318726,
+        -0.5178026556968689,
+        -0.22312121093273163,
+        0.8258918523788452
+      ],
+      "camera": "wide",
+      "name": "day-full-wide-OFF",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "OFF",
+      "pose": "day",
+      "quality": "full"
+    },
+    {
+      "index": 8,
+      "reduceMotion": true,
+      "cframe": [
+        -119.5,
+        17,
+        -36,
+        0.8555001020431519,
+        -0.1350470334291458,
+        0.49988189339637756,
+        0,
+        0.965390682220459,
+        0.26080793142318726,
+        -0.5178026556968689,
+        -0.22312121093273163,
+        0.8258918523788452
+      ],
+      "camera": "wide",
+      "name": "day-full-wide-AG70",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "AG70",
+      "pose": "day",
+      "quality": "full"
+    },
+    {
+      "index": 9,
+      "reduceMotion": true,
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "camera": "near",
+      "name": "sunset-reduced-near-OFF",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "OFF",
+      "pose": "sunset",
+      "quality": "reduced"
+    },
+    {
+      "index": 10,
+      "reduceMotion": true,
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "camera": "near",
+      "name": "sunset-reduced-near-AG70",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "AG70",
+      "pose": "sunset",
+      "quality": "reduced"
+    },
+    {
+      "index": 11,
+      "reduceMotion": true,
+      "cframe": [
+        -119.5,
+        17,
+        -36,
+        0.8555001020431519,
+        -0.1350470334291458,
+        0.49988189339637756,
+        0,
+        0.965390682220459,
+        0.26080793142318726,
+        -0.5178026556968689,
+        -0.22312121093273163,
+        0.8258918523788452
+      ],
+      "camera": "wide",
+      "name": "sunset-reduced-wide-OFF",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "OFF",
+      "pose": "sunset",
+      "quality": "reduced"
+    },
+    {
+      "index": 12,
+      "reduceMotion": true,
+      "cframe": [
+        -119.5,
+        17,
+        -36,
+        0.8555001020431519,
+        -0.1350470334291458,
+        0.49988189339637756,
+        0,
+        0.965390682220459,
+        0.26080793142318726,
+        -0.5178026556968689,
+        -0.22312121093273163,
+        0.8258918523788452
+      ],
+      "camera": "wide",
+      "name": "sunset-reduced-wide-AG70",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "AG70",
+      "pose": "sunset",
+      "quality": "reduced"
+    }
+  ],
+  "matchedPairs": [
+    {
+      "a": "day-reduced-near-OFF",
+      "b": "day-reduced-near-AG70",
+      "matched": true
+    },
+    {
+      "a": "day-reduced-wide-OFF",
+      "b": "day-reduced-wide-AG70",
+      "matched": true
+    },
+    {
+      "a": "day-full-near-OFF",
+      "b": "day-full-near-AG70",
+      "matched": true
+    },
+    {
+      "a": "day-full-wide-OFF",
+      "b": "day-full-wide-AG70",
+      "matched": true
+    },
+    {
+      "a": "sunset-reduced-near-OFF",
+      "b": "sunset-reduced-near-AG70",
+      "matched": true
+    },
+    {
+      "a": "sunset-reduced-wide-OFF",
+      "b": "sunset-reduced-wide-AG70",
+      "matched": true
+    }
+  ],
+  "files": [
+    {
+      "file": "day-full-near-AG70.jpg",
+      "bytes": 683145,
+      "sha256": "151d5bcacda4575c0d02a1da16fcd49c4dc61c16777a044f97928fb705cc3458"
+    },
+    {
+      "file": "day-full-near-OFF.jpg",
+      "bytes": 663188,
+      "sha256": "8a07f1eeb24ce5986dd6310c5c93a085bb190b061625adf99c8a453b3bd95387"
+    },
+    {
+      "file": "day-full-wide-AG70.jpg",
+      "bytes": 676891,
+      "sha256": "7049132feee599a66c9cb7e6c46c498b144687c73d5ec95149a89583b1a4a8b3"
+    },
+    {
+      "file": "day-full-wide-OFF.jpg",
+      "bytes": 658096,
+      "sha256": "3d517de6d117b672ad72e55afc4fff4c0a757b87c41f2c8c6b79b43622472269"
+    },
+    {
+      "file": "day-reduced-near-AG70.jpg",
+      "bytes": 679268,
+      "sha256": "d9a826963a7af9e3e6eb5d361f071b11293dc3d1429332bbaeb5a8f696bb0128"
+    },
+    {
+      "file": "day-reduced-near-OFF.jpg",
+      "bytes": 659330,
+      "sha256": "8425aaa49400353f83da7b9b31c3e97fa8a3c45ac6c1a1013c7cb778eddab076"
+    },
+    {
+      "file": "day-reduced-wide-AG70.jpg",
+      "bytes": 673683,
+      "sha256": "1f23cf8fcec4243839ae64a4dc40c39a88fc343135a4a0ae019d1701435c0d5b"
+    },
+    {
+      "file": "day-reduced-wide-OFF.jpg",
+      "bytes": 654958,
+      "sha256": "ca6c0f575258cb0de90f7f13fa66d8f0f95991d444b55b65c6f83b9d947a55fc"
+    },
+    {
+      "file": "native-records.json",
+      "bytes": 151084,
+      "sha256": "d6bca8c59df5b01b6929ee6b5e79ce3a38d5e400549f2688c83429e26268dc92"
+    },
+    {
+      "file": "native-session.log",
+      "bytes": 104882,
+      "sha256": "ad3a20fb2ab0a6b110398ffba1404aa883bfa894db58c8355e13ff452e301ba9"
+    },
+    {
+      "file": "sunset-reduced-near-AG70.jpg",
+      "bytes": 470643,
+      "sha256": "b55ba2337c26b64c783e4404edb6c3ba8fc69446feba5e31f8d67ee28d92c19d"
+    },
+    {
+      "file": "sunset-reduced-near-OFF.jpg",
+      "bytes": 548558,
+      "sha256": "c6ba2c82e55a23a0290c14dbcc608c5c464a197abc41d2b755677f1cad3d9fbf"
+    },
+    {
+      "file": "sunset-reduced-wide-AG70.jpg",
+      "bytes": 463255,
+      "sha256": "344a618141d7c32e53d787c828fbf161113a345d4c1dd18189a01b92b14e2b98"
+    },
+    {
+      "file": "sunset-reduced-wide-OFF.jpg",
+      "bytes": 541194,
+      "sha256": "cf4a6aff2609189fbba00c0eafd6f599c44a3f9a55cfbc7504f31cb81676f952"
+    }
+  ]
+}

@@ -1,0 +1,2032 @@
+{
+  "status": "CODE_AND_SCOPED_STUDIO_VERIFIED_ART_OPEN",
+  "baseSha": "6467bfd9b024dbf618496ca2901f5b6cac20abb1",
+  "runtimeSourceSha": "89804f0ea070b3b685a9939b00872fa0b5fe2b55",
+  "build": {
+    "path": "build/AG70-R2-Review.rbxlx",
+    "sha256": "6b70cfe5c65e71127c4f2fd1215c49ff4dc360495d8e44cf29f6db45692236b5"
+  },
+  "studio": "0.747.0.7471481",
+  "native": true,
+  "generatedOrRetouched": false,
+  "captures": [
+    {
+      "index": 1,
+      "reduceMotion": true,
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "camera": "near",
+      "name": "day-reduced-near-OFF",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "OFF",
+      "pose": "day",
+      "quality": "reduced"
+    },
+    {
+      "index": 2,
+      "reduceMotion": true,
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "camera": "near",
+      "name": "day-reduced-near-AG70",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "AG70",
+      "pose": "day",
+      "quality": "reduced"
+    },
+    {
+      "index": 3,
+      "reduceMotion": true,
+      "cframe": [
+        -119.5,
+        17,
+        -36,
+        0.8555001020431519,
+        -0.1350470334291458,
+        0.49988189339637756,
+        0,
+        0.965390682220459,
+        0.26080793142318726,
+        -0.5178026556968689,
+        -0.22312121093273163,
+        0.8258918523788452
+      ],
+      "camera": "wide",
+      "name": "day-reduced-wide-OFF",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "OFF",
+      "pose": "day",
+      "quality": "reduced"
+    },
+    {
+      "index": 4,
+      "reduceMotion": true,
+      "cframe": [
+        -119.5,
+        17,
+        -36,
+        0.8555001020431519,
+        -0.1350470334291458,
+        0.49988189339637756,
+        0,
+        0.965390682220459,
+        0.26080793142318726,
+        -0.5178026556968689,
+        -0.22312121093273163,
+        0.8258918523788452
+      ],
+      "camera": "wide",
+      "name": "day-reduced-wide-AG70",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "AG70",
+      "pose": "day",
+      "quality": "reduced"
+    },
+    {
+      "index": 5,
+      "reduceMotion": true,
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "camera": "near",
+      "name": "day-full-near-OFF",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "OFF",
+      "pose": "day",
+      "quality": "full"
+    },
+    {
+      "index": 6,
+      "reduceMotion": true,
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "camera": "near",
+      "name": "day-full-near-AG70",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "AG70",
+      "pose": "day",
+      "quality": "full"
+    },
+    {
+      "index": 7,
+      "reduceMotion": true,
+      "cframe": [
+        -119.5,
+        17,
+        -36,
+        0.8555001020431519,
+        -0.1350470334291458,
+        0.49988189339637756,
+        0,
+        0.965390682220459,
+        0.26080793142318726,
+        -0.5178026556968689,
+        -0.22312121093273163,
+        0.8258918523788452
+      ],
+      "camera": "wide",
+      "name": "day-full-wide-OFF",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "OFF",
+      "pose": "day",
+      "quality": "full"
+    },
+    {
+      "index": 8,
+      "reduceMotion": true,
+      "cframe": [
+        -119.5,
+        17,
+        -36,
+        0.8555001020431519,
+        -0.1350470334291458,
+        0.49988189339637756,
+        0,
+        0.965390682220459,
+        0.26080793142318726,
+        -0.5178026556968689,
+        -0.22312121093273163,
+        0.8258918523788452
+      ],
+      "camera": "wide",
+      "name": "day-full-wide-AG70",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "AG70",
+      "pose": "day",
+      "quality": "full"
+    },
+    {
+      "index": 9,
+      "reduceMotion": true,
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "camera": "near",
+      "name": "sunset-reduced-near-OFF",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "OFF",
+      "pose": "sunset",
+      "quality": "reduced"
+    },
+    {
+      "index": 10,
+      "reduceMotion": true,
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "camera": "near",
+      "name": "sunset-reduced-near-AG70",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "AG70",
+      "pose": "sunset",
+      "quality": "reduced"
+    },
+    {
+      "index": 11,
+      "reduceMotion": true,
+      "cframe": [
+        -119.5,
+        17,
+        -36,
+        0.8555001020431519,
+        -0.1350470334291458,
+        0.49988189339637756,
+        0,
+        0.965390682220459,
+        0.26080793142318726,
+        -0.5178026556968689,
+        -0.22312121093273163,
+        0.8258918523788452
+      ],
+      "camera": "wide",
+      "name": "sunset-reduced-wide-OFF",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "OFF",
+      "pose": "sunset",
+      "quality": "reduced"
+    },
+    {
+      "index": 12,
+      "reduceMotion": true,
+      "cframe": [
+        -119.5,
+        17,
+        -36,
+        0.8555001020431519,
+        -0.1350470334291458,
+        0.49988189339637756,
+        0,
+        0.965390682220459,
+        0.26080793142318726,
+        -0.5178026556968689,
+        -0.22312121093273163,
+        0.8258918523788452
+      ],
+      "camera": "wide",
+      "name": "sunset-reduced-wide-AG70",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "AG70",
+      "pose": "sunset",
+      "quality": "reduced"
+    },
+    {
+      "index": 13,
+      "reduceMotion": true,
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "camera": "near",
+      "name": "sunset-full-near-OFF",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "OFF",
+      "pose": "sunset",
+      "quality": "full"
+    },
+    {
+      "index": 14,
+      "reduceMotion": true,
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "camera": "near",
+      "name": "sunset-full-near-AG70",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "AG70",
+      "pose": "sunset",
+      "quality": "full"
+    },
+    {
+      "index": 15,
+      "reduceMotion": true,
+      "cframe": [
+        -119.5,
+        17,
+        -36,
+        0.8555001020431519,
+        -0.1350470334291458,
+        0.49988189339637756,
+        0,
+        0.965390682220459,
+        0.26080793142318726,
+        -0.5178026556968689,
+        -0.22312121093273163,
+        0.8258918523788452
+      ],
+      "camera": "wide",
+      "name": "sunset-full-wide-OFF",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "OFF",
+      "pose": "sunset",
+      "quality": "full"
+    },
+    {
+      "index": 16,
+      "reduceMotion": true,
+      "cframe": [
+        -119.5,
+        17,
+        -36,
+        0.8555001020431519,
+        -0.1350470334291458,
+        0.49988189339637756,
+        0,
+        0.965390682220459,
+        0.26080793142318726,
+        -0.5178026556968689,
+        -0.22312121093273163,
+        0.8258918523788452
+      ],
+      "camera": "wide",
+      "name": "sunset-full-wide-AG70",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "AG70",
+      "pose": "sunset",
+      "quality": "full"
+    },
+    {
+      "index": 17,
+      "reduceMotion": true,
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "camera": "near",
+      "name": "night-reduced-near-OFF",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "OFF",
+      "pose": "night",
+      "quality": "reduced"
+    },
+    {
+      "index": 18,
+      "reduceMotion": true,
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "camera": "near",
+      "name": "night-reduced-near-AG70",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "AG70",
+      "pose": "night",
+      "quality": "reduced"
+    },
+    {
+      "index": 19,
+      "reduceMotion": true,
+      "cframe": [
+        -119.5,
+        17,
+        -36,
+        0.8555001020431519,
+        -0.1350470334291458,
+        0.49988189339637756,
+        0,
+        0.965390682220459,
+        0.26080793142318726,
+        -0.5178026556968689,
+        -0.22312121093273163,
+        0.8258918523788452
+      ],
+      "camera": "wide",
+      "name": "night-reduced-wide-OFF",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "OFF",
+      "pose": "night",
+      "quality": "reduced"
+    },
+    {
+      "index": 20,
+      "reduceMotion": true,
+      "cframe": [
+        -119.5,
+        17,
+        -36,
+        0.8555001020431519,
+        -0.1350470334291458,
+        0.49988189339637756,
+        0,
+        0.965390682220459,
+        0.26080793142318726,
+        -0.5178026556968689,
+        -0.22312121093273163,
+        0.8258918523788452
+      ],
+      "camera": "wide",
+      "name": "night-reduced-wide-AG70",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "AG70",
+      "pose": "night",
+      "quality": "reduced"
+    },
+    {
+      "index": 21,
+      "reduceMotion": true,
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "camera": "near",
+      "name": "night-full-near-OFF",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "OFF",
+      "pose": "night",
+      "quality": "full"
+    },
+    {
+      "index": 22,
+      "reduceMotion": true,
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "camera": "near",
+      "name": "night-full-near-AG70",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "AG70",
+      "pose": "night",
+      "quality": "full"
+    },
+    {
+      "index": 23,
+      "reduceMotion": true,
+      "cframe": [
+        -119.5,
+        17,
+        -36,
+        0.8555001020431519,
+        -0.1350470334291458,
+        0.49988189339637756,
+        0,
+        0.965390682220459,
+        0.26080793142318726,
+        -0.5178026556968689,
+        -0.22312121093273163,
+        0.8258918523788452
+      ],
+      "camera": "wide",
+      "name": "night-full-wide-OFF",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "OFF",
+      "pose": "night",
+      "quality": "full"
+    },
+    {
+      "index": 24,
+      "reduceMotion": true,
+      "cframe": [
+        -119.5,
+        17,
+        -36,
+        0.8555001020431519,
+        -0.1350470334291458,
+        0.49988189339637756,
+        0,
+        0.965390682220459,
+        0.26080793142318726,
+        -0.5178026556968689,
+        -0.22312121093273163,
+        0.8258918523788452
+      ],
+      "camera": "wide",
+      "name": "night-full-wide-AG70",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "AG70",
+      "pose": "night",
+      "quality": "full"
+    },
+    {
+      "index": 25,
+      "reduceMotion": true,
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "camera": "near",
+      "name": "rain-reduced-near-OFF",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "OFF",
+      "pose": "rain",
+      "quality": "reduced"
+    },
+    {
+      "index": 26,
+      "reduceMotion": true,
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "camera": "near",
+      "name": "rain-reduced-near-AG70",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "AG70",
+      "pose": "rain",
+      "quality": "reduced"
+    },
+    {
+      "index": 27,
+      "reduceMotion": true,
+      "cframe": [
+        -119.5,
+        17,
+        -36,
+        0.8555001020431519,
+        -0.1350470334291458,
+        0.49988189339637756,
+        0,
+        0.965390682220459,
+        0.26080793142318726,
+        -0.5178026556968689,
+        -0.22312121093273163,
+        0.8258918523788452
+      ],
+      "camera": "wide",
+      "name": "rain-reduced-wide-OFF",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "OFF",
+      "pose": "rain",
+      "quality": "reduced"
+    },
+    {
+      "index": 28,
+      "reduceMotion": true,
+      "cframe": [
+        -119.5,
+        17,
+        -36,
+        0.8555001020431519,
+        -0.1350470334291458,
+        0.49988189339637756,
+        0,
+        0.965390682220459,
+        0.26080793142318726,
+        -0.5178026556968689,
+        -0.22312121093273163,
+        0.8258918523788452
+      ],
+      "camera": "wide",
+      "name": "rain-reduced-wide-AG70",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "AG70",
+      "pose": "rain",
+      "quality": "reduced"
+    },
+    {
+      "index": 29,
+      "reduceMotion": true,
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "camera": "near",
+      "name": "rain-full-near-OFF",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "OFF",
+      "pose": "rain",
+      "quality": "full"
+    },
+    {
+      "index": 30,
+      "reduceMotion": true,
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "camera": "near",
+      "name": "rain-full-near-AG70",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "AG70",
+      "pose": "rain",
+      "quality": "full"
+    },
+    {
+      "index": 31,
+      "reduceMotion": true,
+      "cframe": [
+        -119.5,
+        17,
+        -36,
+        0.8555001020431519,
+        -0.1350470334291458,
+        0.49988189339637756,
+        0,
+        0.965390682220459,
+        0.26080793142318726,
+        -0.5178026556968689,
+        -0.22312121093273163,
+        0.8258918523788452
+      ],
+      "camera": "wide",
+      "name": "rain-full-wide-OFF",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "OFF",
+      "pose": "rain",
+      "quality": "full"
+    },
+    {
+      "index": 32,
+      "reduceMotion": true,
+      "cframe": [
+        -119.5,
+        17,
+        -36,
+        0.8555001020431519,
+        -0.1350470334291458,
+        0.49988189339637756,
+        0,
+        0.965390682220459,
+        0.26080793142318726,
+        -0.5178026556968689,
+        -0.22312121093273163,
+        0.8258918523788452
+      ],
+      "camera": "wide",
+      "name": "rain-full-wide-AG70",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "look": "AG70",
+      "pose": "rain",
+      "quality": "full"
+    },
+    {
+      "sun": [
+        -0.38231831789016724,
+        -0.9229980707168579,
+        0.04367269203066826
+      ],
+      "index": 101,
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "name": "night-minimal-near-motion-true"
+    },
+    {
+      "sun": [
+        -0.9948557615280151,
+        0.09141458570957184,
+        0.04365219548344612
+      ],
+      "index": 102,
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "cframe": [
+        -157.5,
+        13,
+        -89,
+        -0.7071067690849304,
+        0.24951313436031342,
+        -0.661621630191803,
+        0,
+        0.935674250125885,
+        0.3528648614883423,
+        0.7071067690849304,
+        0.24951313436031342,
+        -0.661621630191803
+      ],
+      "name": "sunset-reduced-reverse-motion-true"
+    },
+    {
+      "sun": [
+        -0.38231831789016724,
+        -0.9229980707168579,
+        0.04367269203066826
+      ],
+      "index": 103,
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "cframe": [
+        -157.5,
+        13,
+        -89,
+        -0.7071067690849304,
+        0.24951313436031342,
+        -0.661621630191803,
+        0,
+        0.935674250125885,
+        0.3528648614883423,
+        0.7071067690849304,
+        0.24951313436031342,
+        -0.661621630191803
+      ],
+      "name": "night-reduced-reverse-motion-true"
+    },
+    {
+      "sun": [
+        -0.6619343161582947,
+        0.7482902407646179,
+        0.04364236071705818
+      ],
+      "index": 104,
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "name": "afterrain-reduced-near-motion-false"
+    },
+    {
+      "sun": [
+        -0.49511295557022095,
+        0.8677319288253784,
+        0.04363998398184776
+      ],
+      "index": 105,
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "name": "rain-reduced-near-motion-false"
+    },
+    {
+      "camera": "near",
+      "name": "graphics5-night-full",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "graphics": "Enum.QualityLevel.Level05",
+      "index": 201
+    },
+    {
+      "camera": "near",
+      "name": "graphics5-night-reduced",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "graphics": "Enum.QualityLevel.Level05",
+      "index": 202
+    },
+    {
+      "camera": "near",
+      "name": "graphics5-night-minimal",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "graphics": "Enum.QualityLevel.Level05",
+      "index": 203
+    },
+    {
+      "camera": "near",
+      "name": "graphics5-soft-day",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "graphics": "Enum.QualityLevel.Level05",
+      "index": 204
+    },
+    {
+      "camera": "near",
+      "name": "graphics5-realistic-day",
+      "fov": 65,
+      "viewport": [
+        2113,
+        1115
+      ],
+      "cframe": [
+        -129.5,
+        12,
+        -46,
+        0.9070090055465698,
+        -0.0931238979101181,
+        0.41068562865257263,
+        0,
+        0.9752424955368042,
+        0.22113841772079468,
+        -0.4211113452911377,
+        -0.20057453215122223,
+        0.8845536708831787
+      ],
+      "graphics": "Enum.QualityLevel.Level05",
+      "index": 205
+    }
+  ],
+  "matchedPairs": [
+    {
+      "a": "day-reduced-near-OFF",
+      "b": "day-reduced-near-AG70",
+      "matched": true,
+      "sameTimeWeather": true,
+      "sampleA": {
+        "sample": {
+          "night": 0,
+          "warm": 0,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0,
+          "clock": 13.2,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      },
+      "sampleB": {
+        "sample": {
+          "night": 0,
+          "warm": 0,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0,
+          "clock": 13.2,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      }
+    },
+    {
+      "a": "day-reduced-wide-OFF",
+      "b": "day-reduced-wide-AG70",
+      "matched": true,
+      "sameTimeWeather": true,
+      "sampleA": {
+        "sample": {
+          "night": 0,
+          "warm": 0,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0,
+          "clock": 13.2,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      },
+      "sampleB": {
+        "sample": {
+          "night": 0,
+          "warm": 0,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0,
+          "clock": 13.2,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      }
+    },
+    {
+      "a": "day-full-near-OFF",
+      "b": "day-full-near-AG70",
+      "matched": true,
+      "sameTimeWeather": true,
+      "sampleA": {
+        "sample": {
+          "night": 0,
+          "warm": 0,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0,
+          "clock": 13.2,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      },
+      "sampleB": {
+        "sample": {
+          "night": 0,
+          "warm": 0,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0,
+          "clock": 13.2,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      }
+    },
+    {
+      "a": "day-full-wide-OFF",
+      "b": "day-full-wide-AG70",
+      "matched": true,
+      "sameTimeWeather": true,
+      "sampleA": {
+        "sample": {
+          "night": 0,
+          "warm": 0,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0,
+          "clock": 13.2,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      },
+      "sampleB": {
+        "sample": {
+          "night": 0,
+          "warm": 0,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0,
+          "clock": 13.2,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      }
+    },
+    {
+      "a": "sunset-reduced-near-OFF",
+      "b": "sunset-reduced-near-AG70",
+      "matched": true,
+      "sameTimeWeather": true,
+      "sampleA": {
+        "sample": {
+          "night": 0.08,
+          "warm": 1,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0.3,
+          "clock": 17.65,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      },
+      "sampleB": {
+        "sample": {
+          "night": 0.08,
+          "warm": 1,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0.3,
+          "clock": 17.65,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      }
+    },
+    {
+      "a": "sunset-reduced-wide-OFF",
+      "b": "sunset-reduced-wide-AG70",
+      "matched": true,
+      "sameTimeWeather": true,
+      "sampleA": {
+        "sample": {
+          "night": 0.08,
+          "warm": 1,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0.3,
+          "clock": 17.65,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      },
+      "sampleB": {
+        "sample": {
+          "night": 0.08,
+          "warm": 1,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0.3,
+          "clock": 17.65,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      }
+    },
+    {
+      "a": "sunset-full-near-OFF",
+      "b": "sunset-full-near-AG70",
+      "matched": true,
+      "sameTimeWeather": true,
+      "sampleA": {
+        "sample": {
+          "night": 0.08,
+          "warm": 1,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0.3,
+          "clock": 17.65,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      },
+      "sampleB": {
+        "sample": {
+          "night": 0.08,
+          "warm": 1,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0.3,
+          "clock": 17.65,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      }
+    },
+    {
+      "a": "sunset-full-wide-OFF",
+      "b": "sunset-full-wide-AG70",
+      "matched": true,
+      "sameTimeWeather": true,
+      "sampleA": {
+        "sample": {
+          "night": 0.08,
+          "warm": 1,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0.3,
+          "clock": 17.65,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      },
+      "sampleB": {
+        "sample": {
+          "night": 0.08,
+          "warm": 1,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0.3,
+          "clock": 17.65,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      }
+    },
+    {
+      "a": "night-reduced-near-OFF",
+      "b": "night-reduced-near-AG70",
+      "matched": true,
+      "sameTimeWeather": true,
+      "sampleA": {
+        "sample": {
+          "night": 1,
+          "warm": 0,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0.51,
+          "clock": 22.5,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      },
+      "sampleB": {
+        "sample": {
+          "night": 1,
+          "warm": 0,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0.51,
+          "clock": 22.5,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      }
+    },
+    {
+      "a": "night-reduced-wide-OFF",
+      "b": "night-reduced-wide-AG70",
+      "matched": true,
+      "sameTimeWeather": true,
+      "sampleA": {
+        "sample": {
+          "night": 1,
+          "warm": 0,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0.51,
+          "clock": 22.5,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      },
+      "sampleB": {
+        "sample": {
+          "night": 1,
+          "warm": 0,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0.51,
+          "clock": 22.5,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      }
+    },
+    {
+      "a": "night-full-near-OFF",
+      "b": "night-full-near-AG70",
+      "matched": true,
+      "sameTimeWeather": true,
+      "sampleA": {
+        "sample": {
+          "night": 1,
+          "warm": 0,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0.51,
+          "clock": 22.5,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      },
+      "sampleB": {
+        "sample": {
+          "night": 1,
+          "warm": 0,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0.51,
+          "clock": 22.5,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      }
+    },
+    {
+      "a": "night-full-wide-OFF",
+      "b": "night-full-wide-AG70",
+      "matched": true,
+      "sameTimeWeather": true,
+      "sampleA": {
+        "sample": {
+          "night": 1,
+          "warm": 0,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0.51,
+          "clock": 22.5,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      },
+      "sampleB": {
+        "sample": {
+          "night": 1,
+          "warm": 0,
+          "cloud": 0,
+          "dawn": 0,
+          "phase": 0.51,
+          "clock": 22.5,
+          "afterRain": 0,
+          "rain": 0,
+          "wet": 0
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": false
+      }
+    },
+    {
+      "a": "rain-reduced-near-OFF",
+      "b": "rain-reduced-near-AG70",
+      "matched": true,
+      "sameTimeWeather": true,
+      "sampleA": {
+        "sample": {
+          "night": 0.014032592592592595,
+          "warm": 0.17540740740740743,
+          "cloud": 1,
+          "dawn": 0,
+          "phase": 0.08,
+          "clock": 13.980562962962962,
+          "afterRain": 0,
+          "rain": 1,
+          "wet": 1
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": true
+      },
+      "sampleB": {
+        "sample": {
+          "night": 0.014032592592592595,
+          "warm": 0.17540740740740743,
+          "cloud": 1,
+          "dawn": 0,
+          "phase": 0.08,
+          "clock": 13.980562962962962,
+          "afterRain": 0,
+          "rain": 1,
+          "wet": 1
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": true
+      }
+    },
+    {
+      "a": "rain-reduced-wide-OFF",
+      "b": "rain-reduced-wide-AG70",
+      "matched": true,
+      "sameTimeWeather": true,
+      "sampleA": {
+        "sample": {
+          "night": 0.014032592592592595,
+          "warm": 0.17540740740740743,
+          "cloud": 1,
+          "dawn": 0,
+          "phase": 0.08,
+          "clock": 13.980562962962962,
+          "afterRain": 0,
+          "rain": 1,
+          "wet": 1
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": true
+      },
+      "sampleB": {
+        "sample": {
+          "night": 0.014032592592592595,
+          "warm": 0.17540740740740743,
+          "cloud": 1,
+          "dawn": 0,
+          "phase": 0.08,
+          "clock": 13.980562962962962,
+          "afterRain": 0,
+          "rain": 1,
+          "wet": 1
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": true
+      }
+    },
+    {
+      "a": "rain-full-near-OFF",
+      "b": "rain-full-near-AG70",
+      "matched": true,
+      "sameTimeWeather": true,
+      "sampleA": {
+        "sample": {
+          "night": 0.014032592592592595,
+          "warm": 0.17540740740740743,
+          "cloud": 1,
+          "dawn": 0,
+          "phase": 0.08,
+          "clock": 13.980562962962962,
+          "afterRain": 0,
+          "rain": 1,
+          "wet": 1
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": true
+      },
+      "sampleB": {
+        "sample": {
+          "night": 0.014032592592592595,
+          "warm": 0.17540740740740743,
+          "cloud": 1,
+          "dawn": 0,
+          "phase": 0.08,
+          "clock": 13.980562962962962,
+          "afterRain": 0,
+          "rain": 1,
+          "wet": 1
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": true
+      }
+    },
+    {
+      "a": "rain-full-wide-OFF",
+      "b": "rain-full-wide-AG70",
+      "matched": true,
+      "sameTimeWeather": true,
+      "sampleA": {
+        "sample": {
+          "night": 0.014032592592592595,
+          "warm": 0.17540740740740743,
+          "cloud": 1,
+          "dawn": 0,
+          "phase": 0.08,
+          "clock": 13.980562962962962,
+          "afterRain": 0,
+          "rain": 1,
+          "wet": 1
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": true
+      },
+      "sampleB": {
+        "sample": {
+          "night": 0.014032592592592595,
+          "warm": 0.17540740740740743,
+          "cloud": 1,
+          "dawn": 0,
+          "phase": 0.08,
+          "clock": 13.980562962962962,
+          "afterRain": 0,
+          "rain": 1,
+          "wet": 1
+        },
+        "graphics": "Enum.QualityLevel.Level21",
+        "motion": true,
+        "partial": true
+      }
+    }
+  ],
+  "files": [
+    {
+      "file": "afterrain-reduced-near-motion-false.jpg",
+      "bytes": 671925,
+      "sha256": "72512d3df69d633ba1ae9eab092c0d56645f82187019169a883bd8d869bf6241"
+    },
+    {
+      "file": "day-full-near-AG70.jpg",
+      "bytes": 683998,
+      "sha256": "6a8506493b5b7692eb5fe25e02463d00a7137ad9a2d9afe6302af967cd209837"
+    },
+    {
+      "file": "day-full-near-OFF.jpg",
+      "bytes": 663338,
+      "sha256": "1979af26d4523d1b4a284d4688efb13e11d4e270b31cbb06b372908e0562ba5f"
+    },
+    {
+      "file": "day-full-wide-AG70.jpg",
+      "bytes": 676883,
+      "sha256": "cb64687834ca9ad4ec152304b6e8bcb0d8997004cad655b5e27d0f21dc0f12e8"
+    },
+    {
+      "file": "day-full-wide-OFF.jpg",
+      "bytes": 658020,
+      "sha256": "e2e7f8c192004579013de107a3c2d7be0ba53050af005d8cf54c0bc25fac7328"
+    },
+    {
+      "file": "day-reduced-near-AG70.jpg",
+      "bytes": 679414,
+      "sha256": "4b965921df4bc63787cf76309df4e283fcdb3768bb89c69e3fb7bfd4ab8259d7"
+    },
+    {
+      "file": "day-reduced-near-OFF.jpg",
+      "bytes": 659327,
+      "sha256": "4e75821d5d95addc5e3c557f89d901959cda35d7096ad974733e6f21808a3283"
+    },
+    {
+      "file": "day-reduced-wide-AG70.jpg",
+      "bytes": 673838,
+      "sha256": "6fccf6b1fb574acedf0050a01dc37518a535cd6f23fe2e189fea6e5c98b31f40"
+    },
+    {
+      "file": "day-reduced-wide-OFF.jpg",
+      "bytes": 654969,
+      "sha256": "76e37656240cda5419eeb79dc5e3f269f7a239684623e8cf64877c672b130d75"
+    },
+    {
+      "file": "diagnostics.json",
+      "bytes": 522,
+      "sha256": "a3a24e454b638d90d0034791e22cecb7f21394cd3b3362f1b8790188d804b104"
+    },
+    {
+      "file": "graphics5-night-full.jpg",
+      "bytes": 378017,
+      "sha256": "976d9e8cd07591c7badc71b9099171f48ac1745439a4e9c14b06388a98472ac4"
+    },
+    {
+      "file": "graphics5-night-minimal.jpg",
+      "bytes": 346823,
+      "sha256": "782fd0aa97d4dd36ba97c2ead071efcc3a95eba2153ecad33f0ed0cbd2b5b9c1"
+    },
+    {
+      "file": "graphics5-night-reduced.jpg",
+      "bytes": 364194,
+      "sha256": "8de651b54da02641da9e94b068c18bca8a0ff6f3283c8d8077f14082d2cce908"
+    },
+    {
+      "file": "graphics5-realistic-day.jpg",
+      "bytes": 592269,
+      "sha256": "e8130ff4fe3269507c3f7e5d85da37192448aebc9b770b4a8e974c84348bf42d"
+    },
+    {
+      "file": "graphics5-soft-day.jpg",
+      "bytes": 574498,
+      "sha256": "38709479477078319aaebfde11c44d644f2d003782d983e879969d536657f66d"
+    },
+    {
+      "file": "interaction-key-5.jpg",
+      "bytes": 575935,
+      "sha256": "f034e7e01d2c5947645b0699b116791b6e5d98336f97effa6378ddd34deb0ee4"
+    },
+    {
+      "file": "interaction-mouse-10.jpg",
+      "bytes": 576021,
+      "sha256": "9128586597247f17cdd2c13d3c46edd57ec7526593eec0f699493e360a5674c2"
+    },
+    {
+      "file": "native-records.json",
+      "bytes": 801923,
+      "sha256": "7a5eafc3b1e6d1e99fc13d4b336f538f4a5ee6751a63c7dc35be610936153b43"
+    },
+    {
+      "file": "native-session.log",
+      "bytes": 568480,
+      "sha256": "eed640dfaec44e157387de7450abef31d79acaf009d4a7e9fc5cdfb51c73d9ee"
+    },
+    {
+      "file": "night-full-near-AG70.jpg",
+      "bytes": 408166,
+      "sha256": "937fb9d142983e30fdde42bc3a8bfa2f168ccd8ec85f1bdd0809d022bfcdcf42"
+    },
+    {
+      "file": "night-full-near-OFF.jpg",
+      "bytes": 432579,
+      "sha256": "880c6a361d820c007adf9d13e7f236c1353f9fc05f6aa0a8d1fe2b7b20d6f1f5"
+    },
+    {
+      "file": "night-full-wide-AG70.jpg",
+      "bytes": 437586,
+      "sha256": "58c1149b4a51cb37e2aa7628e44fd08bb3a8f92db0a279b584580e9aeeccade0"
+    },
+    {
+      "file": "night-full-wide-OFF.jpg",
+      "bytes": 446167,
+      "sha256": "00c891bba06adfd491e15b892ea0eb41737de177d1399e95ab5c7dc28f1754fa"
+    },
+    {
+      "file": "night-minimal-near-motion-true.jpg",
+      "bytes": 390105,
+      "sha256": "1f33cc2a527dd39b65e3db1a9fe68c2dc34db91489ba0b3dfe4b0df9be738fdd"
+    },
+    {
+      "file": "night-reduced-near-AG70.jpg",
+      "bytes": 395677,
+      "sha256": "f73f6ffdf4f39859b04451d45250b25867a73699ed33c420cc382f1d4a201f39"
+    },
+    {
+      "file": "night-reduced-near-OFF.jpg",
+      "bytes": 425856,
+      "sha256": "3118a1f6d4614dbef7e4e0e4bd851777080643fdc08a0400ebc18d682f159d8a"
+    },
+    {
+      "file": "night-reduced-reverse-motion-true.jpg",
+      "bytes": 414554,
+      "sha256": "2146e4164336649dc372bf883e5687e256aa64b312a3ad74103dab5c53f7cd3f"
+    },
+    {
+      "file": "night-reduced-wide-AG70.jpg",
+      "bytes": 425055,
+      "sha256": "37def2bd8f6d7ce0087f23d40796b929a69afa9ee29f58550420dc5bdda98c9d"
+    },
+    {
+      "file": "night-reduced-wide-OFF.jpg",
+      "bytes": 439002,
+      "sha256": "09e02c0e374cec3cc95d59ee251a65f6d6eb833e52aefd3b66a925e77bddec0a"
+    },
+    {
+      "file": "performance.json",
+      "bytes": 9473,
+      "sha256": "bf21ccd71e9a75d1c5900c8f2e30632530b3e0a00d4d3992becdac9418c061bc"
+    },
+    {
+      "file": "rain-full-near-AG70.jpg",
+      "bytes": 579856,
+      "sha256": "9a32d0404f924c3d3325693422ab28c8727a6b15f45dbd9f16b5611c1ee60d53"
+    },
+    {
+      "file": "rain-full-near-OFF.jpg",
+      "bytes": 589277,
+      "sha256": "332099765000502d880169993a182f407d534dc3315e0a10fa42e68430e047e8"
+    },
+    {
+      "file": "rain-full-wide-AG70.jpg",
+      "bytes": 575848,
+      "sha256": "37567ef6811ef22443f68e1992f990f30a17b61df2d047143d91d04cefe02947"
+    },
+    {
+      "file": "rain-full-wide-OFF.jpg",
+      "bytes": 584953,
+      "sha256": "01c521db9ccc93aee02681e82d2344e73363b4165239b88a458cece14297ea7f"
+    },
+    {
+      "file": "rain-reduced-near-AG70.jpg",
+      "bytes": 576964,
+      "sha256": "4765263dc9c5795aee6f5e3ae4b91797854b8790b5404a01b10e62a8af0cd54e"
+    },
+    {
+      "file": "rain-reduced-near-motion-false.jpg",
+      "bytes": 577730,
+      "sha256": "be512c5e50df91531139e49ed711c36ebea3ab03076ec4a9903f6e6f67751528"
+    },
+    {
+      "file": "rain-reduced-near-OFF.jpg",
+      "bytes": 587098,
+      "sha256": "05b86dbafc766f27a11be0a1b5ce5ef1cf95618d4a4156c9a9ffbacae2ad11d9"
+    },
+    {
+      "file": "rain-reduced-wide-AG70.jpg",
+      "bytes": 573296,
+      "sha256": "34c3211724bbf1954918b65c987adf4614ad37013cd29770d4ff527d9c31d20d"
+    },
+    {
+      "file": "rain-reduced-wide-OFF.jpg",
+      "bytes": 583390,
+      "sha256": "94f7ac0bbb4428ab3153b6661624f928963a9afb732f796810123292eaf0395b"
+    },
+    {
+      "file": "sunset-full-near-AG70.jpg",
+      "bytes": 488441,
+      "sha256": "f8e57fc64175934877445051ec40c42625d7023e33ea1a218c363fe5d6d33270"
+    },
+    {
+      "file": "sunset-full-near-OFF.jpg",
+      "bytes": 551163,
+      "sha256": "c20f26b397da7f195eda54fbe894689d5974bf008b7b0776e2c911af9f648752"
+    },
+    {
+      "file": "sunset-full-wide-AG70.jpg",
+      "bytes": 494293,
+      "sha256": "9a5677cc550252fa4e11770d592e69412aa517276a0366758754fe41473ee8b4"
+    },
+    {
+      "file": "sunset-full-wide-OFF.jpg",
+      "bytes": 544630,
+      "sha256": "dd1dc6180e38804348aa97792007d7d66b97de68c20367ad71be1175825d8c68"
+    },
+    {
+      "file": "sunset-reduced-near-AG70.jpg",
+      "bytes": 481613,
+      "sha256": "76f42f20990a58915d5022cd8c23e6446597a896031172b4bc2fecc1e5506051"
+    },
+    {
+      "file": "sunset-reduced-near-OFF.jpg",
+      "bytes": 548733,
+      "sha256": "e9b861162e5c66e5b53557aef418c078caa536efbcc06355ee457ecef52cb01b"
+    },
+    {
+      "file": "sunset-reduced-reverse-motion-true.jpg",
+      "bytes": 466870,
+      "sha256": "8d4078310a336df12d23346928ffd9e4f8aa422e00c53bd6ae1c40f8d17fa496"
+    },
+    {
+      "file": "sunset-reduced-wide-AG70.jpg",
+      "bytes": 487451,
+      "sha256": "73cd37a64c6acf2f7676f5e9bf1727d523755052577564d25044e4e42ae1c31e"
+    },
+    {
+      "file": "sunset-reduced-wide-OFF.jpg",
+      "bytes": 542756,
+      "sha256": "c2020bc0e9f1dbd33e3d1eebe1be2cc81ea6d60c3a32816128347f2bc54b1d0d"
+    }
+  ],
+  "ownerAccepted": false,
+  "published": false,
+  "furtherVisualWork": "Stopped at owner instruction; existing evidence retained, no further screenshots/recordings.",
+  "logNote": "Some long STATE lines are truncated by native output. For those, matchedPairs extracts only complete worldLookSample/graphics/reduceMotion fields present verbatim; raw lines remain unmodified.",
+  "localRecordings": "Already recorded before owner stop; kept in ignored build/AG70-R2-local-recordings, not uploaded with PR."
+}

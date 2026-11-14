@@ -18,7 +18,7 @@
 
 ### AG-70 — Arcane Forest 2.1 (Issue #41)
 
-**Статус: IN PROGRESS / AG69-R1 dependency verified; OWNER ART OPEN / NOT PUBLISHED.**
+**Статус: CODE_CANDIDATE / scoped STUDIO VERIFIED; OWNER ART OPEN / NOT PUBLISHED.**
 Владелец: Codex, 2026-11-14. Единственная текущая задача — AG70.
 Ветка `feat/ag70-arcane-forest-art-pass`; база Draft PR #42,
 `6467bfd9b024dbf618496ca2901f5b6cac20abb1`, CI Windows/Ubuntu PASS
@@ -27,9 +27,14 @@
 AG70 перенесён с `b2b2d0b723e9f3a2b98beaf45dcce48859fb8ab6` на исправленную базу.
 Граница: палитра и существующие локальные источники единственного EnvironmentView.
 Экономика, HUD, Spellbook, ассеты и права сохраняются; опубликованный default OFF.
-Повторяются ordinary F5, weather/quality/motion restoration, взаимодействия,
-сравнения и desktop timings. Исторические три итерации и 32 кадра сохранены отдельно.
-Телефоны/мультиклиент и художественная приёмка не закрыты.
+Runtime `89804f0ea070b3b685a9939b00872fa0b5fe2b55`, CI Windows/Ubuntu PASS
+(43591968246). После ремонта выполнены две итерации: 120 переключений по всем
+weather/tier/motion комбинациям, восстановление owner, три fallback, E/mouse +5,
+8 привязок и 12 desktop замеров. 1296 Luau + 14 Node тестов.
+Владелец остановил дальнейшие скриншоты/видео; уже полученные материалы сохранены
+в evidence/ag70/r1 и r2. Phone emulation NOT RUN, реальные телефоны/мультиклиент
+и художественная приёмка открыты. Рябь дорожки graphics5, тёмная одежда ночью
+и перекрытый холмом закат остаются замечаниями. Финальный HEAD/checks — Draft PR #43.
 [Отчёт](AG70_ARCANE_FOREST_ART_PASS.md). Миграции, merge и публикации нет.
 
 ### AG-69 — Восстановление 12 текстур M7 (Issue #40)
