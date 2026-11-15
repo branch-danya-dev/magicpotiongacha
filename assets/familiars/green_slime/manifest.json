@@ -1,0 +1,175 @@
+{
+  "version": 1,
+  "task": "AG-73 / Issue #48",
+  "status": "PHASE_A_CANDIDATE_STUDIO_PLAY_BLOCKED",
+  "baseSha": "8dc804ab33e3f9d052dc4d15a97d90b3cd46a02b",
+  "source": {
+    "provider": "Meshy",
+    "ownerAttestation": {
+      "date": "2026-11-15",
+      "plan": "paid",
+      "ownAccount": true
+    },
+    "taskId": null,
+    "fbxSha256": "f3457fb1081549c6634e844350eb7e6fb24aaed39dc1a8814e28a730b18c9c7f",
+    "issuePngSha256": "0af4adc1a06403bb316b2273217c06e145951eb51c909c32d5259da158148254",
+    "actualPngSha256": "631f17ac3724ab7b689c11c5f038242ca68bb38198058c59ab84cf47337b5805",
+    "pngMatchesEmbeddedFbx": true,
+    "licenseReceipt": "source/PROVENANCE.md"
+  },
+  "recipe": {
+    "blender": "4.5.9 LTS",
+    "buildHash": "8bf95cbd38d1",
+    "entrypoint": "rig_v1/scripts/build_rig.py",
+    "byteIdenticalRebuildPromised": false
+  },
+  "roblox": {
+    "assetIds": [],
+    "uploadPerformed": false,
+    "importerPreview": "PASS",
+    "ordinaryPlay": "BLOCKED_PENDING_OWNER_ART_AND_UPLOAD_APPROVAL"
+  },
+  "ownerArtAcceptance": "PENDING",
+  "files": [
+    {
+      "path": "assets/familiars/green_slime/.gitignore",
+      "bytes": 211,
+      "sha256": "745d6cd68b17f171b8f2b5bc96f4d0e25ca972f8910de8740cb13f217305497c"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/fbx-roundtrip.json",
+      "bytes": 1398,
+      "sha256": "2e766ab4f91fb3c6d640c03ff947343f0fae2ee56324341f143223249e85b89b"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/GreenSlime.png",
+      "bytes": 2836714,
+      "sha256": "631f17ac3724ab7b689c11c5f038242ca68bb38198058c59ab84cf47337b5805"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/GreenSlime_Idle.blend",
+      "bytes": 3953334,
+      "sha256": "b3eb5f083e0a3ed67513326e2a042cc56954127b7313067330682885b97f324d"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/GreenSlime_Idle.fbx",
+      "bytes": 3080444,
+      "sha256": "c8cf7dd72d69f4324ad8fc84f63fa7da7378714a8fabe9d2e4caacaf4b666d6b"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/GreenSlime_Rig.fbx",
+      "bytes": 2983132,
+      "sha256": "5733b4cd61b6c3b0659c9e8264612c327e0646a892f5df89a5730dbb86aeecb2"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/previews/center_compression.png",
+      "bytes": 827154,
+      "sha256": "53a7e6f4063cedb6a2d0e177a18f51323c53e0627d9339d56668903cbe6c4f05"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/previews/edge_test.png",
+      "bytes": 833603,
+      "sha256": "d138ab5385c6850d550d451bb07a895946e74ca0e12e1b6173931500e352f555"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/previews/GreenSlime_Idle.mp4",
+      "bytes": 129473,
+      "sha256": "b8466849249abc8bdbd9b95ff07c4489f25e5e925125c64645cd5cc883167a15"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/previews/head_test.png",
+      "bytes": 828916,
+      "sha256": "457b982867253ce4a7583217ae9590b790aa9c696e9f3bc0cf2a934c310dce3e"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/previews/idle_00.png",
+      "bytes": 829305,
+      "sha256": "13f3727f1b441b54e23fa422331bc14eb3d2a3325147ac80c0a71760afee1d3e"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/previews/idle_24.png",
+      "bytes": 829345,
+      "sha256": "d57fada5aff21c47f4e472890528075f683b4b446a6d3934e27c31c5c9e81372"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/previews/idle_48.png",
+      "bytes": 830135,
+      "sha256": "a63ef29d17a8346e9cba991aad35ddc4f65d59b8b2c16298610f433110abfa62"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/previews/idle_72.png",
+      "bytes": 830000,
+      "sha256": "7ef289eed62c7a247fe7fd27fed2cb4bbbc2396676384e5c8b03b531de1a53be"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/previews/idle_96.png",
+      "bytes": 829305,
+      "sha256": "69a82fefffa8a72684c3fb9973a81beb27d0d36f7db46f9e8e8b850910b28ae8"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/previews/neutral.png",
+      "bytes": 829626,
+      "sha256": "cd1c57a301711f1df175f5464c877f770e9bf07552d4056a08eba09a8c97ed59"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/README.md",
+      "bytes": 6071,
+      "sha256": "3ba4c46f29af5174b4d390b2e1b91338b0828b8354838e6f8b9dfae424a4fe5c"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/scripts/build_rig.py",
+      "bytes": 13272,
+      "sha256": "2b256350d5d0326bdcdb2131fde90c7aa6477014e90eff7c9cbc956390ec5435"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/scripts/inspect_source.py",
+      "bytes": 3049,
+      "sha256": "b81c7f44d13f80054e8e33d24d10cabc891d75048046fe676a021e41b7fb7c16"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/scripts/receipt.py",
+      "bytes": 1965,
+      "sha256": "e2060602c215bb4e266819aae4a65a53aa8ccd93096759207cb9c11d2f379f09"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/scripts/render_idle.py",
+      "bytes": 700,
+      "sha256": "039b359ca3ad26deb32f94fc5aa792fe8c7e92ca8efee5f0afc02df34e1d6624"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/scripts/verify_export.py",
+      "bytes": 3425,
+      "sha256": "525432cf78b1258e0d212a34df4eb5849f9d10ecba582568bfc883e36813d252"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/validation.json",
+      "bytes": 1281,
+      "sha256": "8f65d49873beb179c8c84d961baec691815e0d4c75dc9116a4536568ce7a8459"
+    },
+    {
+      "path": "assets/familiars/green_slime/source/GreenSlime.original.fbx",
+      "bytes": 2950252,
+      "sha256": "f3457fb1081549c6634e844350eb7e6fb24aaed39dc1a8814e28a730b18c9c7f"
+    },
+    {
+      "path": "assets/familiars/green_slime/source/GreenSlime.original.png",
+      "bytes": 2836714,
+      "sha256": "631f17ac3724ab7b689c11c5f038242ca68bb38198058c59ab84cf47337b5805"
+    },
+    {
+      "path": "assets/familiars/green_slime/source/PROVENANCE.md",
+      "bytes": 2417,
+      "sha256": "c089c6d8b8fc10ad786168ef6ea25285d1982f13a65f40455ac97a1d27b9ab49"
+    },
+    {
+      "path": "docs/evidence/ag73/blender-hierarchy.jpg",
+      "bytes": 223706,
+      "sha256": "e17c824862115ca1a953d44c93b76aa9a9926cd2df250e7e923741cb0d3a5e09"
+    },
+    {
+      "path": "docs/evidence/ag73/studio-importer-preview.jpg",
+      "bytes": 62563,
+      "sha256": "6759976a257494af563de108f51d06ad5c24c6f62823257a0be8a52fa01a15d5"
+    }
+  ]
+}

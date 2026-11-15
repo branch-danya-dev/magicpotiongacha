@@ -1,0 +1,6 @@
+# Owner confirmed paid Meshy generation in their own account on 2026-11-15.
+# Keep Blender backups and temporary extracted textures out of the package.
+rig_v1/*.blend1
+rig_v1/*.glb
+rig_v1/*.fbm/
+**/__pycache__/

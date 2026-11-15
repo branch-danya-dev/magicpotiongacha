@@ -52,6 +52,7 @@ run(process.execPath, ['scripts/check-ag68.mjs']);
 run(process.execPath, ['scripts/check-ag69.mjs']);
 run(process.execPath, ['scripts/check-ag70.mjs']);
 run(process.execPath, ['scripts/check-ag71.mjs']);
+run(process.execPath, ['scripts/check-green-slime.mjs']);
 run(process.execPath, ['--test', 'tests/ag69-preflight.test.mjs']);
 run(tool('luau', 'luau-compile'), ['--null', ...all]);
 // Roblox engine scripts require Studio's type environment. The portable domain and

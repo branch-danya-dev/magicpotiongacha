@@ -1,0 +1,44 @@
+{
+  "blender": "4.5.9 LTS",
+  "importedObjects": [
+    {
+      "name": "geometry_0",
+      "type": "MESH"
+    }
+  ],
+  "sourceHashes": {
+    "fbx": "f3457fb1081549c6634e844350eb7e6fb24aaed39dc1a8814e28a730b18c9c7f",
+    "png": "631f17ac3724ab7b689c11c5f038242ca68bb38198058c59ab84cf47337b5805"
+  },
+  "vertices": 1321,
+  "triangles": 2603,
+  "boundaryEdgesPreserved": 35,
+  "boundaryReason": "Two original eye rims; rigid Head influence, no destructive cap/remesh",
+  "bones": [
+    "Root",
+    "Contact",
+    "Body",
+    "Head",
+    "EdgeFL",
+    "EdgeFR",
+    "EdgeBL",
+    "EdgeBR"
+  ],
+  "rootWeightedVertices": 0,
+  "maxInfluences": 4,
+  "uvDigest": "6b35611dc348648f12ac2b9a2cf2827b9233f55d78b481008d758adad4af08ba",
+  "geometryPolicy": "Original vertices/faces/UV unchanged except uniform scale and ground-origin translation",
+  "scale": 3.2,
+  "durationSeconds": 3.2,
+  "fps": 30,
+  "firstFrame": 0,
+  "lastFrame": 96,
+  "loopMaxVertexDelta": 0.0,
+  "loopVelocityStepDelta": 0.0001138006899768513,
+  "minimumGroundClearance": 0.012799999676644802,
+  "maximumVertexTravel": 0.05224832179165678,
+  "maximumEdgeStrain": 0.2853689329039708,
+  "noAnimatedScale": true,
+  "nativeStudio": "NOT RUN",
+  "ownerArtAcceptance": "PENDING"
+}

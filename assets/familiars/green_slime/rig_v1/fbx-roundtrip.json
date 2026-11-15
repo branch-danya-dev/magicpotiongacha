@@ -1,0 +1,71 @@
+{
+  "blender": "4.5.9 LTS",
+  "results": [
+    {
+      "file": "GreenSlime_Rig.fbx",
+      "objects": [
+        [
+          "GreenSlimeRig",
+          "ARMATURE"
+        ],
+        [
+          "GreenSlime",
+          "MESH"
+        ]
+      ],
+      "bones": [
+        "Body",
+        "Contact",
+        "EdgeBL",
+        "EdgeBR",
+        "EdgeFL",
+        "EdgeFR",
+        "Head",
+        "Root"
+      ],
+      "vertices": 1321,
+      "triangles": 2603,
+      "maxWeights": 4,
+      "rootWeights": 0,
+      "textureByteIdentical": true
+    },
+    {
+      "file": "GreenSlime_Idle.fbx",
+      "objects": [
+        [
+          "GreenSlimeRig",
+          "ARMATURE"
+        ],
+        [
+          "GreenSlime",
+          "MESH"
+        ]
+      ],
+      "bones": [
+        "Body",
+        "Contact",
+        "EdgeBL",
+        "EdgeBR",
+        "EdgeFL",
+        "EdgeFR",
+        "Head",
+        "Root"
+      ],
+      "vertices": 1321,
+      "triangles": 2603,
+      "maxWeights": 4,
+      "rootWeights": 0,
+      "textureByteIdentical": true,
+      "action": "GreenSlimeRig|Scene",
+      "range": [
+        1.0,
+        97.0
+      ],
+      "fps": 30,
+      "durationSeconds": 3.2,
+      "loopMaxVertexDelta": 0.0,
+      "quarterCycleTravel": 0.03594535856388053,
+      "minimumGroundClearance": 0.012799851596355438
+    }
+  ]
+}

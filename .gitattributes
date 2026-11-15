@@ -28,3 +28,6 @@ docs/evidence/ag69-r1/** -text whitespace=cr-at-eol,-blank-at-eol
 docs/evidence/ag70/** -text whitespace=cr-at-eol,-blank-at-eol
 # Keep AG71 concept manifest hashes identical on Windows and Ubuntu checkouts.
 docs/art/ag71/** -text
+# AG73 source, exported models, recipes and receipts have byte-level digests.
+assets/familiars/green_slime/** -text whitespace=cr-at-eol
+docs/evidence/ag73/** -text
