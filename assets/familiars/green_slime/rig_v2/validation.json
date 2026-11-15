@@ -1,0 +1,61 @@
+{
+  "blender": "4.5.9 LTS",
+  "sourceBlendSha256": "b3eb5f083e0a3ed67513326e2a042cc56954127b7313067330682885b97f324d",
+  "restRigUvWeightsSignature": "e78f0e1f8f382a1bdb029183d05e9dacc5728836b4d6f504a5e951fc35bf1178",
+  "unchangedFromV1": true,
+  "fps": 30,
+  "crossfadeSeconds": 0.3,
+  "samplesPerSecond": 60,
+  "clips": [
+    {
+      "name": "Idle_Calm",
+      "durationSeconds": 3.6,
+      "frames": 109,
+      "loopMaxVertexDelta": 0.0,
+      "minimumGroundClearance": 0.012799999676644802,
+      "maximumEdgeStrain": 0.2867727408727254,
+      "maximumVertexTravelFromRest": 0.07292745759070095,
+      "halfCycleDisplacement": 0.07445582867869442,
+      "maximumHalfFrameStep": 0.0016106738495840522,
+      "worstEdge": [
+        41.0,
+        326,
+        349
+      ]
+    },
+    {
+      "name": "Idle_Active",
+      "durationSeconds": 3.0,
+      "frames": 91,
+      "loopMaxVertexDelta": 0.0,
+      "minimumGroundClearance": 0.012799999676644802,
+      "maximumEdgeStrain": 0.34126621744495056,
+      "maximumVertexTravelFromRest": 0.10232102292561562,
+      "halfCycleDisplacement": 0.1015569955011843,
+      "maximumHalfFrameStep": 0.00274216897920955,
+      "worstEdge": [
+        66.5,
+        869,
+        870
+      ]
+    },
+    {
+      "name": "Calm_Active_Calm_QA",
+      "durationSeconds": 10.2,
+      "frames": 307,
+      "loopMaxVertexDelta": 0.0,
+      "minimumGroundClearance": 0.012799999676644802,
+      "maximumEdgeStrain": 0.34126621744495056,
+      "maximumVertexTravelFromRest": 0.10232102292561562,
+      "halfCycleDisplacement": 0.10154772713017081,
+      "maximumHalfFrameStep": 0.00274216897920955,
+      "worstEdge": [
+        174.5,
+        869,
+        870
+      ]
+    }
+  ],
+  "ownerArtAcceptance": "PENDING",
+  "studioPlay": "BLOCKED_NO_UPLOAD_APPROVAL"
+}

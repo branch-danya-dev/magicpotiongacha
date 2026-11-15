@@ -1,0 +1,52 @@
+[
+  {
+    "file": "sequence-game.mp4",
+    "frames": 306,
+    "fps": 30.0,
+    "size": [
+      960,
+      540
+    ],
+    "durationSeconds": 10.2
+  },
+  {
+    "file": "sequence-detail.mp4",
+    "frames": 306,
+    "fps": 30.0,
+    "size": [
+      960,
+      540
+    ],
+    "durationSeconds": 10.2
+  },
+  {
+    "file": "calm-game.mp4",
+    "frames": 108,
+    "fps": 30.0,
+    "size": [
+      960,
+      540
+    ],
+    "durationSeconds": 3.6
+  },
+  {
+    "file": "active-game.mp4",
+    "frames": 90,
+    "fps": 30.0,
+    "size": [
+      960,
+      540
+    ],
+    "durationSeconds": 3.0
+  },
+  {
+    "file": "v1-game.mp4",
+    "frames": 96,
+    "fps": 30.0,
+    "size": [
+      960,
+      540
+    ],
+    "durationSeconds": 3.2
+  }
+]

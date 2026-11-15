@@ -1,0 +1,348 @@
+{
+  "version": 2,
+  "task": "AG-73 / Issue #48",
+  "status": "PHASE_A_CANDIDATE_STUDIO_PLAY_BLOCKED",
+  "baseSha": "8dc804ab33e3f9d052dc4d15a97d90b3cd46a02b",
+  "source": {
+    "provider": "Meshy",
+    "ownerAttestation": {
+      "date": "2026-11-15",
+      "plan": "paid",
+      "ownAccount": true
+    },
+    "taskId": null,
+    "fbxSha256": "f3457fb1081549c6634e844350eb7e6fb24aaed39dc1a8814e28a730b18c9c7f",
+    "issuePngSha256": "0af4adc1a06403bb316b2273217c06e145951eb51c909c32d5259da158148254",
+    "actualPngSha256": "631f17ac3724ab7b689c11c5f038242ca68bb38198058c59ab84cf47337b5805",
+    "pngMatchesEmbeddedFbx": true,
+    "licenseReceipt": "source/PROVENANCE.md"
+  },
+  "recipe": {
+    "blender": "4.5.9 LTS",
+    "buildHash": "8bf95cbd38d1",
+    "entrypoint": "rig_v2/scripts/build_idles.py",
+    "byteIdenticalRebuildPromised": false,
+    "unchangedV1Dependency": "rig_v1/GreenSlime_Idle.blend"
+  },
+  "roblox": {
+    "assetIds": [],
+    "uploadPerformed": false,
+    "importerPreview": "V1_ONLY_HISTORICAL_PASS_V2_NOT_RUN",
+    "ordinaryPlay": "BLOCKED_PENDING_OWNER_ART_AND_UPLOAD_APPROVAL"
+  },
+  "ownerArtAcceptance": "PENDING",
+  "files": [
+    {
+      "path": "assets/familiars/green_slime/.gitignore",
+      "bytes": 199,
+      "sha256": "8a93995dcbcf3bf340dc7f947599bd8869a94acb30ab630c2bda16bb3c57418a"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/fbx-roundtrip.json",
+      "bytes": 1398,
+      "sha256": "2e766ab4f91fb3c6d640c03ff947343f0fae2ee56324341f143223249e85b89b"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/GreenSlime.png",
+      "bytes": 2836714,
+      "sha256": "631f17ac3724ab7b689c11c5f038242ca68bb38198058c59ab84cf47337b5805"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/GreenSlime_Idle.blend",
+      "bytes": 3953334,
+      "sha256": "b3eb5f083e0a3ed67513326e2a042cc56954127b7313067330682885b97f324d"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/GreenSlime_Idle.fbx",
+      "bytes": 3080444,
+      "sha256": "c8cf7dd72d69f4324ad8fc84f63fa7da7378714a8fabe9d2e4caacaf4b666d6b"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/GreenSlime_Rig.fbx",
+      "bytes": 2983132,
+      "sha256": "5733b4cd61b6c3b0659c9e8264612c327e0646a892f5df89a5730dbb86aeecb2"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/previews/center_compression.png",
+      "bytes": 827154,
+      "sha256": "53a7e6f4063cedb6a2d0e177a18f51323c53e0627d9339d56668903cbe6c4f05"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/previews/edge_test.png",
+      "bytes": 833603,
+      "sha256": "d138ab5385c6850d550d451bb07a895946e74ca0e12e1b6173931500e352f555"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/previews/GreenSlime_Idle.mp4",
+      "bytes": 129473,
+      "sha256": "b8466849249abc8bdbd9b95ff07c4489f25e5e925125c64645cd5cc883167a15"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/previews/head_test.png",
+      "bytes": 828916,
+      "sha256": "457b982867253ce4a7583217ae9590b790aa9c696e9f3bc0cf2a934c310dce3e"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/previews/idle_00.png",
+      "bytes": 829305,
+      "sha256": "13f3727f1b441b54e23fa422331bc14eb3d2a3325147ac80c0a71760afee1d3e"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/previews/idle_24.png",
+      "bytes": 829345,
+      "sha256": "d57fada5aff21c47f4e472890528075f683b4b446a6d3934e27c31c5c9e81372"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/previews/idle_48.png",
+      "bytes": 830135,
+      "sha256": "a63ef29d17a8346e9cba991aad35ddc4f65d59b8b2c16298610f433110abfa62"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/previews/idle_72.png",
+      "bytes": 830000,
+      "sha256": "7ef289eed62c7a247fe7fd27fed2cb4bbbc2396676384e5c8b03b531de1a53be"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/previews/idle_96.png",
+      "bytes": 829305,
+      "sha256": "69a82fefffa8a72684c3fb9973a81beb27d0d36f7db46f9e8e8b850910b28ae8"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/previews/neutral.png",
+      "bytes": 829626,
+      "sha256": "cd1c57a301711f1df175f5464c877f770e9bf07552d4056a08eba09a8c97ed59"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/README.md",
+      "bytes": 6071,
+      "sha256": "3ba4c46f29af5174b4d390b2e1b91338b0828b8354838e6f8b9dfae424a4fe5c"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/scripts/build_rig.py",
+      "bytes": 13272,
+      "sha256": "2b256350d5d0326bdcdb2131fde90c7aa6477014e90eff7c9cbc956390ec5435"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/scripts/inspect_source.py",
+      "bytes": 3049,
+      "sha256": "b81c7f44d13f80054e8e33d24d10cabc891d75048046fe676a021e41b7fb7c16"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/scripts/receipt.py",
+      "bytes": 1965,
+      "sha256": "e2060602c215bb4e266819aae4a65a53aa8ccd93096759207cb9c11d2f379f09"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/scripts/render_idle.py",
+      "bytes": 700,
+      "sha256": "039b359ca3ad26deb32f94fc5aa792fe8c7e92ca8efee5f0afc02df34e1d6624"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/scripts/verify_export.py",
+      "bytes": 3425,
+      "sha256": "525432cf78b1258e0d212a34df4eb5849f9d10ecba582568bfc883e36813d252"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v1/validation.json",
+      "bytes": 1281,
+      "sha256": "8f65d49873beb179c8c84d961baec691815e0d4c75dc9116a4536568ce7a8459"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/continuity.json",
+      "bytes": 696,
+      "sha256": "6f9f278f1d0b51b9af696e87603874aed34080b8e2f19548895aed4bcc03fc85"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/fbx-roundtrip.json",
+      "bytes": 984,
+      "sha256": "aa1dcca3c1e9b5e86fad7c9e91c87ab46509a922e96bbf4fcc50307ddc6bc4e5"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/GreenSlime_TwoIdles.blend",
+      "bytes": 5406058,
+      "sha256": "5088e62aa568948d10e2cc5b3e6e7e1fa0e147d3916c03f17938865b7b67219f"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/Idle_Active.fbx",
+      "bytes": 3079660,
+      "sha256": "aa5279edb46a4c7f56f1829c1da87ee3bf138d17dc86fe2542a412904f89fc30"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/Idle_Calm.fbx",
+      "bytes": 3088204,
+      "sha256": "4dcc2ec438de2ab3fcdeb45d55f3d47304c8845f1183ecb82bb42b29334b6d00"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/preview-camera.json",
+      "bytes": 527,
+      "sha256": "fd96f9ad67ada3039b4c14aacab501f78f32a0e1adcbebf553fa4cabd6d4b3a5"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/previews/active-game.mp4",
+      "bytes": 132633,
+      "sha256": "d22fe880ac6b49871b918ee0fd285ccbdcf7acc331a28b5625bc37bd69a409c1"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/previews/calm-game.mp4",
+      "bytes": 158406,
+      "sha256": "f066f7b2b1b31a950e7712a6f00a700b4e4065bdbf45689329aff5cdd0529adb"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/previews/Idle_Active_detail_0.png",
+      "bytes": 591480,
+      "sha256": "ddfe09f1bf23a3adc71a28d00050a38c02fa565c5c442da9ce2c7887be405522"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/previews/Idle_Active_detail_40.png",
+      "bytes": 591369,
+      "sha256": "fa61889347ea696e7d94dec3afefd13943253549bf779c2b2d2fcba9ee3f96bc"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/previews/Idle_Active_game_0.png",
+      "bytes": 521020,
+      "sha256": "cd65765a643ed71f17dcd01a00ab59e6b3a0fcd237f4dfbdcf788704d22659d5"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/previews/Idle_Active_game_40.png",
+      "bytes": 521518,
+      "sha256": "d4e4eb03a553c76a5de7777d74f9a0f41b449a392840eae79e52675a96a95b35"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/previews/Idle_Calm_detail_0.png",
+      "bytes": 591172,
+      "sha256": "f3d843b7228e267f0d51e1d1ce661394e2f350d17f90178a12154565982d41a8"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/previews/Idle_Calm_detail_48.png",
+      "bytes": 592742,
+      "sha256": "b9fe1b925719e27afdc6702aab7d9ef21b7291d00b5933d4222cc03e3722170f"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/previews/Idle_Calm_game_0.png",
+      "bytes": 521052,
+      "sha256": "68f689585159f5a5c0df5f2c5a5922f370db64a47e1f2a10aed2f9216a521e19"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/previews/Idle_Calm_game_48.png",
+      "bytes": 521293,
+      "sha256": "d4fdd7996c2476d76e64743e176c63525d77629e5359c29247bf46a88bf6c252"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/previews/sequence-detail.mp4",
+      "bytes": 707312,
+      "sha256": "081b38c24ad556d6566a123ba4625e96c6842567fddf783ead9103a6eac21ed9"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/previews/sequence-game.mp4",
+      "bytes": 462669,
+      "sha256": "6060211dbddb83999a95c7eb8f28fc3a223202e33db04b14110d7ca55d835653"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/previews/v1-game.mp4",
+      "bytes": 145963,
+      "sha256": "8bcfc458a643db55662f7b8909127d8cb216bec4582b077cf8ba710dd04d9485"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/README.md",
+      "bytes": 6192,
+      "sha256": "d9a80f82cc1c0eccbdf0b1a30a87a7e0ba2dfc4bc7b81edc1bc37bc84e40d7dd"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/RUNTIME_SELECTOR.md",
+      "bytes": 3190,
+      "sha256": "2f6475c43378b8e144b39fe0c7dce7686775a4bd4cddbca9d3fb07a30e818b8c"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/scripts/build_idles.py",
+      "bytes": 6231,
+      "sha256": "5c0f8c5b4736e83d702215830f9f2719ca359f3483272579f8a9d72ae922beb4"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/scripts/motion.py",
+      "bytes": 3136,
+      "sha256": "1f5a232a0d277c75d63e6f1b45bc603fe85e94f2a6e03070e6c05c829b8ac651"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/scripts/receipt.py",
+      "bytes": 1815,
+      "sha256": "fcb5852abdc725850658c7c3280695b19815796a8c1ae0a3872e14103621559a"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/scripts/render_previews.py",
+      "bytes": 6106,
+      "sha256": "db11a6920313620ffb85ef9fcc34d557ebb9dfe01f89a92b21a84aa01fc71df1"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/scripts/verify_exports.py",
+      "bytes": 4471,
+      "sha256": "8bb6aa7b92fabd0a8a3096d32889ba2f5119328ec2952c48c89ff06215d100ce"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/scripts/verify_previews.py",
+      "bytes": 961,
+      "sha256": "41b8e3dbb5ecc4171b8385695f1a0fd3f82879d4e0912b49d98453235e1550fe"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/scripts/verify_transitions.py",
+      "bytes": 2193,
+      "sha256": "05805841370ddc724cdf86a76c1c37838985d08e9e159e88ec77c4911eae9394"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/validation.json",
+      "bytes": 1788,
+      "sha256": "8a2e1713e1cf9c436c009c6278fe3a3b829b6ddbf6097dae35c52f06c332aac4"
+    },
+    {
+      "path": "assets/familiars/green_slime/rig_v2/video-validation.json",
+      "bytes": 728,
+      "sha256": "f388906e4f1c5dbee6154551da13392c8079fe0271c900862e47ef73b8cb1c8b"
+    },
+    {
+      "path": "assets/familiars/green_slime/source/GreenSlime.original.fbx",
+      "bytes": 2950252,
+      "sha256": "f3457fb1081549c6634e844350eb7e6fb24aaed39dc1a8814e28a730b18c9c7f"
+    },
+    {
+      "path": "assets/familiars/green_slime/source/GreenSlime.original.png",
+      "bytes": 2836714,
+      "sha256": "631f17ac3724ab7b689c11c5f038242ca68bb38198058c59ab84cf47337b5805"
+    },
+    {
+      "path": "assets/familiars/green_slime/source/PROVENANCE.md",
+      "bytes": 2417,
+      "sha256": "c089c6d8b8fc10ad786168ef6ea25285d1982f13a65f40455ac97a1d27b9ab49"
+    },
+    {
+      "path": "docs/evidence/ag73/blender-hierarchy.jpg",
+      "bytes": 223706,
+      "sha256": "e17c824862115ca1a953d44c93b76aa9a9926cd2df250e7e923741cb0d3a5e09"
+    },
+    {
+      "path": "docs/evidence/ag73/studio-importer-preview.jpg",
+      "bytes": 62563,
+      "sha256": "6759976a257494af563de108f51d06ad5c24c6f62823257a0be8a52fa01a15d5"
+    }
+  ],
+  "continuationBaseSha": "59eda121a3c42cf68e820c0ac87a4a76b143161f",
+  "idlePair": {
+    "clips": [
+      {
+        "name": "Idle_Calm",
+        "durationSeconds": 3.6
+      },
+      {
+        "name": "Idle_Active",
+        "durationSeconds": 3.0
+      }
+    ],
+    "weights": {
+      "Idle_Calm": 0.5,
+      "Idle_Active": 0.5
+    },
+    "fadeSeconds": 0.3,
+    "liveSelectorImplemented": false,
+    "commonRestRig": "rig_v1/GreenSlime_Rig.fbx",
+    "previewSequence": "Calm 3.6s -> Active 3.0s -> Calm 3.6s",
+    "studioQa": "BLOCKED_PENDING_OWNER_ART_AND_UPLOAD_APPROVAL"
+  }
+}

@@ -16,6 +16,34 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### AG-73 — Green Slime rig and Idle (Issue #48)
+
+**PHASE A CANDIDATE / STUDIO PLAY BLOCKED / OWNER ART REVIEW REQUIRED.**
+R2 candidate 2026-11-15: owner requested BOTH `Idle_Calm` and `Idle_Active`,
+shared rest/weights, 50/50 future selector and a 0.3-second blended
+Calm → Active → Calm preview. Continuation base PR #49 `59eda121a3c42cf68e820c0ac87a4a76b143161f`,
+CI 43738208276 PASS. V1 was not art accepted. Separate `rig_v2` delivers two FBX
+clips (3.6 s / 3.0 s), one editable scene, a blended 10.2 s review sequence,
+common-camera V1 comparison and fresh-import/continuity receipts. Exact V1 rest,
+weights, source and live code are preserved. Runtime selector is documentation only until
+owner art/upload approval and native QA. No new Roblox upload is authorized.
+Claimed by Codex on 2026-11-15 as the only active task. Base: current PR #45
+`8dc804ab33e3f9d052dc4d15a97d90b3cd46a02b`, CI 43607496544 PASS.
+Branch: `feat/ag73-green-slime-idle`; independent of the pending AG72 art gate.
+Scope: immutable source copies, local non-humanoid Blender rig, one looping Idle,
+FBX export and separate local Studio QA. No gameplay/UI, schema, starter stats,
+server requests, new live asset IDs, paid jobs, merge or publication.
+FBX matches the issue digest. Supplied PNG has SHA-256 `631f17ac3724ab7b689c11c5f038242ca68bb38198058c59ab84cf47337b5805`,
+not the issue's PNG digest; it is byte-identical to the PNG embedded in the
+verified FBX. Use that consistent owner-provided pair and record the discrepancy.
+Owner confirmed paid Meshy generation in their account on 2026-11-15; provenance
+and exact source/output receipts accompany the package. Eight-bone rig and
+3.2-second Idle pass evaluated-mesh and fresh FBX-import checks. Studio importer
+preview shows texture and hierarchy; final import is blocked because underlying
+data upload would exceed current permission. Ordinary Play, mobile quality and
+owner approval remain open. See [AG73 report](AG73_GREEN_SLIME_IDLE.md).
+Rollback removes only isolated asset/tooling files; no runtime integration.
+
 ### AG-71 — Arcane Arcade HUD + Storybook UI (Issue #44)
 
 **PHASE B CODE CANDIDATE / PARTIAL STUDIO VERIFIED / NOT PUBLISHED.**
