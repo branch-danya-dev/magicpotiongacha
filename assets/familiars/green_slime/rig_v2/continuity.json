@@ -1,0 +1,30 @@
+{
+  "action": "Calm_Active_Calm_QA",
+  "durationSeconds": 10.2,
+  "fadeSeconds": 0.3,
+  "evaluatedBakedAction": true,
+  "samplesPerSecond": 60,
+  "minimumGroundClearance": 0.012799999676644802,
+  "maximumEdgeStrain": 0.3411599141452264,
+  "maximumHalfFrameStep": 0.0027434220436572693,
+  "loopMaxVertexDelta": 0.0,
+  "boundaries": [
+    {
+      "seconds": 3.6,
+      "limitVertexDelta": 0.0
+    },
+    {
+      "seconds": 3.9,
+      "limitVertexDelta": 0.0
+    },
+    {
+      "seconds": 6.6,
+      "limitVertexDelta": 0.0
+    },
+    {
+      "seconds": 6.9,
+      "limitVertexDelta": 0.0
+    }
+  ],
+  "scope": "Blender Euler-channel blend approximation; native AnimationTrack remains unverified"
+}

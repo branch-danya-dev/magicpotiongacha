@@ -1,0 +1,33 @@
+{
+  "blender": "4.5.9 LTS",
+  "results": [
+    {
+      "clip": "Idle_Calm",
+      "track": "GreenSlimeRig|Idle_Calm",
+      "durationSeconds": 3.6,
+      "sameRestUvSkinAsV1": true,
+      "textureByteIdentical": true,
+      "eyesRigidHead": true,
+      "rootContactStationary": true,
+      "noAnimatedScale": true,
+      "loopMaxVertexDelta": 0.0,
+      "minimumGroundClearance": 0.012799851596355438,
+      "maximumEdgeStrain": 0.28677226462848426,
+      "maximumHalfFrameStep": 0.0016106516781099994
+    },
+    {
+      "clip": "Idle_Active",
+      "track": "GreenSlimeRig|Idle_Active",
+      "durationSeconds": 3.0,
+      "sameRestUvSkinAsV1": true,
+      "textureByteIdentical": true,
+      "eyesRigidHead": true,
+      "rootContactStationary": true,
+      "noAnimatedScale": true,
+      "loopMaxVertexDelta": 0.0,
+      "minimumGroundClearance": 0.012799851596355438,
+      "maximumEdgeStrain": 0.34116039502708806,
+      "maximumHalfFrameStep": 0.0027432703811996074
+    }
+  ]
+}

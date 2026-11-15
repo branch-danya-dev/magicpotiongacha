@@ -11,6 +11,10 @@ const folder = 'assets/familiars/green_slime';
 const manifest = JSON.parse(await readFile(resolve(root, folder, 'manifest.json'), 'utf8'));
 const sha = b => createHash('sha256').update(b).digest('hex');
 assert.equal(manifest.status, 'PHASE_A_CANDIDATE_STUDIO_PLAY_BLOCKED');
+assert.equal(manifest.version, 2);
+assert.deepEqual(manifest.idlePair.weights, { Idle_Calm: 0.5, Idle_Active: 0.5 });
+assert.equal(manifest.idlePair.fadeSeconds, 0.3);
+assert.equal(manifest.idlePair.liveSelectorImplemented, false);
 assert.equal(manifest.source.ownerAttestation.plan, 'paid');
 assert.deepEqual(manifest.roblox.assetIds, []);
 for (const item of manifest.files) {
@@ -85,8 +89,15 @@ const source = await readFile(resolve(root, folder, 'source/GreenSlime.original.
 assert.equal(sha(source), manifest.source.fbxSha256);
 assert.equal(sha(texture), manifest.source.actualPngSha256);
 assert(source.includes(texture), 'owner PNG is the embedded FBX texture');
-for (const [file, animated] of [['GreenSlime_Rig.fbx', false], ['GreenSlime_Idle.fbx', true]]) {
-  const bytes = await readFile(resolve(root, folder, 'rig_v1', file));
+const specs = [
+  ['rig_v1/GreenSlime_Rig.fbx', 0, 0], ['rig_v1/GreenSlime_Idle.fbx', 3.2, 97],
+  ['rig_v2/Idle_Calm.fbx', 3.6, 109], ['rig_v2/Idle_Active.fbx', 3.0, 91],
+];
+let restIdentity;
+const pairCurves = [];
+for (const [file, duration, frames] of specs) {
+  const animated = duration > 0;
+  const bytes = await readFile(resolve(root, folder, file));
   const nodes = fbx(bytes), objects = nodes.find(n => n.name === 'Objects').children;
   const connectionNodes = nodes.find(n => n.name === 'Connections').children;
   const links = connectionNodes.map(c => c.props);
@@ -112,10 +123,12 @@ for (const [file, animated] of [['GreenSlime_Rig.fbx', false], ['GreenSlime_Idle
   const deformers = objects.filter(n => n.name === 'Deformer');
   assert.equal(deformers.filter(n => n.props[2] === 'Skin').length, 1);
   const influence = Array.from({ length: 1321 }, () => []);
+  const skin = [];
   for (const c of deformers.filter(n => n.props[2] === 'Cluster')) {
     const linked = links.find(p => p[0] === 'OO' && p[2] === c.props[0] && names.has(p[1]));
     assert(linked, 'skin cluster is bound to a bone');
     const bone = names.get(linked[1]), ix = values(c, 'Indexes') ?? [], weights = values(c, 'Weights') ?? [];
+    skin.push({ bone, ix, weights, transform: values(c, 'Transform'), link: values(c, 'TransformLink') });
     assert.equal(ix.length, weights.length);
     ix.forEach((v, i) => { assert(v >= 0 && v < 1321); if (weights[i] > 1e-7) {
       assert(bone !== 'Root' && weights[i] <= 1 && Number.isFinite(weights[i]));
@@ -123,6 +136,10 @@ for (const [file, animated] of [['GreenSlime_Rig.fbx', false], ['GreenSlime_Idle
     } });
   }
   assert(influence.every(w => w.length >= 1 && w.length <= 4 && Math.abs(w.reduce((a, b) => a + b, 0) - 1) < 1e-5));
+  const identity = { vertices: values(geometry[0], 'Vertices'), indices,
+    uv: geometry[0].children.filter(n => n.name === 'LayerElementUV'), skin: skin.sort((a, b) => a.bone.localeCompare(b.bone)) };
+  if (!restIdentity) restIdentity = identity;
+  else assert.deepEqual(identity, restIdentity, file + ' uses the exact same rest surface, UV, skin and bind matrices');
   assert(bytes.includes(texture), 'export embeds exact owner texture');
   const stacks = objects.filter(n => n.name === 'AnimationStack');
   const curves = objects.filter(n => n.name === 'AnimationCurve');
@@ -131,11 +148,32 @@ for (const [file, animated] of [['GreenSlime_Rig.fbx', false], ['GreenSlime_Idle
   for (const curve of curves) {
     const times = values(curve, 'KeyTime'), keys = values(curve, 'KeyValueFloat');
     assert.equal(times.length, keys.length);
-    assert.equal(times.length, 97, 'one baked sample per frame');
-    assert.equal(Number(times.at(-1) - times[0]) / 46186158000, 3.2);
+    assert.equal(times.length, frames, 'one baked sample per frame');
+    assert.equal(Number(times.at(-1) - times[0]) / 46186158000, duration);
     assert(keys.every(Number.isFinite));
     assert(Math.abs(keys[0] - keys.at(-1)) < 1e-5, 'closed animation seam');
+    const curveLink = links.find(p => p[0] === 'OP' && p[1] === curve.props[0]);
+    const target = links.find(p => p[0] === 'OP' && p[1] === curveLink?.[2] && models.some(m => m.props[0] === p[2]));
+    assert(target, 'animation curve has a model target');
+    if (['Root', 'Contact'].includes(names.get(target[2])) || target[3] === 'Lcl Scaling') {
+      assert(keys.every(v => Math.abs(v - keys[0]) < 1e-6), 'stationary Root/Contact and no animated scale');
+    }
   }
+  if (file.startsWith('rig_v2/')) pairCurves.push(curves.map(c => values(c, 'KeyValueFloat')));
   console.log(`AG73 ${file}: 1321 vertices, 2603 triangles, 8 bones, normalized <=4 skin weights, ${curves.length} curves PASS`);
 }
+assert.notDeepEqual(pairCurves[0], pairCurves[1], 'two distinct Idle clips');
+const v2 = JSON.parse(await readFile(resolve(root, folder, 'rig_v2/validation.json'), 'utf8'));
+assert.equal(v2.unchangedFromV1, true);
+for (const clip of v2.clips) {
+  assert(clip.loopMaxVertexDelta < 1e-6 && clip.minimumGroundClearance >= 0);
+  assert(clip.maximumEdgeStrain < 0.35 && clip.maximumHalfFrameStep < 0.005);
+}
+const transition = JSON.parse(await readFile(resolve(root, folder, 'rig_v2/continuity.json'), 'utf8'));
+assert.equal(transition.evaluatedBakedAction, true);
+assert.equal(transition.durationSeconds, 10.2);
+assert.equal(transition.fadeSeconds, 0.3);
+assert.deepEqual(transition.boundaries.map(b => b.seconds), [3.6, 3.9, 6.6, 6.9]);
+assert(transition.boundaries.every(b => b.limitVertexDelta < 1e-6));
+assert(transition.minimumGroundClearance >= 0 && transition.maximumEdgeStrain < .35 && transition.maximumHalfFrameStep < .005);
 console.log(`AG73 ${manifest.files.length} artifact digests PASS; Blender roundtrip recorded; Studio Play BLOCKED, owner art PENDING.`);

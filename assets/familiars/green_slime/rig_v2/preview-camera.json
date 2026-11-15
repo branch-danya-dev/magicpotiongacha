@@ -1,0 +1,15 @@
+{
+  "type": "BLENDER_SCALE_PROXY_NOT_STUDIO_CAPTURE",
+  "sourceWidth": "FamiliarView.client.luau WorkerProxy.Size.X=2.4",
+  "widthStuds": 2.4,
+  "cameraDistanceStuds": 12,
+  "elevationDegrees": 38,
+  "verticalFovDegrees": 70,
+  "cameraAssumption": "Representative review framing; no exact current Studio camera was measured",
+  "renderSize": [
+    960,
+    540
+  ],
+  "visibleWidthPixels": 76.50524139404297,
+  "renderer": "Cycles 32 samples with denoising; OPTIX if available, CPU fallback; not device performance evidence"
+}

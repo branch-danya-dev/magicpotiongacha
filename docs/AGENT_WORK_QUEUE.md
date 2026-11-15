@@ -19,6 +19,14 @@
 ### AG-73 — Green Slime rig and Idle (Issue #48)
 
 **PHASE A CANDIDATE / STUDIO PLAY BLOCKED / OWNER ART REVIEW REQUIRED.**
+R2 candidate 2026-11-15: owner requested BOTH `Idle_Calm` and `Idle_Active`,
+shared rest/weights, 50/50 future selector and a 0.3-second blended
+Calm → Active → Calm preview. Continuation base PR #49 `59eda121a3c42cf68e820c0ac87a4a76b143161f`,
+CI 43738208276 PASS. V1 was not art accepted. Separate `rig_v2` delivers two FBX
+clips (3.6 s / 3.0 s), one editable scene, a blended 10.2 s review sequence,
+common-camera V1 comparison and fresh-import/continuity receipts. Exact V1 rest,
+weights, source and live code are preserved. Runtime selector is documentation only until
+owner art/upload approval and native QA. No new Roblox upload is authorized.
 Claimed by Codex on 2026-11-15 as the only active task. Base: current PR #45
 `8dc804ab33e3f9d052dc4d15a97d90b3cd46a02b`, CI 43607496544 PASS.
 Branch: `feat/ag73-green-slime-idle`; independent of the pending AG72 art gate.

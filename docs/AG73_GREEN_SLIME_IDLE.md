@@ -1,5 +1,34 @@
 # AG73 — Green Slime rig and Idle
 
+## Current R2: Calm + Active, both retained
+
+Owner requested two complementary clips on 2026-11-15 in PR #49 comments
+6898152617 / 6898192761. V1 was **not art accepted**. Continuation base:
+`59eda121a3c42cf68e820c0ac87a4a76b143161f` (CI 43738208276 PASS).
+Current R2 HEAD/checks are recorded in the same Draft PR.
+
+- `Idle_Calm`: 3.6 s; `Idle_Active`: 3.0 s, on the exact unchanged V1 rest/UV/skin.
+- Head tilts around its lower contact; phased edge motion and gather/release
+  timing replace blind amplitude scaling. Same 2603 tris / 8 bones / <=4 weights.
+- Both fresh FBX imports match V1 rest geometry, UV, bone matrices and weights.
+  Seam 0, ground clearance ~0.0128; peak edge strain 28.68% / 34.12% respectively.
+- The 10.2-second Calm→Active→Calm review sequence uses two 0.3-second blends.
+  Blender's baked sequence is independently checked around all fade boundaries.
+- Identical 2.4-stud-width / 12-stud-distance scale previews and a close view
+  are provided; V1 comparison uses the same camera. This is an explicitly
+  calibrated **Blender proxy**, not a claim of actual Studio camera evidence.
+- Future selector behavior is documented: 50/50 configurable, independent pet
+  phases, whole-cycle selection, same-clip continuation, Move/React interrupt,
+  bounded track/lifecycle cleanup. **No live selector code is enabled.**
+
+[V2 package and review videos](../assets/familiars/green_slime/rig_v2/README.md) ·
+[Future runtime contract](../assets/familiars/green_slime/rig_v2/RUNTIME_SELECTOR.md).
+Owner art/readability gate remains **PENDING**. Upload permission, native V2
+Studio Play, low graphics/phone, collision proxy and AnimationTrack fades remain
+**BLOCKED / NOT RUN**. No merge or publication. V1 evidence below is historical.
+
+## Historical V1 delivery
+
 2026-11-15. **PHASE A CANDIDATE / PARTIAL STUDIO PREVIEW VERIFIED /
 OWNER ART PENDING / NOT PUBLISHED.** Issue #48 remains open.
 
