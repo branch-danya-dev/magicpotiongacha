@@ -16,6 +16,22 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### AG-76B-R1 — Owner feedback: enlarged floating island and Tab
+
+**CODE_CANDIDATE / AUTOMATED PASS / OWNER ART + NATIVE QA OPEN / NOT PUBLISHED.**
+Claimed on 2026-11-16 in an isolated branch stacked on AG-76B Draft PR #55,
+base `f21137e26478b83afd47625f48b2ffe9b717600d`. Single scoped task:
+124×116 elliptical walkable plateau, bounded procedural noncolliding rocky
+underbody, safe perimeter recovery, foliage repositioning and suppression of
+Roblox's conflicting Tab PlayerList while RPG Tab inventory is active. V8 schema,
+buildable/core coordinates, economics, saves, starter selection, server owner
+admission, market and pricing unchanged. No paid asset, uploads, C-sector
+expansion, guest permission, merge or publication. `npm test` passed 1,360 Luau
+and 14 Node, 262 Luau source compilation and Rojo/QA artifact builds; exact
+PR SHA/CI are to be recorded on delivery. Native full visual review, actual
+Tab press, player reset, phone matrix and performance remain open; see
+[AG76B_PERSONAL_ISLAND.md](AG76B_PERSONAL_ISLAND.md).
+
 ### AG-76B — One-owner island world (Issue #53)
 
 **CODE_CANDIDATE / STUDIO STARTUP VERIFIED / OWNER ACCEPTANCE OPEN / NOT PUBLISHED.**

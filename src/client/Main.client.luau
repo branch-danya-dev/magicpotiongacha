@@ -1045,6 +1045,34 @@ bindMenu("PotionInventory","inventory",{Enum.KeyCode.I,Enum.KeyCode.DPadDown})
 bindMenu("PotionFamiliars","familiars",{Enum.KeyCode.P,Enum.KeyCode.DPadRight})
 -- AG75_BEGIN_MENU_BIND
 if groupedHUD then
+	-- AG76R1_BEGIN_PLAYERLIST_SETUP
+	-- Roblox owns Tab for its default PlayerList. Suppress only that one
+	-- CoreGui while the replacement RPG navigation is active; keep chat,
+	-- reset and other platform menus intact. Restore the previous state.
+	local starterGui=game:GetService("StarterGui")
+	local oldPlayerListEnabled=nil
+	local playerListSuppressed=false
+	local playerListScopeAlive=true
+	if UserInputService.KeyboardEnabled then task.spawn(function()
+		for _=1,8 do
+			if not playerListScopeAlive then return end
+			local readOk,previous=pcall(function()
+				return starterGui:GetCoreGuiEnabled(Enum.CoreGuiType.PlayerList)
+			end)
+			if readOk and oldPlayerListEnabled==nil then oldPlayerListEnabled=previous end
+			local ok=pcall(function()
+				starterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList,false)
+			end)
+			if ok then
+				playerListSuppressed=true
+				gui:SetAttribute("AG75PlayerListSuppressed",true)
+				return
+			end
+			task.wait(0.25)
+		end
+		warn("AG75: default PlayerList could not be disabled; Tab may conflict")
+	end) end
+	-- AG76R1_END_PLAYERLIST_SETUP
 	for _,name in ipairs({"PotionShop","PotionInventory","PotionFamiliars"}) do ContextActionService:UnbindAction(name) end
 	local function bindGroup(name,menu,keys)
 		ContextActionService:BindActionAtPriority(name,function(_,inputState)
@@ -1059,6 +1087,12 @@ if groupedHUD then
 	bindGroup("AG75Character","character",{Enum.KeyCode.P,Enum.KeyCode.DPadLeft})
 	bindGroup("AG75Familiars","familiars",{Enum.KeyCode.G,Enum.KeyCode.DPadRight})
 	script.Destroying:Connect(function()
+		-- AG76R1_BEGIN_PLAYERLIST_RESTORE
+		playerListScopeAlive=false
+		if playerListSuppressed and oldPlayerListEnabled~=nil then
+			pcall(function() starterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList,oldPlayerListEnabled) end)
+		end
+		-- AG76R1_END_PLAYERLIST_RESTORE
 		for _,name in ipairs({"AG75Inventory","AG75Character","AG75Familiars"}) do ContextActionService:UnbindAction(name) end
 	end)
 end

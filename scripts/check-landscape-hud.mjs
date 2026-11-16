@@ -24,6 +24,10 @@ assert(!/FireServer|InvokeServer|OnClientEvent|Instance.new\("ScreenGui"\)|GetSe
 assert(view.includes('function self.destroy() self.hideFeedback(); host.destroy(); root:Destroy() end'));
 assert(view.includes('if self.connection then return end'),'Popup scheduler must be bounded');
 assert(view.includes('local host=Kit.host()'),'Reuse native control/focus lifecycle');
-assert(!/SetCoreGuiEnabled/.test(main+view));
+const playerListSeam=/-- AG75_BEGIN_MENU_BIND\n([\s\S]*?)-- AG75_END_MENU_BIND/;
+const menu=main.match(playerListSeam)?.[1]||'';
+assert.equal((menu.match(/SetCoreGuiEnabled\(/g)||[]).length,2,'Only reversible PlayerList suppression in grouped UI');
+assert(menu.includes('Enum.CoreGuiType.PlayerList')&&menu.includes('oldPlayerListEnabled'));
+assert(!/SetCoreGuiEnabled/.test(main.replace(playerListSeam,'')+view));
 assert(main.includes('LandscapeHUDEnabled'));
 console.log('AG64 preservation PASS: one PotionTycoonUI/state subscriber; original intents, economy, saves, Spellbook/PostFX, assets and tests unchanged; reversible HUD only.');

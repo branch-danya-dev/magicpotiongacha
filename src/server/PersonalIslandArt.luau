@@ -6,8 +6,11 @@ local Plan=require(Shared.PropPlan)
 local Env=require(Shared.EnvironmentConfig)
 local Art={}
 local function color(key) return Color3.fromRGB(table.unpack(Plan.palette[key])) end
-local function part(parent,name,size,cf,tint,material,collides)
-	local p=Instance.new("Part");p.Name=name;p.Size=size;p.CFrame=cf;p.Color=tint;p.Material=material
+local function part(parent,name,size,cf,tint,material,collides,shape)
+	local p=Instance.new(shape=="Wedge" and "WedgePart" or "Part")
+	p.Name=name;p.Size=size;p.CFrame=cf;p.Color=tint;p.Material=material
+	if shape=="Ball" then p.Shape=Enum.PartType.Ball end
+	if shape=="Cylinder" then p.Shape=Enum.PartType.Cylinder end
 	p.Anchored=true;p.CanCollide=collides==true;p.CanQuery=collides==true;p.CanTouch=false;p.Reflectance=0
 	p.TopSurface=Enum.SurfaceType.Smooth;p.BottomSurface=Enum.SurfaceType.Smooth;p.Parent=parent;return p
 end
@@ -34,14 +37,25 @@ function Art.display(record,state)
 end
 function Art.attach(root,plot)
 	local origin=plot.origin
-	local floor=part(root,"ForestFloor",Vector3.new(85,1,83),CFrame.new(origin+Vector3.new(0,0,-8)),Color3.fromRGB(109,139,101),Enum.Material.SmoothPlastic,true)
+	local surface=Island.surface
+	-- A broad, level, elliptical walkable plateau; the saved V8 buildable
+	-- envelope and all thirteen logical station offsets remain untouched.
+	local floor=part(root,"ForestFloor",Vector3.new(surface.thickness,surface.width,surface.depth),
+		CFrame.new(origin+Vector3.new(0,surface.topY-surface.thickness*0.5,surface.centerZ))
+			*CFrame.Angles(0,0,math.rad(90)),Color3.fromRGB(109,139,101),Enum.Material.Grass,true,"Cylinder")
 	local folder=Instance.new("Folder");folder.Name="EnvironmentArt";folder.Parent=root
-	local stone=Color3.fromRGB(89,100,98)
-	local base=part(folder,"IslandStone",Vector3.new(88,21,86),CFrame.new(origin+Vector3.new(0,-10,-8)),stone,Enum.Material.Slate,false)
-	local mesh=Instance.new("SpecialMesh");mesh.MeshType=Enum.MeshType.Sphere;mesh.Parent=base
-	-- Visible low edge stones define the same safe envelope used by recovery.
-	for _,e in ipairs({{-42,0,-8,1,2,83},{42,0,-8,1,2,83},{0,0,-49,85,2,1},{0,0,33,85,2,1}}) do
-		part(folder,"IslandRim",Vector3.new(e[4],e[5],e[6]),CFrame.new(origin+Vector3.new(e[1],e[2],e[3])),stone,Enum.Material.Slate,true)
+	local terrainTints={
+		stone=Color3.fromRGB(91,102,98),stoneDark=Color3.fromRGB(69,83,82),
+		stoneLight=Color3.fromRGB(119,121,107),stoneDeep=Color3.fromRGB(58,68,71),
+		grass=Color3.fromRGB(101,129,91),grassLight=Color3.fromRGB(126,147,105),
+	}
+	local terrain=Island.terrainPlan()
+	assert(#terrain<=Island.maxTerrainParts,"AG76 terrain part budget exceeded")
+	for _,d in ipairs(terrain) do
+		local p=part(folder,d.name,Vector3.new(table.unpack(d.size)),
+			CFrame.new(origin+Vector3.new(table.unpack(d.position)))*CFrame.Angles(0,math.rad(d.yaw),0),
+			terrainTints[d.tint],Enum.Material[d.material],false,d.shape)
+		p.CastShadow=d.material~="Grass"
 	end
 	for i=0,4 do
 		local p=part(folder,"TemplePath_"..i,Vector3.new(4,.08,2.8),CFrame.new(origin+Vector3.new(0,.57,17-i*3.6)),Color3.fromRGB(157,153,124),Enum.Material.SmoothPlastic,false)
@@ -52,8 +66,11 @@ function Art.attach(root,plot)
 	local count=0
 	if templates then for _,d in ipairs(definitions) do
 		local x,z=d.position[1]-origin.X,d.position[3]-origin.Z
-		-- Only perimeter foliage from the approved pilot. No market/fences/global terrain.
-		if (d.template or d.forest) and not d.barrier and Island.contains(x,z,2)
+		-- Reposition the existing approved perimeter foliage onto the enlarged
+		-- island's outer shoulder; keep stations/paths in the interior clear.
+		local edgeX=x*1.17
+		local edgeZ=surface.centerZ+(z-surface.centerZ)*1.16
+		if (d.template or d.forest) and not d.barrier and Island.surfaceContains(edgeX,edgeZ,7)
 			and (math.abs(x)>35 or z<-42 or z>27) and not string.find(d.template or "","RockPath",1,true) then
 			local model
 			if d.forest then model=require(script.Parent.ForestArt).build(d,templates)
@@ -63,7 +80,7 @@ function Art.attach(root,plot)
 				for _,p in ipairs(items) do if p:IsA("BasePart") then parts+=1 end end
 				if count+parts>Island.maxSceneryParts then model:Destroy() else
 					count+=parts;model.Name=d.id
-					model:PivotTo(CFrame.new(origin+Vector3.new(x,.5,z))*CFrame.Angles(0,math.rad(d.rotation[2]),0))
+						model:PivotTo(CFrame.new(origin+Vector3.new(edgeX,.5,edgeZ))*CFrame.Angles(0,math.rad(d.rotation[2]),0))
 					for _,p in ipairs(items) do if p:IsA("BasePart") then
 						p.Anchored=true;p.CanCollide=false;p.CanTouch=false;p.CanQuery=false
 						p:SetAttribute("EnvironmentDetail",math.min(d.detail or 1,2))
@@ -81,7 +98,9 @@ function Art.attach(root,plot)
 		Art.display(lamp,{level=1,phase=1})
 		for _,e in ipairs(lamp.entries) do if string.find(e.part.Name,"AmberPane",1,true) then e.part:SetAttribute("EnvironmentLanternPane",anchor.Name) end end
 	end
-	root:SetAttribute("IslandSceneryParts",count);root:SetAttribute("EnvironmentArtEnabled",true)
+	root:SetAttribute("IslandSceneryParts",count);root:SetAttribute("IslandTerrainParts",#terrain)
+	root:SetAttribute("IslandSurfaceWidth",surface.width);root:SetAttribute("IslandSurfaceDepth",surface.depth)
+	root:SetAttribute("EnvironmentArtEnabled",true)
 	return floor,folder
 end
 return Art

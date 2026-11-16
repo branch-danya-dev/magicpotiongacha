@@ -21,6 +21,22 @@ for _,p in ipairs(root:GetChildren()) do
 	assert(not p.Name:match("^Plot_") and p.Name~="Bazaar" and p.Name~="TradePost")
 end
 assert(owned==1)
+local floor=assert(root:FindFirstChild("ForestFloor"),"AG76-R1 walkable forest surface missing")
+assert(floor:IsA("Part") and floor.Shape==Enum.PartType.Cylinder and floor.CanCollide)
+assert(floor.Size.Y>=Island.surface.width and floor.Size.Z>=Island.surface.depth)
+assert(math.abs(floor.Position.X-Island.origin[1])<.01)
+assert(root:GetAttribute("IslandSurfaceWidth")==Island.surface.width)
+assert(root:GetAttribute("IslandSurfaceDepth")==Island.surface.depth)
+local relief=assert(root:FindFirstChild("EnvironmentArt"),"AG76-R1 relief missing")
+local terrainCount=0
+for _,piece in ipairs(relief:GetChildren()) do
+	if piece.Name:match("^Island") then
+		assert(piece:IsA("BasePart") and piece.Anchored and not piece.CanCollide)
+		terrainCount+=1
+	end
+end
+assert(terrainCount==root:GetAttribute("IslandTerrainParts"))
+assert(terrainCount>=50 and terrainCount<=Island.maxTerrainParts)
 for _,id in ipairs(Config.stationOrder) do
 	local p=assert(model:FindFirstChild(id),id)
 	assert(p:GetAttribute("StationId")==id and p:GetAttribute("IslandId")==Island.identity(owner))
@@ -32,4 +48,5 @@ for _,p in ipairs(root:GetDescendants()) do
 end
 assert((root:GetAttribute("IslandSceneryParts") or math.huge)<=Island.maxSceneryParts)
 print("AG76_NATIVE_SERVER_PASS",game:GetService("HttpService"):JSONEncode({owner=owner,islands=owned,logicalStations=#Config.stationOrder,
-	schema=Config.schemaVersion,instances=#root:GetDescendants(),sceneryParts=root:GetAttribute("IslandSceneryParts"),memory=true,trading=false,purchases=false}))
+	schema=Config.schemaVersion,instances=#root:GetDescendants(),sceneryParts=root:GetAttribute("IslandSceneryParts"),terrainParts=terrainCount,
+	surfaceWidth=Island.surface.width,surfaceDepth=Island.surface.depth,memory=true,trading=false,purchases=false}))
