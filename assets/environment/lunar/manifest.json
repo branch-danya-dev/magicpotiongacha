@@ -1,0 +1,77 @@
+{
+  "task": "AG-76B-R4B",
+  "provenance": "Owner-supplied original ChatGPT Library concepts; exact supplied SHA-256 validated. Built-in image_gen cutout edits, prompts.json. No third-party game art.",
+  "license": "Owner-authorized project artwork; no third-party license claimed",
+  "robloxAssetIds": null,
+  "robloxUploadApproved": false,
+  "delivery": "Local Studio-only EditableImage RGBA buffers; no upload or API setting change",
+  "preparation": "node scripts/prepare-lunar-assets.mjs (area downscale only, generated alpha preserved); node scripts/build-lunar-island.mjs (validate + encode fixed pixel buffers)",
+  "textures": [
+    {
+      "name": "pearl",
+      "source": {
+        "path": "assets/environment/lunar/source/pearl_moon_concept_v1.png",
+        "sha256": "3f62f4e440abe5b8aacc3904f2c829429abf7ee3a135663313ccf188f157dd58",
+        "bytes": 2342053,
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-3051d55733288191b68b921eb9ff842a_72129a2f176c81919add0c85246d9626&account_id=personal"
+      },
+      "edited": {
+        "path": "assets/environment/lunar/edited/pearl-disc.png",
+        "sha256": "c976403299c8cd9bd0c0950df43160e1d7e9ed82b6d442549ff587c828cc9f1a",
+        "bytes": 1622935
+      },
+      "texture": {
+        "path": "assets/environment/lunar/textures/pearl-moon.png",
+        "sha256": "cd82a3662150d73506e4609c06336240913cc1d7f18101be843147534c82f6eb",
+        "bytes": 366616,
+        "width": 512,
+        "height": 512,
+        "rgbaSha256": "73dca1812e41ed231858b26535123e72e80ad216a350ccd972566d4e084a6d53"
+      }
+    },
+    {
+      "name": "blood",
+      "source": {
+        "path": "assets/environment/lunar/source/blood_moon_concept_v1.png",
+        "sha256": "20a3609b2baeae61b6ffb60b1011fcb060334bd4e3daf400d31a4eb4ff46f2ac",
+        "bytes": 2299377,
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-3664602a72888191acfcd7b985e76597_72129a2f176c81919add0c85246d9626&account_id=personal"
+      },
+      "edited": {
+        "path": "assets/environment/lunar/edited/blood-disc.png",
+        "sha256": "754a72be61d18aa9852b8c355c12a76e341947c5fb06afcdd0297116a86ae66c",
+        "bytes": 1815528
+      },
+      "texture": {
+        "path": "assets/environment/lunar/textures/blood-moon.png",
+        "sha256": "1ab291dc8971be469a1f4057b60886c5c6b4140a276d09b81305af408a10114b",
+        "bytes": 391060,
+        "width": 512,
+        "height": 512,
+        "rgbaSha256": "8109d03584c15a498971bd47255f7aa1f72d3489aa87ac215ab2186500419ee6"
+      }
+    },
+    {
+      "name": "frost",
+      "source": {
+        "path": "assets/environment/lunar/source/frost_moon_concept_v1.png",
+        "sha256": "82b7e938643f2f841d8982f9412915038c76d9ac9f504bcbd6495006b6673fb4",
+        "bytes": 2159928,
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-56dd242bf1a4819197b64e7a71861a7e_72129a2f176c81919add0c85246d9626&account_id=personal"
+      },
+      "edited": {
+        "path": "assets/environment/lunar/edited/frost-disc.png",
+        "sha256": "d0f5d046cce3ecef6a6fafb91d4f7f7bd91784851cbf0cf5fe98307365ad5c15",
+        "bytes": 1710565
+      },
+      "texture": {
+        "path": "assets/environment/lunar/textures/frost-moon.png",
+        "sha256": "1f9ec502959418362b506ab7758a8a31621efcb9762cdd2575afaefd59250dc2",
+        "bytes": 395122,
+        "width": 512,
+        "height": 512,
+        "rgbaSha256": "148bb5eb745535365590d377fb22cc283f170a3bdee01d3363a2bb4dddb71d9d"
+      }
+    }
+  ]
+}

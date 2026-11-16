@@ -16,9 +16,25 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### AG-76B-R4B — Three Moons & Lunar Lighting
+
+**IN PROGRESS / STUDIO QA ONLY / OWNER MOON ART PENDING / NOT INTEGRATED.**
+Claimed 2026-11-17 as the sole active task. Branch `feat/ag76b-r4b-moon-cycle`.
+Base Draft PR #58 at `56666c072e66f7357ec2f054f818a642cae0abd9`, confirmed
+open/draft with Windows/Ubuntu CI success (run 43972108708), clean starting tree.
+Scope: three original moon disks, deterministic 70/10/20 lunar selection,
+1500-second day/dusk/night/dawn proportions 300/375/675/150 and lunar palette,
+through the existing EnvironmentView owner in a separate reproducible QA place.
+Preserve grass, geometry/landmarks, stations/routes, production modules and data.
+No migration or live service operations. Rollback is the untouched R4A place.
+Roblox upload requires separate approval of the three concrete prepared files.
+No paid generation, production integration, merge or Roblox publication.
+
 ### AG-76B-R4A — Dynamic Grass & Ground Cover
 
-**CODE CANDIDATE / STUDIO VERIFIED (bounded art QA) / OWNER ART PENDING / NOT INTEGRATED.**
+**CODE CANDIDATE / STUDIO VERIFIED (bounded art QA) / OWNER GRASS ART ACCEPTED / NOT INTEGRATED.**
+Owner approved the R4A grass art in the R4B task on 2026-11-17.
+This approval does not accept the full R3 composition, mobile or release gates.
 Claimed 2026-11-17; sole active task, branch `feat/ag76b-r4a-dynamic-grass`.
 Base Draft PR #57 at `d5f39fad50ac84e660365299f1b3c4de600e3a80`;
 exact-head Windows/Ubuntu CI success, clean starting tree.
@@ -32,7 +48,7 @@ matched desktop timings, seven-point movement and 20 quality switches.
 291 added meshes; Full/Reduced/Minimal visible 291/157/57; Reduce Motion zero
 wind and unchanged transforms. 1,372 Luau + 14 Node tests PASS. Exact-head CI
 is recorded in the stacked Draft PR. No merge, Roblox publication, new upload
-or Meshy generation. Stopped for owner art review; phones remain untested.
+or Meshy generation. Grass art gate accepted; phones remain untested.
 
 ### AG-76B-R3 — Romantic Dark Fairytale / Forgotten Sanctuary
 

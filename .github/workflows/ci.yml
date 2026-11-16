@@ -44,6 +44,8 @@ jobs:
             build/romantic-island-build.json
             build/WizardIsland-AG76B-R4A-Grass-ART-PENDING.rbxlx
             build/grass-island-build.json
+            build/WizardIsland-AG76B-R4B-Moons-ART-PENDING.rbxlx
+            build/lunar-island-build.json
             build/AG67-Prototype.rbxlx
             assets/vfx/ag67/
             scripts/install-ag67-preview.mjs
