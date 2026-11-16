@@ -1,0 +1,44 @@
+{
+  "task": "AG-74 / Issue #50",
+  "baseSha": "8796abfbb8345dd90f2ebc7052c415782e056eaa",
+  "creator": "addout studio",
+  "creatorId": 925845207,
+  "experienceId": 10776120489,
+  "placeId": 125724638469407,
+  "privacy": "Restricted",
+  "creatorStore": false,
+  "gamePublished": false,
+  "permissionObservation": "Creator Dashboard: Restricted on all four assets; Experience 10776120489 resolved and Done saved for each. Local Studio Play uses PlaceId/GameId 0, not independent proof of server delivery.",
+  "nativeStudio": "0.747.0.7471481",
+  "assets": {
+    "mesh": 76181395589964,
+    "texture": 107809848451619,
+    "Idle_Calm": 73712172546084,
+    "Idle_Active": 89284758082218
+  },
+  "sourceManifest": "manifest.json",
+  "license": "source/PROVENANCE.md",
+  "meshSource": "rig_v1/GreenSlime_Rig.fbx",
+  "animationSources": [
+    "rig_v2/Idle_Calm.fbx",
+    "rig_v2/Idle_Active.fbx"
+  ],
+  "nativeClipLengths": [
+    3.5999999046325684,
+    3
+  ],
+  "normalizer": "scripts/green-slime-runtime-asset.mjs --write",
+  "ownerArtAcceptance": "OPEN",
+  "files": [
+    {
+      "path": "assets/familiars/green_slime/GreenSlime.imported.rbxmx",
+      "bytes": 59929,
+      "sha256": "b7a60ac2e71bf2137b7874bccd01594477003b9b8f9bb30db00920f9f2eddbfa"
+    },
+    {
+      "path": "assets/familiars/green_slime/GreenSlime.rbxmx",
+      "bytes": 32920,
+      "sha256": "d9db7eb69eb377a9f790679b5639ae00a8640b5fbc232c3dce3f74ab4c3d1b96"
+    }
+  ]
+}

@@ -1,11 +1,22 @@
 --!nonstrict
 -- Cosmetic client-side worker proxies. Never used as proof of delivery or ownership.
 local RunService = game:GetService("RunService")
+-- AG74_BEGIN_IMPORT
+local RigView = require(script.Parent.FamiliarRigView)
+-- AG74_END_IMPORT
 local world = workspace:WaitForChild("PotionTycoonWorld")
 local folder = Instance.new("Folder")
 folder.Name, folder.Parent = "LocalFamiliarVisuals", workspace
 local proxies = {}
 local crates = {}
+-- AG74_BEGIN_STATE
+local rigs = {}
+local function clearRig(anchor)
+	local record = rigs[anchor]
+	if record and record.view then record.view.destroy() end
+	rigs[anchor] = nil
+end
+-- AG74_END_STATE
 local colors = { slime = Color3.fromRGB(112, 222, 149), brewer = Color3.fromRGB(200, 151, 239), farmer = Color3.fromRGB(235, 203, 141) }
 
 local function discover(anchor)
@@ -32,6 +43,9 @@ world.DescendantAdded:Connect(discover)
 RunService.RenderStepped:Connect(function()
 	local time = os.clock()
 	for anchor, pet in pairs(proxies) do
+-- AG74_BEGIN_CLEANUP
+		if not anchor.Parent or not anchor:GetAttribute("WorkerId") or not RigView.enabled() then clearRig(anchor) end
+-- AG74_END_CLEANUP
 		if not anchor.Parent then
 			pet:Destroy()
 			crates[anchor]:Destroy()
@@ -47,6 +61,19 @@ RunService.RenderStepped:Connect(function()
 			local from, destination, progress = anchor:GetAttribute("HaulFrom"), anchor:GetAttribute("HaulTo"), anchor:GetAttribute("HaulProgress")
 			if from and destination and progress then position = from:Lerp(destination, progress) + Vector3.new(0, 3, 0) end
 			pet.CFrame = pet.CFrame:Lerp(CFrame.new(position), 0.2)
+-- AG74_BEGIN_RENDER
+			if RigView.enabled() and species == "slime" then
+				local id = anchor:GetAttribute("WorkerId")
+				if rigs[anchor] and rigs[anchor].id ~= id then clearRig(anchor) end
+				local previous = rigs[anchor] and rigs[anchor].view
+				if previous and previous.disposed and not previous.failed then clearRig(anchor) end
+				if not rigs[anchor] then rigs[anchor] = {id = id, view = RigView.create(species, folder)} end
+				local view = rigs[anchor].view
+				local hauling = from and destination and progress ~= nil
+				local pivot = CFrame.new(pet.Position - Vector3.new(0, 1.2, 0))
+				if view and view.update(pivot, not hauling and anchor:GetAttribute("WorkerReacting") ~= true) then pet.Transparency = 1 end
+			else clearRig(anchor) end
+-- AG74_END_RENDER
 		else pet.Transparency = 1; pet.GhostTrail.Enabled=false end
 		local crate = crates[anchor]
 		if crate then
@@ -65,3 +92,9 @@ RunService.RenderStepped:Connect(function()
 		end
 	end
 end)
+-- AG74_BEGIN_DISPOSE
+script.Destroying:Connect(function()
+	for anchor in pairs(rigs) do clearRig(anchor) end
+	folder:Destroy()
+end)
+-- AG74_END_DISPOSE

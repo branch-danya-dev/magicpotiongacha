@@ -1,0 +1,272 @@
+{
+  "task": "AG-74",
+  "baseSha": "8796abfbb8345dd90f2ebc7052c415782e056eaa",
+  "date": "2026-11-16",
+  "studio": "0.747.0.7471481",
+  "mode": "Ordinary F5 local full-game QA with opt-in client-only diagnostic fixtures",
+  "placeId": 0,
+  "gameId": 0,
+  "media": "No video/screenshots per owner request 2026-11-16",
+  "scope": "Single desktop client. Not owner art acceptance, live backend or multiplayer certification.",
+  "sourceAndBuildSha256": {
+    "src/client/FamiliarRigView.luau": "a2c6e79809b595fea255d73cec0a1e1f8862f92171abfc16a2340a3f4f952d3e",
+    "src/client/FamiliarView.client.luau": "d14b8df89876846411be3657af797d403b190e6265388f5e5afdb33ba8069eb4",
+    "src/client/FamiliarVisualRegistry.luau": "9acb584d2cc6d81550e77585c97507199e58f86b8fb3fbb291e26c79048d1d17",
+    "src/shared/FamiliarIdle.luau": "a5054207c4ca332ed1aa3d358b899007d8b6d20de857f96ab66734d4749a8a01",
+    "qa/green-slime/Preview.client.luau": "4b5f7c3a66eb153dd47d4e1f8e8e6e0626bd6d1236a27e78e36150b1f09fae4a",
+    "qa/green-slime/Checks.client.luau": "9063f3cf0836820f8c8edcb5985059075385f921425c8dbabfa5fc0d921681ef",
+    "assets/familiars/green_slime/GreenSlime.rbxmx": "d9db7eb69eb377a9f790679b5639ae00a8640b5fbc232c3dce3f74ab4c3d1b96",
+    "build/AG74-NativeChecks-R4.rbxlx": "1f47ca5f6710ced8296c8ba62db31daa8b2833b207bceeaf313ccd377f48dbb8",
+    "build/PotionTycoon-AG74-GreenSlime-QA.rbxlx": "ee1f9e81afd0c3044c0cccf3b3bf7bab755a48facd72e18dcc56512cfc1e6440"
+  },
+  "results": [
+    {
+      "time": "2026-11-16T01:45:15.770Z",
+      "name": "loaded",
+      "data": {
+        "count": 2,
+        "pets": [
+          {
+            "connections": 2,
+            "failed": false,
+            "ready": true,
+            "tracks": 2,
+            "selections": 0,
+            "current": 0,
+            "disposed": false,
+            "transitions": [],
+            "fetch": {
+              "rbxassetid://89284758082218": "Success",
+              "rbxassetid://107809848451619": "Success",
+              "rbxassetid://76181395589964": "Success",
+              "rbxassetid://73712172546084": "Success"
+            }
+          },
+          {
+            "connections": 2,
+            "failed": false,
+            "ready": true,
+            "tracks": 2,
+            "selections": 0,
+            "current": 0,
+            "disposed": false,
+            "transitions": [],
+            "fetch": {
+              "rbxassetid://89284758082218": "Success",
+              "rbxassetid://107809848451619": "Success",
+              "rbxassetid://76181395589964": "Success",
+              "rbxassetid://73712172546084": "Success"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "time": "2026-11-16T01:45:15.770Z",
+      "name": "isolation",
+      "data": {
+        "previewPets": 2,
+        "plots": 8,
+        "owned": 1,
+        "placeId": 0,
+        "gameId": 0
+      }
+    },
+    {
+      "time": "2026-11-16T01:45:30.615Z",
+      "name": "fourTransitions",
+      "data": {
+        "count": 2,
+        "pets": [
+          {
+            "connections": 2,
+            "failed": false,
+            "ready": true,
+            "tracks": 2,
+            "selections": 4,
+            "current": 2,
+            "disposed": false,
+            "transitions": {
+              "1-2": 1,
+              "1-1": 2,
+              "2-1": 1
+            },
+            "fetch": {
+              "rbxassetid://89284758082218": "Success",
+              "rbxassetid://107809848451619": "Success",
+              "rbxassetid://76181395589964": "Success",
+              "rbxassetid://73712172546084": "Success"
+            }
+          },
+          {
+            "connections": 2,
+            "failed": false,
+            "ready": true,
+            "tracks": 2,
+            "selections": 4,
+            "current": 1,
+            "disposed": false,
+            "transitions": {
+              "2-1": 1,
+              "1-1": 1,
+              "2-2": 2
+            },
+            "fetch": {
+              "rbxassetid://89284758082218": "Success",
+              "rbxassetid://107809848451619": "Success",
+              "rbxassetid://76181395589964": "Success",
+              "rbxassetid://73712172546084": "Success"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "time": "2026-11-16T01:45:30.615Z",
+      "name": "desktopTiming",
+      "data": {
+        "headMoved": true,
+        "crossfadeOverlap": true,
+        "sampleSeconds": 14.836773669114336,
+        "heartbeatHz": 138.10280089837838,
+        "maxHeartbeatMs": 19.845759496092796
+      }
+    },
+    {
+      "time": "2026-11-16T01:45:31.119Z",
+      "name": "quality",
+      "data": {
+        "playing": 2,
+        "count": 2,
+        "quality": "full"
+      }
+    },
+    {
+      "time": "2026-11-16T01:45:31.620Z",
+      "name": "quality",
+      "data": {
+        "playing": 2,
+        "count": 2,
+        "quality": "reduced"
+      }
+    },
+    {
+      "time": "2026-11-16T01:45:32.121Z",
+      "name": "quality",
+      "data": {
+        "playing": 0,
+        "count": 2,
+        "quality": "minimal"
+      }
+    },
+    {
+      "time": "2026-11-16T01:45:33.125Z",
+      "name": "reduceMotion",
+      "data": true
+    },
+    {
+      "time": "2026-11-16T01:45:34.133Z",
+      "name": "reactResume",
+      "data": true
+    },
+    {
+      "time": "2026-11-16T01:45:34.162Z",
+      "name": "oldProxyHidden",
+      "data": true
+    },
+    {
+      "time": "2026-11-16T01:45:35.368Z",
+      "name": "workerHaulReactResume",
+      "data": true
+    },
+    {
+      "time": "2026-11-16T01:45:35.375Z",
+      "name": "flagOffRestoresOldProxy",
+      "data": {
+        "proxyVisible": true,
+        "previewPets": 0,
+        "count": 0
+      }
+    },
+    {
+      "time": "2026-11-16T01:45:36.048Z",
+      "name": "missingTemplateRecovery",
+      "data": true
+    },
+    {
+      "time": "2026-11-16T01:45:36.403Z",
+      "name": "missingAnimationFallback",
+      "data": {
+        "disposed": true,
+        "failed": true,
+        "count": 2
+      }
+    },
+    {
+      "time": "2026-11-16T01:45:36.448Z",
+      "name": "removeRecreate",
+      "data": {
+        "count": 2
+      }
+    },
+    {
+      "time": "2026-11-16T01:45:36.870Z",
+      "name": "fiveRecreates",
+      "data": {
+        "count": 2,
+        "pets": [
+          {
+            "connections": 2,
+            "failed": false,
+            "ready": true,
+            "tracks": 2,
+            "selections": 0,
+            "current": 0,
+            "disposed": false,
+            "transitions": [],
+            "fetch": {
+              "rbxassetid://89284758082218": "Success",
+              "rbxassetid://107809848451619": "Success",
+              "rbxassetid://76181395589964": "Success",
+              "rbxassetid://73712172546084": "Success"
+            }
+          },
+          {
+            "connections": 2,
+            "failed": false,
+            "ready": true,
+            "tracks": 2,
+            "selections": 0,
+            "current": 0,
+            "disposed": false,
+            "transitions": [],
+            "fetch": {
+              "rbxassetid://89284758082218": "Success",
+              "rbxassetid://107809848451619": "Success",
+              "rbxassetid://76181395589964": "Success",
+              "rbxassetid://73712172546084": "Success"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "time": "2026-11-16T01:45:36.870Z",
+      "name": "complete",
+      "data": true
+    }
+  ],
+  "knownWarnings": [
+    "Texture 107809848451619 optimized representation warning; explicit preload Success. Final material appearance remains unverified.",
+    "ID 0 deliberately invalid animation: expected one fallback warning.",
+    "Unrelated inherited asset 203785492 incorrect type.",
+    "Rojo plugin localhost connection warnings: no serve process required for rbxlx."
+  ],
+  "notRun": [
+    "Owner visual approval",
+    "Death/reset and real backend rejoin",
+    "Real phones/low FPS/GPU profiling",
+    "2-8 simultaneous clients",
+    "Delivery from live Experience 10776120489"
+  ]
+}

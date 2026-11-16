@@ -1,0 +1,37 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {execFileSync} from 'node:child_process';
+import {normalize} from './green-slime-runtime-asset.mjs';
+import {beforeAG74} from './ag74-preservation.mjs';
+const base='8796abfbb8345dd90f2ebc7052c415782e056eaa';
+const read=p=>readFileSync(p,'utf8').replaceAll('\r\n','\n');
+const paths=execFileSync('git',['ls-tree','-r','--name-only',base,'src','tests','qa','assets'],{encoding:'utf8'}).trim().split('\n');
+for(const path of [...paths,'default.project.json']) {
+ const old=execFileSync('git',['show',`${base}:${path}`],{maxBuffer:64*1024*1024});
+ if(path==='src/client/FamiliarView.client.luau') assert.equal(beforeAG74(path,read(path)),old.toString().replaceAll('\r\n','\n'));
+ else if(/\.(luau|json|md|svg|rbxmx|txt|mjs|py)$/.test(path)) assert.equal(read(path),old.toString().replaceAll('\r\n','\n'),path);
+ else assert(readFileSync(path).equals(old),path);
+}
+const root='assets/familiars/green_slime/';
+const xml=read(root+'GreenSlime.rbxmx');
+assert.equal(xml,normalize(read(root+'GreenSlime.imported.rbxmx')),'Native export deterministically normalized');
+assert.equal((xml.match(/class="Bone"/g)||[]).length,8);
+assert.equal((xml.match(/class="MeshPart"/g)||[]).length,1);
+assert.equal((xml.match(/class="Animator"/g)||[]).length,1);
+assert(!/class="(?:Folder|Script|LocalScript|ModuleScript)"/.test(xml));
+assert(xml.includes('rbxassetid://76181395589964')&&xml.includes('rbxassetid://107809848451619'));
+const receipt=JSON.parse(read(root+'runtime-manifest.json'));
+assert.equal(receipt.creatorId,925845207); assert.equal(receipt.experienceId,10776120489);
+assert.equal(receipt.privacy,'Restricted'); assert.equal(receipt.creatorStore,false);
+assert.equal(receipt.gamePublished,false);
+const registry=read('src/client/FamiliarVisualRegistry.luau');
+for(const id of ['73712172546084','89284758082218']) assert(registry.includes(id));
+const view=read('src/client/FamiliarRigView.luau');
+assert(view.includes('RunService:IsStudio() and workspace:GetAttribute("GreenSlimeRigPreviewEnabled") == true'));
+assert(view.includes('limit = 10')&&view.includes('os.clock() + 12'));
+assert.equal((view.match(/animator:LoadAnimation/g)||[]).length,1,'One bounded preload loop, never render-loop loading');
+const sources=['src/shared/FamiliarIdle.luau','src/client/FamiliarRigView.luau','src/client/FamiliarVisualRegistry.luau','qa/green-slime/Preview.client.luau'].map(read).join('\n');
+assert(!/FireServer|InvokeServer|OnServerEvent|DataStore|ProfileStore|MarketplaceService|HttpService|Lighting/.test(sources),'Visuals cannot alter authority/economy/persistence');
+assert(!read('default.project.json').includes('GreenSlimeRigPreviewEnabled'));
+assert(!read('default.project.json').includes('FamiliarTemplates'));
+console.log('AG74 PASS: PR49 authority/assets/tests preserved, exact native receipt and deterministic inert rig, Studio-only bounded renderer. Native tests reported separately.');

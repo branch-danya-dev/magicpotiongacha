@@ -26,6 +26,15 @@ for (const item of manifest.files) {
 }
 const listed = new Set(manifest.files.map(x => x.path));
 assert.equal(listed.size, manifest.files.length, 'no duplicate manifest paths');
+// AG74's native exports have a separate receipt; AG73's original 58 files stay immutable.
+const nativeReceipt = JSON.parse(await readFile(resolve(root, folder, 'runtime-manifest.json'), 'utf8'));
+assert.deepEqual(nativeReceipt.files.map(x=>x.path).sort(), [folder+'/GreenSlime.imported.rbxmx',folder+'/GreenSlime.rbxmx']);
+for(const item of nativeReceipt.files) {
+  const bytes=await readFile(resolve(root,item.path));
+  assert.equal(bytes.length,item.bytes); assert.equal(sha(bytes),item.sha256);
+  listed.add(item.path);
+}
+listed.add(folder+'/runtime-manifest.json');
 async function checkCoverage(dir) {
   for (const entry of await readdir(resolve(root, dir), { withFileTypes: true })) {
     if (entry.name.endsWith('.blend1') || entry.name.endsWith('.fbm') || entry.name === '__pycache__') continue;
