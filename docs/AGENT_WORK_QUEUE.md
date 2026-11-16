@@ -18,6 +18,13 @@
 
 ### AG-76B-R2 — Wizard Island visual proof of concept
 
+**2026-11-16 follow-up CODE_CANDIDATE / STUDIO CHECKED / ART PENDING:** owner requested smoother nonrepeating cliffs,
+Dark Fairytale vegetation and readable Minimal night. Base `2f981f7ffee8785457dce866f1f7f1d604e4b27d`.
+Same isolated branch/place; no integration, upload, economy, save, merge or publication.
+One original continuous cliff mesh, muted woodland with exposed twisting branches,
+and readable Minimal night are available for owner review. Native Play evidence,
+quality checks and desktop timings: [AG76B_R2_ART_POLISH.md](AG76B_R2_ART_POLISH.md).
+
 **CODE_CANDIDATE / STUDIO PLAY CHECKED / OWNER ART GATE OPEN / NOT INTEGRATED / NOT PUBLISHED.**
 Only active task, claimed 2026-11-16. Branch `feat/ag76b-r2-wizard-island-poc`.
 Base: local R1 `913231369629f8663e66dc9e18fecccc15d0ee68`, descendant of

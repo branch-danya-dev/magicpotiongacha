@@ -1,5 +1,8 @@
 # AG-76B-R2 — Wizard Island, local art candidate
 
+This is the preserved first candidate and its original evidence. The owner's
+requested follow-up is in [AG76B_R2_ART_POLISH.md](AG76B_R2_ART_POLISH.md).
+
 Status: **IMPLEMENTED/CODE + STUDIO VERIFIED (bounded checks below), ART PENDING,
 NOT INTEGRATED, NOT PUBLISHED**. This is a review candidate, not a claim that the
 owner has accepted Stylized Realism / Dark Fairytale quality.

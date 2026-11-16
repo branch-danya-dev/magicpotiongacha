@@ -58,20 +58,13 @@ end
 local floor=part("ForestFloor",{0,-.3,-8},{1.6,124,116},{80,92,68},"Grass",root)
 floor.Shape=Enum.PartType.Cylinder;floor.CFrame=CFrame.new(O+Vector3.new(0,-.3,-8))*CFrame.Angles(0,0,math.pi/2)
 floor.Transparency=1;floor.CanCollide=true;floor.CanQuery=true
--- Interlocking organic masses. No WedgePart, no detached procedural teeth.
-rock("Rock_Medium_1",-4,-36,-10,22,12,22,22,{116,127,134},"Slate")
-rock("Rock_Medium_1",7,-57,-12,13,14,13,-16,{104,116,128},"Slate")
-rock("Rock_Medium_1",-5,-73,-16,6,12,7,70,{97,111,126},"Slate")
-for i=1,15 do
-	local a=i*math.pi*2/15;local r=1+.10*math.sin(a*5)+.035*math.cos(a*7)
-	local x,z=47*r*math.cos(a),-8+43*r*math.sin(a)
-	rock("Rock_Medium_1",x,-14-(i%3)*2,z,5.4+(i%3)*.7,6.5+(i%4)*.65,5.5,i*31,{124+i%3*9,133+i%3*7,136+i%3*8},"Slate")
-end
+-- One original continuous smooth MeshPart is built locally by Cliff.luau in Play.
+-- No duplicated, scaled stock boulders form the main island silhouette anymore.
 -- A thin native terrain skin blends grass, soil and stone without stretched mesh UVs.
 -- The main cliffs/underbody remain imported MeshParts. Terrain exists only in this place.
 local terrain=workspace.Terrain
-terrain:SetMaterialColor(Enum.Material.Grass,Color3.fromRGB(76,94,68))
-terrain:SetMaterialColor(Enum.Material.Ground,Color3.fromRGB(93,87,69))
+terrain:SetMaterialColor(Enum.Material.Grass,Color3.fromRGB(92,110,99))
+terrain:SetMaterialColor(Enum.Material.Ground,Color3.fromRGB(116,108,95))
 terrain:SetMaterialColor(Enum.Material.Rock,Color3.fromRGB(105,114,114))
 local region=Region3.new(O+Vector3.new(-68,-8,-72),O+Vector3.new(68,8,56)):ExpandToGrid(4)
 local corner=region.CFrame.Position-region.Size/2;local count=region.Size/4
@@ -98,31 +91,36 @@ terrain:WriteVoxels(region,4,materials,occupancy)
 -- Small stones create an irregular, readable route to the unchanged crystal coordinate.
 for i=0,10 do
 	local z=24-i*2.6;local x=math.sin(i*.45)*1.2
-	for side=-1,1,2 do mesh("RockPath_Round_Small_1",x+side*1.6,.42,z,2.25,17*i+side*14,{177,182,161}) end
+	rock("Pebble_Round_1",x,.62,z,1.7,.48,1.7,17*i-9,{130,144,143},"Slate")
 end
 for i=1,13 do local a=i*math.pi*2/13
-	mesh("RockPath_Round_Small_1",math.cos(a)*6.2,.46,-2+math.sin(a)*6.2,2.4,i*29,{167,174,161})
+	rock("Pebble_Round_1",math.cos(a)*6.2,.62,-2+math.sin(a)*6.2,1.05,.5,1.25,i*29,{137,147,144},"Slate")
 end
 -- Authored tree silhouettes: open centre, asymmetric framing and layered far bank.
 local trees={
 	{"TwistedTree_1",-17,12,1.13,35},{"CommonTree_3",20,12,1.15,-35},
-	{"CommonTree_5",-40,6,.9,90},{"Pine_2",44,0,.84,-22},
+	{"CommonTree_5",-40,6,.9,90},{"CommonTree_1",44,0,.84,-22},
 	{"TwistedTree_1",-23,-28,1.3,20},{"CommonTree_3",27,-28,1.28,-14},
-	{"CommonTree_5",-5,-42,1.28,55},{"Pine_2",12,-44,1.2,84},
+	{"CommonTree_5",-5,-42,1.28,55},{"CommonTree_1",12,-44,1.2,84},
 	{"CommonTree_1",-37,-29,1.15,90},{"Pine_2",37,-34,1.12,17},
 	{"CommonTree_3",-15,-48,.92,0},{"CommonTree_5",29,-46,.83,-25},
-	{"Pine_2",-43,-15,.9,60},{"CommonTree_5",43,16,.78,82},
-	{"CommonTree_3",-32,34,.84,120},{"Pine_2",18,40,.76,9},
+	{"TwistedTree_1",-43,-15,.9,60},{"CommonTree_5",43,16,.78,82},
+	{"CommonTree_3",-32,34,.84,120},{"CommonTree_1",18,40,.76,9},
 	{"CommonTree_3",-14,-35,1.45,72},{"CommonTree_5",16,-30,1.34,104},
 	{"Pine_2",-30,-42,1.2,24},{"CommonTree_3",3,-48,1.4,13},
 }
-for _,d in ipairs(trees) do
-	local m=mesh(d[1],d[2],.4,d[3],d[4],d[5],{161,181,160})
-	-- The pack's red twisted canopy is an accent, subdued into the forest palette.
-	if d[1]=="TwistedTree_1" then for _,p in ipairs(m:GetChildren()) do
-		if p:IsA("MeshPart") and p.Name:match("_2$") then
-			p.Color=Color3.fromRGB(119,132,146)
-			local s=p:FindFirstChildOfClass("SurfaceAppearance");if s then s.Color=p.Color end
+for index,d in ipairs(trees) do
+	local m=mesh(d[1],d[2],.4,d[3],d[4],d[5],{172,179,190})
+	for _,p in ipairs(m:GetChildren()) do if p:IsA("MeshPart") and p.Name:match("_2$") then
+		local s=p:FindFirstChildOfClass("SurfaceAppearance")
+		if d[1]=="TwistedTree_1" then
+			-- Expose the old twisting branches; no red plastic-looking crown.
+			p.Transparency=1;p:SetAttribute("EnvironmentDetail",99)
+		else
+			-- Preserve leaf alpha/albedo: removing it reveals the mesh's leaf cards.
+			local palette={{107,131,127},{126,143,132},{96,119,130},{135,146,137}}
+			p.Color=Color3.fromRGB(table.unpack(palette[index%4+1]))
+			if s then s.Color=p.Color end
 		end
 	end end
 end
@@ -130,11 +128,11 @@ end
 local rng=Random.new(7602)
 local clusters={{-16,13},{15,18},{-24,-20},{23,-21},{-39,4},{35,1},{-10,-39},{14,-35},{-26,30},{32,27}}
 for n,c in ipairs(clusters) do
-	mesh("Bush_Common_Flowers",c[1],.45,c[2],1.2+(n%3)*.15,n*41,{170,194,168})
+	mesh("Bush_Common_Flowers",c[1],.45,c[2],1.1+(n%3)*.15,n*41,{133,157,172})
 	for j=1,6 do
 		local a=j*2.39996;local r=2+j*.72
 		local name=j%3==0 and "Fern_1" or (j%2==0 and "Grass_Wispy_Tall" or "Clover_2")
-		mesh(name,c[1]+math.cos(a)*r,.5,c[2]+math.sin(a)*r,name=="Clover_2" and 3 or 1.05,n*27+j*29,{156,180,145},nil,2)
+		mesh(name,c[1]+math.cos(a)*r,.5,c[2]+math.sin(a)*r,name=="Clover_2" and 2.5 or 1.05,n*27+j*29,{120,148,161},nil,2)
 	end
 end
 for i=1,55 do

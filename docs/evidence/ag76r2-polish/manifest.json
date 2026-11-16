@@ -1,0 +1,178 @@
+{
+  "task": "AG-76B-R2 art polish",
+  "date": "2026-11-16",
+  "branch": "feat/ag76b-r2-wizard-island-poc",
+  "base": "2f981f7ffee8785457dce866f1f7f1d604e4b27d",
+  "sourceCommit": "Containing commit; exact final HEAD in build/wizard-island-build.json",
+  "artifactSha256": "55013e59203419ccb58eb84d79c8cb3ca6bb04f7e1d55e6d01845263184562ce",
+  "sourceHashes": {
+    "qa/wizard-island/Scene.server.luau": "d291f1a5e7cb74ce8149bfcdd49da0d08054186462bf91eb085ae64d649c1c89",
+    "qa/wizard-island/Review.client.luau": "4d12e8926b87f8ca715ad0b83236de56483c92b50cbb598161a061dc745eb294",
+    "qa/wizard-island/Cliff.luau": "38a0e6ec7e23dce6c95d2885e06e5b3c4461d1a372c0a9f8bfd3dc3250aff666",
+    "qa/wizard-island/AtmosphereStyle.luau": "582acefdb5ca9faa35e8f4a40d876c131594b98f84b3bbe0c017b59932db3409",
+    "qa/wizard-island/EnvironmentConfig.luau": "de688cb9e30fae2a7105fbd6853135843af4ddad2643810d82bcf05b19cf407f",
+    "src/client/EnvironmentView.luau": "0d97aaf1ad5fcaaf415abac03adfdf5e4ac806c250621fc7046069dd5e3d04c3"
+  },
+  "templates": {
+    "nature": "803ae25b3aacb215699f378dad60451e2fb1e025ac1fc40df7f8e6435735f5f5",
+    "lectern": "c541c02e6d91099a3297de9919f2d3f52bca8a183f277af4f0dcf17a38ba59a2"
+  },
+  "studio": "0.747.0.7471481",
+  "viewport": [
+    1566,
+    1095
+  ],
+  "graphics": "Studio Q6",
+  "gpu": "NVIDIA GeForce RTX 5070 Ti",
+  "captureMethod": "Native Studio View > Screenshot during ordinary F5 Play; original PNG bytes, no external rendering or retouching",
+  "captures": [
+    {
+      "file": "01-spawn-dusk.png",
+      "original": "RobloxScreenShot20261116_213421964.png",
+      "camera": "spawn",
+      "pose": "dusk",
+      "quality": "full",
+      "reduceMotion": false,
+      "bytes": 1631579,
+      "sha256": "7533296ce0639728ccb1869481eb4171d4303bc412a29b2c271fb2d2830aa926"
+    },
+    {
+      "file": "02-island-dusk.png",
+      "original": "RobloxScreenShot20261116_213453007.png",
+      "camera": "overview",
+      "pose": "dusk",
+      "quality": "full",
+      "reduceMotion": false,
+      "bytes": 619947,
+      "sha256": "2ecca9ea117d0f968b3f4c118c94295847bdbf476975bbea0e00f6e46c2895f4"
+    },
+    {
+      "file": "03-altar-dusk.png",
+      "original": "RobloxScreenShot20261116_213516353.png",
+      "camera": "altar",
+      "pose": "dusk",
+      "quality": "full",
+      "reduceMotion": false,
+      "bytes": 1671306,
+      "sha256": "6e9a8f1d838fd8b9623ed798d7900fb4bcc9aedfbea862a7238e99d6287ab4b2"
+    },
+    {
+      "file": "04-spawn-night-minimal.png",
+      "original": "RobloxScreenShot20261116_213756177.png",
+      "camera": "spawn",
+      "pose": "night",
+      "quality": "minimal",
+      "reduceMotion": true,
+      "bytes": 1457343,
+      "sha256": "3e638c350df17196f009b471742f505edfb37754b23490d1c8f04489b5bd488a"
+    },
+    {
+      "file": "05-spawn-night-full.png",
+      "original": "RobloxScreenShot20261116_213832265.png",
+      "camera": "spawn",
+      "pose": "night",
+      "quality": "full",
+      "reduceMotion": false,
+      "bytes": 1697518,
+      "sha256": "794b5be4a4be3ed0299eaba58465b70bdee1bb9035a78d9051ed413d1a62b472"
+    },
+    {
+      "file": "06-spawn-day.png",
+      "original": "RobloxScreenShot20261116_213857777.png",
+      "camera": "spawn",
+      "pose": "day",
+      "quality": "full",
+      "reduceMotion": false,
+      "bytes": 1869348,
+      "sha256": "a19b7b96639aa418ee981f6c748a75560662b4674b2957e896d5cd9af8f86f30"
+    }
+  ],
+  "nativeQa": [
+    {
+      "lights": 0,
+      "wind": 0,
+      "cliffVertices": 3936,
+      "lighting": [
+        "Atmosphere:M7Atmosphere",
+        "Sky:M7Sky",
+        "ColorCorrectionEffect:M7Color",
+        "BloomEffect:M7Bloom",
+        "SunRaysEffect:M7SunRays"
+      ],
+      "motion": true,
+      "cliffCount": 1,
+      "cliffTriangles": 7868,
+      "assetFailures": 0,
+      "enabledPointLights": 0,
+      "motes": 0,
+      "quality": "minimal"
+    }
+  ],
+  "benchmarks": [
+    {
+      "lights": 6,
+      "seconds": 15.003595795715228,
+      "assetFailures": 0,
+      "frames": 3500,
+      "fps": 233.27741213873148,
+      "memoryMiB": 2661.7734375,
+      "p95ms": 5.439599975943565,
+      "wind": 12,
+      "viewport": "1566, 1095",
+      "motes": 24,
+      "p50ms": 4.158600233495235,
+      "quality": "full"
+    },
+    {
+      "lights": 3,
+      "seconds": 15.003667906392366,
+      "assetFailures": 0,
+      "frames": 3494,
+      "fps": 232.8763887470056,
+      "memoryMiB": 2659.46875,
+      "p95ms": 5.371300037950277,
+      "wind": 4,
+      "viewport": "1566, 1095",
+      "motes": 9,
+      "p50ms": 4.181200172752142,
+      "quality": "reduced"
+    },
+    {
+      "lights": 0,
+      "seconds": 15.001339093316346,
+      "assetFailures": 0,
+      "frames": 3588,
+      "fps": 239.1786478314184,
+      "memoryMiB": 2659.31640625,
+      "p95ms": 5.1033999770879745,
+      "wind": 0,
+      "viewport": "1566, 1095",
+      "motes": 0,
+      "p50ms": 4.091599956154823,
+      "quality": "minimal"
+    }
+  ],
+  "artApproved": false,
+  "integrated": false,
+  "published": false,
+  "validation": {
+    "tools": "PASS",
+    "luauTests": 1360,
+    "nodeTests": 14,
+    "compiledSourcesInRegression": 267,
+    "finalQaFilesRecompiled": 5,
+    "ci": "NOT RUN",
+    "productionSourceDiff": false,
+    "repeatedBuildSha256": "55013e59203419ccb58eb84d79c8cb3ca6bb04f7e1d55e6d01845263184562ce",
+    "logs": [
+      {
+        "file": "build/ag76r2-polish-tools.log",
+        "sha256": "afaafa3ffbbc9b71fea5bbd26cb3e9087419eb0cb94a32881c8b893b4b6a58a0"
+      },
+      {
+        "file": "build/ag76r2-polish-check.log",
+        "sha256": "374d973e12a8a8133a846da880ebbc3c8885ef92d867ee1a80939eb5c85a6afd"
+      }
+    ]
+  }
+}

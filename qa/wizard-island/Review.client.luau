@@ -10,6 +10,8 @@ local Assets=require(Shared.EnvironmentAssets)
 local O=Vector3.new(table.unpack(require(Shared.PersonalIsland).origin))
 local root=workspace:WaitForChild("PotionTycoonWorld")
 while not root:GetAttribute("WizardReady") do task.wait() end
+local cliff=require(script.Parent.Cliff).create(root.EnvironmentArt,O)
+script.Destroying:Connect(function() cliff.part:Destroy();cliff.mesh:Destroy() end)
 local View=require(script.Parent.EnvironmentView)
 local view=View.start(root,{quality="full",pose="dusk"})
 view.setLook("OFF");view.setAnnotationsEnabled(false)
