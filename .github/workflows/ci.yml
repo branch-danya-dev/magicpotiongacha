@@ -42,6 +42,8 @@ jobs:
             build/PotionTycoon-AG76B-PersonalIsland-QA.rbxlx
             build/WizardIsland-AG76B-R3-Romantic-ART-PENDING.rbxlx
             build/romantic-island-build.json
+            build/WizardIsland-AG76B-R4A-Grass-ART-PENDING.rbxlx
+            build/grass-island-build.json
             build/AG67-Prototype.rbxlx
             assets/vfx/ag67/
             scripts/install-ag67-preview.mjs

@@ -1,0 +1,195 @@
+{
+  "method": "RenderStepped frame intervals; same viewport, Q6 and QualityLevel3; dusk/spawn; 3 seconds settle and 15 seconds sample; motion enabled; no capture/test jobs during samples",
+  "beforeBase": "d5f39fad50ac84e660365299f1b3c4de600e3a80",
+  "beforeBuildSha256": "389cdc8ab642143db8e0b7ba5ab78f4d82bc749ece4ce79aa9e577617fc3bc79",
+  "before": [
+    {
+      "at": "2026-11-16T22:02:58.326Z",
+      "p50": 4.100299905985594,
+      "seconds": 15.000589406816289,
+      "frames": 3572,
+      "fps": 238.12397654034035,
+      "camera": "spawn",
+      "p95": 5.15480013564229,
+      "graphics": "QualityLevel3",
+      "viewport": "1566, 1095",
+      "memory": 2892.50390625,
+      "pose": "dusk",
+      "quality": "full"
+    },
+    {
+      "at": "2026-11-16T22:03:16.327Z",
+      "p50": 4.09420020878315,
+      "seconds": 15.001997389597818,
+      "frames": 3575,
+      "fps": 238.301601257367,
+      "camera": "spawn",
+      "p95": 5.166800227016211,
+      "graphics": "QualityLevel3",
+      "viewport": "1566, 1095",
+      "memory": 2892.9609375,
+      "pose": "dusk",
+      "quality": "reduced"
+    },
+    {
+      "at": "2026-11-16T22:03:34.329Z",
+      "p50": 4.1057998314499855,
+      "seconds": 15.001207909313962,
+      "frames": 3561,
+      "fps": 237.3808843612549,
+      "camera": "spawn",
+      "p95": 5.130699835717678,
+      "graphics": "QualityLevel3",
+      "viewport": "1566, 1095",
+      "memory": 2896.0625,
+      "pose": "dusk",
+      "quality": "minimal"
+    }
+  ],
+  "after": [
+    {
+      "at": "2026-11-16T22:33:50.301Z",
+      "p50": 4.082799889147282,
+      "seconds": 15.004017611965537,
+      "frames": 3488,
+      "fps": 232.47106809701148,
+      "camera": "spawn",
+      "p95": 5.666300188750029,
+      "graphics": "QualityLevel3",
+      "viewport": "1566, 1095",
+      "memory": 3092.21484375,
+      "pose": "dusk",
+      "quality": "full"
+    },
+    {
+      "at": "2026-11-16T22:34:08.305Z",
+      "p50": 4.129000008106232,
+      "seconds": 15.001040895702317,
+      "frames": 3505,
+      "fps": 233.65045294984535,
+      "camera": "spawn",
+      "p95": 5.537699908018112,
+      "graphics": "QualityLevel3",
+      "viewport": "1566, 1095",
+      "memory": 3090.0703125,
+      "pose": "dusk",
+      "quality": "reduced"
+    },
+    {
+      "at": "2026-11-16T22:34:26.312Z",
+      "p50": 4.089700058102608,
+      "seconds": 15.003836294868961,
+      "frames": 3597,
+      "fps": 239.73868611390466,
+      "camera": "spawn",
+      "p95": 5.103799980133772,
+      "graphics": "QualityLevel3",
+      "viewport": "1566, 1095",
+      "memory": 3090.23046875,
+      "pose": "dusk",
+      "quality": "minimal"
+    }
+  ],
+  "cover": [
+    {
+      "at": "2026-11-16T22:28:57.278Z",
+      "zones": {
+        "rim": 61,
+        "clearing": 110,
+        "grove": 120
+      },
+      "details": [
+        57,
+        100,
+        134
+      ],
+      "occupancyChanged": 0,
+      "grassLength": 0.23999999463558197,
+      "removedUnsupported": 9,
+      "decoration": true,
+      "seatedExisting": 67,
+      "triangles": 112530,
+      "materialVoxelsChanged": 122,
+      "skipped": 29,
+      "collision": false,
+      "parts": 291
+    }
+  ],
+  "checks": [
+    {
+      "at": "2026-11-16T22:35:36.687Z",
+      "baseMoving": 0,
+      "wind": "0, 0, 0",
+      "after": 873,
+      "assetFailures": 0,
+      "changed": 0,
+      "before": 873,
+      "moving": 0,
+      "switches": 20,
+      "checked": 291
+    }
+  ],
+  "walk": [
+    {
+      "at": "2026-11-16T22:34:42.122Z",
+      "method": "Humanoid MoveTo, normal physics; no teleport",
+      "points": [
+        {
+          "health": 100,
+          "x": 0,
+          "reached": true,
+          "z": 2
+        },
+        {
+          "health": 100,
+          "x": -20,
+          "reached": true,
+          "z": 2
+        },
+        {
+          "health": 100,
+          "x": -30,
+          "reached": true,
+          "z": -20
+        },
+        {
+          "health": 100,
+          "x": 0,
+          "reached": true,
+          "z": -30
+        },
+        {
+          "health": 100,
+          "x": 28,
+          "reached": true,
+          "z": -12
+        },
+        {
+          "health": 100,
+          "x": 20,
+          "reached": true,
+          "z": 16
+        },
+        {
+          "health": 100,
+          "x": 0,
+          "reached": true,
+          "z": 20
+        }
+      ],
+      "health": 100,
+      "minRootY": 3.709409713745117
+    }
+  ],
+  "assets": [
+    {
+      "at": "2026-11-16T22:28:58.960Z",
+      "ok": true,
+      "failed": []
+    }
+  ],
+  "limits": [
+    "Single desktop sample near 240 FPS cap, not GPU timings or phone verification",
+    "Studio aggregate memory includes reopened-place and asset caches"
+  ]
+}

@@ -16,6 +16,24 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### AG-76B-R4A — Dynamic Grass & Ground Cover
+
+**CODE CANDIDATE / STUDIO VERIFIED (bounded art QA) / OWNER ART PENDING / NOT INTEGRATED.**
+Claimed 2026-11-17; sole active task, branch `feat/ag76b-r4a-dynamic-grass`.
+Base Draft PR #57 at `d5f39fad50ac84e660365299f1b3c4de600e3a80`;
+exact-head Windows/Ubuntu CI success, clean starting tree.
+Scope: native Terrain grass, heterogeneous ground-cover groups and bounded
+visual wind through the existing EnvironmentView owner. Separate QA build only.
+Preserve R3 trees, arch, waterfall, clouds, Lighting, 124x116 island, all 13
+stations/26 endpoints, spawn and six-stud path. No `src/`, economy, V8 or saves.
+No migration/persistent operations; rollback is opening the preserved R3 place.
+Delivered [six native Play shots, 12.2-second wind video and report](AG76B_R4A_DYNAMIC_GRASS.md),
+matched desktop timings, seven-point movement and 20 quality switches.
+291 added meshes; Full/Reduced/Minimal visible 291/157/57; Reduce Motion zero
+wind and unchanged transforms. 1,372 Luau + 14 Node tests PASS. Exact-head CI
+is recorded in the stacked Draft PR. No merge, Roblox publication, new upload
+or Meshy generation. Stopped for owner art review; phones remain untested.
+
 ### AG-76B-R3 — Romantic Dark Fairytale / Forgotten Sanctuary
 
 **CODE CANDIDATE / STUDIO VERIFIED (bounded QA) / OWNER ART PENDING / NOT INTEGRATED.**

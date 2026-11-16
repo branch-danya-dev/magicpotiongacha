@@ -1,0 +1,60 @@
+2026-11-16T22:02:58.326Z,4970.326660,5ab8,6,Info [FLog::CreatorOutput] GRASS_BASELINE {"p50":4.100299905985594,"seconds":15.000589406816289,"frames":3572,"fps":238.12397654034036,"camera":"spawn","p95":5.15480013564229,"graphics":"QualityLevel3","viewport":"1566, 1095","memory":2892.50390625,"pose":"dusk","quality":"full"}
+2026-11-16T22:03:16.327Z,4988.327637,5ab8,6,Info [FLog::CreatorOutput] GRASS_BASELINE {"p50":4.09420020878315,"seconds":15.001997389597819,"frames":3575,"fps":238.301601257367,"camera":"spawn","p95":5.1668002270162109,"graphics":"QualityLevel3","viewport":"1566, 1095","memory":2892.9609375,"pose":"dusk","quality":"reduced"}
+2026-11-16T22:03:34.329Z,5006.329590,5ab8,6,Info [FLog::CreatorOutput] GRASS_BASELINE {"p50":4.1057998314499859,"seconds":15.001207909313962,"frames":3561,"fps":237.3808843612549,"camera":"spawn","p95":5.130699835717678,"graphics":"QualityLevel3","viewport":"1566, 1095","memory":2896.0625,"pose":"dusk","quality":"minimal"}
+2026-11-16T22:28:57.278Z,6529.278809,657c,6,Info [FLog::CreatorOutput] GRASS_COVER {"zones":{"rim":61,"clearing":110,"grove":120},"details":[57,100,134],"occupancyChanged":0,"grassLength":0.23999999463558198,"removedUnsupported":9,"decoration":true,"seatedExisting":67,"triangles":112530,"materialVoxelsChanged":122,"skipped":29,"collision":false,"parts":291}
+2026-11-16T22:28:57.432Z,6529.432129,27e8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn full reduceMotion=false
+2026-11-16T22:28:58.960Z,6530.960938,27e8,6,Info [FLog::CreatorOutput] WIZARD_ASSETS {"ok":true,"failed":[]}
+2026-11-16T22:29:50.759Z,6582.759766,27e8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk grass full reduceMotion=false
+2026-11-16T22:30:15.286Z,6607.286621,5ab8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk overview full reduceMotion=false
+2026-11-16T22:30:52.716Z,6644.716797,27e8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk grove full reduceMotion=false
+2026-11-16T22:31:47.512Z,6699.512207,5ab8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk grove full reduceMotion=true
+2026-11-16T22:32:14.845Z,6726.845703,5ab8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk grove full reduceMotion=false
+2026-11-16T22:32:14.906Z,6726.906738,5ab8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn full reduceMotion=false
+2026-11-16T22:32:14.925Z,6726.925781,5ab8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW night spawn full reduceMotion=false
+2026-11-16T22:32:14.980Z,6726.980469,5ab8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW night spawn reduced reduceMotion=false
+2026-11-16T22:32:15.000Z,6727.000488,5ab8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW night spawn minimal reduceMotion=false
+2026-11-16T22:33:32.297Z,6804.297852,657c,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn minimal reduceMotion=false
+2026-11-16T22:33:32.297Z,6804.297852,657c,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn minimal reduceMotion=false
+2026-11-16T22:33:32.298Z,6804.298828,657c,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn minimal reduceMotion=false
+2026-11-16T22:33:32.298Z,6804.298828,657c,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn full reduceMotion=false
+2026-11-16T22:33:50.301Z,6822.301270,5ab8,6,Info [FLog::CreatorOutput] GRASS_FINAL {"p50":4.082799889147282,"seconds":15.004017611965537,"frames":3488,"fps":232.47106809701149,"camera":"spawn","p95":5.666300188750029,"graphics":"QualityLevel3","viewport":"1566, 1095","memory":3092.21484375,"pose":"dusk","quality":"full"}
+2026-11-16T22:33:50.301Z,6822.301270,5ab8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn full reduceMotion=false
+2026-11-16T22:33:50.302Z,6822.302246,5ab8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn reduced reduceMotion=false
+2026-11-16T22:34:08.305Z,6840.305176,5ab8,6,Info [FLog::CreatorOutput] GRASS_FINAL {"p50":4.129000008106232,"seconds":15.001040895702318,"frames":3505,"fps":233.65045294984535,"camera":"spawn","p95":5.537699908018112,"graphics":"QualityLevel3","viewport":"1566, 1095","memory":3090.0703125,"pose":"dusk","quality":"reduced"}
+2026-11-16T22:34:08.305Z,6840.305176,5ab8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn reduced reduceMotion=false
+2026-11-16T22:34:08.306Z,6840.306152,5ab8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn minimal reduceMotion=false
+2026-11-16T22:34:26.312Z,6858.312012,5ab8,6,Info [FLog::CreatorOutput] GRASS_FINAL {"p50":4.089700058102608,"seconds":15.003836294868961,"frames":3597,"fps":239.73868611390467,"camera":"spawn","p95":5.103799980133772,"graphics":"QualityLevel3","viewport":"1566, 1095","memory":3090.23046875,"pose":"dusk","quality":"minimal"}
+2026-11-16T22:34:26.312Z,6858.312012,5ab8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn minimal reduceMotion=false
+2026-11-16T22:34:26.312Z,6858.312012,5ab8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn full reduceMotion=false
+2026-11-16T22:34:26.312Z,6858.312012,5ab8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn full reduceMotion=true
+2026-11-16T22:34:31.317Z,6863.317383,657c,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn full reduceMotion=true
+2026-11-16T22:34:31.317Z,6863.317383,657c,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn full reduceMotion=false
+2026-11-16T22:34:31.317Z,6863.317383,657c,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk free full reduceMotion=false
+2026-11-16T22:34:42.122Z,6874.122070,27e8,6,Info [FLog::CreatorOutput] ROMANTIC_WALK {"method":"Humanoid MoveTo, normal physics; no teleport","points":[{"health":100,"x":0,"reached":true,"z":2},{"health":100,"x":-20,"reached":true,"z":2},{"health":100,"x":-30,"reached":true,"z":-20},{"health":100,"x":0,"reached":true,"z":-30},{"health":100,"x":28,"reached":true,"z":-12},{"health":100,"x":20,"reached":true,"z":16},{"health":100,"x":0,"reached":true,"z":20}],"health":100,"minRootY":3.709409713745117}
+2026-11-16T22:35:29.619Z,6921.619141,27e8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn full reduceMotion=false
+2026-11-16T22:35:29.619Z,6921.619141,27e8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn reduced reduceMotion=false
+2026-11-16T22:35:29.723Z,6921.723633,3028,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn minimal reduceMotion=false
+2026-11-16T22:35:29.827Z,6921.827637,1b08,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn full reduceMotion=false
+2026-11-16T22:35:29.930Z,6921.930664,1b08,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn reduced reduceMotion=false
+2026-11-16T22:35:30.034Z,6922.034180,3028,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn minimal reduceMotion=false
+2026-11-16T22:35:30.138Z,6922.138672,0650,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn full reduceMotion=false
+2026-11-16T22:35:30.239Z,6922.239746,6e90,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn reduced reduceMotion=false
+2026-11-16T22:35:30.343Z,6922.343750,2274,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn minimal reduceMotion=false
+2026-11-16T22:35:30.445Z,6922.445801,6e90,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn full reduceMotion=false
+2026-11-16T22:35:30.547Z,6922.547363,0650,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn reduced reduceMotion=false
+2026-11-16T22:35:30.653Z,6922.653809,3028,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn minimal reduceMotion=false
+2026-11-16T22:35:30.756Z,6922.756836,27e8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn full reduceMotion=false
+2026-11-16T22:35:30.860Z,6922.860840,3028,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn reduced reduceMotion=false
+2026-11-16T22:35:30.963Z,6922.963379,69b8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn minimal reduceMotion=false
+2026-11-16T22:35:31.065Z,6923.065430,27e8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn full reduceMotion=false
+2026-11-16T22:35:31.167Z,6923.167480,657c,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn reduced reduceMotion=false
+2026-11-16T22:35:31.270Z,6923.270020,27e8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn minimal reduceMotion=false
+2026-11-16T22:35:31.375Z,6923.375488,3028,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn full reduceMotion=false
+2026-11-16T22:35:31.477Z,6923.477051,2274,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn reduced reduceMotion=false
+2026-11-16T22:35:31.579Z,6923.579102,27e8,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn minimal reduceMotion=false
+2026-11-16T22:35:31.679Z,6923.679688,6e90,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn full reduceMotion=false
+2026-11-16T22:35:31.680Z,6923.680664,6e90,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn full reduceMotion=true
+2026-11-16T22:35:36.687Z,6928.687500,3028,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn full reduceMotion=true
+2026-11-16T22:35:36.687Z,6928.687500,3028,6,Info [FLog::CreatorOutput] GRASS_FINAL_CHECK {"baseMoving":0,"wind":"0, 0, 0","after":873,"assetFailures":0,"changed":0,"before":873,"moving":0,"switches":20,"checked":291}
+2026-11-16T22:35:36.687Z,6928.687500,3028,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn full reduceMotion=false
+2026-11-16T22:35:36.687Z,6928.687500,3028,6,Info [FLog::CreatorOutput] ROMANTIC_VIEW dusk spawn full reduceMotion=false
