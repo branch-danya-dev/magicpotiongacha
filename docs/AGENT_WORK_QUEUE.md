@@ -16,6 +16,29 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### AG-76B-R3 — Romantic Dark Fairytale / Forgotten Sanctuary
+
+**CODE CANDIDATE / STUDIO VERIFIED (bounded QA) / OWNER ART PENDING / NOT INTEGRATED.**
+Claimed 2026-11-16; sole active task. Branch `feat/ag76b-r3-romantic-island-layout`.
+Base PR #56 @ `34e28910c739f66ff2b6b0543c4fe628966e9ee3`, draft/open,
+CI 43932662835 Windows/Ubuntu success. Clean starting tree.
+R3: [composition report and six original Play captures](AG76B_R3_ROMANTIC_ISLAND.md).
+All 13 stations/26 endpoints preserved; seven-point normal-physics walk PASS;
+Full/Reduced/Minimal and Reduce Motion checked. 1,365 Luau + 14 Node tests PASS.
+Exact R3 HEAD/CI are on its stacked Draft PR. No production integration, uploads,
+merge or publication. Await owner art decision; phones/multiplayer remain open.
+Owner concept v3, SVG and brief obtained from Library and preserved under
+`docs/references/ag76r3/`; composition follows these supplied materials.
+Scope: peripheral ancient-tree/ruined-arch proxies, waterfall, open construction
+clearing, romantic dusk and readable Minimal night in a separate QA place.
+All 13 station anchors/waypoints, spawn, 124x116 surface, economy, V8 and source
+modules remain unchanged. No migrations or persistent operations. Rollback:
+open the R2 QA build; no game integration. Invalid/colliding art plans fail checks.
+No Meshy, new Roblox asset upload, paid assets, merge or publication.
+Deliver native Play captures, movement/clearance checks, tests and a stacked Draft
+PR, then stop for owner art review. R2 candidate remains preserved below.
+
+
 ### AG-76B-R2 — Wizard Island visual proof of concept
 
 **2026-11-16 follow-up CODE_CANDIDATE / STUDIO CHECKED / ART PENDING:** owner requested smoother nonrepeating cliffs,

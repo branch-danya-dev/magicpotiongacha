@@ -31,3 +31,7 @@ docs/art/ag71/** -text
 # AG73 source, exported models, recipes and receipts have byte-level digests.
 assets/familiars/green_slime/** -text whitespace=cr-at-eol
 docs/evidence/ag73/** -text
+# Preserve owner-supplied R3 reference bytes and native evidence across both CI hosts.
+docs/references/ag76r3/** -text whitespace=cr-at-eol
+docs/evidence/ag76r3/** -text whitespace=cr-at-eol
+qa/romantic-island/** text eol=lf

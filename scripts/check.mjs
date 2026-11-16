@@ -76,6 +76,8 @@ run(tool('luau', 'luau'), ['tests/run_ag71.luau']);
 run(tool('luau', 'luau'), ['tests/run_ag74.luau']);
 run(tool('luau', 'luau'), ['tests/run_ag75.luau']);
 run(tool('luau', 'luau'), ['tests/run_ag76.luau']);
+run(tool('luau', 'luau'), ['tests/run_ag76r3.luau']);
+run(process.execPath, ['scripts/build-romantic-island.mjs']);
 run(process.execPath, ['scripts/build-ag76-preview.mjs', '--owner-user-id=-1']);
 run(process.execPath, ['scripts/build-ag74-preview.mjs']);
 run(process.execPath, ['scripts/build-ag75-preview.mjs']);

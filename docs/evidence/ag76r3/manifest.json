@@ -1,0 +1,301 @@
+{
+  "base": "34e28910c739f66ff2b6b0543c4fe628966e9ee3",
+  "head": "The Git commit containing this manifest; exact SHA recorded on Draft PR.",
+  "studio": "0.747.0.7471481",
+  "scope": "Studio-only standalone art scene. No production integration, gameplay bootstrap or persistence.",
+  "artifact": "build/WizardIsland-AG76B-R3-Romantic-ART-PENDING.rbxlx",
+  "artifactSha256": "389cdc8ab642143db8e0b7ba5ab78f4d82bc749ece4ce79aa9e577617fc3bc79",
+  "sourceHashes": {
+    "qa/romantic-island/Layout.luau": "8577acf6a10b1b25427be9683648ee6f8072bc10d060e68e8ebba7ae247240de",
+    "qa/romantic-island/Waterfall.luau": "ea7bbbb68410683ef45c8fb3b76b4e159da24afbdd91f313119b6f40f09ac663",
+    "qa/romantic-island/Scene.server.luau": "250cba28c14a3e16ff2876f9a034cec0fa2c4090479d897e0c3c36b97e0c7c4b",
+    "qa/romantic-island/Review.client.luau": "578115cb727f3d07568408f124e63148db906c5b262e9304e7d97807c0ae97d2",
+    "qa/wizard-island/Cliff.luau": "38a0e6ec7e23dce6c95d2885e06e5b3c4461d1a372c0a9f8bfd3dc3250aff666",
+    "qa/romantic-island/AtmosphereStyle.luau": "c0bae20a8fa103fc363859a86b4dca4451c3726e2257a29daf8c93d98b19e6b7",
+    "qa/romantic-island/EnvironmentConfig.luau": "3cfaf49ec63534cdc32b03bb3f04156071b7d778f9170328e9b5b741c31d13a1",
+    "src/client/EnvironmentView.luau": "0d97aaf1ad5fcaaf415abac03adfdf5e4ac806c250621fc7046069dd5e3d04c3"
+  },
+  "templates": {
+    "nature": "803ae25b3aacb215699f378dad60451e2fb1e025ac1fc40df7f8e6435735f5f5",
+    "lectern": "c541c02e6d91099a3297de9919f2d3f52bca8a183f277af4f0dcf17a38ba59a2"
+  },
+  "originalGeometry": {
+    "source": "qa/wizard-island/Cliff.luau",
+    "runtime": "Studio client EditableMesh -> one MeshPart",
+    "vertices": 3936,
+    "triangles": 7868,
+    "uploaded": false
+  },
+  "captureMethod": "Native Roblox Studio Screenshot command during ordinary F5 Play. Original PNG bytes copied, no processing or external render.",
+  "camerasRelativeToIslandOrigin": {
+    "spawn": {
+      "position": [
+        0,
+        8,
+        32
+      ],
+      "target": [
+        0,
+        6,
+        -8
+      ],
+      "fov": 82
+    },
+    "overview": {
+      "position": [
+        120,
+        66,
+        140
+      ],
+      "target": [
+        0,
+        -16,
+        -8
+      ],
+      "fov": 47
+    },
+    "altar": {
+      "position": [
+        13,
+        7.8,
+        12
+      ],
+      "target": [
+        -1,
+        4.3,
+        -4
+      ],
+      "fov": 52
+    },
+    "side": {
+      "position": [
+        100,
+        29,
+        61
+      ],
+      "target": [
+        -6,
+        10,
+        -25
+      ],
+      "fov": 62
+    }
+  },
+  "graphics": "Native viewport Q6; software Full/Reduced/Minimal are distinct from engine quality.",
+  "shots": [
+    {
+      "file": "01-spawn-dusk.png",
+      "original": "RobloxScreenShot20261116_234947402.png",
+      "sha256": "33c8d7dccc9f68fe7a6c70aa9ec555e115c2bb45fa596bb69453cc6132ac18a6",
+      "bytes": 1248022,
+      "width": 1566,
+      "height": 1095,
+      "camera": "spawn",
+      "pose": "dusk",
+      "quality": "full",
+      "reduceMotion": false
+    },
+    {
+      "file": "02-island-overview.png",
+      "original": "RobloxScreenShot20261116_235020412.png",
+      "sha256": "dddfec3ab5eab3a5492ddac56464ddd0cfeeb9ef6e7dce7b8dcfcde28f6f6f67",
+      "bytes": 600363,
+      "width": 1566,
+      "height": 1095,
+      "camera": "overview",
+      "pose": "dusk",
+      "quality": "full",
+      "reduceMotion": false
+    },
+    {
+      "file": "03-altar-dusk.png",
+      "original": "RobloxScreenShot20261116_235051922.png",
+      "sha256": "ca28b7134ce88389ed9bc23c778a8166645365d65b733d2aaa732534e40dab75",
+      "bytes": 1452056,
+      "width": 1566,
+      "height": 1095,
+      "camera": "altar",
+      "pose": "dusk",
+      "quality": "full",
+      "reduceMotion": false
+    },
+    {
+      "file": "04-tree-arch-side.png",
+      "original": "RobloxScreenShot20261116_235117952.png",
+      "sha256": "4fba6069c138d4dfb30e8bdc1d1dbb97aeb5ef7b1fa7eacb8f38462a29f188e0",
+      "bytes": 699323,
+      "width": 1566,
+      "height": 1095,
+      "camera": "side",
+      "pose": "dusk",
+      "quality": "full",
+      "reduceMotion": false
+    },
+    {
+      "file": "05-spawn-day.png",
+      "original": "RobloxScreenShot20261116_235143720.png",
+      "sha256": "ca4b787dc5706f510ac6fbaddc869157787bf207923e4af4e68d0171a2a6de96",
+      "bytes": 1437486,
+      "width": 1566,
+      "height": 1095,
+      "camera": "spawn",
+      "pose": "day",
+      "quality": "full",
+      "reduceMotion": false
+    },
+    {
+      "file": "06-night-minimal.png",
+      "original": "RobloxScreenShot20261116_235213406.png",
+      "sha256": "d35d16208626116db1e33047ab81e38da367b7a0b4da125c165d70cbd3b0f17d",
+      "bytes": 1169316,
+      "width": 1566,
+      "height": 1095,
+      "camera": "spawn",
+      "pose": "night",
+      "quality": "minimal",
+      "reduceMotion": false
+    }
+  ],
+  "walk": [
+    {
+      "method": "Humanoid MoveTo, normal physics; no teleport",
+      "points": [
+        {
+          "health": 100,
+          "x": 0,
+          "reached": true,
+          "z": 2
+        },
+        {
+          "health": 100,
+          "x": -20,
+          "reached": true,
+          "z": 2
+        },
+        {
+          "health": 100,
+          "x": -30,
+          "reached": true,
+          "z": -20
+        },
+        {
+          "health": 100,
+          "x": 0,
+          "reached": true,
+          "z": -30
+        },
+        {
+          "health": 100,
+          "x": 28,
+          "reached": true,
+          "z": -12
+        },
+        {
+          "health": 100,
+          "x": 20,
+          "reached": true,
+          "z": 16
+        },
+        {
+          "health": 100,
+          "x": 0,
+          "reached": true,
+          "z": 20
+        }
+      ],
+      "health": 100,
+      "minRootY": 3.7094101905822754
+    }
+  ],
+  "perf": [
+    {
+      "lights": 4,
+      "seconds": 15.00053820735775,
+      "assetFailures": 0,
+      "waterfall": {
+        "beams": 3,
+        "reduceMotion": false,
+        "particleRate": 18,
+        "localLights": 0,
+        "quality": "full"
+      },
+      "frames": 3498,
+      "fps": 233.19163296982467,
+      "p95ms": 5.475800018757582,
+      "wind": 12,
+      "viewport": "1566, 1095",
+      "motes": 16,
+      "p50ms": 4.156900104135275,
+      "quality": "full"
+    },
+    {
+      "lights": 3,
+      "seconds": 15.002734499284998,
+      "assetFailures": 0,
+      "waterfall": {
+        "beams": 1,
+        "reduceMotion": false,
+        "particleRate": 7,
+        "localLights": 0,
+        "quality": "reduced"
+      },
+      "frames": 3531,
+      "fps": 235.35709441290726,
+      "p95ms": 5.369199905544519,
+      "wind": 4,
+      "viewport": "1566, 1095",
+      "motes": 6,
+      "p50ms": 4.133100155740976,
+      "quality": "reduced"
+    },
+    {
+      "lights": 0,
+      "seconds": 15.002644595922902,
+      "assetFailures": 0,
+      "waterfall": {
+        "beams": 1,
+        "reduceMotion": false,
+        "particleRate": 0,
+        "localLights": 0,
+        "quality": "minimal"
+      },
+      "frames": 3443,
+      "fps": 229.4928722723769,
+      "p95ms": 5.552699789404869,
+      "wind": 0,
+      "viewport": "1566, 1095",
+      "motes": 0,
+      "p50ms": 4.242499824613333,
+      "quality": "minimal"
+    }
+  ],
+  "motion": [
+    {
+      "wind": 0,
+      "motes": 0,
+      "waterfall": {
+        "beams": 3,
+        "reduceMotion": true,
+        "particleRate": 0,
+        "localLights": 0,
+        "quality": "full"
+      }
+    }
+  ],
+  "waterfallChurn": [
+    {
+      "before": 16,
+      "wind": 0,
+      "after": 16,
+      "waterfall": {
+        "beams": 1,
+        "reduceMotion": true,
+        "particleRate": 0,
+        "localLights": 0,
+        "quality": "minimal"
+      },
+      "motes": 0
+    }
+  ],
+  "artAcceptance": "OWNER ART PENDING"
+}

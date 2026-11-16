@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1460" height="900" viewBox="0 0 1460 900" role="img" aria-labelledby="title desc">
+  <title id="title">Wizard Island v3 — предварительная схема композиции</title>
+  <desc id="desc">Схема острова 124 на 116 Roblox studs с 13 существующими игровыми станциями и предложенными местами для древнего дерева, разрушенной арки и водопада.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#151d37"/><stop offset="1" stop-color="#232747"/>
+    </linearGradient>
+    <radialGradient id="land" cx="48%" cy="44%" r="70%">
+      <stop offset="0" stop-color="#456b65"/><stop offset=".72" stop-color="#2c4b4b"/><stop offset="1" stop-color="#203a42"/>
+    </radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="5"/></filter>
+    <style>
+      text{font-family:Inter,Arial,sans-serif;fill:#e8e8e6}
+      .small{font-size:16px;fill:#bac3cb}
+      .minor{font-size:14px;fill:#9bb0b6}
+      .label{font-size:20px;font-weight:700}
+      .station{fill:#bad2d0;stroke:#193a40;stroke-width:2}
+      .number{fill:#12292d;font-size:14px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+    </style>
+  </defs>
+  <rect width="1460" height="900" fill="url(#bg)"/>
+  <text x="60" y="64" font-size="30" font-weight="700">WIZARD ISLAND / v3</text>
+  <text x="60" y="97" class="small">Romantic Dark Fairytale — план композиции, не финальные координаты ассетов</text>
+  <path d="M 450,162 V 724" stroke="#667385" stroke-dasharray="5 10" opacity=".3"/>
+  <path d="M 139,440 H 760" stroke="#667385" stroke-dasharray="5 10" opacity=".3"/>
+  <ellipse cx="450" cy="440" rx="310" ry="290" fill="url(#land)" stroke="#9ab1a1" stroke-width="5"/>
+  <ellipse cx="450" cy="440" rx="295" ry="275" fill="none" stroke="#aec5ac" stroke-width="2" opacity=".22" stroke-dasharray="3 10"/>
+  <rect x="257.5" y="252.5" width="385" height="375" rx="8" fill="#d8a865" fill-opacity=".035" stroke="#e4b370" stroke-width="2" stroke-dasharray="10 8"/>
+  <text x="466" y="260" class="small" fill="#f4d2a0">Зона будущих построек 77 × 75</text>
+  <path d="M 450,580 C 447,558 460,535 452,515 C 448,494 450,481 450,470" fill="none" stroke="#a9a79b" stroke-width="35" opacity=".17" stroke-linecap="round"/>
+  <path d="M 450,580 C 447,558 460,535 452,515 C 448,494 450,481 450,470" fill="none" stroke="#ddd4bd" stroke-width="5" stroke-dasharray="7 14" stroke-linecap="round"/>
+  <circle cx="450" cy="580" r="17" fill="#e5aa67" stroke="#fbe0b5" stroke-width="3"/>
+  <text x="450" y="586" font-size="17" font-weight="700" text-anchor="middle" fill="#24313a">S</text>
+  <text x="451" y="614" class="small" text-anchor="middle">Spawn</text>
+  <circle cx="450" cy="470" r="36" fill="#8cd6e9" opacity=".18" filter="url(#glow)"/>
+  <circle cx="450" cy="470" r="30" fill="none" stroke="#80cde0" stroke-width="4"/>
+  <circle cx="450" cy="470" r="23" fill="#8cd6e9" opacity=".12"/>
+  <text x="450" y="477" font-size="21" font-weight="700" text-anchor="middle">✦</text>
+
+  <!-- Existing V8 stations: scaled local X/Z anchors; decorative exclusion zones are schematic. -->
+  <g opacity=".95">
+    <circle class="station" cx="350" cy="480" r="17"/><text class="number" x="350" y="480">2</text>
+    <circle class="station" cx="350" cy="380" r="17"/><text class="number" x="350" y="380">3</text>
+    <circle class="station" cx="525" cy="390" r="17"/><text class="number" x="525" y="390">4</text>
+    <circle class="station" cx="550" cy="480" r="17"/><text class="number" x="550" y="480">5</text>
+    <circle class="station" cx="450" cy="345" r="17"/><text class="number" x="450" y="345">6</text>
+    <circle class="station" cx="290" cy="550" r="17"/><text class="number" x="290" y="550">7</text>
+    <circle class="station" cx="550" cy="560" r="17"/><text class="number" x="550" y="560">8</text>
+    <circle class="station" cx="610" cy="390" r="17"/><text class="number" x="610" y="390">9</text>
+    <circle class="station" cx="290" cy="430" r="17"/><text class="number" x="290" y="430">10</text>
+    <circle class="station" cx="290" cy="320" r="17"/><text class="number" x="290" y="320">11</text>
+    <circle class="station" cx="490" cy="560" r="17"/><text class="number" x="490" y="560">12</text>
+    <circle class="station" cx="610" cy="500" r="17"/><text class="number" x="610" y="500">13</text>
+  </g>
+  <g stroke-linecap="round">
+    <circle cx="685" cy="335" r="38" fill="#486c60" opacity=".65" stroke="#c3d5aa" stroke-width="2"/>
+    <circle cx="685" cy="335" r="14" fill="#a9a080"/><path d="M 685,335 Q 660,326 653,304 M685,335 Q 705,315 719,310" fill="none" stroke="#d9b59b" stroke-width="4"/>
+    <circle cx="215" cy="340" r="35" fill="#897a8a" opacity=".4" stroke="#cfb5d7" stroke-width="2"/>
+    <path d="M 199,357 V 327 Q 215,303 231,327 V357" fill="none" stroke="#d0c1b1" stroke-width="9" stroke-linecap="round"/>
+    <circle cx="725" cy="535" r="18" fill="#64c9e5" opacity=".5"/><path d="M 718,529 q 7,5 15,0 m-15,8 q 7,5 15,0" stroke="#b2eeff" stroke-width="2" fill="none"/>
+  </g>
+  <text x="708" y="290" class="small">Древнее дерево</text>
+  <text x="92" y="285" class="small">Арка-руины</text>
+  <text x="740" y="540" class="small">Водопад</text>
+  <text x="450" y="775" font-size="16" text-anchor="middle" fill="#d5dee4">Вид сверху · наверху — дальняя сторона острова (−Z)</text>
+  <text x="450" y="806" class="minor" text-anchor="middle">Масштаб: 5 px = 1 stud · поверхность 124 × 116 · центр Z = −8</text>
+  <line x1="860" y1="120" x2="860" y2="830" stroke="#5f677e" stroke-width="2"/>
+  <text x="902" y="151" class="label">Зонирование</text>
+  <rect x="902" y="180" width="21" height="21" rx="3" fill="none" stroke="#e4b370" stroke-width="2" stroke-dasharray="5 3"/>
+  <text x="940" y="197" class="small">Сохранённые границы строительства</text>
+  <circle cx="913" cy="242" r="11" fill="#bad2d0"/>
+  <text x="940" y="247" class="small">Существующие станции / якоря V8</text>
+  <circle cx="913" cy="287" r="11" fill="#e5aa67"/>
+  <text x="940" y="292" class="small">Spawn / вход на остров</text>
+  <circle cx="913" cy="332" r="11" fill="#486c60" stroke="#d8d6aa" stroke-width="2"/>
+  <text x="940" y="338" class="small">Новые центральные арт-объекты</text>
+  <text x="902" y="398" class="label">Существующие 13 станций</text>
+  <text x="902" y="434" class="small">1  Crystal / Spellbook: (0, −2)</text>
+  <text x="902" y="464" class="small">2  Garden: (−20, 0)       3  Mine: (−20, −20)</text>
+  <text x="902" y="494" class="small">4  Distillery: (15, −18)  5  Cauldron: (20, 0)</text>
+  <text x="902" y="524" class="small">6  Logistics: (0, −27)   7  Garden 2: (−32, 14)</text>
+  <text x="902" y="554" class="small">8  Cauldron 2: (20, 16)  9  Distillery 2: (32, −18)</text>
+  <text x="902" y="584" class="small">10 Mushrooms: (−32, −10) 11 Berries: (−32, −32)</text>
+  <text x="902" y="614" class="small">12 Press: (8, 16)       13 Centrifuge: (32, 4)</text>
+  <text x="902" y="680" class="label">Новые предложенные точки</text>
+  <text x="902" y="716" class="small">Hero Tree: (+47, −29) · ориентир 15–20 studs</text>
+  <text x="902" y="746" class="small">Ruined Arch: (−47, −28) · ориентир 12–16 studs</text>
+  <text x="902" y="776" class="small">Waterfall lip: (+55, +11) · VFX по краю</text>
+  <text x="902" y="826" class="minor">Точки уточняются в Studio после проверки коллизий.</text>
+</svg>
