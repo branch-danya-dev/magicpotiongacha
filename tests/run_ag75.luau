@@ -1,0 +1,95 @@
+--!nonstrict
+local T=require("./Test")
+local Config=require("../src/shared/Config")
+local Cards=require("../src/shared/StarterCardsModel")
+local Access=require("../src/shared/Access")
+local Nav=require("../src/shared/RPGNavigation")
+local Atmosphere=require("../src/shared/AG75Atmosphere")
+local function snapshot()
+ return {starter={claimed=false,legacyGrant=false},writable=true}
+end
+T.test("AG75 new starter opens full-screen cards only before a claim",function()
+ local s=snapshot();T.truthy(Cards.intro(s));T.truthy(Cards.ready(s,false))
+ s.starter.claimed=true;T.falsy(Cards.intro(s));T.falsy(Cards.ready(s,false))
+ s.starter.claimed=false;s.starter.legacyGrant=true;T.falsy(Cards.intro(s))
+ T.falsy(Cards.intro(nil));T.falsy(Cards.intro({}))
+end)
+T.test("AG75 pending and readonly cannot dispatch a starter choice",function()
+ local s=snapshot();T.falsy(Cards.ready(s,true))
+ s.writable=false;T.falsy(Cards.ready(s,false))
+end)
+T.test("AG75 exactly three canonical portraits and real server stats",function()
+ local cards=Cards.cards(Config);T.equal(#cards,3)
+ local ids={farmer=true,slime=true,brewer=true}
+ for i,card in ipairs(cards) do
+  T.truthy(ids[card.id]);ids[card.id]=nil
+  T.equal(card.id,Config.starterPets[i].species)
+  T.equal(card.stats,Config.starterPets[i].stats)
+  T.truthy(card.title);T.truthy(card.description)
+ end
+ T.equal(next(ids),nil)
+end)
+T.test("AG75 safe card geometry at desk and phone dimensions",function()
+ for _,size in ipairs({{1920,1080},{1366,768},{844,390},{750,324},{620,320},{390,844}}) do
+  local w,h=size[1],size[2]
+  local p=Cards.layout(w,h,false)
+  T.truthy(p.width>0 and p.height>0)
+  if p.portrait then T.truthy(p.scroll);T.truthy(p.width<=w-36)
+  elseif 3*p.width+2*p.gap>w-24 then T.truthy(p.scrollHorizontal)
+  else T.falsy(p.scroll) end
+  local confirm=Cards.layout(w,h,true)
+  T.truthy(confirm.width<=w-24)
+ end
+end)
+T.test("AG75 remote starter selection is owned/alive, not altar-range-gated",function()
+ T.truthy(Access.starterAllowed(true,true))
+ T.falsy(Access.starterAllowed(false,true))
+ T.falsy(Access.starterAllowed(true,false))
+ T.falsy(Access.starterAllowed(nil,true))
+ T.equal(Access.target("chooseStarter",{}),"altar")
+ T.falsy(Access.allowed(true,true,1000,16))
+end)
+T.test("AG75 three RPG menus own deterministic, non-overlapping subtabs",function()
+ T.equal(Nav.groupFor("warehouse"),"inventory")
+ T.equal(Nav.groupFor("cauldron"),"inventory")
+ T.equal(Nav.groupFor("character"),"character")
+ T.equal(Nav.groupFor("rebirth"),"character")
+ T.equal(Nav.groupFor("altar"),"familiars")
+ T.truthy(Nav.visible("garden","inventory"))
+ T.falsy(Nav.visible("dailies","inventory"))
+ T.truthy(Nav.visible("quality","character"))
+ T.truthy(Nav.visible("familiars","altar"))
+ local known={}
+ for _,group in ipairs({"inventory","character","familiars"}) do
+  for _,entry in ipairs(Nav.tabs(group)) do
+   T.falsy(known[entry[1]]);known[entry[1]]=true
+  end
+ end
+end)
+T.test("AG75 character overview uses only published presentation state",function()
+ local c=Nav.overview({pets={a={},b={}},gold=120.9,essence=50.5,rebirths=2,phase={name="Workshop"}})
+ T.equal(c.gold,120);T.equal(c.essence,50);T.equal(c.pets,2)
+ T.equal(c.rebirths,2);T.equal(c.phase,"Workshop")
+end)
+T.test("AG75 tonemap dims hard daylight and preserves night mood",function()
+ local base={brightness=2.7,exposure=-.12,contrast=.19,bloom=.1,haze=1.5}
+ local day=Atmosphere.project({night=0,warm=0,dawn=0,rain=0},base,"full")
+ local night=Atmosphere.project({night=1,warm=0,dawn=0,rain=0},base,"full")
+ T.truthy(day.brightness<2.2 and day.exposure<base.exposure)
+ T.truthy(night.brightness==base.brightness)
+ T.truthy(day.bloom>base.bloom and night.bloom>base.bloom)
+ T.falsy(Atmosphere.enabled(false,nil));T.truthy(Atmosphere.enabled(true,nil))
+end)
+T.test("AG75 weather boosts existing rain strokes with bounded alpha",function()
+ T.truthy(Atmosphere.rainTrail(.52,1)>.52)
+ T.truthy(Atmosphere.rainTrail(1,1)<=.72)
+end)
+T.test("AG75 shooting stars appear only briefly at night",function()
+ local meteor=Atmosphere.meteor(19.8,1,"full",false)
+ T.truthy(meteor and meteor.t>0 and meteor.t<1)
+ T.equal(Atmosphere.meteor(25,1,"full",false),nil)
+ T.equal(Atmosphere.meteor(19.8,.3,"full",false),nil)
+ T.equal(Atmosphere.meteor(19.8,1,"minimal",false),nil)
+ T.equal(Atmosphere.meteor(19.8,1,"full",true),nil)
+end)
+T.finish()

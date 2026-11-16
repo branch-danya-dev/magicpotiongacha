@@ -8,6 +8,7 @@ return {
 		animations = {"rbxassetid://73712172546084", "rbxassetid://89284758082218"},
 		lengths = {3.6, 3.0},
 		weights = {0.5, 0.5},
-		scale = 1,
+		-- AG75: visible at the actual game camera distance; keep uniform rig scaling.
+		scale = 1.65,
 	},
 }

@@ -210,6 +210,11 @@ function World:inRange(player, action, payload, maxDistance)
 	local hrp = character and character:FindFirstChild("HumanoidRootPart")
 	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
 	if not hrp or not humanoid or humanoid.Health <= 0 then return false end
+-- AG75_BEGIN_STARTER
+	if action == "chooseStarter" then
+		return Access.starterAllowed(plot.owner == player, humanoid.Health > 0)
+	end
+-- AG75_END_STARTER
 	local id = Access.target(action, payload)
 	local anchor = plot.anchors[id]
 	return anchor ~= nil and Access.allowed(plot.owner == player, humanoid.Health > 0, (hrp.Position - anchor.Position).Magnitude, maxDistance)

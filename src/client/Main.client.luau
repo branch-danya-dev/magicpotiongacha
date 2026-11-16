@@ -20,6 +20,13 @@ local shopPreview = require(script.Parent.ShopPreview)
 local environment = require(script.Parent.EnvironmentController)
 local Session = require(shared.FirstSessionView)
 local Glance = require(script.Parent.TutorialGlance)
+-- AG75_BEGIN_IMPORT
+local StarterCardsView=require(script.Parent.StarterCards)
+local SimplifiedScene=require(script.Parent.SimplifiedScene)
+local RPGNavigation=require(shared.RPGNavigation)
+-- A fresh Studio desktop session should expose the full visual tier by default.
+if game:GetService("RunService"):IsStudio() and not UserInputService.TouchEnabled then environment.setQuality("full") end
+-- AG75_END_IMPORT
 local ContextActionService = game:GetService("ContextActionService")
 local MarketplaceService = game:GetService("MarketplaceService")
 local remotes = ReplicatedStorage.PotionTycoon:WaitForChild("Remotes")
@@ -47,6 +54,18 @@ local arcadeReady=false
 -- AG71_END_IMPORT
 -- AG64_END_IMPORT
 local selectedUpgrade = false
+-- AG75_BEGIN_MENU_STATE
+local groupedHUD=game:GetService("RunService"):IsStudio() and workspace:GetAttribute("AG75GroupedHUDEnabled")~=false
+local groupedTabs={}
+local tabScroller,activeGroup=nil,nil
+local function refreshGroupTabs()
+	if not groupedHUD then return end
+	local group=RPGNavigation.groupFor(selected)
+	if tabScroller and group~=activeGroup then tabScroller.CanvasPosition=Vector2.zero end
+	activeGroup=group
+	for id,control in pairs(groupedTabs) do control.Visible=RPGNavigation.visible(id,selected) end
+end
+-- AG75_END_MENU_STATE
 local context, currentContext
 local scrollPositions = {}
 local drawnKey,drawGeneration=nil,0
@@ -170,6 +189,9 @@ tabs.AutomaticCanvasSize, tabs.CanvasSize = Enum.AutomaticSize.X, UDim2.new()
 tabs.ScrollingDirection = Enum.ScrollingDirection.X
 tabs.BackgroundTransparency, tabs.Size = 1, UDim2.new(1, -16, 0, 48)
 tabs.Position, tabs.Parent = UDim2.fromOffset(8, 42), panel
+-- AG75_BEGIN_MENU_SCROLLER
+tabScroller=tabs
+-- AG75_END_MENU_SCROLLER
 local grid = Instance.new("UIListLayout")
 grid.FillDirection, grid.Padding, grid.Parent = Enum.FillDirection.Horizontal, UDim.new(0, 4), tabs
 
@@ -336,6 +358,9 @@ local function assignedTo(petId)
 end
 
 draw = function()
+-- AG75_BEGIN_MENU_GROUP_REFRESH
+	refreshGroupTabs()
+-- AG75_END_MENU_GROUP_REFRESH
 	if drawnKey then scrollPositions[drawnKey]=contents.CanvasPosition.Y end
 	drawnKey=selected..(selectedUpgrade and ":upgrade" or "")..(petPicker and ":picker" or "")
 	drawGeneration+=1
@@ -382,6 +407,17 @@ draw = function()
 		return
 	end
 	if not state then text("Ожидаем безопасную загрузку профиля…"); return end
+-- AG75_BEGIN_MENU_OVERVIEW
+	if groupedHUD and selected=="character" then
+		title.Text="Персонаж · обзор"
+		local summary=RPGNavigation.overview(state)
+		text("Текущий этап: "..summary.phase,48)
+		text("Перерождения: "..summary.rebirths.." · Спутников: "..summary.pets,48)
+		text("Gold: "..summary.gold.." · Essence: "..summary.essence,48)
+		text("Развитие, ежедневные награды и графика — в соседних вкладках.",64)
+		refresh();return
+	end
+-- AG75_END_MENU_OVERVIEW
 	if selected=="quality" then
 		title.Text="Окружение · качество"
 		text(state.mode=="STUDIO_MEMORY" and "Локальная проверка Studio: прогресс не сохраняется после Stop." or (state.writable and "Сохранение прогресса включено." or "Сохранение приостановлено."),64)
@@ -723,9 +759,21 @@ end
 local tabList={{"blueprint","Развитие"},{"shop","Событие"},{"rebirth","Rebirth"},{"dailies","Daily"},{"shards","Осколки"},{"bazaar","Обмен"},{"quality","Качество"}}
 for _,id in ipairs(Config.stationOrder) do table.insert(tabList,{id,Config.stations[id].name}) end
 for _,tab in ipairs({{"warehouse","Склад"},{"orders","Заказы"},{"altar","Фамильяры"}}) do table.insert(tabList,tab) end
+-- AG75_BEGIN_MENU_CHARACTER_TAB
+table.insert(tabList,{"character","Обзор"})
+-- AG75_END_MENU_CHARACTER_TAB
 for _, tab in ipairs(tabList) do
 	local tabButton = button(tabs, tab[2], function() selected, petPicker, selectedUpgrade = tab[1], false, false; draw() end)
 	tabButton.Size = UDim2.fromOffset(104, 44)
+-- AG75_BEGIN_MENU_TAB_REF
+	if groupedHUD then
+		groupedTabs[tab[1]]=tabButton
+		for _,entry in ipairs(RPGNavigation.tabs(RPGNavigation.groupFor(tab[1]))) do
+			if entry[1]==tab[1] then tabButton.Text=entry[2] end
+		end
+		tabButton.Visible=false
+	end
+-- AG75_END_MENU_TAB_REF
 end
 
 local coach=Instance.new("Frame")
@@ -769,6 +817,23 @@ for _,menu in ipairs({{"supplies","Магазин"},{"inventory","Инвента
 	local menuButton=button(quick,menu[2],function() openMenu(menu[1]) end)
 	menuButton.Size=UDim2.fromOffset(148,44)
 end
+-- AG75_BEGIN_MENU_BAR
+local mobileNav=Instance.new("Frame")
+mobileNav.Name="AG75MobileNavigation";mobileNav.BackgroundTransparency=1
+mobileNav.Size=UDim2.fromScale(1,1);mobileNav.Active=false
+mobileNav.ZIndex=30;mobileNav.Visible=false;mobileNav.Parent=gui
+local mobileRow=Instance.new("Frame");mobileRow.Name="RPGMenuBar"
+mobileRow.BackgroundColor3=BG;mobileRow.BackgroundTransparency=.12
+mobileRow.AnchorPoint=Vector2.new(.5,1);mobileRow.Position=UDim2.new(.5,0,1,-14)
+mobileRow.Size=UDim2.new(.96,0,0,52);mobileRow.ZIndex=31;mobileRow.Parent=mobileNav;round(mobileRow)
+local mobileLimit=Instance.new("UISizeConstraint");mobileLimit.MaxSize=Vector2.new(350,52);mobileLimit.Parent=mobileRow
+for i,entry in ipairs({{"inventory","Рюкзак"},{"character","Герой"},{"familiars","Спутники"}}) do
+	local b=button(mobileRow,entry[2],function() openMenu(entry[1]) end)
+	b.Name=entry[1].."Button";b.Position=UDim2.new((i-1)/3,4,0,4)
+	b.Size=UDim2.new(1/3,-8,1,-8);b.ZIndex=32;b.BackgroundColor3=ACCENT
+end
+script.Destroying:Connect(function() mobileNav:Destroy() end)
+-- AG75_END_MENU_BAR
 local acknowledged=nil
 local renderCoach
 local skipGlance=button(coach,"Пропустить показ",function() Glance.stop() end)
@@ -905,6 +970,12 @@ syncLandscape=function(forceLayout)
 	end
 -- AG71_END_PRESENT
 	landscape.update(state,collectionPending,selected,panel.Visible or coach.Visible,environment.reduceMotion)
+-- AG75_BEGIN_MENU_HIDE_LEGACY
+	if groupedHUD and landscape.root then
+		local oldNavigation=landscape.root:FindFirstChild("Navigation") or landscape.root:FindFirstChild("QuickNavigation")
+		if oldNavigation then oldNavigation.Visible=false end
+	end
+-- AG75_END_MENU_HIDE_LEGACY
 end
 -- AG71_BEGIN_ASSET_GATE
 local arcadeFlagConnection=workspace:GetAttributeChangedSignal("ArcadeHUDEnabled"):Connect(function() resize(); renderCoach(); draw() end)
@@ -952,6 +1023,26 @@ end
 bindMenu("PotionShop","supplies",{Enum.KeyCode.M,Enum.KeyCode.DPadLeft})
 bindMenu("PotionInventory","inventory",{Enum.KeyCode.I,Enum.KeyCode.DPadDown})
 bindMenu("PotionFamiliars","familiars",{Enum.KeyCode.P,Enum.KeyCode.DPadRight})
+-- AG75_BEGIN_MENU_BIND
+if groupedHUD then
+	for _,name in ipairs({"PotionShop","PotionInventory","PotionFamiliars"}) do ContextActionService:UnbindAction(name) end
+	local function bindGroup(name,menu,keys)
+		ContextActionService:BindActionAtPriority(name,function(_,inputState)
+			if inputState~=Enum.UserInputState.Begin or UserInputService:GetFocusedTextBox() then return Enum.ContextActionResult.Pass end
+			if not state or Session.intro(state) then return Enum.ContextActionResult.Pass end
+			if panel.Visible and selected==menu then panel.Visible=false
+			else openMenu(menu) end
+			return Enum.ContextActionResult.Sink
+		end,false,4200,table.unpack(keys))
+	end
+	bindGroup("AG75Inventory","inventory",{Enum.KeyCode.Tab,Enum.KeyCode.DPadDown})
+	bindGroup("AG75Character","character",{Enum.KeyCode.P,Enum.KeyCode.DPadLeft})
+	bindGroup("AG75Familiars","familiars",{Enum.KeyCode.G,Enum.KeyCode.DPadRight})
+	script.Destroying:Connect(function()
+		for _,name in ipairs({"AG75Inventory","AG75Character","AG75Familiars"}) do ContextActionService:UnbindAction(name) end
+	end)
+end
+-- AG75_END_MENU_BIND
 
 local toastGeneration = 0
 local function showToast(message, duration)
@@ -961,6 +1052,15 @@ local function showToast(message, duration)
 	task.delay(duration or 4, function() if generation == toastGeneration then toast.Visible = false end end)
 end
 
+-- AG75_BEGIN_STARTER
+local starterCards=StarterCardsView.new(gui.Parent,Config,function(speciesId)
+	send("chooseStarter",{speciesId=speciesId})
+end)
+local simplifiedScene=SimplifiedScene.new()
+script.Destroying:Connect(function()
+	starterCards.destroy(); simplifiedScene.destroy()
+end)
+-- AG75_END_STARTER
 State.OnClientEvent:Connect(function(value)
 	local first = state == nil
 	local previousEssence = state and state.essence
@@ -1005,6 +1105,13 @@ State.OnClientEvent:Connect(function(value)
 		hasReport = true
 		showToast("С возвращением! Учтено " .. value.offlineReport.processedSeconds .. " сек. работы. Gold: +" .. math.floor(value.offlineReport.goldEarned or 0) .. ". Уже сохранено.", 8)
 	end
+-- AG75_BEGIN_UPDATE
+	starterCards.update(value,collectionPending,environment.reduceMotion)
+-- AG75_END_UPDATE
+-- AG75_BEGIN_MENU_UPDATE
+	mobileNav.Visible=groupedHUD and UserInputService.TouchEnabled and not Session.intro(value)
+	mobileRow.Position=UDim2.new(.5,0,1,value.tutorial.complete and -14 or -182)
+-- AG75_END_MENU_UPDATE
 end)
 PurchasePrompt.OnClientEvent:Connect(function(value)
 	if not state then return end
@@ -1033,6 +1140,9 @@ end)
 Notice.OnClientEvent:Connect(function(value)
 	collectionPending = false
 	showToast(Session.explain(value.text))
+-- AG75_BEGIN_NOTICE
+	starterCards.notice(Session.explain(value.text))
+-- AG75_END_NOTICE
 -- AG64_BEGIN_NOTICE
 	if syncLandscape then syncLandscape() end
 -- AG64_END_NOTICE

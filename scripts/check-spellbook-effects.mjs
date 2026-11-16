@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import assert from 'node:assert/strict';
 import {beforeAG69} from './ag69-preservation.mjs';
+import {beforeAG75} from './ag75-preservation.mjs';
 const base='341b7f6dd9ac1692781f865bf25fed63a05e9d8a';
 const protectedFiles=['src/shared/Factory.luau','src/shared/Config.luau','src/shared/Protocol.luau',
   'src/shared/Access.luau','src/server/ProfileStore.luau','src/server/World.luau',
@@ -10,8 +11,10 @@ const protectedFiles=['src/shared/Factory.luau','src/shared/Config.luau','src/sh
   'assets/props/SpellbookLectern.rbxmx','assets/props/spellbook-lectern.glb','default.project.json'];
 for(const path of protectedFiles) {
   const before=execFileSync('git',['show',`${base}:${path}`],{maxBuffer:4*1024*1024});
-  const after=readFileSync(path);
-  assert.equal(after.toString().replace(/\r\n/g,'\n'),before.toString().replace(/\r\n/g,'\n'),`${path}: AG62A scope regression`);
+  const after=readFileSync(path).toString().replace(/\r\n/g,'\n');
+  // AG75's explicit once-only starter ownership exception is independently
+  // tested; the original AG62A guard still checks every underlying byte.
+  assert.equal(beforeAG75(path,after),before.toString().replace(/\r\n/g,'\n'),`${path}: AG62A scope regression`);
 }
 // AG67B retains the entire accepted owner verbatim for instant rollback.
 const client=readFileSync('src/client/LegacySpellbookEffects.luau','utf8');

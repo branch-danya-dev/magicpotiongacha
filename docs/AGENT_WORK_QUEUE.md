@@ -16,6 +16,21 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### AG-75 — Owner feedback: starter cards, simplified scene, atmosphere and grouped menus
+
+**CODE_CANDIDATE / NATIVE STUDIO QA + OWNER VISUAL REVIEW OPEN / NOT PUBLISHED.**
+Claimed on 2026-11-16 as the only new task. Base: exact PR #51 SHA
+`f421ccdaa5da6c55535ebf4c1048eb186ccfb5d4`, branch
+`feat/ag75-owner-feedback-p0`. The original AG72 cards were static QA only and
+did not reach the AG74 branch. Scope: Studio-only, reversible visible scene
+cleanup preserving the lectern/crystal, three clickable fullscreen starter
+cards through one existing server-owned intent, daytime/postFX/weather/lighting
+tuning, 1.65× Green Slime, Tab/P/G RPG grouping, phone on-screen shortcuts.
+Production flags stay OFF. Crickets require approved audio provenance and are
+deferred. No economy/profile/schema/asset IDs/upload, merge or publication.
+Exact rollback, test/Studio QA matrix and build command:
+[AG75_OWNER_FEEDBACK.md](AG75_OWNER_FEEDBACK.md).
+
 ### AG-74 — Green Slime private import and runtime QA (Issue #50)
 
 **IMPLEMENTED/CODE / SCOPED STUDIO TECHNICAL CHECKS PASSED / OWNER ART OPEN / NOT PUBLISHED.**
