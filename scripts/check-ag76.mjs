@@ -21,6 +21,13 @@ assert(main.includes('RunService:IsStudio()')&&main.includes('AG76QAOwnerUserId'
 const world=read('src/server/PersonalIslandWorld.luau');
 assert(!/PlotCount|for index|FindFirstChild\("Bazaar"\)|DataStore|Teleport|FireServer/.test(world));
 assert(world.includes('self.session:admit(player.UserId,player)')&&world.includes('function World:inBazaar(_player) return false end'));
+const island=read('src/shared/PersonalIsland.luau');
+const art=read('src/server/PersonalIslandArt.luau');
+const client=read('src/client/Main.client.luau');
+assert(island.includes('function Island.surfaceContains(')&&island.includes('function Island.terrainPlan('));
+assert(art.includes('Island.terrainPlan()')&&art.includes('IslandTerrainParts')&&art.includes('"Cylinder"'));
+assert(read('src/server/CharacterSafety.server.luau').includes('island.surfaceContains('));
+assert(client.includes('SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList,false)')&&client.includes('Enum.KeyCode.Tab'));
 assert(!/Instance\.new\("(?:RemoteEvent|RemoteFunction)"\)|SetAsync|UpdateAsync/.test(addedRuntime.map(read).join('\n')));
 assert(!read('src/client/PersonalMarketUI.luau').includes('requestPurchase'));
 assert(Object.keys(seams).length===5&&addedRuntime.length===5);

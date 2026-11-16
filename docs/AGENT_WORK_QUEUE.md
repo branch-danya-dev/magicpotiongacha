@@ -16,6 +16,46 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### AG-76B-R2 — Wizard Island visual proof of concept
+
+**2026-11-16 follow-up CODE_CANDIDATE / STUDIO CHECKED / ART PENDING:** owner requested smoother nonrepeating cliffs,
+Dark Fairytale vegetation and readable Minimal night. Base `2f981f7ffee8785457dce866f1f7f1d604e4b27d`.
+Same isolated branch/place; no integration, upload, economy, save, merge or publication.
+One original continuous cliff mesh, muted woodland with exposed twisting branches,
+and readable Minimal night are available for owner review. Native Play evidence,
+quality checks and desktop timings: [AG76B_R2_ART_POLISH.md](AG76B_R2_ART_POLISH.md).
+
+**CODE_CANDIDATE / STUDIO PLAY CHECKED / OWNER ART GATE OPEN / NOT INTEGRATED / NOT PUBLISHED.**
+Only active task, claimed 2026-11-16. Branch `feat/ag76b-r2-wizard-island-poc`.
+Base: local R1 `913231369629f8663e66dc9e18fecccc15d0ee68`, descendant of
+Draft PR #55 `f21137e26478b83afd47625f48b2ffe9b717600d` (still draft/open;
+CI run 43882273636 success). Original `b0af9f9` object is absent; its verified
+mail patch was applied as `2d04fd5`. No assumption of remote R1 availability.
+Separate Studio art scene only: existing licensed meshes, organic rock island,
+woodland composition, central unchanged lectern coordinates, dusk/night through
+one inherited EnvironmentView. No gameplay/domain/source changes or new uploads.
+Native screenshots and desktop timings requested for this R2; owner art review
+required before integration. New paid generation/uploads remain separately gated.
+Native Play captures, desktop samples and known art limitations are recorded in
+[AG76B_R2_WIZARD_ISLAND.md](AG76B_R2_WIZARD_ISLAND.md). Local tests: 1,360 Luau +
+14 Node pass. R2 CI not run; PR55's existing green CI is not R2 acceptance.
+
+### AG-76B-R1 — Owner feedback: enlarged floating island and Tab
+
+**CODE_CANDIDATE / AUTOMATED PASS / OWNER ART + NATIVE QA OPEN / NOT PUBLISHED.**
+Claimed on 2026-11-16 in an isolated branch stacked on AG-76B Draft PR #55,
+base `f21137e26478b83afd47625f48b2ffe9b717600d`. Single scoped task:
+124×116 elliptical walkable plateau, bounded procedural noncolliding rocky
+underbody, safe perimeter recovery, foliage repositioning and suppression of
+Roblox's conflicting Tab PlayerList while RPG Tab inventory is active. V8 schema,
+buildable/core coordinates, economics, saves, starter selection, server owner
+admission, market and pricing unchanged. No paid asset, uploads, C-sector
+expansion, guest permission, merge or publication. `npm test` passed 1,360 Luau
+and 14 Node, 262 Luau source compilation and Rojo/QA artifact builds; exact
+PR SHA/CI are to be recorded on delivery. Native full visual review, actual
+Tab press, player reset, phone matrix and performance remain open; see
+[AG76B_PERSONAL_ISLAND.md](AG76B_PERSONAL_ISLAND.md).
+
 ### AG-76B — One-owner island world (Issue #53)
 
 **CODE_CANDIDATE / STUDIO STARTUP VERIFIED / OWNER ACCEPTANCE OPEN / NOT PUBLISHED.**

@@ -1,0 +1,128 @@
+{
+  "task": "AG-76B-R2",
+  "date": "2026-11-16",
+  "status": "ART_PENDING_NOT_INTEGRATED_NOT_PUBLISHED",
+  "branch": "feat/ag76b-r2-wizard-island-poc",
+  "base": "913231369629f8663e66dc9e18fecccc15d0ee68",
+  "remotePr55Head": "f21137e26478b83afd47625f48b2ffe9b717600d",
+  "artifactSha256": "4253c2f06b2f3bec2b86d3d63bbe8c6c2b25e206f632ff60ce4a564568297a77",
+  "sourceHashes": {
+    "qa/wizard-island/Scene.server.luau": "368b3ca4c7ef6f1ca1827abb0133e24f92dc8803870f6571c67137c2c3142feb",
+    "qa/wizard-island/Review.client.luau": "3398e944a1cd0ee647ea806fbc5549b379c2d2bc1b6311ec96aa289b00b1c870",
+    "qa/wizard-island/EnvironmentConfig.luau": "e9c1b91715513a40c226a75800dba7a90139fd884eaabba1e69bbf1674bdfbe5",
+    "src/client/EnvironmentView.luau": "0d97aaf1ad5fcaaf415abac03adfdf5e4ac806c250621fc7046069dd5e3d04c3"
+  },
+  "sourceCommit": "Containing Git commit; build/wizard-island-build.json records delivery HEAD",
+  "captureMethod": "Native Roblox Studio View > Screenshot during F5 Play, unmodified PNG",
+  "studio": "0.747.0.7471481",
+  "viewport": [
+    1566,
+    1095
+  ],
+  "studioGraphics": "Q6",
+  "gpu": "NVIDIA GeForce RTX 5070 Ti",
+  "captures": [
+    {
+      "file": "01-spawn-dusk.png",
+      "original": "RobloxScreenShot20261116_211449832.png",
+      "sha256": "407416393f0c51990fb33deaf8282907eed7a61a69468b3607d160b78a9733c3",
+      "bytes": 1793098
+    },
+    {
+      "file": "02-island-dusk.png",
+      "original": "RobloxScreenShot20261116_211514072.png",
+      "sha256": "b5f45088df97dcd9f24365611dbb6047c8fa6138d72f9344d9da95fe032f6676",
+      "bytes": 780096
+    },
+    {
+      "file": "03-altar-dusk.png",
+      "original": "RobloxScreenShot20261116_211554729.png",
+      "sha256": "43673d6b1a31d368039ee521b718e4c75a998ad153e5b3cf5bd6657546c0e096",
+      "bytes": 1815988
+    },
+    {
+      "file": "04-spawn-night.png",
+      "original": "RobloxScreenShot20261116_211830675.png",
+      "sha256": "68d12e1eb59a6b09d7a3e4f19e6a9177f9207955a197603494e43dc5a81a5b22",
+      "bytes": 1500728
+    },
+    {
+      "file": "05-spawn-day.png",
+      "original": "RobloxScreenShot20261116_211854966.png",
+      "sha256": "54c15f50db716c346415aef33461ac5ff666ed35ad689c23efdede1f47be7ae3",
+      "bytes": 1977521
+    },
+    {
+      "file": "06-minimal-night-motion.png",
+      "original": "RobloxScreenShot20261116_211921788.png",
+      "sha256": "23744693ab8dfabbc257a5415b01232f789306c41ea6b9926c2e0b917c02400b",
+      "bytes": 1132146
+    }
+  ],
+  "benchmark": [
+    {
+      "lights": 6,
+      "seconds": 15.001069515012205,
+      "assetFailures": 0,
+      "frames": 3589,
+      "fps": 239.24960793017698,
+      "memoryMiB": 3416.3125,
+      "p95ms": 5.131700076162815,
+      "wind": 12,
+      "viewport": "1566, 1095",
+      "motes": 24,
+      "p50ms": 4.0686000138521194,
+      "quality": "full"
+    },
+    {
+      "lights": 3,
+      "seconds": 15.001945502590388,
+      "assetFailures": 0,
+      "frames": 3593,
+      "fps": 239.50226984757384,
+      "memoryMiB": 3413.96484375,
+      "p95ms": 5.072799976915121,
+      "wind": 4,
+      "viewport": "1566, 1095",
+      "motes": 9,
+      "p50ms": 4.089199937880039,
+      "quality": "reduced"
+    },
+    {
+      "lights": 0,
+      "seconds": 15.001693602884188,
+      "assetFailures": 0,
+      "frames": 3600,
+      "fps": 239.97290541301768,
+      "memoryMiB": 3414.09375,
+      "p95ms": 5.0790999084711075,
+      "wind": 0,
+      "viewport": "1566, 1095",
+      "motes": 0,
+      "p50ms": 4.0779998525977135,
+      "quality": "minimal"
+    }
+  ],
+  "benchmarkArtifact": "4253c2f06b2f3bec2b86d3d63bbe8c6c2b25e206f632ff60ce4a564568297a77",
+  "benchmarkLimit": "Final artifact. Dusk spawn, 15 seconds per tier, Q6. RenderStepped intervals, not GPU timings. Desktop frame cap, not mobile/full-game evidence.",
+  "nativeQa": {
+    "lights": 0,
+    "wind": 0,
+    "terrainY": 0.4999980926513672,
+    "assetFailures": 0,
+    "lighting": [
+      "Atmosphere:M7Atmosphere",
+      "Sky:M7Sky",
+      "ColorCorrectionEffect:M7Color",
+      "BloomEffect:M7Bloom",
+      "SunRaysEffect:M7SunRays"
+    ],
+    "motion": true,
+    "motes": 0,
+    "quality": "minimal"
+  },
+  "newUploads": 0,
+  "artApproved": false,
+  "integrated": false,
+  "published": false
+}

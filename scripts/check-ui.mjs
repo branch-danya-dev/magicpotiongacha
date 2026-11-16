@@ -10,7 +10,14 @@ for(const [a,b] of [['local function send(', 'local function names('],['Purchase
   assert.equal(section(main,a,b),section(historical['src/client/Main.client.luau'],a,b),'Protected intent/payment section');
 const context=read('src/client/WorldContext.luau');
 assert(!/FireServer|InvokeServer|InputHoldBegin|Triggered:|SetCoreGuiEnabled/.test(context),'Context must use native prompts and grant no authority');
-assert(!/SetCoreGuiEnabled/.test(main),'Do not hide Roblox controls for UI acceptance');
+// The owner explicitly replaced desktop Tab's stock PlayerList with the RPG
+// Inventory in AG75. Only the named and reversible PlayerList suppression is
+// allowed inside that already reviewed grouped-menu seam.
+const playerListSeam=/-- AG75_BEGIN_MENU_BIND\n([\s\S]*?)-- AG75_END_MENU_BIND/;
+const grouped=main.match(playerListSeam)?.[1]||'';
+assert.equal((grouped.match(/SetCoreGuiEnabled\(/g)||[]).length,2,'Only paired PlayerList toggle/restore allowed');
+assert(!/SetCoreGuiEnabled\(/.test(main.replace(playerListSeam,'')),'No other Roblox controls may be hidden');
+assert(grouped.includes('Enum.CoreGuiType.PlayerList')&&grouped.includes('oldPlayerListEnabled'));
 assert(!read('default.project.json').includes('qa/'),'QA leaked to production');
 assert.match(main,/ScreenInsets = Enum.ScreenInsets.CoreUISafeInsets/);
 console.log('UI18 contract PASS: original intent sequencing/payment handling; native prompts; CoreGui and release isolation');

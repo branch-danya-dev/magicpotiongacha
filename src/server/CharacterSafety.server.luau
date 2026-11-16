@@ -25,7 +25,7 @@ RunService.Heartbeat:Connect(function(dt)
 -- AG76_BEGIN_BOUNDS
 		if root:GetAttribute("PersonalIsland")==true then
 			local island=require(game:GetService("ReplicatedStorage").PotionTycoon.Shared.PersonalIsland)
-			escaped=not island.contains(hrp.Position.X-island.origin[1],hrp.Position.Z-island.origin[3],1)
+			escaped=not island.surfaceContains(hrp.Position.X-island.origin[1],hrp.Position.Z-island.origin[3],3)
 				and now-last>=Recovery.cooldown
 		end
 -- AG76_END_BOUNDS

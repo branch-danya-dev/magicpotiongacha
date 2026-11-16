@@ -60,6 +60,54 @@ T.test("AG76 safe bounds reject the old neighbouring plots and invalid coordinat
 	T.falsy(Island.contains(0/0,0));T.falsy(Island.contains("0",0))
 	T.truthy(Island.contains(0,-8));T.falsy(Island.contains(42.5,0,1))
 end)
+T.test("AG76-R1 walkable island expands without moving frozen V8 construction bounds",function()
+	local s=Island.surface
+	T.truthy(s.width>=120 and s.depth>=110)
+	T.equal(s.topY,.5);T.equal(s.thickness,1.5)
+	T.truthy(Island.surfaceContains(52,s.centerZ,3))
+	T.falsy(Island.surfaceContains(85,s.centerZ))
+	T.falsy(Island.surfaceContains(0,100))
+	for _,invalid in ipairs({math.huge,-math.huge,"40"}) do
+		T.falsy(Island.surfaceContains(invalid,0));T.falsy(Island.surfaceContains(0,invalid))
+	end
+	T.falsy(Island.surfaceContains(0/0,0))
+	T.falsy(Island.surfaceContains(0,0,-1))
+	T.falsy(Island.surfaceContains(0,0,100))
+	T.equal(Island.core.minX,-42.5);T.equal(Island.core.maxX,42.5)
+	T.equal(Island.buildable.minZ,-45.5);T.equal(Island.buildable.maxZ,29.5)
+	for _,id in ipairs(Config.stationOrder) do
+		local p=Island.offset(Config,id)
+		T.truthy(Island.surfaceContains(p[1],p[3],5))
+		for _,q in pairs(Config.stations[id].waypoints) do
+			T.truthy(Island.surfaceContains(q[1],q[3],3))
+		end
+	end
+end)
+T.test("AG76-R1 deterministic rocky island stays inside prop budget",function()
+	local plan=Island.terrainPlan()
+	local again=Island.terrainPlan()
+	T.truthy(#plan>=50 and #plan<=Island.maxTerrainParts)
+	T.equal(#plan,#again)
+	local names,wedges={ },0
+	for i,d in ipairs(plan) do
+		T.falsy(names[d.name]);names[d.name]=true
+		T.equal(d.name,again[i].name)
+		T.equal(d.position[1],again[i].position[1]);T.equal(d.position[2],again[i].position[2])
+		T.equal(d.position[3],again[i].position[3]);T.equal(d.yaw,again[i].yaw)
+		T.truthy(d.shape=="Ball" or d.shape=="Wedge")
+		T.truthy(d.material=="Slate" or d.material=="Rock" or d.material=="Grass")
+		for _,length in ipairs(d.size) do T.truthy(length>0 and length<200) end
+		if d.shape=="Wedge" then wedges+=1 end
+	end
+	T.truthy(wedges>=40)
+	T.equal(plan[1].name,"IslandStone")
+	local count=0
+	for _,id in ipairs(Config.stationOrder) do if id~="crystal" then
+		local n=Props.metrics(Props.station(Config,id));count+=n
+	end end
+	local n=Props.metrics(Props.lantern());count+=n*4
+	T.truthy(count+Island.maxSceneryParts+Island.maxTerrainParts+15<=Props.combinedPartLimit)
+end)
 T.test("AG76 remote Market allowlist never opens production paid or P2P actions",function()
 	for _,id in ipairs({"buySeed","shopFamiliar","buyEventGold"}) do
 		T.truthy(Island.marketAllowed(true,true,id));T.falsy(Island.marketAllowed(false,true,id));T.falsy(Island.marketAllowed(true,false,id))

@@ -1,5 +1,46 @@
 # AG-76B — one-owner island vertical slice
 
+## Owner feedback R1 — walkable relief + Tab (2026-11-16)
+
+**CODE CANDIDATE; automated checks PASS; owner/native visual acceptance OPEN.**
+User requested a larger one-player platform with the terrain silhouette of a
+floating island and reported that Tab shows Roblox's stock leaderboard rather
+than the RPG inventory. This continuation is stacked on Draft PR #55 at exact
+base `f21137e26478b83afd47625f48b2ffe9b717600d`; it is not a new island
+routing, save-migration or AG-76C expansion implementation.
+
+- Surface: 124×116 stud elliptical, level Grass plateau, up from a rectangular
+  85×83 stud platform. `PersonalIsland.surfaceContains` changes *physical* safe
+  recovery bounds to match the enlarged playable surface. The frozen V8 core,
+  buildable region, 13 stations/waypoints and single owner placement are exact.
+- Underbody: deterministic, non-colliding, low-poly nested Slate/Rock bulges,
+  asymmetric jagged cliff wedges, middle strata and a tapered lower keel.
+  Sparse grass shoulders, repositioned existing approved foliage, and four
+  lanterns frame the edge; no imported materials, paid assets or new lights.
+  At most `Island.maxTerrainParts=90` terrain Parts/Wedges; included in combined
+  part budget. Render style/visual coherence and mobile FPS still need inspection.
+- Input: with the grouped HUD enabled, `StarterGui:SetCoreGuiEnabled` suppresses
+  only `PlayerList` (Roblox's default Tab overlay); the existing Tab/P/G
+  grouped controls remain and other CoreGui modules remain enabled. Retries
+  briefly if the CoreGui is not initialized yet, restores prior value when
+  Main's script is destroyed. A native read-only QA probe checks the conflict.
+  The actual Tab press and phone layout require owner/native validation.
+
+R1 automated verification: `npm run tools`, `npm test` (1,360 Luau + 14 Node,
+all green), 262 compiled Luau files, AG76 source-preservation and full Rojo
+builds passed. The 16 AG76 tests include two new terrain/surface/budget cases.
+Only two inherited Luau lint notices remain (C01 tests); the new shared island
+logic analyzes cleanly. The generated `-1` QA artifact is a fixture, **not**
+evidence of a native Studio Play session or owner acceptance.
+
+R1 next gates: build an explicit
+owner fixture with the documented command below. Verify visually that the
+edge has undercut rock depth, walk the expanded rim without recovery teleports,
+try Tab twice during normal play and during starter selection, and test
+respawn/rejoin. Also run phone Full/Reduced/Minimal and measure part/FPS budgets.
+The backend/server migration and any paid second plot remain **OUT OF SCOPE**.
+Rollback is to open the unchanged PR #55 owner artifact; no saved-data rewrite.
+
 Status: **CODE CANDIDATE; STUDIO STARTUP VERIFIED; full native/owner acceptance OPEN; NOT PUBLISHED.**
 Issue #53. Stacked on AG-76A Draft PR #54, exact base
 `fdb6494a96c9065783bf3b3ac1f6fd3f8c4888ae`, green Windows/Ubuntu run `43874880056`.
