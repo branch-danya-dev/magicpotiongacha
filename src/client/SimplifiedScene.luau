@@ -5,6 +5,9 @@ local Scene={}
 function Scene.new()
  local self={modified={},world=nil,connections={},active=false,elapsed=0}
  local function enabled()
+-- AG76_BEGIN_OWNED_WORLD
+  if workspace:GetAttribute("AG76PersonalIsland")==true then return false end
+-- AG76_END_OWNED_WORLD
   return RunService:IsStudio() and workspace:GetAttribute("AG75SimplifiedSceneEnabled")~=false
  end
  local function plotOf(object)

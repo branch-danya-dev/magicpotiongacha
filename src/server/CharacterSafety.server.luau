@@ -22,6 +22,13 @@ RunService.Heartbeat:Connect(function(dt)
 		local now=os.clock()
 		local last=rescues[character] or -math.huge
 		local escaped=root:GetAttribute("EnvironmentArtEnabled")==true and Boundary.escaped(hrp.Position.X,hrp.Position.Z) and now-last>=Recovery.cooldown
+-- AG76_BEGIN_BOUNDS
+		if root:GetAttribute("PersonalIsland")==true then
+			local island=require(game:GetService("ReplicatedStorage").PotionTycoon.Shared.PersonalIsland)
+			escaped=not island.contains(hrp.Position.X-island.origin[1],hrp.Position.Z-island.origin[3],1)
+				and now-last>=Recovery.cooldown
+		end
+-- AG76_END_BOUNDS
 		if escaped or Recovery.needed(hrp.Position.Y,hrp.AssemblyLinearVelocity.Y,Recovery.interval,workspace.FallenPartsDestroyHeight,last,now) then
 			-- No yield between ownership/character validation and the move.
 			humanoid.Sit=false

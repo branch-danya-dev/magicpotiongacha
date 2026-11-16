@@ -16,9 +16,28 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### AG-76B — One-owner island world (Issue #53)
+
+**CODE_CANDIDATE / STUDIO STARTUP VERIFIED / OWNER ACCEPTANCE OPEN / NOT PUBLISHED.**
+Claimed by Codex on 2026-11-16 as the only active implementation task.
+Owner approved AG-76A routing/QA design and explicitly requested B in this chat.
+Base: Draft PR #54 @ `fdb6494a96c9065783bf3b3ac1f6fd3f8c4888ae`, both CI jobs
+SUCCESS in run `43874880056`; branch `feat/ag76b-personal-island-world`.
+Scope: server-owned one-island world, configured owner admission before profile
+load, V8-only memory QA, existing personal Market intents through Inventory,
+logical anchor/visual compatibility and portable/native checks. No new schema,
+live routing/place changes, uploads, paid/guest activation, merge or publication.
+Expansion/migration/Rebirth decisions remain gated for C. No screenshots/video.
+The owner subsequently allowed technical window captures for Studio control only;
+no art-report images or video. Startup diagnostics confirmed one island, 13 logical
+stations, V8 memory mode, 91 foliage parts and 425 world instances. Full gameplay,
+rejoin, multi-client, phone and performance gates remain open. See
+[AG76B_PERSONAL_ISLAND.md](AG76B_PERSONAL_ISLAND.md) for reproducible builds,
+the explicit owner-fixture correction, scope, evidence and rollback.
+
 ### AG-76A — Personal Islands architecture (Issue #53)
 
-**DOCUMENTATION CANDIDATE / ARCHITECTURE ONLY / OWNER REVIEW REQUIRED / NOT PUBLISHED.**
+**DOCUMENTATION CANDIDATE / D1 OWNER APPROVED FOR B / NOT PUBLISHED.**
 Claimed by Codex on 2026-11-16 as the only active task. Clean base: Draft PR #52,
 `feat/ag75-owner-feedback-p0` @ `a1a165be6b3120e707fd33fb746fb9bac4dfc078`;
 Windows/Ubuntu CI run `43794436530` SUCCESS. Branch:
@@ -26,7 +45,7 @@ Windows/Ubuntu CI run `43794436530` SUCCESS. Branch:
 routing ADR, additive V8 migration proposal, logical station compatibility,
 Market authorization, stage and QA gates. No runtime, profile, schema,
 DataStore, asset, purchase, place settings or publication changes in A.
-AG-76B is gated on routing/QA design review; AG-76C additionally requires
+AG-76B routing/QA design was approved by the owner in chat; AG-76C additionally requires
 migration and expansion/Rebirth decisions. Existing AG-75 native QA gates
 remain open. Rollback of A is documentation-only. The reviewable proposal and
 concrete D1–D5 decisions are in [AG76A_PERSONAL_ISLANDS_ADR.md](AG76A_PERSONAL_ISLANDS_ADR.md).

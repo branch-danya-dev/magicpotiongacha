@@ -117,14 +117,14 @@ Current `RPGNavigation` Inventory/Bazaar tab routes to M4 exchange UI. The perso
 
 | Existing intent | Proposed personal Market access | Preserved checks |
 | --- | --- | --- |
-| `exchangeEssence` | Owner may invoke from Inventory → Market without crystal distance | Existing amount/rate/balance/sequence rules; no extra currency conversion |
+| `exchangeEssence` | NOT offered: B audit confirmed `Factory.act` always rejects this obsolete intent | Essence remains for alchemy; the original A proposal was incorrect and must not reactivate conversion |
 | `buySeed` | Owner UI access without garden distance | Existing seed allowlist, quantity, Gold, capacity, request validation |
 | `shopFamiliar` | Existing guaranteed choice offers via owner UI without altar distance | Existing price/stats, policy, inventory cap, provenance, idempotency |
 | `buyEventGold` | Existing earned-Gold fixed offers only; do not broaden offer availability | Existing schedule/stock/price, durable transaction/receipt rules and acquisition restrictions |
 | Other production, upgrade, summon, fuse, contract and paid-prompt intents | Keep existing authorization/location requirements unless separately reviewed | No generic `inRange=true` or client-supplied access mode |
 | M4 invites/offers/confirm; purchase prompts | Remain OFF under existing settings | No physical Bazaar fallback that activates P2P; no new Robux products |
 
-The four personal operations reuse their existing server handlers; no new prices, sale modes or currency sinks. UI opens safely even with no physical Market. Add a narrow server policy `canUsePersonalMarket(admission, actualPlayer, intent)` before the existing action checks: owner, active/alive, writable profile, lifecycle/rate limits and trade/value locks. Everything outside the allowlist retains existing access rules. A visitor cannot purchase into the owner's profile or receive its inventory snapshot.
+The three permitted personal operations reuse their existing server handlers; no new prices, sale modes or currency sinks. UI opens safely even with no physical Market. Add a narrow server policy `canUsePersonalMarket(admission, actualPlayer, intent)` before the existing action checks: owner, active/alive, writable profile, lifecycle/rate limits and trade/value locks. Everything outside the allowlist retains existing access rules. A visitor cannot purchase into the owner's profile or receive its inventory snapshot.
 Remove `World:inBazaar` from personal-market paths. M4 may keep a denied compatibility callback while disabled; its persistent recovery must still operate without a Bazaar. Later Hub trading requires a separate proximity/policy design and approval. Existing NPC contracts, brewing and auto-sales stay unchanged.
 
 ## 6. Proposed V9 geographic state — C only
@@ -220,7 +220,7 @@ Future test matrix (all unexecuted in A; portable tests cannot satisfy native ro
 | T02 | Directory loss, teleport failure/retry exhaustion, generation replacement, split runtime identity, profile lease collision/expiry, unknown release | Portable adapter faults B/C + private backend routing QA |
 | T03 | Exactly one island/lectern; no old Bazaar/plot/sign/collider; safe walk/jump/camera/reset; owner respawn after death/rejoin | B ordinary Studio Player and multi-client rejection fixture |
 | T04 | AG75 fullscreen starter choice once, +5 click, first full production/order/automation cycle, both Green Slime Idles, Tab/P/G/touch; all 13 stations and anchor lookups | B inherited portable + ordinary Studio Play; real phone remains separate |
-| T05 | Market four allowlisted operations at arbitrary owner location; normal balances/rules/retries; wrong owner/guest/closing/locked denial; summon/build still retain their guards; M4 and purchases OFF | B portable + ordinary Play |
+| T05 | Market three allowlisted operations at arbitrary owner location; normal balances/rules/retries; wrong owner/guest/closing/locked denial; obsolete Essence exchange remains rejected; summon/build still retain their guards; M4 and purchases OFF | B portable + ordinary Play |
 | T06 | V1…V8 fixtures including new/migrated starter, all phases/epochs, partial jobs/cargo/orders, locks/receipts/collections; exact economic conservation, idempotent migration; identical offline advance | C pure migration/integration fixtures |
 | T07 | Corrupt/future/oversize save, unknown island fields, ambiguous pre-V9 island, bad owner/template, NaN/fractions/duplicate/missing station refs; unknown DataStore writes, retry/rejoin/recovery | C ProfileStore fault injection + isolated real QA backend |
 | T08 | One sector unlock, duplicate/conflicting/stale request, quota, under-level/forged/free coordinate, overlap/path block; save before visual grant, restart round-trip, no duplicate Instances | C portable + memory restart harness + native private rejoin |
