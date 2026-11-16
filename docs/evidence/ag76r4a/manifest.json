@@ -1,0 +1,160 @@
+{
+  "base": "d5f39fad50ac84e660365299f1b3c4de600e3a80",
+  "head": "Git commit containing this manifest; exact SHA in Draft PR",
+  "scope": "Standalone Studio-only art pass; no gameplay or persistence",
+  "ownerArtApproval": "PENDING",
+  "studio": "0.747.0.7471481",
+  "viewport": [
+    1566,
+    1095
+  ],
+  "studioViewportGraphics": "Q6",
+  "savedQualityLevel": "QualityLevel3",
+  "artifact": "build/WizardIsland-AG76B-R4A-Grass-ART-PENDING.rbxlx",
+  "artifactSha256": "939602a1903960a667ab9fe3f4afc9fdd8e0638f8efe01c774fb66fc98f0f36c",
+  "sourceHashes": {
+    "qa/dynamic-grass/Plan.luau": "be13c0070fa5155c3a152402cb91a5a03978633ff3cb0aabf0aa9793db088991",
+    "qa/dynamic-grass/Wind.luau": "81ac17926b202f1e7c77eca24c75b3778e18e30534bc6e570b50e0f4b2b81e73",
+    "qa/dynamic-grass/Style.luau": "7358f2c7e66fd97bc2f5fd6a81b115e787181397ea9b76b1a73c47b2ff0c04dc",
+    "qa/dynamic-grass/Cover.server.luau": "7827cd810285822a6b4e77c59a3f8c8f648ebc47ae9e4cff6abaf82c5d979a17",
+    "build/grass-review.client.luau": "7a842d07b9a75d252c93efc264d30ed1fff4b1654fdf4a40e95daeed8a4174e3",
+    "scripts/build-grass-island.mjs": "406f3a77ca2303c8ed68827a1f9bceb2e0c1bbe2da59c251ec60d6829714588e"
+  },
+  "baselineBuildSha256": "389cdc8ab642143db8e0b7ba5ab78f4d82bc749ece4ce79aa9e577617fc3bc79",
+  "captureMethod": "Original Roblox Studio Screenshot/Clear and F12 recording during ordinary F5 Play; copied unchanged; no generated/edited pixels or external render",
+  "camerasRelativeToIslandOrigin": {
+    "spawn": {
+      "position": [
+        0,
+        8,
+        32
+      ],
+      "target": [
+        0,
+        6,
+        -8
+      ],
+      "fov": 82
+    },
+    "grass": {
+      "position": [
+        -16,
+        4.8,
+        32
+      ],
+      "target": [
+        -25,
+        1.2,
+        38
+      ],
+      "fov": 65
+    },
+    "overview": {
+      "position": [
+        120,
+        66,
+        140
+      ],
+      "target": [
+        0,
+        -16,
+        -8
+      ],
+      "fov": 47
+    },
+    "grove": {
+      "position": [
+        30,
+        5.2,
+        -15
+      ],
+      "target": [
+        45,
+        1.4,
+        -30
+      ],
+      "fov": 68
+    }
+  },
+  "screenshots": [
+    {
+      "file": "01-spawn-dusk-full.png",
+      "nativeFile": "RobloxScreenShot20261117_012912519.png",
+      "camera": "spawn",
+      "pose": "dusk",
+      "quality": "full",
+      "reduceMotion": false,
+      "bytes": 1275835,
+      "sha256": "7ae4dcfbfd40f31d28fb06c3581ffc7aaa87bcc4ee7e4b9915eed001012005c8"
+    },
+    {
+      "file": "02-grass-character-height.png",
+      "nativeFile": "RobloxScreenShot20261117_012956011.png",
+      "camera": "grass",
+      "pose": "dusk",
+      "quality": "full",
+      "reduceMotion": false,
+      "bytes": 799054,
+      "sha256": "84057aed90805bc1b02ee263ff3fffb98981c1237d6ff7c750bf9592e7406480"
+    },
+    {
+      "file": "03-overview-full.png",
+      "nativeFile": "RobloxScreenShot20261117_013020097.png",
+      "camera": "overview",
+      "pose": "dusk",
+      "quality": "full",
+      "reduceMotion": false,
+      "bytes": 804215,
+      "sha256": "6d0bdd802f395fd34a3cd77210821369c01bc9f218a5bdbfeb6856af5420610a"
+    },
+    {
+      "file": "04-grove-dusk-full.png",
+      "nativeFile": "RobloxScreenShot20261117_013059411.png",
+      "camera": "grove",
+      "pose": "dusk",
+      "quality": "full",
+      "reduceMotion": false,
+      "bytes": 1044651,
+      "sha256": "21bfd097f96a76bd98a19dbe378d0ad2169220fba53f50b21c40a536b55aa443"
+    },
+    {
+      "file": "05-spawn-night-minimal.png",
+      "nativeFile": "RobloxScreenShot20261117_013255367.png",
+      "camera": "spawn",
+      "pose": "night",
+      "quality": "minimal",
+      "reduceMotion": false,
+      "bytes": 1165811,
+      "sha256": "ea17c144f7e5016bb1090c37e765035ce628bd25afe08bee5e3b098c9214e361"
+    },
+    {
+      "file": "06-grove-reduce-motion.png",
+      "nativeFile": "RobloxScreenShot20261117_013152412.png",
+      "camera": "grove",
+      "pose": "dusk",
+      "quality": "full",
+      "reduceMotion": true,
+      "bytes": 1020947,
+      "sha256": "d917db3724376f11cbf7de488f5a64f92d4867d04e189bd24b94756c56d25e96"
+    }
+  ],
+  "video": {
+    "file": "grass-wind-gust.mp4",
+    "nativeFile": "Roblox-2026-11-16T22_31_29.204Z.mp4",
+    "seconds": 12.224,
+    "dimensions": [
+      1552,
+      1088
+    ],
+    "codec": "H.264",
+    "encoder": "RobloxGameEngine",
+    "camera": "grove",
+    "pose": "dusk",
+    "quality": "full",
+    "reduceMotion": false,
+    "bytes": 26181124,
+    "sha256": "95a77e4c21a432a7f0a0b3d87a7206572bb7c48cedc4c67cff00ac5d1d60cd90"
+  },
+  "observationsSha256": "8e2f6b7b1ebb190bc43ff71306e94d5469f2d8baf812e43a9d5bd0766985a7ec",
+  "metricsSha256": "af6cc0b40083f397c7fb5d8aa8346501280522554ea2544ceae3279ed6ad8c6e"
+}

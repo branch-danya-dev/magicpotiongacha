@@ -35,3 +35,7 @@ docs/evidence/ag73/** -text
 docs/references/ag76r3/** -text whitespace=cr-at-eol
 docs/evidence/ag76r3/** -text whitespace=cr-at-eol
 qa/romantic-island/** text eol=lf
+# Preserve R4A native capture hashes and reproducible QA source bytes.
+docs/evidence/ag76r4a/** -text whitespace=cr-at-eol
+qa/dynamic-grass/** text eol=lf
+scripts/build-grass-island.mjs text eol=lf
