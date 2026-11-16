@@ -42,7 +42,10 @@ implementation status and next tasks.
    affordable automation and recovery routes are implemented and portable-tested.
    The normal Studio/mobile/reconnect/economy acceptance remains open.
 3. **C02:** server-validated free station placement, quick build mode, temple
-   upgrades and build-area expansion inside unchanged eight-plot ownership.
+   upgrades and build-area expansion inside AG-76 owner-island sectors.
+   [AG-76A](AG76A_PERSONAL_ISLANDS_ADR.md) precedes B (world) and C (migration + one
+   expansion); those stages do not complete C02. Routing, migration and free-land
+   Rebirth decisions are separate review gates.
 4. **C03:** keep/sell/contract potion routing; physical bottle inspection,
    Warehouse/Laboratory/Atlas and protected collection persistence.
 5. **C04:** capped working-familiar slots, trainable Farming/Alchemy/Logistics;
@@ -53,10 +56,12 @@ implementation status and next tasks.
    blocked on owner-approved potion rarity ladder and precise reward policy.
 8. **C07:** three-epoch Rebirth, persistent collection/skills and bounded academic
    charms with conservative paid/trading provenance.
-9. **C08:** mobile/8-owner/security/persistence acceptance, asset readiness and
+9. **C08:** mobile/isolated-owner-session/security/persistence acceptance, asset readiness and
    independent monetization safety gates.
 
-**Sequence note:** M7 07D ART APPROVED -> UX #18 -> 08 full island rollout still
-requires separate explicit owner decisions. Implement V2 in a separate branch/
+**AG-76 topology amendment (owner 2026-11-16):** the eight-plot rollout and shared
+physical Bazaar are superseded by personal islands and Inventory Market. Old M3
+eight-plot measurements above remain historical evidence, not target acceptance.
+Art/UX gates still require separate explicit owner decisions. Implement V2 in a separate branch/
 Draft PR sequence; do not use V2 as permission to merge/publish M7 or enable
 trading and paid random items.

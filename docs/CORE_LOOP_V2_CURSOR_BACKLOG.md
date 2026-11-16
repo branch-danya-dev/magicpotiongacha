@@ -12,13 +12,15 @@
 
 ## Golden rules for Cursor
 
+**AG-76 amendment (owner 2026-11-16):** [ADR and staged gates](AG76A_PERSONAL_ISLANDS_ADR.md). The former eight-owner/4×2 topology, neighbour boundaries, eight-plot art rollout and physical Bazaar are superseded, not accepted as completed. A is documentation only; B is a single-owner world after routing/QA review; C is additive persistence + one expansion after migration/Rebirth review. Other C00–C08 contracts remain. Historical 2–8-owner tests below become multiple isolated owner sessions plus denied cross-owner/guest access, with real routing QA separate from Studio.
+
 1. **Keep clicker + tycoon + idle as the mandatory loop:** clicks -> Essence -> supply/brew -> Gold -> upgrades -> higher idle output. New complexity must be optional or progressively automated.
 2. Implement **thin vertical slices**, with a playable recovery path after every slice. Do not attempt one huge rewrite of World/Factory/Protocol/ProfileStore.
 3. Keep simulation pure/portable. Server authenticates ownership, prices, layout, timers, inventories, XP, item serials, odds and transactions; client sends validated intents.
 4. Treat all existing profiles and V1–V7 receipts as real user data. No destructive reset, duplication, new free grants or unvalidated migration. No silently changed paid ancestry, unknown outcomes or open trading/monetization flags.
 5. Keep versioned documented owner choices separate from provisional economy numbers. No paid randomness, new currency or commission/purchase of 3D assets without further approval.
 6. Work from **one task at a time** with tests and exact-head CI, ordinary Roblox Studio build, acceptance/blocked matrix. No merge/publish unless separately authorized.
-7. M7 07D owner review -> UX #18 -> 08 eight-plot art rollout remains **independent and open**. Do not mark it complete as a side effect of V2.
+7. M7 art/UX acceptance remains **independent and open**. The old 08 eight-plot rollout is superseded by AG-76 personal-island art; do not mark it complete as a side effect of V2.
 
 ## C00 — Architecture inventory, save migration plan, playable baseline (P0)
 
@@ -48,9 +50,9 @@ Written inventory and the V8 migration contract: [CORE_LOOP_V2_C00.md](CORE_LOOP
 
 - [ ] Convert fixed slot coordinates into server-owned station instances with immutable IDs, type/tier/phase, local snapped X/Z/rotation, and persistable occupied bounds.
 - [ ] Client placement preview + rotate/move + quick-build/preset option on PC and touch; reject placement at server for invalid funds/phase, overlap, protected hill, neighbour, restricted zone, spawn/path and maximum instance limit.
-- [ ] Make temple central and non-movable; upgrades unlock plot-local build area within fixed 8-plot protected envelopes. Connect existing four technology gates provisionally to temple progression, pending approved mapping.
+- [ ] Make temple central and non-movable; use AG-76 owner-island sectors instead of fixed 8-plot envelopes. Connect existing four technology gates provisionally to temple progression, pending approved mapping, footprint and Rebirth retention.
 - [ ] Moving a bought building is recoverable and cannot duplicate refunds/resources, teleport in-flight loads, bypass idle/busy equipment restrictions or alter another owner. Construction must not softlock access.
-- [ ] Keep optional pipes/haulers as meaningful throughput improvements; no quadratic routing scans across arbitrary station positions. Provide determinism/owner isolation under 8 simultaneous plots.
+- [ ] Keep optional pipes/haulers as meaningful throughput improvements; no quadratic routing scans across arbitrary station positions. Provide determinism across isolated owner sessions, no double writer and no cross-owner/unauthorized guest access.
 - [ ] Existing saves with 13 legacy stations load as a usable layout, never zero/missing stations; preserve cargo, jobs and original tier/phase prices until explicitly rebalanced.
 
 **Done when:** free placement persists through rejoin, relocation and safe expansion; deterministic arbitrary overlap/property tests and ordinary Studio movement succeed.

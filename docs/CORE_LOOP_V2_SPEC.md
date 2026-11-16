@@ -7,6 +7,8 @@
 
 ## Product identity and non-negotiable loop
 
+**Topology amendment — AG-76, owner 2026-11-16:** [Issue #53](https://github.com/branch-danya-dev/magicpotiongacha/issues/53) replaces only eight physical owner plots, neighbour boundaries, eight-plot art rollout and physical Bazaar. [AG-76A ADR](AG76A_PERSONAL_ISLANDS_ADR.md) defines the proposed owner-session/routing, migration and review gates. C00/C01 exist as code candidates; C02 free placement remains unfinished. No economy, publication or art acceptance is implied.
+
 Cozy Light Fantasy alchemy **clicker + tycoon + idle factory**, with optional depth in freely arranged land, plant cultivation, familiar collection, rare alchemy and laboratory display. The core repeatable loop remains:
 
 1. Interact with temple crystal to gain **Essence**.
@@ -19,7 +21,7 @@ Clicking, production/sales, upgrades and passive earnings are first-class, indep
 
 ## New-profile onboarding
 
-- Each server still hosts up to eight owner-separated plots and a communal Bazaar; others may visit but may not edit/sell from another plot.
+- Each live island server hosts one authenticated owner's personal island; unrelated owners are routed to their own sessions. Future invited guests never claim it or acquire economic rights. Personal Market is in Inventory, with no shared physical Bazaar; a social Hub is a later separate location. B/C have no guest runtime.
 - Each new plot starts mostly empty: a **fixed central temple + Essence crystal**, a modest **one-time starter Gold** allowance (amount TBD), and a small valid build zone.
 - **Exactly one** selectable initial familiar from the three original beginner identities (owl/slime/cat), once per new profile, with confirmed, idempotent choice. A full new-user free path exists irrespective of choice, including without a specialist familiar.
 - First-session tutorial is short and skippable/recoverable: click crystal -> buy/place a first planting bed -> buy/plant starter seed -> harvest -> buy/place/operate basic cauldron -> brew Healing -> choose sale -> use Gold to upgrade -> learn first automatic production. The starter budget must fund the necessary starter actions, and a no-Gold/nonrandom recovery route must survive overspending.
@@ -29,7 +31,7 @@ Clicking, production/sales, upgrades and passive earnings are first-class, indep
 ## Land, construction, temple
 
 - **Replace 13 hard-coded slot positions with server-authoritative purchased station instances**. Each placed instance has stable ID, type, tier, owner, valid plot-local snapped position, snapped rotation, buildable-boundary rule and safe upgrade/move/removal semantics.
-- Preserve the eight plot ownership boundaries and natural M7 hills/outer collision boundary. Plot expansion by temple level occurs **inside a preallocated safe plot envelope**, without stealing neighbours' parcels, invading shared routes or allowing placement on protected hills.
+- Use stable owner/island IDs and named island-local sectors with safe bounds/connectivity; no neighbour parcels or inherited eight-plot boundary. Preserve existing station footprints during migration. Temple/phase progression may unlock reviewed free sectors without a second charge. Exact geometry, milestones and Rebirth retention require owner review; see AG-76A. Full C02 free placement remains separate from one land expansion.
 - The temple is a fixed central landmark (not freely moved). Its tiers are the visible upgrade/progression axis; **map the existing four functional phases to temple milestones** provisionally instead of adding a confusing second phase paywall. Preserve era/epoch as a separate Rebirth dimension. Exact prices, phase recipes and buildable footprint are balance TBD.
 - Offer (a) quick placement/presets for tycoon players and (b) full movable/rotatable snapped placement and decoration. A preview cannot grant ownership; the server validates money, unlock, bounds, overlap, neighbour/access restrictions and capacity before atomic save. Free relocation of owned idle structures is proposed.
 - Stations cannot block guaranteed playable routes, altar/crystal/temple access, player spawns, emergency recovery or necessary NPC/familiar movement.

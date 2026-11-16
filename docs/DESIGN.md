@@ -2,11 +2,13 @@
 > **New product direction / Cursor handoff (owner, 2026-11-06):** the intended next core loop is documented in [CORE_LOOP_V2_SPEC.md](CORE_LOOP_V2_SPEC.md) and scheduled in [CORE_LOOP_V2_CURSOR_BACKLOG.md](CORE_LOOP_V2_CURSOR_BACKLOG.md). It retains the clicker -> Essence -> potion -> Gold -> tycoon upgrade -> idle production loop, and adds temple-based freely placed construction, bought seeds, one chosen starter familiar, skill growth, owned/displayable potions, extended orders, optional rare synthesis and Rebirth charms.
 > **Nothing in V2 is implemented or live yet.** The M0–M6 decisions and fixed-slot production described below are the current historical/implemented contract, not a declaration that V2 already works. Do not rewrite those rules without additive migrations, owner decisions and regressions. The C00 inventory and V8 migration contract is [CORE_LOOP_V2_C00.md](CORE_LOOP_V2_C00.md). C00b stores that projection at schema 8 without changing prices, production, or the three-familiar grant. M7 #17 stays Draft; 07D/UX/08 art gates remain independent.
 
+> **AG-76 owner decision, 2026-11-16:** [Issue #53](https://github.com/branch-danya-dev/magicpotiongacha/issues/53) supersedes only the eight-owner physical topology, neighbour boundaries, eight-plot art rollout and shared physical Bazaar. Target: one expandable personal island per owner session; future guests are not owners; personal Market through Inventory. [AG-76A ADR](AG76A_PERSONAL_ISLANDS_ADR.md) proposes routing/data/QA, pending review; no runtime changes yet. C00/C01 and AG75 are code candidates, so the older “Nothing in V2” statement above is historical. Other economy, migration and art gates remain intact.
+
 # Design decisions — agreed baseline
 
 ## Product
 
-Mobile-first Roblox tycoon/crafting/clicking/trading. Stylized low-poly magical forest, with restrained neon accents. Each player owns a separate fixed-slot factory. Target topology: 6–8 owners per server, visitors welcome, no shared factory ownership in the first release.
+Mobile-first Roblox tycoon/crafting/clicking/trading. Stylized low-poly magical forest, with restrained neon accents. Each player owns a separate factory. Target topology (AG-76): one authoritative owner's expandable island per island server, reconstructed from saved state; future invited visitors have no shared factory ownership. Entry routing must separate unrelated owners. The inherited runtime still has eight fixed plots until AG-76B; merely changing PlotCount is insufficient.
 
 Three layout zones: agriculture to the left of the crystal; processing in the centre/right; storage and summoning in the rear. The automated coal mine is a resource annex to the agricultural side. Station coordinates are relative to a plot origin. Visual waypoints are presentation, not proof of economic delivery.
 

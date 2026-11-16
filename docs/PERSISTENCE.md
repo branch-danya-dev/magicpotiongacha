@@ -1,5 +1,7 @@
 # M6 player persistence
 
+> **AG-76 migration proposal (2026-11-16):** [ADR section 6](AG76A_PERSONAL_ISLANDS_ADR.md#6-proposed-v9-geographic-state--c-only) specifies a proposed additive island projection, conservation, closed validation, unknown-write fencing and rollback limits. Actual profile schema remains V8 and envelope version remains 1. Keys already use UserId; geographic state must share that single-profile writer. A/B do not write a new schema; C requires migration and free-expansion/Rebirth review plus isolated QA. Existing namespaces and trade/receipt journals must not be used for unapproved migration testing.
+
 ## Scope and verification status
 
 `src/server/ProfileStore.luau` stores one player profile per DataStore key and
