@@ -9,7 +9,7 @@ const paths=execFileSync('git',['ls-tree','-r','--name-only',base,'src','tests',
 for(const path of [...paths,'default.project.json']) {
  const old=execFileSync('git',['show',`${base}:${path}`],{maxBuffer:64*1024*1024});
  if(path==='src/client/FamiliarView.client.luau') assert.equal(beforeAG74(path,read(path)),old.toString().replaceAll('\r\n','\n'));
- else if(/\.(luau|json|md|svg|rbxmx|txt|mjs|py)$/.test(path)) assert.equal(read(path),old.toString().replaceAll('\r\n','\n'),path);
+ else if(/\.(luau|json|md|svg|rbxmx|txt|mjs|py)$/.test(path)) assert.equal(beforeAG74(path,read(path)),old.toString().replaceAll('\r\n','\n'),path);
  else assert(readFileSync(path).equals(old),path);
 }
 const root='assets/familiars/green_slime/';

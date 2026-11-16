@@ -19,6 +19,9 @@ local WorldLook=require(Shared.WorldLook)
 local ArcaneForest=require(Shared.ArcaneForest)
 -- AG70_END_IMPORT
 -- AG68_END_IMPORT
+-- AG75_BEGIN_IMPORT
+local AG75Atmosphere=require(Shared.AG75Atmosphere)
+-- AG75_END_IMPORT
 local Style=require(Shared.AtmosphereStyle)
 local Transition=require(Shared.EnvironmentTransition)
 local Clock=require(Shared.EnvironmentClock)
@@ -147,6 +150,16 @@ function View.start(root,settings)
 	-- One non-rendering anchor, no per-star Parts/lights/emitters. The rig follows
 	-- camera translation only so celestial bearings remain fixed in the world.
 	local celestialAnchor=localPart("CelestialAnchor",Vector3.new(.1,.1,.1))
+-- AG75_BEGIN_METEOR_CREATE
+	-- One reusable camera-distant beam, no light, emitter, asset upload or render-loop creation.
+	local meteorStart=effect("Attachment","AG75MeteorTail",celestialAnchor)
+	local meteorEnd=effect("Attachment","AG75MeteorHead",celestialAnchor)
+	local meteor=effect("Beam","AG75ShootingStar",celestialAnchor)
+	meteor.Attachment0=meteorStart;meteor.Attachment1=meteorEnd
+	meteor.Color=ColorSequence.new(Color3.fromRGB(171,239,224),Color3.fromRGB(255,251,225))
+	meteor.FaceCamera=true;meteor.LightEmission=.85;meteor.Width0=2;meteor.Width1=.16
+	meteor.Enabled=false;meteor.Segments=3
+-- AG75_END_METEOR_CREATE
 	local function celestialSprite(name,uri,size,direction)
 		local attachment=effect("Attachment",name,celestialAnchor); attachment.Position=direction*Config.celestial.distance
 		local gui=effect("BillboardGui",name.."Sprite",attachment); gui.Adornee=attachment
@@ -173,10 +186,28 @@ function View.start(root,settings)
 	local meadowWind={}; local meadowParts={}; local forestParts={}; local forestByPart={}
 	local vistaParts={}; local vistaByPart={}
 	local labels={}; local annotations=true; local labelsDirty=0; local pendingPanes={}
+-- AG75_BEGIN_LANTERN_GLOW_STATE
+	local distantLanterns={}
+-- AG75_END_LANTERN_GLOW_STATE
 	local function bindPane(p)
 		local id=p:GetAttribute("EnvironmentLanternPane")
 		if not id then return false end
 		lampPanes[id]=p; if lampsById[id] then lampsById[id].Parent=p end
+-- AG75_BEGIN_LANTERN_GLOW_BIND
+		-- A visible distant glint is cosmetic, not an extra PointLight. It reuses
+		-- the approved star image; the actual physical pool remains tier-capped.
+		if AG75Atmosphere.enabled(RunService:IsStudio(),workspace:GetAttribute("AG75AtmosphereEnabled")) and not distantLanterns[p] then
+			local aura=effect("BillboardGui","AG75DistantLantern",folder)
+			aura.Adornee=p;aura.Size=UDim2.fromScale(5,5);aura.MaxDistance=220
+			aura.AlwaysOnTop=false;aura.LightInfluence=0
+			local img=effect("ImageLabel","Aura",aura)
+			img.BackgroundTransparency=1;img.Size=UDim2.fromScale(1,1)
+			img.Image=Assets.uri("star");img.ImageColor3=Color3.fromRGB(255,193,107)
+			img.ImageTransparency=1
+			assetGui(aura,"star")
+			distantLanterns[p]=img
+		end
+-- AG75_END_LANTERN_GLOW_BIND
 		return true
 	end
 -- AG69_BEGIN_REGISTER
@@ -320,6 +351,17 @@ function View.start(root,settings)
 			rays.Intensity=forestPost.rays; rays.Enabled=forestPost.rays>.0001
 		end
 -- AG70_END_APPLY
+-- AG75_BEGIN_TONEMAP
+		if forestPost and AG75Atmosphere.enabled(RunService:IsStudio(),workspace:GetAttribute("AG75AtmosphereEnabled")) then
+			local tone=AG75Atmosphere.project(sample,forestPost,self.quality)
+			Lighting.Brightness=tone.brightness
+			Lighting.ExposureCompensation=tone.exposure
+			correction.Contrast=tone.contrast
+			bloom.Intensity=tone.bloom; bloom.Enabled=tone.bloom>.0001
+			bloom.Threshold=tone.threshold
+			atmosphere.Haze=tone.haze*q.haze
+		end
+-- AG75_END_TONEMAP
 	end
 	local lod=0; local step=0; local connection
 	local transition=Transition.new({forward=true,clockAtPhase=function(phase) return Clock.at(Config,phase) end})
@@ -423,6 +465,20 @@ function View.start(root,settings)
 		moon.attachment.Position=Vector3.new(table.unpack(State.moon(sample.phase)))*Config.celestial.distance
 		moon.image.ImageTransparency=1-sample.celestial*.94
 		for i,v in ipairs(stars) do v.image.ImageTransparency=1-(i<=q.stars and sample.celestial*v.alpha or 0) end
+-- AG75_BEGIN_METEOR_UPDATE
+		local meteorEvent=AG75Atmosphere.enabled(RunService:IsStudio(),workspace:GetAttribute("AG75AtmosphereEnabled"))
+			and AG75Atmosphere.meteor(time,sample.night,self.quality,self.reduceMotion)
+		meteor.Enabled=meteorEvent~=nil
+		if meteorEvent then
+			local t=meteorEvent.t;local side=meteorEvent.side
+			local function point(p)
+				return Vector3.new(side*(.66-.56*p),.82-.31*p,-.58).Unit*Config.celestial.distance
+			end
+			meteorStart.Position=point(math.max(0,t-.18))
+			meteorEnd.Position=point(t)
+			meteor.Transparency=NumberSequence.new(1-math.sin(t*math.pi)*.85)
+		end
+-- AG75_END_METEOR_UPDATE
 		for _,v in ipairs(wetSurfaces) do v.part.Color=v.color:Lerp(v.wet,sample.wetStone*.35) end
 		if labelsDirty>=.25 then
 			labelsDirty=0
@@ -489,6 +545,14 @@ function View.start(root,settings)
 		end
 		LightSlots.step(lanternSlots,math.max(0,q.lights-State.sunSlots(self.quality)),q.distance,elapsed)
 		LightSlots.step(sunSlots,State.sunSlots(self.quality),q.distance,elapsed)
+-- AG75_BEGIN_LIGHT_ALLOCATION
+		-- Nighttime recycles the existing two sun slots for the lanterns instead.
+		-- Never create a new light or exceed the existing quality-tier total.
+		if AG75Atmosphere.enabled(RunService:IsStudio(),workspace:GetAttribute("AG75AtmosphereEnabled")) and sample.night>.48 then
+			LightSlots.step(lanternSlots,q.lights,q.distance,elapsed)
+			LightSlots.step(sunSlots,0,q.distance,elapsed)
+		end
+-- AG75_END_LIGHT_ALLOCATION
 		for _,e in ipairs(lanternSlots) do
 			e.light.Enabled=e.weight>0; e.light.Brightness=(.10+sample.night*1.53)*e.weight
 		end
@@ -507,6 +571,12 @@ function View.start(root,settings)
 			if look=="AG70" then local l=ArcaneForest.localLight(sample,"canopy"); e.light.Color=color(l.color); e.light.Brightness=l.brightness*e.weight; e.light.Range=l.range; e.light.Angle=l.angle end
 		end
 -- AG70_END_LIGHTS
+-- AG75_BEGIN_LANTERN_GLOW_UPDATE
+		for _,image in pairs(distantLanterns) do
+			local strength=math.clamp(sample.night*.42+sample.warm*.16,0,.52)
+			image.ImageTransparency=1-strength
+		end
+-- AG75_END_LANTERN_GLOW_UPDATE
 		for _,p in ipairs(meadowParts) do
 			local target=p:GetAttribute("MeadowTargetAlpha") or 0; local alpha=p.LocalTransparencyModifier
 			if alpha~=target then p.LocalTransparencyModifier=alpha+math.clamp(target-alpha,-elapsed*2,elapsed*2) end
@@ -564,12 +634,23 @@ function View.start(root,settings)
 				else
 					p.Size=Vector3.new(.045,.85,.045); p.CFrame=CFrame.new(x+(1-fall)*flow.x*.18,y+.2+(1-fall)*24,z+(1-fall)*flow.z*.18)*CFrame.Angles(math.atan(flow.z*.007),0,-math.atan(flow.x*.007))
 				end
+-- AG75_BEGIN_RAIN_TRAILS
+				if fall<=.91 and AG75Atmosphere.enabled(RunService:IsStudio(),workspace:GetAttribute("AG75AtmosphereEnabled")) then
+					p.Size=Vector3.new(.052,1.55,.052)
+					p.Transparency=1-AG75Atmosphere.rainTrail(sample.rain*.52,sample.rain)
+				end
+-- AG75_END_RAIN_TRAILS
 			end
 		end
 		for i,v in ipairs(fog) do
 			local distance=(v.part.Position-camera.CFrame.Position).Magnitude
 			local fade=math.clamp((q.distance-distance)/20,0,1)
 			v.image.ImageTransparency=1-(i<=q.fog and sample.fog*.85*fade or 0)
+-- AG75_BEGIN_FOG
+			if AG75Atmosphere.enabled(RunService:IsStudio(),workspace:GetAttribute("AG75AtmosphereEnabled")) then
+				v.image.ImageTransparency=1-math.clamp((1-v.image.ImageTransparency)*(1+sample.rain*.32),0,.96)
+			end
+-- AG75_END_FOG
 			v.image.ImageColor3=Color3.fromRGB(214,229,239):Lerp(Color3.fromRGB(228,249,241),sample.dawn)
 		end
 		for i,p in ipairs(glints) do

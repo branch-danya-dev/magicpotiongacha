@@ -30,4 +30,11 @@ function Access.allowed(ownerMatches: boolean, alive: boolean, distance: number,
 		and maximum == maximum and maximum > 0 and maximum < math.huge and distance <= maximum
 end
 
+-- AG75_BEGIN_STARTER
+-- Starter selection is a once-per-profile server action, not a world prompt.
+-- Other actions retain their exact inherited station-distance requirement.
+function Access.starterAllowed(ownerMatches: boolean, alive: boolean): boolean
+	return ownerMatches == true and alive == true
+end
+-- AG75_END_STARTER
 return Access

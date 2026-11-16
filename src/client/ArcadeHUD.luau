@@ -157,6 +157,9 @@ function View.new(gui,callbacks)
   counters.gold.Text=data.gold; counters.essence.Text=data.essence; level.Text=data.level; goalText.Text=data.goal; fill.Size=UDim2.fromScale(data.progress,1)
   goal.Visible=not data.intro and self.plan.goal.w>=80
   chooser.Visible=data.intro and self.plan.chooserFits; page.Visible=bookOpen
+-- AG75_BEGIN_HIDE_CHOOSER
+  if RunService:IsStudio() and workspace:GetAttribute("AG75StarterCardsEnabled")~=false then chooser.Visible=false end
+-- AG75_END_HIDE_CHOOSER
   nav.Visible=not bookOpen; if modal then moreOpen=false end; more.Visible=moreOpen and not modal
   subtitle.Text="Уровень "..data.level.." · Магия начинается здесь"; perTap.Text="+"..data.amount.." Essence за касание"
   collectText.Text="Собрать +"..data.amount; upgradeText.Text=data.upgradeText

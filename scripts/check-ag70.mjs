@@ -51,8 +51,11 @@ const r3Files=new Set(['src/client/EnvironmentView.luau','src/shared/ArcaneFores
 const changed=execFileSync('git',['diff','--name-only',receipt.runtimeSourceSha,'--','src'],{encoding:'utf8'}).trim().split('\n').filter(Boolean);
 const ag71Files=new Set(['src/client/Main.client.luau','src/client/LandscapeHUD.luau','src/client/ArcadeHUD.luau','src/shared/ui/Arcade.luau','src/shared/ui/ArcadeAssets.luau']);
 const ag74Files=new Set(['src/client/FamiliarView.client.luau','src/client/FamiliarRigView.luau','src/client/FamiliarVisualRegistry.luau','src/shared/FamiliarIdle.luau']);
+const ag75Files=new Set(['src/shared/StarterCardsModel.luau','src/client/StarterCards.luau','src/client/SimplifiedScene.luau',
+  'src/shared/RPGNavigation.luau','src/shared/AG75Atmosphere.luau',
+  'src/shared/Access.luau','src/server/World.luau']);
 // AG74 has its own base-preservation guard; the old owner is byte-preserved after removing five named seams.
-assert(changed.every(path=>r3Files.has(path)||ag71Files.has(path)||ag74Files.has(path)),'Unreviewed R3/AG71/AG74 runtime drift');
+assert(changed.every(path=>r3Files.has(path)||ag71Files.has(path)||ag74Files.has(path)||ag75Files.has(path)),'Unreviewed R3/AG71/AG74/AG75 runtime drift');
 assert(view.includes('else light.Parent.CFrame=base.cf end'),'Restore both pool transforms before culling');
 assert(view.includes('e.light.Range=base.range; e.light.Angle=base.angle'),'Restore pool shape');
 assert(view.includes('e.light.Range=14'),'Restore lantern radius');

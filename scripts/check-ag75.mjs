@@ -1,0 +1,28 @@
+// AG75 is a Studio-only presentation patch over the exact AG74 runtime.
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+const read=path=>readFileSync(path,'utf8');
+const main=read('src/client/Main.client.luau');
+const view=read('src/client/StarterCards.luau');
+const world=read('src/server/World.luau');
+const scene=read('src/client/SimplifiedScene.luau');
+const atmosphere=read('src/client/EnvironmentView.luau');
+const project=read('default.project.json');
+assert.equal((main.match(/(?:^|\n)State\.OnClientEvent:Connect/g)||[]).length,1);
+assert.equal((main.match(/Instance\.new\("ScreenGui"\)/g)||[]).length,1);
+assert(main.includes('StarterCardsView.new(gui.Parent,Config'));
+assert(main.includes('SimplifiedScene.new()'));
+assert(main.includes('Enum.KeyCode.Tab,Enum.KeyCode.DPadDown'));
+assert(main.includes('Enum.KeyCode.P,Enum.KeyCode.DPadLeft'));
+assert(main.includes('Enum.KeyCode.G,Enum.KeyCode.DPadRight'));
+assert(view.includes('screen.DisplayOrder=120')&&view.includes('backdrop.Modal=true'));
+assert(view.includes('Model.cards(config)')&&view.includes('choose(self.selected)'));
+assert(!/FireServer|InvokeServer|DataStore|MarketplaceService|ProfileStore|SetAttribute/.test(view));
+assert(world.includes('if action == "chooseStarter" then')&&world.includes('Access.starterAllowed(plot.owner == player, humanoid.Health > 0)'));
+assert(scene.includes('LocalTransparencyModifier=1')&&scene.includes('restore()'));
+assert(!/FireServer|InvokeServer|DataStore|:Destroy\(\).*plot|ProfileStore/.test(scene));
+assert.equal((atmosphere.match(/effect\("PointLight"/g)||[]).length,1);
+assert.equal((atmosphere.match(/effect\("SpotLight"/g)||[]).length,1);
+assert.equal((atmosphere.match(/effect\("Beam"/g)||[]).length,1);
+assert(!project.includes('AG75StarterCardsEnabled')&&!project.includes('AG75AtmosphereEnabled'));
+console.log('AG75 integrity PASS: owned first-session UI, one state subscription, mobile/desktop RPG groups, reversible scene, one lighting owner and bounded meteor. Studio visual QA remains OPEN.');
