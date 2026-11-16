@@ -32,7 +32,7 @@ client.LunarDiagnostics={$path:path('qa/lunar/Diagnostics.luau')};
 const adapt=(source,patches)=>{for(const [a,b]of patches){assert.equal(source.split(a).length,2,`QA anchor drift: ${a}`);source=source.replace(a,b);}return source;};
 let view=adapt(read('src/client/EnvironmentView.luau'),[
  ['local View={}','local Lunar=require(Shared.LunarCycle)\nlocal LunarDisks=require(script.Parent.LunarDisks)\nlocal View={}'],
- ['\tassert(not active,','\tassert(RunService:IsStudio(),"R4B scene is Studio-only")\n\tassert(not active,'],
+ ['\tassert(not active,','\tassert(RunService:IsStudio(),"R4B scene is Studio-only")\n\tassert(not workspace:FindFirstChild("M7ClientWeather"),"Environment lighting already has a scene owner")\n\tassert(not active,'],
  ['\tactive=self','\tactive=self\n\tlocal lunarCycle=Lunar.new(); local forcedMoon="auto"; local lunarWeights={1,0,0}'],
  ['\tassetGui(moon.gui,"moon")','\tassetGui(moon.gui,"moon")\n\tlocal lunarDisks=LunarDisks.create(moon,Vista.moonSize)\n\tif lunarDisks.ready then assetGuis[moon.gui]=nil; moon.gui.Enabled=true end'],
  ['\tfunction self.setQuality(name)','\tfunction self.setMoon(name) if not Lunar.valid(name) then return false end;forcedMoon=name;return true end\n\tfunction self.setQuality(name)'],
@@ -49,7 +49,7 @@ let review=adapt(read('build/grass-review.client.luau'),[
  ['local cameras={','local cameras={\n\tmoon={Vector3.new(-43,8,14),Vector3.new(0,19,-8),78},\n\tdawnmoon={Vector3.new(43,8,14),Vector3.new(0,19,-8),78},'],
  ['local cameraMode="spawn";local pose="dusk"','local cameraMode="moon";local pose="night"'],
  ['({day=true,dusk=true,night=true})','({day=true,dusk=true,night=true,dawn=true,dawnend=true})'],
- ['\telseif action=="measure" then','\telseif action=="moon" then view.setMoon(value);return view.stats().lunar\n\telseif action=="inspect" then return view.stats()\n\telseif action=="auto" then view.setPose(nil);return true\n\telseif action=="preview" then view.setPreview(value);return true\n\telseif action=="weather" then view.setWeather(value);return true\n\telseif action=="stop" then view.stop();return Diagnostics.restored(beforeView)\n\telseif action=="measure" then'],
+ ['\telseif action=="measure" then','\telseif action=="moon" then view.setMoon(value);return view.stats().lunar\n\telseif action=="inspect" then return view.stats()\n\telseif action=="owner-check" then local ok=pcall(View.start,root);return {duplicateRejected=not ok}\n\telseif action=="auto" then view.setPose(nil);return true\n\telseif action=="preview" then view.setPreview(value);return true\n\telseif action=="weather" then view.setWeather(value);return true\n\telseif action=="stop" then view.stop();return Diagnostics.restored(beforeView)\n\telseif action=="measure" then'],
  ['\tlocal c=({[Enum.KeyCode.One]','\tlocal moonKey=({[Enum.KeyCode.Z]="pearl",[Enum.KeyCode.X]="blood",[Enum.KeyCode.C]="frost",[Enum.KeyCode.Zero]="auto"})[key.KeyCode]\n\tif moonKey then view.setMoon(moonKey);return end\n\tif key.KeyCode==Enum.KeyCode.Nine then cameraMode="moon";refresh();return end\n\tif key.KeyCode==Enum.KeyCode.T then pose="dawn";refresh();return end\n\tlocal c=({[Enum.KeyCode.One]'],
  ['R4A DYNAMIC GRASS / ART PENDING','R4B MOONS / ART PENDING'],
  ['Q Quality  R Motion"','Q Quality  R Motion  Z/X/C Moons  T Dawn"'],

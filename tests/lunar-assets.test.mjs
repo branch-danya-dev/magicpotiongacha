@@ -28,6 +28,8 @@ test('R4B one inherited Lighting/wind owner with bounded fixed images and stop d
  assert.equal((view.match(/RenderStepped:Connect/g)||[]).length,(base.match(/RenderStepped:Connect/g)||[]).length);
  assert(!/RenderStepped|Heartbeat|GlobalWind|GetService\("Lighting"\)/.test(disks));
  assert(view.includes('Lighting:GetMoonDirection()'));assert(view.includes('sky.MoonAngularSize=0'));
+ assert(view.includes('assert(not workspace:FindFirstChild("M7ClientWeather")'));
+ assert(view.indexOf('assert(not workspace:FindFirstChild("M7ClientWeather")')<view.indexOf('active=self'));
  assert(view.includes('lunarDisks.destroy()'));assert(view.includes('for k,v in pairs(saved) do Lighting[k]=v end'));assert(view.includes('workspace.GlobalWind=savedWind'));
  assert(!/RemoteEvent|DataStore|MarketplaceService|PromptCreatePlatformContent|CreateAsset/.test(disks));
 });
