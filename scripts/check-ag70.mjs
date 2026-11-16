@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {seams as ag76Seams,addedRuntime as ag76Added} from './ag76-preservation.mjs';
 import {readFileSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
@@ -55,7 +56,8 @@ const ag75Files=new Set(['src/shared/StarterCardsModel.luau','src/client/Starter
   'src/shared/RPGNavigation.luau','src/shared/AG75Atmosphere.luau',
   'src/shared/Access.luau','src/server/World.luau']);
 // AG74 has its own base-preservation guard; the old owner is byte-preserved after removing five named seams.
-assert(changed.every(path=>r3Files.has(path)||ag71Files.has(path)||ag74Files.has(path)||ag75Files.has(path)),'Unreviewed R3/AG71/AG74/AG75 runtime drift');
+const ag76Files=new Set([...Object.keys(ag76Seams),...ag76Added]);
+assert(changed.every(path=>r3Files.has(path)||ag71Files.has(path)||ag74Files.has(path)||ag75Files.has(path)||ag76Files.has(path)),'Unreviewed R3/AG71/AG74/AG75/AG76 runtime drift');
 assert(view.includes('else light.Parent.CFrame=base.cf end'),'Restore both pool transforms before culling');
 assert(view.includes('e.light.Range=base.range; e.light.Angle=base.angle'),'Restore pool shape');
 assert(view.includes('e.light.Range=14'),'Restore lantern radius');

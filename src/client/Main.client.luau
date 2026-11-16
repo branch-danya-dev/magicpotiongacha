@@ -24,6 +24,9 @@ local Glance = require(script.Parent.TutorialGlance)
 local StarterCardsView=require(script.Parent.StarterCards)
 local SimplifiedScene=require(script.Parent.SimplifiedScene)
 local RPGNavigation=require(shared.RPGNavigation)
+-- AG76_BEGIN_NAV
+RPGNavigation.personalMarket(workspace:GetAttribute("AG76PersonalIsland")==true)
+-- AG76_END_NAV
 -- A fresh Studio desktop session should expose the full visual tier by default.
 if game:GetService("RunService"):IsStudio() and not UserInputService.TouchEnabled then environment.setQuality("full") end
 -- AG75_END_IMPORT
@@ -402,6 +405,15 @@ draw = function()
 		refresh(); return
 	end
 	if selected=="bazaar" then
+-- AG76_BEGIN_MARKET
+		if workspace:GetAttribute("AG76PersonalIsland")==true then
+			title.Text="Рынок · личные покупки"
+			if not state then text("Ожидаем безопасную загрузку профиля…");return end
+			local Market=require(script.Parent.PersonalMarketUI)
+			Market.draw({state=state,text=text,action=action,send=send,redraw=draw})
+			refresh();return
+		end
+-- AG76_END_MARKET
 		title.Text="Магический базар · обмен"
 		tradeUI.draw({value=tradeState,text=text,action=action,send=send,redraw=draw})
 		return
@@ -889,6 +901,14 @@ local coachClose=button(coach,"×",function() coachOpen=false; if syncLandscape 
 coachClose.Name="CloseTutorial"; coachClose.Size=UDim2.fromOffset(44,44); coachClose.Position=UDim2.new(1,-48,0,0); coachClose.Visible=false
 local function bookAnchor()
 	local world=workspace:FindFirstChild("PotionTycoonWorld")
+-- AG76_BEGIN_BOOK
+	if world and world:GetAttribute("PersonalIsland")==true then
+		local island=world:FindFirstChild("Island_primary")
+		if island and island:GetAttribute("IslandId")==player:GetAttribute("PotionIslandId")
+			and island:GetAttribute("OwnerUserId")==player.UserId then return island:FindFirstChild("crystal") end
+		return nil
+	end
+-- AG76_END_BOOK
 	local index=player:GetAttribute("PotionPlotIndex")
 	local plot=world and index and world:FindFirstChild("Plot_"..index)
 	return plot and plot:GetAttribute("OwnerUserId")==player.UserId and plot:FindFirstChild("crystal") or nil

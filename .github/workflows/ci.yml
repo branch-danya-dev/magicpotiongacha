@@ -39,6 +39,7 @@ jobs:
           path: |
             build/PotionTycoon.rbxlx
             build/PotionTycoon-AG74-GreenSlime-QA.rbxlx
+            build/PotionTycoon-AG76B-PersonalIsland-QA.rbxlx
             build/AG67-Prototype.rbxlx
             assets/vfx/ag67/
             scripts/install-ag67-preview.mjs

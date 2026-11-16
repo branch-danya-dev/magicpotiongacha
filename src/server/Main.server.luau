@@ -41,6 +41,13 @@ local Action, State, Notice, Focus, Ready = remote("Action"), remote("State"), r
 local TradeState = remote("TradeState")
 local PurchasePrompt = remote("PurchasePrompt")
 local memoryMode = RunService:IsStudio() and Settings.UseMemoryInStudio
+-- AG76_BEGIN_WORLD
+-- The QA artifact cannot become a live route merely by being published.
+if workspace:GetAttribute("AG76PersonalIsland")==true then
+	assert(memoryMode and RunService:IsStudio(),"AG76 QA cannot access live persistence")
+	World=require(script.Parent.PersonalIslandWorld).forOwner(workspace:GetAttribute("AG76QAOwnerUserId"))
+end
+-- AG76_END_WORLD
 
 -- The published game stays behind Gate A until the owner accepts M7.
 -- In-memory Studio sessions preview the preserved pilot inside real C01 gameplay.
@@ -351,6 +358,9 @@ end)
 
 local function placeCharacter(player, character)
 	local hrp = character:WaitForChild("HumanoidRootPart", 10)
+-- AG76_BEGIN_SPAWN
+	if world.session and (character~=player.Character or not world:owned(player)) then return end
+-- AG76_END_SPAWN
 	local plot = world.owners[player.UserId]
 	if hrp and plot and plot.owner == player and player.Parent == Players then
 		character:PivotTo(CFrame.new(plot.spawn.Position + Vector3.new(0, 4, 0)))
@@ -417,6 +427,13 @@ local function onPlayer(player)
 	sessions[userId] = session
 	local plot = world:claim(player)
 	if not plot then
+-- AG76_BEGIN_DENIED
+		if world.session then
+			sessions[userId]=nil
+			player:Kick("Это тестовый остров другого владельца или прежняя сессия ещё закрывается. Твой UserId: "..tostring(userId))
+			return
+		end
+-- AG76_END_DENIED
 		sessions[userId] = nil
 		player:Kick("Все участки заняты. Выберите другой сервер.")
 		return
@@ -472,6 +489,20 @@ local function onPlayer(player)
 		closeSession(session)
 		return
 	end
+-- AG76_BEGIN_ACTIVATE
+	if world.activate then
+		if not world:activate(player,profile) then
+			session.phase="closing";closeSession(session)
+			if player.Parent==Players then player:Kick("Не удалось подтвердить владельца острова. Повтори вход.") end
+			return
+		end
+		if closing or session.cancelled or sessions[userId]~=session or player.Parent~=Players
+			or not store:isWritable(userId) or not world:owned(player) then
+			session.phase="closing";closeSession(session);return
+		end
+		if player.Character then task.spawn(placeCharacter,player,player.Character) end
+	end
+-- AG76_END_ACTIVATE
 	session.phase = "active"
 	task.spawn(function() local ok=pcall(purchases.refresh,player); if not ok then warn("Purchase rights refresh pending",userId) end end)
 	task.spawn(function()

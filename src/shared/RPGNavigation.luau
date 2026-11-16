@@ -18,6 +18,11 @@ end
 function Nav.tabs(group)
  return groups[group] or groups.inventory
 end
+-- AG76_BEGIN_MARKET_LABEL
+function Nav.personalMarket(enabled)
+ groups.inventory[7][2]=enabled and "Рынок" or "Обмен"
+end
+-- AG76_END_MARKET_LABEL
 function Nav.visible(id,selected)
  for _,item in ipairs(Nav.tabs(Nav.groupFor(selected))) do
   if item[1]==id then return true end
