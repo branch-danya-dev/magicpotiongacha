@@ -29,8 +29,14 @@ assert(root:GetAttribute("IslandSurfaceWidth")==Island.surface.width)
 assert(root:GetAttribute("IslandSurfaceDepth")==Island.surface.depth)
 local relief=assert(root:FindFirstChild("EnvironmentArt"),"AG76-R1 relief missing")
 local terrainCount=0
+local terrainNames={}
+for _,descriptor in ipairs(Island.terrainPlan()) do
+	assert(relief:FindFirstChild(descriptor.name),"Missing terrain piece: "..descriptor.name)
+	terrainNames[descriptor.name]=true
+end
 for _,piece in ipairs(relief:GetChildren()) do
-	if piece.Name:match("^Island") then
+	-- IslandLantern_* are lighting anchors, not terrain. Validate the exact plan.
+	if terrainNames[piece.Name] then
 		assert(piece:IsA("BasePart") and piece.Anchored and not piece.CanCollide)
 		terrainCount+=1
 	end
