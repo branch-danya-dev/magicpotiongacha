@@ -16,6 +16,30 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### AG-74 — Green Slime private import and runtime QA (Issue #50)
+
+**IMPLEMENTED/CODE / SCOPED STUDIO TECHNICAL CHECKS PASSED / OWNER ART OPEN / NOT PUBLISHED.**
+Claimed by Codex on 2026-11-15 as the only active task.
+Base: PR #49 `8796abfbb8345dd90f2ebc7052c415782e056eaa`, remote HEAD
+confirmed; CI 43741788473 SUCCESS. Branch `feat/ag74-green-slime-runtime`.
+AG72 remains separate. Owner authorized exactly the existing mesh/texture and
+two Idle clips for private group/QA-experience import (Issue #50; PR49 comment
+6898665908), superseding AG73's earlier upload block for this task only.
+Scope: reproducible asset import, client visual registry, bounded 50/50 Idle
+selector with 0.3s fade, OFF-by-default Studio QA flag and real game-camera QA.
+No Factory/profile/schema/starter grants/economy/remotes or live enablement.
+Rollback disables the QA flag and restores inherited procedural visuals;
+missing assets fail back without touching progression or saves.
+Private import and permission UI recorded for all four assets. Ordinary F5 local
+QA passed two-track loading, all four loop transitions, crossfade overlap,
+quality/motion policies, worker swap/Haul/React/rollback, failure cleanup,
+remove/recreate, ten-rig cap and five rapid flag recreates. The last check exposed
+and fixed a lifecycle race. No video/screenshots per owner request 2026-11-16.
+Texture optimized-representation warning, owner art/scale, phone, backend/rejoin,
+death/reset and real multi-client gates remain open; local PlaceId/GameId are 0/0.
+Report and exact evidence: `docs/AG74_GREEN_SLIME_RUNTIME.md` and
+`docs/evidence/ag74/native-checks.json`. No merge/publication or further animations.
+
 ### AG-73 — Green Slime rig and Idle (Issue #48)
 
 **PHASE A CANDIDATE / STUDIO PLAY BLOCKED / OWNER ART REVIEW REQUIRED.**
