@@ -1,5 +1,7 @@
 # C00 — Architecture inventory and V8 migration contract
 
+> **AG-76 note (2026-11-16):** this is the historical V8 contract, not permission to overwrite its layout/temple projections. [AG-76A](AG76A_PERSONAL_ISLANDS_ADR.md) proposes a separate additive geographic state and documents the actual migration hook/order at the AG75 base. Only eight-plot topology/neighbour envelopes/physical Bazaar assumptions are superseded; V1–V8 conservation and all logical station IDs remain mandatory. No V9 code or schema writes are made by A.
+
 **Status: CONTRACT, with sections 6–7 implemented by C00b.** Recorded against `design/core-loop-v2-cursor` at `5779c902b3d31f1163c04faffb56dd76e35a82a9`.
 **Product target:** [CORE_LOOP_V2_SPEC.md](CORE_LOOP_V2_SPEC.md). **Task order:** [CORE_LOOP_V2_CURSOR_BACKLOG.md](CORE_LOOP_V2_CURSOR_BACKLOG.md).
 **Implemented gameplay truth:** M0–M6 rules in [DESIGN.md](DESIGN.md), [PERSISTENCE.md](PERSISTENCE.md), [ARCHITECTURE.md](ARCHITECTURE.md), and the M1–M6 rule documents. M7 art stays on Draft PR #17 and is not accepted here.

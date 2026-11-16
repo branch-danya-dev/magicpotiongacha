@@ -16,6 +16,24 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### AG-76A — Personal Islands architecture (Issue #53)
+
+**DOCUMENTATION CANDIDATE / ARCHITECTURE ONLY / OWNER REVIEW REQUIRED / NOT PUBLISHED.**
+Claimed by Codex on 2026-11-16 as the only active task. Clean base: Draft PR #52,
+`feat/ag75-owner-feedback-p0` @ `a1a165be6b3120e707fd33fb746fb9bac4dfc078`;
+Windows/Ubuntu CI run `43794436530` SUCCESS. Branch:
+`feat/ag76a-personal-islands-architecture`. Scope: one-owner island/session
+routing ADR, additive V8 migration proposal, logical station compatibility,
+Market authorization, stage and QA gates. No runtime, profile, schema,
+DataStore, asset, purchase, place settings or publication changes in A.
+AG-76B is gated on routing/QA design review; AG-76C additionally requires
+migration and expansion/Rebirth decisions. Existing AG-75 native QA gates
+remain open. Rollback of A is documentation-only. The reviewable proposal and
+concrete D1–D5 decisions are in [AG76A_PERSONAL_ISLANDS_ADR.md](AG76A_PERSONAL_ISLANDS_ADR.md).
+Inherited checks: 1,344 Luau + 14 Node, 253 sources compiled and Rojo builds;
+no new executable tests for this docs-only stage. Exact candidate SHA, final
+Windows/Ubuntu CI and repeat-build receipt are recorded in its stacked Draft PR.
+
 ### AG-75 — Owner feedback: starter cards, simplified scene, atmosphere and grouped menus
 
 **CODE_CANDIDATE / NATIVE STUDIO QA + OWNER VISUAL REVIEW OPEN / NOT PUBLISHED.**

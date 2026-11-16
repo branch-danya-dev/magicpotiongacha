@@ -1,5 +1,7 @@
 # Architecture — M6
 
+> **AG-76 architecture proposal (2026-11-16):** [Personal Islands ADR](AG76A_PERSONAL_ISLANDS_ADR.md) inventories the actual AG75 base and proposes Entry → one-owner Island routing, identity-based World/access, logical anchor compatibility and personal Market UI. A changes documentation only. The current eight-plot World and Bazaar remain implemented until B. Factory stays authoritative; profile lease remains the final writer fence; Hub/visitors/payments are not enabled. The historical layer contracts below remain unless explicitly superseded for physical topology.
+
 ## Boundaries
 
 | Layer | Responsibility | Authority |
