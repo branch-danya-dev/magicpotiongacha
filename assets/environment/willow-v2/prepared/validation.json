@@ -1,0 +1,78 @@
+{
+  "roundtrip": "PASS",
+  "variants": [
+    {
+      "variant": 1,
+      "fbxSha256": "66962d452aa963c4b65ded316148fcdd0037460ce94ea9b81e9775036fc8575a",
+      "meshes": [
+        {
+          "name": "Willow_Foliage_V0",
+          "triangles": 3192,
+          "vertices": 3648
+        },
+        {
+          "name": "Willow_Trunk_V0",
+          "triangles": 2591,
+          "vertices": 1408
+        }
+      ],
+      "Willow_Foliage_V0": {
+        "motion": 1.1454478991695025,
+        "loopSeam": 0.007150599163934802
+      },
+      "Willow_Trunk_V0": {
+        "motion": 0.0,
+        "loopSeam": 0.0
+      }
+    },
+    {
+      "variant": 2,
+      "fbxSha256": "5abaad56ba12081f89bf65cd3c85118914ff093a5397bd1b5833d37c30e3758d",
+      "meshes": [
+        {
+          "name": "Willow_Foliage_V1",
+          "triangles": 3192,
+          "vertices": 3648
+        },
+        {
+          "name": "Willow_Trunk_V1",
+          "triangles": 2591,
+          "vertices": 1408
+        }
+      ],
+      "Willow_Foliage_V1": {
+        "motion": 1.1437003616444466,
+        "loopSeam": 0.007184455458974102
+      },
+      "Willow_Trunk_V1": {
+        "motion": 0.0,
+        "loopSeam": 0.0
+      }
+    },
+    {
+      "variant": 3,
+      "fbxSha256": "778f0eaca967cb74cca338fac72290604d69a3293d4c26448df801ba9125df56",
+      "meshes": [
+        {
+          "name": "Willow_Foliage_V2",
+          "triangles": 3192,
+          "vertices": 3648
+        },
+        {
+          "name": "Willow_Trunk_V2",
+          "triangles": 2591,
+          "vertices": 1408
+        }
+      ],
+      "Willow_Foliage_V2": {
+        "motion": 1.143702323841376,
+        "loopSeam": 0.007179839760587853
+      },
+      "Willow_Trunk_V2": {
+        "motion": 0.0,
+        "loopSeam": 0.0
+      }
+    }
+  ],
+  "rendersCreated": 0
+}

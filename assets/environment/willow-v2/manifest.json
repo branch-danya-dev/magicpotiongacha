@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "task": "WILLOW-V2",
+  "base": "08e7603a124807318236ed6521e97ac1ea9f6277",
+  "rights": "Derivative of owner-paid Meshy willow; owner confirmation retained in V1. CC0 Quaternius bark and original generated foliage atlas retained unchanged.",
+  "sources": [
+    {
+      "path": "assets/environment/willow/source/owner-confirmation.json",
+      "bytes": 584,
+      "sha256": "6f83b08e86dd60faf5a060c802ef97441f8dcdc0f5bf638d4eafb3e37d0ea0b0"
+    },
+    {
+      "path": "assets/environment/willow/source/Quaternius-CC0.txt",
+      "bytes": 852,
+      "sha256": "120710e542c3ebaf83856c4eb55b4a1e680593b39302eba7fdc5d942dfe78c58"
+    },
+    {
+      "path": "assets/environment/willow/prepared/Willow.mesh.json",
+      "bytes": 1235028,
+      "sha256": "7c7e9bd14794a802c0d1ccd7cdbdc99ab8c8ebe5ac905243f68ea32c03c340f0"
+    },
+    {
+      "path": "assets/environment/willow/textures/FoliageAtlas.png",
+      "bytes": 2024746,
+      "sha256": "169086eab654c01999381dfc8d659a4ff22cd63925773932eac7d9aaf4a08783"
+    },
+    {
+      "path": "assets/environment/willow/textures/Bark.png",
+      "bytes": 1385430,
+      "sha256": "4ae0a89814815967d288062963125dea4a36c5a8413777485af7289c1420be2a"
+    }
+  ],
+  "process": "Existing mesh only, local Blender 4.5.9 derivation. Three crown/root variants; shared unchanged maps, material tint in TreeVisualConfig. No rendering, generation or uploads.",
+  "files": [
+    {
+      "path": "assets/environment/willow-v2/prepared/WillowV2.blend",
+      "bytes": 6228025,
+      "sha256": "e985c36163057706aea7859efa02ebbf56ccd14936a377762cf0cba9048f320d"
+    },
+    {
+      "path": "assets/environment/willow-v2/prepared/WillowV2.mesh.json",
+      "bytes": 3831487,
+      "sha256": "b9e1737627dfbfd1e0b42c41620bfdd34733b6a78bc6222b54ba9b3e31072434"
+    },
+    {
+      "path": "assets/environment/willow-v2/prepared/WillowV2_1.fbx",
+      "bytes": 2509948,
+      "sha256": "66962d452aa963c4b65ded316148fcdd0037460ce94ea9b81e9775036fc8575a"
+    },
+    {
+      "path": "assets/environment/willow-v2/prepared/WillowV2_2.fbx",
+      "bytes": 2510012,
+      "sha256": "5abaad56ba12081f89bf65cd3c85118914ff093a5397bd1b5833d37c30e3758d"
+    },
+    {
+      "path": "assets/environment/willow-v2/prepared/WillowV2_3.fbx",
+      "bytes": 2509804,
+      "sha256": "778f0eaca967cb74cca338fac72290604d69a3293d4c26448df801ba9125df56"
+    },
+    {
+      "path": "assets/environment/willow-v2/prepared/build-report.json",
+      "bytes": 1626,
+      "sha256": "d054f125166eea06cdcf64c4940148a11d513668b8ac5a53db42cd780b583535"
+    },
+    {
+      "path": "assets/environment/willow-v2/prepared/validation.json",
+      "bytes": 1869,
+      "sha256": "ddad8d85cc75e335ce7147469be98fc6399d62ba90421de9ac4f671e79a452fe"
+    }
+  ],
+  "studioPreview": "Local EditableMesh/EditableImage; not a native V2 asset permission receipt",
+  "nativeV2Upload": "NOT AUTHORIZED / NOT PERFORMED",
+  "integrated": false,
+  "ownerArt": "PENDING"
+}
