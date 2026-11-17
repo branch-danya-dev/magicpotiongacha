@@ -1,0 +1,85 @@
+{
+  "auditedAtUTC": "2026-11-17T08:14:37Z",
+  "method": "Read-only native Chrome Creator Dashboard; owner session; all five Configure and Collaborators pages; full Experience Permissions CSV export",
+  "group": {
+    "name": "addout studio",
+    "id": "925845207"
+  },
+  "experienceId": "10776120489",
+  "placeId": "125724638469407",
+  "assets": [
+    {
+      "id": "81045114472619",
+      "name": "Willow-Studio-6119_Scene",
+      "type": "Animation",
+      "owner": "crystymoore",
+      "privacy": "Restricted",
+      "collaborators": 0,
+      "experiencePermission": "ABSENT in full target-experience export",
+      "configureUrl": "https://create.roblox.com/dashboard/creations/store/81045114472619/configure",
+      "evidencePrefix": "animation"
+    },
+    {
+      "id": "103393042017627",
+      "name": "Willow_Foliage",
+      "type": "Mesh",
+      "owner": "crystymoore",
+      "privacy": "Restricted",
+      "collaborators": 0,
+      "experiencePermission": "ABSENT in full target-experience export",
+      "configureUrl": "https://create.roblox.com/dashboard/creations/store/103393042017627/configure",
+      "evidencePrefix": "foliage-mesh"
+    },
+    {
+      "id": "85732748826171",
+      "name": "Willow_Trunk",
+      "type": "Mesh",
+      "owner": "crystymoore",
+      "privacy": "Restricted",
+      "collaborators": 0,
+      "experiencePermission": "ABSENT in full target-experience export",
+      "configureUrl": "https://create.roblox.com/dashboard/creations/store/85732748826171/configure",
+      "evidencePrefix": "trunk-mesh"
+    },
+    {
+      "id": "79171837674186",
+      "name": "base_color_texture (foliage)",
+      "type": "Image",
+      "owner": "crystymoore",
+      "privacy": "Restricted",
+      "collaborators": 0,
+      "experiencePermission": "ABSENT in full target-experience export",
+      "configureUrl": "https://create.roblox.com/dashboard/creations/store/79171837674186/configure",
+      "evidencePrefix": "foliage-image"
+    },
+    {
+      "id": "77979867898740",
+      "name": "base_color_texture (bark)",
+      "type": "Image",
+      "owner": "crystymoore",
+      "privacy": "Restricted",
+      "collaborators": 0,
+      "experiencePermission": "ABSENT in full target-experience export",
+      "configureUrl": "https://create.roblox.com/dashboard/creations/store/77979867898740/configure",
+      "evidencePrefix": "bark"
+    }
+  ],
+  "export": {
+    "path": "docs/evidence/willow/permissions/10776120489_asset_permissions.csv",
+    "rows": 54,
+    "sha256": "fa1e2cb1e8797eea42b687dabcb2f2e0c35c601cbd6f8be087c3eb81a5b9746a"
+  },
+  "evidenceDirectory": "docs/evidence/willow/permissions/",
+  "documentation": "https://create.roblox.com/docs/projects/assets/privacy#view-permissions",
+  "correction": "81045114472619 is an Animation, not a Model",
+  "creatorStoreListingStatus": "Not independently audited; Restricted use permissions verified",
+  "assetRevision": "Intermediate native import before duplicate removal (6142 triangles); not final 6119-triangle FBX",
+  "changes": {
+    "uploads": 0,
+    "permissionChanges": 0,
+    "gamePublications": 0,
+    "integrations": 0,
+    "merges": 0
+  },
+  "remainingGate": "Any new final-version uploads or game access grants require separate explicit owner approval"
+}

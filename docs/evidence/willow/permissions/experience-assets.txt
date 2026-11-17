@@ -1,0 +1,309 @@
+Window: "Маг-производитель зелий: волшебный кликер / Permissions - Google Chrome", App: chrome.exe.
+	0 window (окно) Маг-производитель зелий: волшебный кликер / Permissions - Google Chrome Secondary Actions: Raise
+		1 pane (панель) (disabled)
+		2 pane (регион) Маг-производитель зелий: волшебный кликер / Permissions - Google Chrome
+			3 pane (регион)
+				4 pane (регион)
+					5 pane (регион)
+						6 button (кнопка) Свернуть ID: view_1
+						140 button (кнопка) Восстановить ID: view_3
+						8 button (кнопка) Закрыть ID: view_4
+					9 pane (регион)
+						10 pane (регион)
+							11 toolbar (панель инструментов) ID: view_1000
+								12 button (кнопка) Назад ID: view_1001
+								13 button (кнопка) (disabled) Вперед ID: view_1002
+								14 button (кнопка) Перезагрузить ID: view_1003
+								15 group (группа)
+									16 button (кнопка) Сведения о сайте ID: view_1011
+									17 text field (поле) (settable, string) Адресная строка и строка поиска Description: Спросите Google или введите URL Value: create.roblox.com/dashboard/creations/experiences/10776120489/permissions ID: view_1012
+									18 pane (регион)
+										1443 button (кнопка) Перевести
+										1442 button (кнопка) Добавить страницу в закладки
+								21 pane (регион)
+									22 button (кнопка) OrangeMonkey У расширения есть доступ к этому сайту ID: view_1009
+									23 button (кнопка) Open Claude У расширения есть доступ к этому сайту ID: view_1009
+									24 button (кнопка) Расширения ID: view_1006
+								25 pane (регион)
+								2089 pane (регион)
+									2090 button (кнопка) Файл скачан
+								26 button (кнопка) Управляйте воспроизведением музыки, видео и других медиафайлов
+								27 button (кнопка) Даниил ID: view_1018
+								28 button (кнопка) Chrome ID: view_1007
+						29 pane (регион)
+							30 pane (регион)
+								31 pane (регион)
+								1444 document (документ) Маг-производитель зелий: волшебный кликер / Permissions Value: https://create.roblox.com/dashboard/creations/experiences/10776120489/permissions ID: RootWebArea
+									1445 group (группа)
+										1446 group (группа)
+											1684 hyperlink (ссылка) CREATOR Value: https://create.roblox.com/
+											1685 button (кнопка) addout studio addout studio
+												1686 image (изображение) addout studio
+											1687 hyperlink (ссылка) Home Value: https://create.roblox.com/
+											1688 hyperlink (ссылка) Creations Value: https://create.roblox.com/dashboard/creations
+											1689 hyperlink (ссылка) Learn Value: https://create.roblox.com/docs/
+											1690 hyperlink (ссылка) Store Value: https://create.roblox.com/store/
+											1691 hyperlink (ссылка) Forum Value: https://devforum.roblox.com/
+											1692 hyperlink (ссылка) Updates Value: https://create.roblox.com/updates
+											1693 separator (разделитель)
+											1694 hyperlink (ссылка) Finances Value: https://create.roblox.com/dashboard/group/payouts
+											1695 hyperlink (ссылка) Analytics Value: https://create.roblox.com/dashboard/analytics
+											1696 hyperlink (ссылка) Collaboration Value: https://create.roblox.com/dashboard/group/profile
+											1697 hyperlink (ссылка) Ads Value: https://create.roblox.com/advertise
+											1698 separator (разделитель)
+											1699 button (кнопка) All tools
+											1700 hyperlink (ссылка) Roblox.com Value: https://roblox.com/
+											1701 button (кнопка) Studio
+											1702 button (кнопка) Hide sidebar
+											1703 list (список)
+												1741 list item (элемент списка) Маг-производитель зелий: волшебный кликерМаг-произво…
+													1747 image (изображение) Маг-производитель зелий: волшебный кликер
+													1742 text (текстовый) Маг-производитель зелий: волшебный кликер
+													1743 button (кнопка) more
+											1705 separator (разделитель)
+											1748 tree (дерево) ID: mui-tree-view-3
+												1749 tree item (элемент дерева) Overview ID: mui-tree-view-3-overview
+													1750 group (группа)
+														1751 group (группа)
+														1752 hyperlink (ссылка) Overview Value: https://create.roblox.com/dashboard/creations/experiences/10776120489/overview
+												1753 tree item (элемент дерева) Publish settings ID: mui-tree-view-3-parent-settings
+													1754 group (группа)
+														1755 group (группа)
+												1756 tree item (элемент дерева) Configurations ID: mui-tree-view-3-parent-configureCategory
+													1757 group (группа)
+														1758 group (группа)
+													1846 group (группа)
+														1847 tree item (элемент дерева) Places ID: mui-tree-view-3-places
+															1848 group (группа)
+																1849 group (группа)
+																1850 hyperlink (ссылка) Places Value: https://create.roblox.com/dashboard/creations/experiences/10776120489/places
+														1851 tree item (элемент дерева) Chat ID: mui-tree-view-3-chat
+															1852 group (группа)
+																1853 group (группа)
+																1854 hyperlink (ссылка) Chat Value: https://create.roblox.com/dashboard/creations/experiences/10776120489/chat
+														1855 tree item (элемент дерева) Custom Matchmaking ID: mui-tree-view-3-matchmaking
+															1856 group (группа)
+																1857 group (группа)
+																1858 hyperlink (ссылка) Custom Matchmaking Value: https://create.roblox.com/dashboard/creations/experiences/10776120489/matchmaking
+														1859 tree item (элемент дерева) Server management ID: mui-tree-view-3-serverManagement
+															1860 group (группа)
+																1861 group (группа)
+																1862 hyperlink (ссылка) Server management Value: https://create.roblox.com/dashboard/creations/experiences/10776120489/server-management
+														1863 tree item (элемент дерева) Permissions ID: mui-tree-view-3-permissions
+															1864 group (группа)
+																1865 group (группа)
+																1866 hyperlink (ссылка) Permissions Value: https://create.roblox.com/dashboard/creations/experiences/10776120489/permissions
+														1867 tree item (элемент дерева) Configs ID: mui-tree-view-3-remoteConfigs
+															1868 group (группа)
+																1869 group (группа)
+																1870 hyperlink (ссылка) Configs Value: https://create.roblox.com/dashboard/creations/experiences/10776120489/configs
+														1871 tree item (элемент дерева) Experiments ID: mui-tree-view-3-experiments
+															1872 group (группа)
+																1873 group (группа)
+																1874 hyperlink (ссылка) Experiments Value: https://create.roblox.com/dashboard/creations/experiences/10776120489/experiments
+														1875 tree item (элемент дерева) Alerts ID: mui-tree-view-3-alerts
+															1876 group (группа)
+																1877 group (группа)
+																1878 hyperlink (ссылка) Alerts Value: https://create.roblox.com/dashboard/creations/experiences/10776120489/alerts
+														1879 tree item (элемент дерева) Secrets ID: mui-tree-view-3-secrets
+															1880 group (группа)
+																1881 group (группа)
+																1882 hyperlink (ссылка) Secrets Value: https://create.roblox.com/dashboard/creations/experiences/10776120489/secrets
+														1883 tree item (элемент дерева) Webhooks ID: mui-tree-view-3-webhooks
+															1884 group (группа)
+																1885 group (группа)
+																1886 hyperlink (ссылка) Webhooks Value: https://create.roblox.com/dashboard/creations/experiences/10776120489/webhooks
+														1887 tree item (элемент дерева) Data Stores Manager ID: mui-tree-view-3-dataStoresManager
+															1888 group (группа)
+																1889 group (группа)
+																1890 hyperlink (ссылка) Data Stores Manager Value: https://create.roblox.com/dashboard/creations/experiences/10776120489/analytics/data-stores
+														1891 tree item (элемент дерева) Leaderboard ID: mui-tree-view-3-leaderboard
+															1892 group (группа)
+																1893 group (группа)
+																1894 hyperlink (ссылка) Leaderboard Value: https://create.roblox.com/dashboard/creations/experiences/10776120489/leaderboard
+														1895 tree item (элемент дерева) Extended services ID: mui-tree-view-3-extendedServicesUnlock
+															1896 group (группа)
+																1897 group (группа)
+																1898 hyperlink (ссылка) Extended services Value: https://create.roblox.com/dashboard/creations/experiences/10776120489/extended-services
+												1759 tree item (элемент дерева) Analytics ID: mui-tree-view-3-parent-analyticsCategory
+													1760 group (группа)
+														1761 group (группа)
+												1762 tree item (элемент дерева) Custom dashboards ID: mui-tree-view-3-parent-customDashboardsCategory
+													1763 group (группа)
+														1764 group (группа)
+												1765 tree item (элемент дерева) Monetization ID: mui-tree-view-3-parent-monetizationCategory
+													1766 group (группа)
+														1767 group (группа)
+												1768 tree item (элемент дерева) Monitoring ID: mui-tree-view-3-parent-monitorCategory
+													1769 group (группа)
+														1770 group (группа)
+												1771 tree item (элемент дерева) Activity history ID: mui-tree-view-3-activityFeed
+													1772 group (группа)
+														1773 group (группа)
+														1774 hyperlink (ссылка) Activity history Value: https://create.roblox.com/dashboard/creations/experiences/10776120489/activity-history
+												1775 tree item (элемент дерева) Audience ID: mui-tree-view-3-parent-audienceCategory
+													1776 group (группа)
+														1777 group (группа)
+												1778 tree item (элемент дерева) Engagement ID: mui-tree-view-3-parent-engagementCategory
+													1779 group (группа)
+														1780 group (группа)
+												1781 tree item (элемент дерева) Moderation ID: mui-tree-view-3-bans
+													1782 group (группа)
+														1783 group (группа)
+														1784 hyperlink (ссылка) Moderation Value: https://create.roblox.com/dashboard/creations/experiences/10776120489/safety/bans
+												1785 tree item (элемент дерева) Safety ID: mui-tree-view-3-parent-safetyCategory
+													1786 group (группа)
+														1787 group (группа)
+												1788 tree item (элемент дерева) Promotion ID: mui-tree-view-3-parent-promotionCategory
+													1789 group (группа)
+														1790 group (группа)
+											1706 button (кнопка) menu
+											1707 group (навигация) breadcrumb ID: navigation-breadcrumbs
+												1708 list (список)
+													1709 list item (элемент списка) Creations
+														1710 hyperlink (ссылка) Creations Value: https://create.roblox.com/dashboard/creations?groupId=925845207
+													1711 list item (элемент списка) Маг-производитель зелий: волшебный кликер
+														1899 hyperlink (ссылка) Маг-производитель зелий: волшебный кликер Value: https://create.roblox.com/dashboard/creations/experiences/10776120489/overview
+													1744 list item (элемент списка) Permissions
+														1900 group (группа)
+															1901 text (текстовый) Permissions
+											1714 button (кнопка) Search
+											1715 button (кнопка) Notifications
+											1716 button (кнопка) crystymoore
+												1717 image (изображение) crystymoore
+											1902 text (заголовок) Permissions
+											1903 tab (вкладка)
+												1904 tab item (элемент вкладки) (selectable) Collaborators
+												1905 tab item (элемент вкладки) (selectable) Assets
+											1978 text (текстовый) You can only give this experience permission to use assets that you have access to. Saving will give permission to use all versions of the added assets.
+											1979 text (текстовый) Once saved, permission cannot be removed.
+											1980 text (текстовый) 
+											1981 hyperlink (ссылка) Learn more Value: https://create.roblox.com/docs/projects/assets/privacy
+											1982 text (текстовый) Enter asset IDs
+											1983 group (группа)
+												1984 text field (поле) (settable, string) Enter asset IDs ID: privateAssetToAdd
+											1985 text (текстовый) Separate multiple IDs using commas
+											1986 button (кнопка) (disabled) Add
+											1991 button (кнопка) Export your data to a .CSV file
+											1992 table (таблицу)
+												1993 data item (строка)
+													1994 data item (заголовок столбца) Asset
+													1995 data item (заголовок столбца) ID
+													1996 data item (заголовок столбца) Owner
+													1997 data item (заголовок столбца) Asset Type
+												1998 data item (строка)
+													1999 data item (элемент) Paw03
+													2000 data item (элемент) 90524766157477
+													2001 data item (элемент) addout studio
+													2002 data item (элемент) Mesh
+													2003 data item (элемент)
+												2004 data item (строка)
+													2005 data item (элемент) SpellbookLectern
+													2006 data item (элемент) 92876851534007
+													2007 data item (элемент) addout studio
+													2008 data item (элемент) Model
+													2009 data item (элемент)
+												2010 data item (строка)
+													2011 data item (элемент) CandleDish
+													2012 data item (элемент) 92973868112960
+													2013 data item (элемент) addout studio
+													2014 data item (элемент) Mesh
+													2015 data item (элемент)
+												2016 data item (строка)
+													2017 data item (элемент) InkPotBody3
+													2018 data item (элемент) 94148985942232
+													2019 data item (элемент) addout studio
+													2020 data item (элемент) Mesh
+													2021 data item (элемент)
+												2022 data item (строка)
+													2023 data item (элемент) ###########
+													2024 data item (элемент) 96243370555026
+													2025 data item (элемент) addout studio
+													2026 data item (элемент) Image
+													2027 data item (элемент)
+												2028 data item (строка)
+													2029 data item (элемент) ############
+													2030 data item (элемент) 96590033453082
+													2031 data item (элемент) addout studio
+													2032 data item (элемент) Image
+													2033 data item (элемент)
+												2034 data item (строка)
+													2035 data item (элемент) CandleDish3
+													2036 data item (элемент) 96968891999807
+													2037 data item (элемент) addout studio
+													2038 data item (элемент) Mesh
+													2039 data item (элемент)
+												2040 data item (строка)
+													2041 data item (элемент) #########
+													2042 data item (элемент) 99406398694311
+													2043 data item (элемент) addout studio
+													2044 data item (элемент) Image
+													2045 data item (элемент)
+												2046 data item (строка)
+													2047 data item (элемент) Crystal
+													2048 data item (элемент) 99780103231215
+													2049 data item (элемент) addout studio
+													2050 data item (элемент) Mesh
+													2051 data item (элемент)
+												2059 data item (строка)
+													2060 data item (элемент) Cover5
+													2061 data item (элемент) 100113691987749
+													2062 data item (элемент) addout studio
+													2063 data item (элемент) Mesh
+													2064 data item (элемент)
+												2052 data item (строка)
+													2053 data item (элемент) Rows per page: 10 1-10 of 54 Go to previous page Go to next page ID: tablePagination
+														2054 group (группа)
+														2055 group (группа)
+															2056 combo box (поле со списком) (settable, string) Rows per page: 10 Value: 10
+														2057 button (кнопка) (disabled) Go to previous page Description: Go to previous page
+														2058 button (кнопка) Go to next page Description: Go to next page
+											1988 button (кнопка) Cancel
+											1989 button (кнопка) (disabled) Save Changes
+											1719 text (текстовый) ©2026 Roblox Corporation. All rights reserved.
+											1720 hyperlink (ссылка) Terms Value: https://www.roblox.com/info/terms
+											1721 text (текстовый) ·
+											1722 hyperlink (ссылка) Privacy Value: https://www.roblox.com/info/privacy
+											1723 text (текстовый) ·
+											1724 hyperlink (ссылка) Accessibility Value: https://www.roblox.com/info/accessibility
+											1725 text (текстовый) ·
+											1726 hyperlink (ссылка) Support Value: https://www.roblox.com/info/help
+											1727 text (текстовый) ·
+											1728 button (кнопка) Your Privacy Choices
+											1729 hyperlink (ссылка) X Value: https://x.com/Roblox
+												1730 button (кнопка) X
+											1731 hyperlink (ссылка) Facebook Value: https://www.facebook.com/Roblox/
+												1732 button (кнопка) Facebook
+											1733 hyperlink (ссылка) LinkedIn Value: https://www.linkedin.com/company/roblox
+												1734 button (кнопка) LinkedIn
+											1735 hyperlink (ссылка) Instagram Value: https://www.instagram.com/roblox/
+												1736 button (кнопка) Instagram
+											1737 hyperlink (ссылка) YouTube Value: https://www.youtube.com/@RobloxCreators
+												1738 button (кнопка) YouTube
+											1739 hyperlink (ссылка) English Value: https://roblox.com/my/account
+												1740 button (кнопка) English
+										1483 group (группа)
+											1484 text (оповещение)
+												1511 text (текстовый) Маг-производитель зелий: волшебный кликер / Permissions
+										2065 tooltip (подсказка) Export your data to a .CSV file
+							128 pane (регион)
+						129 pane (регион)
+							130 pane (регион)
+								131 button (кнопка) Вкладка поиска
+							132 pane (регион) ID: view_21
+								133 tab (вкладка)
+									135 tab item (элемент вкладки) (selectable) Вкладка "Маг-производитель зелий: волшебный кликер / Permissions" использует 342 МБ памяти ID: view_20
+										136 button (кнопка) Закрыть
+								134 pane (регион)
+							137 button (кнопка) Новая вкладка
+							138 pane (регион)
+						139 pane (регион)
+
+Document text: ```
+￼
+```
+
+Focused element: 17 text field (поле) (settable, string) Адресная строка и строка поиска Description: Спросите Google или введите URL Value: create.roblox.com/dashboard/creations/experiences/10776120489/permissions ID: view_1012
+
+Document text:
+￼

@@ -2,12 +2,13 @@
   "schema": 1,
   "base": "fdaf931b179ad188555147c720b768dd9334b17b",
   "meshyTask": "01a1e765-fba3-7739-ac6c-e560f44b6856",
-  "rights": "Owner attested own Meshy account and paid plan for this willow on 2026-11-17; Roblox permissions remain unverified",
+  "rights": "Owner attested own Meshy account and paid plan on 2026-11-17; five Roblox assets verified Restricted, target Experience grant absent",
   "integration": false,
   "nativeImportIncident": {
     "uploadCheckbox": false,
-    "result": "Online IDs nevertheless created under personal account crystymoore; permission audit blocked by Updated Agreements",
-    "model": "81045114472619",
+    "result": "Online IDs nevertheless created under personal account crystymoore; read-only audit completed 2026-11-17; all Restricted, no grant in target Experience export",
+    "animation": "81045114472619",
+    "assetTypeCorrection": "81045114472619 was previously misidentified as a Model; Dashboard confirms Animation",
     "foliageMesh": "103393042017627",
     "woodMesh": "85732748826171",
     "foliageImage": "79171837674186",
@@ -24,6 +25,11 @@
       "path": "source/owner-confirmation.json",
       "bytes": 584,
       "sha256": "6f83b08e86dd60faf5a060c802ef97441f8dcdc0f5bf638d4eafb3e37d0ea0b0"
+    },
+    {
+      "path": "source/roblox-permission-audit.json",
+      "bytes": 3252,
+      "sha256": "830dd936489366d244be5f9abb29e5fe236f08624dcf3fe019722ccce69a508b"
     },
     {
       "path": "source/willow-reference.png",

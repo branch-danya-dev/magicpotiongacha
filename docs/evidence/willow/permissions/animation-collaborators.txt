@@ -1,0 +1,150 @@
+Window: "Willow-Studio-6119_Scene / Permissions - Google Chrome", App: chrome.exe.
+	0 window (окно) Willow-Studio-6119_Scene / Permissions - Google Chrome Secondary Actions: Raise
+		1 pane (панель) (disabled)
+		2 pane (регион) Willow-Studio-6119_Scene / Permissions - Google Chrome
+			3 pane (регион)
+				4 pane (регион)
+					5 pane (регион)
+						6 button (кнопка) Свернуть ID: view_1
+						140 button (кнопка) Восстановить ID: view_3
+						8 button (кнопка) Закрыть ID: view_4
+					9 pane (регион)
+						10 pane (регион)
+							11 toolbar (панель инструментов) ID: view_1000
+								12 button (кнопка) Назад ID: view_1001
+								13 button (кнопка) (disabled) Вперед ID: view_1002
+								14 button (кнопка) Перезагрузить ID: view_1003
+								15 group (группа)
+									16 button (кнопка) Сведения о сайте ID: view_1011
+									17 text field (поле) (settable, string) Адресная строка и строка поиска Description: Спросите Google или введите URL Value: create.roblox.com/dashboard/creations/store/81045114472619/permissions?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll ID: view_1012
+									18 pane (регион)
+										1443 button (кнопка) Перевести
+										1442 button (кнопка) Добавить страницу в закладки
+								21 pane (регион)
+									22 button (кнопка) OrangeMonkey У расширения есть доступ к этому сайту ID: view_1009
+									23 button (кнопка) Open Claude У расширения есть доступ к этому сайту ID: view_1009
+									24 button (кнопка) Расширения ID: view_1006
+								25 pane (регион)
+								26 button (кнопка) Управляйте воспроизведением музыки, видео и других медиафайлов
+								27 button (кнопка) Даниил ID: view_1018
+								28 button (кнопка) Chrome ID: view_1007
+						29 pane (регион)
+							30 pane (регион)
+								31 pane (регион)
+								1444 document (документ) Willow-Studio-6119_Scene / Permissions Value: https://create.roblox.com/dashboard/creations/store/81045114472619/permissions?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll ID: RootWebArea
+									1445 group (группа)
+										1446 group (группа)
+											1447 hyperlink (ссылка) CREATOR Value: https://create.roblox.com/
+											1512 button (кнопка) crystymoore crystymoore
+												1513 image (изображение) crystymoore
+											1486 hyperlink (ссылка) Home Value: https://create.roblox.com/
+											1487 hyperlink (ссылка) Creations Value: https://create.roblox.com/dashboard/creations
+											1488 hyperlink (ссылка) Learn Value: https://create.roblox.com/docs/
+											1489 hyperlink (ссылка) Store Value: https://create.roblox.com/store/
+											1490 hyperlink (ссылка) Forum Value: https://devforum.roblox.com/
+											1491 hyperlink (ссылка) Updates Value: https://create.roblox.com/updates
+											1492 separator (разделитель)
+											1493 hyperlink (ссылка) Finances Value: https://create.roblox.com/dashboard/devex
+											1494 hyperlink (ссылка) Analytics Value: https://create.roblox.com/dashboard/analytics
+											1495 hyperlink (ссылка) Ads Value: https://create.roblox.com/advertise
+											1496 separator (разделитель)
+											1497 button (кнопка) All tools
+											1498 hyperlink (ссылка) Roblox.com Value: https://roblox.com/
+											1499 button (кнопка) Studio
+											1500 button (кнопка) Hide sidebar
+											1448 hyperlink (ссылка) Back Value: https://create.roblox.com/dashboard/creations?activeTab=Model&inventoryAssetTypes=All
+												1449 button (кнопка) Back
+											1514 list (список)
+												1515 list item (элемент списка) Willow-Studio-6119_Scene
+													1516 image (Графическое изображение без описания) Чтобы получить недостающие описания изображений, откройте контекстное меню.
+													1517 text (текстовый) Willow-Studio-6119_Scene
+													1518 button (кнопка) more
+											1451 tree (дерево) ID: mui-tree-view-1
+												1452 tree item (элемент дерева) Configure ID: mui-tree-view-1-configure
+													1453 group (группа)
+														1454 group (группа)
+														1455 hyperlink (ссылка) Configure Value: https://create.roblox.com/dashboard/creations/store/81045114472619/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+												1519 tree item (элемент дерева) Permissions ID: mui-tree-view-1-permissions
+													1520 group (группа)
+														1521 group (группа)
+														1522 hyperlink (ссылка) Permissions Value: https://create.roblox.com/dashboard/creations/store/81045114472619/permissions?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+												1523 tree item (элемент дерева) Version History ID: mui-tree-view-1-versionHistory
+													1524 group (группа)
+														1525 group (группа)
+														1526 hyperlink (ссылка) Version History Value: https://create.roblox.com/dashboard/creations/store/81045114472619/version-history?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+											1456 button (кнопка) menu
+											1457 group (навигация) breadcrumb ID: navigation-breadcrumbs
+												1458 list (список)
+													1501 list item (элемент списка) Creations
+														1502 hyperlink (ссылка) Creations Value: https://create.roblox.com/dashboard/creations
+													1503 list item (элемент списка) Willow-Studio-6119_Scene
+														1557 hyperlink (ссылка) Willow-Studio-6119_Scene Value: https://create.roblox.com/dashboard/creations/store/81045114472619/configure
+													1527 list item (элемент списка) Permissions
+														1558 group (группа)
+															1559 text (текстовый) Permissions
+											1459 button (кнопка) Search
+											1506 button (кнопка) Notifications
+											1507 button (кнопка) crystymoore
+												1530 image (изображение) crystymoore
+											1508 text (заголовок) Permissions
+											1565 text (текстовый) Configure who has permission to access your asset
+											1560 tab (вкладка)
+												1561 tab item (элемент вкладки) (selectable) Collaborators ID: Collaborators
+												1562 tab item (элемент вкладки) (selectable) Experiences ID: Experiences
+											1563 pane (панель вкладок) Collaborators ID: Collaborators
+												1566 pane (панель вкладок) ID: collaborators-panel-active
+													1567 text (текстовый) No collaborators yet
+													1568 text (текстовый) Give your friends and groups access to this asset
+													1569 text (текстовый) 
+													1570 button (кнопка) Add collaborators
+											1510 text (текстовый) ©2026 Roblox Corporation. All rights reserved.
+											1462 hyperlink (ссылка) Terms Value: https://www.roblox.com/info/terms
+											1463 text (текстовый) ·
+											1464 hyperlink (ссылка) Privacy Value: https://www.roblox.com/info/privacy
+											1465 text (текстовый) ·
+											1466 hyperlink (ссылка) Accessibility Value: https://www.roblox.com/info/accessibility
+											1467 text (текстовый) ·
+											1468 hyperlink (ссылка) Support Value: https://www.roblox.com/info/help
+											1469 text (текстовый) ·
+											1470 button (кнопка) Your Privacy Choices
+											1471 hyperlink (ссылка) X Value: https://x.com/Roblox
+												1472 button (кнопка) X
+											1473 hyperlink (ссылка) Facebook Value: https://www.facebook.com/Roblox/
+												1474 button (кнопка) Facebook
+											1475 hyperlink (ссылка) LinkedIn Value: https://www.linkedin.com/company/roblox
+												1476 button (кнопка) LinkedIn
+											1477 hyperlink (ссылка) Instagram Value: https://www.instagram.com/roblox/
+												1478 button (кнопка) Instagram
+											1479 hyperlink (ссылка) YouTube Value: https://www.youtube.com/@RobloxCreators
+												1480 button (кнопка) YouTube
+											1481 hyperlink (ссылка) English Value: https://roblox.com/my/account
+												1482 button (кнопка) English
+										1483 group (группа)
+											1484 text (оповещение)
+												1511 text (текстовый) Willow-Studio-6119_Scene / Permissions
+							128 pane (регион)
+						129 pane (регион)
+							130 pane (регион)
+								131 button (кнопка) Вкладка поиска
+							132 pane (регион) ID: view_21
+								133 tab (вкладка)
+									135 tab item (элемент вкладки) (selectable) Вкладка "Willow-Studio-6119_Scene / Permissions" использует 332 МБ памяти ID: view_20
+										136 button (кнопка) Закрыть
+								134 pane (регион)
+							137 button (кнопка) Новая вкладка
+							138 pane (регион)
+						139 pane (регион)
+			1552 pane (панель)
+				1553 pane (панель) (disabled)
+				1554 pane (регион)
+					1555 pane (регион)
+						1556 text (текстовый) https://create.roblox.com/dashboard/creations/store/81045114472619/permissions?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+
+Document text: ```
+create.roblox.com/dashboard/creations/store/81045114472619/permissions?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+```
+
+Focused element: 17 text field (поле) (settable, string) Адресная строка и строка поиска Description: Спросите Google или введите URL Value: create.roblox.com/dashboard/creations/store/81045114472619/permissions?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll ID: view_1012
+
+Document text:
+create.roblox.com/dashboard/creations/store/81045114472619/permissions?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll

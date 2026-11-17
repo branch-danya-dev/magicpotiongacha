@@ -1,0 +1,146 @@
+Window: "base_color_texture / Permissions - Google Chrome", App: chrome.exe.
+	0 window (окно) base_color_texture / Permissions - Google Chrome Secondary Actions: Raise
+		1 pane (панель) (disabled)
+		2 pane (регион) base_color_texture / Permissions - Google Chrome
+			3 pane (регион)
+				4 pane (регион)
+					5 pane (регион)
+						6 button (кнопка) Свернуть ID: view_1
+						140 button (кнопка) Восстановить ID: view_3
+						8 button (кнопка) Закрыть ID: view_4
+					9 pane (регион)
+						10 pane (регион)
+							11 toolbar (панель инструментов) ID: view_1000
+								12 button (кнопка) Назад ID: view_1001
+								13 button (кнопка) (disabled) Вперед ID: view_1002
+								14 button (кнопка) Перезагрузить ID: view_1003
+								15 group (группа)
+									16 button (кнопка) Сведения о сайте ID: view_1011
+									17 text field (поле) (settable, string) Адресная строка и строка поиска Description: Спросите Google или введите URL Value: create.roblox.com/dashboard/creations/store/77979867898740/permissions?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll ID: view_1012
+									18 pane (регион)
+										908 button (кнопка) Перевести
+										20 button (кнопка) Добавить страницу в закладки
+								21 pane (регион)
+									22 button (кнопка) OrangeMonkey У расширения есть доступ к этому сайту ID: view_1009
+									23 button (кнопка) Open Claude У расширения есть доступ к этому сайту ID: view_1009
+									24 button (кнопка) Расширения ID: view_1006
+								25 pane (регион)
+								26 button (кнопка) Управляйте воспроизведением музыки, видео и других медиафайлов
+								27 button (кнопка) Даниил ID: view_1018
+								28 button (кнопка) Chrome ID: view_1007
+						29 pane (регион)
+							30 pane (регион)
+								31 pane (регион)
+								907 document (документ) base_color_texture / Permissions Value: https://create.roblox.com/dashboard/creations/store/77979867898740/permissions?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll ID: RootWebArea
+									909 group (группа)
+										910 group (группа)
+											911 hyperlink (ссылка) CREATOR Value: https://create.roblox.com/
+											950 button (кнопка) crystymoore crystymoore
+												951 image (изображение) crystymoore
+											952 hyperlink (ссылка) Home Value: https://create.roblox.com/
+											953 hyperlink (ссылка) Creations Value: https://create.roblox.com/dashboard/creations
+											954 hyperlink (ссылка) Learn Value: https://create.roblox.com/docs/
+											955 hyperlink (ссылка) Store Value: https://create.roblox.com/store/
+											956 hyperlink (ссылка) Forum Value: https://devforum.roblox.com/
+											957 hyperlink (ссылка) Updates Value: https://create.roblox.com/updates
+											958 separator (разделитель)
+											959 hyperlink (ссылка) Finances Value: https://create.roblox.com/dashboard/devex
+											960 hyperlink (ссылка) Analytics Value: https://create.roblox.com/dashboard/analytics
+											961 hyperlink (ссылка) Ads Value: https://create.roblox.com/advertise
+											962 separator (разделитель)
+											963 button (кнопка) All tools
+											964 hyperlink (ссылка) Roblox.com Value: https://roblox.com/
+											965 button (кнопка) Studio
+											966 button (кнопка) Hide sidebar
+											912 hyperlink (ссылка) Back Value: https://create.roblox.com/dashboard/creations?activeTab=Model&inventoryAssetTypes=All
+												913 button (кнопка) Back
+											978 list (список)
+												979 list item (элемент списка) base_color_texture
+													980 image (Графическое изображение без описания) Чтобы получить недостающие описания изображений, откройте контекстное меню.
+													981 text (текстовый) base_color_texture
+													982 button (кнопка) more
+											915 tree (дерево) ID: mui-tree-view-1
+												916 tree item (элемент дерева) Configure ID: mui-tree-view-1-configure
+													917 group (группа)
+														918 group (группа)
+														919 hyperlink (ссылка) Configure Value: https://create.roblox.com/dashboard/creations/store/77979867898740/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+												983 tree item (элемент дерева) Permissions ID: mui-tree-view-1-permissions
+													984 group (группа)
+														985 group (группа)
+														986 hyperlink (ссылка) Permissions Value: https://create.roblox.com/dashboard/creations/store/77979867898740/permissions?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+											920 button (кнопка) menu
+											921 group (навигация) breadcrumb ID: navigation-breadcrumbs
+												922 list (список)
+													967 list item (элемент списка) Creations
+														968 hyperlink (ссылка) Creations Value: https://create.roblox.com/dashboard/creations
+													969 list item (элемент списка) base_color_texture
+														1023 hyperlink (ссылка) base_color_texture Value: https://create.roblox.com/dashboard/creations/store/77979867898740/configure
+													987 list item (элемент списка) Permissions
+														1024 group (группа)
+															1025 text (текстовый) Permissions
+											923 button (кнопка) Search
+											972 button (кнопка) Notifications
+											973 button (кнопка) crystymoore
+												974 image (изображение) crystymoore
+											975 text (заголовок) Permissions
+											1031 text (текстовый) Configure who has permission to access your asset
+											1026 tab (вкладка)
+												1027 tab item (элемент вкладки) (selectable) Collaborators ID: Collaborators
+												1028 tab item (элемент вкладки) (selectable) Experiences ID: Experiences
+											1029 pane (панель вкладок) Collaborators ID: Collaborators
+												1032 pane (панель вкладок) ID: collaborators-panel-active
+													1033 text (текстовый) No collaborators yet
+													1034 text (текстовый) Give your friends and groups access to this asset
+													1035 text (текстовый) 
+													1036 button (кнопка) Add collaborators
+											977 text (текстовый) ©2026 Roblox Corporation. All rights reserved.
+											926 hyperlink (ссылка) Terms Value: https://www.roblox.com/info/terms
+											927 text (текстовый) ·
+											928 hyperlink (ссылка) Privacy Value: https://www.roblox.com/info/privacy
+											929 text (текстовый) ·
+											930 hyperlink (ссылка) Accessibility Value: https://www.roblox.com/info/accessibility
+											931 text (текстовый) ·
+											932 hyperlink (ссылка) Support Value: https://www.roblox.com/info/help
+											933 text (текстовый) ·
+											934 button (кнопка) Your Privacy Choices
+											935 hyperlink (ссылка) X Value: https://x.com/Roblox
+												936 button (кнопка) X
+											937 hyperlink (ссылка) Facebook Value: https://www.facebook.com/Roblox/
+												938 button (кнопка) Facebook
+											939 hyperlink (ссылка) LinkedIn Value: https://www.linkedin.com/company/roblox
+												940 button (кнопка) LinkedIn
+											941 hyperlink (ссылка) Instagram Value: https://www.instagram.com/roblox/
+												942 button (кнопка) Instagram
+											943 hyperlink (ссылка) YouTube Value: https://www.youtube.com/@RobloxCreators
+												944 button (кнопка) YouTube
+											945 hyperlink (ссылка) English Value: https://roblox.com/my/account
+												946 button (кнопка) English
+										947 group (группа)
+											948 text (оповещение)
+												949 text (текстовый) base_color_texture / Permissions
+							128 pane (регион)
+						129 pane (регион)
+							130 pane (регион)
+								131 button (кнопка) Вкладка поиска
+							132 pane (регион) ID: view_21
+								133 tab (вкладка)
+									135 tab item (элемент вкладки) (selectable) Вкладка "base_color_texture / Permissions" использует 264 МБ памяти ID: view_20
+										136 button (кнопка) Закрыть
+								134 pane (регион)
+							137 button (кнопка) Новая вкладка
+							138 pane (регион)
+						139 pane (регион)
+			1018 pane (панель)
+				1019 pane (панель) (disabled)
+				1020 pane (регион)
+					1021 pane (регион)
+						1022 text (текстовый) https://create.roblox.com/dashboard/creations/store/77979867898740/permissions?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+
+Document text: ```
+create.roblox.com/dashboard/creations/store/77979867898740/permissions?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+```
+
+Focused element: 17 text field (поле) (settable, string) Адресная строка и строка поиска Description: Спросите Google или введите URL Value: create.roblox.com/dashboard/creations/store/77979867898740/permissions?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll ID: view_1012
+
+Document text:
+create.roblox.com/dashboard/creations/store/77979867898740/permissions?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll

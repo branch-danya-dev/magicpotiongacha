@@ -1,0 +1,55 @@
+Asset,ID,Owner,Asset Type
+Paw03,90524766157477,addout studio,Mesh
+SpellbookLectern,92876851534007,addout studio,Model
+CandleDish,92973868112960,addout studio,Mesh
+InkPotBody3,94148985942232,addout studio,Mesh
+###########,96243370555026,addout studio,Image
+############,96590033453082,addout studio,Image
+CandleDish3,96968891999807,addout studio,Mesh
+#########,99406398694311,addout studio,Image
+Crystal,99780103231215,addout studio,Mesh
+Cover5,100113691987749,addout studio,Mesh
+Cover3,103016093980875,addout studio,Mesh
+###########,104321131031052,addout studio,Image
+#########,106126272501921,addout studio,Image
+###########,106481090533297,addout studio,Image
+Page02,107319023796846,addout studio,Mesh
+base_color_texture,107809848451619,addout studio,Image
+Rune0.001,109188288921960,addout studio,Mesh
+RingOuter,109946376033981,addout studio,Mesh
+Page03,110856837337371,addout studio,Mesh
+Cover2,111954150769718,addout studio,Mesh
+#########,120296233207649,addout studio,Image
+AG71_ArcadeAtlas,127092357608242,addout studio,Image
+########,127279777775296,addout studio,Image
+###########,127569253577461,addout studio,Image
+###########,130725840424597,addout studio,Image
+CandleDish2,132959566136120,addout studio,Mesh
+InkPotBody,133436862452468,addout studio,Mesh
+Paw04,133718296106071,addout studio,Mesh
+InkPotBody2,134367322049600,addout studio,Mesh
+Cover,137978977969458,addout studio,Mesh
+Page0,138386361699294,addout studio,Mesh
+circle500,2609138523,Reselim,Image
+bcfg,5981360137,Reselim,Image
+bcbg,5981360418,Reselim,Image
+rojo-small,5990772764,Reselim,Image
+Images/sun_alb,6196665106,DodgerJavi,Image
+Grid,6372755229,meow_pizza,Image
+Images/top,6412503613,DodgerJavi,Image
+Moon_01_alb_256,6444320592,meow_pizza,Image
+Images/pz,6444884337,DodgerJavi,Image
+Images/ny,6444884785,DodgerJavi,Image
+Cover4,70655948924007,addout studio,Mesh
+AG67B_PageBurnAtlas,71524045190344,addout studio,Image
+AG74_GreenSlime_Idle_Calm,73712172546084,addout studio,Animation
+GreenSlime,76181395589964,addout studio,Mesh
+AG67B_SigilAtlas,76491767385771,addout studio,Image
+Paw0,76770741438140,addout studio,Mesh
+AG67B_SoulWisp,79556416543344,addout studio,Image
+CandleFlame,81459105124278,addout studio,Mesh
+###########,83662321011462,addout studio,Image
+###########,87150286021124,addout studio,Image
+AG74_GreenSlime_Idle_Active,89284758082218,addout studio,Animation
+CandleFlame2,89771412745333,addout studio,Mesh
+Paw02,90370639747465,addout studio,Mesh

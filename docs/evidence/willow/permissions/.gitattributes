@@ -1,0 +1,3 @@
+# Preserve the original read-only Dashboard export and native AX evidence.
+*.csv -text whitespace=cr-at-eol
+*.txt -text whitespace=cr-at-eol,-blank-at-eol

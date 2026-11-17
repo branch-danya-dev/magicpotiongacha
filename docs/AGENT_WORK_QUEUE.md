@@ -35,9 +35,12 @@ Delivered locally: 6,119 triangles, 84 hanging groups, nine bones, two meshes,
 1024 RGBA atlas, packed Blender/FBX and isolated wind QA. See
 [prototype report and original Play captures](WILLOW_TREE_PROTOTYPE.md).
 Owner confirmed own Meshy account and paid plan for this willow on 2026-11-17.
-Final native FBX import and online permissions remain blocked:
-Studio unexpectedly created personal-account assets despite Upload being unchecked;
-Dashboard is gated by Updated Agreements. No further uploads/permission changes.
+Studio unexpectedly created personal-account assets despite Upload being unchecked.
+Read-only Dashboard audit completed 2026-11-17 after owner resolved agreements:
+all five assets Restricted, no collaborators, no target Experience grant in its
+54-row export. ID 81045114472619 is Animation, not Model. See
+[permissions audit](WILLOW_ASSET_PERMISSIONS.md). Final-version native upload/access
+still needs separate owner approval. No further uploads/permission changes.
 Phone/multiplayer and candidate GitHub CI NOT RUN. No production admission.
 
 ### AG-76B-R4B — Three Moons & Lunar Lighting

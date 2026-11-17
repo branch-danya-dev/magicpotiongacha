@@ -67,7 +67,7 @@ The native 3D importer recognized the corrected scale, two meshes and nine bones
 
 | Asset | ID |
 |---|---|
-| Model Willow-Studio-6119 | 81045114472619 |
+| Animation Willow-Studio-6119_Scene (corrected from initial Model label) | 81045114472619 |
 | Foliage mesh | 103393042017627 |
 | Trunk mesh | 85732748826171 |
 | Foliage image | 79171837674186 |
@@ -75,18 +75,18 @@ The native 3D importer recognized the corrected scale, two meshes and nine bones
 
 The misleading temporary import filename predated explicit duplicate removal: that importer run reported **6,142**, not 6,119 triangles. Final FBX and portable QA now both contain 6,119, verified in Blender and by automated tests. **The final FBX was not re-imported through that uploader.** The native importer also logged one image-delivery failure for foliage immediately after creation; it is not claimed as a clean final native texture delivery check.
 
-The owner was informed promptly; no further imports or permission changes were attempted. Creator Dashboard is blocked by an **Updated Agreements** dialog about account-region terms. The agent did not accept it. Access/Creator Store/Open Use status is therefore **UNVERIFIED**, not assumed private. These IDs are not referenced by the local QA scene or production code. No game publication occurred. On 2026-11-17 the owner confirmed that this specific Meshy willow was created in their account on a paid plan; the declaration is preserved in the asset source directory. That provenance confirmation gate is closed. This reply does not authorize new uploads, permission changes or publication; the feature remains local.
+The owner was informed promptly; no further imports or permission changes were attempted. The owner subsequently resolved the Updated Agreements prompt. A [read-only Dashboard audit](WILLOW_ASSET_PERMISSIONS.md) on 2026-11-17 confirms all five assets are **Restricted** under `crystymoore`, with no collaborators. The target Experience's complete 54-row permissions export contains none of the Willow IDs. The inspection blocker is closed; game access is absent, not merely unverified. Creator Store listing status was not independently audited. These IDs are not referenced by the local QA scene or production code. No game publication occurred. The owner also confirmed this willow was created in their Meshy account on a paid plan; the declaration is preserved in the asset source directory. Neither confirmation authorizes new uploads, permission changes or integration.
 
 | Gate | Status |
 |---|---|
 | Final local QA Play and quality modes | VERIFIED |
 | Final FBX UV/rig/weight round trip | PASS in Blender |
-| Native final FBX import / online textures | BLOCKED by unexpected upload behavior and permission audit |
+| Native final FBX import / online textures | NOT RUN; new final upload/access requires owner approval |
 | Real phone / low-end GPU / multiplayer | NOT RUN |
 | Production memory/alpha-overdraw/GPU profiling | NOT RUN |
 | Owner art approval / production integration | PENDING / NOT STARTED |
 | Meshy account / paid-plan provenance | OWNER CONFIRMED 2026-11-17 |
-| Roblox online permissions | BLOCKED by Dashboard agreements |
+| Roblox online permissions audit | COMPLETE: Restricted; no target Experience grant |
 | Merge / Roblox game publication | NOT PERFORMED |
 
 ## Automated checks and cleanup
