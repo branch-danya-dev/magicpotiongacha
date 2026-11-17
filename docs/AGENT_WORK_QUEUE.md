@@ -18,6 +18,13 @@
 
 ### AG-76B-R4B — Three Moons & Lunar Lighting
 
+**Moon Atmosphere Refinement — IN PROGRESS**, sole active task, same PR #59 branch.
+Follow-up base: `463cf0ddc2562239c589bcececeba9b0b93c4ada`, exact-head Windows/Ubuntu
+green (43984037134), clean starting tree. Preserve original disks for comparison;
+refine atmospheric softness/halo, compare +35%/+50%, and cache deterministic
+60/20/20 selection at dusk through the following dawn. No production integration,
+gameplay/data changes, new uploads or publication. Owner art gate remains pending.
+
 **CODE CANDIDATE / STUDIO VERIFIED (bounded QA) / OWNER MOON ART PENDING / NOT INTEGRATED.**
 Claimed 2026-11-17 as the sole active task. Branch `feat/ag76b-r4b-moon-cycle`.
 Base Draft PR #58 at `56666c072e66f7357ec2f054f818a642cae0abd9`, confirmed

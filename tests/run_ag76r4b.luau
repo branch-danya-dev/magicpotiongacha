@@ -6,15 +6,15 @@ local Base=require("../src/shared/EnvironmentConfig")
 local State=require("../src/shared/EnvironmentState")
 local Clock=require("../src/shared/EnvironmentClock")
 local function close(a,b,e) T.truthy(math.abs(a-b)<(e or 1e-6)) end
-T.test("R4B chooses once per complete synchronized server cycle",function()
-	for cycle=1124000,1124100 do for _,offset in ipairs({0,299,674,675,1349,1499.999}) do
+T.test("R4B chooses at dusk and retains the same night through dawn and invisible day",function()
+	for cycle=1124000,1124100 do for _,offset in ipairs({300,674,675,1349,1499.999,1500,1799.999}) do
 		T.equal(M.index(cycle*1500+offset),cycle);T.equal(M.choose(M.index(cycle*1500+offset)),M.choose(cycle))
 	end end
 end)
-T.test("R4B deterministic 70/10/20 distribution across independent cycle windows",function()
+T.test("R4B deterministic 60/20/20 distribution across independent night windows",function()
 	for _,start in ipairs({0,1124000,123456789}) do local counts={0,0,0}
 		for cycle=start,start+9999 do local k=M.choose(cycle);counts[k]+=1;T.equal(k,M.choose(cycle)) end
-		close(counts[1]/10000,.7,.025);close(counts[2]/10000,.1,.02);close(counts[3]/10000,.2,.025)
+		close(counts[1]/10000,.6,.025);close(counts[2]/10000,.2,.025);close(counts[3]/10000,.2,.025)
 	end
 end)
 T.test("R4B proportions are exactly 300/375/675/150 seconds",function()
@@ -67,9 +67,10 @@ T.test("R4B smooth lunar overlays preserve weather and wind accounting",function
 	for _,key in ipairs({"rain","cloud","wet","afterRain","wind","phase","clock"}) do T.equal(out[key],s[key]) end
 	T.equal(M.alpha(s,.6),0.95*(1-M.smooth(.85/.9)))
 end)
-T.test("R4B Minimal retains moon and suppresses only optional halo",function()
+T.test("R4B Minimal retains moon with a reduced halo",function()
 	local night=State.at(C,.6,0)
-	T.truthy(M.alpha(night,.5)>.9);T.equal(M.halo("minimal"),0);T.truthy(M.halo("full")>M.halo("reduced"))
+	T.truthy(M.alpha(night,.5)>.9);T.truthy(M.halo("minimal")>0 and M.halo("minimal")<.05)
+	T.truthy(M.halo("full")>M.halo("reduced") and M.halo("reduced")>M.halo("minimal"))
 	T.equal(M.alpha(night,-.1),0);T.equal(M.alpha(State.at(C,.6,1),.7),0)
 end)
 T.test("R4B all lighting channels stay continuous across cycle seam",function()
@@ -79,5 +80,29 @@ T.test("R4B all lighting channels stay continuous across cycle seam",function()
 end)
 T.test("R4B rejects invalid time and unknown moon commands",function()
 	T.falsy(pcall(M.index,0/0));T.falsy(pcall(M.index,math.huge));T.falsy(M.valid("reward"));T.truthy(M.valid("auto"))
+end)
+T.test("R4B probabilities partition exactly 100 percent without a gap",function()
+	T.equal(M.weights[1]+M.weights[2]+M.weights[3],100)
+	local counts={0,0,0};for roll=0,9999 do counts[M.bucket(roll)]+=1 end
+	T.equal(counts[1],6000);T.equal(counts[2],2000);T.equal(counts[3],2000)
+end)
+T.test("R4B samples select only once each dusk, never each frame or manual mode change",function()
+	local f=M.new();local first=table.clone(f.sample(300,0,"auto"))
+	for t=301,1799 do f.sample(t,t/60,"auto");T.equal(f.selections,1);T.equal(f.automatic,M.choose(0)) end
+	for _,name in ipairs({"pearl","blood","frost","auto"}) do f.sample(1799,100,name);T.equal(f.selections,1) end
+	f.sample(1800,101,"auto");T.equal(f.selections,2);T.equal(f.nightIndex,1)
+	local g=M.new();local join=g.sample(900,0,"auto");for i=1,3 do T.equal(join[i],first[i]) end
+end)
+T.test("R4B independent nights allow consecutive repetitions of every variant",function()
+	local repeats={false,false,false}
+	for n=0,10000 do local a,b=M.choose(n),M.choose(n+1);if a==b then repeats[a]=true end end
+	for _,v in ipairs(repeats) do T.truthy(v) end
+end)
+T.test("R4B optical profiles have no bright ring and expose the two requested scales",function()
+	local p=require("../qa/lunar/Presentation")
+	T.truthy(p.scaleValid(1.35));T.truthy(p.scaleValid(1.5));T.falsy(p.scaleValid(2));T.falsy(p.scaleValid(0/0))
+	local last=1
+	for i=0,200 do local a=p.haloAlpha(i/200,"after");T.truthy(a<=last and a>=0);last=a end
+	T.equal(last,0);T.truthy(p.haloAlpha(.5,"after")>p.haloAlpha(.5*p.haloScale/1.22,"before"))
 end)
 T.finish()

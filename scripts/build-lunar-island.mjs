@@ -14,19 +14,25 @@ for(const file of protectedPaths){const before=execFileSync('git',['show',`${bas
 }
 execFileSync(process.execPath,['scripts/build-grass-island.mjs'],{cwd:root,stdio:'pipe'});
 const manifest=JSON.parse(read('assets/environment/lunar/manifest.json'));
-const disks=[];
+const before=[],disks=[];
 for(const item of manifest.textures){
  for(const key of ['source','edited','texture'])assert.equal(hash(readFileSync(path(item[key].path))),item[key].sha256,`Lunar ${key} hash`);
+ const img=decode(readFileSync(path(item.texture.path)));assert.equal(img.w,512);assert.equal(img.h,512);before.push(img.rgba.toString('base64'));
+}
+const refinement=JSON.parse(read('assets/environment/lunar/refinement/manifest.json'));
+for(const item of refinement.textures){
+ for(const key of ['input','edited','texture'])assert.equal(hash(readFileSync(path(item[key].path))),item[key].sha256,`Refined lunar ${key} hash`);
  const img=decode(readFileSync(path(item.texture.path)));assert.equal(img.w,512);assert.equal(img.h,512);disks.push(img.rgba.toString('base64'));
 }
 mkdirSync(path('build'),{recursive:true});
-writeFileSync(path('build/lunar-pixels.luau'),'-- Generated, three fixed local RGBA images; never uploaded.\nreturn {size=512,disks={\n'+disks.map(s=>'[=['+s+']=]').join(',\n')+'\n}}\n');
+writeFileSync(path('build/lunar-pixels.luau'),'-- Generated local RGBA, original bytes retained for explicit QA A/B; never uploaded.\nreturn {size=512,disks={\n'+disks.map(s=>'[=['+s+']=]').join(',\n')+'\n},before={\n'+before.map(s=>'[=['+s+']=]').join(',\n')+'\n}}\n');
 const project=JSON.parse(read('build/grass-island.project.json'));
 project.name='WizardIsland-AG76B-R4B-Moons-ART-PENDING';
 const shared=project.tree.ReplicatedStorage.PotionTycoon.Shared,client=project.tree.StarterPlayer.StarterPlayerScripts.WizardReview;
 shared.R4AEnvironmentConfig=shared.EnvironmentConfig;
 shared.EnvironmentConfig={$path:path('qa/lunar/EnvironmentConfig.luau')};
 shared.LunarConfig={$path:path('qa/lunar/Config.luau')};shared.LunarCycle={$path:path('qa/lunar/Cycle.luau')};shared.LunarPixels={$path:path('build/lunar-pixels.luau')};
+shared.LunarPresentation={$path:path('qa/lunar/Presentation.luau')};
 client.LunarDisks={$path:path('qa/lunar/Disks.luau')};
 client.LunarDiagnostics={$path:path('qa/lunar/Diagnostics.luau')};
 const adapt=(source,patches)=>{for(const [a,b]of patches){assert.equal(source.split(a).length,2,`QA anchor drift: ${a}`);source=source.replace(a,b);}return source;};
@@ -35,10 +41,10 @@ let view=adapt(read('src/client/EnvironmentView.luau'),[
  ['\tassert(not active,','\tassert(RunService:IsStudio(),"R4B scene is Studio-only")\n\tassert(not workspace:FindFirstChild("M7ClientWeather"),"Environment lighting already has a scene owner")\n\tassert(not active,'],
  ['\tactive=self','\tactive=self\n\tlocal lunarCycle=Lunar.new(); local forcedMoon="auto"; local lunarWeights={1,0,0}'],
  ['\tassetGui(moon.gui,"moon")','\tassetGui(moon.gui,"moon")\n\tlocal lunarDisks=LunarDisks.create(moon,Vista.moonSize)\n\tif lunarDisks.ready then assetGuis[moon.gui]=nil; moon.gui.Enabled=true end'],
- ['\tfunction self.setQuality(name)','\tfunction self.setMoon(name) if not Lunar.valid(name) then return false end;forcedMoon=name;return true end\n\tfunction self.setQuality(name)'],
+ ['\tfunction self.setQuality(name)','\tfunction self.setMoon(name) if not Lunar.valid(name) then return false end;forcedMoon=name;return true end\n\tfunction self.setMoonScale(n) return lunarDisks.setScale(n) end\n\tfunction self.setMoonStyle(n) return lunarDisks.setStyle(n) end\n\tfunction self.setQuality(name)'],
  ['\t\tlocal flow=State.wind(sample,time,self.reduceMotion)','\t\tlunarWeights=lunarCycle.sample(time,now,forcedMoon)\n\t\tsample=Lunar.apply(sample,lunarWeights)\n\t\tlocal flow=State.wind(sample,time,self.reduceMotion)'],
  ['\t\tmoon.attachment.Position=Vector3.new(table.unpack(State.moon(sample.phase)))*Config.celestial.distance\n\t\tmoon.image.ImageTransparency=1-sample.celestial*.94','\t\tlocal moonDirection=Lighting:GetMoonDirection()\n\t\tmoon.attachment.Position=moonDirection*Config.celestial.distance\n\t\tlunarDisks.update(sample,lunarWeights,moonDirection,self.quality)'],
- ['\t\tcounts.moon=moon.image.ImageTransparency<1 and 1 or 0','\t\tcounts.moon=lunarDisks.alpha>0 and 1 or 0\n\t\tcounts.lunar=lunarDisks.stats();counts.lunar.forced=forcedMoon;counts.lunar.cycle=Lunar.index(workspace:GetServerTimeNow())\n\t\tcounts.lunar.alignment=moon.attachment.Position.Unit:Dot(Lighting:GetMoonDirection())'],
+ ['\t\tcounts.moon=moon.image.ImageTransparency<1 and 1 or 0','\t\tcounts.moon=lunarDisks.alpha>0 and 1 or 0\n\t\tcounts.lunar=lunarDisks.stats();counts.lunar.forced=forcedMoon;counts.lunar.cycle=lunarCycle.nightIndex;counts.lunar.selections=lunarCycle.selections\n\t\tcounts.lunar.alignment=moon.attachment.Position.Unit:Dot(Lighting:GetMoonDirection())'],
  ['counts.moonLoaded=moon.image.IsLoaded','counts.moonLoaded=lunarDisks.ready or moon.image.IsLoaded'],
  ['\t\tlocal function request()','\t\tlocal function request()\n\t\t\tlocal token=root:GetAttribute("EnvironmentReview")\n\t\t\tlocal name=type(token)=="string" and string.match(token,"^moon:(%a+)$")\n\t\t\tif name then self.setMoon(name);return end'],
  ['\t\tclearProbes()\n\t\tfor texture','\t\tlunarDisks.destroy()\n\t\tclearProbes()\n\t\tfor texture'],
@@ -46,7 +52,7 @@ let view=adapt(read('src/client/EnvironmentView.luau'),[
 writeFileSync(path('build/lunar-view.luau'),view);client.EnvironmentView={$path:path('build/lunar-view.luau')};
 let review=adapt(read('build/grass-review.client.luau'),[
  ['local view=View.start(root,{quality="full",pose="dusk"})','local Diagnostics=require(script.Parent.LunarDiagnostics)\nlocal beforeView=Diagnostics.snapshot()\nlocal view=View.start(root,{quality="full",pose="night"})\nscript.Destroying:Connect(function() view.stop() end)'],
- ['local cameras={','local cameras={\n\tmoon={Vector3.new(-43,8,14),Vector3.new(0,19,-8),78},\n\tdawnmoon={Vector3.new(43,8,14),Vector3.new(0,19,-8),78},'],
+ ['local cameras={','local cameras={\n\tmoon={Vector3.new(-43,8,14),Vector3.new(0,27,-8),78},\n\tdawnmoon={Vector3.new(43,8,14),Vector3.new(0,27,-8),78},'],
  ['local cameraMode="spawn";local pose="dusk"','local cameraMode="moon";local pose="night"'],
  ['({day=true,dusk=true,night=true})','({day=true,dusk=true,night=true,dawn=true,dawnend=true})'],
  ['\telseif action=="measure" then','\telseif action=="moon" then view.setMoon(value);return view.stats().lunar\n\telseif action=="inspect" then return view.stats()\n\telseif action=="owner-check" then local ok=pcall(View.start,root);return {duplicateRejected=not ok}\n\telseif action=="auto" then view.setPose(nil);return true\n\telseif action=="preview" then view.setPreview(value);return true\n\telseif action=="weather" then view.setWeather(value);return true\n\telseif action=="stop" then view.stop();return Diagnostics.restored(beforeView)\n\telseif action=="measure" then'],
@@ -55,13 +61,18 @@ let review=adapt(read('build/grass-review.client.luau'),[
  ['Q Quality  R Motion"','Q Quality  R Motion  Z/X/C Moons  T Dawn"'],
  ['\t\tprint("WIZARD_PERF "..Http:JSONEncode(data));measuring=false','\t\tdata.effects=nil;data.lunar=view.stats().lunar\n\t\tprint("LUNAR_PERF "..Http:JSONEncode(data));measuring=false'],
 ]);
+review=adapt(review,[
+ ['\telseif action=="inspect"','\telseif action=="moonScale" then return view.setMoonScale(value)\n\telseif action=="moonStyle" then return view.setMoonStyle(value)\n\telseif action=="inspect"'],
+ ['\tlocal moonKey=','\tlocal size=({[Enum.KeyCode.J]=1.35,[Enum.KeyCode.K]=1.5,[Enum.KeyCode.L]=1})[key.KeyCode]\n\tif size then view.setMoonScale(size);return end\n\tif key.KeyCode==Enum.KeyCode.V then view.setMoonStyle("before");return end\n\tif key.KeyCode==Enum.KeyCode.B then view.setMoonStyle("after");return end\n\tlocal moonKey='],
+ ['Z/X/C Moons  T Dawn','Z/X/C Moons  J/K Size  V/B Before/After'],
+]);
 writeFileSync(path('build/lunar-review.client.luau'),review);client.Review={$path:path('build/lunar-review.client.luau')};
 writeFileSync(path('build/lunar-island.project.json'),JSON.stringify(project,null,2)+'\n');
 const artifact='build/WizardIsland-AG76B-R4B-Moons-ART-PENDING.rbxlx';
 execFileSync(path('.tools/rojo/rojo'+(process.platform==='win32'?'.exe':'')),['build',path('build/lunar-island.project.json'),'-o',path(artifact)],{stdio:'inherit'});
 const xml=read(artifact);assert(!xml.includes('<string name="Name">Main</string>'));assert.equal((view.match(/RenderStepped:Connect/g)||[]).length,1);
 const receipt={base,head:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),artifact,sha256:hash(readFileSync(path(artifact))),
- protectedPaths,textureManifest:hash(readFileSync(path('assets/environment/lunar/manifest.json'))),localOnly:true,robloxUploads:0,
+ protectedPaths,textureManifest:hash(readFileSync(path('assets/environment/lunar/manifest.json'))),refinementManifest:hash(readFileSync(path('assets/environment/lunar/refinement/manifest.json'))),localOnly:true,robloxUploads:0,
  added:{editableImages:4,pixelBytes:3162112,imageLabels:4,renderConnections:0,lights:0},ownerMoonArt:'PENDING',integrated:false};
 writeFileSync(path('build/lunar-island-build.json'),JSON.stringify(receipt,null,2)+'\n');
 console.log(`R4B built ${artifact} SHA256 ${receipt.sha256}`);

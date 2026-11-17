@@ -1,18 +1,23 @@
 --!nonstrict
 -- Pure QA presentation: no player, remotes, rewards, persistence or random state.
-local M={seconds=1500,fadeSeconds=8,names={"pearl","blood","frost"},durations={300,375,675,150}}
+local M={seconds=1500,duskSeconds=300,fadeSeconds=8,names={"pearl","blood","frost"},weights={60,20,20},durations={300,375,675,150}}
 local function smooth(t) t=math.clamp(t,0,1);return t*t*(3-2*t) end
 M.smooth=smooth
 function M.index(seconds)
 	assert(type(seconds)=="number" and seconds==seconds and math.abs(seconds)<1e13,"Invalid lunar clock")
-	return math.floor(seconds/M.seconds)
+	-- The same night key spans dusk, night, dawn and the following invisible day.
+	return math.floor((seconds-M.duskSeconds)/M.seconds)
+end
+function M.bucket(roll)
+	assert(roll%1==0 and roll>=0 and roll<10000,"Invalid lunar roll")
+	return roll<M.weights[1]*100 and 1 or roll<(M.weights[1]+M.weights[2])*100 and 2 or 3
 end
 function M.choose(cycle)
 	-- Park-Miller integer arithmetic remains exact in double precision. No math.random.
 	local h=((cycle%2147483646)+739391)*48271%2147483647
 	h=h*48271%2147483647;h=h*48271%2147483647
 	local roll=h%10000
-	return roll<7000 and 1 or roll<8000 and 2 or 3
+	return M.bucket(roll)
 end
 function M.period(phase)
 	phase%=1
@@ -25,9 +30,13 @@ end
 function M.valid(name) for _,v in ipairs(M.names) do if v==name then return true end end;return name=="auto" end
 function M.number(name) for i,v in ipairs(M.names) do if v==name then return i end end;return nil end
 function M.new()
-	local self={target=nil,from={1,0,0},last={1,0,0},started=0}
+	local self={target=nil,from={1,0,0},last={1,0,0},started=0,nightIndex=nil,automatic=nil,selections=0}
 	function self.sample(seconds,now,forced)
-		local target=M.number(forced) or M.choose(M.index(seconds))
+		local night=M.index(seconds)
+		if night~=self.nightIndex then
+			self.nightIndex=night;self.automatic=M.choose(night);self.selections+=1
+		end
+		local target=M.number(forced) or self.automatic
 		if self.target~=target then
 			self.from=table.clone(self.last);self.started=now
 			if not self.target then self.started=now-M.fadeSeconds end
@@ -61,5 +70,5 @@ end
 function M.alpha(sample,elevation)
 	return .95*M.envelope(sample.phase)*smooth((elevation+.025)/.15)*(1-smooth(sample.cloud/.9))
 end
-function M.halo(quality) return quality=="full" and .16 or quality=="reduced" and .08 or 0 end
+function M.halo(quality) return quality=="full" and .24 or quality=="reduced" and .13 or .045 end
 return M
