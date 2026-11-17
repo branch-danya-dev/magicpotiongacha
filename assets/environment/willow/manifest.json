@@ -2,7 +2,7 @@
   "schema": 1,
   "base": "fdaf931b179ad188555147c720b768dd9334b17b",
   "meshyTask": "01a1e765-fba3-7739-ac6c-e560f44b6856",
-  "rights": "Owner attested own Meshy account and paid plan on 2026-11-17; five Roblox assets verified Restricted, target Experience grant absent",
+  "rights": "Owner attested own paid Meshy account and authorized final group delivery on 2026-11-17; six final addout studio assets Restricted, target Experience grant confirmed; see final delivery receipt for raw foliage-image HTTP 502 limitation",
   "integration": false,
   "nativeImportIncident": {
     "uploadCheckbox": false,
@@ -90,6 +90,16 @@
       "path": "prepared/validation.json",
       "bytes": 744,
       "sha256": "d4386188d7683dd1ad556c3bb75e559b2c5ee1105da2fa63ae7b282e1b02674b"
+    },
+    {
+      "path": "source/roblox-final-delivery.json",
+      "bytes": 2520,
+      "sha256": "a8134352be911add0557da7e99def5fe749cafa2535f13abeca8d2bc1eeb4c4b"
+    },
+    {
+      "path": "prepared/WillowRoblox.rbxmx",
+      "bytes": 111940,
+      "sha256": "cfaf9ca6a48be0acad58b0a8896c74f3ec97442a696be2c580b64c53a80b7d9a"
     }
   ]
 }

@@ -1,0 +1,73 @@
+{
+  "date": "2026-11-17",
+  "authorization": "Owner explicitly authorized final Willow uploads under addout studio, Restricted, and access to Experience 10776120489; Studio verification only, no integration, merge or publication",
+  "groupId": 925845207,
+  "experienceId": 10776120489,
+  "placeId": 125724638469407,
+  "sourceFbxSha256": "c6d4ce5eac77a3d260bb184583e86f5f0d3adb65f974fd923c47a9ed30a515a6",
+  "finalFbxSha256": "0fd537f88ab08ab59eceaad49529265b57b2bc33c5244c7a70bdb17590ca4a77",
+  "templateSha256": "cfaf9ca6a48be0acad58b0a8896c74f3ec97442a696be2c580b64c53a80b7d9a",
+  "triangles": 6119,
+  "meshes": 2,
+  "bones": 9,
+  "assets": [
+    {
+      "role": "model",
+      "id": "101585127712277",
+      "type": "Model",
+      "privacy": "Restricted",
+      "owner": "addout studio",
+      "targetExperienceGrant": "confirmed in post-save CSV"
+    },
+    {
+      "role": "animation",
+      "id": "92465993419789",
+      "type": "Animation",
+      "privacy": "Restricted",
+      "owner": "addout studio",
+      "targetExperienceGrant": "confirmed in post-save CSV"
+    },
+    {
+      "role": "foliageMesh",
+      "id": "99848017305133",
+      "type": "Mesh",
+      "privacy": "Restricted",
+      "owner": "addout studio",
+      "targetExperienceGrant": "confirmed in post-save CSV"
+    },
+    {
+      "role": "trunkMesh",
+      "id": "135971643496462",
+      "type": "Mesh",
+      "privacy": "Restricted",
+      "owner": "addout studio",
+      "targetExperienceGrant": "confirmed in post-save CSV"
+    },
+    {
+      "role": "foliageImage",
+      "id": "101368619581292",
+      "type": "Image",
+      "privacy": "Restricted",
+      "owner": "addout studio",
+      "targetExperienceGrant": "confirmed in post-save CSV"
+    },
+    {
+      "role": "barkImage",
+      "id": "103562800749987",
+      "type": "Image",
+      "privacy": "Restricted",
+      "owner": "addout studio",
+      "targetExperienceGrant": "confirmed in post-save CSV"
+    }
+  ],
+  "grantCsvSha256": "972e37c7620bf01e2159e2dfd8b882a2fbe7d87b394080b59e95de26387d062a",
+  "grantRowsBefore": 54,
+  "grantRowsAfter": 60,
+  "creatorStoreModelStatus": "Not distributed on Creator Store",
+  "studioNativePlay": "verified in isolated local scene",
+  "rawFoliageImageDelivery": "HTTP 502 in ImageLabel diagnostic, initial and bounded retry not loaded; processed SurfaceAppearance visible",
+  "ownerArt": "pending",
+  "integrated": false,
+  "merged": false,
+  "gamePublished": false
+}

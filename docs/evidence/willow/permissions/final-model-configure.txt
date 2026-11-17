@@ -1,0 +1,382 @@
+Window: "Willow / Configure - Google Chrome", App: chrome.exe.
+	0 window (окно) Willow / Configure - Google Chrome Secondary Actions: Raise
+		1 pane (панель) (disabled)
+		2 pane (регион) Willow / Configure - Google Chrome
+			3 pane (регион)
+				4 pane (регион)
+					5 pane (регион)
+						6 button (кнопка) Свернуть ID: view_1
+						2314 button (кнопка) Развернуть ID: view_2
+						8 button (кнопка) Закрыть ID: view_4
+					9 pane (регион)
+						10 pane (регион)
+							11 toolbar (панель инструментов) ID: view_1000
+								12 button (кнопка) Назад ID: view_1001
+								13 button (кнопка) (disabled) Вперед ID: view_1002
+								14 button (кнопка) Перезагрузить ID: view_1003
+								15 group (группа)
+									16 button (кнопка) Сведения о сайте ID: view_1011
+									17 text field (поле) (settable, string) Адресная строка и строка поиска Description: Спросите Google или введите URL Value: create.roblox.com/dashboard/creations/store/101585127712277/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll ID: view_1012
+									18 pane (регион)
+										2836 button (кнопка) Перевести
+										2315 button (кнопка) Добавить страницу в закладки
+								21 pane (регион)
+									22 button (кнопка) OrangeMonkey У расширения есть доступ к этому сайту ID: view_1009
+									23 button (кнопка) Open Claude У расширения есть доступ к этому сайту ID: view_1009
+									24 button (кнопка) Расширения ID: view_1006
+								25 pane (регион)
+								2089 pane (регион)
+									2090 button (кнопка) Скачанные файлы
+								26 button (кнопка) Управляйте воспроизведением музыки, видео и других медиафайлов
+								27 button (кнопка) Даниил ID: view_1018
+								28 button (кнопка) Chrome ID: view_1007
+						29 pane (регион)
+							30 pane (регион)
+								31 pane (регион)
+								2835 document (документ) Willow / Configure Value: https://create.roblox.com/dashboard/creations/store/101585127712277/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll ID: RootWebArea
+									2837 group (группа)
+										2838 group (группа)
+											2839 hyperlink (ссылка) CREATOR Value: https://create.roblox.com/
+											2901 button (кнопка) addout studio addout studio
+												2921 image (изображение) addout studio
+											2841 hyperlink (ссылка) Home Value: https://create.roblox.com/
+											2842 hyperlink (ссылка) Creations Value: https://create.roblox.com/dashboard/creations
+											2843 hyperlink (ссылка) Learn Value: https://create.roblox.com/docs/
+											2844 hyperlink (ссылка) Store Value: https://create.roblox.com/store/
+											2845 hyperlink (ссылка) Forum Value: https://devforum.roblox.com/
+											2846 hyperlink (ссылка) Updates Value: https://create.roblox.com/updates
+											2847 separator (разделитель)
+											2848 hyperlink (ссылка) Finances Value: https://create.roblox.com/dashboard/group/payouts
+											2849 hyperlink (ссылка) Analytics Value: https://create.roblox.com/dashboard/analytics
+											2902 hyperlink (ссылка) Collaboration Value: https://create.roblox.com/dashboard/group/profile
+											2850 hyperlink (ссылка) Ads Value: https://create.roblox.com/advertise
+											2851 separator (разделитель)
+											2852 button (кнопка) All tools
+											2853 hyperlink (ссылка) Roblox.com Value: https://roblox.com/
+											2854 button (кнопка) Studio
+											2855 button (кнопка) Hide sidebar
+											2856 hyperlink (ссылка) Back Value: https://create.roblox.com/dashboard/creations?activeTab=Model&inventoryAssetTypes=All
+												2857 button (кнопка) Back
+											2903 list (список)
+												2904 list item (элемент списка) Willow
+													2905 image (Графическое изображение без описания) Чтобы получить недостающие описания изображений, откройте контекстное меню.
+													2906 text (текстовый) Willow
+													2907 button (кнопка) more
+											2859 tree (дерево) ID: mui-tree-view-1
+												2860 tree item (элемент дерева) Configure ID: mui-tree-view-1-configure
+													2861 group (группа)
+														2862 group (группа)
+														2863 hyperlink (ссылка) Configure Value: https://create.roblox.com/dashboard/creations/store/101585127712277/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+												2908 tree item (элемент дерева) Permissions ID: mui-tree-view-1-permissions
+													2909 group (группа)
+														2910 group (группа)
+														2911 hyperlink (ссылка) Permissions Value: https://create.roblox.com/dashboard/creations/store/101585127712277/permissions?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+												2912 tree item (элемент дерева) Version History ID: mui-tree-view-1-versionHistory
+													2913 group (группа)
+														2914 group (группа)
+														2915 hyperlink (ссылка) Version History Value: https://create.roblox.com/dashboard/creations/store/101585127712277/version-history?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+											2864 button (кнопка) menu
+											2865 group (навигация) breadcrumb ID: navigation-breadcrumbs
+												2866 list (список)
+													2867 list item (элемент списка) Creations
+														2868 hyperlink (ссылка) Creations Value: https://create.roblox.com/dashboard/creations?groupId=925845207
+													2869 list item (элемент списка) Willow
+													2916 list item (элемент списка) Configure
+														2917 group (группа)
+															2918 text (текстовый) Configure
+											2872 button (кнопка) Search
+											2873 button (кнопка) Notifications
+											2874 button (кнопка) crystymoore
+												2919 image (изображение) crystymoore
+											2875 text (заголовок) Configure
+											2959 image (изображение) Plugin Icon
+											2922 button (кнопка) Change Image
+											2923 text (текстовый) Format: *.jpg, *.gif, *.png, *.tga, *.bmp
+											2924 text (текстовый) Ratio: 1:1
+											2926 group (группа) ID: thumbnail-aria-description
+												2927 text (текстовый) No image uploaded
+											2928 text (текстовый) Name
+											2929 group (группа)
+												2930 text field (поле) (settable, string) Name Value: Willow ID: name
+											2931 text (текстовый) Up to 50 characters
+											2932 text (текстовый) Description
+											2933 group (группа)
+												2934 text field (поле) (settable, string) Description ID: description
+											2935 text (текстовый) Up to 1000 characters
+											2936 separator (разделитель)
+											2937 text (заголовок) Video
+											2938 text (текстовый) You must verify your account for media to be visible.
+											2939 hyperlink (ссылка) Learn more Value: https://create.roblox.com/docs/production/publishing/account-verification
+											2940 text (текстовый) .
+											2941 text (текстовый) You can add up to one video.
+											2942 button (кнопка) Upload Video
+											2958 text (текстовый) You get 10 uploads per Month.
+											2943 text (текстовый) Format:
+											2944 text (текстовый) *.mp4 *.mov
+											2945 text (текстовый) Max size per file: 50 MB
+											2946 text (текстовый) Max file duration: 60 seconds
+											2947 text (текстовый) Max Resolution: 4096x2160
+											2948 text (текстовый) Ratio: 16:9
+											2949 separator (разделитель)
+											2950 text (заголовок) Images
+											2951 text (текстовый) You must verify your account for media to be visible.
+											2952 hyperlink (ссылка) Learn more Value: https://create.roblox.com/docs/production/publishing/account-verification
+											2953 text (текстовый) .
+											2954 button (кнопка) Upload an image
+											2955 text (текстовый) Format: *.jpg, *.gif, *.png, *.tga, *.bmp
+											2956 text (текстовый) You can upload up to 5 images.
+											2957 text (текстовый) Thumbnail will be visible to others after moderation.
+										2898 group (группа)
+											2899 text (оповещение)
+												2900 text (текстовый) /dashboard/creations/store/101585127712277/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+							128 pane (регион)
+						129 pane (регион)
+							130 pane (регион)
+								131 button (кнопка) Вкладка поиска
+							132 pane (регион) ID: view_21
+								133 tab (вкладка)
+									135 tab item (элемент вкладки) (selectable) Вкладка "Willow / Configure" использует 278 МБ памяти ID: view_20
+										136 button (кнопка) Закрыть
+								134 pane (регион)
+							137 button (кнопка) Новая вкладка
+							138 pane (регион)
+						139 pane (регион)
+
+Document text: ```
+CREATOR
+￼
+addout studio
+Home
+Creations
+Learn
+Store
+Forum
+Updates
+￼
+Finances
+Analytics
+Collaboration
+Ads
+￼
+All tools
+Roblox.com
+Studio
+Hide sidebar
+Back
+￼
+Willow
+more
+￼
+Configure
+￼
+Permissions
+￼
+Version History
+menu
+Creations
+Willow
+Configure
+Search
+Notifications
+￼
+Configure
+￼
+Change
+Format: *.jpg, *.gif, *.png, *.tga, *.bmp
+Ratio: 1:1
+No image uploaded
+Name
+Willow
+Up to 50 characters
+Description
+￼
+Up to 1000 characters
+￼
+Video
+You must verify your account for media to be visible. Learn more.
+You can add up to one video.
+Upload Video
+You get 10 uploads per Month.
+Format:*.mp4 *.mov
+Max size per file: 50 MB
+Max file duration: 60 seconds
+Max Resolution: 4096x2160
+Ratio: 16:9
+￼
+Images
+You must verify your account for media to be visible. Learn more.
+Upload an image
+Format: *.jpg, *.gif, *.png, *.tga, *.bmp
+
+You can upload up to 5 images.
+Thumbnail will be visible to others after moderation.
+￼
+Social links
+You can add up to 3 social links:
+Your social media links are not currently visible
+Confirm your age to enable visibility and manage social media links for this community. View Details
+Get Started
+Add Link
+￼
+Try in Roblox
+Add a 'Try in Roblox' button to your asset's details page so buyers can try it in-experience. Choose the default Roblox experience or provide a custom one. If you're starting from scratch, you can easily create a copy of our default experience.
+Create a custom experience by editing the default template in Studio
+￼
+Disabled
+Do not have a Try in Roblox experience
+￼
+Use Roblox-provided default experience
+Use the Roblox-provided default experience, which works for most assets
+￼
+Use custom experience
+Provide a Place ID for your custom Try in Roblox experience, tailored to your asset
+￼
+Asset Privacy
+Only Image, Mesh, and Decal assets can be set to Open Use. Asset Privacy must be enabled to create new Image, Mesh, and Decal assets as Restricted. Learn more
+Restricted
+Only you and those with permission can use this asset
+Mesh and Image dependencies have their own privacy settings and may not be set to Restricted if they were created before enabling Asset Privacy. You must re-import and create a new Model after enabling Asset Privacy if you wish to restrict access to your content.
+￼
+Distribution
+To maintain community safety, Roblox may terminate accounts that publish spam or assets with malicious or obfuscated code. Learn More.
+Not distributed on Creator Store
+You do not currently meet the eligibility criteria for distributing assets on the Creator Store. For more information, please review the Creator Store publishing requirements.
+Distribute on Creator Store
+￼
+Distribute on Creator Store
+Share up to 10 assets per 30 days. What's my limit?
+￼
+Cancel
+Save Changes
+©2026 Roblox Corporation. All rights reserved.
+Terms·Privacy·Accessibility·Support·
+Your Privacy Choices
+X
+Facebook
+LinkedIn
+Instagram
+YouTube
+￼
+English
+/dashboard/creations/store/101585127712277/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+```
+
+Focused element: 17 text field (поле) (settable, string) Адресная строка и строка поиска Description: Спросите Google или введите URL Value: create.roblox.com/dashboard/creations/store/101585127712277/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll ID: view_1012
+
+Document text:
+CREATOR
+￼
+addout studio
+Home
+Creations
+Learn
+Store
+Forum
+Updates
+￼
+Finances
+Analytics
+Collaboration
+Ads
+￼
+All tools
+Roblox.com
+Studio
+Hide sidebar
+Back
+￼
+Willow
+more
+￼
+Configure
+￼
+Permissions
+￼
+Version History
+menu
+Creations
+Willow
+Configure
+Search
+Notifications
+￼
+Configure
+￼
+Change
+Format: *.jpg, *.gif, *.png, *.tga, *.bmp
+Ratio: 1:1
+No image uploaded
+Name
+Willow
+Up to 50 characters
+Description
+￼
+Up to 1000 characters
+￼
+Video
+You must verify your account for media to be visible. Learn more.
+You can add up to one video.
+Upload Video
+You get 10 uploads per Month.
+Format:*.mp4 *.mov
+Max size per file: 50 MB
+Max file duration: 60 seconds
+Max Resolution: 4096x2160
+Ratio: 16:9
+￼
+Images
+You must verify your account for media to be visible. Learn more.
+Upload an image
+Format: *.jpg, *.gif, *.png, *.tga, *.bmp
+
+You can upload up to 5 images.
+Thumbnail will be visible to others after moderation.
+￼
+Social links
+You can add up to 3 social links:
+Your social media links are not currently visible
+Confirm your age to enable visibility and manage social media links for this community. View Details
+Get Started
+Add Link
+￼
+Try in Roblox
+Add a 'Try in Roblox' button to your asset's details page so buyers can try it in-experience. Choose the default Roblox experience or provide a custom one. If you're starting from scratch, you can easily create a copy of our default experience.
+Create a custom experience by editing the default template in Studio
+￼
+Disabled
+Do not have a Try in Roblox experience
+￼
+Use Roblox-provided default experience
+Use the Roblox-provided default experience, which works for most assets
+￼
+Use custom experience
+Provide a Place ID for your custom Try in Roblox experience, tailored to your asset
+￼
+Asset Privacy
+Only Image, Mesh, and Decal assets can be set to Open Use. Asset Privacy must be enabled to create new Image, Mesh, and Decal assets as Restricted. Learn more
+Restricted
+Only you and those with permission can use this asset
+Mesh and Image dependencies have their own privacy settings and may not be set to Restricted if they were created before enabling Asset Privacy. You must re-import and create a new Model after enabling Asset Privacy if you wish to restrict access to your content.
+￼
+Distribution
+To maintain community safety, Roblox may terminate accounts that publish spam or assets with malicious or obfuscated code. Learn More.
+Not distributed on Creator Store
+You do not currently meet the eligibility criteria for distributing assets on the Creator Store. For more information, please review the Creator Store publishing requirements.
+Distribute on Creator Store
+￼
+Distribute on Creator Store
+Share up to 10 assets per 30 days. What's my limit?
+￼
+Cancel
+Save Changes
+©2026 Roblox Corporation. All rights reserved.
+Terms·Privacy·Accessibility·Support·
+Your Privacy Choices
+X
+Facebook
+LinkedIn
+Instagram
+YouTube
+￼
+English
+/dashboard/creations/store/101585127712277/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll

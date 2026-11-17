@@ -1,0 +1,221 @@
+Window: "Willow_Scene / Configure - Google Chrome", App: chrome.exe.
+	0 window (окно) Willow_Scene / Configure - Google Chrome Secondary Actions: Raise
+		1 pane (панель) (disabled)
+		2 pane (регион) Willow_Scene / Configure - Google Chrome
+			3 pane (регион)
+				4 pane (регион)
+					5 pane (регион)
+						6 button (кнопка) Свернуть ID: view_1
+						2960 button (кнопка) Восстановить ID: view_3
+						8 button (кнопка) Закрыть ID: view_4
+					9 pane (регион)
+						10 pane (регион)
+							11 toolbar (панель инструментов) ID: view_1000
+								12 button (кнопка) Назад ID: view_1001
+								13 button (кнопка) (disabled) Вперед ID: view_1002
+								14 button (кнопка) Перезагрузить ID: view_1003
+								15 group (группа)
+									16 button (кнопка) Сведения о сайте ID: view_1011
+									17 text field (поле) (settable, string) Адресная строка и строка поиска Description: Спросите Google или введите URL Value: create.roblox.com/dashboard/creations/store/92465993419789/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll ID: view_1012
+									18 pane (регион)
+										3074 button (кнопка) Перевести
+										2961 button (кнопка) Добавить страницу в закладки
+								21 pane (регион)
+									22 button (кнопка) OrangeMonkey У расширения есть доступ к этому сайту ID: view_1009
+									23 button (кнопка) Open Claude У расширения есть доступ к этому сайту ID: view_1009
+									24 button (кнопка) Расширения ID: view_1006
+								25 pane (регион)
+								2089 pane (регион)
+									2090 button (кнопка) Скачанные файлы
+								26 button (кнопка) Управляйте воспроизведением музыки, видео и других медиафайлов
+								27 button (кнопка) Даниил ID: view_1018
+								28 button (кнопка) Chrome ID: view_1007
+						29 pane (регион)
+							30 pane (регион)
+								31 pane (регион)
+								3073 document (документ) Willow_Scene / Configure Value: https://create.roblox.com/dashboard/creations/store/92465993419789/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll ID: RootWebArea
+									3075 group (группа)
+										3076 group (группа)
+											3077 hyperlink (ссылка) CREATOR Value: https://create.roblox.com/
+											3133 button (кнопка) addout studio addout studio
+												3157 image (изображение) addout studio
+											3079 hyperlink (ссылка) Home Value: https://create.roblox.com/
+											3080 hyperlink (ссылка) Creations Value: https://create.roblox.com/dashboard/creations
+											3081 hyperlink (ссылка) Learn Value: https://create.roblox.com/docs/
+											3082 hyperlink (ссылка) Store Value: https://create.roblox.com/store/
+											3083 hyperlink (ссылка) Forum Value: https://devforum.roblox.com/
+											3084 hyperlink (ссылка) Updates Value: https://create.roblox.com/updates
+											3085 separator (разделитель)
+											3086 hyperlink (ссылка) Finances Value: https://create.roblox.com/dashboard/group/payouts
+											3087 hyperlink (ссылка) Analytics Value: https://create.roblox.com/dashboard/analytics
+											3134 hyperlink (ссылка) Collaboration Value: https://create.roblox.com/dashboard/group/profile
+											3088 hyperlink (ссылка) Ads Value: https://create.roblox.com/advertise
+											3089 separator (разделитель)
+											3090 button (кнопка) All tools
+											3091 hyperlink (ссылка) Roblox.com Value: https://roblox.com/
+											3092 button (кнопка) Studio
+											3093 button (кнопка) Hide sidebar
+											3094 hyperlink (ссылка) Back Value: https://create.roblox.com/dashboard/creations?activeTab=Model&inventoryAssetTypes=All
+												3095 button (кнопка) Back
+											3135 list (список)
+												3136 list item (элемент списка) Willow_Scene
+													3137 image (Графическое изображение без описания) Чтобы получить недостающие описания изображений, откройте контекстное меню.
+													3138 text (текстовый) Willow_Scene
+													3139 button (кнопка) more
+											3097 tree (дерево) ID: mui-tree-view-1
+												3098 tree item (элемент дерева) Configure ID: mui-tree-view-1-configure
+													3099 group (группа)
+														3100 group (группа)
+														3101 hyperlink (ссылка) Configure Value: https://create.roblox.com/dashboard/creations/store/92465993419789/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+												3140 tree item (элемент дерева) Permissions ID: mui-tree-view-1-permissions
+													3141 group (группа)
+														3142 group (группа)
+														3143 hyperlink (ссылка) Permissions Value: https://create.roblox.com/dashboard/creations/store/92465993419789/permissions?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+												3144 tree item (элемент дерева) Version History ID: mui-tree-view-1-versionHistory
+													3145 group (группа)
+														3146 group (группа)
+														3147 hyperlink (ссылка) Version History Value: https://create.roblox.com/dashboard/creations/store/92465993419789/version-history?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+											3102 button (кнопка) menu
+											3103 group (навигация) breadcrumb ID: navigation-breadcrumbs
+												3104 list (список)
+													3148 list item (элемент списка) Creations
+														3149 hyperlink (ссылка) Creations Value: https://create.roblox.com/dashboard/creations?groupId=925845207
+													3150 list item (элемент списка) Willow_Scene
+													3151 list item (элемент списка) Configure
+														3152 group (группа)
+															3153 text (текстовый) Configure
+											3105 button (кнопка) Search
+											3106 button (кнопка) Notifications
+											3107 button (кнопка) crystymoore
+												3154 image (изображение) crystymoore
+											3155 text (заголовок) Configure
+											3158 text (текстовый) Name
+											3159 group (группа)
+												3160 text field (поле) (settable, string) Name Value: Willow_Scene ID: name
+											3161 text (текстовый) Up to 50 characters
+											3162 text (текстовый) Description
+											3163 group (группа)
+												3164 text field (поле) (settable, string) Description ID: description
+											3165 text (текстовый) Up to 1000 characters
+											3166 separator (разделитель)
+											3167 text (заголовок) Asset Privacy
+											3168 text (текстовый) Only Image, Mesh, and Decal assets can be set to Open Use. Asset Privacy must be enabled to create new Image, Mesh, and Decal assets as Restricted.
+											3169 hyperlink (ссылка) Learn more Value: https://create.roblox.com/docs/projects/assets/privacy
+											3173 text (текстовый) Restricted
+											3174 text (текстовый) Only you and those with permission can use this asset
+											3178 image (Графическое изображение без описания)
+											3175 separator (разделитель)
+											3176 button (кнопка) Cancel
+											3177 button (кнопка) (disabled) Save Changes
+											3156 text (текстовый) ©2026 Roblox Corporation. All rights reserved.
+											3109 hyperlink (ссылка) Terms Value: https://www.roblox.com/info/terms
+											3110 text (текстовый) ·
+											3111 hyperlink (ссылка) Privacy Value: https://www.roblox.com/info/privacy
+											3112 text (текстовый) ·
+											3113 hyperlink (ссылка) Accessibility Value: https://www.roblox.com/info/accessibility
+											3114 text (текстовый) ·
+											3115 hyperlink (ссылка) Support Value: https://www.roblox.com/info/help
+											3116 text (текстовый) ·
+											3117 button (кнопка) Your Privacy Choices
+											3118 hyperlink (ссылка) X Value: https://x.com/Roblox
+												3119 button (кнопка) X
+											3120 hyperlink (ссылка) Facebook Value: https://www.facebook.com/Roblox/
+												3121 button (кнопка) Facebook
+											3122 hyperlink (ссылка) LinkedIn Value: https://www.linkedin.com/company/roblox
+												3123 button (кнопка) LinkedIn
+											3124 hyperlink (ссылка) Instagram Value: https://www.instagram.com/roblox/
+												3125 button (кнопка) Instagram
+											3126 hyperlink (ссылка) YouTube Value: https://www.youtube.com/@RobloxCreators
+												3127 button (кнопка) YouTube
+											3128 hyperlink (ссылка) English Value: https://roblox.com/my/account
+												3129 button (кнопка) English
+										3130 group (группа)
+											3131 text (оповещение)
+												3132 text (текстовый) /dashboard/creations/store/92465993419789/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+							128 pane (регион)
+						129 pane (регион)
+							130 pane (регион)
+								131 button (кнопка) Вкладка поиска
+							132 pane (регион) ID: view_21
+								133 tab (вкладка)
+									135 tab item (элемент вкладки) (selectable) Вкладка "Willow_Scene / Configure" использует 250 МБ памяти ID: view_20
+										136 button (кнопка) Закрыть
+								134 pane (регион)
+							137 button (кнопка) Новая вкладка
+							138 pane (регион)
+						139 pane (регион)
+
+Selected text: ```
+create.roblox.com/dashboard/creations/store/92465993419789/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+```
+
+Note: Pay special attention to the content selected by the user. If the user asks a question or refers to the content they are looking at on-screen, they might be referring to the selected content (but they might be referring to something else that's visible, too).
+
+Focused element: 17 text field (поле) (settable, string) Адресная строка и строка поиска Description: Спросите Google или введите URL Value: create.roblox.com/dashboard/creations/store/92465993419789/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll ID: view_1012
+
+Selected text: create.roblox.com/dashboard/creations/store/92465993419789/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+
+Document text:
+CREATOR
+￼
+addout studio
+Home
+Creations
+Learn
+Store
+Forum
+Updates
+￼
+Finances
+Analytics
+Collaboration
+Ads
+￼
+All tools
+Roblox.com
+Studio
+Hide sidebar
+Back
+￼
+Willow_Scene
+more
+￼
+Configure
+￼
+Permissions
+￼
+Version History
+menu
+Creations
+Willow_Scene
+Configure
+Search
+Notifications
+￼
+Configure
+Name
+Willow_Scene
+Up to 50 characters
+Description
+￼
+Up to 1000 characters
+￼
+Asset Privacy
+Only Image, Mesh, and Decal assets can be set to Open Use. Asset Privacy must be enabled to create new Image, Mesh, and Decal assets as Restricted. Learn more
+Restricted
+Only you and those with permission can use this asset
+￼
+￼
+Cancel
+Save Changes
+©2026 Roblox Corporation. All rights reserved.
+Terms·Privacy·Accessibility·Support·
+Your Privacy Choices
+X
+Facebook
+LinkedIn
+Instagram
+YouTube
+￼
+English
+/dashboard/creations/store/92465993419789/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll

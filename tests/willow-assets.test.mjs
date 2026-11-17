@@ -41,3 +41,15 @@ test('Willow driver only consumes GlobalWind and QA never maps production server
  assert.equal((wind.match(/Heartbeat:Connect/g)||[]).length,1);assert(wind.includes('connection:Disconnect()'));
  const build=readFileSync(new URL('../scripts/build-willow.mjs',import.meta.url),'utf8');assert(!build.includes('src/server/Main'));
 });
+test('Native Willow is inert, uses only final group IDs and prepares alpha before Play',()=>{
+ const xml=read('prepared/WillowRoblox.rbxmx').toString();
+ assert.equal((xml.match(/class="MeshPart"/g)||[]).length,2);
+ assert.equal((xml.match(/class="Bone"/g)||[]).length,9);
+ assert.equal((xml.match(/class="SurfaceAppearance"/g)||[]).length,2);
+ assert(!/class="(?:Script|LocalScript|ModuleScript)"/.test(xml));
+ for(const id of ['99848017305133','135971643496462','101368619581292','103562800749987'])assert(xml.includes('rbxassetid://'+id));
+ for(const id of ['103393042017627','85732748826171','79171837674186','77979867898740'])assert(!xml.includes(id));
+ assert(xml.includes('<token name="AlphaMode">1</token>'));assert(xml.includes('<token name="AlphaMode">0</token>'));
+ const native=readFileSync(new URL('../qa/willow/NativeModel.luau',import.meta.url),'utf8');
+ assert(!/\.RenderFidelity\s*=|\.ColorMap\s*=|\.AlphaMode\s*=/.test(native),'Protected properties must be prepared offline, not written by LocalScript');
+});

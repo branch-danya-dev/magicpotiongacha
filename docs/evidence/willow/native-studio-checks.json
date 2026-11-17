@@ -1,0 +1,107 @@
+{
+  "studioVersion": "0.747.0.7471481",
+  "localPlace": true,
+  "records": [
+    {
+      "utc": "2026-11-17T08:49:51.738Z",
+      "message": "WILLOW_READY {\"wind\":[6.157415390014648,0,1.985356092453003],\"meshResources\":0,\"imageResources\":0,\"meshPartsPerTree\":2,\"lastWindMs\":0,\"reduceMotion\":false,\"updates\":0,\"descendants\":57,\"groups\":84,\"quality\":\"full\",\"boneWrites\":0,\"bonesPerTree\":9,\"treeCount\":1,\"triangles\":6119}"
+    },
+    {
+      "utc": "2026-11-17T08:50:38.727Z",
+      "message": "WILLOW_NATIVE_LOAD rbxassetid://135971643496462 Failure"
+    },
+    {
+      "utc": "2026-11-17T08:50:38.728Z",
+      "message": "WILLOW_NATIVE_LOAD rbxassetid://99848017305133 Failure"
+    },
+    {
+      "utc": "2026-11-17T08:50:38.728Z",
+      "message": "WILLOW_NATIVE_LOAD rbxassetid://101368619581292 Failure"
+    },
+    {
+      "utc": "2026-11-17T08:50:38.728Z",
+      "message": "WILLOW_NATIVE_LOAD rbxassetid://103562800749987 Failure"
+    },
+    {
+      "utc": "2026-11-17T08:50:38.728Z",
+      "message": "WILLOW_NATIVE_LOAD rbxassetid://92465993419789 Failure"
+    },
+    {
+      "utc": "2026-11-17T08:50:38.733Z",
+      "message": "WILLOW_NATIVE_MATERIAL Willow_Trunk rbxassetid://135971643496462 rbxassetid://103562800749987 Overlay false"
+    },
+    {
+      "utc": "2026-11-17T08:50:38.733Z",
+      "message": "WILLOW_NATIVE_MATERIAL Willow_Foliage rbxassetid://99848017305133 rbxassetid://101368619581292 Transparency true"
+    },
+    {
+      "utc": "2026-11-17T08:50:48.738Z",
+      "message": "WILLOW_PERF {\"wind\":[5.943386077880859,0,2.793006420135498],\"imageResources\":0,\"frames\":1711,\"descendants\":57,\"groups\":84,\"bonesPerTree\":9,\"triangles\":6119,\"lastWindMs\":0.040099999750964347,\"meshResources\":0,\"memoryMb\":2901.2265625,\"windUpdates\":246,\"windP95Ms\":0.04809998790733516,\"frameP95Ms\":6.457400042563677,\"quality\":\"full\",\"reduceMotion\":false,\"meshPartsPerTree\":2,\"boneWrites\":12880,\"updates\":1610,\"treeCount\":1,\"frameMedianMs\":4.366499837487936}"
+    },
+    {
+      "utc": "2026-11-17T08:51:00.751Z",
+      "message": "WILLOW_PERF {\"wind\":[5.639620780944824,0,2.9314136505126955],\"imageResources\":0,\"frames\":2208,\"descendants\":1140,\"groups\":84,\"bonesPerTree\":9,\"triangles\":6119,\"lastWindMs\":0.21330000890884549,\"meshResources\":0,\"memoryMb\":2904.31640625,\"windUpdates\":300,\"windP95Ms\":0.27540000155568125,\"frameP95Ms\":6.058000028133392,\"quality\":\"full\",\"reduceMotion\":false,\"meshPartsPerTree\":2,\"boneWrites\":58136,\"updates\":1971,\"treeCount\":20,\"frameMedianMs\":4.385999869555235}"
+    },
+    {
+      "utc": "2026-11-17T08:51:12.754Z",
+      "message": "WILLOW_PERF {\"wind\":[5.441863059997559,0,3.067819833755493],\"imageResources\":0,\"frames\":2292,\"descendants\":1140,\"groups\":84,\"bonesPerTree\":9,\"triangles\":6119,\"lastWindMs\":0.09989998943638057,\"meshResources\":0,\"memoryMb\":2899.83984375,\"windUpdates\":150,\"windP95Ms\":0.12440000136848539,\"frameP95Ms\":5.675000138580799,\"quality\":\"reduced\",\"reduceMotion\":false,\"meshPartsPerTree\":2,\"boneWrites\":70136,\"updates\":2166,\"treeCount\":20,\"frameMedianMs\":4.237200133502483}"
+    },
+    {
+      "utc": "2026-11-17T08:51:24.760Z",
+      "message": "WILLOW_PERF {\"wind\":[5.681982517242432,0,3.358201265335083],\"imageResources\":0,\"frames\":2292,\"descendants\":1140,\"groups\":84,\"bonesPerTree\":9,\"triangles\":6119,\"lastWindMs\":0.03290000313427299,\"meshResources\":0,\"memoryMb\":2900.1875,\"windUpdates\":60,\"windP95Ms\":0.04870000702794641,\"frameP95Ms\":5.703900009393692,\"quality\":\"minimal\",\"reduceMotion\":false,\"meshPartsPerTree\":2,\"boneWrites\":70856,\"updates\":2247,\"treeCount\":20,\"frameMedianMs\":4.243699833750725}"
+    },
+    {
+      "utc": "2026-11-17T08:51:26.766Z",
+      "message": "WILLOW_NATIVE_REST true"
+    },
+    {
+      "utc": "2026-11-17T08:51:26.771Z",
+      "message": "WILLOW_NATIVE_CHECKS_DONE {\"wind\":[0,0,0],\"meshResources\":0,\"imageResources\":0,\"triangles\":6119,\"reduceMotion\":true,\"groups\":84,\"lastWindMs\":0.017099999240599574,\"descendants\":57,\"updates\":2259,\"meshPartsPerTree\":2,\"boneWrites\":70856,\"bonesPerTree\":9,\"treeCount\":1,\"quality\":\"minimal\"}"
+    },
+    {
+      "utc": "2026-11-17T08:51:56.895Z",
+      "message": "WILLOW_NATIVE_INSTANCE_LOAD rbxassetid://135971643496462 Success"
+    },
+    {
+      "utc": "2026-11-17T08:51:56.899Z",
+      "message": "WILLOW_NATIVE_INSTANCE_LOAD rbxassetid://99848017305133 Success"
+    },
+    {
+      "utc": "2026-11-17T08:52:06.904Z",
+      "message": "WILLOW_NATIVE_CLIP 8 true"
+    },
+    {
+      "utc": "2026-11-17T08:52:41.895Z",
+      "message": "WILLOW_NATIVE_SWAY true true true"
+    },
+    {
+      "utc": "2026-11-17T08:52:51.899Z",
+      "message": "WILLOW_NATIVE_IMAGE rbxassetid://101368619581292 false"
+    },
+    {
+      "utc": "2026-11-17T08:52:51.899Z",
+      "message": "WILLOW_NATIVE_IMAGE rbxassetid://103562800749987 true"
+    },
+    {
+      "utc": "2026-11-17T08:54:26.039Z",
+      "message": "WILLOW_NATIVE_IMAGE_RETRY rbxassetid://101368619581292 false"
+    },
+    {
+      "utc": "2026-11-17T08:54:51.489Z",
+      "message": "WILLOW_NATIVE_CLEANUP {\"windRestored\":true,\"meshResources\":0,\"imageResources\":0}"
+    },
+    {
+      "utc": "2026-11-17T08:54:51.489Z",
+      "message": "WILLOW_NATIVE_REMOVED true true true Custom"
+    },
+    {
+      "utc": "2026-11-17T08:55:52.128Z",
+      "message": "WILLOW_READY {\"wind\":[5.636038303375244,0,3.377748966217041],\"meshResources\":0,\"imageResources\":0,\"meshPartsPerTree\":2,\"lastWindMs\":0,\"reduceMotion\":false,\"updates\":0,\"descendants\":57,\"groups\":84,\"quality\":\"full\",\"boneWrites\":0,\"bonesPerTree\":9,\"treeCount\":1,\"triangles\":6119}"
+    }
+  ],
+  "limitations": [
+    "Raw foliage image HTTP 502",
+    "No published-client or real-device test",
+    "Desktop concurrent use; preliminary frame intervals only"
+  ]
+}

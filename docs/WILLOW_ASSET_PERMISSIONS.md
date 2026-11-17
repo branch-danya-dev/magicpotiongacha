@@ -1,4 +1,25 @@
-# Willow asset permissions audit — 2026-11-17
+# Willow asset permissions — 2026-11-17
+
+## Final authorized group delivery
+
+The owner explicitly authorized final Willow assets under **addout studio (925845207)**, Restricted, with access to **Experience 10776120489**. Native Studio import of the final 6,119-triangle FBX produced six records. All six Configure pages show **Restricted**. The Model page says **Not distributed on Creator Store**. No distribution action, paid generation, integration, merge or game publication was performed.
+
+| Final asset | Roblox ID | Type | Owner | Experience access |
+|---|---|---|---|---|
+| Willow | 101585127712277 | Model | addout studio | Granted |
+| Willow_Scene | 92465993419789 | Animation | addout studio | Granted |
+| Willow_Foliage | 99848017305133 | Mesh | addout studio | Granted |
+| Willow_Trunk | 135971643496462 | Mesh | addout studio | Granted |
+| Foliage base_color_texture | 101368619581292 | Image | addout studio | Granted |
+| Bark base_color_texture | 103562800749987 | Image | addout studio | Granted |
+
+The target Experience's Permissions → Assets form was saved with exactly these IDs. The [post-save export](evidence/willow/permissions/10776120489_final_willow_permissions.csv) contains **60 rows**: all original 54 plus precisely these six. SHA-256: `972e37c7620bf01e2159e2dfd8b882a2fbe7d87b394080b59e95de26387d062a`. Access is permanent as stated by Roblox. No other Experience was granted access.
+
+[Saved permissions screenshot](evidence/willow/permissions/final-experience-granted.png). Configure captures and text snapshots are alongside it, prefixed `final-`. [Native Studio results and limitations](WILLOW_NATIVE_DELIVERY.md).
+
+The earlier personal records below remain unused and are absent from the new export.
+
+## Earlier read-only audit, before final upload authorization
 
 Read-only verification completed in the owner's native Chrome session. The owner resolved the agreements prompt; no agreement was accepted by the agent. No new uploads, permission changes, integration, merge or game publication occurred.
 

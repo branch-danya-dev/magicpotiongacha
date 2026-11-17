@@ -1,0 +1,226 @@
+Window: "Willow_Foliage / Configure - Google Chrome", App: chrome.exe.
+	0 window (окно) Willow_Foliage / Configure - Google Chrome Secondary Actions: Raise
+		3181 pane (панель) (disabled)
+		3182 pane (регион) Willow_Foliage / Configure - Google Chrome
+			3183 pane (регион)
+				3184 pane (регион)
+					3185 pane (регион)
+						3186 button (кнопка) Свернуть ID: view_1
+						3187 button (кнопка) Восстановить ID: view_3
+						3188 button (кнопка) Закрыть ID: view_4
+					3189 pane (регион)
+						3190 pane (регион)
+							3191 toolbar (панель инструментов) ID: view_1000
+								3192 button (кнопка) Назад ID: view_1001
+								3193 button (кнопка) (disabled) Вперед ID: view_1002
+								3194 button (кнопка) Перезагрузить ID: view_1003
+								3195 group (группа)
+									3196 button (кнопка) Сведения о сайте ID: view_1011
+									3197 text field (поле) (settable, string) Адресная строка и строка поиска Description: Спросите Google или введите URL Value: create.roblox.com/dashboard/creations/store/99848017305133/configure ID: view_1012
+									3198 pane (регион)
+										3199 button (кнопка) Перевести
+										3200 button (кнопка) Добавить страницу в закладки
+								3201 pane (регион)
+									3202 button (кнопка) OrangeMonkey У расширения есть доступ к этому сайту ID: view_1009
+									3203 button (кнопка) Open Claude У расширения есть доступ к этому сайту ID: view_1009
+									3204 button (кнопка) Расширения ID: view_1006
+								3205 pane (регион)
+								3206 pane (регион)
+									3207 button (кнопка) Скачанные файлы
+								3208 button (кнопка) Управляйте воспроизведением музыки, видео и других медиафайлов
+								3209 button (кнопка) Даниил ID: view_1018
+								3210 button (кнопка) Chrome ID: view_1007
+						3211 pane (регион)
+							3212 pane (регион)
+								3213 pane (регион)
+								3325 document (документ) Willow_Foliage / Configure Value: https://create.roblox.com/dashboard/creations/store/99848017305133/configure ID: RootWebArea
+									3326 group (группа)
+										3327 group (группа)
+											3328 hyperlink (ссылка) CREATOR Value: https://create.roblox.com/
+											3390 button (кнопка) addout studio addout studio
+												3406 image (изображение) addout studio
+											3330 hyperlink (ссылка) Home Value: https://create.roblox.com/
+											3331 hyperlink (ссылка) Creations Value: https://create.roblox.com/dashboard/creations
+											3332 hyperlink (ссылка) Learn Value: https://create.roblox.com/docs/
+											3333 hyperlink (ссылка) Store Value: https://create.roblox.com/store/
+											3334 hyperlink (ссылка) Forum Value: https://devforum.roblox.com/
+											3335 hyperlink (ссылка) Updates Value: https://create.roblox.com/updates
+											3336 separator (разделитель)
+											3337 hyperlink (ссылка) Finances Value: https://create.roblox.com/dashboard/group/payouts
+											3338 hyperlink (ссылка) Analytics Value: https://create.roblox.com/dashboard/analytics
+											3391 hyperlink (ссылка) Collaboration Value: https://create.roblox.com/dashboard/group/profile
+											3339 hyperlink (ссылка) Ads Value: https://create.roblox.com/advertise
+											3340 separator (разделитель)
+											3341 button (кнопка) All tools
+											3342 hyperlink (ссылка) Roblox.com Value: https://roblox.com/
+											3343 button (кнопка) Studio
+											3344 button (кнопка) Hide sidebar
+											3345 hyperlink (ссылка) Back Value: https://create.roblox.com/dashboard/creations?activeTab=Mesh&groupId=925845207
+												3346 button (кнопка) Back
+											3392 list (список)
+												3393 list item (элемент списка) Willow_Foliage
+													3394 image (Графическое изображение без описания) Чтобы получить недостающие описания изображений, откройте контекстное меню.
+													3395 text (текстовый) Willow_Foliage
+													3396 button (кнопка) more
+											3348 tree (дерево) ID: mui-tree-view-1
+												3349 tree item (элемент дерева) Configure ID: mui-tree-view-1-configure
+													3350 group (группа)
+														3351 group (группа)
+														3352 hyperlink (ссылка) Configure Value: https://create.roblox.com/dashboard/creations/store/99848017305133/configure
+												3397 tree item (элемент дерева) Permissions ID: mui-tree-view-1-permissions
+													3398 group (группа)
+														3399 group (группа)
+														3400 hyperlink (ссылка) Permissions Value: https://create.roblox.com/dashboard/creations/store/99848017305133/permissions
+											3353 button (кнопка) menu
+											3354 group (навигация) breadcrumb ID: navigation-breadcrumbs
+												3355 list (список)
+													3356 list item (элемент списка) Creations
+														3357 hyperlink (ссылка) Creations Value: https://create.roblox.com/dashboard/creations?groupId=925845207
+													3358 list item (элемент списка) Willow_Foliage
+													3401 list item (элемент списка) Configure
+														3402 group (группа)
+															3403 text (текстовый) Configure
+											3361 button (кнопка) Search
+											3362 button (кнопка) Notifications
+											3363 button (кнопка) crystymoore
+												3404 image (изображение) crystymoore
+											3364 text (заголовок) Configure
+											3407 text (текстовый) Name
+											3408 group (группа)
+												3409 text field (поле) (settable, string) Name Value: Willow_Foliage ID: name
+											3410 text (текстовый) Up to 50 characters
+											3411 text (текстовый) Description
+											3412 group (группа)
+												3413 text field (поле) (settable, string) Description Value: RenderMesh ID: description
+											3414 text (текстовый) Up to 1000 characters
+											3415 separator (разделитель)
+											3416 text (заголовок) Asset Privacy
+											3417 text (текстовый) Only Image, Mesh, and Decal assets can be set to Open Use. Asset Privacy must be enabled to create new Image, Mesh, and Decal assets as Restricted.
+											3418 hyperlink (ссылка) Learn more Value: https://create.roblox.com/docs/projects/assets/privacy
+											3422 group (группа переключателей) (settable, string)
+												3423 group (группа)
+													3424 radio button (переключатель) (selectable, settable, string) Restricted
+													3425 text (текстовый) Restricted
+												3426 text (текстовый) Only you and those with permission can use this asset
+												3427 group (группа)
+													3428 radio button (переключатель) (selectable, settable, string) OpenUse
+													3429 text (текстовый) Open Use
+												3430 text (текстовый) Anyone on Roblox can use this asset
+											3434 image (Графическое изображение без описания)
+											3431 separator (разделитель)
+											3432 button (кнопка) Cancel
+											3433 button (кнопка) (disabled) Save Changes
+											3405 text (текстовый) ©2026 Roblox Corporation. All rights reserved.
+											3366 hyperlink (ссылка) Terms Value: https://www.roblox.com/info/terms
+											3367 text (текстовый) ·
+											3368 hyperlink (ссылка) Privacy Value: https://www.roblox.com/info/privacy
+											3369 text (текстовый) ·
+											3370 hyperlink (ссылка) Accessibility Value: https://www.roblox.com/info/accessibility
+											3371 text (текстовый) ·
+											3372 hyperlink (ссылка) Support Value: https://www.roblox.com/info/help
+											3373 text (текстовый) ·
+											3374 button (кнопка) Your Privacy Choices
+											3375 hyperlink (ссылка) X Value: https://x.com/Roblox
+												3376 button (кнопка) X
+											3377 hyperlink (ссылка) Facebook Value: https://www.facebook.com/Roblox/
+												3378 button (кнопка) Facebook
+											3379 hyperlink (ссылка) LinkedIn Value: https://www.linkedin.com/company/roblox
+												3380 button (кнопка) LinkedIn
+											3381 hyperlink (ссылка) Instagram Value: https://www.instagram.com/roblox/
+												3382 button (кнопка) Instagram
+											3383 hyperlink (ссылка) YouTube Value: https://www.youtube.com/@RobloxCreators
+												3384 button (кнопка) YouTube
+											3385 hyperlink (ссылка) English Value: https://roblox.com/my/account
+												3386 button (кнопка) English
+										3387 group (группа)
+											3388 text (оповещение)
+												3389 text (текстовый) /dashboard/creations/store/99848017305133/configure
+							3313 pane (регион)
+						3314 pane (регион)
+							3315 pane (регион)
+								3316 button (кнопка) Вкладка поиска
+							3317 pane (регион) ID: view_21
+								3318 tab (вкладка)
+									3319 tab item (элемент вкладки) (selectable) Вкладка "Willow_Foliage / Configure" использует 249 МБ памяти ID: view_20
+										3320 button (кнопка) Закрыть
+								3321 pane (регион)
+							3322 button (кнопка) Новая вкладка
+							3323 pane (регион)
+						3324 pane (регион)
+
+Selected text: ```
+create.roblox.com/dashboard/creations/store/99848017305133/configure
+```
+
+Note: Pay special attention to the content selected by the user. If the user asks a question or refers to the content they are looking at on-screen, they might be referring to the selected content (but they might be referring to something else that's visible, too).
+
+Focused element: 3197 text field (поле) (settable, string) Адресная строка и строка поиска Description: Спросите Google или введите URL Value: create.roblox.com/dashboard/creations/store/99848017305133/configure ID: view_1012
+
+Selected text: create.roblox.com/dashboard/creations/store/99848017305133/configure
+
+Document text:
+CREATOR
+￼
+addout studio
+Home
+Creations
+Learn
+Store
+Forum
+Updates
+￼
+Finances
+Analytics
+Collaboration
+Ads
+￼
+All tools
+Roblox.com
+Studio
+Hide sidebar
+Back
+￼
+Willow_Foliage
+more
+￼
+Configure
+￼
+Permissions
+menu
+Creations
+Willow_Foliage
+Configure
+Search
+Notifications
+￼
+Configure
+Name
+Willow_Foliage
+Up to 50 characters
+Description
+RenderMesh
+Up to 1000 characters
+￼
+Asset Privacy
+Only Image, Mesh, and Decal assets can be set to Open Use. Asset Privacy must be enabled to create new Image, Mesh, and Decal assets as Restricted. Learn more
+Restricted
+Restricted
+Only you and those with permission can use this asset
+OpenUse
+Open Use
+Anyone on Roblox can use this asset
+￼
+￼
+Cancel
+Save Changes
+©2026 Roblox Corporation. All rights reserved.
+Terms·Privacy·Accessibility·Support·
+Your Privacy Choices
+X
+Facebook
+LinkedIn
+Instagram
+YouTube
+￼
+English
+/dashboard/creations/store/99848017305133/configure

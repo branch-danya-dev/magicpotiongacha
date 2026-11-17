@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-17",
+  "platform": "Windows",
+  "npmRunTools": "PASS: pinned Luau 0.745 and Rojo 7.7.1 verified this turn",
+  "npmTest": "PASS, exit 0",
+  "luauTests": 1396,
+  "nodeTests": 24,
+  "totalTests": 1420,
+  "luauSourcesCompiled": 294,
+  "nativeAssetTests": 5,
+  "fullSuiteLogSha256": "42d32c893f719c0870facdfe4b179c89cb030790c4aef358fb8aff4eee28e025",
+  "productionDiff": "none in src/ or default.project.json",
+  "candidateGithubCI": "NOT RUN, local branch",
+  "nativePlay": "PASS with raw image delivery limitation; see native-studio-checks.json",
+  "ownerArt": "PENDING",
+  "mobile": "NOT RUN",
+  "multiplayer": "NOT RUN"
+}

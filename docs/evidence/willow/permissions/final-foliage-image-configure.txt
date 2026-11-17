@@ -1,0 +1,226 @@
+Window: "base_color_texture / Configure - Google Chrome", App: chrome.exe.
+	0 window (окно) base_color_texture / Configure - Google Chrome Secondary Actions: Raise
+		1 pane (панель) (disabled)
+		2 pane (регион) base_color_texture / Configure - Google Chrome
+			3 pane (регион)
+				4 pane (регион)
+					5 pane (регион)
+						6 button (кнопка) Свернуть ID: view_1
+						2960 button (кнопка) Восстановить ID: view_3
+						8 button (кнопка) Закрыть ID: view_4
+					9 pane (регион)
+						10 pane (регион)
+							11 toolbar (панель инструментов) ID: view_1000
+								12 button (кнопка) Назад ID: view_1001
+								13 button (кнопка) (disabled) Вперед ID: view_1002
+								14 button (кнопка) Перезагрузить ID: view_1003
+								15 group (группа)
+									16 button (кнопка) Сведения о сайте ID: view_1011
+									17 text field (поле) (settable, string) Адресная строка и строка поиска Description: Спросите Google или введите URL Value: create.roblox.com/dashboard/creations/store/101368619581292/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll ID: view_1012
+									18 pane (регион)
+										2963 button (кнопка) Перевести
+										2961 button (кнопка) Добавить страницу в закладки
+								21 pane (регион)
+									22 button (кнопка) OrangeMonkey У расширения есть доступ к этому сайту ID: view_1009
+									23 button (кнопка) Open Claude У расширения есть доступ к этому сайту ID: view_1009
+									24 button (кнопка) Расширения ID: view_1006
+								25 pane (регион)
+								2089 pane (регион)
+									2090 button (кнопка) Скачанные файлы
+								26 button (кнопка) Управляйте воспроизведением музыки, видео и других медиафайлов
+								27 button (кнопка) Даниил ID: view_1018
+								28 button (кнопка) Chrome ID: view_1007
+						29 pane (регион)
+							30 pane (регион)
+								31 pane (регион)
+								2962 document (документ) base_color_texture / Configure Value: https://create.roblox.com/dashboard/creations/store/101368619581292/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll ID: RootWebArea
+									2964 group (группа)
+										2965 group (группа)
+											2966 hyperlink (ссылка) CREATOR Value: https://create.roblox.com/
+											3029 button (кнопка) addout studio addout studio
+												3044 image (изображение) addout studio
+											2968 hyperlink (ссылка) Home Value: https://create.roblox.com/
+											2969 hyperlink (ссылка) Creations Value: https://create.roblox.com/dashboard/creations
+											2970 hyperlink (ссылка) Learn Value: https://create.roblox.com/docs/
+											2971 hyperlink (ссылка) Store Value: https://create.roblox.com/store/
+											2972 hyperlink (ссылка) Forum Value: https://devforum.roblox.com/
+											2973 hyperlink (ссылка) Updates Value: https://create.roblox.com/updates
+											2974 separator (разделитель)
+											2975 hyperlink (ссылка) Finances Value: https://create.roblox.com/dashboard/devex
+											2976 hyperlink (ссылка) Analytics Value: https://create.roblox.com/dashboard/analytics
+											3030 hyperlink (ссылка) Collaboration Value: https://create.roblox.com/dashboard/group/profile
+											2977 hyperlink (ссылка) Ads Value: https://create.roblox.com/advertise
+											2978 separator (разделитель)
+											2979 button (кнопка) All tools
+											2980 hyperlink (ссылка) Roblox.com Value: https://roblox.com/
+											2981 button (кнопка) Studio
+											2982 button (кнопка) Hide sidebar
+											2983 hyperlink (ссылка) Back Value: https://create.roblox.com/dashboard/creations?activeTab=Model&inventoryAssetTypes=All
+												2984 button (кнопка) Back
+											3031 list (список)
+												3032 list item (элемент списка) base_color_texture
+													3033 image (Графическое изображение без описания) Чтобы получить недостающие описания изображений, откройте контекстное меню.
+													3034 text (текстовый) base_color_texture
+													3035 button (кнопка) more
+											2986 tree (дерево) ID: mui-tree-view-1
+												2987 tree item (элемент дерева) Configure ID: mui-tree-view-1-configure
+													2988 group (группа)
+														2989 group (группа)
+														2990 hyperlink (ссылка) Configure Value: https://create.roblox.com/dashboard/creations/store/101368619581292/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+												3036 tree item (элемент дерева) Permissions ID: mui-tree-view-1-permissions
+													3037 group (группа)
+														3038 group (группа)
+														3039 hyperlink (ссылка) Permissions Value: https://create.roblox.com/dashboard/creations/store/101368619581292/permissions?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+											2991 button (кнопка) menu
+											2992 group (навигация) breadcrumb ID: navigation-breadcrumbs
+												2993 list (список)
+													2994 list item (элемент списка) Creations
+														2995 hyperlink (ссылка) Creations Value: https://create.roblox.com/dashboard/creations?groupId=925845207
+													2996 list item (элемент списка) base_color_texture
+													3040 list item (элемент списка) Configure
+														3041 group (группа)
+															3042 text (текстовый) Configure
+											2999 button (кнопка) Search
+											3000 button (кнопка) Notifications
+											3001 button (кнопка) crystymoore
+												3043 image (изображение) crystymoore
+											3002 text (заголовок) Configure
+											3045 text (текстовый) Name
+											3046 group (группа)
+												3047 text field (поле) (settable, string) Name Value: base_color_texture ID: name
+											3048 text (текстовый) Up to 50 characters
+											3049 text (текстовый) Description
+											3050 group (группа)
+												3051 text field (поле) (settable, string) Description Value: Image ID: description
+											3052 text (текстовый) Up to 1000 characters
+											3053 separator (разделитель)
+											3054 text (заголовок) Asset Privacy
+											3055 text (текстовый) Only Image, Mesh, and Decal assets can be set to Open Use. Asset Privacy must be enabled to create new Image, Mesh, and Decal assets as Restricted.
+											3056 hyperlink (ссылка) Learn more Value: https://create.roblox.com/docs/projects/assets/privacy
+											3060 group (группа переключателей) (settable, string)
+												3061 group (группа)
+													3062 radio button (переключатель) (selectable, settable, string) Restricted
+													3063 text (текстовый) Restricted
+												3064 text (текстовый) Only you and those with permission can use this asset
+												3065 group (группа)
+													3066 radio button (переключатель) (selectable, settable, string) OpenUse
+													3067 text (текстовый) Open Use
+												3068 text (текстовый) Anyone on Roblox can use this asset
+											3072 image (Графическое изображение без описания)
+											3069 separator (разделитель)
+											3070 button (кнопка) Cancel
+											3071 button (кнопка) (disabled) Save Changes
+											3004 text (текстовый) ©2026 Roblox Corporation. All rights reserved.
+											3005 hyperlink (ссылка) Terms Value: https://www.roblox.com/info/terms
+											3006 text (текстовый) ·
+											3007 hyperlink (ссылка) Privacy Value: https://www.roblox.com/info/privacy
+											3008 text (текстовый) ·
+											3009 hyperlink (ссылка) Accessibility Value: https://www.roblox.com/info/accessibility
+											3010 text (текстовый) ·
+											3011 hyperlink (ссылка) Support Value: https://www.roblox.com/info/help
+											3012 text (текстовый) ·
+											3013 button (кнопка) Your Privacy Choices
+											3014 hyperlink (ссылка) X Value: https://x.com/Roblox
+												3015 button (кнопка) X
+											3016 hyperlink (ссылка) Facebook Value: https://www.facebook.com/Roblox/
+												3017 button (кнопка) Facebook
+											3018 hyperlink (ссылка) LinkedIn Value: https://www.linkedin.com/company/roblox
+												3019 button (кнопка) LinkedIn
+											3020 hyperlink (ссылка) Instagram Value: https://www.instagram.com/roblox/
+												3021 button (кнопка) Instagram
+											3022 hyperlink (ссылка) YouTube Value: https://www.youtube.com/@RobloxCreators
+												3023 button (кнопка) YouTube
+											3024 hyperlink (ссылка) English Value: https://roblox.com/my/account
+												3025 button (кнопка) English
+										3026 group (группа)
+											3027 text (оповещение)
+												3028 text (текстовый) /dashboard/creations/store/101368619581292/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+							128 pane (регион)
+						129 pane (регион)
+							130 pane (регион)
+								131 button (кнопка) Вкладка поиска
+							132 pane (регион) ID: view_21
+								133 tab (вкладка)
+									135 tab item (элемент вкладки) (selectable) Вкладка "base_color_texture / Configure" использует 212 МБ памяти ID: view_20
+										136 button (кнопка) Закрыть
+								134 pane (регион)
+							137 button (кнопка) Новая вкладка
+							138 pane (регион)
+						139 pane (регион)
+
+Selected text: ```
+create.roblox.com/dashboard/creations/store/101368619581292/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+```
+
+Note: Pay special attention to the content selected by the user. If the user asks a question or refers to the content they are looking at on-screen, they might be referring to the selected content (but they might be referring to something else that's visible, too).
+
+Focused element: 17 text field (поле) (settable, string) Адресная строка и строка поиска Description: Спросите Google или введите URL Value: create.roblox.com/dashboard/creations/store/101368619581292/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll ID: view_1012
+
+Selected text: create.roblox.com/dashboard/creations/store/101368619581292/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll
+
+Document text:
+CREATOR
+￼
+addout studio
+Home
+Creations
+Learn
+Store
+Forum
+Updates
+￼
+Finances
+Analytics
+Collaboration
+Ads
+￼
+All tools
+Roblox.com
+Studio
+Hide sidebar
+Back
+￼
+base_color_texture
+more
+￼
+Configure
+￼
+Permissions
+menu
+Creations
+base_color_texture
+Configure
+Search
+Notifications
+￼
+Configure
+Name
+base_color_texture
+Up to 50 characters
+Description
+Image
+Up to 1000 characters
+￼
+Asset Privacy
+Only Image, Mesh, and Decal assets can be set to Open Use. Asset Privacy must be enabled to create new Image, Mesh, and Decal assets as Restricted. Learn more
+Restricted
+Restricted
+Only you and those with permission can use this asset
+OpenUse
+Open Use
+Anyone on Roblox can use this asset
+￼
+￼
+Cancel
+Save Changes
+©2026 Roblox Corporation. All rights reserved.
+Terms·Privacy·Accessibility·Support·
+Your Privacy Choices
+X
+Facebook
+LinkedIn
+Instagram
+YouTube
+￼
+English
+/dashboard/creations/store/101368619581292/configure?publishingConsolidationReturnTo=%2Fdashboard%2Fcreations%3FactiveTab%3DModel%26inventoryAssetTypes%3DAll

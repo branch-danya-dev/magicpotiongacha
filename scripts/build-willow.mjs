@@ -6,6 +6,7 @@ import {createHash} from 'node:crypto';
 import {decode,downscale} from './lunar-pixels.mjs';
 import assert from 'node:assert/strict';
 const root=resolve(import.meta.dirname,'..'),path=p=>resolve(root,p);
+const native=process.argv.includes('--native');
 const data=readFileSync(path('assets/environment/willow/prepared/Willow.mesh.json'),'utf8');
 const parsed=JSON.parse(data);assert.equal(parsed.bones.length,9);
 assert(parsed.meshes.reduce((n,m)=>n+m.triangles.length,0)<=6500);
@@ -21,6 +22,7 @@ writeFileSync(path('build/willow/pixels.luau'),`-- RGBA export transport. Writte
 const node=p=>({$path:path(p)});
 const shared=node('src/shared');shared.WillowData=node('build/willow/data.luau');shared.WillowPixels=node('build/willow/pixels.luau');
 const client={$className:'Folder',Review:node('qa/willow/Review.client.luau'),Model:node('qa/willow/Model.luau'),Wind:node('qa/willow/Wind.luau'),WindModel:node('qa/willow/WindModel.luau'),EnvironmentView:node('src/client/EnvironmentView.luau')};
+if(native)client.Model=node('qa/willow/NativeModel.luau');
 const project={name:'Willow-Prototype-ART-PENDING',tree:{$className:'DataModel',
  ReplicatedStorage:{PotionTycoon:{$className:'Folder',Shared:shared}},
  ServerScriptService:{WillowSetup:node('qa/willow/Setup.server.luau')},
@@ -28,9 +30,10 @@ const project={name:'Willow-Prototype-ART-PENDING',tree:{$className:'DataModel',
  Workspace:{$properties:{Gravity:196.2}},
  Lighting:{$properties:{ClockTime:14,Brightness:2.5,LightingStyle:'Realistic',Technology:'Future',PrioritizeLightingQuality:true}}
 }};
+if(native)project.tree.ReplicatedStorage.WillowNativeTemplate=node('assets/environment/willow/prepared/WillowRoblox.rbxmx');
 writeFileSync(path('build/willow/willow.project.json'),JSON.stringify(project,null,2)+'\n');
-const artifact='build/Willow-Prototype-ART-PENDING.rbxlx';
+const artifact=native?'build/Willow-Native-Restricted-QA.rbxlx':'build/Willow-Prototype-ART-PENDING.rbxlx';
 execFileSync(path('.tools/rojo/rojo'+(process.platform==='win32'?'.exe':'')),['build',path('build/willow/willow.project.json'),'-o',path(artifact)],{stdio:'inherit'});
 const hash=b=>createHash('sha256').update(b).digest('hex');
-writeFileSync(path('build/willow/build.json'),JSON.stringify({base:'fdaf931b179ad188555147c720b768dd9334b17b',head:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),artifact,sha256:hash(readFileSync(path(artifact))),meshSha256:hash(Buffer.from(data)),automatedBuildUploads:0,integrated:false},null,2)+'\n');
+writeFileSync(path(native?'build/willow/native-build.json':'build/willow/build.json'),JSON.stringify({base:'fdaf931b179ad188555147c720b768dd9334b17b',head:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),artifact,sha256:hash(readFileSync(path(artifact))),meshSha256:hash(Buffer.from(data)),nativeTemplateSha256:native?hash(readFileSync(path('assets/environment/willow/prepared/WillowRoblox.rbxmx'))):null,automatedBuildUploads:0,integrated:false},null,2)+'\n');
 console.log('Willow QA built: '+artifact);

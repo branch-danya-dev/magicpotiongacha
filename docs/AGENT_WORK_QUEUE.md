@@ -39,8 +39,13 @@ Studio unexpectedly created personal-account assets despite Upload being uncheck
 Read-only Dashboard audit completed 2026-11-17 after owner resolved agreements:
 all five assets Restricted, no collaborators, no target Experience grant in its
 54-row export. ID 81045114472619 is Animation, not Model. See
-[permissions audit](WILLOW_ASSET_PERMISSIONS.md). Final-version native upload/access
-still needs separate owner approval. No further uploads/permission changes.
+[permissions audit](WILLOW_ASSET_PERMISSIONS.md). The owner subsequently explicitly
+authorized final group upload/access: six Restricted assets uploaded under addout
+studio and granted to Experience 10776120489, verified in its 60-row export.
+Native isolated Play, 1/20 trees, quality modes, Reduce Motion, eight-second clip
+and cleanup verified. Raw foliage-image delivery returned HTTP 502 despite its
+processed SurfaceAppearance rendering; do not mark all delivery checks clean.
+See [native delivery report](WILLOW_NATIVE_DELIVERY.md). Owner art approval pending.
 Phone/multiplayer and candidate GitHub CI NOT RUN. No production admission.
 
 ### AG-76B-R4B — Three Moons & Lunar Lighting

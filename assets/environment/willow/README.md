@@ -4,6 +4,8 @@ Base: `fdaf931b179ad188555147c720b768dd9334b17b` (PR #59).
 Branch: `feat/willow-tree-game-ready-prototype`.
 Owner art approval and final integration are pending.
 
+**Update: final group upload/access completed 2026-11-17.** Run `node scripts/build-willow.mjs --native`, then open `build/Willow-Native-Restricted-QA.rbxlx`. The checked-in `prepared/WillowRoblox.rbxmx` has final group IDs and prepared alpha materials; no repeat upload is needed. See `docs/WILLOW_NATIVE_DELIVERY.md` and `source/roblox-final-delivery.json` for authorization, Studio evidence and the raw foliage-image HTTP 502 limitation. Earlier personal-import/approval notes below record the preceding delivery stage and are superseded by this update. Owner art review is still pending.
+
 ## Source and rights
 
 - Original: `C:\Users\keara\Downloads\Meshy_AI_model_20261117_generate.fbx`, preserved byte-for-byte.

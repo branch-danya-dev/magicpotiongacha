@@ -1,5 +1,7 @@
 # Willow Tree — prototype review, 2026-11-17
 
+**Later authorized delivery:** final assets are now group-owned, Restricted and granted to the target Experience. Native isolated Play and quality checks are recorded in [WILLOW_NATIVE_DELIVERY.md](WILLOW_NATIVE_DELIVERY.md), including the unresolved raw foliage-image HTTP 502. That report supersedes the earlier upload/access gates below; the original evidence is retained as history. No production integration or owner art acceptance is implied.
+
 **CODE CANDIDATE / QA PLAY VERIFIED / OWNER ART PENDING / NOT INTEGRATED.**
 Base: PR #59, `fdaf931b179ad188555147c720b768dd9334b17b`.
 Branch: `feat/willow-tree-game-ready-prototype`. This is a local asset prototype, not a production replacement or a release.
