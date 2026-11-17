@@ -1,0 +1,234 @@
+{
+  "runtimeSource": "c682e739027da96b37bffec0fa7c0ecc451f0e26",
+  "artifactSha256": "9c849264e9e7f22660dfde5ef182796515351d026de25742b90f135bf7d62566",
+  "limitations": "Single desktop Studio process; cached memory; R4A CLI-test overlap; different moon sky position. See report. Not a controlled GPU benchmark.",
+  "rows": [
+    {
+      "utc": "2026-11-16T23:33:43.600Z",
+      "probe": "R4A_LUNAR_BASE",
+      "result": {
+        "p50": 4.608999937772751,
+        "fps": 209.37419813930043,
+        "memory": 1574.41796875,
+        "p95": 6.384999956935644,
+        "moon": "-8.733957201911835e-08, 0.9990482330322266, 0.04361940920352936",
+        "clock": 0,
+        "graphics": "QualityLevel3",
+        "viewport": "1566, 1095",
+        "quality": "full"
+      }
+    },
+    {
+      "utc": "2026-11-16T23:34:08.606Z",
+      "probe": "R4A_LUNAR_BASE",
+      "result": {
+        "p50": 4.59490017965436,
+        "fps": 210.6654195113469,
+        "memory": 1577.625,
+        "p95": 6.291800178587437,
+        "moon": "-8.733957201911835e-08, 0.9990482330322266, 0.04361940920352936",
+        "clock": 0,
+        "graphics": "QualityLevel3",
+        "viewport": "1566, 1095",
+        "quality": "reduced"
+      }
+    },
+    {
+      "utc": "2026-11-16T23:34:33.611Z",
+      "probe": "R4A_LUNAR_BASE",
+      "result": {
+        "p50": 4.230000078678131,
+        "fps": 231.35029666494685,
+        "memory": 1579.04296875,
+        "p95": 5.484200082719326,
+        "moon": "-8.733957201911835e-08, 0.9990482330322266, 0.04361940920352936",
+        "clock": 0,
+        "graphics": "QualityLevel3",
+        "viewport": "1566, 1095",
+        "quality": "minimal"
+      }
+    },
+    {
+      "utc": "2026-11-16T23:52:48.386Z",
+      "probe": "R4B_SWITCH_FINAL",
+      "result": {
+        "wind": "0, 0, 0",
+        "after": 279,
+        "peak": 279,
+        "before": 279,
+        "sameContext": true,
+        "duplicateRejected": true,
+        "moving": 0,
+        "switches": 20,
+        "lunar": {
+          "editableImages": 4,
+          "forced": "frost",
+          "halo": false,
+          "pixelBytes": 3162112,
+          "alpha": 0.9288159122085048,
+          "cycle": 1196582,
+          "alignment": 1,
+          "ready": true,
+          "destroyed": false,
+          "weights": [
+            0.0012360984906685949,
+            0.0014803120557931656,
+            0.9972835894535381
+          ],
+          "consumer": "BillboardGui/EditableImage",
+          "labels": 4
+        }
+      }
+    },
+    {
+      "utc": "2026-11-16T23:53:51.209Z",
+      "probe": "R4B_PERF_FINAL",
+      "result": {
+        "seconds": 15.002696499999729,
+        "fps": 231.62502511963132,
+        "memoryMiB": 2898.23046875,
+        "p95ms": 5.6169000454247,
+        "lunar": {
+          "editableImages": 4,
+          "forced": "pearl",
+          "halo": true,
+          "pixelBytes": 3162112,
+          "alpha": 0.9288159122085048,
+          "cycle": 1196582,
+          "alignment": 1,
+          "ready": true,
+          "destroyed": false,
+          "weights": [
+            1,
+            0,
+            0
+          ],
+          "consumer": "BillboardGui/EditableImage",
+          "labels": 4
+        },
+        "clock": 0,
+        "viewport": "1566, 1095",
+        "p50ms": 4.120599944144487,
+        "quality": "full"
+      },
+      "clock0Comparison": true
+    },
+    {
+      "utc": "2026-11-16T23:54:14.215Z",
+      "probe": "R4B_PERF_FINAL",
+      "result": {
+        "seconds": 15.001145500005805,
+        "fps": 105.85858189385915,
+        "memoryMiB": 2897.80859375,
+        "p95ms": 17.44920015335083,
+        "lunar": {
+          "editableImages": 4,
+          "forced": "pearl",
+          "halo": true,
+          "pixelBytes": 3162112,
+          "alpha": 0.9288159122085048,
+          "cycle": 1196582,
+          "alignment": 1,
+          "ready": true,
+          "destroyed": false,
+          "weights": [
+            1,
+            0,
+            0
+          ],
+          "consumer": "BillboardGui/EditableImage",
+          "labels": 4
+        },
+        "clock": 20.5,
+        "viewport": "1566, 1095",
+        "p50ms": 6.151900161057711,
+        "quality": "reduced"
+      },
+      "clock0Comparison": false
+    },
+    {
+      "utc": "2026-11-16T23:54:37.220Z",
+      "probe": "R4B_PERF_FINAL",
+      "result": {
+        "seconds": 15.000959600001806,
+        "fps": 59.996161045628575,
+        "memoryMiB": 2896.25,
+        "p95ms": 17.57979951798916,
+        "lunar": {
+          "editableImages": 4,
+          "forced": "pearl",
+          "halo": false,
+          "pixelBytes": 3162112,
+          "alpha": 0.9288159122085048,
+          "cycle": 1196582,
+          "alignment": 1,
+          "ready": true,
+          "destroyed": false,
+          "weights": [
+            1,
+            0,
+            0
+          ],
+          "consumer": "BillboardGui/EditableImage",
+          "labels": 4
+        },
+        "clock": 20.5,
+        "viewport": "1566, 1095",
+        "p50ms": 16.620900481939316,
+        "quality": "minimal"
+      },
+      "clock0Comparison": false
+    },
+    {
+      "utc": "2026-11-16T23:55:34.031Z",
+      "probe": "R4B_PERF_MATCHED",
+      "result": {
+        "memoryMiB": 2897.2421875,
+        "seconds": 15.001630099999602,
+        "p95ms": 5.148000083863735,
+        "viewport": "1566, 1095",
+        "clock": 0,
+        "fps": 239.4406410652237,
+        "p50ms": 4.061399959027767,
+        "quality": "reduced"
+      },
+      "clock0Comparison": true
+    },
+    {
+      "utc": "2026-11-16T23:55:57.041Z",
+      "probe": "R4B_PERF_MATCHED",
+      "result": {
+        "memoryMiB": 2897.20703125,
+        "seconds": 15.002823699993314,
+        "p95ms": 5.071499850600958,
+        "viewport": "1566, 1095",
+        "clock": 0,
+        "fps": 239.62155710989686,
+        "p50ms": 4.092200193554163,
+        "quality": "minimal"
+      },
+      "clock0Comparison": true
+    },
+    {
+      "utc": "2026-11-16T23:57:52.886Z",
+      "probe": "R4B_CYCLE_FINAL",
+      "result": {
+        "seconds": 53.044907400006196,
+        "maxAmbientStep": 0.023828089237213135,
+        "alphaMin": 0,
+        "samples": 1004,
+        "alphaMax": 0.95,
+        "rainMax": 60
+      }
+    },
+    {
+      "utc": "2026-11-16T23:58:00.894Z",
+      "probe": "R4B_RESTORE_FINAL",
+      "result": {
+        "failures": [],
+        "pass": true,
+        "propertyCount": 12
+      }
+    }
+  ]
+}

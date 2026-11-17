@@ -18,7 +18,7 @@
 
 ### AG-76B-R4B — Three Moons & Lunar Lighting
 
-**IN PROGRESS / STUDIO QA ONLY / OWNER MOON ART PENDING / NOT INTEGRATED.**
+**CODE CANDIDATE / STUDIO VERIFIED (bounded QA) / OWNER MOON ART PENDING / NOT INTEGRATED.**
 Claimed 2026-11-17 as the sole active task. Branch `feat/ag76b-r4b-moon-cycle`.
 Base Draft PR #58 at `56666c072e66f7357ec2f054f818a642cae0abd9`, confirmed
 open/draft with Windows/Ubuntu CI success (run 43972108708), clean starting tree.
@@ -29,6 +29,10 @@ Preserve grass, geometry/landmarks, stations/routes, production modules and data
 No migration or live service operations. Rollback is the untouched R4A place.
 Roblox upload requires separate approval of the three concrete prepared files.
 No paid generation, production integration, merge or Roblox publication.
+Delivered in Draft PR #59: [report, eight native F5 images and measurements](AG76B_R4B_THREE_MOONS.md).
+Three original disks render through local EditableImages; no Roblox uploads.
+20-switch object/owner checks and exact stop restoration passed in Studio.
+Real phones, multiplayer and production backend NOT TESTED. Wait for moon art review.
 
 ### AG-76B-R4A — Dynamic Grass & Ground Cover
 
