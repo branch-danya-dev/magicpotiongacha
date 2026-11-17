@@ -46,6 +46,10 @@ jobs:
             build/grass-island-build.json
             build/WizardIsland-AG76B-R4B-Moons-ART-PENDING.rbxlx
             build/lunar-island-build.json
+            build/WillowV2-ArtPolish-QA.rbxlx
+            build/PotionTycoon-WillowV2-Game-QA.rbxlx
+            build/willow-v2/game-build.json
+            build/willow-v2/build.json
             build/AG67-Prototype.rbxlx
             assets/vfx/ag67/
             scripts/install-ag67-preview.mjs

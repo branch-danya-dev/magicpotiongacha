@@ -16,6 +16,27 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### WILLOW-V2 — art polish and reusable tree system
+
+**IN PROGRESS / OWNER ART PENDING / NOT INTEGRATED**, sole task claimed
+2026-11-17 from clean `08e7603a124807318236ed6521e97ac1ea9f6277` on
+`feat/willow-v2-art-polish`. PR #59 remains draft at
+`fdaf931b179ad188555147c720b768dd9334b17b`, an ancestor of the local base.
+Preserve V1 files and production sources. Derive taller, open asymmetric crowns
+and root/color variants from the existing source, with shared tree settings and
+one bounded client wind scheduler consuming GlobalWind. Deliver an isolated
+reproducible Studio scene, 20-tree checks and text/numeric evidence only.
+No screenshots, recordings, paid generation, new uploads, access changes,
+gameplay/data migration, production integration, merge or game publication.
+Rollback: unchanged V1 native scene and combined-game build. CLI/package tool
+is not installed; use the existing local Blender/export workflow, without
+claiming a game-dev package receipt. Native upload of V2 remains separately gated.
+
+Owner clarification: primary delivery is the ordinary playable game with V2 at
+the existing hero-tree location, default character camera, HUD, familiar selection,
+book and stations. The 20-tree scene is only an optional diagnostic harness.
+This authorizes a separate local gameplay preview, not production admission.
+
 ### CURRENT-GAME-QA — consolidated owner test build
 
 **CODE CANDIDATE / STUDIO SMOKE VERIFIED / OWNER ART PENDING**, task claimed 2026-11-17 at clean local
