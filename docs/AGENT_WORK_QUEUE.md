@@ -16,6 +16,24 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### CURRENT-GAME-QA — consolidated owner test build
+
+**CODE CANDIDATE / STUDIO SMOKE VERIFIED / OWNER ART PENDING**, task claimed 2026-11-17 at clean local
+`c7f4764f7f18a6791cb41c21611d9a8f7d8ab19b`, branch `feat/current-game-studio-qa`.
+Owner requests the current full game with all recent changes. PR #59 remains
+draft at `fdaf931b179ad188555147c720b768dd9334b17b`; the local willow stack
+descends from it. Build a separate Studio-only gameplay preview combining the
+existing personal-island gameplay with R3/R4A/R4B art and the final Restricted
+willow. Preserve production `src/`, default project, economy, V8 and server
+authority; memory-only QA owner 11924805007. No new asset upload, access change,
+merge, publication or production admission. Art acceptance remains pending.
+Validate ancestry, source preservation, tools/tests, repeat build and ordinary
+F5 startup. Rollback: open any preserved standalone QA artifact.
+Delivered in [the combined preview report](CURRENT_GAME_QA.md): 1420 portable
+tests, unchanged production sources, normal starter selection, book +5 Essence,
+13 original anchors, all three quality modes and Reduce Motion. This is an
+owner-requested local combined build, not production acceptance of art prototypes.
+
 ### Willow Tree — Game-Ready Prototype
 
 **CODE CANDIDATE / QA PLAY VERIFIED / OWNER ART PENDING / NOT INTEGRATED.** Sole active task,
