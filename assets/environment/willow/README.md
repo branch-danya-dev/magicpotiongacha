@@ -9,7 +9,7 @@ Owner art approval and final integration are pending.
 - Original: `C:\Users\keara\Downloads\Meshy_AI_model_20261117_generate.fbx`, preserved byte-for-byte.
 - Meshy image-to-3D task: `01a1e765-fba3-7739-ac6c-e560f44b6856`, model meshy-t2.5, smart topology, untextured. Read-only task lookup; no paid jobs.
 - Original SHA-256: `c6d4ce5eac77a3d260bb184583e86f5f0d3adb65f974fd923c47a9ed30a515a6`.
-- The task response did not include a license. The owner was asked to confirm the account/plan for **this willow**. Until answered, public redistribution and production admission remain blocked. Earlier Green Slime ownership statements are not silently reused.
+- The task response did not include a license. On 2026-11-17 the owner directly confirmed that **this willow** was created in their own Meshy account on a paid plan. The exact declaration and source binding are recorded in `source/owner-confirmation.json`; the account/plan confirmation gate is closed. This is an owner attestation, not an independent subscription audit. Roblox asset permissions and owner art/integration approval remain separate unresolved gates.
 - Owner's two reference images are preserved in `source/`. Their Library identifiers are recorded in the task report; no signed download URLs or credentials are stored.
 - Bark is reused from the already-vendored Quaternius Stylized Nature MegaKit Standard, `Bark_TwistedTree.png`, CC0. Original license is in `source/Quaternius-CC0.txt`.
 - Foliage atlas is newly generated for this prototype using the built-in image tool; source PNG and prompts are preserved. Export normalization only scales to 1024 square, without painting/replacing the approved concept.

@@ -34,7 +34,8 @@ honestly and stop before final integration for owner art review.
 Delivered locally: 6,119 triangles, 84 hanging groups, nine bones, two meshes,
 1024 RGBA atlas, packed Blender/FBX and isolated wind QA. See
 [prototype report and original Play captures](WILLOW_TREE_PROTOTYPE.md).
-Final native FBX import, asset rights and online permissions remain blocked:
+Owner confirmed own Meshy account and paid plan for this willow on 2026-11-17.
+Final native FBX import and online permissions remain blocked:
 Studio unexpectedly created personal-account assets despite Upload being unchecked;
 Dashboard is gated by Updated Agreements. No further uploads/permission changes.
 Phone/multiplayer and candidate GitHub CI NOT RUN. No production admission.

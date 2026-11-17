@@ -2,7 +2,7 @@
   "schema": 1,
   "base": "fdaf931b179ad188555147c720b768dd9334b17b",
   "meshyTask": "01a1e765-fba3-7739-ac6c-e560f44b6856",
-  "rights": "Owner confirmation for this willow pending; no public redistribution",
+  "rights": "Owner attested own Meshy account and paid plan for this willow on 2026-11-17; Roblox permissions remain unverified",
   "integration": false,
   "nativeImportIncident": {
     "uploadCheckbox": false,
@@ -19,6 +19,11 @@
       "path": "source/Meshy_AI_model_20261117_generate.fbx",
       "bytes": 142476,
       "sha256": "c6d4ce5eac77a3d260bb184583e86f5f0d3adb65f974fd923c47a9ed30a515a6"
+    },
+    {
+      "path": "source/owner-confirmation.json",
+      "bytes": 584,
+      "sha256": "6f83b08e86dd60faf5a060c802ef97441f8dcdc0f5bf638d4eafb3e37d0ea0b0"
     },
     {
       "path": "source/willow-reference.png",
