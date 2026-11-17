@@ -1,0 +1,801 @@
+{
+  "studio": "0.747.0.7471481",
+  "graphics": "Q6; NVIDIA GeForce RTX 5070 Ti",
+  "notes": "Native isolated Play. Frame interval is not GPU render time. All twenty clones are allocated before measurement; only 1 or 20 are parented. Earlier diagnostics are retained. Final live Unix-time correction is verified at 04:02:41 UTC; final performance runs follow at 04:02:53 through 04:03:32 UTC.",
+  "records": [
+    {
+      "utc": "2026-11-17T03:25:24.059Z",
+      "kind": "WILLOW_READY",
+      "value": {
+        "wind": [
+          5.387245178222656,
+          0,
+          3.018852472305298
+        ],
+        "meshResources": 2,
+        "imageResources": 2,
+        "meshPartsPerTree": 2,
+        "lastWindMs": 0,
+        "reduceMotion": false,
+        "updates": 0,
+        "descendants": 15,
+        "groups": 84,
+        "quality": "full",
+        "boneWrites": 0,
+        "bonesPerTree": 9,
+        "treeCount": 1,
+        "triangles": 6294
+      }
+    },
+    {
+      "utc": "2026-11-17T03:26:43.194Z",
+      "kind": "WILLOW_CHECK",
+      "value": {
+        "wind": [
+          5.835152626037598,
+          0,
+          2.9491117000579834
+        ],
+        "meshResources": 2,
+        "imageResources": 2,
+        "triangles": 6294,
+        "reduceMotion": false,
+        "groups": 84,
+        "lastWindMs": 0.0408000050811097,
+        "descendants": 15,
+        "updates": 2333,
+        "meshPartsPerTree": 2,
+        "boneWrites": 18664,
+        "bonesPerTree": 9,
+        "treeCount": 1,
+        "quality": "full"
+      }
+    },
+    {
+      "utc": "2026-11-17T03:40:17.827Z",
+      "kind": "WILLOW_NATIVE_IMPORT",
+      "value": {
+        "bones": 9,
+        "meshes": [
+          {
+            "mesh": "rbxassetid://103393042017627",
+            "anchored": true,
+            "name": "Willow_Foliage",
+            "texture": "rbxassetid://79171837674186"
+          },
+          {
+            "mesh": "rbxassetid://85732748826171",
+            "anchored": true,
+            "name": "Willow_Trunk",
+            "texture": "rbxassetid://77979867898740"
+          }
+        ],
+        "size": [
+          28.37664794921875,
+          24.967540740966797,
+          13.47732162475586
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-17T03:41:15.657Z",
+      "kind": "WILLOW_READY",
+      "value": {
+        "wind": [
+          5.448836803436279,
+          0,
+          3.311147451400757
+        ],
+        "meshResources": 2,
+        "imageResources": 2,
+        "meshPartsPerTree": 2,
+        "lastWindMs": 0,
+        "reduceMotion": false,
+        "updates": 0,
+        "descendants": 15,
+        "groups": 84,
+        "quality": "full",
+        "boneWrites": 0,
+        "bonesPerTree": 9,
+        "treeCount": 1,
+        "triangles": 6142
+      }
+    },
+    {
+      "utc": "2026-11-17T03:41:50.699Z",
+      "kind": "WILLOW_CHECK",
+      "value": {
+        "wind": [
+          5.433603763580322,
+          0,
+          3.1885695457458496
+        ],
+        "meshResources": 2,
+        "imageResources": 2,
+        "triangles": 6142,
+        "reduceMotion": false,
+        "groups": 84,
+        "lastWindMs": 0.03160000778734684,
+        "descendants": 15,
+        "updates": 1014,
+        "meshPartsPerTree": 2,
+        "boneWrites": 8112,
+        "bonesPerTree": 9,
+        "treeCount": 1,
+        "quality": "full"
+      }
+    },
+    {
+      "utc": "2026-11-17T03:42:00.702Z",
+      "kind": "WILLOW_PERF",
+      "value": {
+        "wind": [
+          5.440514087677002,
+          0,
+          3.0382542610168457
+        ],
+        "imageResources": 2,
+        "frames": 2400,
+        "descendants": 15,
+        "groups": 84,
+        "bonesPerTree": 9,
+        "triangles": 6142,
+        "lastWindMs": 0.03429999924264848,
+        "meshResources": 2,
+        "memoryMb": 3128.6640625,
+        "windUpdates": 300,
+        "windP95Ms": 0.0357000099029392,
+        "frameP95Ms": 5.0743999890983105,
+        "quality": "full",
+        "reduceMotion": false,
+        "meshPartsPerTree": 2,
+        "boneWrites": 10512,
+        "updates": 1314,
+        "treeCount": 1,
+        "frameMedianMs": 4.078700207173824
+      }
+    },
+    {
+      "utc": "2026-11-17T03:43:27.924Z",
+      "kind": "WILLOW_READY",
+      "value": {
+        "wind": [
+          6.066798686981201,
+          0,
+          1.9630144834518433
+        ],
+        "meshResources": 2,
+        "imageResources": 2,
+        "meshPartsPerTree": 2,
+        "lastWindMs": 0,
+        "reduceMotion": false,
+        "updates": 0,
+        "descendants": 15,
+        "groups": 84,
+        "quality": "full",
+        "boneWrites": 0,
+        "bonesPerTree": 9,
+        "treeCount": 1,
+        "triangles": 6119
+      }
+    },
+    {
+      "utc": "2026-11-17T03:44:10.272Z",
+      "kind": "WILLOW_FINAL",
+      "value": {
+        "wind": [
+          5.700329780578613,
+          0,
+          2.387950897216797
+        ],
+        "meshResources": 2,
+        "imageResources": 2,
+        "triangles": 6119,
+        "reduceMotion": false,
+        "groups": 84,
+        "lastWindMs": 0.03539999306667596,
+        "descendants": 15,
+        "updates": 1232,
+        "meshPartsPerTree": 2,
+        "boneWrites": 9856,
+        "bonesPerTree": 9,
+        "treeCount": 1,
+        "quality": "full"
+      }
+    },
+    {
+      "utc": "2026-11-17T03:45:50.098Z",
+      "kind": "WILLOW_REDUCE_MOTION_PASS",
+      "value": 9
+    },
+    {
+      "utc": "2026-11-17T03:46:12.967Z",
+      "kind": "WILLOW_PERF",
+      "value": {
+        "wind": [
+          5.753584384918213,
+          0,
+          2.7801830768585205
+        ],
+        "imageResources": 2,
+        "frames": 2400,
+        "descendants": 15,
+        "groups": 84,
+        "bonesPerTree": 9,
+        "triangles": 6119,
+        "lastWindMs": 0.026900001103058457,
+        "meshResources": 2,
+        "memoryMb": 3162.37109375,
+        "windUpdates": 300,
+        "windP95Ms": 0.037699996028095484,
+        "frameP95Ms": 5.090800113976002,
+        "quality": "full",
+        "reduceMotion": false,
+        "meshPartsPerTree": 2,
+        "boneWrites": 32648,
+        "updates": 4146,
+        "treeCount": 1,
+        "frameMedianMs": 4.0711998008191586
+      }
+    },
+    {
+      "utc": "2026-11-17T03:46:13.968Z",
+      "kind": "WILLOW_ACTIVE",
+      "value": {
+        "meanAnimatedTrees": 1,
+        "count": 1,
+        "quality": "full"
+      }
+    },
+    {
+      "utc": "2026-11-17T03:46:25.976Z",
+      "kind": "WILLOW_PERF",
+      "value": {
+        "wind": [
+          5.735202789306641,
+          0,
+          2.4912359714508057
+        ],
+        "imageResources": 2,
+        "frames": 2399,
+        "descendants": 300,
+        "groups": 84,
+        "bonesPerTree": 9,
+        "triangles": 6119,
+        "lastWindMs": 0.13330001092981547,
+        "meshResources": 2,
+        "memoryMb": 3168.25390625,
+        "windUpdates": 300,
+        "windP95Ms": 0.2221999893663451,
+        "frameP95Ms": 5.09499991312623,
+        "quality": "full",
+        "reduceMotion": false,
+        "meshPartsPerTree": 2,
+        "boneWrites": 81712,
+        "updates": 4535,
+        "treeCount": 20,
+        "frameMedianMs": 4.092500079423189
+      }
+    },
+    {
+      "utc": "2026-11-17T03:46:26.973Z",
+      "kind": "WILLOW_ACTIVE",
+      "value": {
+        "meanAnimatedTrees": 17,
+        "count": 20,
+        "quality": "full"
+      }
+    },
+    {
+      "utc": "2026-11-17T03:46:38.981Z",
+      "kind": "WILLOW_PERF",
+      "value": {
+        "wind": [
+          6.156204700469971,
+          0,
+          2.366142749786377
+        ],
+        "imageResources": 2,
+        "frames": 2401,
+        "descendants": 300,
+        "groups": 84,
+        "bonesPerTree": 9,
+        "triangles": 6119,
+        "lastWindMs": 0.10979999206028879,
+        "meshResources": 2,
+        "memoryMb": 3168.04296875,
+        "windUpdates": 150,
+        "windP95Ms": 0.11160000576637685,
+        "frameP95Ms": 5.082699935883284,
+        "quality": "reduced",
+        "reduceMotion": false,
+        "meshPartsPerTree": 2,
+        "boneWrites": 94432,
+        "updates": 4745,
+        "treeCount": 20,
+        "frameMedianMs": 4.093199968338013
+      }
+    },
+    {
+      "utc": "2026-11-17T03:46:39.980Z",
+      "kind": "WILLOW_ACTIVE",
+      "value": {
+        "meanAnimatedTrees": 6,
+        "count": 20,
+        "quality": "reduced"
+      }
+    },
+    {
+      "utc": "2026-11-17T03:46:51.988Z",
+      "kind": "WILLOW_PERF",
+      "value": {
+        "wind": [
+          5.84047269821167,
+          0,
+          2.067168951034546
+        ],
+        "imageResources": 2,
+        "frames": 2400,
+        "descendants": 300,
+        "groups": 84,
+        "bonesPerTree": 9,
+        "triangles": 6119,
+        "lastWindMs": 0.02479999966453761,
+        "meshResources": 2,
+        "memoryMb": 3167.453125,
+        "windUpdates": 60,
+        "windP95Ms": 0.0337999954354018,
+        "frameP95Ms": 5.100199952721596,
+        "quality": "minimal",
+        "reduceMotion": false,
+        "meshPartsPerTree": 2,
+        "boneWrites": 95152,
+        "updates": 4832,
+        "treeCount": 20,
+        "frameMedianMs": 4.0525998920202255
+      }
+    },
+    {
+      "utc": "2026-11-17T03:46:52.986Z",
+      "kind": "WILLOW_ACTIVE",
+      "value": {
+        "meanAnimatedTrees": 0,
+        "count": 20,
+        "quality": "minimal"
+      }
+    },
+    {
+      "utc": "2026-11-17T03:48:42.566Z",
+      "kind": "WILLOW_PERF",
+      "value": {
+        "wind": [
+          5.589632987976074,
+          0,
+          3.1513001918792725
+        ],
+        "imageResources": 2,
+        "frames": 2402,
+        "descendants": 15,
+        "groups": 84,
+        "bonesPerTree": 9,
+        "triangles": 6119,
+        "lastWindMs": 0.026699999580159783,
+        "meshResources": 2,
+        "memoryMb": 3164.62890625,
+        "windUpdates": 300,
+        "windP95Ms": 0.036299999919719994,
+        "frameP95Ms": 5.081499926745892,
+        "quality": "full",
+        "reduceMotion": false,
+        "meshPartsPerTree": 2,
+        "boneWrites": 154472,
+        "updates": 6115,
+        "treeCount": 1,
+        "frameMedianMs": 4.070600029081106
+      }
+    },
+    {
+      "utc": "2026-11-17T03:48:43.564Z",
+      "kind": "WILLOW_NEAR_ACTIVE",
+      "value": {
+        "meanAnimatedTrees": 1,
+        "count": 1,
+        "quality": "full"
+      }
+    },
+    {
+      "utc": "2026-11-17T03:48:55.572Z",
+      "kind": "WILLOW_PERF",
+      "value": {
+        "wind": [
+          5.578549385070801,
+          0,
+          3.3269970417022705
+        ],
+        "imageResources": 2,
+        "frames": 2402,
+        "descendants": 300,
+        "groups": 84,
+        "bonesPerTree": 9,
+        "triangles": 6119,
+        "lastWindMs": 0.1407999952789396,
+        "meshResources": 2,
+        "memoryMb": 3166.79296875,
+        "windUpdates": 300,
+        "windP95Ms": 0.23609999334439635,
+        "frameP95Ms": 5.156800150871277,
+        "quality": "full",
+        "reduceMotion": false,
+        "meshPartsPerTree": 2,
+        "boneWrites": 212152,
+        "updates": 6504,
+        "treeCount": 20,
+        "frameMedianMs": 4.081800114363432
+      }
+    },
+    {
+      "utc": "2026-11-17T03:48:56.571Z",
+      "kind": "WILLOW_NEAR_ACTIVE",
+      "value": {
+        "meanAnimatedTrees": 20,
+        "count": 20,
+        "quality": "full"
+      }
+    },
+    {
+      "utc": "2026-11-17T03:49:08.577Z",
+      "kind": "WILLOW_PERF",
+      "value": {
+        "wind": [
+          5.263840675354004,
+          0,
+          3.253486156463623
+        ],
+        "imageResources": 2,
+        "frames": 2402,
+        "descendants": 300,
+        "groups": 84,
+        "bonesPerTree": 9,
+        "triangles": 6119,
+        "lastWindMs": 0.11170000652782619,
+        "meshResources": 2,
+        "memoryMb": 3166.83203125,
+        "windUpdates": 150,
+        "windP95Ms": 0.14600000577047467,
+        "frameP95Ms": 5.104700103402138,
+        "quality": "reduced",
+        "reduceMotion": false,
+        "meshPartsPerTree": 2,
+        "boneWrites": 234232,
+        "updates": 6714,
+        "treeCount": 20,
+        "frameMedianMs": 4.070099908858538
+      }
+    },
+    {
+      "utc": "2026-11-17T03:49:09.576Z",
+      "kind": "WILLOW_NEAR_ACTIVE",
+      "value": {
+        "meanAnimatedTrees": 12,
+        "count": 20,
+        "quality": "reduced"
+      }
+    },
+    {
+      "utc": "2026-11-17T03:49:21.584Z",
+      "kind": "WILLOW_PERF",
+      "value": {
+        "wind": [
+          5.6298017501831055,
+          0,
+          3.4262731075286865
+        ],
+        "imageResources": 2,
+        "frames": 2387,
+        "descendants": 300,
+        "groups": 84,
+        "bonesPerTree": 9,
+        "triangles": 6119,
+        "lastWindMs": 0.04260000423528254,
+        "meshResources": 2,
+        "memoryMb": 3166.9609375,
+        "windUpdates": 60,
+        "windP95Ms": 0.06890000076964498,
+        "frameP95Ms": 5.180899985134602,
+        "quality": "minimal",
+        "reduceMotion": false,
+        "meshPartsPerTree": 2,
+        "boneWrites": 236824,
+        "updates": 6801,
+        "treeCount": 20,
+        "frameMedianMs": 4.077400080859661
+      }
+    },
+    {
+      "utc": "2026-11-17T03:49:22.584Z",
+      "kind": "WILLOW_NEAR_ACTIVE",
+      "value": {
+        "meanAnimatedTrees": 2,
+        "count": 20,
+        "quality": "minimal"
+      }
+    },
+    {
+      "utc": "2026-11-17T03:50:16.146Z",
+      "kind": "WILLOW_WALK",
+      "value": {
+        "trunkBlocked": true,
+        "foliagePass": true,
+        "offset": [
+          -2.98358154296875,
+          -2.3885879516601562
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-17T03:55:15.408Z",
+      "kind": "WILLOW_READY",
+      "value": {
+        "wind": [
+          5.943614959716797,
+          0,
+          1.9777237176895142
+        ],
+        "meshResources": 2,
+        "imageResources": 2,
+        "meshPartsPerTree": 2,
+        "lastWindMs": 0,
+        "reduceMotion": false,
+        "updates": 0,
+        "descendants": 15,
+        "groups": 84,
+        "quality": "full",
+        "boneWrites": 0,
+        "bonesPerTree": 9,
+        "treeCount": 1,
+        "triangles": 6119
+      }
+    },
+    {
+      "utc": "2026-11-17T03:55:49.781Z",
+      "kind": "WILLOW_CLEANUP",
+      "value": {
+        "windRestored": true,
+        "meshResources": 0,
+        "imageResources": 0,
+        "folderRemoved": true,
+        "qaRemoved": true,
+        "cameraRestored": true,
+        "guiRemoved": true
+      }
+    },
+    {
+      "utc": "2026-11-17T04:00:06.840Z",
+      "kind": "WILLOW_READY",
+      "value": {
+        "wind": [
+          5.485645771026611,
+          0,
+          2.8447036743164062
+        ],
+        "meshResources": 2,
+        "imageResources": 2,
+        "meshPartsPerTree": 2,
+        "lastWindMs": 0,
+        "reduceMotion": false,
+        "updates": 0,
+        "descendants": 15,
+        "groups": 84,
+        "quality": "full",
+        "boneWrites": 0,
+        "bonesPerTree": 9,
+        "treeCount": 1,
+        "triangles": 6119
+      }
+    },
+    {
+      "utc": "2026-11-17T04:02:09.041Z",
+      "kind": "WILLOW_READY",
+      "value": {
+        "wind": [
+          6.0613298416137695,
+          0,
+          2.351238965988159
+        ],
+        "meshResources": 2,
+        "imageResources": 2,
+        "meshPartsPerTree": 2,
+        "lastWindMs": 0,
+        "reduceMotion": false,
+        "updates": 0,
+        "descendants": 15,
+        "groups": 84,
+        "quality": "full",
+        "boneWrites": 0,
+        "bonesPerTree": 9,
+        "treeCount": 1,
+        "triangles": 6119
+      }
+    },
+    {
+      "utc": "2026-11-17T04:02:41.279Z",
+      "kind": "WILLOW_LIVE_TIME",
+      "value": {
+        "epoch": 1794888158.730407,
+        "fixedRoots": 1,
+        "changedCrownBones": 8
+      }
+    },
+    {
+      "utc": "2026-11-17T04:02:53.288Z",
+      "kind": "WILLOW_PERF",
+      "value": {
+        "wind": [
+          5.868261814117432,
+          0,
+          1.9193376302719116
+        ],
+        "imageResources": 2,
+        "frames": 2402,
+        "descendants": 15,
+        "groups": 84,
+        "bonesPerTree": 9,
+        "triangles": 6119,
+        "lastWindMs": 0.03689998993650079,
+        "meshResources": 2,
+        "memoryMb": 3216.2890625,
+        "windUpdates": 300,
+        "windP95Ms": 0.0391000066883862,
+        "frameP95Ms": 5.106499884277582,
+        "quality": "full",
+        "reduceMotion": false,
+        "meshPartsPerTree": 2,
+        "boneWrites": 10312,
+        "updates": 1289,
+        "treeCount": 1,
+        "frameMedianMs": 4.067599773406982
+      }
+    },
+    {
+      "utc": "2026-11-17T04:03:06.293Z",
+      "kind": "WILLOW_PERF",
+      "value": {
+        "wind": [
+          6.208323955535889,
+          0,
+          2.0941250324249268
+        ],
+        "imageResources": 2,
+        "frames": 2390,
+        "descendants": 300,
+        "groups": 84,
+        "bonesPerTree": 9,
+        "triangles": 6119,
+        "lastWindMs": 0.2420999953756109,
+        "meshResources": 2,
+        "memoryMb": 3216.86328125,
+        "windUpdates": 300,
+        "windP95Ms": 0.2410000015515834,
+        "frameP95Ms": 5.239900201559067,
+        "quality": "full",
+        "reduceMotion": false,
+        "meshPartsPerTree": 2,
+        "boneWrites": 68152,
+        "updates": 1679,
+        "treeCount": 20,
+        "frameMedianMs": 4.08060010522604
+      }
+    },
+    {
+      "utc": "2026-11-17T04:03:19.300Z",
+      "kind": "WILLOW_PERF",
+      "value": {
+        "wind": [
+          5.948131561279297,
+          0,
+          2.199098587036133
+        ],
+        "imageResources": 2,
+        "frames": 2400,
+        "descendants": 300,
+        "groups": 84,
+        "bonesPerTree": 9,
+        "triangles": 6119,
+        "lastWindMs": 0.14509999891743064,
+        "meshResources": 2,
+        "memoryMb": 3216.5859375,
+        "windUpdates": 150,
+        "windP95Ms": 0.17229998775292188,
+        "frameP95Ms": 5.0617000088095665,
+        "quality": "reduced",
+        "reduceMotion": false,
+        "meshPartsPerTree": 2,
+        "boneWrites": 90232,
+        "updates": 1889,
+        "treeCount": 20,
+        "frameMedianMs": 4.081800114363432
+      }
+    },
+    {
+      "utc": "2026-11-17T04:03:32.306Z",
+      "kind": "WILLOW_PERF",
+      "value": {
+        "wind": [
+          5.818688869476318,
+          0,
+          2.3961758613586426
+        ],
+        "imageResources": 2,
+        "frames": 2400,
+        "descendants": 300,
+        "groups": 84,
+        "bonesPerTree": 9,
+        "triangles": 6119,
+        "lastWindMs": 0.046200002543628216,
+        "meshResources": 2,
+        "memoryMb": 3216.54296875,
+        "windUpdates": 60,
+        "windP95Ms": 0.07270000060088933,
+        "frameP95Ms": 5.131000187247992,
+        "quality": "minimal",
+        "reduceMotion": false,
+        "meshPartsPerTree": 2,
+        "boneWrites": 92824,
+        "updates": 1976,
+        "treeCount": 20,
+        "frameMedianMs": 4.079800099134445
+      }
+    },
+    {
+      "utc": "2026-11-17T04:03:33.307Z",
+      "kind": "WILLOW_FINAL_PERF_DONE",
+      "value": 1
+    }
+  ],
+  "captures": [
+    {
+      "name": "angle-full.png",
+      "sha256": "8f97b05a991c9df514dd2ca5dc6791199d06e85702e2143c4bb29c2ee5d2cb81"
+    },
+    {
+      "name": "back-full.png",
+      "sha256": "c64f1e9ba567c522bd7204c353ed9509582153bf1b5dc71a6c3a9dc488e398a3"
+    },
+    {
+      "name": "front-full.png",
+      "sha256": "755a1a47fafe0cb91275d35660f05acd5d5bc28ce46d509c1fc27d2fe273e774"
+    },
+    {
+      "name": "front-minimal.png",
+      "sha256": "664d3eacd533f3c0a726995bb4724730e84d7bdb830f062ef2041f3171e867ff"
+    },
+    {
+      "name": "front-reduced.png",
+      "sha256": "8969eb3c3ab9e934a676536d0f0bb3d51d9ff8429430db9f53af8c96ed28a479"
+    },
+    {
+      "name": "reduce-motion.png",
+      "sha256": "00da9b95ce0219251f0ceddb10d4c5a3b9121cb353ee495820649b432bbd06f6"
+    },
+    {
+      "name": "side-full.png",
+      "sha256": "7bd4b89de410bb5ff38a96ef81273ba883730f509612d3bb506879915b5727dc"
+    },
+    {
+      "name": "twenty-full.png",
+      "sha256": "4244f814295357e69f282ed29e29c6ea4e3ff302d26183fac1b3e95c91dbf89f"
+    },
+    {
+      "name": "wind-00.png",
+      "sha256": "643e8419cb953dbe193dfbb5a1074fbfd157df6341fe478d9421ceb7f23fbf39"
+    },
+    {
+      "name": "wind-02.png",
+      "sha256": "d38f0b856fd3625ad2db9f09ff8f726e8d7e598a5ca7c83d6e4c40174efd7ba1"
+    },
+    {
+      "name": "wind-04.png",
+      "sha256": "fbe3d10a6fae53f017eb68352fcc7bdfcc17ce365ed1c00a9e1078396e12f9d2"
+    }
+  ]
+}

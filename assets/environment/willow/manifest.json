@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "base": "fdaf931b179ad188555147c720b768dd9334b17b",
+  "meshyTask": "01a1e765-fba3-7739-ac6c-e560f44b6856",
+  "rights": "Owner confirmation for this willow pending; no public redistribution",
+  "integration": false,
+  "nativeImportIncident": {
+    "uploadCheckbox": false,
+    "result": "Online IDs nevertheless created under personal account crystymoore; permission audit blocked by Updated Agreements",
+    "model": "81045114472619",
+    "foliageMesh": "103393042017627",
+    "woodMesh": "85732748826171",
+    "foliageImage": "79171837674186",
+    "barkImage": "77979867898740",
+    "usedByQABuild": false
+  },
+  "files": [
+    {
+      "path": "source/Meshy_AI_model_20261117_generate.fbx",
+      "bytes": 142476,
+      "sha256": "c6d4ce5eac77a3d260bb184583e86f5f0d3adb65f974fd923c47a9ed30a515a6"
+    },
+    {
+      "path": "source/willow-reference.png",
+      "bytes": 2498926,
+      "sha256": "7ab340374e26680e4647b572dcb66e6c412a60d5f41a7b0e9a8046abf3cbf68b"
+    },
+    {
+      "path": "source/trees-concept-v3.png",
+      "bytes": 2344662,
+      "sha256": "f0f94288d3288c00f8d8cfd3f03d98accba3090cfe5a8bab87f6cf0efd4ee5c0"
+    },
+    {
+      "path": "source/FoliageAtlas-generated.png",
+      "bytes": 2236259,
+      "sha256": "7cba27317f30ab093a762e8616a373e16f2c76fc4919eb7bff72fcde9788f3b0"
+    },
+    {
+      "path": "source/atlas-prompts.json",
+      "bytes": 2491,
+      "sha256": "f79b01b781f098af257d0503e718ad3d620935a245de2fe05de620ff920f17b5"
+    },
+    {
+      "path": "source/Quaternius-CC0.txt",
+      "bytes": 852,
+      "sha256": "120710e542c3ebaf83856c4eb55b4a1e680593b39302eba7fdc5d942dfe78c58"
+    },
+    {
+      "path": "textures/FoliageAtlas.png",
+      "bytes": 2024746,
+      "sha256": "169086eab654c01999381dfc8d659a4ff22cd63925773932eac7d9aaf4a08783"
+    },
+    {
+      "path": "textures/Bark.png",
+      "bytes": 1385430,
+      "sha256": "4ae0a89814815967d288062963125dea4a36c5a8413777485af7289c1420be2a"
+    },
+    {
+      "path": "prepared/Willow.blend",
+      "bytes": 4666571,
+      "sha256": "723cb63a0d221b2b9f0451328ba8c7fd25d7e52a1ccc57ea490e76d6bf822257"
+    },
+    {
+      "path": "prepared/Willow.fbx",
+      "bytes": 3898780,
+      "sha256": "0fd537f88ab08ab59eceaad49529265b57b2bc33c5244c7a70bdb17590ca4a77"
+    },
+    {
+      "path": "prepared/Willow.mesh.json",
+      "bytes": 1235028,
+      "sha256": "7c7e9bd14794a802c0d1ccd7cdbdc99ab8c8ebe5ac905243f68ea32c03c340f0"
+    },
+    {
+      "path": "prepared/build-report.json",
+      "bytes": 255,
+      "sha256": "73e8ef4b8d9fe8fe78fca1a54bae33b41069433678b5da48c5a096b4fde6ecb9"
+    },
+    {
+      "path": "prepared/validation.json",
+      "bytes": 744,
+      "sha256": "d4386188d7683dd1ad556c3bb75e559b2c5ee1105da2fa63ae7b282e1b02674b"
+    }
+  ]
+}

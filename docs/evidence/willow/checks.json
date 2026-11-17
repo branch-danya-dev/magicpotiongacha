@@ -1,0 +1,17 @@
+{
+  "base": "fdaf931b179ad188555147c720b768dd9334b17b",
+  "tools": "PASS, Luau 0.745 / Rojo 7.7.1 SHA-256 verified",
+  "npmTest": {
+    "exitCode": 0,
+    "luau": 1396,
+    "node": 23,
+    "total": 1419,
+    "compiledSources": 293,
+    "logSha256": "4d7b9ab8a2f1b64ac2a30f686c7a40574f4e72a7abbbc2eeb3c1e382e0b9991b"
+  },
+  "independentBlenderRebuild": "PASS, byte-identical mesh/UV/weights; fresh FBX round-trip passed",
+  "studio": "Scoped local QA Play verified; final native FBX uploader blocked",
+  "ciWindowsUbuntu": "NOT RUN for local candidate",
+  "phones": "NOT RUN",
+  "multiplayer": "NOT RUN"
+}

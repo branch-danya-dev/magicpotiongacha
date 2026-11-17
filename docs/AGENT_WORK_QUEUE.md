@@ -16,6 +16,29 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### Willow Tree — Game-Ready Prototype
+
+**CODE CANDIDATE / QA PLAY VERIFIED / OWNER ART PENDING / NOT INTEGRATED.** Sole active task,
+claimed 2026-11-17 on `feat/willow-tree-game-ready-prototype` from clean PR #59
+HEAD `fdaf931b179ad188555147c720b768dd9334b17b` (Windows/Ubuntu green).
+Scope: inspect the owner's Meshy task `01a1e765-fba3-7739-ac6c-e560f44b6856`
+and local FBX, preserve source bytes, rebuild hanging foliage/rig in Blender,
+deliver reproducible isolated QA with wind consuming existing GlobalWind.
+Target 4000–6500 triangles, 60–100 hanging groups, 6–10 bones, 1024 foliage atlas.
+No migration, gameplay, station, route, island or existing tree replacement.
+No additional paid generation, merge or Roblox publication. Rollback: open
+the preserved R4B QA build. New Roblox uploads need a concrete owner approval.
+Validate source/export bytes, weights/UVs, Full/Reduced/Minimal/Reduce Motion,
+native 1/20-tree comparison; mark unavailable native/mobile/multiplayer gates
+honestly and stop before final integration for owner art review.
+Delivered locally: 6,119 triangles, 84 hanging groups, nine bones, two meshes,
+1024 RGBA atlas, packed Blender/FBX and isolated wind QA. See
+[prototype report and original Play captures](WILLOW_TREE_PROTOTYPE.md).
+Final native FBX import, asset rights and online permissions remain blocked:
+Studio unexpectedly created personal-account assets despite Upload being unchecked;
+Dashboard is gated by Updated Agreements. No further uploads/permission changes.
+Phone/multiplayer and candidate GitHub CI NOT RUN. No production admission.
+
 ### AG-76B-R4B — Three Moons & Lunar Lighting
 
 **Moon Atmosphere Refinement — CODE CANDIDATE / STUDIO VERIFIED / OWNER ART PENDING**,

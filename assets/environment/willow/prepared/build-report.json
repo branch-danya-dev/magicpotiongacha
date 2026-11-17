@@ -1,0 +1,13 @@
+{
+  "triangles": 6119,
+  "trunkTriangles": 2591,
+  "foliageTriangles": 3528,
+  "groups": 84,
+  "ribbons": 252,
+  "segmentsPerRibbon": 7,
+  "bones": 9,
+  "maxInfluences": 2,
+  "materials": 2,
+  "meshParts": 2,
+  "removedConnectedFinFaces": 49
+}

@@ -1,0 +1,6 @@
+# Preserve exact provenance/export bytes across Windows and Ubuntu checkouts.
+source/** -text whitespace=cr-at-eol
+prepared/** -text whitespace=cr-at-eol
+textures/** -text
+# Original upstream license is intentionally byte-preserved, including spaces.
+source/Quaternius-CC0.txt whitespace=cr-at-eol,-blank-at-eol

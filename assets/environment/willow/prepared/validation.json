@@ -1,0 +1,29 @@
+{
+  "roundtrip": "PASS",
+  "meshes": [
+    {
+      "name": "Willow_Foliage",
+      "vertices": 4032,
+      "triangles": 3528,
+      "uvLayers": 1
+    },
+    {
+      "name": "Willow_Trunk",
+      "vertices": 1408,
+      "triangles": 2591,
+      "uvLayers": 1
+    }
+  ],
+  "bones": 9,
+  "Willow_Foliage": {
+    "maxDisplacement": 0.6694618891419891,
+    "loopSeam": 0.004244467611426348
+  },
+  "Willow_Trunk": {
+    "maxDisplacement": 0.0,
+    "loopSeam": 0.0
+  },
+  "sourceSha256": "c6d4ce5eac77a3d260bb184583e86f5f0d3adb65f974fd923c47a9ed30a515a6",
+  "fbxSha256": "0fd537f88ab08ab59eceaad49529265b57b2bc33c5244c7a70bdb17590ca4a77",
+  "meshSha256": "7c7e9bd14794a802c0d1ccd7cdbdc99ab8c8ebe5ac905243f68ea32c03c340f0"
+}
