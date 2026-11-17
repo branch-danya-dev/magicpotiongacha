@@ -1,0 +1,88 @@
+{
+  "artifactSha256": "c3b62762708b93d4842ca0d0fa68b825950105293227ecf553ab771aece2222d",
+  "viewport": [
+    1566,
+    1095
+  ],
+  "runtimeSource": "5e226a84f2ad2347c57d5d58d0e6321a73990426",
+  "method": "Roblox Studio F5 Play, native screenshot command, byte-for-byte copies",
+  "captures": [
+    {
+      "sha256": "5043bb4132a7db070943149eba1ce4db67f805dba94b958b137ad072b989d722",
+      "file": "01-before-pearl-100.png",
+      "bytes": 792804,
+      "unmodified": true,
+      "nativeFilename": "RobloxScreenShot20261117_032743514.png"
+    },
+    {
+      "sha256": "d90be2a938c4e609dc20b7c84824f5ecdd214da404f8adb0ee6767f56d64389e",
+      "file": "02-soft-pearl-100.png",
+      "bytes": 785143,
+      "unmodified": true,
+      "nativeFilename": "RobloxScreenShot20261117_032758243.png"
+    },
+    {
+      "sha256": "c6d8b5ddcd7c542e89a740815746d0c58941b09c437df69070b56f81bcb4aee2",
+      "file": "03-soft-pearl-135.png",
+      "bytes": 844969,
+      "unmodified": true,
+      "nativeFilename": "RobloxScreenShot20261117_032815368.png"
+    },
+    {
+      "sha256": "a51112994fddfb8a6e0103af9482c48404b10c60cd14beb31d6a7eaa4f410cea",
+      "file": "04-soft-pearl-150.png",
+      "bytes": 897485,
+      "unmodified": true,
+      "nativeFilename": "RobloxScreenShot20261117_032829931.png"
+    },
+    {
+      "sha256": "440b41c4d9df91a3addeb03d05f783b1a05c395dc8c1e993adaddffca5a0acff",
+      "file": "05-soft-blood-150.png",
+      "bytes": 909284,
+      "unmodified": true,
+      "nativeFilename": "RobloxScreenShot20261117_032907656.png"
+    },
+    {
+      "sha256": "ee64f6aeaeae85c7e039093be1274179c59a5baf533b53ec314f3f0a62ab9e61",
+      "file": "06-soft-frost-150.png",
+      "bytes": 883918,
+      "unmodified": true,
+      "nativeFilename": "RobloxScreenShot20261117_032945012.png"
+    },
+    {
+      "sha256": "704e2381eafcb2699e7c5ca7d2356d97f90c6c677dea961a57eeb5ac05ff4868",
+      "file": "07-soft-pearl-reduced.png",
+      "bytes": 825061,
+      "unmodified": true,
+      "nativeFilename": "RobloxScreenShot20261117_033012941.png"
+    },
+    {
+      "sha256": "6015f3edb22b58150b81c242a860d70a8bf56fb54089f52a6cea6c90fc090903",
+      "file": "08-soft-pearl-minimal.png",
+      "bytes": 782553,
+      "unmodified": true,
+      "nativeFilename": "RobloxScreenShot20261117_033058480.png"
+    },
+    {
+      "sha256": "18cd4f894e50025f2a7583559aadf5f2c60cfc98dbda77e2c6a6c5d093130dbb",
+      "file": "09-soft-pearl-reduce-motion.png",
+      "bytes": 847057,
+      "unmodified": true,
+      "nativeFilename": "RobloxScreenShot20261117_033125890.png"
+    },
+    {
+      "sha256": "9d6da89c91bdb29a02bbea28ae188d97834ec18792c0bb844436e0521e32c10e",
+      "file": "10-soft-pearl-lower-sky.png",
+      "bytes": 862315,
+      "unmodified": true,
+      "nativeFilename": "RobloxScreenShot20261117_033436799.png"
+    },
+    {
+      "sha256": "a0afd3e01b4b72368c29fe2dfc04297b08037a7d2f71a415120065055ccf85d9",
+      "file": "11-dawn-moon-hidden.png",
+      "bytes": 766644,
+      "unmodified": true,
+      "nativeFilename": "RobloxScreenShot20261117_033537118.png"
+    }
+  ]
+}

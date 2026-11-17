@@ -1,5 +1,10 @@
 # AG-76B-R4B — Three Moons & Lunar Lighting
 
+> Historical initial delivery. The [Moon Atmosphere Refinement report](AG76B_R4B_MOON_REFINEMENT.md)
+> supersedes its probability, halo, size and comparison-camera settings with
+> 60/20/20 selection at dusk and a softened +50% candidate. Earlier images and
+> measurements below are retained as historical evidence.
+
 **CODE CANDIDATE / STUDIO VERIFIED (bounded QA) / OWNER MOON ART PENDING / NOT INTEGRATED.**
 
 Draft [PR #59](https://github.com/branch-danya-dev/magicpotiongacha/pull/59), stacked

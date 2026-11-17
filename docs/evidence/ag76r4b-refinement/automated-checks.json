@@ -1,0 +1,13 @@
+{
+  "tools": "PASS: hash-pinned Luau 0.745 / Rojo 7.7.1",
+  "runtimeSource": "5e226a84f2ad2347c57d5d58d0e6321a73990426",
+  "logSha256": "7ec7d20850d9be9f2da442a7c329d9571b6dee939fd25f10b1ed3ac91533fed2",
+  "compiledSources": 287,
+  "npmTestExit": 0,
+  "luauTests": 1390,
+  "runtimeCiWindows": "success",
+  "nodeTests": 19,
+  "runtimeCiRun": 43987665647,
+  "artifactSha256": "c3b62762708b93d4842ca0d0fa68b825950105293227ecf553ab771aece2222d",
+  "runtimeCiUbuntu": "success"
+}
