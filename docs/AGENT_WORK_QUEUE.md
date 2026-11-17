@@ -16,9 +16,45 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### AG-76B-R4B — Three Moons & Lunar Lighting
+
+**Moon Atmosphere Refinement — CODE CANDIDATE / STUDIO VERIFIED / OWNER ART PENDING**,
+same PR #59 branch; no integration.
+Follow-up base: `463cf0ddc2562239c589bcececeba9b0b93c4ada`, exact-head Windows/Ubuntu
+green (43984037134), clean starting tree. Preserve original disks for comparison;
+refine atmospheric softness/halo, compare +35%/+50%, and cache deterministic
+60/20/20 selection at dusk through the following dawn. No production integration,
+gameplay/data changes, new uploads or publication. Owner art gate remains pending.
+Delivered [refinement report, 11 original native Play captures and checks](AG76B_R4B_MOON_REFINEMENT.md).
++50% selected as candidate, +35%/original retained; Full/Reduced/Minimal and
+Reduce Motion checked. Twenty switches remain bounded and stop restores lighting.
+Runtime source `5e226a84f2ad2347c57d5d58d0e6321a73990426`, Windows/Ubuntu green
+(43987665647); final documentation HEAD/CI recorded in PR #59. Phones and native
+multiplayer NOT TESTED. Wait for owner art review.
+
+The following paragraph records the initial delivery, superseded above:
+
+**CODE CANDIDATE / STUDIO VERIFIED (bounded QA) / OWNER MOON ART PENDING / NOT INTEGRATED.**
+Claimed 2026-11-17 as the sole active task. Branch `feat/ag76b-r4b-moon-cycle`.
+Base Draft PR #58 at `56666c072e66f7357ec2f054f818a642cae0abd9`, confirmed
+open/draft with Windows/Ubuntu CI success (run 43972108708), clean starting tree.
+Scope: three original moon disks, deterministic 70/10/20 lunar selection,
+1500-second day/dusk/night/dawn proportions 300/375/675/150 and lunar palette,
+through the existing EnvironmentView owner in a separate reproducible QA place.
+Preserve grass, geometry/landmarks, stations/routes, production modules and data.
+No migration or live service operations. Rollback is the untouched R4A place.
+Roblox upload requires separate approval of the three concrete prepared files.
+No paid generation, production integration, merge or Roblox publication.
+Delivered in Draft PR #59: [report, eight native F5 images and measurements](AG76B_R4B_THREE_MOONS.md).
+Three original disks render through local EditableImages; no Roblox uploads.
+20-switch object/owner checks and exact stop restoration passed in Studio.
+Real phones, multiplayer and production backend NOT TESTED. Wait for moon art review.
+
 ### AG-76B-R4A — Dynamic Grass & Ground Cover
 
-**CODE CANDIDATE / STUDIO VERIFIED (bounded art QA) / OWNER ART PENDING / NOT INTEGRATED.**
+**CODE CANDIDATE / STUDIO VERIFIED (bounded art QA) / OWNER GRASS ART ACCEPTED / NOT INTEGRATED.**
+Owner approved the R4A grass art in the R4B task on 2026-11-17.
+This approval does not accept the full R3 composition, mobile or release gates.
 Claimed 2026-11-17; sole active task, branch `feat/ag76b-r4a-dynamic-grass`.
 Base Draft PR #57 at `d5f39fad50ac84e660365299f1b3c4de600e3a80`;
 exact-head Windows/Ubuntu CI success, clean starting tree.
@@ -32,7 +68,7 @@ matched desktop timings, seven-point movement and 20 quality switches.
 291 added meshes; Full/Reduced/Minimal visible 291/157/57; Reduce Motion zero
 wind and unchanged transforms. 1,372 Luau + 14 Node tests PASS. Exact-head CI
 is recorded in the stacked Draft PR. No merge, Roblox publication, new upload
-or Meshy generation. Stopped for owner art review; phones remain untested.
+or Meshy generation. Grass art gate accepted; phones remain untested.
 
 ### AG-76B-R3 — Romantic Dark Fairytale / Forgotten Sanctuary
 

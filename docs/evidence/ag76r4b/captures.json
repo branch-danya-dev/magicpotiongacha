@@ -1,0 +1,59 @@
+{
+  "method": "Native Roblox screenshot command during ordinary F5 Play; copied without pixel changes",
+  "viewport": [
+    1566,
+    1095
+  ],
+  "runtimeSource": "d13cf308b68f00a559b15f7bd1352e2c48c58d20",
+  "artifactSha256": "18160bde15fece507af5bc7705293382e2546b751c4e585bc348c062eadb649b",
+  "files": [
+    {
+      "file": "01-pearl-night-full.png",
+      "source": "RobloxScreenShot20261117_024333835.png",
+      "bytes": 930615,
+      "sha256": "86d51c7f08abe4a785c1548907538dfc02efbfea794cb6ee0442af32a3cdac2f"
+    },
+    {
+      "file": "02-blood-night-full.png",
+      "source": "RobloxScreenShot20261117_024402543.png",
+      "bytes": 936382,
+      "sha256": "b9cf6e983a73ba85de7aad3b2684de1e3230309633d3937b9b1baa57f9fe0cfc"
+    },
+    {
+      "file": "03-frost-night-full.png",
+      "source": "RobloxScreenShot20261117_024301448.png",
+      "bytes": 931064,
+      "sha256": "5adc3fb8adc7b919d448fd83ae4978fa4ccff47454586c9e593041aa2fce83f5"
+    },
+    {
+      "file": "04-pearl-night-reduced.png",
+      "source": "RobloxScreenShot20261117_024437694.png",
+      "bytes": 897797,
+      "sha256": "ef17c5c707d19dfa85aacec1bf07c21b9a13c95583c17ada7a0ec29ad1df4cd9"
+    },
+    {
+      "file": "05-pearl-night-minimal.png",
+      "source": "RobloxScreenShot20261117_024503896.png",
+      "bytes": 880579,
+      "sha256": "f10f6b944a7e319d8257cb1aa9c54468b639bbeefbc11fffd7066b5489336295"
+    },
+    {
+      "file": "06-pearl-reduce-motion.png",
+      "source": "RobloxScreenShot20261117_024525897.png",
+      "bytes": 901865,
+      "sha256": "90f40268ee93fc08d352be6b653bf8f7acb22a1765c03e89199fe1f7ac6cd628"
+    },
+    {
+      "file": "07-pearl-dusk.png",
+      "source": "RobloxScreenShot20261117_024602138.png",
+      "bytes": 877568,
+      "sha256": "3e016b09f9d460c53d4294359648accc51fcc7b2ecfbd03bc5ec9ee954bf6745"
+    },
+    {
+      "file": "08-dawn-moon-hidden.png",
+      "source": "RobloxScreenShot20261117_024642039.png",
+      "bytes": 965285,
+      "sha256": "4a9ace559573b57dc05a987ab1931d69a54f06432bfc76ed13c54d59fdc25523"
+    }
+  ]
+}

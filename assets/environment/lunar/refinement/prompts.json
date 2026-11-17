@@ -1,0 +1,6 @@
+{
+  "tool": "built-in image_gen",
+  "operation": "Conservative edit of the three approved runtime textures; no new concept. Alpha preserved in deterministic downscale.",
+  "prompt": "Edit target: the attached approved moon texture. This is a conservative optical-softening edit of THIS EXACT IMAGE, not a new moon design. Preserve its exact crater map, large crater rays and maria, orientation, illumination, circular disk diameter relative to canvas, center and color identity. Keep the 1:1 square canvas and existing transparent margins. Gently soften only fine-grained detail and lower microcontrast by about 15%, while keeping large craters and terrain recognizable. Feather the disk's existing alpha silhouette inward and outward over roughly 1.5% of image width to simulate a distant moon seen through atmosphere. This must be a soft transparent edge, NOT a bright ring or opaque halo. Fully transparent background, no stars, no rectangular wash, no added sky, no redesign, no new features, no global brightening, no blur over the entire image. Outer padding fully transparent. Halo will be rendered separately in the game. Output a single isolated moon texture, no text or comparison layout.",
+  "suffix": "Moon identity: {pearl|blood|frost}; retain the supplied exact palette."
+}

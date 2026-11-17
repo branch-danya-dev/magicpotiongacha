@@ -1,0 +1,364 @@
+{
+  "runtimeSource": "5e226a84f2ad2347c57d5d58d0e6321a73990426",
+  "records": [
+    {
+      "data": {
+        "moving": 0,
+        "wind": "0, 0, 0",
+        "lunar": {
+          "forced": "pearl",
+          "scale": 1.5,
+          "destroyed": false,
+          "ready": true,
+          "editableImages": 4,
+          "pixelWrites": 12,
+          "halo": true,
+          "pixelBytes": 3162112,
+          "alpha": 0.9288159122085048,
+          "bounds": {
+            "top": 82.70318603515625,
+            "viewportX": 1566,
+            "bottom": 517.5219116210938,
+            "fullyFramed": true,
+            "viewportY": 1095,
+            "left": 879.6881103515625,
+            "right": 1314.5068359375
+          },
+          "cycle": 1196583,
+          "alignment": 1,
+          "consumer": "BillboardGui/EditableImage",
+          "weights": [
+            1,
+            0,
+            0
+          ],
+          "selections": 1,
+          "style": "after",
+          "labels": 4
+        }
+      },
+      "check": "R4BREF_MOTION",
+      "timestamp": "2026-11-17T00:34:10.163Z"
+    },
+    {
+      "data": {
+        "forced": "pearl",
+        "scale": 1.5,
+        "destroyed": false,
+        "ready": true,
+        "editableImages": 4,
+        "pixelWrites": 12,
+        "halo": true,
+        "pixelBytes": 3162112,
+        "alpha": 0.7205162612022579,
+        "bounds": {
+          "top": 346.80035400390625,
+          "viewportX": 1566,
+          "bottom": 771.3078002929688,
+          "fullyFramed": true,
+          "viewportY": 1095,
+          "left": 932.4219970703125,
+          "right": 1356.929443359375
+        },
+        "cycle": 1196583,
+        "alignment": 1,
+        "consumer": "BillboardGui/EditableImage",
+        "weights": [
+          1,
+          0,
+          0
+        ],
+        "selections": 1,
+        "style": "after",
+        "labels": 4
+      },
+      "check": "R4BREF_TWILIGHT",
+      "timestamp": "2026-11-17T00:35:13.337Z"
+    },
+    {
+      "data": {
+        "forced": "pearl",
+        "scale": 1.5,
+        "destroyed": false,
+        "ready": true,
+        "editableImages": 4,
+        "pixelWrites": 12,
+        "halo": false,
+        "pixelBytes": 3162112,
+        "alpha": 0,
+        "bounds": {
+          "top": 603.1082763671875,
+          "viewportX": 1566,
+          "bottom": 1071.34716796875,
+          "fullyFramed": true,
+          "viewportY": 1095,
+          "left": 131.265380859375,
+          "right": 599.5043334960938
+        },
+        "cycle": 1196583,
+        "alignment": 1,
+        "consumer": "BillboardGui/EditableImage",
+        "weights": [
+          1,
+          0,
+          0
+        ],
+        "selections": 1,
+        "style": "after",
+        "labels": 4
+      },
+      "check": "R4BREF_DAWN",
+      "timestamp": "2026-11-17T00:36:02.754Z"
+    },
+    {
+      "data": {
+        "seconds": 12.002594803459942,
+        "pixelWritesStable": true,
+        "images": 4,
+        "scale": 1,
+        "frames": 2567,
+        "fps": 213.8704206910343,
+        "memoryMiB": 2963.19140625,
+        "style": "before",
+        "labels": 4,
+        "clock": 20.5,
+        "p95ms": 7.742099929600954,
+        "p50ms": 4.186199977993965,
+        "quality": "full"
+      },
+      "check": "R4BREF_PERF",
+      "timestamp": "2026-11-17T00:36:18.763Z"
+    },
+    {
+      "data": {
+        "seconds": 12.001409011892974,
+        "pixelWritesStable": true,
+        "images": 4,
+        "scale": 1.5,
+        "frames": 711,
+        "fps": 59.243043820556736,
+        "memoryMiB": 2963.39453125,
+        "style": "after",
+        "labels": 4,
+        "clock": 20.5,
+        "p95ms": 17.748700454831123,
+        "p50ms": 16.67100004851818,
+        "quality": "full"
+      },
+      "check": "R4BREF_PERF",
+      "timestamp": "2026-11-17T00:36:34.753Z"
+    },
+    {
+      "data": {
+        "seconds": 12.015223416499794,
+        "pixelWritesStable": true,
+        "images": 4,
+        "scale": 1,
+        "frames": 721,
+        "fps": 60.00720710776742,
+        "memoryMiB": 2960.97265625,
+        "style": "before",
+        "labels": 4,
+        "clock": 20.5,
+        "p95ms": 17.758699133992195,
+        "p50ms": 16.62749983370304,
+        "quality": "reduced"
+      },
+      "check": "R4BREF_PERF",
+      "timestamp": "2026-11-17T00:36:50.773Z"
+    },
+    {
+      "data": {
+        "seconds": 12.014174407348037,
+        "pixelWritesStable": true,
+        "images": 4,
+        "scale": 1.5,
+        "frames": 721,
+        "fps": 60.01244659466791,
+        "memoryMiB": 2961.04296875,
+        "style": "after",
+        "labels": 4,
+        "clock": 20.5,
+        "p95ms": 17.528800293803215,
+        "p50ms": 16.632599756121635,
+        "quality": "reduced"
+      },
+      "check": "R4BREF_PERF",
+      "timestamp": "2026-11-17T00:37:06.777Z"
+    },
+    {
+      "data": {
+        "seconds": 12.014748407527804,
+        "pixelWritesStable": true,
+        "images": 4,
+        "scale": 1,
+        "frames": 721,
+        "fps": 60.00957952213628,
+        "memoryMiB": 2961.12109375,
+        "style": "before",
+        "labels": 4,
+        "clock": 20.5,
+        "p95ms": 17.618799582123756,
+        "p50ms": 16.61979965865612,
+        "quality": "minimal"
+      },
+      "check": "R4BREF_PERF",
+      "timestamp": "2026-11-17T00:37:22.796Z"
+    },
+    {
+      "data": {
+        "seconds": 12.014402512460947,
+        "pixelWritesStable": true,
+        "images": 4,
+        "scale": 1.5,
+        "frames": 721,
+        "fps": 60.011307200021164,
+        "memoryMiB": 2961.26171875,
+        "style": "after",
+        "labels": 4,
+        "clock": 20.5,
+        "p95ms": 17.55649968981743,
+        "p50ms": 16.63780026137829,
+        "quality": "minimal"
+      },
+      "check": "R4BREF_PERF",
+      "timestamp": "2026-11-17T00:37:38.814Z"
+    },
+    {
+      "data": {
+        "seconds": 12.00040730368346,
+        "frames": 2828,
+        "fps": 235.65866794637552,
+        "memoryMiB": 2961.59375,
+        "style": "before",
+        "clock": 20.5,
+        "p95ms": 5.412700120359659,
+        "p50ms": 4.070799797773361,
+        "quality": "full"
+      },
+      "check": "R4BREF_PERF_REPEAT",
+      "timestamp": "2026-11-17T00:38:31.305Z"
+    },
+    {
+      "data": {
+        "seconds": 12.00237760413438,
+        "frames": 2743,
+        "fps": 228.53805224850922,
+        "memoryMiB": 2961.7421875,
+        "style": "after",
+        "clock": 20.5,
+        "p95ms": 5.7450998574495316,
+        "p50ms": 4.1808998212218285,
+        "quality": "full"
+      },
+      "check": "R4BREF_PERF_REPEAT",
+      "timestamp": "2026-11-17T00:38:53.315Z"
+    },
+    {
+      "data": {
+        "forced": "pearl",
+        "scale": 1.35,
+        "destroyed": false,
+        "ready": true,
+        "editableImages": 4,
+        "pixelWrites": 44,
+        "halo": true,
+        "pixelBytes": 3162112,
+        "alpha": 0.9288159122085048,
+        "bounds": {
+          "top": 104.444091796875,
+          "viewportX": 1566,
+          "bottom": 495.781005859375,
+          "fullyFramed": true,
+          "viewportY": 1095,
+          "left": 901.4290161132812,
+          "right": 1292.765869140625
+        },
+        "cycle": 1196583,
+        "alignment": 1,
+        "consumer": "BillboardGui/EditableImage",
+        "weights": [
+          1,
+          0,
+          0
+        ],
+        "selections": 1,
+        "style": "after",
+        "labels": 4
+      },
+      "check": "R4BREF_BOUNDS",
+      "timestamp": "2026-11-17T00:39:43.967Z"
+    },
+    {
+      "data": {
+        "forced": "pearl",
+        "scale": 1.5,
+        "destroyed": false,
+        "ready": true,
+        "editableImages": 4,
+        "pixelWrites": 44,
+        "halo": true,
+        "pixelBytes": 3162112,
+        "alpha": 0.9288159122085048,
+        "bounds": {
+          "top": 82.70318603515625,
+          "viewportX": 1566,
+          "bottom": 517.5219116210938,
+          "fullyFramed": true,
+          "viewportY": 1095,
+          "left": 879.6881103515625,
+          "right": 1314.5068359375
+        },
+        "cycle": 1196583,
+        "alignment": 1,
+        "consumer": "BillboardGui/EditableImage",
+        "weights": [
+          1,
+          0,
+          0
+        ],
+        "selections": 1,
+        "style": "after",
+        "labels": 4
+      },
+      "check": "R4BREF_BOUNDS",
+      "timestamp": "2026-11-17T00:39:44.073Z"
+    },
+    {
+      "data": {
+        "before": 279,
+        "after": 279,
+        "images": 4,
+        "pixelWritesStable": true,
+        "owner": {
+          "duplicateRejected": true
+        },
+        "peak": 279,
+        "labels": 4
+      },
+      "check": "R4BREF_SWITCH",
+      "timestamp": "2026-11-17T00:39:48.254Z"
+    },
+    {
+      "data": {
+        "maxAlpha": 0.95,
+        "seconds": 53.030297299992526,
+        "maxAmbientStep": 0.023612916469573975,
+        "samples": 1005,
+        "maxRain": 60,
+        "minAlpha": 0
+      },
+      "check": "R4BREF_PREVIEW",
+      "timestamp": "2026-11-17T00:40:49.287Z"
+    },
+    {
+      "data": {
+        "failures": [],
+        "pass": true,
+        "propertyCount": 12
+      },
+      "check": "R4BREF_RESTORE",
+      "timestamp": "2026-11-17T00:41:24.575Z"
+    }
+  ]
+}
