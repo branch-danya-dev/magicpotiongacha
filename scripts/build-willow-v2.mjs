@@ -11,7 +11,7 @@ const manifest=JSON.parse(readFileSync(path('assets/environment/willow-v2/manife
 for(const entry of [...manifest.files,...manifest.sources])assert.equal(hash(readFileSync(path(entry.path))),entry.sha256,entry.path);
 const protectedPaths=execFileSync('git',['ls-tree','-r','--name-only',base,'src','assets/environment/willow','qa/willow','default.project.json'],{cwd:root,encoding:'utf8'}).trim().split('\n');
 for(const p of protectedPaths){const a=execFileSync('git',['show',`${base}:${p}`],{cwd:root,maxBuffer:64*1024*1024}),b=readFileSync(path(p));
- if(/\.(luau|md|json|txt|svg)$/.test(p)||p.endsWith('/.gitattributes'))assert.equal(b.toString().replaceAll('\r\n','\n'),a.toString().replaceAll('\r\n','\n'),p);else assert.deepEqual(b,a,p);
+ if(/\.(luau|md|json|txt|svg)$/.test(p)||/\/\.git(attributes|ignore)$/.test(p))assert.equal(b.toString().replaceAll('\r\n','\n'),a.toString().replaceAll('\r\n','\n'),p);else assert.deepEqual(b,a,p);
 }
 execFileSync(process.execPath,['scripts/build-lunar-island.mjs'],{cwd:root,stdio:'pipe'});
 const data=readFileSync(path('assets/environment/willow-v2/prepared/WillowV2.mesh.json'),'utf8');
