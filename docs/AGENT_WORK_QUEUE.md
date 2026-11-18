@@ -16,6 +16,63 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### SKY-WORLD-TREE-R3 — dynamic light and horizon diagnosis
+
+**CODE CANDIDATE / STUDIO QA PENDING / OWNER ART PENDING**, task claimed 2026-11-18 on existing
+PR #61, `feat/ag76b-sky-world-tree` @ `3760c9081e9c0a19cc2622dadcc210bfe990986b`.
+Exact-base Windows/Ubuntu CI 44322639495 PASS; working tree initially clean.
+Scope: QA-only directional crown highlights using the existing images/owner,
+softened ocean edges and isolated horizon ablations. Keep R2 placement, sizes,
+production sources, camera/FOV, economy, V8, geometry/stations/routes and clock.
+No screenshots/video, new Roblox uploads/access changes, merge or publication.
+The horizon cause is not proven by code inspection: native visual comparison
+of Offset .15/0/-.05, scattering, ocean, sky and native clouds remains required.
+Rollback: R2 commit and preserved R2 owner place; no save migration.
+1460 tests/309 sources and builds PASS. Report: [SKY_WORLD_TREE_R3.md](SKY_WORLD_TREE_R3.md).
+Text-only Studio control cannot activate its Test menu; owner launch is pending.
+Source sky edges match exactly, but baked horizon bands/sky clouds remain possible
+contributors. Do not call the visible seam fixed or its cause established yet.
+
+### SKY-WORLD-TREE-R2 — monumental crown and cloud ocean
+
+**CODE CANDIDATE / STUDIO QA (numeric PASS) / OWNER ART PENDING**, task claimed 2026-11-18
+on existing PR #61 branch `feat/ag76b-sky-world-tree`, clean revision
+`2a047c401529632150c902b9d7f6ef188dd88ec4` (Windows/Ubuntu green).
+R1 retained as that commit and `G:\Codex\PotionTycoon-SkyWorldTree-R1.rbxlx`.
+Use owner's image(7) view and explicit 820–1805 / 140–560 pixel bounds;
+the downloaded image has no visible red annotation. Image(6) is the R1 comparison.
+Independent tree/cloud/glow placement, alpha-aware bounds, horizon cloud mass,
+bounded single-owner renderer. Preserve original masters, production sources,
+13 stations/26 routes, island/local trees, clock/lunar/Lighting/GlobalWind.
+No migrations, paid provider jobs, uploads, QA screenshots/video, merge or publish.
+Native results require evidence; code/build success cannot close the owner art gate.
+Delivered in [SKY_WORLD_TREE_R2.md](SKY_WORLD_TREE_R2.md): 1453 portable tests,
+ordinary F5 Custom-camera probe, willow mesh-budget fix observed, modes/moons/
+20 switches/restoration PASS. Reference art, normal-camera framing, 360-degree
+sweep/walking, foreground occlusion and devices remain OPEN. Startup camera's
+downward angle crops the crown; no forced camera/FOV adjustment is applied.
+
+### SKY-WORLD-TREE — distant atmospheric landmark
+
+**CODE CANDIDATE / STUDIO RETEST PENDING / OWNER ART PENDING**, sole task claimed
+2026-11-18 on `feat/ag76b-sky-world-tree`, clean base PR #60
+`6540ba350cb933c598d5abe0eb22167878e55fc9` (Windows/Ubuntu green).
+PR #59 `fdaf931b179ad188555147c720b768dd9334b17b` is already an ancestor;
+both remain draft. Original layered 2D concept/PNGs, bounded environment consumer
+and ordinary playable Studio-only composition over Willow V2. Preserve lunar
+60/20/20 and 1500-second clock, existing lighting/wind owners, all production
+sources, economy, V8, stations, routes and geometry. No paid third-party jobs,
+Roblox uploads/access changes, screenshots/video, merge or publication.
+Rollback: untouched Willow V2 game builder/artifacts. Native Play and platform
+gates require direct evidence; no automatic promotion from CLI success.
+Use host-native ImageGen and deterministic local texture packaging; game-dev
+CLI remains unavailable, so do not claim its canonical package verification.
+Delivered source/code in [SKY_WORLD_TREE.md](SKY_WORLD_TREE.md): original concept
+and PNG layers, ordinary-game builder, 1,448 local tests. Initial native numeric
+checks passed for the landmark but exposed Willow mesh-budget exhaustion.
+The generated hero-only cache fix needs a new Play. Owner explicitly deferred
+Studio and requested code/build-only continuation. No visual acceptance claimed.
+
 ### WILLOW-V2 — art polish and reusable tree system
 
 **IN PROGRESS / OWNER ART PENDING / NOT INTEGRATED**, sole task claimed

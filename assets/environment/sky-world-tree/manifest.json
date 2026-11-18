@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "task": "SKY-WORLD-TREE",
+  "base": "6540ba350cb933c598d5abe0eb22167878e55fc9",
+  "origin": "Original host-native OpenAI ImageGen artwork generated 2026-11-18 for this project. No third-party game imagery or paid-provider job.",
+  "rights": "Project-created generated artwork; use subject to applicable OpenAI terms. No claim of exclusive copyright or third-party CC0 licensing. Roblox upload NOT PERFORMED.",
+  "recipe": "Preserve masters; transparent 1664-square padding; premultiplied-alpha area resampling. Minimal compositing: Glow .10, Tree 1, Cloud .90 shifted +.06Y.",
+  "generation": {
+    "path": "assets/environment/sky-world-tree/generation.json",
+    "sha256": "6f332e652f189281ae6fe02cd999cf126791f55501d4a207c258f1ca525b3c01"
+  },
+  "textureBytes": 6553600,
+  "editableImages": 4,
+  "files": [
+    {
+      "path": "assets/environment/sky-world-tree/source/Concept.png",
+      "bytes": 1942251,
+      "sha256": "b3a1cc9d67f78c648d944b5b0a9ce34257007031614b425451519769a13fd6e0",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "path": "assets/environment/sky-world-tree/source/Tree.png",
+      "bytes": 1809614,
+      "sha256": "9b3ba55350d74525c7b789da7f886acc7320defa71ccb68eb084c93be3ac8876",
+      "width": 1536,
+      "height": 1024,
+      "transparentPixels": 972373,
+      "softPixels": 600491,
+      "edgeAlphaMax": 1
+    },
+    {
+      "path": "assets/environment/sky-world-tree/source/Cloud.png",
+      "bytes": 1433683,
+      "sha256": "d47e10f8e0aab68437c21603844977beaab59aaa8d7e6a99470db3e96f37228e",
+      "width": 1536,
+      "height": 1024,
+      "transparentPixels": 791288,
+      "softPixels": 781576,
+      "edgeAlphaMax": 1
+    },
+    {
+      "path": "assets/environment/sky-world-tree/source/Glow.png",
+      "bytes": 1590567,
+      "sha256": "71ea6491ba0ca7273e60c453d111d5d391eeed7d50b59d6c6e2c7a9fc574724f",
+      "width": 1536,
+      "height": 1024,
+      "transparentPixels": 487817,
+      "softPixels": 1085047,
+      "edgeAlphaMax": 2
+    },
+    {
+      "path": "assets/environment/sky-world-tree/textures/Tree.png",
+      "bytes": 722848,
+      "sha256": "99758e3a547afa8b98668a22f627e2755732953749a7e61e481a633f91fe93f8",
+      "width": 1024,
+      "height": 1024,
+      "transparentPixels": 821384,
+      "softPixels": 227192,
+      "edgeAlphaMax": 0
+    },
+    {
+      "path": "assets/environment/sky-world-tree/textures/Cloud.png",
+      "bytes": 204446,
+      "sha256": "75ee038e1d4b4c594bd65f727261d7ba3f81672975b48ff9b95cbdcacc7973ed",
+      "width": 512,
+      "height": 512,
+      "transparentPixels": 188360,
+      "softPixels": 73784,
+      "edgeAlphaMax": 0
+    },
+    {
+      "path": "assets/environment/sky-world-tree/textures/Glow.png",
+      "bytes": 87852,
+      "sha256": "02a5c5d876acec659d4520c59574354d60a782d829b9d9485e5e46a82def7b9d",
+      "width": 256,
+      "height": 256,
+      "transparentPixels": 39882,
+      "softPixels": 25654,
+      "edgeAlphaMax": 0
+    },
+    {
+      "path": "assets/environment/sky-world-tree/textures/Minimal.png",
+      "bytes": 317488,
+      "sha256": "d91184e36865cd4e8f55bace09b946da3e691afd0f0bb946ad5b6b6a4b926e78",
+      "width": 512,
+      "height": 512,
+      "transparentPixels": 145315,
+      "softPixels": 116418,
+      "edgeAlphaMax": 0
+    }
+  ],
+  "qaCaptures": 0,
+  "robloxUploads": 0,
+  "productionIntegrated": false
+}

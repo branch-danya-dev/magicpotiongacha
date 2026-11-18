@@ -50,6 +50,8 @@ jobs:
             build/PotionTycoon-WillowV2-Game-QA.rbxlx
             build/willow-v2/game-build.json
             build/willow-v2/build.json
+            build/PotionTycoon-SkyWorldTree-R3-QA.rbxlx
+            build/sky-landmark/build.json
             build/AG67-Prototype.rbxlx
             assets/vfx/ag67/
             scripts/install-ag67-preview.mjs
