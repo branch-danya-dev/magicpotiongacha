@@ -140,8 +140,14 @@ does not silently change FOV, look direction or screen-lock the background.
 Matching that reference, complete foreground/cloud occlusion, perceived cloud
 volume/no white wall, moon readability, a 360° sweep and walking around the
 island remain **OPEN**, as does final art approval. No report screenshots/videos
-were created. A technical screenshot was used only to operate the old scene's
-save/close dialog; it is not an art-QA deliverable.
+were created. Computer Use observations were used to operate the old scene's
+save/close dialog and inspect the running game; they are not art-QA deliverables.
+The follow-up UI check selected and confirmed Green Slime through the ordinary
+starter cards. The modal closed and the normal HUD/character appeared. The larger
+tree was visibly behind the book, pine and willow, with its top cropped in the
+startup view. This confirms basic foreground ordering at spawn, not full-route
+occlusion or reference-camera acceptance. Attempted movement/camera keyboard
+input instead selected Explorer rows, so walking/360-degree review is not claimed.
 Mobile, multiplayer and real-backend checks: **NOT RUN**.
 
 ## Build, comparison and rollback
