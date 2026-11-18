@@ -1,0 +1,70 @@
+{
+  "task": "SKY-WORLD-TREE-R4",
+  "base": "c1689262ae73a06426a7308b02235b501cf6c167",
+  "source": "assets/environment/sky-world-tree/r2/textures/Tree.png",
+  "sourceSHA256": "258d0cb0f9cb2e3e90909d92ec1f2bbab4b3d8b81c43412c964ffbf588bf1f5f",
+  "recipeSHA256": "a0fe9a2f51f94a7f6af7587c79b41b680c3317e5e04a6e7abd2edc717b95cb66",
+  "rights": "Derived masks of original project artwork; inherited r2 manifest provenance/terms. Original authored swept geometry, no external models.",
+  "recipe": "scripts/prepare-sky-depth.mjs",
+  "atlas": {
+    "size": 1024,
+    "slots": [
+      "rear",
+      "middle",
+      "front",
+      "accent"
+    ],
+    "rects": [
+      {
+        "x": 8,
+        "y": 8,
+        "width": 1008,
+        "height": 240
+      },
+      {
+        "x": 8,
+        "y": 264,
+        "width": 1008,
+        "height": 240
+      },
+      {
+        "x": 8,
+        "y": 520,
+        "width": 1008,
+        "height": 240
+      },
+      {
+        "x": 8,
+        "y": 776,
+        "width": 1008,
+        "height": 240
+      }
+    ],
+    "supportPixels": [
+      56737,
+      51102,
+      38015,
+      14305
+    ]
+  },
+  "textureBytes": 4194304,
+  "images": 1,
+  "meshes": 6,
+  "vertices": 280,
+  "triangles": 536,
+  "geometryPayloadBytes": 37442,
+  "uploads": 0,
+  "paidJobs": 0,
+  "files": [
+    {
+      "path": "assets/environment/sky-world-tree/r4/CanopyAtlas.png",
+      "sha256": "029f0e2c451a2250fc3d63e57cc17b86f48bb4ada5d37ce88293722d27bc7cb5",
+      "bytes": 1809872
+    },
+    {
+      "path": "assets/environment/sky-world-tree/r4/trunk.json",
+      "sha256": "f445071ccae5f990e9247e009f5ccc29ba1d820c273ad08a0e901c8b79ffc057",
+      "bytes": 37442
+    }
+  ]
+}
