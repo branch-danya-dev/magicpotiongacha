@@ -1,5 +1,8 @@
 # AG-76B Sky World Tree
 
+**Current candidate: [R2 — monumental crown and cloud ocean](SKY_WORLD_TREE_R2.md).**
+The remainder of this document preserves the historical R1 implementation/results.
+
 **CODE CANDIDATE / STUDIO RETEST PENDING / OWNER ART PENDING.**
 Base: `6540ba350cb933c598d5abe0eb22167878e55fc9` (Draft PR #60, Windows/Ubuntu
 green). PR #59 `fdaf931b179ad188555147c720b768dd9334b17b` is already an ancestor;

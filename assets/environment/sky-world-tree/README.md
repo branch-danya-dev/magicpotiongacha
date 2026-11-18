@@ -1,5 +1,15 @@
 # Sky World Tree — original layered candidate
 
+Current R2: `r2/` retains a sibling tree contrast edit, its exact prompt and a
+separate manifest. `node scripts/sky-landmark-r2-assets.mjs` exports alpha-aware
+crop metadata and four runtime images with the same 6.25 MiB decoded budget.
+The original masters/textures and recipe below remain unchanged for rollback.
+R2 game: `node scripts/build-sky-landmark.mjs --owner-user-id=11924805007`, output
+`build/PotionTycoon-SkyWorldTree-R2-QA.rbxlx`.
+See `docs/SKY_WORLD_TREE_R2.md` for native numeric QA and open art checks.
+
+## Original R1 package
+
 Original OpenAI ImageGen concept and three transparent layers created for this
 project on 2026-11-18. The complete prompts, reference relationships and output
 identities are in `generation.json`. No extracted Elden Ring imagery, paid

@@ -1,0 +1,150 @@
+{
+  "schema": 2,
+  "task": "SKY-WORLD-TREE-R2",
+  "revisionBase": "2a047c401529632150c902b9d7f6ef188dd88ec4",
+  "origin": "Original project artwork; built-in image_gen limited tree contrast edit. Original cloud and glow retained byte-for-byte.",
+  "rights": "Generated project artwork subject to applicable OpenAI terms; no exclusive copyright or CC0 claim.",
+  "recipe": "1664-square transparent padding, alpha-preserving area downsample; crop from alpha>=3 plus margin, reported visible bounds alpha>=32. Runtime crops only; no per-frame writes.",
+  "textureBytes": 6553600,
+  "editableImages": 4,
+  "layers": {
+    "Tree": {
+      "size": 1024,
+      "crop": {
+        "x": 52,
+        "y": 288,
+        "width": 921,
+        "height": 370
+      },
+      "visible": {
+        "x": 61,
+        "y": 296,
+        "width": 903,
+        "height": 341
+      },
+      "support": {
+        "x": 60,
+        "y": 296,
+        "width": 905,
+        "height": 354
+      },
+      "cropEdgeAlphaMax": 1
+    },
+    "Cloud": {
+      "size": 512,
+      "crop": {
+        "x": 26,
+        "y": 207,
+        "width": 460,
+        "height": 201
+      },
+      "visible": {
+        "x": 38,
+        "y": 216,
+        "width": 437,
+        "height": 180
+      },
+      "support": {
+        "x": 30,
+        "y": 211,
+        "width": 452,
+        "height": 193
+      },
+      "cropEdgeAlphaMax": 1
+    },
+    "Glow": {
+      "size": 256,
+      "crop": {
+        "x": 20,
+        "y": 64,
+        "width": 216,
+        "height": 127
+      },
+      "visible": {
+        "x": 34,
+        "y": 77,
+        "width": 187,
+        "height": 100
+      },
+      "support": {
+        "x": 24,
+        "y": 68,
+        "width": 208,
+        "height": 119
+      },
+      "cropEdgeAlphaMax": 1
+    },
+    "Minimal": {
+      "size": 512,
+      "crop": {
+        "x": 26,
+        "y": 144,
+        "width": 461,
+        "height": 185
+      },
+      "visible": {
+        "x": 30,
+        "y": 148,
+        "width": 452,
+        "height": 170
+      },
+      "support": {
+        "x": 30,
+        "y": 148,
+        "width": 453,
+        "height": 177
+      },
+      "cropEdgeAlphaMax": 1
+    }
+  },
+  "files": [
+    {
+      "path": "assets/environment/sky-world-tree/r2/textures/Tree.png",
+      "sha256": "258d0cb0f9cb2e3e90909d92ec1f2bbab4b3d8b81c43412c964ffbf588bf1f5f",
+      "bytes": 758467
+    },
+    {
+      "path": "assets/environment/sky-world-tree/r2/textures/Cloud.png",
+      "sha256": "75ee038e1d4b4c594bd65f727261d7ba3f81672975b48ff9b95cbdcacc7973ed",
+      "bytes": 204446
+    },
+    {
+      "path": "assets/environment/sky-world-tree/r2/textures/Glow.png",
+      "sha256": "02a5c5d876acec659d4520c59574354d60a782d829b9d9485e5e46a82def7b9d",
+      "bytes": 87852
+    },
+    {
+      "path": "assets/environment/sky-world-tree/r2/textures/Minimal.png",
+      "sha256": "3efc40be2f8976d1c002e270aa0f1c997d986f45f1028a8463bb2790b3e9eb99",
+      "bytes": 206277
+    },
+    {
+      "path": "assets/environment/sky-world-tree/r2/source/Tree.png",
+      "sha256": "691cf5cc112ddf13b1463d35233da659cabeb8489f239ac946414ac691a68d21",
+      "bytes": 1934973
+    },
+    {
+      "path": "assets/environment/sky-world-tree/r2/generation.json",
+      "sha256": "3569f6f48ff86028e3c811d6095f3b174b29bcad5804df9e3c67b7df684eff2e",
+      "bytes": 1378
+    },
+    {
+      "path": "assets/environment/sky-world-tree/source/Tree.png",
+      "sha256": "9b3ba55350d74525c7b789da7f886acc7320defa71ccb68eb084c93be3ac8876",
+      "bytes": 1809614
+    },
+    {
+      "path": "assets/environment/sky-world-tree/source/Cloud.png",
+      "sha256": "d47e10f8e0aab68437c21603844977beaab59aaa8d7e6a99470db3e96f37228e",
+      "bytes": 1433683
+    },
+    {
+      "path": "assets/environment/sky-world-tree/source/Glow.png",
+      "sha256": "71ea6491ba0ca7273e60c453d111d5d391eeed7d50b59d6c6e2c7a9fc574724f",
+      "bytes": 1590567
+    }
+  ],
+  "qaCaptures": 0,
+  "robloxUploads": 0,
+  "paidThirdPartyJobs": 0
+}

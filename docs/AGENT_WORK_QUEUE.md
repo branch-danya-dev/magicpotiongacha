@@ -16,6 +16,25 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### SKY-WORLD-TREE-R2 — monumental crown and cloud ocean
+
+**CODE CANDIDATE / STUDIO QA (numeric PASS) / OWNER ART PENDING**, task claimed 2026-11-18
+on existing PR #61 branch `feat/ag76b-sky-world-tree`, clean revision
+`2a047c401529632150c902b9d7f6ef188dd88ec4` (Windows/Ubuntu green).
+R1 retained as that commit and `G:\Codex\PotionTycoon-SkyWorldTree-R1.rbxlx`.
+Use owner's image(7) view and explicit 820–1805 / 140–560 pixel bounds;
+the downloaded image has no visible red annotation. Image(6) is the R1 comparison.
+Independent tree/cloud/glow placement, alpha-aware bounds, horizon cloud mass,
+bounded single-owner renderer. Preserve original masters, production sources,
+13 stations/26 routes, island/local trees, clock/lunar/Lighting/GlobalWind.
+No migrations, paid provider jobs, uploads, QA screenshots/video, merge or publish.
+Native results require evidence; code/build success cannot close the owner art gate.
+Delivered in [SKY_WORLD_TREE_R2.md](SKY_WORLD_TREE_R2.md): 1453 portable tests,
+ordinary F5 Custom-camera probe, willow mesh-budget fix observed, modes/moons/
+20 switches/restoration PASS. Reference art, normal-camera framing, 360-degree
+sweep/walking, foreground occlusion and devices remain OPEN. Startup camera's
+downward angle crops the crown; no forced camera/FOV adjustment is applied.
+
 ### SKY-WORLD-TREE — distant atmospheric landmark
 
 **CODE CANDIDATE / STUDIO RETEST PENDING / OWNER ART PENDING**, sole task claimed

@@ -1,0 +1,13 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-11-18",
+  "intent": "limited contrast correction, same original silhouette",
+  "prompt": "Use case: precise-object-edit. Asset type: transparent game sky-landmark tree layer. Edit the provided original Sky World Tree artwork only. Preserve its exact asymmetric silhouette, arrangement of ancient branches, separate foliage masses, all gaps, silver-sage and restrained champagne palette, transparent background, faded lower branches and soft atmospheric outer edge. Make the large internal branches and shaded foliage cavities moderately darker and more readable at game-camera scale; reduce the milky lavender-white veil inside the crown. Retain finely detailed foliage and restrained tiny warm light pockets, never black shadows, sharp outlines or opaque cutout edges. No new tree design, no cloud bank/background/sky/island/trunk/roots/text. Maintain the same framing and approximate 1536x1024 aspect. This is a limited contrast correction for enlargement, not a new concept. Preserve genuine alpha transparency.",
+  "reference": "assets/environment/sky-world-tree/source/Tree.png",
+  "output": "assets/environment/sky-world-tree/r2/source/Tree.png",
+  "toolOutput": "exec-299c96a3-12c1-45e5-8c56-d6e1bd2fcd82.png",
+  "transparentBackground": true,
+  "paidThirdPartyJobs": 0,
+  "robloxUploads": 0,
+  "sourcePreserved": true
+}

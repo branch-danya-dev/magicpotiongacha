@@ -19,3 +19,21 @@ test('World billboard retains depth occlusion and adds no lighting/time owner',(
  assert(!/RenderStepped:Connect|Heartbeat:Connect|Lighting\.[A-Za-z]+\s*=|GlobalWind\s*=|math\.random|RemoteEvent/.test(text));
  assert.equal((text.match(/WritePixelsBuffer/g)||[]).length,1);assert(text.indexOf('WritePixelsBuffer')<text.indexOf('function self.update'));
 });
+const r2=JSON.parse(readFileSync(dir+'r2/manifest.json'));
+test('R2 pins the new edit and original masters without increasing decoded image memory',()=>{
+ for(const f of r2.files)assert.equal(createHash('sha256').update(readFileSync(f.path)).digest('hex'),f.sha256,f.path);
+ for(const name of ['Cloud','Glow'])assert.deepEqual(readFileSync(dir+'r2/textures/'+name+'.png'),readFileSync(dir+'textures/'+name+'.png'));
+ assert.equal(r2.textureBytes,6553600);assert.equal(r2.editableImages,4);assert.equal(r2.robloxUploads,0);assert.equal(r2.qaCaptures,0);
+});
+test('R2 crop metadata encloses all visible pixels without a hard cropped edge',()=>{
+ for(const [name,shape]of Object.entries(r2.layers)){
+  const d=decode(readFileSync(dir+'r2/textures/'+name+'.png')),c=shape.crop,v=shape.visible;
+  let x0=d.w,y0=d.h,x1=0,y1=0,edge=0;
+  for(let y=0;y<d.h;y++)for(let x=0;x<d.w;x++){let a=d.rgba[(y*d.w+x)*4+3];if(a>=32){x0=Math.min(x0,x);y0=Math.min(y0,y);x1=Math.max(x1,x);y1=Math.max(y1,y)}
+   if(x>=c.x&&x<c.x+c.width&&y>=c.y&&y<c.y+c.height&&(x===c.x||y===c.y||x===c.x+c.width-1||y===c.y+c.height-1))edge=Math.max(edge,a);
+  }
+  assert.deepEqual(v,{x:x0,y:y0,width:x1-x0+1,height:y1-y0+1});assert.equal(edge,shape.cropEdgeAlphaMax);assert(edge<=2);
+  assert(c.height<d.h*.55);assert(c.width*c.height<d.w*d.h*.55);
+ }
+ assert.deepEqual(r2.layers.Tree.crop,{x:52,y:288,width:921,height:370});assert.deepEqual(r2.layers.Tree.visible,{x:61,y:296,width:903,height:341});
+});
