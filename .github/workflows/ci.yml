@@ -54,6 +54,8 @@ jobs:
             build/sky-landmark/build.json
             build/PotionTycoon-SkyWorldTree-R4-Experimental.rbxlx
             build/sky-depth/build.json
+            build/PotionTycoon-Island-Vegetation-Pilot.rbxlx
+            build/landscape/build.json
             build/AG67-Prototype.rbxlx
             assets/vfx/ag67/
             scripts/install-ag67-preview.mjs

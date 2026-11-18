@@ -96,9 +96,13 @@ run(process.execPath, ['scripts/build-sky-landmark.mjs', '--owner-user-id=-1', '
 run(tool('luau', 'luau-compile'), ['--null', 'build/sky-landmark/environment-view.luau', 'build/sky-landmark/pixels.luau', 'build/sky-landmark/hero-model.luau']);
 run(tool('luau', 'luau'), ['tests/run_sky_depth.luau']);
 run(tool('luau', 'luau'), ['tests/run_vegetation.luau']);
+run(tool('luau', 'luau'), ['tests/run_landscape.luau']);
+run(process.execPath, ['--test', 'tests/landscape-assets.test.mjs']);
 run(process.execPath, ['--test', 'tests/vegetation-assets.test.mjs']);
 run(process.execPath, ['--test', 'tests/sky-depth-assets.test.mjs']);
 run(process.execPath, ['scripts/build-sky-depth.mjs', '--owner-user-id=-1', '--reuse-r3']);
+run(process.execPath, ['scripts/build-landscape.mjs', '--owner-user-id=-1', '--reuse-r4']);
+run(tool('luau', 'luau-compile'), ['--null', 'build/landscape/art.luau', 'build/landscape/additions.client.luau']);
 run(tool('luau', 'luau-compile'), ['--null', 'build/sky-depth/renderer.luau', 'build/sky-depth/data.luau']);
 run(tool('luau', 'luau-compile'), ['--null', 'build/lunar-view.luau', 'build/lunar-review.client.luau', 'build/lunar-pixels.luau']);
 run(process.execPath, ['scripts/build-ag76-preview.mjs', '--owner-user-id=-1']);

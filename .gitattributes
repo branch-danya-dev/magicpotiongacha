@@ -44,3 +44,5 @@ assets/environment/vegetation-v2/** -text whitespace=cr-at-eol
 qa/vegetation/** text eol=lf
 scripts/vegetation/*.py text eol=lf
 scripts/build-vegetation.mjs text eol=lf
+qa/landscape/** text eol=lf
+scripts/build-landscape.mjs text eol=lf

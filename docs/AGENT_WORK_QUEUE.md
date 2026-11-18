@@ -16,6 +16,25 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### ISLAND-VEGETATION-PILOT — composed landscape trial
+
+**STAGE 1 CODE CANDIDATE / OWNER ART PENDING**, claimed 2026-11-18. Branch `feat/island-vegetation-pilot`.
+Exact local base `b9c5a3c1ba99f5f6079a91ffe9f53f3f823bcf1e` (Vegetation V2),
+descendant of confirmed Draft PR #62 `deb2ba18e1dda7f68713923a1e6164abd0df7f0f`.
+Stage 1 only: authored grove, restrained palette, shared wind, remove active
+willow in an isolated ordinary-game build while retaining its source. Preserve
+World Tree, island geometry, stations/routes, server economy and V8. No migrations,
+new uploads, screenshots/video, merge or publication. Rollback: use the previous
+build. Stage 2 whole-island planting requires owner review of this pilot.
+Portable/build/CI checks and native/device evidence are separate gates.
+Five trees (three ordinary model types, one magical), 22 undergrowth groups;
+concave coastline/crown/13-station audits, 3/2/1 rigged wind caps. No active willow.
+Local `npm run tools` and `npm test`: PASS, 1,451 Luau + 46 Node = 1,497;
+323 Luau sources. All 1,486 inherited tests retained. Candidate ordinary build
+reproduces from source; `docs/ISLAND_VEGETATION_PILOT.md` records scope and gates.
+Studio Play/FPS/phones NOT RUN (prior owner code/build-only instruction).
+GitHub CI results and final SHA are recorded in the new Draft PR.
+
 ### VEGETATION-V2 — source-licensed reusable tree library
 
 **FIRST PAIR CODE CANDIDATE / STUDIO DEFERRED BY OWNER**, claimed 2026-11-18.
