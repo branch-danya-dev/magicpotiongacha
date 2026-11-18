@@ -16,6 +16,27 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### SKY-WORLD-TREE — distant atmospheric landmark
+
+**CODE CANDIDATE / STUDIO RETEST PENDING / OWNER ART PENDING**, sole task claimed
+2026-11-18 on `feat/ag76b-sky-world-tree`, clean base PR #60
+`6540ba350cb933c598d5abe0eb22167878e55fc9` (Windows/Ubuntu green).
+PR #59 `fdaf931b179ad188555147c720b768dd9334b17b` is already an ancestor;
+both remain draft. Original layered 2D concept/PNGs, bounded environment consumer
+and ordinary playable Studio-only composition over Willow V2. Preserve lunar
+60/20/20 and 1500-second clock, existing lighting/wind owners, all production
+sources, economy, V8, stations, routes and geometry. No paid third-party jobs,
+Roblox uploads/access changes, screenshots/video, merge or publication.
+Rollback: untouched Willow V2 game builder/artifacts. Native Play and platform
+gates require direct evidence; no automatic promotion from CLI success.
+Use host-native ImageGen and deterministic local texture packaging; game-dev
+CLI remains unavailable, so do not claim its canonical package verification.
+Delivered source/code in [SKY_WORLD_TREE.md](SKY_WORLD_TREE.md): original concept
+and PNG layers, ordinary-game builder, 1,448 local tests. Initial native numeric
+checks passed for the landmark but exposed Willow mesh-budget exhaustion.
+The generated hero-only cache fix needs a new Play. Owner explicitly deferred
+Studio and requested code/build-only continuation. No visual acceptance claimed.
+
 ### WILLOW-V2 — art polish and reusable tree system
 
 **IN PROGRESS / OWNER ART PENDING / NOT INTEGRATED**, sole task claimed

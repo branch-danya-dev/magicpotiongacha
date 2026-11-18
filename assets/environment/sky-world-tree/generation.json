@@ -1,0 +1,41 @@
+{
+  "date": "2026-11-18",
+  "provider": "Host-native OpenAI image_gen",
+  "thirdPartyPaidJobs": 0,
+  "robloxUploads": 0,
+  "determinism": "Generation is not seed-reproducible. Preserved output bytes and deterministic export recipe are the reproducible source of truth.",
+  "requests": [
+    {
+      "name": "Concept",
+      "transparent_background": false,
+      "generated_file": "exec-744fae8e-4273-4733-b076-62e610d95865.png",
+      "prompt": "Use case: stylized-concept. Create an original premium game environment concept painting, landscape 1536x1024, for Wizard Island's distant Sky World Tree. Romantic dark fairytale, beautiful mysterious and serene, not horror. View from the height of an unseen floating island over an almost infinite ocean of pale blue lilac clouds. A colossal ancient tree rises FROM THE WORLD FAR BELOW THROUGH clouds, its wide asymmetrical crown top at the viewer's horizon, not towering overhead. Mainly enormous canopy and upper twisting branches visible; all main trunk, roots and ground totally obscured by cloud banks. No floating platform or island beneath the tree. Silver-sage foliage with restrained muted champagne inner luminosity and cool lavender atmospheric half-tones. Crown consists of irregular overlapping large masses with expressive gaps and huge curving ancient boughs of different thickness, strong original silhouette, not an enlarged garden tree. A deep blue romantic dusk sky and distant rose-lavender horizon, foreground cloud bank obscures the lower 40% of the subject with irregular soft fog, softened edges and low contrast conveying immense distance. Tree sits slightly right of center spanning roughly 55% image width; broad calm negative space on left for sky. The concept must be original, no recreation of any copyrighted game tree, no Elden Ring imagery, no characters, runes, text, logos, watermark, planets or moons. Rich painterly atmospheric depth, cohesive stylized realism, no neon gold, no sharp cutout border, no thick glowing outline. This is original concept art, not a Roblox screenshot or evidence.",
+      "reference": null,
+      "source": "source/Concept.png"
+    },
+    {
+      "name": "Tree",
+      "transparent_background": true,
+      "generated_file": "exec-96fa8afd-2bbf-4b16-9925-279ec114492d.png",
+      "prompt": "Use case: background-extraction / game-asset compositing. Extract and complete ONLY the colossal silver-sage ancient Sky World Tree from this original concept into a transparent landscape PNG master 1536x1024. Preserve the recognizable broad asymmetric layered canopy, curving ancient upper boughs, muted silver green cool lavender palette and subtle champagne interior light of this exact concept. Recenter the complete crown with generous transparent margins on ALL four sides (at least 8%); extend the rightmost clipped branches naturally inside the canvas. Keep the sprawling irregular canopy split into large masses with beautiful natural gaps, not a garden-tree silhouette. No sky and NO CLOUDS in this tree layer. No roots, no ground, no platform. Show only canopy and upper branches; the branch mass at the bottom must fade smoothly to full transparency over its lower third, without a cut edge or a remaining opaque stump. Preserve soft distant atmospheric edges and low contrast, do not sharpen leaf noise, no opaque pale background, no checkerboard drawn into pixels, no text. This is an original transparent game asset derived from the supplied concept, not a screenshot.",
+      "reference": "source/Concept.png",
+      "source": "source/Tree.png"
+    },
+    {
+      "name": "Cloud",
+      "transparent_background": true,
+      "generated_file": "exec-0bf71cf7-a284-4843-8cea-5d3278e50992.png",
+      "prompt": "Use case: precise-object-edit / game-asset compositing. Make a separate transparent foreground CLOUD OCCLUSION layer to match the original concept supplied as palette/mood reference. Remove the tree, branches, sky, all objects and all distant scenery. Only a wide, irregular horizontal bank of soft volumetric pale silver-lilac-blue clouds, gently varying cloud crests in upper half and opaque fluffy cloud body across lower middle. Landscape1536x1024 transparent PNG. The bank spans from 8% to92% ofcanvas width and y40% to86%; the upper skyline irregular, varied little cloud peaks, cinematic natural mist, no repeated puffs. Body in middle-lower should be opaque enough to hide a tree trunk; edges of entire cloud bank dissolve to full transparency on all four sides well before the image bounds, at least6% transparent margin. No dark background, no rectangle, no horizon line or ground. No highlights brighter than muted silver, no hard contour. Keep its airy atmospheric perspective, subtle details and graceful cloud shapes. This is an original reusable game sprite layer, not a screenshot. Real alpha transparency, no checkerboard.",
+      "reference": "source/Concept.png",
+      "source": "source/Cloud.png"
+    },
+    {
+      "name": "Glow",
+      "transparent_background": true,
+      "generated_file": "exec-c19e334d-4afd-49c7-a842-128d13e5ccae.png",
+      "prompt": "Use case: stylized-concept / game VFX texture. A standalone transparent PNG soft atmospheric glow layer, landscape 1536x1024. Only a very broad feathered irregular elliptical luminous haze centered at (50%,48%), width65% height36% ofcanvas. Pale muted champagne-silver at the center transitioning through very faint cold silver-lavender in its outer diffusion. Subtle large soft patches suggesting scattered light from a vast tree canopy, no recognizable tree or clouds or branches, no stars or sparkles. Extremely gentle and smooth, a volumetric ambient glow rather than a bright ring. It MUST dissolve completely to alpha zero within allfourcanvas borders, generous 15% transparent margins. No solid colored background, no black painted background, no checkerboard, no border, no hard outline, no text. Real alpha transparency, colors unpremultiplied. Intended as a low-opacity compositing sprite behind a distant fantasy tree.",
+      "reference": null,
+      "source": "source/Glow.png"
+    }
+  ]
+}
