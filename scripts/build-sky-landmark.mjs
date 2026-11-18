@@ -30,25 +30,44 @@ treePatch('for mi,source in ipairs(variant.meshes)do','for mi,source in ipairs(v
 treePatch('\t\t\tend\n\t\tend\n\tend)','\t\t\tend\n\t\t\tend\n\t\tend\n\tend)');
 writeFileSync(path('build/sky-landmark/hero-model.luau'),treeModel);
 project.tree.StarterPlayer.StarterPlayerScripts.CurrentArt.TreeModel=node('build/sky-landmark/hero-model.luau');
-for(const name of ['Config','Model','Resources'])shared['SkyLandmark'+name]=node('qa/sky-landmark/'+name+'.luau');
+for(const name of ['Config','Model','Resources','Horizon'])shared['SkyLandmark'+name]=node('qa/sky-landmark/'+name+'.luau');
 shared.SkyLandmarkPixels=node('build/sky-landmark/pixels.luau');client.SkyLandmark=node('qa/sky-landmark/SkyLandmark.luau');
 let view=read('build/lunar-view.luau');
 const patch=(a,b)=>{assert.equal(view.split(a).length,2,'Environment bridge drift: '+a);view=view.replace(a,b);};
-patch('local View={}','local SkyLandmark=require(script.Parent.SkyLandmark)\nlocal View={}');
+patch('local View={}','local SkyLandmark=require(script.Parent.SkyLandmark)\nlocal Horizon=require(Shared.SkyLandmarkHorizon)\nlocal View={}');
 patch('local saved={}; local savedWind=workspace.GlobalWind','self.skyBaseline=require(script.Parent.LunarDiagnostics).snapshot()\n\tlocal saved={}; local savedWind=workspace.GlobalWind');
-patch('local lunarDisks=LunarDisks.create(moon,Vista.moonSize)','local lunarDisks=LunarDisks.create(moon,Vista.moonSize)\n\tlocal skyLandmark=SkyLandmark.create(folder)');
-patch('lunarDisks.update(sample,lunarWeights,moonDirection,self.quality)','lunarDisks.update(sample,lunarWeights,moonDirection,self.quality)\n\t\tskyLandmark.update(sample,lunarWeights,workspace.GlobalWind,self.quality,self.reduceMotion,elapsed)');
-patch('counts.lunar=lunarDisks.stats();','counts.skyLandmark=skyLandmark.stats();counts.lunar=lunarDisks.stats();');
+patch('local lunarDisks=LunarDisks.create(moon,Vista.moonSize)',`local lunarDisks=LunarDisks.create(moon,Vista.moonSize)
+	local skyLandmark=SkyLandmark.create(folder)
+	local horizonMode="candidate"
+	function self.setHorizon(mode)
+		if not RunService:IsStudio() or not Horizon.valid(mode) then return false end
+		horizonMode=mode;return true
+	end`);
+patch('-- AG75_END_TONEMAP\n\tend',`-- AG75_END_TONEMAP
+		-- R3 QA-only composition, applied by the existing owner after all looks.
+		-- Offset zero is a candidate, not a proven diagnosis of the reported seam.
+		local h=Horizon.plan(horizonMode)
+		atmosphere.Offset=h.offset
+		atmosphere.Parent=h.atmosphere and Lighting or nil
+		if h.neutralScatter then atmosphere.Density=.12;atmosphere.Haze=0;atmosphere.Glare=0;atmosphere.Decay=atmosphere.Color end
+		sky.Parent=h.sky and Lighting or nil;clouds.Enabled=h.nativeClouds
+		skyLandmark.setOceanEnabled(h.ocean)
+		self.horizonState={mode=horizonMode,offset=atmosphere.Offset,density=atmosphere.Density,haze=atmosphere.Haze,
+			color={atmosphere.Color.R,atmosphere.Color.G,atmosphere.Color.B},decay={atmosphere.Decay.R,atmosphere.Decay.G,atmosphere.Decay.B},
+			atmosphere=atmosphere.Parent==Lighting,sky=sky.Parent==Lighting,nativeClouds=clouds.Enabled,ocean=h.ocean}
+	end`);
+patch('lunarDisks.update(sample,lunarWeights,moonDirection,self.quality)','lunarDisks.update(sample,lunarWeights,moonDirection,self.quality)\n\t\tskyLandmark.update(sample,lunarWeights,workspace.GlobalWind,self.quality,self.reduceMotion,elapsed,{sun=sun,moon=moonDirection,sky=atmosphere.Color})');
+patch('counts.lunar=lunarDisks.stats();','counts.skyLandmark=skyLandmark.stats();counts.skyHorizon=self.horizonState;counts.lunar=lunarDisks.stats();');
 patch('lunarDisks.destroy()','skyLandmark.destroy()\n\t\tlunarDisks.destroy()');
 writeFileSync(path('build/sky-landmark/environment-view.luau'),view);client.EnvironmentView=node('build/sky-landmark/environment-view.luau');
 client.SkyDiagnostics=node('qa/sky-landmark/Diagnostics.client.luau');client.LunarDiagnostics=node('qa/lunar/Diagnostics.luau');
-project.name='PotionTycoon-SkyWorldTree-R2-QA';project.tree.Workspace.$attributes.SkyLandmarkQA=true;
+project.name='PotionTycoon-SkyWorldTree-R3-QA';project.tree.Workspace.$attributes.SkyLandmarkQA=true;
 project.tree.Workspace.$attributes.SkyLandmarkAutoCheck=process.argv.includes('--verify');
 writeFileSync(path('build/sky-landmark/game.project.json'),JSON.stringify(project,null,2)+'\n');
-const output='build/PotionTycoon-SkyWorldTree-R2-QA.rbxlx';
+const output='build/PotionTycoon-SkyWorldTree-R3-QA.rbxlx';
 execFileSync(path('.tools/rojo/rojo'+(process.platform==='win32'?'.exe':'')),['build',path('build/sky-landmark/game.project.json'),'-o',path(output)],{stdio:'inherit'});
 assert.equal((view.match(/RenderStepped:Connect/g)||[]).length,1);
 const xml=read(output);for(const key of ['UseMemoryInStudio = true','AG76 QA cannot access live persistence','WILLOW_V2_GAME_READY','SkyLandmark','<string name="Name">Main</string>'])assert(xml.includes(key),key);
 assert(!xml.includes('WillowV2ReviewCamera'));assert(!xml.includes('<string name="Name">WizardReview</string>'));
-writeFileSync(path('build/sky-landmark/build.json'),JSON.stringify({base,revisionBase:manifest.revisionBase,revision:2,head:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),artifact:output,sha256:hash(readFileSync(path(output))),owner:receipt.owner,ordinaryCamera:true,autoCheck:process.argv.includes('--verify'),textureBytes:manifest.textureBytes,images:4,instances:30,cloudBanks:8,renderConnections:0,addedLights:0,uploads:0,productionIntegrated:false},null,2)+'\n');
+writeFileSync(path('build/sky-landmark/build.json'),JSON.stringify({base,revisionBase:'3760c9081e9c0a19cc2622dadcc210bfe990986b',revision:3,head:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),artifact:output,sha256:hash(readFileSync(path(output))),owner:receipt.owner,ordinaryCamera:true,autoCheck:process.argv.includes('--verify'),textureBytes:manifest.textureBytes,images:4,instances:45,cloudBanks:8,renderConnections:0,addedLights:0,uploads:0,productionIntegrated:false,horizonCause:'UNCONFIRMED until native visual ablation'},null,2)+'\n');
 console.log('Sky World Tree ordinary game built: '+output);

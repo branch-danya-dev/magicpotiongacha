@@ -1,6 +1,7 @@
 # AG-76B Sky World Tree
 
-**Current candidate: [R2 — monumental crown and cloud ocean](SKY_WORLD_TREE_R2.md).**
+**Current candidate: [R3 — directional lighting and horizon investigation](SKY_WORLD_TREE_R3.md).**
+Previous candidate: [R2 — monumental crown and cloud ocean](SKY_WORLD_TREE_R2.md).
 The remainder of this document preserves the historical R1 implementation/results.
 
 **CODE CANDIDATE / STUDIO RETEST PENDING / OWNER ART PENDING.**

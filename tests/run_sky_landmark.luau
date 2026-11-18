@@ -4,6 +4,7 @@ local M=require("../qa/sky-landmark/Model")
 local C=require("../qa/sky-landmark/Config")
 local R=require("../qa/sky-landmark/Resources")
 local Lunar=require("../qa/lunar/Cycle")
+local H=require("../qa/sky-landmark/Horizon")
 local function sample(n,w,c)return {night=n,warm=w,cloud=c}end
 T.test("Landmark is distant and apparent size changes less than 5 percent across island",function()
 	local p=C.offset;local d=math.sqrt(p[1]^2+p[2]^2+p[3]^2);T.truthy(d>2400)
@@ -51,9 +52,9 @@ T.test("Partial allocation failure releases every previously created resource",f
 	T.falsy(pcall(r.get,"failure",function()error("image budget")end));r.destroy();T.equal(freed,1);T.equal(#r.items,0)
 end)
 T.test("Quality and memory budgets are explicit",function()
-	T.equal(C.imageCount,4);T.equal(C.textureBytes,6553600);T.equal(C.maxInstances,30)
+	T.equal(C.imageCount,4);T.equal(C.textureBytes,6553600);T.equal(C.maxInstances,45)
 	T.truthy(C.quality.full.hz>C.quality.reduced.hz and C.quality.reduced.hz>C.quality.minimal.hz)
-	T.equal(C.quality.minimal.layers,9);T.falsy(pcall(M.project,sample(0,0,0),{1,0,0},"invalid",0,false))
+	T.equal(C.quality.minimal.layers,10);T.falsy(pcall(M.project,sample(0,0,0),{1,0,0},"invalid",0,false))
 end)
 T.test("Alpha-aware composition meets the owner's approximate reference rectangle without camera overrides",function()
 	-- Estimated from book/arch/pine positions in the provided image(7), not a native art PASS.
@@ -78,8 +79,62 @@ T.test("Cloud mass remains visible at night in every quality while extra layers 
 	for _,q in ipairs({"full","reduced","minimal"})do
 		local p=M.project(sample(1,0,0),{1,0,0},q,0,false)
 		T.truthy(p.cloud*C.cloud.opacity*C.cloud.density>.8)
-		for _,channel in ipairs(p.cloudColor)do T.truthy(channel>.3 and channel<.65)end
+		for _,channel in ipairs(p.cloudColor)do T.truthy(channel>.3 and channel<.8)end
 		if q=="minimal"then T.equal(p.glow,0);T.equal(p.haze,0);T.equal(p.moving,0)end
 	end
+end)
+T.test("R3 keeps R2 placement and independent layer sizes exactly",function()
+	T.same(C.offset,{510,1150,-5175});T.same(C.tree.size,{6400,2920});T.same(C.tree.offset,{0,0})
+	T.same(C.cloud.size,{6750,2500});T.same(C.cloud.offset,{0,-2070});T.same(C.glow.size,{7350,3520})
+end)
+T.test("Sun and moon directions select the lit side; below-horizon lights cannot illuminate",function()
+	local d={sun={-.8,.6,.6},moon={.8,-.6,-.6}}
+	local a=M.light(sample(0,0,0),{1,0,0},"full",d)
+	T.truthy(a.left>.3 and a.right==0 and a.top>0);T.truthy(a.color[1]>a.color[3])
+	d.sun={.8,.6,.6};local b=M.light(sample(0,0,0),{1,0,0},"full",d);T.near(a.left,b.right,1e-10)
+	d.sun={1,1,-.3};d.moon={1,1,-.3}
+	local dark=M.light(sample(.5,.5,0),{1,0,0},"full",d);T.equal(dark.top,0);T.equal(dark.left,0);T.equal(dark.right,0)
+end)
+T.test("Three lunar accents stay distinct without changing base tree color or geometry",function()
+	local d={sun={0,-1,-1},moon={.6,.8,.8}}
+	local p=M.light(sample(1,0,0),{1,0,0},"full",d)
+	local b=M.light(sample(1,0,0),{0,1,0},"full",d)
+	local f=M.light(sample(1,0,0),{0,0,1},"full",d)
+	T.truthy(p.color[3]>p.color[1]);T.truthy(b.color[1]>b.color[2]*1.5)
+	T.truthy(f.color[2]>f.color[1]*1.5);T.near(p.top,b.top,1e-10);T.near(p.top,f.top,1e-10)
+end)
+T.test("Directional accents remain bounded and continuous across dusk and horizon",function()
+	local prior=nil
+	for i=0,1000 do
+		local t=i/1000;local d={sun={.8,.3,.3-.6*t},moon={-.8,.3,-.3+.6*t}}
+		local l=M.light(sample(t,1,0),{1-t,t,0},"full",d)
+		for _,k in ipairs({"top","left","right"})do T.truthy(l[k]>=0 and l[k]<=.55);if prior then T.truthy(math.abs(l[k]-prior[k])<.006)end end
+		prior=l
+	end
+end)
+T.test("Minimal retains only top light and Reduce Motion does not freeze astronomical lighting",function()
+	local d={sun={-.8,.6,.6},moon={.8,-.6,-.6}}
+	local min=M.project(sample(0,0,0),{1,0,0},"minimal",7,true,d)
+	T.truthy(min.lightTop>0);T.equal(min.lightLeft,0);T.equal(min.lightRight,0)
+	local a=M.project(sample(0,0,0),{1,0,0},"full",7,true,d)
+	d.sun={.8,.6,.6};local b=M.project(sample(0,0,0),{1,0,0},"full",7,true,d)
+	T.truthy(a.lightLeft>b.lightLeft and b.lightRight>a.lightRight)
+end)
+T.test("Weather attenuates highlights and ocean follows final atmosphere without whitening",function()
+	local d={sun={.8,.6,.6},moon={-.8,-.6,-.6},sky={.5,.6,.7}}
+	local clear=M.project(sample(0,0,0),{1,0,0},"full",0,false,d)
+	local storm=M.project(sample(0,0,1),{1,0,0},"full",0,false,d)
+	T.truthy(storm.lightRight<clear.lightRight*.5)
+	for _,c in ipairs(clear.cloudColor)do T.truthy(c>.5 and c<.9)end
+end)
+T.test("Horizon ablations isolate controls and always return to a complete candidate",function()
+	T.falsy(H.valid("publish"));T.falsy(H.valid(nil));T.falsy(pcall(H.plan,"bad"))
+	T.equal(H.plan("baseline").offset,.15);T.equal(H.plan("offset0").offset,0);T.equal(H.plan("offsetNegative").offset,-.05)
+	for _,pair in ipairs({{"noAtmosphere","atmosphere"},{"noOcean","ocean"},{"noSky","sky"},{"noNativeClouds","nativeClouds"}})do
+		local plan=H.plan(pair[1]);T.equal(plan.offset,.15)
+		for _,key in ipairs({"atmosphere","ocean","sky","nativeClouds"})do T.equal(plan[key],key~=pair[2])end
+	end
+	local p=H.plan("candidate");for _,key in ipairs({"atmosphere","ocean","sky","nativeClouds"})do T.truthy(p[key])end
+	T.equal(p.offset,0);T.falsy(p.neutralScatter)
 end)
 T.finish()

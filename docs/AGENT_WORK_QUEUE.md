@@ -16,6 +16,23 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### SKY-WORLD-TREE-R3 — dynamic light and horizon diagnosis
+
+**CODE CANDIDATE / STUDIO QA PENDING / OWNER ART PENDING**, task claimed 2026-11-18 on existing
+PR #61, `feat/ag76b-sky-world-tree` @ `3760c9081e9c0a19cc2622dadcc210bfe990986b`.
+Exact-base Windows/Ubuntu CI 44322639495 PASS; working tree initially clean.
+Scope: QA-only directional crown highlights using the existing images/owner,
+softened ocean edges and isolated horizon ablations. Keep R2 placement, sizes,
+production sources, camera/FOV, economy, V8, geometry/stations/routes and clock.
+No screenshots/video, new Roblox uploads/access changes, merge or publication.
+The horizon cause is not proven by code inspection: native visual comparison
+of Offset .15/0/-.05, scattering, ocean, sky and native clouds remains required.
+Rollback: R2 commit and preserved R2 owner place; no save migration.
+1460 tests/309 sources and builds PASS. Report: [SKY_WORLD_TREE_R3.md](SKY_WORLD_TREE_R3.md).
+Text-only Studio control cannot activate its Test menu; owner launch is pending.
+Source sky edges match exactly, but baked horizon bands/sky clouds remain possible
+contributors. Do not call the visible seam fixed or its cause established yet.
+
 ### SKY-WORLD-TREE-R2 — monumental crown and cloud ocean
 
 **CODE CANDIDATE / STUDIO QA (numeric PASS) / OWNER ART PENDING**, task claimed 2026-11-18

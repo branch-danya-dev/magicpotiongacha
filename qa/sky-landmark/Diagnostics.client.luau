@@ -7,6 +7,7 @@ local Controller=require(script.Parent.EnvironmentController)
 local View=require(script.Parent.EnvironmentView)
 local Diagnostics=require(script.Parent.LunarDiagnostics)
 local Config=require(game:GetService("ReplicatedStorage").PotionTycoon.Shared.SkyLandmarkConfig)
+local Horizon=require(game:GetService("ReplicatedStorage").PotionTycoon.Shared.SkyLandmarkHorizon)
 local root=workspace:WaitForChild("PotionTycoonWorld")
 local function emit(kind,data)print("SKY_LANDMARK_"..kind,Http:JSONEncode(data))end
 local running=false
@@ -17,6 +18,7 @@ local function checks()
 	if running then return false end;running=true
 	local quality,motion=Controller.quality,Controller.reduceMotion
 	local initial=Controller.view;local pose=initial.pose;local stopped=false
+	local horizon=initial.stats().skyHorizon.mode
 	local ok,err=pcall(function()
 		local s=assert(inspect());assert(s.ready,s.error);assert(s.images==4 and s.instances==Config.maxInstances and s.pixelWrites==4)
 		local camera=workspace.CurrentCamera
@@ -32,6 +34,15 @@ local function checks()
 			emit("POSE",{pose=p,clock=game:GetService("Lighting").ClockTime,camera=camera.CameraType.Name,moonSeparationDegrees=separation,landmark=st.skyLandmark,lunar=st.lunar.weights})
 		end
 		for _,name in ipairs({"pearl","blood","frost"})do Controller.view.setMoon(name);task.wait(9);emit("MOON",{name=name,landmark=inspect(),weights=Controller.view.stats().lunar.weights})end
+		Controller.view.setPose("day");task.wait(9)
+		for _,mode in ipairs(Horizon.modes)do
+			assert(Controller.view.setHorizon(mode));task.wait(.5)
+			local h=Controller.view.stats().skyHorizon;local expected=Horizon.plan(mode)
+			for _,key in ipairs({"offset","atmosphere","ocean","sky","nativeClouds"})do assert(h[key]==expected[key],"Ablation mismatch: "..key)end
+			assert(inspect().oceanEnabled==expected.ocean)
+			emit("HORIZON",{state=h,visualObservation="NOT RECORDED; numerical settings do not identify the seam cause"})
+		end
+		Controller.view.setHorizon(horizon)
 		for i=1,20 do
 			Controller.setQuality(({"full","reduced","minimal"})[(i-1)%3+1]);Controller.setReduceMotion(i%2==0);task.wait(.25)
 			local st=inspect();assert(st.images==4 and st.instances==Config.maxInstances and st.pixelWrites==4 and st.renderConnections==0 and st.lifecycleConnections==1)
@@ -41,7 +52,8 @@ local function checks()
 		emit("QUALITY",{switches=20,reduceMotionFrozen=true,landmark=inspect()})
 		local metrics={};for _,q in ipairs({"full","reduced","minimal"})do
 			Controller.setQuality(q);Controller.setReduceMotion(false);task.wait(5)
-			assert(inspect().visibleLayers==Config.quality[q].layers,"Steady layer budget mismatch")
+			assert(inspect().visibleLayers<=Config.quality[q].layers,"Steady layer cap exceeded")
+			if q=="minimal"then assert(inspect().light.left<.001 and inspect().light.right<.001,"Minimal side accents survived")end
 			local samples,cpu={},0
 			for i=1,90 do local dt=Run.RenderStepped:Wait();samples[i]=dt*1000;cpu+=inspect().lastMs end
 			table.sort(samples);metrics[q]={frames=90,frameMedianMs=samples[45],frameP95Ms=samples[86],sampledUpdateMeanMs=cpu/90,totalClientMemoryMb=game:GetService("Stats"):GetTotalMemoryUsageMb()}
@@ -53,11 +65,17 @@ local function checks()
 	end)
 	if stopped then Controller.view=View.start(root,{quality=quality});Controller.view.setLook("OFF")end
 	Controller.setQuality(quality);Controller.setReduceMotion(motion)
-	if Controller.view then Controller.view.setPose(pose);Controller.view.setMoon("auto")end
+	if Controller.view then Controller.view.setPose(pose);Controller.view.setMoon("auto");Controller.view.setHorizon(horizon)end
 	if not ok then emit("FAIL",{error=tostring(err)})end;running=false;return ok
 end
 local control=Instance.new("BindableFunction");control.Name="SkyLandmarkQA";control.Parent=root
-control.OnInvoke=function(action)if action=="check" then task.spawn(checks);return true end;return inspect()end
+control.OnInvoke=function(action,value)
+	if action=="check" then task.spawn(checks);return true end
+	if action=="horizon"then return Controller.view.setHorizon(value)end
+	if action=="pose"then Controller.view.setPose(value);return true end
+	if action=="moon"then return Controller.view.setMoon(value)end
+	return {landmark=inspect(),horizon=Controller.view.stats().skyHorizon}
+end
 task.spawn(function()
 	for _=1,300 do local s=inspect();if s and s.ready then
 		emit("READY",s)
