@@ -16,6 +16,23 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### SKY-WORLD-TREE-R4 — isolated 2.5D depth prototype
+
+**CODE CANDIDATE / EXPERIMENTAL / OWNER ART REVIEW PENDING**, claimed 2026-11-18.
+Branch `feat/ag76b-sky-world-tree-r4-depth`; exact base PR #61
+`c1689262ae73a06426a7308b02235b501cf6c167`, Windows/Ubuntu CI 44328385986 PASS.
+Source-derived independent canopy masks, fixed world depth, lightweight trunk,
+interleaved clouds and reversible R3/R4 comparison. Preserve R3 and its owner,
+camera, economy/V8/stations/routes, clock and lunar probabilities. No screenshots,
+video, paid generation, uploads, integration, merge or publication. Native/device
+checks need their own evidence; horizon remains a separate unresolved defect.
+Three source-derived crown masks, one ridge mask, six lightweight meshes and
+two interleaved cloud cards; R3/Minimal fallback, fixed anchors, no owner changes.
+Full local suite 1471 PASS, final 9-test R4 suite PASS (1472 current total),
+313 compiled sources. Native file dialog is inaccessible without captures;
+Play, measured timings and owner art remain pending. [Report](SKY_WORLD_TREE_R4.md).
+
+
 ### SKY-WORLD-TREE-R3 — dynamic light and horizon diagnosis
 
 **CODE CANDIDATE / STUDIO QA PENDING / OWNER ART PENDING**, task claimed 2026-11-18 on existing
