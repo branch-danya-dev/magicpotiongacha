@@ -97,11 +97,15 @@ run(tool('luau', 'luau-compile'), ['--null', 'build/sky-landmark/environment-vie
 run(tool('luau', 'luau'), ['tests/run_sky_depth.luau']);
 run(tool('luau', 'luau'), ['tests/run_vegetation.luau']);
 run(tool('luau', 'luau'), ['tests/run_landscape.luau']);
+run(tool('luau', 'luau'), ['tests/run_forest.luau']);
+run(process.execPath, ['--test', 'tests/forest-assets.test.mjs']);
 run(process.execPath, ['--test', 'tests/landscape-assets.test.mjs']);
 run(process.execPath, ['--test', 'tests/vegetation-assets.test.mjs']);
 run(process.execPath, ['--test', 'tests/sky-depth-assets.test.mjs']);
 run(process.execPath, ['scripts/build-sky-depth.mjs', '--owner-user-id=-1', '--reuse-r3']);
 run(process.execPath, ['scripts/build-landscape.mjs', '--owner-user-id=-1', '--reuse-r4']);
+run(process.execPath, ['scripts/build-forest.mjs', '--owner-user-id=-1', '--reuse-landscape']);
+run(tool('luau', 'luau-compile'), ['--null', ...await files('build/forest'), 'scripts/forest-stats.luau']);
 run(tool('luau', 'luau-compile'), ['--null', 'build/landscape/art.luau', 'build/landscape/additions.client.luau', 'scripts/landscape-stats.luau']);
 run(tool('luau', 'luau-compile'), ['--null', 'build/landscape/Cliff.luau', 'build/landscape/VegetationTreeModel.luau', 'build/landscape/SkyDepthRenderer.luau']);
 run(tool('luau', 'luau-compile'), ['--null', 'build/sky-depth/renderer.luau', 'build/sky-depth/data.luau']);
