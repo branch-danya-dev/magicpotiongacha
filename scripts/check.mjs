@@ -95,6 +95,8 @@ run(process.execPath, ['--test', 'tests/sky-landmark-assets.test.mjs']);
 run(process.execPath, ['scripts/build-sky-landmark.mjs', '--owner-user-id=-1', '--reuse-game']);
 run(tool('luau', 'luau-compile'), ['--null', 'build/sky-landmark/environment-view.luau', 'build/sky-landmark/pixels.luau', 'build/sky-landmark/hero-model.luau']);
 run(tool('luau', 'luau'), ['tests/run_sky_depth.luau']);
+run(tool('luau', 'luau'), ['tests/run_vegetation.luau']);
+run(process.execPath, ['--test', 'tests/vegetation-assets.test.mjs']);
 run(process.execPath, ['--test', 'tests/sky-depth-assets.test.mjs']);
 run(process.execPath, ['scripts/build-sky-depth.mjs', '--owner-user-id=-1', '--reuse-r3']);
 run(tool('luau', 'luau-compile'), ['--null', 'build/sky-depth/renderer.luau', 'build/sky-depth/data.luau']);

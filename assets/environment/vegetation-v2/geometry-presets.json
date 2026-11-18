@@ -1,0 +1,4 @@
+[
+  {"id":"Natural","TrunkHeight":1,"TrunkWidth":1,"TrunkCurvature":0,"BranchSpread":1,"CrownSize":1,"CrownShape":[1,1],"FoliageDensity":1},
+  {"id":"Windswept","TrunkHeight":1.10,"TrunkWidth":0.9,"TrunkCurvature":0.065,"BranchSpread":1.10,"CrownSize":1.08,"CrownShape":[1.12,0.88],"FoliageDensity":0.90}
+]

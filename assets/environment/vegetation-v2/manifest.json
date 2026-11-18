@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "kind": "LOCAL_DERIVATIVE_RECEIPT",
+  "canonicalGameDevReceipt": false,
+  "studioVerified": false,
+  "productionAdmitted": false,
+  "sourceAudit": "source-audit.json",
+  "files": [
+    {
+      "path": "assets/environment/vegetation-v2/prepared/stylized_stefan/Atlas.png",
+      "bytes": 98087,
+      "sha256": "5f5abd6191d316fb563f256cc4a3b9ae97e15772c135166056ecd691e1f25125"
+    },
+    {
+      "path": "assets/environment/vegetation-v2/prepared/stylized_stefan/Editable.blend",
+      "bytes": 2147578,
+      "sha256": "e2f9db8cb0a4114d002eca92f59cc3f2f53f2fb0208dfe8d3c24c0fc544ca0ca"
+    },
+    {
+      "path": "assets/environment/vegetation-v2/prepared/stylized_stefan/Natural.fbx",
+      "bytes": 460844,
+      "sha256": "2d99337ab66a2570bf67c3523df4ec833539b32fe6f3e4eb5f6c0b138db7b14a"
+    },
+    {
+      "path": "assets/environment/vegetation-v2/prepared/stylized_stefan/Tree.mesh.json",
+      "bytes": 2069171,
+      "sha256": "27f26a4bad7bc3007b52c7a6d894c5699df192e06650047a877e5cb7ac1360fa"
+    },
+    {
+      "path": "assets/environment/vegetation-v2/prepared/stylized_stefan/Windswept.fbx",
+      "bytes": 457116,
+      "sha256": "5bd7b56af163e4fe0e3c798399781b3247e008f92cea847d1c407c3bcba2669b"
+    },
+    {
+      "path": "assets/environment/vegetation-v2/prepared/stylized_stefan/build-report.json",
+      "bytes": 479,
+      "sha256": "36c4e60a52adec5ed6f7a69216f026d8472ceef2d2dbd395e68152bf61653cf5"
+    },
+    {
+      "path": "assets/environment/vegetation-v2/prepared/stylized_stefan/validation.json",
+      "bytes": 1372,
+      "sha256": "4c6938c5232bdadf2275a69b7340200d4f68eab370bf51cd85460db4bdc9515c"
+    },
+    {
+      "path": "assets/environment/vegetation-v2/prepared/magic_igor/Atlas.png",
+      "bytes": 212638,
+      "sha256": "3e6c547781e15456e3090aa889cefbaeb1022e987098d451e0084169e68da65c"
+    },
+    {
+      "path": "assets/environment/vegetation-v2/prepared/magic_igor/Editable.blend",
+      "bytes": 2955455,
+      "sha256": "949189e5e6bf24c35f4d537d607f933969e1dbf3f55345ca7c328c74082e0a32"
+    },
+    {
+      "path": "assets/environment/vegetation-v2/prepared/magic_igor/Natural.fbx",
+      "bytes": 676540,
+      "sha256": "dd98c4cb73b17340c0cb591499ee9e9dfa13a5ed4c17f09c12fc69941f11436a"
+    },
+    {
+      "path": "assets/environment/vegetation-v2/prepared/magic_igor/Tree.mesh.json",
+      "bytes": 4338097,
+      "sha256": "a55fcb5b32f977acad35d42339a76318d17da0b3c4cdce292a6144da85288562"
+    },
+    {
+      "path": "assets/environment/vegetation-v2/prepared/magic_igor/Windswept.fbx",
+      "bytes": 676780,
+      "sha256": "2f76067b4f5bbcf2b2d3bb00136625d14a5837c4665d7d9066c73f43cddc19c3"
+    },
+    {
+      "path": "assets/environment/vegetation-v2/prepared/magic_igor/build-report.json",
+      "bytes": 545,
+      "sha256": "5fe562423b0f8d89fddf111a633b1e65ace90d99f5d0dddb0dfc8c6454c1deb2"
+    },
+    {
+      "path": "assets/environment/vegetation-v2/prepared/magic_igor/validation.json",
+      "bytes": 1493,
+      "sha256": "4329b3bb052fc676b6e979dd3b8a551128f4b1e9d751bf9feb0c433fb83aa58c"
+    }
+  ]
+}

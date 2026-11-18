@@ -1,0 +1,62 @@
+{
+  "key": "stylized_stefan",
+  "blender": "4.5.9 LTS",
+  "fbxRoundtrip": [
+    {
+      "variant": "Natural",
+      "triangles": 3322,
+      "bones": 10,
+      "boundsBlender": [
+        [
+          -10.821659,
+          -5.620457,
+          0.0
+        ],
+        [
+          10.208456,
+          9.877527,
+          24.0
+        ]
+      ],
+      "maxDeformation": {
+        "Foliage": 0.5371308097030233,
+        "FoliageSecondary": 0.4438720041779272,
+        "Roots": 0.0,
+        "Branches": 0.27450913855861014,
+        "Trunk": 0.39909779687394786
+      },
+      "rootsFixed": true,
+      "weightsNormalized": true
+    },
+    {
+      "variant": "Windswept",
+      "triangles": 3092,
+      "bones": 10,
+      "boundsBlender": [
+        [
+          -13.158741,
+          -5.875851,
+          0.0
+        ],
+        [
+          13.835257,
+          10.200298,
+          27.167999
+        ]
+      ],
+      "maxDeformation": {
+        "Foliage.001": 0.5706201272361586,
+        "Roots.001": 0.0,
+        "Branches.001": 0.31176899108327555,
+        "FoliageSecondary.001": 0.5268064860385163,
+        "Trunk.001": 0.39804171967373364
+      },
+      "rootsFixed": true,
+      "weightsNormalized": true
+    }
+  ],
+  "packedTextures": true,
+  "renders": 0,
+  "studioPlay": "NOT_RUN",
+  "artReview": "PENDING"
+}

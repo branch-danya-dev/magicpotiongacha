@@ -39,3 +39,8 @@ qa/romantic-island/** text eol=lf
 docs/evidence/ag76r4a/** -text whitespace=cr-at-eol
 qa/dynamic-grass/** text eol=lf
 scripts/build-grass-island.mjs text eol=lf
+# Vegetation V2 source and derivative receipts hash exact bytes on every host.
+assets/environment/vegetation-v2/** -text whitespace=cr-at-eol
+qa/vegetation/** text eol=lf
+scripts/vegetation/*.py text eol=lf
+scripts/build-vegetation.mjs text eol=lf

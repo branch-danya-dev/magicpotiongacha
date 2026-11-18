@@ -16,6 +16,32 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### VEGETATION-V2 — source-licensed reusable tree library
+
+**FIRST PAIR CODE CANDIDATE / STUDIO DEFERRED BY OWNER**, claimed 2026-11-18.
+Branch `feat/vegetation-v2-library`, clean base PR #62
+`deb2ba18e1dda7f68713923a1e6164abd0df7f0f` (Windows/Ubuntu CI 44339538104 PASS).
+Audit nine owner-selected Sketchfab sources, including Maple NoAI and dungdao.
+Only verified sources may enter Blender preparation; first validate one normal
+and one magical tree before extending to remaining admitted models. Reuse the
+existing tree/wind architecture; preserve World Tree/clouds/horizon, economy,
+V8 and placements. No migrations, screenshots/video, paid jobs, bulk replacement,
+new Roblox uploads/access changes, merge or publication. Unknown rights/file
+access and native art/device checks stay explicit blockers. Revert the isolated
+library branch for rollback; existing vegetation remains the default.
+Nine metadata/license records checked; stefan and Igor Zukowicz downloaded and
+derived into two geometry variants each, packed Blender sources and four FBXs.
+Maple remains BLOCKED_NOAI. Six other models wait for the first pair's full
+Studio gate. Owner requested code/build only on 2026-11-18 after the text-only
+Studio file dialog could not be controlled. No screenshots or video.
+Windows: `npm run tools` PASS; `npm test` PASS — 1,443 Luau + 43 Node = 1,486,
+319 Luau sources, inherited Rojo builds; seven Python source-intake tests PASS.
+Blender 4.5.9: four FBX reimports PASS; mesh JSON and atlas hashes reproduce
+identically. Candidate GitHub CI has not run (local feature branch only).
+Report: `docs/VEGETATION_V2_REPORT.md`. Native Play, mobile/performance and owner
+art acceptance are NOT RUN/PENDING; this is not a completed nine-model library.
+
+
 ### SKY-WORLD-TREE-R4 — isolated 2.5D depth prototype
 
 **CODE CANDIDATE / EXPERIMENTAL / OWNER ART REVIEW PENDING**, claimed 2026-11-18.
