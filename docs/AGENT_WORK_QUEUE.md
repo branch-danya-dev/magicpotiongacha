@@ -18,6 +18,17 @@
 
 ### ISLAND-VEGETATION-PILOT — composed landscape trial
 
+**Reopened 2026-11-18: native allocation failure**, exact fix base
+`0910661f948fa8d74507542c7d2869fe16307a01`, same branch / Draft PR #63.
+Owner Play log confirms static plants loaded, but Cliff allocation failed before
+Grove.start; R4 retained six expandable meshes. Fix shared transient allocation,
+compact finished geometry, isolate startup failures and verify the replacement
+artifact in the existing Studio window. No art/layout/economy or upload changes.
+Fix candidate now passes native F5 creation: 3 rigged trees, 17 meshes, 3 images,
+34 static parts; 24 compact allocations, zero failures/live scratch, peak one.
+Cliff retains 3,936 vertices / 7,868 triangles. Owner art/skin/wind/quality/FPS gates
+remain open; no screenshots/video. Exact evidence/build hashes go in PR #63.
+
 **STAGE 1 CODE CANDIDATE / OWNER ART PENDING**, claimed 2026-11-18. Branch `feat/island-vegetation-pilot`.
 Exact local base `b9c5a3c1ba99f5f6079a91ffe9f53f3f823bcf1e` (Vegetation V2),
 descendant of confirmed Draft PR #62 `deb2ba18e1dda7f68713923a1e6164abd0df7f0f`.
@@ -29,10 +40,10 @@ build. Stage 2 whole-island planting requires owner review of this pilot.
 Portable/build/CI checks and native/device evidence are separate gates.
 Five trees (three ordinary model types, one magical), 22 undergrowth groups;
 concave coastline/crown/13-station audits, 3/2/1 rigged wind caps. No active willow.
-Local `npm run tools` and `npm test`: PASS, 1,451 Luau + 46 Node = 1,497;
-323 Luau sources. All 1,486 inherited tests retained. Candidate ordinary build
+Local `npm run tools` and `npm test`: PASS, 1,456 Luau + 47 Node = 1,503;
+325 Luau sources. All 1,486 inherited tests retained. Candidate ordinary build
 reproduces from source; `docs/ISLAND_VEGETATION_PILOT.md` records scope and gates.
-Studio Play/FPS/phones NOT RUN (prior owner code/build-only instruction).
+Studio creation PASS (2026-11-18); visual/quality/FPS/phones remain unverified.
 GitHub CI results and final SHA are recorded in the new Draft PR.
 
 ### VEGETATION-V2 — source-licensed reusable tree library

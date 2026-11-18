@@ -1,6 +1,6 @@
 # Island vegetation — Stage 1 grove
 
-**CODE CANDIDATE / STUDIO NOT RUN / OWNER ART REVIEW PENDING.**
+**CODE CANDIDATE / STUDIO LOAD VERIFIED / OWNER ART REVIEW PENDING.**
 This is the requested first trial composition. Whole-island planting (Stage 2)
 and final art acceptance remain gated on the owner's review of this build.
 No screenshots/video, Roblox uploads, permission changes, merge or publication.
@@ -84,6 +84,38 @@ Static setup failure removes its partial group and does not stall other art
 initialization. Quality/motion switches reuse the pool; scene destruction stops
 wind and destroys resources. Native failure injection remains unperformed.
 
+### Native loading regression and fix (2026-11-18)
+
+The owner's Play of `0910661` reproduced a real failure: static planting created
+34 parts, but the seventh expandable EditableMesh allocation failed in Cliff,
+aborting Additions before Grove.start. The six R4 branch meshes already held
+expandable capacity. The old successful build/test result did not cover this
+native memory limit.
+
+The isolated candidate now shares one MeshFactory across R4, cliff and grove.
+Each recipe uses a serialized temporary expandable mesh, clones the completed
+topology into a FixedSize mesh, then destroys the temporary mesh. Native vertex,
+face and bone counts are checked across compaction. The retained resources are
+24 fixed meshes (6 R4 + 1 cliff + 17 grove), with at most one expandable scratch.
+The original source geometry/rigs and protected modules remain byte-identical;
+the builder generates these allocation adapters only for this candidate.
+Cliff startup is isolated so an unrelated failure cannot suppress the grove.
+
+Ordinary F5 on the owner Fix build at **2026-11-18 20:42:12 UTC**, Studio
+0.748.0.7481526, produced `LANDSCAPE_CLIENT_STATE ready=true`: **3 rigged trees,
+17 meshes, 3 images, 150 rigged descendants, 34 static parts**, one wind connection.
+Allocation counters: **24 completed / 0 failed / 0 live scratch / peak 1**.
+`WIZARD_CLIFF_READY` reports the unchanged **3,936 vertices / 7,868 triangles**.
+The initial full-game diagnostic reports one Lighting owner and no active willow.
+This proves runtime creation, not artistic visibility or correct deformation at
+every angle. Reported client memory was approximately **2,848 MiB**, a whole-game
+Studio snapshot, not a grove-only cost, steady-state figure or mobile benchmark.
+
+The native run used the pre-commit Fix artifact; its hash and the final delivery
+hash are recorded separately in the PR. No screenshot/video was taken. Quality
+cycling, camera/wind/skin appearance, teardown/failure injection, FPS comparison,
+physical phones and multiplayer still require separate verification.
+
 ## Resource budget and checks
 
 New pilot content, before subtracting removed old trees/undergrowth/willow:
@@ -96,11 +128,12 @@ New pilot content, before subtracting removed old trees/undergrowth/willow:
 | Static trees + undergrowth | 9,834 triangles / 34 MeshParts |
 | Total added pilot geometry | 24,268 triangles / 51 MeshParts |
 | EditableMesh / EditableImage pools | 17 / 3 |
+| Shared retained meshes (R4 + cliff + grove) / transient expandable cap | 24 fixed / 1 |
 | Decoded tree atlases | 6 MiB (two 512², one 1024²) |
 | Additional lights / update loops vs first-pair preview | 0 / 0 |
 
-The 24 static models contain 92 serialized instances. Bone and runtime totals
-are printed by `LandscapeQA`; actual Studio counts are not yet measured. The
+The 24 static models contain 92 serialized instances. The first native creation
+reported 150 rigged descendants; bone details are available through Studio. The
 6 MiB atlas figure excludes mesh buffers, Lua/base64 data and engine overhead.
 Compared with the first pair's 5 MiB atlases, the Windswept pool adds 1 MiB;
 removing the willow saves other allocations, but **no total-memory/FPS claim**
@@ -115,14 +148,16 @@ npm test
 node scripts/build-landscape.mjs --owner-user-id=11924805007
 ```
 
-Local Windows result: `npm run tools` PASS; `npm test` **1,497 PASS**
-(1,451 Luau + 46 Node), 323 compiled Luau sources and all inherited Rojo builds.
-All 1,486 inherited tests retained; 11 added. Two inherited C01 analyzer warnings
+Local Windows result: `npm run tools` PASS; `npm test` **1,503 PASS**
+(1,456 Luau + 47 Node), 325 compiled Luau sources and all inherited Rojo builds.
+All 1,486 inherited tests retained; 17 added. Two inherited C01 analyzer warnings
 (unused session, shadowed second) remain; no new compiler/type failures.
 
 Eight new portable tests cover clearance, concave root support, protected layout,
 mixed-species wind caps and detail fading; three Node tests validate actual mesh
-envelopes, resource totals and existing CC0 template digests. CI builds this
+envelopes, resource totals and existing CC0 template digests. Six additional
+regressions cover the old allocation failure, fixed retention, error cleanup,
+concurrent serialization and all three generated memory adapters. CI builds this
 candidate on Windows/Ubuntu with a test owner and compiles its generated adapters.
 Exact run results are recorded in the PR; local logs and build receipt are under
 `build/landscape/`. Receipt contains source HEAD, owner, asset/environment hashes
@@ -134,8 +169,8 @@ Owner file: `G:\Codex\PotionTycoon-Island-Vegetation-Pilot.rbxlx`.
 Open it in the existing Studio window, F5, choose a familiar and walk toward
 the left edge/foreground planting. It is the ordinary game with HUD and book,
 normal camera and owner `11924805007`; profile persistence is memory-only.
-No screenshot or video is needed. Previous instruction to continue code/build
-only is respected; **native Play, FPS/memory timings and phones are NOT RUN**.
+No screenshot or video is needed. Native F5 creation is confirmed as detailed
+above; FPS, mobile performance and full visual/interaction checks are NOT RUN.
 
 Optional Client Command Bar diagnostics after choosing a familiar:
 
@@ -154,7 +189,7 @@ not an automatic artistic PASS or real-device benchmark.
 allows material-channel review without geometry churn; commit final choices to
 Plan and rebuild. Geometry changes use prepared variants and a rebuild.
 
-Open gates: ordinary Play/asset loading and skin deformation, camera/cliff
+Open gates: visual asset delivery and skin deformation, camera/cliff
 views, color coherence in day/dusk/night, cleanup/fallback in engine, actual
 performance and phones/multiplayer. Whole-island rollout waits for pilot art
 approval. No main integration or publication is implied by this draft.

@@ -4,6 +4,7 @@ import {resolve} from 'node:path';
 import {execFileSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
 import assert from 'node:assert/strict';
+import {compactCliff,compactDepth,compactTrees} from './landscape-memory.mjs';
 const root=resolve(import.meta.dirname,'..'),path=p=>resolve(root,p),read=p=>readFileSync(path(p),'utf8').replaceAll('\r\n','\n');
 const hash=b=>createHash('sha256').update(b).digest('hex'),node=p=>({$path:path(p)});
 const base='b9c5a3c1ba99f5f6079a91ffe9f53f3f823bcf1e';
@@ -17,6 +18,15 @@ const project=JSON.parse(read('build/vegetation/game.project.json'));
 const shared=project.tree.ReplicatedStorage.PotionTycoon.Shared,client=project.tree.StarterPlayer.StarterPlayerScripts.CurrentArt;
 mkdirSync(path('build/landscape'),{recursive:true});
 shared.LandscapePlan=node('qa/landscape/Plan.luau');client.LandscapeGrove=node('qa/landscape/Grove.luau');
+shared.MeshFactory=node('qa/landscape/MeshFactory.luau');shared.MeshAllocation=node('qa/landscape/MeshAllocation.luau');
+for(const [name,source,transform] of [
+ ['Cliff','qa/wizard-island/Cliff.luau',compactCliff],
+ ['VegetationTreeModel','qa/vegetation/TreeModel.luau',compactTrees],
+]){
+ const file=`build/landscape/${name}.luau`;writeFileSync(path(file),transform(read(source)));client[name]=node(file);
+}
+writeFileSync(path('build/landscape/SkyDepthRenderer.luau'),compactDepth(read('qa/sky-depth/Renderer.luau')));
+project.tree.StarterPlayer.StarterPlayerScripts.PotionTycoon.SkyDepthRenderer=node('build/landscape/SkyDepthRenderer.luau');
 project.tree.ServerScriptService.LandscapeSetup=node('qa/landscape/Setup.server.luau');
 function adapt(source,a,b){assert.equal(source.split(a).length,2,'Landscape adapter drift: '+a);return source.replace(a,b);}
 let art=read('build/current-game-art.luau');
@@ -27,6 +37,10 @@ writeFileSync(path('build/landscape/art.luau'),art);project.tree.ServerScriptSer
 let additions=read('build/vegetation/additions.client.luau');
 const start=additions.indexOf('local models='),end=additions.indexOf('local cloudAnchor=');assert(start>0&&end>start);
 additions=additions.slice(0,start)+'while not root:GetAttribute("LandscapeReady") do task.wait(.1) end\nlocal wind=require(script.Parent.LandscapeGrove).start(root,O)\n'+additions.slice(end);
+additions=adapt(additions,'local cliff=require(script.Parent.Cliff).create(art,O)',
+ 'local cliffOK,cliff=pcall(require(script.Parent.Cliff).create,art,O)\nif not cliffOK then root:SetAttribute("LandscapeCliffError",tostring(cliff));warn("LANDSCAPE_CLIFF_BLOCKED",cliff);cliff={triangles=0} end');
+additions=adapt(additions,'cliff.part:Destroy();cliff.mesh:Destroy();',
+ 'if cliff.part then cliff.part:Destroy() end;if cliff.mesh then cliff.mesh:Destroy() end;');
 additions=adapt(additions,'if quality==Controller.quality and motion==Controller.reduceMotion then return end','if quality==Controller.quality and motion==Controller.reduceMotion then wind.update();return end');
 additions=adapt(additions,'local bones=0;for _,v in ipairs(tree:GetDescendants()) do if v:IsA("Bone") then bones+=1 end end','local grove=wind.stats()');
 additions=adapt(additions,'willowBones=bones,windUpdates=wind.updates','willowBones=0,grove=grove');
@@ -46,6 +60,11 @@ for(const [key,file] of Object.entries({SkyLandmarkDiagnostics:'qa/sky-landmark/
  const output=`build/landscape/${key}.client.luau`;writeFileSync(path(output),text);gameClient[key]=node(output);
 }
 project.name='PotionTycoon-Island-Vegetation-Pilot';project.tree.Workspace.$attributes.LandscapePilotQA=true;
+const codeFiles=['qa/landscape/Plan.luau','qa/landscape/Setup.server.luau','qa/landscape/Grove.luau',
+ 'qa/landscape/MeshAllocation.luau','qa/landscape/MeshFactory.luau','build/landscape/art.luau',
+ 'build/landscape/additions.client.luau','build/landscape/Cliff.luau','build/landscape/VegetationTreeModel.luau','build/landscape/SkyDepthRenderer.luau'];
+const codeSHA256=hash(Buffer.from(codeFiles.map(f=>f+'\n'+read(f)).join('\n')));
+project.tree.Workspace.$attributes.LandscapeCodeSHA256=codeSHA256;
 project.tree.Workspace.$attributes.SkyLandmarkAutoCheck=false;project.tree.Workspace.$attributes.SkyDepthAutoCheck=false;
 const output='build/PotionTycoon-Island-Vegetation-Pilot.rbxlx';
 writeFileSync(path('build/landscape/game.project.json'),JSON.stringify(project,null,2)+'\n');
@@ -53,10 +72,10 @@ execFileSync(path('.tools/rojo/rojo'+(process.platform==='win32'?'.exe':'')),['b
 const bytes=readFileSync(path(output));assert(bytes.includes('AG76 QA cannot access live persistence'));
 assert(!additions.includes('models.create')&&!additions.includes('models.destroy')&&!additions.includes('WillowV2Ready'));
 assert(!/\b(?:models|tree)\b/.test(additions),'Stale active willow reference');
-const report={base,head:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),owner:prior.owner,artifact:output,bytes:bytes.length,sha256:hash(bytes),
+ const report={base,head:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),codeSHA256,owner:prior.owner,artifact:output,bytes:bytes.length,sha256:hash(bytes),
  sourceAssets:prior.assets,environmentViewSHA256:hash(readFileSync(path(gameClient.EnvironmentView.$path))),
  vegetationBaseSHA256:prior.sha256,r4ArtifactSHA256:prior.r4ArtifactSHA256,stage:1,wholeIslandApproved:false,
  riggedTrees:3,staticTrees:2,undergrowthModels:22,editableMeshes:17,editableImages:3,decodedAtlasBytes:6291456,
- newLights:0,additionalFrameLoops:0,sharedBoneSchedulers:1,studioOnly:true,memoryOnly:true,ordinaryCamera:true,
+ newLights:0,additionalFrameLoops:0,sharedBoneSchedulers:1,maxConcurrentExpandableMeshes:1,fixedMeshResources:24,studioOnly:true,memoryOnly:true,ordinaryCamera:true,
  activeWillow:false,sourceWillowRetained:true,uploads:0,screenshots:0,productionIntegrated:false};
 writeFileSync(path('build/landscape/build.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));

@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
+import {compactCliff,compactDepth,compactTrees} from '../scripts/landscape-memory.mjs';
 const read=p=>readFileSync(p,'utf8'),json=p=>JSON.parse(read(p));
 const plan=read('qa/landscape/Plan.luau');
 const trees=[...plan.matchAll(/\{id="([^"]+)",source="([^"]+)",variant="([^"]+)",x=([^,]+),z=([^,]+),scale=([^,]+),yaw=([^,]+),radius=([^,]+)/g)].map(m=>({id:m[1],source:m[2],variant:m[3],scale:Number(m[6]),radius:Number(m[8])}));
@@ -28,4 +29,10 @@ test('Reused CC0 template roster still matches the admitted source receipt',()=>
  const bytes=readFileSync('assets/environment/woodland/M7NatureTemplates.rbxmx');
  assert.equal(createHash('sha256').update(bytes).digest('hex'),receipt.files['M7NatureTemplates.rbxmx']);
  for(const name of ['CommonTree_5','Pine_2','Bush_Common_Flowers','Fern_1','Grass_Common_Short','Flower_3_Group'])assert(bytes.includes(`<string name="Name">${name}</string>`),name);
+});
+test('All three actual generated consumers use the shared compact allocator',()=>{
+ for(const [path,adapt] of [['qa/wizard-island/Cliff.luau',compactCliff],['qa/sky-depth/Renderer.luau',compactDepth],['qa/vegetation/TreeModel.luau',compactTrees]]){
+  const generated=adapt(read(path).replaceAll('\r\n','\n'));
+  assert(!generated.includes(':CreateEditableMesh()'),path);assert(generated.includes('MeshFactory.build(function('),path);
+ }
 });

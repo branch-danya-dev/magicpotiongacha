@@ -9,6 +9,7 @@ local Pixels=require(Shared.VegetationPixels)
 local Model=require(script.Parent.VegetationTreeModel)
 local Appearance=require(script.Parent.Appearance)
 local Controller=require(script.Parent.VegetationWindController)
+local MeshFactory=require(Shared.MeshFactory)
 local M={}
 function M.start(root,origin)
 	assert(Run:IsStudio() and workspace:GetAttribute("LandscapePilotQA"))
@@ -69,7 +70,7 @@ function M.start(root,origin)
 		local meshes,images,trees=0,0,0
 		for _,lib in pairs(libraries)do meshes+=#lib.meshes;images+=#lib.images end
 		for _ in pairs(entries)do trees+=1 end
-		return {ready=self.ready,error=self.error,quality=self.quality,reduceMotion=self.reduceMotion,riggedTrees=trees,
+		return {ready=self.ready,error=self.error,cliffError=root:GetAttribute("LandscapeCliffError"),allocation=MeshFactory.stats(),quality=self.quality,reduceMotion=self.reduceMotion,riggedTrees=trees,
 			meshes=meshes,images=images,instances=#folder:GetDescendants(),staticParts=root:GetAttribute("LandscapeStaticParts"),
 			wind=wind and wind.stats(),newLights=0,clientMemoryMiB=game:GetService("Stats"):GetTotalMemoryUsageMb()}
 	end

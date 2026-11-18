@@ -103,6 +103,7 @@ run(process.execPath, ['--test', 'tests/sky-depth-assets.test.mjs']);
 run(process.execPath, ['scripts/build-sky-depth.mjs', '--owner-user-id=-1', '--reuse-r3']);
 run(process.execPath, ['scripts/build-landscape.mjs', '--owner-user-id=-1', '--reuse-r4']);
 run(tool('luau', 'luau-compile'), ['--null', 'build/landscape/art.luau', 'build/landscape/additions.client.luau']);
+run(tool('luau', 'luau-compile'), ['--null', 'build/landscape/Cliff.luau', 'build/landscape/VegetationTreeModel.luau', 'build/landscape/SkyDepthRenderer.luau']);
 run(tool('luau', 'luau-compile'), ['--null', 'build/sky-depth/renderer.luau', 'build/sky-depth/data.luau']);
 run(tool('luau', 'luau-compile'), ['--null', 'build/lunar-view.luau', 'build/lunar-review.client.luau', 'build/lunar-pixels.luau']);
 run(process.execPath, ['scripts/build-ag76-preview.mjs', '--owner-user-id=-1']);

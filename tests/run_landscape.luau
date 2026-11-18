@@ -6,6 +6,25 @@ local C=require("../src/shared/Config")
 local G=require("../src/shared/NatureGeometry")
 local L=require("../qa/romantic-island/Layout")
 local Policy=require("../qa/vegetation/TreeWindPolicy")
+local Allocation=require("../qa/landscape/MeshAllocation")
+local function allocator(options)
+	options=options or {};local bytes,peak,created,destroyed=0,0,0,0
+	local function reserve(cost)
+		if bytes+cost>1000 then return nil end
+		bytes+=cost;peak=math.max(bytes,peak);created+=1
+		return {cost=cost,vertices={},dead=false}
+	end
+	local api={create=function()if options.createFail then return nil end;return reserve(150)end,
+		compact=function(m)
+			if options.yieldCompact then coroutine.yield("compacting")end
+			if options.compactFail then error("compaction failed")end
+			if options.compactNil then return nil end
+			local f=reserve(1);f.vertices=table.clone(m.vertices);return f
+		end,
+		destroy=function(m)T.falsy(m.dead);m.dead=true;bytes-=m.cost;destroyed+=1 end,
+		wait=function()coroutine.yield("queued")end}
+	return Allocation.new(api),api,function()return bytes,peak,created,destroyed end
+end
 T.test("Pilot whole crowns clear all 13 stations, services, routes, construction and sightlines",function()
 	local a=P.audit(C,I);T.truthy(a.ok,table.concat(a.errors,"; "));T.equal(a.stations,13);T.truthy(a.minStationCrownGap>=4)
 end)
@@ -54,5 +73,38 @@ T.test("Actual mixed grove is capped to 3/2/1 animated trees",function()
 		local items={};for _,t in ipairs(P.trees)do if t.source then table.insert(items,{id=t.id,species=t.source,distance=10,budget=P.windBudgets(t.source)[q]})end end
 		T.equal(#Policy.select(items,q),cap)
 	end
+end)
+T.test("Six retained expandable R4 meshes reproduce the seventh-allocation cliff failure",function()
+	local _,api=allocator();for _=1,6 do T.truthy(api.create())end;T.equal(api.create(),nil)
+end)
+T.test("R4 plus cliff plus 17 tree meshes retain only compact resources",function()
+	local a,api,stats=allocator();local retained={}
+	for i=1,24 do
+		local fixed=a.build(function(m)m.vertices={i,2,3}end);T.equal(fixed.vertices[1],i);table.insert(retained,fixed)
+	end
+	local bytes,peak,created,destroyed=stats();T.equal(bytes,24);T.truthy(peak<=174);T.equal(created,48);T.equal(destroyed,24)
+	T.equal(a.stats().activeScratch,0);T.equal(a.stats().peakScratch,1)
+	for _,m in ipairs(retained)do api.destroy(m)end;T.equal(stats(),0)
+end)
+T.test("Fill failure frees scratch and allows the next grove resource",function()
+	local a,api,stats=allocator();T.falsy(pcall(a.build,function()error("bad geometry")end));T.equal(stats(),0);T.falsy(a.stats().busy)
+	local f=a.build(function(m)m.vertices={1}end);T.equal(a.stats().completed,1);api.destroy(f)
+end)
+T.test("Create and compaction failures release the queue without leaking",function()
+	for _,key in ipairs({"createFail","compactFail","compactNil"})do
+		local options={[key]=true};local a,api,stats=allocator(options)
+		T.falsy(pcall(a.build,function()end));T.equal(stats(),0);T.equal(a.stats().activeScratch,0);T.falsy(a.stats().busy)
+		options[key]=false;local f=a.build(function()end);api.destroy(f);T.equal(stats(),0)
+	end
+end)
+T.test("Concurrent environment and grove tasks serialize yielding compaction",function()
+	local a,api,stats=allocator({yieldCompact=true});local first,second
+	local c1=coroutine.create(function()first=a.build(function(m)m.vertices={1}end)end)
+	local c2=coroutine.create(function()second=a.build(function(m)m.vertices={2}end)end)
+	local ok,state=coroutine.resume(c1);T.truthy(ok);T.equal(state,"compacting")
+	ok,state=coroutine.resume(c2);T.truthy(ok);T.equal(state,"queued");T.equal(a.stats().activeScratch,1)
+	T.truthy(coroutine.resume(c1));T.truthy(first);T.equal(a.stats().activeScratch,0)
+	ok,state=coroutine.resume(c2);T.truthy(ok);T.equal(state,"compacting");T.truthy(coroutine.resume(c2))
+	T.equal(second.vertices[1],2);T.equal(a.stats().peakScratch,1);api.destroy(first);api.destroy(second);T.equal(stats(),0)
 end)
 T.finish()
