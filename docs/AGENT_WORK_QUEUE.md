@@ -16,6 +16,25 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### ISLAND-DENSE-FOREST — larger island, dense perimeter, open centre
+
+**CODE_CANDIDATE / STUDIO VERIFIED (desktop) / OWNER ART PENDING 2026-11-19**, branch `feat/island-dense-forest`, exact base
+`2cbc8d5b970d086ffe41bd3081a39ac68b519107` (Draft PR #63, remote confirmed).
+The owner explicitly requests a larger island and dense woodland everywhere
+except the centre, superseding the five-tree pilot limit. Candidate dimensions
+184 x 172; layered authored forest using existing admitted assets. Keep the
+construction rectangle, 13 stations, spawn, waypoints, book, economy, V8 and
+World Tree unchanged. Adapt only Studio candidate terrain/traversal bounds;
+no paid expansion, migration or production integration. Retain shared compact
+mesh/image pools and bounded wind. Add coverage/clearance/boundary tests and
+verify native visibility. Technical Studio captures are authorized for diagnosis;
+no report screenshots/video, new assets, permissions, merge or publication.
+Rollback: the untouched Grove Art Pilot build and PR #63.
+Evidence and resource costs: `docs/ISLAND_DENSE_FOREST.md`. 48 trees / 171 understory
+models, bounded wind and camera occlusion; delayed client-terrain startup handled.
+Full suite and exact-HEAD CI results belong to the stacked PR; phone, multiplayer,
+live backend and art approval remain open. No production integration.
+
 ### ISLAND-VEGETATION-PILOT — composed landscape trial
 
 **Grove art refinement claimed 2026-11-18**, exact base

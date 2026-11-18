@@ -56,6 +56,8 @@ jobs:
             build/sky-depth/build.json
             build/PotionTycoon-Island-Vegetation-Pilot.rbxlx
             build/landscape/build.json
+            build/PotionTycoon-Dense-Forest.rbxlx
+            build/forest/build.json
             build/AG67-Prototype.rbxlx
             assets/vfx/ag67/
             scripts/install-ag67-preview.mjs
