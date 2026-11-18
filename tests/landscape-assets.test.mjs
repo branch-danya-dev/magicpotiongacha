@@ -28,7 +28,7 @@ test('Reused CC0 template roster still matches the admitted source receipt',()=>
  const receipt=json('assets/environment/woodland/receipt.json');assert.match(receipt.license,/CC0/);
  const bytes=readFileSync('assets/environment/woodland/M7NatureTemplates.rbxmx');
  assert.equal(createHash('sha256').update(bytes).digest('hex'),receipt.files['M7NatureTemplates.rbxmx']);
- for(const name of ['CommonTree_5','Pine_2','Bush_Common_Flowers','Fern_1','Grass_Common_Short','Flower_3_Group'])assert(bytes.includes(`<string name="Name">${name}</string>`),name);
+ for(const name of ['CommonTree_5','Pine_2','Bush_Common_Flowers','Fern_1','Grass_Common_Short','Flower_3_Group','Rock_Medium_1','Pebble_Round_1','RockPath_Round_Small_1'])assert(bytes.includes(`<string name="Name">${name}</string>`),name);
 });
 test('All three actual generated consumers use the shared compact allocator',()=>{
  for(const [path,adapt] of [['qa/wizard-island/Cliff.luau',compactCliff],['qa/sky-depth/Renderer.luau',compactDepth],['qa/vegetation/TreeModel.luau',compactTrees]]){

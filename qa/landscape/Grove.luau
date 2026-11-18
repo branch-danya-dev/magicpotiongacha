@@ -22,9 +22,9 @@ function M.start(root,origin)
 		for _,lib in pairs(libraries)do lib.destroy()end;table.clear(libraries);table.clear(entries)
 	end
 	local function style(t)
-		local c=P.palette
-		return Appearance.resolve("Natural",{GeometryVariant=t.variant,BarkColor=c.bark,
-			LeafColor=t.magic and c.magicLeaf or c.leaf,LeafSecondaryColor=t.magic and c.magicSecondary or c.secondary,
+		local c=P.palette;local tone=assert(P.tones[t.tone])
+		return Appearance.resolve("Natural",{GeometryVariant=t.variant,BarkColor=tone.bark,
+			LeafColor=tone.leaf,LeafSecondaryColor=tone.secondary,
 			MagicGlowColor=c.glow,MagicGlowIntensity=t.magic and c.glowIntensity or 0,WindStrength=t.wind})
 	end
 	local ok,err=pcall(function()

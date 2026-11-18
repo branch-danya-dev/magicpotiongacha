@@ -48,12 +48,24 @@ T.test("Three ordinary types and one magic type, three rigged instances with sta
 	local duplicates={P.trees[1],P.trees[1]};T.falsy(P.audit(C,I,duplicates).ok)
 end)
 T.test("Authored undergrowth roots remain on island and outside construction",function()
-	T.equal(#P.cover,22)
+	T.truthy(#P.cover<=42)
 	for _,v in ipairs(P.cover)do
 		T.truthy(G[v[1]],v[1]);T.truthy(I.surfaceContains(v[2],v[3],1))
 		T.truthy(P.terrainMargin(v[2],v[3])>=2.1,v[1].." unsupported terrain edge")
 		local r=G[v[1]].radius*v[4]
 		T.truthy(v[2]+r<I.buildable.minX or v[3]-r>I.buildable.maxZ,v[1].." construction overhang")
+	end
+end)
+T.test("Dressed grove keeps construction, worker routes and a three-stud walking strip clear",function()
+	local a=P.auditDressing(C,I,G);T.truthy(a.ok,table.concat(a.errors,"; "))
+	T.truthy(a.parts<=76);T.truthy(a.triangles<=19000);T.truthy(a.minimalParts>=20)
+	for _,v in ipairs(P.cover)do T.truthy(P.tones[v[6]]);T.truthy(v[7]==1 or v[7]==2)end
+	for _,v in ipairs(P.stones)do T.truthy(P.stoneColors[v[6]])end
+end)
+T.test("Dressing audit rejects plant overhang and a blocked grove approach",function()
+	for _,point in ipairs({{-39,12},{-42,16},{0,10},{-53,-17}})do
+		local v=table.clone(P.cover[1]);v[2]=point[1];v[3]=point[2]
+		T.falsy(P.auditDressing(C,I,G,{v},{}).ok)
 	end
 end)
 T.test("Grove wind uses nearest selection with strict quality and far caps",function()

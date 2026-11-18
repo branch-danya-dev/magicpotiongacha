@@ -18,6 +18,15 @@
 
 ### ISLAND-VEGETATION-PILOT — composed landscape trial
 
+**Grove art refinement claimed 2026-11-18**, exact base
+`3996b9513e73cda3687be4ccef7e3b215d73c1de`, same feature branch / Draft PR #63.
+Owner confirms the new trees appear; requests dressing this grove next. This is
+not whole-island approval. Refine authored plant pockets, stone/root transitions,
+subtle per-tree color and quality-preserved ground silhouettes using the admitted
+models only. Preserve memory fix, tree pool budget, construction/routes, island
+geometry, World Tree, lighting ownership, economy and V8. Rebuild and check; no
+new uploads, screenshots/video, merge or publication.
+
 **Reopened 2026-11-18: native allocation failure**, exact fix base
 `0910661f948fa8d74507542c7d2869fe16307a01`, same branch / Draft PR #63.
 Owner Play log confirms static plants loaded, but Cliff allocation failed before

@@ -9,6 +9,7 @@ const root=resolve(import.meta.dirname,'..'),path=p=>resolve(root,p),read=p=>rea
 const hash=b=>createHash('sha256').update(b).digest('hex'),node=p=>({$path:path(p)});
 const base='b9c5a3c1ba99f5f6079a91ffe9f53f3f823bcf1e';
 const owner=process.argv.find(a=>a.startsWith('--owner-user-id='));assert(owner,'Explicit owner required');
+const dressing=JSON.parse(execFileSync(path('.tools/luau/luau'+(process.platform==='win32'?'.exe':'')),['scripts/landscape-stats.luau'],{cwd:root,encoding:'utf8'}));
 execFileSync('git',['diff','--exit-code','--ignore-cr-at-eol',base,'--','src','default.project.json','qa/trees','qa/sky-landmark','qa/sky-depth','qa/current-game','qa/vegetation','assets'],{cwd:root});
 const args=['scripts/build-vegetation.mjs',owner];if(process.argv.includes('--reuse-r4'))args.push('--reuse-r4');
 execFileSync(process.execPath,args,{cwd:root,stdio:'pipe',maxBuffer:8e6});
@@ -75,7 +76,9 @@ assert(!/\b(?:models|tree)\b/.test(additions),'Stale active willow reference');
  const report={base,head:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),codeSHA256,owner:prior.owner,artifact:output,bytes:bytes.length,sha256:hash(bytes),
  sourceAssets:prior.assets,environmentViewSHA256:hash(readFileSync(path(gameClient.EnvironmentView.$path))),
  vegetationBaseSHA256:prior.sha256,r4ArtifactSHA256:prior.r4ArtifactSHA256,stage:1,wholeIslandApproved:false,
- riggedTrees:3,staticTrees:2,undergrowthModels:22,editableMeshes:17,editableImages:3,decodedAtlasBytes:6291456,
+ riggedTrees:3,staticTrees:2,undergrowthModels:dressing.coverModels,stoneModels:dressing.stoneModels,
+ staticParts:dressing.staticParts,staticTriangles:dressing.staticTriangles,minimalStaticParts:dressing.minimalStaticParts,
+ editableMeshes:17,editableImages:3,decodedAtlasBytes:6291456,
  newLights:0,additionalFrameLoops:0,sharedBoneSchedulers:1,maxConcurrentExpandableMeshes:1,fixedMeshResources:24,studioOnly:true,memoryOnly:true,ordinaryCamera:true,
  activeWillow:false,sourceWillowRetained:true,uploads:0,screenshots:0,productionIntegrated:false};
 writeFileSync(path('build/landscape/build.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));

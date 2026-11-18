@@ -1,6 +1,8 @@
 # Island vegetation — Stage 1 grove
 
-**CODE CANDIDATE / STUDIO LOAD VERIFIED / OWNER ART REVIEW PENDING.**
+**GROVE ART CODE CANDIDATE / CURRENT ART PLAY PENDING / OWNER ART REVIEW PENDING.**
+The owner confirmed the preceding `3996b95` trees appear in Play. That confirms
+the loading fix, not acceptance of the new grove dressing described below.
 This is the requested first trial composition. Whole-island planting (Stage 2)
 and final art acceptance remain gated on the owner's review of this build.
 No screenshots/video, Roblox uploads, permission changes, merge or publication.
@@ -12,6 +14,38 @@ Exact local dependency: `b9c5a3c1ba99f5f6079a91ffe9f53f3f823bcf1e`
 The new PR includes the unpublished first-pair library commit as a dependency;
 it targets the R4 branch, not bootstrap main.
 
+## Grove dressing revision — 2026-11-19
+
+Exact refinement base: `3996b9513e73cda3687be4ccef7e3b215d73c1de`, same Draft PR #63.
+This remains Stage 1. The owner requested dressing the now-visible grove, not
+whole-island planting or release integration.
+
+Three connected pockets replace sparse individual clumps: a cool fern bank
+under the west conifer/broadleaf, a lower olive/sage foreground with sparse warm
+flowers, and a muted teal/lilac understory beneath the magical tree. Slight yaw
+changes separate the foreground silhouettes; tree positions/scales and memory
+pools remain unchanged. Ten low root stones anchor the planting; six separated
+old paving fragments follow the inside edge. There is no new interaction point.
+
+The recipe contains **40 undergrowth models and 16 stone/paving models**. Uneven
+heights, scales and rotations keep the cliff notch and clearing open. A curved
+**three-stud walking strip** runs along the grove's inside edge; conservative
+mesh envelopes are audited against this strip, the construction rectangle,
+all 13 stations, worker waypoints, service points, the book route and terrain.
+Paving is deliberately allowed in the strip; all decorative collisions stay off.
+
+Independent bark/foliage colors now use shade/edge/arcane palettes rather than
+one shared tint. Flower heads have separate restrained tints. Green-grey stone
+tint suggests aged stone; this adds no moss texture or new PBR map. Structural
+bushes/ferns and paving remain visible in Minimal (34 static parts including
+trees); small tufts/flowers use the existing detail-2 quality/distance culling.
+EnvironmentView remains the sole static-foliage wind/LOD owner. No new loop,
+light, editable texture, terrain paint/geometry edit, source download or upload.
+
+Native Play of this art revision has not been performed. Prior loading evidence
+below is explicitly for the predecessor. New build/CI hashes and validation
+results are recorded in the PR. Art, wind appearance and mobile cost stay open.
+
 ## Composition and source rights
 
 An asymmetric southwest rim grove, with a deliberate open interval at the
@@ -22,9 +56,9 @@ World Tree remains the landmark. Island surface, World Tree/clouds/lunar light,
 
 | Instance | Model / geometry | X / Z | Scale / yaw |
 | --- | --- | --- | --- |
-| West broadleaf | stefan / Natural | −47 / 18 | .50 / 20° |
-| Foreground leaning tree | stefan / Windswept | −20 / 37 | .42 / −65° |
-| Low foreground broadleaf | Quaternius CommonTree_5 | −9 / 43 | .62 / 48° |
+| West broadleaf | stefan / Natural | −47 / 18 | .50 / 32° |
+| Foreground leaning tree | stefan / Windswept | −20 / 37 | .42 / −52° |
+| Low foreground broadleaf | Quaternius CommonTree_5 | −9 / 43 | .62 / 64° |
 | West conifer | Quaternius Pine_2 | −53 / 2 | .40 / 110° |
 | Restrained magical tree | Igor Zukowicz / Natural | −51 / −12 | .42 / 190° |
 
@@ -37,7 +71,8 @@ model types and one magical type, not three newly downloaded species.
   `assets/environment/vegetation-v2/ATTRIBUTION.md`. Original archives, license
   metadata, hashes, Blender sources and FBX roundtrip reports retained.
 - Quaternius Standard **CC0**, existing admitted templates: CommonTree_5, Pine_2,
-  Bush_Common_Flowers, Fern_1, Grass_Common_Short, Flower_3_Group.
+  Bush_Common_Flowers, Fern_1, Grass_Common_Short, Flower_3_Group,
+  Rock_Medium_1, Pebble_Round_1 and RockPath_Round_Small_1.
   `assets/environment/woodland/receipt.json` and template hashes rechecked.
 - No new downloads or paid jobs. NoAI Maple remains excluded; the other six
   unprepared Sketchfab sources are not used. No additional Roblox IDs introduced.
@@ -123,17 +158,20 @@ New pilot content, before subtracting removed old trees/undergrowth/willow:
 | Resource | Budget |
 | --- | ---: |
 | Skinned / static trees | 3 / 2 |
-| Low-plant models | 22 |
+| Low-plant / stone-paving models | 40 / 16 |
 | Rigged geometry | 14,434 triangles / 17 MeshParts |
-| Static trees + undergrowth | 9,834 triangles / 34 MeshParts |
-| Total added pilot geometry | 24,268 triangles / 51 MeshParts |
+| Static trees + undergrowth + stone | 19,780 triangles / 75 MeshParts |
+| Total added pilot geometry | 34,214 triangles / 92 MeshParts |
+| Static parts retained by Minimal | 34 |
 | EditableMesh / EditableImage pools | 17 / 3 |
 | Shared retained meshes (R4 + cliff + grove) / transient expandable cap | 24 fixed / 1 |
 | Decoded tree atlases | 6 MiB (two 512², one 1024²) |
 | Additional lights / update loops vs first-pair preview | 0 / 0 |
 
-The 24 static models contain 92 serialized instances. The first native creation
-reported 150 rigged descendants; bone details are available through Studio. The
+The art revision adds **41 static MeshParts / 9,946 triangles** relative to the
+loading-fix baseline; no increase to the shared EditableMesh/Image pools.
+The 58 static models have not yet been counted in native Play. The preceding
+native creation reported 150 rigged descendants. The
 6 MiB atlas figure excludes mesh buffers, Lua/base64 data and engine overhead.
 Compared with the first pair's 5 MiB atlases, the Windswept pool adds 1 MiB;
 removing the willow saves other allocations, but **no total-memory/FPS claim**
@@ -148,10 +186,12 @@ npm test
 node scripts/build-landscape.mjs --owner-user-id=11924805007
 ```
 
-Local Windows result: `npm run tools` PASS; `npm test` **1,503 PASS**
+Preceding `3996b95` Windows result: `npm run tools` PASS; `npm test` **1,503 PASS**
 (1,456 Luau + 47 Node), 325 compiled Luau sources and all inherited Rojo builds.
 All 1,486 inherited tests retained; 17 added. Two inherited C01 analyzer warnings
 (unused session, shadowed second) remain; no new compiler/type failures.
+The art revision adds two route/budget regressions and compiles its new receipt
+statistics helper. Latest local and Windows/Ubuntu CI outcomes are in PR #63.
 
 Eight new portable tests cover clearance, concave root support, protected layout,
 mixed-species wind caps and detail fading; three Node tests validate actual mesh
@@ -165,12 +205,13 @@ and the final `.rbxlx` SHA-256. Repeated builds must match byte-for-byte.
 
 ## Owner review in the ordinary game
 
-Owner file: `G:\Codex\PotionTycoon-Island-Vegetation-Pilot.rbxlx`.
+Owner art file: `G:\Codex\PotionTycoon-Grove-Art-Pilot.rbxlx`.
 Open it in the existing Studio window, F5, choose a familiar and walk toward
 the left edge/foreground planting. It is the ordinary game with HUD and book,
 normal camera and owner `11924805007`; profile persistence is memory-only.
-No screenshot or video is needed. Native F5 creation is confirmed as detailed
-above; FPS, mobile performance and full visual/interaction checks are NOT RUN.
+No screenshot or video is needed. Native F5 creation of the preceding loading
+fix is confirmed above; the new dressing, FPS, mobile performance and full
+visual/interaction checks are NOT RUN.
 
 Optional Client Command Bar diagnostics after choosing a familiar:
 
