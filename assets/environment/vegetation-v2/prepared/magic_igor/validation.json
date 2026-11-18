@@ -1,0 +1,66 @@
+{
+  "key": "magic_igor",
+  "blender": "4.5.9 LTS",
+  "fbxRoundtrip": [
+    {
+      "variant": "Natural",
+      "triangles": 8020,
+      "bones": 10,
+      "boundsBlender": [
+        [
+          -13.293892,
+          -13.815584,
+          0.0
+        ],
+        [
+          20.788361,
+          16.130112,
+          28.0
+        ]
+      ],
+      "maxDeformation": {
+        "Extras_Magic": 0.0,
+        "Foliage": 0.7096253274789511,
+        "Branches": 0.5387254245052934,
+        "Extras_Stone": 0.0,
+        "FoliageSecondary": 0.5745887197027535,
+        "Roots": 0.0,
+        "Trunk": 0.4858140560894952
+      },
+      "rootsFixed": true,
+      "weightsNormalized": true
+    },
+    {
+      "variant": "Windswept",
+      "triangles": 8018,
+      "bones": 10,
+      "boundsBlender": [
+        [
+          -16.28097,
+          -13.965691,
+          0.0
+        ],
+        [
+          27.329636,
+          16.171972,
+          31.695999
+        ]
+      ],
+      "maxDeformation": {
+        "Extras_Stone.001": 0.0,
+        "Foliage.001": 0.8157970868549655,
+        "Extras_Magic.001": 0.0,
+        "Branches.001": 0.6428640709136608,
+        "FoliageSecondary.001": 0.6760269060321106,
+        "Roots.001": 0.0,
+        "Trunk.001": 0.4911664866580336
+      },
+      "rootsFixed": true,
+      "weightsNormalized": true
+    }
+  ],
+  "packedTextures": true,
+  "renders": 0,
+  "studioPlay": "NOT_RUN",
+  "artReview": "PENDING"
+}

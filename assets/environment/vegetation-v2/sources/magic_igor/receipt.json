@@ -1,0 +1,204 @@
+{
+  "key": "magic_igor",
+  "source": "https://sketchfab.com/3d-models/magic-tree-ba0869cea1944722825abf4d18a6ae41",
+  "author": "Igor Zukowicz",
+  "authorURL": "https://sketchfab.com/gonzobmx",
+  "license": "http://creativecommons.org/licenses/by/4.0/",
+  "archiveBytes": 29457198,
+  "archiveSHA256": "fe32b4cecdd763c16a5202adee094dfb93ae874105b8d35d65fd777330acb2a4",
+  "files": [
+    {
+      "path": "source/asteroida low res.fbx",
+      "bytes": 370460,
+      "sha256": "08f3786c72d7dfc5974e0ade58e30a2477c77b3d46f619de717a4cd479ef2dff"
+    },
+    {
+      "path": "textures/LEAVES_LP_normal.png",
+      "bytes": 4515126,
+      "sha256": "a76e443de7046b4ff693f1bdcbea479ed9ebd180fdfab5e268a4aaf30b5de7b4"
+    },
+    {
+      "path": "textures/FOLIAGE_HP_opacity.jpeg",
+      "bytes": 64374,
+      "sha256": "a74714130f52795b147dad443fe5d0bac8646fcbec916817dfdbd2e5ac565c16"
+    },
+    {
+      "path": "textures/FOLIAGE_HP_AO.jpeg",
+      "bytes": 123836,
+      "sha256": "0c41cb09b1667fe65891a3717fc3a003b7ae075a7a87c17389acbe99394306a5"
+    },
+    {
+      "path": "textures/TRUNK_LP_emissive.jpeg",
+      "bytes": 123530,
+      "sha256": "7a98f40cca37c6753e951d4d7cdb097dcf6721fbd824d0bfdf3ace1fedc9fbb1"
+    },
+    {
+      "path": "textures/FOLIAGE_HP_roughness.jpeg",
+      "bytes": 20278,
+      "sha256": "f9a1f17b218bedea24d5d0939b1f0208095304ccd4d23e2bfe74c5a8e6329747"
+    },
+    {
+      "path": "textures/LEAVES_LP_opacity.jpeg",
+      "bytes": 181378,
+      "sha256": "83007da8709f390173557828bedb82a8ca88f8e12bf0c5aafe9627ed857627e8"
+    },
+    {
+      "path": "textures/TRUNK_LP_albedo.jpeg",
+      "bytes": 1660823,
+      "sha256": "123bb0fdf5c765d6d87f39244f4db8d735a4662145b51333ee887a681373a318"
+    },
+    {
+      "path": "textures/KAMIEN_LP_albedo.jpeg",
+      "bytes": 500243,
+      "sha256": "f2d91e1ef3f71db13c53b4d0e455ad8e43645c08de5a0f0c3ab35a19d0545bd9"
+    },
+    {
+      "path": "textures/LEAVES_LP_spod_AO.jpeg",
+      "bytes": 93153,
+      "sha256": "996d31f329d677eb6f1add778e563fc9b53da031408c45d2fd8b842da7111532"
+    },
+    {
+      "path": "textures/TRUNK_LP_roughness.jpeg",
+      "bytes": 239476,
+      "sha256": "293f0bc04b1f24819bed4bbb89857d3fa1a8b8f66a8ad7c8c85ea5d1ca36e810"
+    },
+    {
+      "path": "textures/KAMIEN_LP_AO.jpeg",
+      "bytes": 321228,
+      "sha256": "6eac488e6ce8c0e294d6df213c475db659eb323ea4bd7a9a391a31a93a644e6d"
+    },
+    {
+      "path": "textures/LEAVES_LP_spod_metallic.jpeg",
+      "bytes": 16545,
+      "sha256": "d07c2919c0940872339cb8d0f31d80212b8ba58d93c852fdebeca59986a1258e"
+    },
+    {
+      "path": "textures/TRUNK_LP_metallic.jpeg",
+      "bytes": 16545,
+      "sha256": "d07c2919c0940872339cb8d0f31d80212b8ba58d93c852fdebeca59986a1258e"
+    },
+    {
+      "path": "textures/FOLIAGE_HP_metallic.jpeg",
+      "bytes": 16545,
+      "sha256": "d07c2919c0940872339cb8d0f31d80212b8ba58d93c852fdebeca59986a1258e"
+    },
+    {
+      "path": "textures/TRUNK_LP_AO.jpeg",
+      "bytes": 687919,
+      "sha256": "da3387894a39bf7853836ac7ec760c012b29df23fa3a322b94e0d17b695542c4"
+    },
+    {
+      "path": "textures/FOLIAGE_HP_normal.png",
+      "bytes": 2209149,
+      "sha256": "25d5053ed373b1d8c3f7a56cfb5115655f6cbabad01ba72a2940e4aac515434e"
+    },
+    {
+      "path": "textures/LEAVES_LP_albedo.jpeg",
+      "bytes": 1763451,
+      "sha256": "99d25ef36467513af6ae0887a10160cb7cd3ab160a26c65be3ca9c7f364ca900"
+    },
+    {
+      "path": "textures/KAMIEN_LP_opacity.jpeg",
+      "bytes": 165151,
+      "sha256": "4ac6a043baf1c94b6a26ad4dd59005fced553bb65cd45b29dce76c30e05f5077"
+    },
+    {
+      "path": "textures/LEAVES_LP_spod_albedo.jpeg",
+      "bytes": 573752,
+      "sha256": "3f98445483bc226e427256b59a5c9e514e4fc52afc6cd1da96f1365551d1fcf9"
+    },
+    {
+      "path": "textures/GEM_LP_roughness.jpeg",
+      "bytes": 285840,
+      "sha256": "48fe1687a55b13d6310340c46e15a87b158ba04659446823b56ade2de6bb03b0"
+    },
+    {
+      "path": "textures/LEAVES_LP_spod_normal.png",
+      "bytes": 2617479,
+      "sha256": "9e00efe8375c61bd3d5cbb2a8bd7eed15303a6bc2ee8b707574795cb00f90796"
+    },
+    {
+      "path": "textures/KAMIEN_LP_metallic.jpeg",
+      "bytes": 16545,
+      "sha256": "d07c2919c0940872339cb8d0f31d80212b8ba58d93c852fdebeca59986a1258e"
+    },
+    {
+      "path": "textures/LEAVES_LP_spod_roughness.jpeg",
+      "bytes": 54238,
+      "sha256": "9d252f848628ced74a5d11487bfed1846b3e1d0b925c7ad29a3b5790fc9a181a"
+    },
+    {
+      "path": "textures/FOLIAGE_HP_albedo.jpeg",
+      "bytes": 323566,
+      "sha256": "23ffb446914749b0d65016635f4f0102e34d1c20a2f2ef1ce77787be7c99d789"
+    },
+    {
+      "path": "textures/LEAVES_LP_metallic.jpeg",
+      "bytes": 16545,
+      "sha256": "d07c2919c0940872339cb8d0f31d80212b8ba58d93c852fdebeca59986a1258e"
+    },
+    {
+      "path": "textures/GEM_LP_metallic.jpeg",
+      "bytes": 141740,
+      "sha256": "56981235a661ac500334ab07d8644774c147af86d72ce3486e386459b863d170"
+    },
+    {
+      "path": "textures/TRUNK_LP_opacity.jpeg",
+      "bytes": 239476,
+      "sha256": "293f0bc04b1f24819bed4bbb89857d3fa1a8b8f66a8ad7c8c85ea5d1ca36e810"
+    },
+    {
+      "path": "textures/GEM_LP_albedo.jpeg",
+      "bytes": 523190,
+      "sha256": "1889f90e1028254c51247dfe1431d68f0952fd55f98fd2c808f9957f496ad1de"
+    },
+    {
+      "path": "textures/LEAVES_LP_roughness.jpeg",
+      "bytes": 701439,
+      "sha256": "45aa51294bd82ed20f77056bdd6f873d1ca23819ba24c647ca5bfe09c3e4284e"
+    },
+    {
+      "path": "textures/KAMIEN_LP_roughness.jpeg",
+      "bytes": 374032,
+      "sha256": "8c9895c465c96b5ad7de8418c9db3244e73f55d0cf93529177282ebecbae1e3c"
+    },
+    {
+      "path": "textures/GEM_LP_AO.jpeg",
+      "bytes": 196740,
+      "sha256": "275e0d31ea2e8c27b63c5fb7aff27123deb77bac585797404b80f38682c233a5"
+    },
+    {
+      "path": "textures/LEAVES_LP_AO.jpeg",
+      "bytes": 608789,
+      "sha256": "93508a3c851f3648b8fd9b691136e679db4c34cd25f17c653e1df13199ceaa37"
+    },
+    {
+      "path": "textures/TRUNK_LP_normal.png",
+      "bytes": 3862920,
+      "sha256": "67d51ea8f985bd02be92fbc900ac39893000e77a796d492ace51164270d6d278"
+    },
+    {
+      "path": "textures/GEM_LP_normal.png",
+      "bytes": 2319161,
+      "sha256": "fd78385c94dfee316e91bbffc41f84bcb47a74bdc9bc9fada41c245c408e00aa"
+    },
+    {
+      "path": "textures/GEM_LP_opacity.jpeg",
+      "bytes": 85994,
+      "sha256": "90045b4ea81d6a14ffd41b56137b17c525a23ff3fbbab4e80c760097e98ce1db"
+    },
+    {
+      "path": "textures/GEM_LP_emissive.jpeg",
+      "bytes": 538759,
+      "sha256": "1cd6d75d8b60fecb2e3072e9ca6591a351c8793df12c32f6d1fbe73402567659"
+    },
+    {
+      "path": "textures/KAMIEN_LP_normal.png",
+      "bytes": 2882573,
+      "sha256": "903962929b8214a983d6a5b696747ae75b037aa2604c1a427007ef16a21a7a08"
+    }
+  ],
+  "method": "Official authenticated Sketchfab Download / Original format",
+  "imported": false,
+  "uploaded": false
+}

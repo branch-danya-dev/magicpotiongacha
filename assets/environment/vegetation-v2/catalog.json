@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "base": "deb2ba18e1dda7f68713923a1e6164abd0df7f0f",
+  "firstPair": [
+    "stylized_stefan",
+    "magic_igor"
+  ],
+  "models": [
+    {
+      "key": "magic_igor",
+      "status": "FIRST_PAIR_CODE_CANDIDATE",
+      "commercialLicenseDeclaration": "CC-BY-4.0",
+      "sourceFilesRetained": true,
+      "studioVerified": false,
+      "productionAdmitted": false
+    },
+    {
+      "key": "magic_nyomryu",
+      "status": "WAIT_FIRST_PAIR_STUDIO_GATE",
+      "commercialLicenseDeclaration": "CC-BY-4.0",
+      "sourceFilesRetained": false,
+      "studioVerified": false,
+      "productionAdmitted": false
+    },
+    {
+      "key": "fantasy_simon",
+      "status": "WAIT_FIRST_PAIR_STUDIO_GATE",
+      "commercialLicenseDeclaration": "CC-BY-4.0",
+      "sourceFilesRetained": false,
+      "studioVerified": false,
+      "productionAdmitted": false
+    },
+    {
+      "key": "oak_maple",
+      "status": "BLOCKED_NOAI",
+      "commercialLicenseDeclaration": "CC-BY-4.0",
+      "sourceFilesRetained": false,
+      "studioVerified": false,
+      "productionAdmitted": false
+    },
+    {
+      "key": "sakura_jogoss",
+      "status": "WAIT_FIRST_PAIR_STUDIO_GATE",
+      "commercialLicenseDeclaration": "CC-BY-4.0",
+      "sourceFilesRetained": false,
+      "studioVerified": false,
+      "productionAdmitted": false
+    },
+    {
+      "key": "cherry_sereib",
+      "status": "WAIT_FIRST_PAIR_STUDIO_GATE",
+      "commercialLicenseDeclaration": "CC-BY-4.0",
+      "sourceFilesRetained": false,
+      "studioVerified": false,
+      "productionAdmitted": false
+    },
+    {
+      "key": "stylized_voyage",
+      "status": "WAIT_FIRST_PAIR_STUDIO_GATE",
+      "commercialLicenseDeclaration": "CC-BY-4.0",
+      "sourceFilesRetained": false,
+      "studioVerified": false,
+      "productionAdmitted": false
+    },
+    {
+      "key": "stylized_stefan",
+      "status": "FIRST_PAIR_CODE_CANDIDATE",
+      "commercialLicenseDeclaration": "CC-BY-4.0",
+      "sourceFilesRetained": true,
+      "studioVerified": false,
+      "productionAdmitted": false
+    },
+    {
+      "key": "curved_dungdao",
+      "status": "WAIT_FIRST_PAIR_STUDIO_GATE",
+      "commercialLicenseDeclaration": "CC-BY-4.0",
+      "sourceFilesRetained": false,
+      "studioVerified": false,
+      "productionAdmitted": false
+    }
+  ],
+  "canonicalGameDevReceipt": false,
+  "pipeline": "Direct local Blender 4.5.9; game-dev CLI unavailable"
+}

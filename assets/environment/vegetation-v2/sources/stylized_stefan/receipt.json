@@ -1,0 +1,44 @@
+{
+  "key": "stylized_stefan",
+  "source": "https://sketchfab.com/3d-models/stylized-tree-4475c38dac544c8abe49ffa602df6595",
+  "author": "stefan",
+  "authorURL": "https://sketchfab.com/stefanhagewoud",
+  "license": "http://creativecommons.org/licenses/by/4.0/",
+  "archiveBytes": 7908809,
+  "archiveSHA256": "75f8c882210ef5b3c5b7e21c7065d877372ef6e9cd8941f8acc7ed93c4766a35",
+  "files": [
+    {
+      "path": "source/Sketchfab_2023_05_10_22_49_34.blend",
+      "bytes": 4097704,
+      "sha256": "ef028d2079b028f30928cdb20127c352639afeb2ee98d7c7e22dd7ecfdfef028"
+    },
+    {
+      "path": "textures/LowPoly_DefaultMaterial_BaseColor.png",
+      "bytes": 507500,
+      "sha256": "1f94eb61eb312b12633209c6e7f96573c8f8bc0fc3d78809b90f78027f1075a4"
+    },
+    {
+      "path": "textures/Leaves.png",
+      "bytes": 45998,
+      "sha256": "c6dabf44205f86543261ae47a0dcf07c1a0dd91303f6248bb07adf5766eba366"
+    },
+    {
+      "path": "textures/internal_ground_ao_texture.jpeg",
+      "bytes": 18768,
+      "sha256": "29b79a45efe717cb02ce1e8dc7435bc724c230ecd654b2d46899c326ac9f0ecf"
+    },
+    {
+      "path": "textures/LowPoly_DefaultMaterial_Normal.png",
+      "bytes": 3168957,
+      "sha256": "14574683f4447ba7d531d5c3d8b0565e5783ce39a3da552081c65575fc02f62f"
+    },
+    {
+      "path": "textures/Color.png",
+      "bytes": 68988,
+      "sha256": "d768cd8a0cf4e31676a7a7689b21cd4e665b0ac6af5329b169b532312d2535ab"
+    }
+  ],
+  "method": "Official authenticated Sketchfab Download / Original format",
+  "imported": false,
+  "uploaded": false
+}

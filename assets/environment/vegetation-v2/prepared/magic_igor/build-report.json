@@ -1,0 +1,28 @@
+{
+  "key": "magic_igor",
+  "variants": [
+    {
+      "id": "Natural",
+      "triangles": 8020,
+      "authoringParts": 7,
+      "bones": 10
+    },
+    {
+      "id": "Windswept",
+      "triangles": 8018,
+      "authoringParts": 7,
+      "bones": 10
+    }
+  ],
+  "textureCount": 1,
+  "textureSize": 1024,
+  "blenderVersion": "4.5.9 LTS",
+  "removed": [
+    "Original preview armature/action",
+    "Drop shadow plane"
+  ],
+  "sourceNormalsNotBaked": true,
+  "screenshots": 0,
+  "uploads": 0,
+  "studioVerified": false
+}

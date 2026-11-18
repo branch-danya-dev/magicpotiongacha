@@ -16,6 +16,71 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### ISLAND-VEGETATION-PILOT — composed landscape trial
+
+**Grove art refinement claimed 2026-11-18**, exact base
+`3996b9513e73cda3687be4ccef7e3b215d73c1de`, same feature branch / Draft PR #63.
+Owner confirms the new trees appear; requests dressing this grove next. This is
+not whole-island approval. Refine authored plant pockets, stone/root transitions,
+subtle per-tree color and quality-preserved ground silhouettes using the admitted
+models only. Preserve memory fix, tree pool budget, construction/routes, island
+geometry, World Tree, lighting ownership, economy and V8. Rebuild and check; no
+new uploads, screenshots/video, merge or publication.
+
+**Reopened 2026-11-18: native allocation failure**, exact fix base
+`0910661f948fa8d74507542c7d2869fe16307a01`, same branch / Draft PR #63.
+Owner Play log confirms static plants loaded, but Cliff allocation failed before
+Grove.start; R4 retained six expandable meshes. Fix shared transient allocation,
+compact finished geometry, isolate startup failures and verify the replacement
+artifact in the existing Studio window. No art/layout/economy or upload changes.
+Fix candidate now passes native F5 creation: 3 rigged trees, 17 meshes, 3 images,
+34 static parts; 24 compact allocations, zero failures/live scratch, peak one.
+Cliff retains 3,936 vertices / 7,868 triangles. Owner art/skin/wind/quality/FPS gates
+remain open; no screenshots/video. Exact evidence/build hashes go in PR #63.
+
+**STAGE 1 CODE CANDIDATE / OWNER ART PENDING**, claimed 2026-11-18. Branch `feat/island-vegetation-pilot`.
+Exact local base `b9c5a3c1ba99f5f6079a91ffe9f53f3f823bcf1e` (Vegetation V2),
+descendant of confirmed Draft PR #62 `deb2ba18e1dda7f68713923a1e6164abd0df7f0f`.
+Stage 1 only: authored grove, restrained palette, shared wind, remove active
+willow in an isolated ordinary-game build while retaining its source. Preserve
+World Tree, island geometry, stations/routes, server economy and V8. No migrations,
+new uploads, screenshots/video, merge or publication. Rollback: use the previous
+build. Stage 2 whole-island planting requires owner review of this pilot.
+Portable/build/CI checks and native/device evidence are separate gates.
+Five trees (three ordinary model types, one magical), 22 undergrowth groups;
+concave coastline/crown/13-station audits, 3/2/1 rigged wind caps. No active willow.
+Local `npm run tools` and `npm test`: PASS, 1,456 Luau + 47 Node = 1,503;
+325 Luau sources. All 1,486 inherited tests retained. Candidate ordinary build
+reproduces from source; `docs/ISLAND_VEGETATION_PILOT.md` records scope and gates.
+Studio creation PASS (2026-11-18); visual/quality/FPS/phones remain unverified.
+GitHub CI results and final SHA are recorded in the new Draft PR.
+
+### VEGETATION-V2 — source-licensed reusable tree library
+
+**FIRST PAIR CODE CANDIDATE / STUDIO DEFERRED BY OWNER**, claimed 2026-11-18.
+Branch `feat/vegetation-v2-library`, clean base PR #62
+`deb2ba18e1dda7f68713923a1e6164abd0df7f0f` (Windows/Ubuntu CI 44339538104 PASS).
+Audit nine owner-selected Sketchfab sources, including Maple NoAI and dungdao.
+Only verified sources may enter Blender preparation; first validate one normal
+and one magical tree before extending to remaining admitted models. Reuse the
+existing tree/wind architecture; preserve World Tree/clouds/horizon, economy,
+V8 and placements. No migrations, screenshots/video, paid jobs, bulk replacement,
+new Roblox uploads/access changes, merge or publication. Unknown rights/file
+access and native art/device checks stay explicit blockers. Revert the isolated
+library branch for rollback; existing vegetation remains the default.
+Nine metadata/license records checked; stefan and Igor Zukowicz downloaded and
+derived into two geometry variants each, packed Blender sources and four FBXs.
+Maple remains BLOCKED_NOAI. Six other models wait for the first pair's full
+Studio gate. Owner requested code/build only on 2026-11-18 after the text-only
+Studio file dialog could not be controlled. No screenshots or video.
+Windows: `npm run tools` PASS; `npm test` PASS — 1,443 Luau + 43 Node = 1,486,
+319 Luau sources, inherited Rojo builds; seven Python source-intake tests PASS.
+Blender 4.5.9: four FBX reimports PASS; mesh JSON and atlas hashes reproduce
+identically. Candidate GitHub CI has not run (local feature branch only).
+Report: `docs/VEGETATION_V2_REPORT.md`. Native Play, mobile/performance and owner
+art acceptance are NOT RUN/PENDING; this is not a completed nine-model library.
+
+
 ### SKY-WORLD-TREE-R4 — isolated 2.5D depth prototype
 
 **CODE CANDIDATE / EXPERIMENTAL / OWNER ART REVIEW PENDING**, claimed 2026-11-18.

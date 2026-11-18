@@ -1,0 +1,25 @@
+{
+  "key": "stylized_stefan",
+  "variants": [
+    {
+      "id": "Natural",
+      "triangles": 3322,
+      "authoringParts": 5,
+      "bones": 10
+    },
+    {
+      "id": "Windswept",
+      "triangles": 3092,
+      "authoringParts": 5,
+      "bones": 10
+    }
+  ],
+  "textureCount": 1,
+  "textureSize": 512,
+  "blenderVersion": "4.5.9 LTS",
+  "removed": [],
+  "sourceNormalsNotBaked": true,
+  "screenshots": 0,
+  "uploads": 0,
+  "studioVerified": false
+}
