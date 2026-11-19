@@ -16,6 +16,23 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### ISLAND-FOREST-P0 — grass, World Tree artifact and forest frame spikes
+
+**CLAIMED 2026-11-19**, branch `fix/island-forest-p0`, exact confirmed Draft #64
+base `a1bb4edf76df6f631512256b520128fc0fdf3062`. Preserve 184 x 172, 48 authored
+tree placements and all 13 gameplay anchors. Restore suitable native grass and
+collision-audited legacy cover. Diagnose R3/R4 in Play; use the explicitly
+authorized R3 fallback if R4 cannot be corrected safely. Compare bounded native
+Studio stationary/traversal scenarios before/after, including loaded geometry,
+wind, frame median/p95/p99 and >100 ms stalls, memory and available render stats.
+Limit optimization to candidate forest/vegetation adapters and at most two
+measured iterations; target fewer stalls and p99 <33.3 ms at the same desktop
+quality/workload, never infer mobile acceptance. Production economy/V8/remotes
+unchanged. No new assets/uploads, main merge or publication. Report raw evidence,
+duration and unperformed gates. CLI `game-dev` and `.game-dev/adapter.json` absent;
+use the requested native Studio diagnostics, not a fabricated sealed-harness run.
+Rollback: untouched PR #64 plus its owner build; new separate candidate file.
+
 ### ISLAND-DENSE-FOREST — larger island, dense perimeter, open centre
 
 **CODE_CANDIDATE / STUDIO VERIFIED (desktop) / OWNER ART PENDING 2026-11-19**, branch `feat/island-dense-forest`, exact base

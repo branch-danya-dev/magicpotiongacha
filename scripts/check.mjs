@@ -98,6 +98,7 @@ run(tool('luau', 'luau'), ['tests/run_sky_depth.luau']);
 run(tool('luau', 'luau'), ['tests/run_vegetation.luau']);
 run(tool('luau', 'luau'), ['tests/run_landscape.luau']);
 run(tool('luau', 'luau'), ['tests/run_forest.luau']);
+run(tool('luau', 'luau'), ['tests/run_forest_p0.luau']);
 run(process.execPath, ['--test', 'tests/forest-assets.test.mjs']);
 run(process.execPath, ['--test', 'tests/landscape-assets.test.mjs']);
 run(process.execPath, ['--test', 'tests/vegetation-assets.test.mjs']);
