@@ -1,0 +1,812 @@
+{
+  "label": "candidate",
+  "startup": {
+    "memoryMiB": 3660.48046875,
+    "frames": {
+      "stallsOver100": 0,
+      "mean": 14.173956577638712,
+      "p99": 64.27279859781265,
+      "framesOver33": 20,
+      "p95": 49.282100051641464,
+      "median": 6.278799846768379,
+      "stallMs": 0,
+      "max": 70.24230062961578,
+      "n": 136
+    },
+    "readySec": 4.050979299994651,
+    "code": "08fe2181ced9c6ee8d53bd8239779c8670b8f80230e7001b8b6926d5097f205e"
+  },
+  "completed": true,
+  "rows": [
+    {
+      "kind": "case",
+      "seconds": 80.00135229999432,
+      "arrivals": 19,
+      "run": "candidate",
+      "timeouts": 0,
+      "fov": 70,
+      "viewport": [
+        2095,
+        1095
+      ],
+      "mode": "R3",
+      "stage": "noForest",
+      "quality": "reduced"
+    },
+    {
+      "kind": "frames",
+      "moving": {
+        "stallsOver100": 0,
+        "mean": 4.16809775473615,
+        "p99": 5.803300067782402,
+        "framesOver33": 0,
+        "p95": 5.253300070762634,
+        "median": 4.096799995750189,
+        "stallMs": 0,
+        "max": 17.29240082204342,
+        "n": 15595
+      },
+      "stationary": {
+        "stallsOver100": 0,
+        "mean": 4.168389417916639,
+        "p99": 5.670300219208002,
+        "framesOver33": 0,
+        "p95": 5.190100055187941,
+        "median": 4.099099896848202,
+        "stallMs": 0,
+        "max": 8.166099898517132,
+        "n": 3600
+      },
+      "all": {
+        "stallsOver100": 0,
+        "mean": 4.168152455827568,
+        "p99": 5.783699918538332,
+        "framesOver33": 0,
+        "p95": 5.243000108748674,
+        "median": 4.097199998795986,
+        "stallMs": 0,
+        "max": 17.29240082204342,
+        "n": 19195
+      },
+      "run": "candidate",
+      "stage": "noForest"
+    },
+    {
+      "kind": "resources",
+      "drawCalls": {
+        "mean": 98.29629629629629,
+        "p99": 138,
+        "p95": 125,
+        "median": 112,
+        "max": 138,
+        "n": 81
+      },
+      "memory": {
+        "mean": 3596.1317515432097,
+        "p99": 3599.5,
+        "p95": 3598.27734375,
+        "median": 3595.91796875,
+        "max": 3599.5,
+        "n": 81
+      },
+      "sceneTriangles": {
+        "mean": 248232.65432098764,
+        "p99": 298979,
+        "p95": 290425,
+        "median": 269469,
+        "max": 298979,
+        "n": 81
+      },
+      "run": "candidate",
+      "stage": "noForest"
+    },
+    {
+      "kind": "meshes",
+      "visibleCandidates": {
+        "mean": 207.58024691358025,
+        "p99": 210,
+        "p95": 208,
+        "median": 208,
+        "max": 210,
+        "n": 81
+      },
+      "note": "nontransparent Workspace MeshParts; includes offscreen; rendered triangles/drawcalls are separate Stats counters",
+      "run": "candidate",
+      "stage": "noForest"
+    },
+    {
+      "kind": "work",
+      "stage": "noForest",
+      "renderCPUms": {
+        "stallsOver100": 0,
+        "mean": 2.4206444554973716,
+        "p99": 3.3976000268012285,
+        "framesOver33": 0,
+        "p95": 2.9319000896066427,
+        "median": 2.408399945124984,
+        "stallMs": 0,
+        "max": 3.3976000268012285,
+        "n": 81
+      },
+      "run": "candidate",
+      "windMs": {
+        "stallsOver100": 0,
+        "mean": 0.030596295003721744,
+        "p99": 0.04029995761811733,
+        "framesOver33": 0,
+        "p95": 0.03759999526664615,
+        "median": 0.029099988751113415,
+        "stallMs": 0,
+        "max": 0.04029995761811733,
+        "n": 81
+      }
+    },
+    {
+      "kind": "state",
+      "state": {
+        "meshes": 23,
+        "newLights": 0,
+        "highTrees": 4,
+        "ready": true,
+        "instances": 1532,
+        "riggedTrees": 29,
+        "wind": {
+          "connections": 1,
+          "updates": 7424,
+          "activeTrees": 0,
+          "boneWrites": 650586,
+          "resets": 2553,
+          "entries": 29,
+          "lastMs": 0.03250001464039087
+        },
+        "reduceMotion": true,
+        "clientMemoryMiB": 3597.30859375,
+        "images": 3,
+        "allocation": {
+          "completed": 24,
+          "peakScratch": 1,
+          "busy": false,
+          "activeScratch": 0,
+          "failed": 0
+        },
+        "staticParts": 338,
+        "quality": "reduced"
+      },
+      "run": "candidate",
+      "stage": "noForest"
+    },
+    {
+      "kind": "case",
+      "seconds": 80.00150069996016,
+      "arrivals": 19,
+      "run": "candidate",
+      "timeouts": 0,
+      "fov": 70,
+      "viewport": [
+        2095,
+        1095
+      ],
+      "mode": "R3",
+      "stage": "trees",
+      "quality": "reduced"
+    },
+    {
+      "kind": "frames",
+      "moving": {
+        "stallsOver100": 0,
+        "mean": 4.6897218157506035,
+        "p99": 47.795701771974564,
+        "framesOver33": 156,
+        "p95": 5.338099785149097,
+        "median": 4.085400141775608,
+        "stallMs": 0,
+        "max": 65.36699831485748,
+        "n": 13861
+      },
+      "stationary": {
+        "stallsOver100": 0,
+        "mean": 4.224490625254015,
+        "p99": 5.822000093758106,
+        "framesOver33": 4,
+        "p95": 5.279399920254946,
+        "median": 4.097700119018555,
+        "stallMs": 0,
+        "max": 63.93440067768097,
+        "n": 3551
+      },
+      "all": {
+        "stallsOver100": 0,
+        "mean": 4.594842654399042,
+        "p99": 7.443000096827745,
+        "framesOver33": 160,
+        "p95": 5.32039999961853,
+        "median": 4.087099805474281,
+        "stallMs": 0,
+        "max": 65.36699831485748,
+        "n": 17412
+      },
+      "run": "candidate",
+      "stage": "trees"
+    },
+    {
+      "kind": "resources",
+      "drawCalls": {
+        "mean": 127.9753086419753,
+        "p99": 171,
+        "p95": 163,
+        "median": 145,
+        "max": 171,
+        "n": 81
+      },
+      "memory": {
+        "mean": 3602.571759259259,
+        "p99": 3606.77734375,
+        "p95": 3606.234375,
+        "median": 3602.6171875,
+        "max": 3606.77734375,
+        "n": 81
+      },
+      "sceneTriangles": {
+        "mean": 312656.27160493826,
+        "p99": 408141,
+        "p95": 385605,
+        "median": 337497,
+        "max": 408141,
+        "n": 81
+      },
+      "run": "candidate",
+      "stage": "trees"
+    },
+    {
+      "kind": "meshes",
+      "visibleCandidates": {
+        "mean": 314.69135802469134,
+        "p99": 320,
+        "p95": 318,
+        "median": 316,
+        "max": 320,
+        "n": 81
+      },
+      "note": "nontransparent Workspace MeshParts; includes offscreen; rendered triangles/drawcalls are separate Stats counters",
+      "run": "candidate",
+      "stage": "trees"
+    },
+    {
+      "kind": "work",
+      "stage": "trees",
+      "renderCPUms": {
+        "stallsOver100": 0,
+        "mean": 2.5393469115420255,
+        "p99": 4.171899985522032,
+        "framesOver33": 0,
+        "p95": 3.2293000258505344,
+        "median": 2.415599999949336,
+        "stallMs": 0,
+        "max": 4.171899985522032,
+        "n": 81
+      },
+      "run": "candidate",
+      "windMs": {
+        "stallsOver100": 0,
+        "mean": 0.031517284640605436,
+        "p99": 0.06970000686123967,
+        "framesOver33": 0,
+        "p95": 0.03979995381087065,
+        "median": 0.028499984182417393,
+        "stallMs": 0,
+        "max": 0.06970000686123967,
+        "n": 81
+      }
+    },
+    {
+      "kind": "state",
+      "state": {
+        "meshes": 23,
+        "newLights": 0,
+        "highTrees": 4,
+        "ready": true,
+        "instances": 1532,
+        "riggedTrees": 29,
+        "wind": {
+          "connections": 1,
+          "updates": 8504,
+          "activeTrees": 0,
+          "boneWrites": 650586,
+          "resets": 2553,
+          "entries": 29,
+          "lastMs": 0.02770003629848361
+        },
+        "reduceMotion": true,
+        "clientMemoryMiB": 3605.51953125,
+        "images": 3,
+        "allocation": {
+          "completed": 24,
+          "peakScratch": 1,
+          "busy": false,
+          "activeScratch": 0,
+          "failed": 0
+        },
+        "staticParts": 338,
+        "quality": "reduced"
+      },
+      "run": "candidate",
+      "stage": "trees"
+    },
+    {
+      "kind": "case",
+      "seconds": 80.00083009997616,
+      "arrivals": 19,
+      "run": "candidate",
+      "timeouts": 0,
+      "fov": 70,
+      "viewport": [
+        2095,
+        1095
+      ],
+      "mode": "R3",
+      "stage": "understory",
+      "quality": "reduced"
+    },
+    {
+      "kind": "frames",
+      "moving": {
+        "stallsOver100": 0,
+        "mean": 4.684319283121038,
+        "p99": 47.92419821023941,
+        "framesOver33": 154,
+        "p95": 5.388400051742792,
+        "median": 4.084200132638216,
+        "stallMs": 0,
+        "max": 59.851400554180145,
+        "n": 13877
+      },
+      "stationary": {
+        "stallsOver100": 0,
+        "mean": 4.2188045847296705,
+        "p99": 5.823099985718727,
+        "framesOver33": 4,
+        "p95": 5.208199843764305,
+        "median": 4.0756999514997005,
+        "stallMs": 0,
+        "max": 56.78030103445053,
+        "n": 3556
+      },
+      "all": {
+        "stallsOver100": 0,
+        "mean": 4.589363150069945,
+        "p99": 7.926899939775467,
+        "framesOver33": 158,
+        "p95": 5.348199978470802,
+        "median": 4.0825000032782555,
+        "stallMs": 0,
+        "max": 59.851400554180145,
+        "n": 17433
+      },
+      "run": "candidate",
+      "stage": "understory"
+    },
+    {
+      "kind": "resources",
+      "drawCalls": {
+        "mean": 150.25925925925927,
+        "p99": 215,
+        "p95": 186,
+        "median": 160,
+        "max": 215,
+        "n": 81
+      },
+      "memory": {
+        "mean": 3590.131992669753,
+        "p99": 3593.05859375,
+        "p95": 3592.83984375,
+        "median": 3590.0703125,
+        "max": 3593.05859375,
+        "n": 81
+      },
+      "sceneTriangles": {
+        "mean": 321162.44444444444,
+        "p99": 426197,
+        "p95": 397972,
+        "median": 343981,
+        "max": 426197,
+        "n": 81
+      },
+      "run": "candidate",
+      "stage": "understory"
+    },
+    {
+      "kind": "meshes",
+      "visibleCandidates": {
+        "mean": 430.0617283950617,
+        "p99": 459,
+        "p95": 452,
+        "median": 431,
+        "max": 459,
+        "n": 81
+      },
+      "note": "nontransparent Workspace MeshParts; includes offscreen; rendered triangles/drawcalls are separate Stats counters",
+      "run": "candidate",
+      "stage": "understory"
+    },
+    {
+      "kind": "work",
+      "stage": "understory",
+      "renderCPUms": {
+        "stallsOver100": 0,
+        "mean": 3.100441978600474,
+        "p99": 47.70850017666817,
+        "framesOver33": 1,
+        "p95": 3.3178001176565886,
+        "median": 2.4282000958919525,
+        "stallMs": 0,
+        "max": 47.70850017666817,
+        "n": 81
+      },
+      "run": "candidate",
+      "windMs": {
+        "stallsOver100": 0,
+        "mean": 0.03000740881687329,
+        "p99": 0.04269997589290142,
+        "framesOver33": 0,
+        "p95": 0.037299992982298136,
+        "median": 0.028499984182417393,
+        "stallMs": 0,
+        "max": 0.04269997589290142,
+        "n": 81
+      }
+    },
+    {
+      "kind": "state",
+      "state": {
+        "meshes": 23,
+        "newLights": 0,
+        "highTrees": 4,
+        "ready": true,
+        "instances": 1532,
+        "riggedTrees": 29,
+        "wind": {
+          "connections": 1,
+          "updates": 9585,
+          "activeTrees": 0,
+          "boneWrites": 650586,
+          "resets": 2553,
+          "entries": 29,
+          "lastMs": 0.027200032491236925
+        },
+        "reduceMotion": true,
+        "clientMemoryMiB": 3592.7890625,
+        "images": 3,
+        "allocation": {
+          "completed": 24,
+          "peakScratch": 1,
+          "busy": false,
+          "activeScratch": 0,
+          "failed": 0
+        },
+        "staticParts": 338,
+        "quality": "reduced"
+      },
+      "run": "candidate",
+      "stage": "understory"
+    },
+    {
+      "kind": "case",
+      "seconds": 80.0007401999901,
+      "arrivals": 19,
+      "run": "candidate",
+      "timeouts": 0,
+      "fov": 70,
+      "viewport": [
+        2095,
+        1095
+      ],
+      "mode": "R3",
+      "stage": "windR3",
+      "quality": "reduced"
+    },
+    {
+      "kind": "frames",
+      "moving": {
+        "stallsOver100": 0,
+        "mean": 4.705289596997787,
+        "p99": 48.67659881711006,
+        "framesOver33": 156,
+        "p95": 5.422499962151051,
+        "median": 4.111899994313717,
+        "stallMs": 0,
+        "max": 67.47130304574966,
+        "n": 13815
+      },
+      "stationary": {
+        "stallsOver100": 0,
+        "mean": 4.212777901111849,
+        "p99": 6.040799897164106,
+        "framesOver33": 3,
+        "p95": 5.297999829053879,
+        "median": 4.112000111490488,
+        "stallMs": 0,
+        "max": 56.10769987106323,
+        "n": 3561
+      },
+      "all": {
+        "stallsOver100": 0,
+        "mean": 4.6043553112559685,
+        "p99": 8.624600246548653,
+        "framesOver33": 159,
+        "p95": 5.390400066971779,
+        "median": 4.111899994313717,
+        "stallMs": 0,
+        "max": 67.47130304574966,
+        "n": 17376
+      },
+      "run": "candidate",
+      "stage": "windR3"
+    },
+    {
+      "kind": "resources",
+      "drawCalls": {
+        "mean": 157.37037037037038,
+        "p99": 220,
+        "p95": 193,
+        "median": 167,
+        "max": 220,
+        "n": 81
+      },
+      "memory": {
+        "mean": 3591.5401234567903,
+        "p99": 3593.5546875,
+        "p95": 3593.33984375,
+        "median": 3591.98046875,
+        "max": 3593.5546875,
+        "n": 81
+      },
+      "sceneTriangles": {
+        "mean": 321381.3333333333,
+        "p99": 427495,
+        "p95": 398762,
+        "median": 344021,
+        "max": 427495,
+        "n": 81
+      },
+      "run": "candidate",
+      "stage": "windR3"
+    },
+    {
+      "kind": "meshes",
+      "visibleCandidates": {
+        "mean": 430.4691358024691,
+        "p99": 456,
+        "p95": 451,
+        "median": 431,
+        "max": 456,
+        "n": 81
+      },
+      "note": "nontransparent Workspace MeshParts; includes offscreen; rendered triangles/drawcalls are separate Stats counters",
+      "run": "candidate",
+      "stage": "windR3"
+    },
+    {
+      "kind": "work",
+      "stage": "windR3",
+      "renderCPUms": {
+        "stallsOver100": 0,
+        "mean": 2.5416987482458353,
+        "p99": 3.4384001046419144,
+        "framesOver33": 0,
+        "p95": 2.989900065585971,
+        "median": 2.4892999790608883,
+        "stallMs": 0,
+        "max": 3.4384001046419144,
+        "n": 81
+      },
+      "run": "candidate",
+      "windMs": {
+        "stallsOver100": 0,
+        "mean": 0.22670370239166565,
+        "p99": 0.3961999900639057,
+        "framesOver33": 0,
+        "p95": 0.3703000256791711,
+        "median": 0.23860001238062978,
+        "stallMs": 0,
+        "max": 0.3961999900639057,
+        "n": 81
+      }
+    },
+    {
+      "kind": "state",
+      "state": {
+        "meshes": 23,
+        "newLights": 0,
+        "highTrees": 4,
+        "ready": true,
+        "instances": 1532,
+        "riggedTrees": 29,
+        "wind": {
+          "connections": 1,
+          "updates": 10665,
+          "activeTrees": 3,
+          "boneWrites": 765170,
+          "resets": 2689,
+          "entries": 29,
+          "lastMs": 0.19500002963468432
+        },
+        "reduceMotion": false,
+        "clientMemoryMiB": 3594.40234375,
+        "images": 3,
+        "allocation": {
+          "completed": 24,
+          "peakScratch": 1,
+          "busy": false,
+          "activeScratch": 0,
+          "failed": 0
+        },
+        "staticParts": 338,
+        "quality": "reduced"
+      },
+      "run": "candidate",
+      "stage": "windR3"
+    },
+    {
+      "kind": "case",
+      "seconds": 80.00047260004794,
+      "arrivals": 19,
+      "run": "candidate",
+      "timeouts": 0,
+      "fov": 70,
+      "viewport": [
+        2095,
+        1095
+      ],
+      "mode": "R4",
+      "stage": "windR4",
+      "quality": "reduced"
+    },
+    {
+      "kind": "frames",
+      "moving": {
+        "stallsOver100": 0,
+        "mean": 4.700543842817119,
+        "p99": 48.12369868159294,
+        "framesOver33": 154,
+        "p95": 5.401600152254105,
+        "median": 4.111600108444691,
+        "stallMs": 0,
+        "max": 73.77699762582779,
+        "n": 13829
+      },
+      "stationary": {
+        "stallsOver100": 0,
+        "mean": 4.229317113866361,
+        "p99": 5.748100113123655,
+        "framesOver33": 4,
+        "p95": 5.264100152999163,
+        "median": 4.117699805647135,
+        "stallMs": 0,
+        "max": 53.083598613739014,
+        "n": 3547
+      },
+      "all": {
+        "stallsOver100": 0,
+        "mean": 4.604351323964199,
+        "p99": 8.329999633133411,
+        "framesOver33": 158,
+        "p95": 5.35559980198741,
+        "median": 4.112800117582083,
+        "stallMs": 0,
+        "max": 73.77699762582779,
+        "n": 17376
+      },
+      "run": "candidate",
+      "stage": "windR4"
+    },
+    {
+      "kind": "resources",
+      "drawCalls": {
+        "mean": 160.4320987654321,
+        "p99": 221,
+        "p95": 197,
+        "median": 169,
+        "max": 221,
+        "n": 81
+      },
+      "memory": {
+        "mean": 3599.49609375,
+        "p99": 3608.69140625,
+        "p95": 3600.98828125,
+        "median": 3599.4921875,
+        "max": 3608.69140625,
+        "n": 81
+      },
+      "sceneTriangles": {
+        "mean": 321487.5925925926,
+        "p99": 427925,
+        "p95": 399190,
+        "median": 344927,
+        "max": 427925,
+        "n": 81
+      },
+      "run": "candidate",
+      "stage": "windR4"
+    },
+    {
+      "kind": "meshes",
+      "visibleCandidates": {
+        "mean": 436.69135802469134,
+        "p99": 462,
+        "p95": 458,
+        "median": 437,
+        "max": 462,
+        "n": 81
+      },
+      "note": "nontransparent Workspace MeshParts; includes offscreen; rendered triangles/drawcalls are separate Stats counters",
+      "run": "candidate",
+      "stage": "windR4"
+    },
+    {
+      "kind": "work",
+      "stage": "windR4",
+      "renderCPUms": {
+        "stallsOver100": 0,
+        "mean": 4.3408370743517155,
+        "p99": 51.78369954228401,
+        "framesOver33": 3,
+        "p95": 3.60920000821352,
+        "median": 2.579999854788184,
+        "stallMs": 0,
+        "max": 51.78369954228401,
+        "n": 81
+      },
+      "run": "candidate",
+      "windMs": {
+        "stallsOver100": 0,
+        "mean": 0.23238642003249238,
+        "p99": 0.4416999872773886,
+        "framesOver33": 0,
+        "p95": 0.3801999846473336,
+        "median": 0.23819995112717152,
+        "stallMs": 0,
+        "max": 0.4416999872773886,
+        "n": 81
+      }
+    },
+    {
+      "kind": "state",
+      "state": {
+        "meshes": 23,
+        "newLights": 0,
+        "highTrees": 4,
+        "ready": true,
+        "instances": 1532,
+        "riggedTrees": 29,
+        "wind": {
+          "connections": 1,
+          "updates": 11745,
+          "activeTrees": 3,
+          "boneWrites": 878892,
+          "resets": 2741,
+          "entries": 29,
+          "lastMs": 0.2964999875985086
+        },
+        "reduceMotion": false,
+        "clientMemoryMiB": 3600.65625,
+        "images": 3,
+        "allocation": {
+          "completed": 30,
+          "peakScratch": 1,
+          "busy": false,
+          "activeScratch": 0,
+          "failed": 0
+        },
+        "staticParts": 338,
+        "quality": "reduced"
+      },
+      "run": "candidate",
+      "stage": "windR4"
+    },
+    {
+      "kind": "complete",
+      "ok": true,
+      "run": "candidate"
+    }
+  ]
+}

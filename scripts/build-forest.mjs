@@ -63,9 +63,15 @@ grove=change(grove,'libraries[key]=Model.load(data,Pixels[t.source],t.variant)',
  'libraries[key]=Model.load(data,Pixels[t.source],t.variant);StaticLOD.load(libraries[key],data,t.variant)');
 grove=change(grove,'table.insert(parts,p)','p:SetAttribute("ForestScale",t.scale);table.insert(parts,p)');
 grove=change(grove,'if dead or not workspace.CurrentCamera then return end',`if dead or not workspace.CurrentCamera then return end
-		local started=os.clock();local candidates={}
+		local now=os.clock();local candidates={}
 		for id,e in pairs(entries)do
-			table.insert(candidates,{id=id,high=e.high==true,distance=(e.rest.Position-workspace.CurrentCamera.CFrame.Position).Magnitude})
+			-- Partial transparency invalidates skinned rendering while the camera
+			-- crosses a crown. Only its unskinned silhouette performs this fade.
+			for _,p in ipairs(e.parts)do
+				if p:GetAttribute("ForestStaticLOD") and Occlusion.target(p,workspace.CurrentCamera)>0 then e.occludedUntil=now+1;break end
+			end
+			local distance=(e.rest.Position-workspace.CurrentCamera.CFrame.Position).Magnitude
+			table.insert(candidates,{id=id,high=e.high==true,distance=(e.occludedUntil or 0)>now and math.huge or distance})
 		end
 		local high=LOD.select(candidates,self.quality);self.highTrees=0`);
 grove=change(grove,'for _,p in ipairs(e.parts)do\n\t\t\t\tlocal target=',`e.high=high[e.descriptor.id]==true;e.tree:SetAttribute("ForestWindActive",e.high)
@@ -75,8 +81,10 @@ grove=change(grove,'for _,p in ipairs(e.parts)do\n\t\t\t\tlocal target=',`e.high
 grove=change(grove,'p.LocalTransparencyModifier+=math.clamp(target-p.LocalTransparencyModifier,-.4,.4)',
  `local visible=(p:GetAttribute("ForestStaticLOD")==true)~=e.high
 				if visible then
-					target=math.max(target,Occlusion.target(p,workspace.CurrentCamera))
-					target=p.LocalTransparencyModifier+math.clamp(target-p.LocalTransparencyModifier,-.4,.4)
+					if p:GetAttribute("ForestStaticLOD")then
+						target=math.max(target,Occlusion.target(p,workspace.CurrentCamera))
+						target=p.LocalTransparencyModifier+math.clamp(target-p.LocalTransparencyModifier,-.4,.4)
+					else target=target>=1 and 1 or 0 end
 				else target=1 end
 				-- Setting even an unchanged transparency can invalidate skinned rendering.
 				if math.abs(target-p.LocalTransparencyModifier)>.0001 then p.LocalTransparencyModifier=target end`);

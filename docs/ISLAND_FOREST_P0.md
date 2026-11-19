@@ -32,6 +32,11 @@ Branch: `fix/island-forest-p0`. Studio-only, memory-backed QA build.
   hysteresis avoids swaps around equal distances. Understory has distance caps.
 - Skip unchanged transparency writes; use the existing 5 Hz visibility poll
   and one bone scheduler. Split expensive mesh construction into yielding batches.
+- Camera-obscuring crowns use their unskinned silhouette for local fading;
+  skinned parts are either fully shown or hidden. A one-second hold prevents
+  oscillation at the camera/crown boundary. This is the second and final measured
+  optimization iteration; the first reduced spikes but retained a 48 ms movement
+  p99, so it is not the final candidate.
 - Lazy-load R4 only on explicit QA selection. Default fixed mesh resource cap
   stays 24 (17 original skinned + 6 static LOD + 1 cliff); experimental R4
   adds 6 meshes and 4 MiB of decoded pixels on demand, peak 30 fixed meshes.
@@ -65,6 +70,18 @@ never the raw Studio log. The game-dev CLI/adapter is unavailable on this host;
 these are native Studio measurements, not a sealed game-dev run.
 
 Results and final verification are pending the candidate run.
+
+## Functional checks already observed
+
+Ordinary F5, normal familiar selection, native GrassLength .24/Decoration true,
+48-tree scene and an unobstructed walk from spawn to the book. A normal click
+advanced the tutorial and increased Essence from 0 to exactly 5. The server's
+read-only scene check verifies all 13 original station positions and V8/memory
+isolation. Station production/accounting is covered by the inherited regression
+suite; a fresh full progression playthrough of all 13 machines is not claimed.
+Twenty quality/motion switches passed root, bone reset, no-collision, one-scheduler
+and constant allocation/instance assertions. Day and night Minimal were visually
+inspected using technical window captures only, with no report images/video saved.
 
 ## Open gates
 
