@@ -1,0 +1,46 @@
+--!nonstrict
+local T=require("./Test")
+local L=require("../qa/forest/LOD")
+local S=require("../qa/forest/PerfStats")
+local F=require("../qa/forest/Layout")
+local I=F.island(require("../src/shared/PersonalIsland"))
+local C=require("../src/shared/Config")
+local G=require("../src/shared/NatureGeometry")
+local P=F.apply(require("../qa/landscape/Plan"),C,I,G,require("../qa/romantic-island/Layout"))
+T.test("LOD retains all 48 placements while bounding high-detail trees at each quality",function()
+	T.equal(#P.trees,48)
+	local entries={};for _,t in ipairs(P.trees)do if t.source then table.insert(entries,{id=t.id,distance=10})end end
+	for q,cap in pairs({full=8,reduced=4,minimal=1})do local n=0;for _ in pairs(L.select(entries,q))do n+=1 end;T.equal(n,cap)end
+end)
+T.test("LOD has stable distance ties and hysteresis without retaining distant trees",function()
+	local e={{id="b",distance=10},{id="a",distance=10}}
+	T.truthy(L.select(e,"minimal").a)
+	e[1].high=true;T.truthy(L.select(e,"minimal").b)
+	T.truthy(L.select({{id="x",high=true,distance=29}},"minimal").x)
+	T.falsy(L.select({{id="x",distance=29}},"minimal").x)
+	T.falsy(L.select({{id="x",high=true,distance=99}},"minimal").x)
+	T.falsy(L.select({{id="x",distance=0/0}},"minimal").x)
+end)
+T.test("Minimal keeps near structural understory and culls distant detail",function()
+	T.equal(L.detailAlpha(1,"minimal",10),0);T.equal(L.detailAlpha(1,"minimal",43),1)
+	T.equal(L.detailAlpha(2,"minimal",1),1)
+	T.equal(L.detailAlpha(1,"reduced",60),7/12)
+	T.equal(L.detailAlpha(1,"full",60),0)
+end)
+T.test("Compatible legacy dressing returns without filling the core or duplicating new roots",function()
+	T.falsy(P.inPilot(0,0));T.truthy(P.inPilot(P.trees[1].x,P.trees[1].z))
+	T.truthy(#P.legacyCover>0)
+	local a=P.auditDressing(C,I,G);T.truthy(a.ok,table.concat(a.errors,"; "))
+	for _,v in ipairs(P.legacyCover)do
+		local seen=0;for _,p in ipairs(P.cover)do if p==v then seen+=1 end end;T.equal(seen,1)
+		T.falsy(F.path(v[2],v[3],G[v[1]].radius*v[4]))
+	end
+	local keys={};for _,v in ipairs(P.cover)do local key=v[1]..":"..v[2]..":"..v[3];T.falsy(keys[key]);keys[key]=true end
+end)
+T.test("Frame quantiles and freeze duration include long stalls rather than averaging them away",function()
+	local values={};for i=1,99 do values[i]=16 end;values[100]=150
+	local s=S.summary(values);T.equal(s.median,16);T.equal(s.p95,16);T.equal(s.p99,16)
+	T.equal(s.max,150);T.equal(s.stallsOver100,1);T.equal(s.stallMs,150);T.equal(s.framesOver33,1)
+	T.equal(S.summary({101,200,16}).stallsOver100,2)
+end)
+T.finish()

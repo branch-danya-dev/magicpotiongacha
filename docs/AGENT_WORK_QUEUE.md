@@ -16,6 +16,32 @@
 
 ## Ближайшие конкретные задачи (P0)
 
+### ISLAND-FOREST-P0 — grass, World Tree artifact and forest frame spikes
+
+**CODE VERIFIED / STUDIO VERIFIED (desktop, limits below) / OWNER VISUAL REVIEW PENDING
+2026-11-19**, branch `fix/island-forest-p0`, Draft #65, exact confirmed Draft #64
+base `a1bb4edf76df6f631512256b520128fc0fdf3062`. Preserve 184 x 172, 48 authored
+tree placements and all 13 gameplay anchors. Restore suitable native grass and
+collision-audited legacy cover. Diagnose R3/R4 in Play; use the explicitly
+authorized R3 fallback if R4 cannot be corrected safely. Compare bounded native
+Studio stationary/traversal scenarios before/after, including loaded geometry,
+wind, frame median/p95/p99 and >100 ms stalls, memory and available render stats.
+Limit optimization to candidate forest/vegetation adapters and at most two
+measured iterations; target fewer stalls and p99 <33.3 ms at the same desktop
+quality/workload, never infer mobile acceptance. Production economy/V8/remotes
+unchanged. No new assets/uploads, main merge or publication. Report raw evidence,
+duration and unperformed gates. CLI `game-dev` and `.game-dev/adapter.json` absent;
+use the requested native Studio diagnostics, not a fabricated sealed-harness run.
+Rollback: untouched PR #64 plus its owner build; new separate candidate file.
+Report: `docs/ISLAND_FOREST_P0.md`; 1,521 tests / 334 compiled sources passed.
+Measured runtime `2e8fd7e` CI Windows/Ubuntu green. Final HEAD CI is linked in
+Draft #65. Five matched 80-second cases plus 300-second quality/motion/time soak;
+R3 movement p99 55.86 -> 6.15 ms, >33 ms frames 319 -> 99. All 48 trees and
+13 station anchors retained, .24 native grass restored, defective R4 opt-in only.
+**P0 acceptance OPEN:** one 435.65 ms fresh-scene startup frame and residual
+33–73 ms visibility/LOD hitches remain. Mobile, multiplayer, live persistence,
+full 13-machine playthrough and owner art acceptance not claimed.
+
 ### ISLAND-DENSE-FOREST — larger island, dense perimeter, open centre
 
 **CODE_CANDIDATE / STUDIO VERIFIED (desktop) / OWNER ART PENDING 2026-11-19**, branch `feat/island-dense-forest`, exact base

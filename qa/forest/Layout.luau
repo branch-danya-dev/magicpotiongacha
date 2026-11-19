@@ -46,10 +46,17 @@ F.rows={
 	{"N",55,-75,.86,63},{"C",-40,-62,.74,188},{"P",66,-42,.77,251},
 	{"C",-66,-56,.72,50},{"W",-48,36,.77,119},{"C",34,43,.76,303},
 }
-function F.apply(P,config,island,geometry)
+function F.apply(P,config,island,geometry,legacyLayout)
 	-- The base instance is private to this candidate; its audits close over P.
+	local formerCover=P.cover
 	P.trees={};P.cover={};P.stones={};P.groveRoute={{-39,20},{-69,20}}
-	P.terrainMargin=F.margin;P.inPilot=function()return true end
+	P.terrainMargin=F.margin
+	function P.inPilot(x,z)
+		for _,t in ipairs(P.trees)do if (t.x-x)^2+(t.z-z)^2<(t.radius+1)^2 then return true end end
+		return false
+	end
+	-- The authored 48-tree stand replaces the former canopy, not all low plants.
+	P.keepTrees=function()return {} end
 	P.tones.shade={bark={.62,.58,.49},leaf={.24,.48,.29},secondary={.20,.39,.28},flower={.69,.73,.70}}
 	P.tones.edge={bark={.72,.64,.51},leaf={.35,.56,.29},secondary={.26,.44,.25},flower={.84,.78,.60}}
 	P.tones.arcane={bark={.58,.57,.62},leaf={.32,.52,.51},secondary={.36,.40,.56},flower={.64,.72,.83}}
@@ -86,6 +93,33 @@ function F.apply(P,config,island,geometry)
 			add(P.cover,{name,x,z,scale,(n*47+j*71)%360,t.tone,j<=2 and 1 or 2})
 		end
 		if n%2==0 then add(P.stones,{"Rock_Medium_1",t.x+3,t.z+1,.6+(n%3)*.12,n*37%360,"mossStone",1,-.18})end
+	end
+	P.legacyCover={}
+	local dressingBudget=P.auditDressing(config,island,geometry)
+	local function restore(v)
+		local g=geometry[v[1]];local r=g.radius*v[4]
+		if dressingBudget.parts+#g.parts>300 or dressingBudget.triangles+g.triangles>70000 then return end
+		if F.path(v[2],v[3],r)then return end
+		for _,t in ipairs(P.trees)do if (v[2]-t.x)^2+(v[3]-t.z)^2<(r+1.4)^2 then return end end
+		for _,p in ipairs(P.cover)do
+			local gap=(r+geometry[p[1]].radius*p[4])*.7
+			if (v[2]-p[2])^2+(v[3]-p[3])^2<gap*gap then return end
+		end
+		local before=#P.cover;add(P.cover,v)
+		if #P.cover>before then
+			table.insert(P.legacyCover,v);dressingBudget.parts+=#g.parts;dressingBudget.triangles+=g.triangles
+		end
+	end
+	for _,v in ipairs(formerCover)do restore(v)end
+	-- Preserve eligible old cluster positions, then validate each child footprint.
+	-- The build adapter removes their old writer; Setup owns each survivor once.
+	for n,c in ipairs(P.keepClusters(legacyLayout and legacyLayout.clusters or {}))do
+		restore({"Bush_Common_Flowers",c[1],c[2],.90+(n%3)*.13,n*41,"shade",1})
+		for j=1,5 do
+			local a=j*2.39996;local r=1.8+j*.65
+			local name=j%3==0 and "Fern_1" or (j%2==0 and "Grass_Wispy_Tall" or "Clover_2")
+			restore({name,c[1]+math.cos(a)*r,c[2]+math.sin(a)*r,name=="Clover_2" and 2.7 or .8,n*27+j*29,"shade",2})
+		end
 	end
 	return P
 end

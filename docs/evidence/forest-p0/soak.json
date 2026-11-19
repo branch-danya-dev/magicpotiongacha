@@ -1,0 +1,184 @@
+{
+  "label": "candidate2-soak",
+  "startup": {
+    "memoryMiB": 3350.41796875,
+    "frames": {
+      "stallsOver100": 1,
+      "mean": 16.022691901566255,
+      "p99": 74.48349893093109,
+      "framesOver33": 18,
+      "p95": 51.40630155801773,
+      "median": 6.29250006750226,
+      "stallMs": 435.6530010700226,
+      "max": 435.6530010700226,
+      "n": 135
+    },
+    "readySec": 3.747393199999351,
+    "code": "e229c07f93cc359c1a37d743ae707301c46d49a0cd5ae00e08ccc6f7d57017c2"
+  },
+  "completed": true,
+  "rows": [
+    {
+      "kind": "case",
+      "seconds": 300.0003116999869,
+      "arrivals": 82,
+      "run": "candidate2-soak",
+      "timeouts": 0,
+      "fov": 70,
+      "viewport": [
+        2095,
+        1095
+      ],
+      "mode": "R3",
+      "stage": "soak",
+      "quality": "reduced"
+    },
+    {
+      "kind": "frames",
+      "moving": {
+        "stallsOver100": 0,
+        "mean": 4.47716887633786,
+        "p99": 6.168500054627657,
+        "framesOver33": 436,
+        "p95": 5.284999962896109,
+        "median": 4.087800160050392,
+        "stallMs": 0,
+        "max": 72.49230146408081,
+        "n": 63657
+      },
+      "stationary": {
+        "stallsOver100": 0,
+        "mean": 4.198713178842584,
+        "p99": 5.900000222027302,
+        "framesOver33": 2,
+        "p95": 5.289100110530853,
+        "median": 4.113399889320135,
+        "stallMs": 0,
+        "max": 55.182598531246185,
+        "n": 3573
+      },
+      "all": {
+        "stallsOver100": 0,
+        "mean": 4.462370092950226,
+        "p99": 6.142800208181143,
+        "framesOver33": 438,
+        "p95": 5.285299848765135,
+        "median": 4.088799934834242,
+        "stallMs": 0,
+        "max": 72.49230146408081,
+        "n": 67230
+      },
+      "run": "candidate2-soak",
+      "stage": "soak"
+    },
+    {
+      "kind": "resources",
+      "drawCalls": {
+        "mean": 172.43853820598008,
+        "p99": 295,
+        "p95": 264,
+        "median": 162,
+        "max": 310,
+        "n": 301
+      },
+      "memory": {
+        "mean": 3049.6318521594685,
+        "p99": 3054.16015625,
+        "p95": 3053.04296875,
+        "median": 3049.73828125,
+        "max": 3055.16015625,
+        "n": 301
+      },
+      "sceneTriangles": {
+        "mean": 336860.5249169435,
+        "p99": 468968,
+        "p95": 445133,
+        "median": 336800,
+        "max": 494021,
+        "n": 301
+      },
+      "run": "candidate2-soak",
+      "stage": "soak"
+    },
+    {
+      "kind": "meshes",
+      "visibleCandidates": {
+        "mean": 486.9700996677741,
+        "p99": 796,
+        "p95": 787,
+        "median": 435,
+        "max": 799,
+        "n": 301
+      },
+      "note": "nontransparent Workspace MeshParts; includes offscreen; rendered triangles/drawcalls are separate Stats counters",
+      "run": "candidate2-soak",
+      "stage": "soak"
+    },
+    {
+      "kind": "work",
+      "stage": "soak",
+      "renderCPUms": {
+        "stallsOver100": 0,
+        "mean": 2.2741976682177167,
+        "p99": 3.4482998307794333,
+        "framesOver33": 0,
+        "p95": 2.8111001010984182,
+        "median": 2.1800000686198473,
+        "stallMs": 0,
+        "max": 3.994499798864126,
+        "n": 301
+      },
+      "run": "candidate2-soak",
+      "windMs": {
+        "stallsOver100": 0,
+        "mean": 0.12316245994100539,
+        "p99": 0.5753000150434673,
+        "framesOver33": 0,
+        "p95": 0.4338999860920012,
+        "median": 0.04339998122304678,
+        "stallMs": 0,
+        "max": 0.6066999631002545,
+        "n": 301
+      }
+    },
+    {
+      "kind": "state",
+      "state": {
+        "meshes": 23,
+        "newLights": 0,
+        "highTrees": 2,
+        "ready": true,
+        "instances": 1532,
+        "riggedTrees": 29,
+        "wind": {
+          "connections": 1,
+          "updates": 11705,
+          "activeTrees": 0,
+          "boneWrites": 982460,
+          "resets": 2472,
+          "entries": 29,
+          "lastMs": 0.03460003063082695
+        },
+        "reduceMotion": false,
+        "clientMemoryMiB": 3057.828125,
+        "images": 3,
+        "allocation": {
+          "completed": 30,
+          "peakScratch": 1,
+          "busy": false,
+          "activeScratch": 0,
+          "failed": 0
+        },
+        "staticParts": 338,
+        "quality": "reduced"
+      },
+      "run": "candidate2-soak",
+      "stage": "soak"
+    },
+    {
+      "kind": "complete",
+      "ok": true,
+      "run": "candidate2-soak"
+    }
+  ]
+}
