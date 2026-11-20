@@ -66,7 +66,12 @@ function Alchemy.describe(config,item)
  return {
   name=grade.name.." "..recipe.name..suffix,
   quality=grade.name,rarity=item.rarity,
-  visual=recipe.visual, effectId=(item.optionalId~="" and recipe.optional.effectId or recipe.baseEffectId),
+  visual={
+   bottle=recipe.visual.bottle,liquid=recipe.visual.liquid,spark=recipe.visual.spark,
+   flash=recipe.visual.flash,intensity=item.quality,modifier=item.optionalId,
+   presetId=recipe.id..":"..(item.optionalId~="" and item.optionalId or "plain")..":q"..item.quality,
+  },
+  effectId=(item.optionalId~="" and recipe.optional.effectId or recipe.baseEffectId),
   effectDuration=(item.optionalId~="" and recipe.optional.effectDuration or 0),
   effectStrength=item.quality, -- Placeholder metadata, NOT an active gameplay buff.
  }
