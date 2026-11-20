@@ -193,6 +193,25 @@ function Alchemy.apply(profile,config,action,payload,now)
  end
  return false,"Unknown alchemy action"
 end
+-- Reconcile prepaid-legacy, unspent cauldron buffers without minting anything.
+-- Existing in-flight jobs own their resources until they settle. Full storage keeps
+-- the remainder in the old buffer until a later safe tick.
+function Alchemy.recoverLegacyBuffers(profile,config,room)
+ if not Alchemy.active(config,profile) then return end
+ local station=profile.stations.cauldron
+ if not station or station.job then return end
+ for itemId,amount in pairs(station.input) do
+  if amount>0 and config.items[itemId] then
+   local take=math.min(amount,math.max(0,room(itemId,amount)))
+   if take>0 then
+    spend(station.input,itemId,take)
+    profile.inventory[itemId]=have(profile.inventory,itemId)+take
+   end
+  end
+ end
+ local essence=math.min(station.essence,math.max(0,config.maxBalance-profile.essence))
+ if essence>0 then station.essence-=essence;profile.essence+=essence end
+end
 function Alchemy.tick(profile,config,now)
  if not Alchemy.active(config,profile) then return end
  Alchemy.bootstrap(profile,config)
