@@ -138,6 +138,10 @@ island=replaceOnce(island,
  'crystal prompt update does not reintroduce manual click');
 island=replaceOnce(island,"\tLectern.ensure(plot,plot.anchors.crystal)",
  "\t-- V1-01 QA: no old Spellbook Lectern, temporary extractor preview owns this location","replace outdated crystal lectern");
+island=replaceOnce(island,
+ 'p.Material=Enum.Material.SmoothPlastic;p.Color=Color3.fromRGB(137,95,234);p.Transparency=0',
+ 'p.Material=Enum.Material.SmoothPlastic;p.Color=Color3.fromRGB(137,95,234);p.Transparency=profile.starter.legacyGrant and 0 or 1',
+ 'V1 extractor hides old purple crystal part; preserve legacy fallback');
 server.PersonalIslandWorld=write('PersonalIslandWorld',island);
 server.AlchemyStarterProps={$path:path('qa/alchemy/Props.luau')};
 // The former click affordance is removed, not repurposed to award Essence on-device.
