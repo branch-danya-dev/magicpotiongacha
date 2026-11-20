@@ -1,6 +1,7 @@
 // Dedicated Studio-only game variant. Inherited forest and all production source remain intact.
 import assert from 'node:assert/strict';
 import {applyGardenV1} from './apply-v1-garden.mjs';
+import {applyAlchemyV1} from './apply-v1-alchemy.mjs';
 import {readFileSync, writeFileSync, mkdirSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {execFileSync} from 'node:child_process';
@@ -184,13 +185,14 @@ project.tree.StarterPlayer.StarterPlayerScripts.AlchemyPotionBook={$path:path('q
 project.tree.StarterPlayer.StarterPlayerScripts.V1Companion={$path:path('qa/alchemy/Companion.client.luau')};
 project.tree.Workspace.$attributes.AlchemyFirstQA=true;
 applyGardenV1({project,read,write,path});
+applyAlchemyV1({project,read,write,path});
 project.name='PotionTycoon-Alchemy-First';
 const output='build/alchemy/game.project.json',artifact='build/PotionTycoon-Alchemy-First-QA.rbxlx';
 writeFileSync(path(output),JSON.stringify(project,null,2)+'\n');
 execFileSync(path('.tools/rojo/rojo'+(process.platform==='win32'?'.exe':'')),
  ['build',path(output),'-o',path(artifact)],{cwd:root,stdio:'inherit'});
 const bytes=readFileSync(path(artifact));
-for(const marker of ['AlchemyFirstQA','GardenV1QA','GardenCropCatalog','waterCrop','buySprinkler','Essence accumulates automatically','BrewingCube','HerbGarden','AlchemyPotionBook','V1Companion','ExtractorPlaceholder']){
+for(const marker of ['AlchemyV1QA','AlchemyCatalog','craftPotion','sellPotion','buyAlchemySupply','AlchemyFirstQA','GardenV1QA','GardenCropCatalog','waterCrop','buySprinkler','Essence accumulates automatically','BrewingCube','HerbGarden','AlchemyPotionBook','V1Companion','ExtractorPlaceholder']){
  assert(bytes.includes(marker),'Missing from Studio artifact: '+marker);
 }
 const codeSHA256=hash(Buffer.from(generated.map(file=>file+'\n'+read(file)).join('\n')));
@@ -200,5 +202,6 @@ const receipt={head,owner,artifact,bytes:bytes.length,sha256:hash(bytes),codeSHA
  mainOrLiveIntegrated:false,studioOnly:true,memoryOnly:true,uploads:0,paidFeatures:false,
  qaStatus:'CODE BUILD; NORMAL STUDIO F5 / OWNER REVIEW / MOBILE NOT RUN'};
 receipt.gardenV1={cropSpecies:['mandrake','antarctic_biter'],independentBeds:3,manualWatering:true,optionalSprinkler:true,visualModelsImported:false};
+receipt.alchemyV1={classes:6,qualities:6,recipes:4,storedPotions:true,manualSale:true,optionalAdditives:true,visualEffects:'metadata-only',assetsImported:false};
 writeFileSync(path('build/alchemy/build.json'),JSON.stringify(receipt,null,2)+'\n');
 console.log(JSON.stringify(receipt,null,2));
