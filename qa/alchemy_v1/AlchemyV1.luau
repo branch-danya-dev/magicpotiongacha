@@ -246,5 +246,6 @@ function Alchemy.tick(profile,config,now)
   profile.tutorial.brew=true;profile.tutorial.manual=true
  end
  state.job=nil
+ return id -- emitted once so the host may record legitimate online manual-brew progress
 end
 return Alchemy
