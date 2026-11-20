@@ -80,6 +80,8 @@ T.test("V1-03: real novice loop debits Gold/resources/Essence; creates potion, N
  T.equal(potion.quality,2);T.equal(potion.price,250)
  T.equal(p.gold,beforeGold);T.truthy(p.tutorial.brew)
  T.equal(p.alchemyV1.xp,1)
+ T.truthy(p.discoveredRecipes.healing)
+ T.truthy(p.atlas.discovered.healing)
  action(p,"sellPotion",{potionId=id},1098)
  T.equal(p.gold,beforeGold+250)
  T.truthy(p.tutorial.sale)
