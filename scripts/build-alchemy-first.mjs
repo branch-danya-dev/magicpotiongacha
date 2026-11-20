@@ -42,6 +42,8 @@ let config=read(shared.Config.$path);
 config=replaceOnce(config,'\teconomyV2 = {','\talchemyFirstQA = true,\n\teconomyV2 = {','feature flag');
 config=replaceOnce(config,'passiveEssence = { 0, 2, 6, 18, 48 }',
  'passiveEssence = { 1, 2, 6, 18, 48 }','V2 first passive tier');
+config=replaceOnce(config,"name = \"Magic crystal\", skill = \"Farming\", initialLevel = 1,",
+ "name = \"Botanical Essence Extractor\", skill = \"Farming\", initialLevel = 1,","source name keeps legacy ID");
 shared.Config=write('Config',config);
 shared.AlchemyFirstPolicy={$path:path('qa/alchemy/Policy.luau')};
 // Use the existing deterministic one-second online/offline simulator. Manual Essence
@@ -109,6 +111,8 @@ session=replaceOnce(session,
  'if step == "essence" then\n\t\treturn { { id = "essence", label = "Собрать Essence", action = "click", payload = {} } }',
  'if step == "essence" then\n\t\tif config.alchemyFirstQA then return {} end\n\t\treturn { { id = "essence", label = "Собрать Essence", action = "click", payload = {} } }',
  'remove tutorial click intent');
+session=replaceOnce(session,"passive = \"Улучши кристалл.\",",
+ "passive = \"Улучши экстрактор.\",","passive step text");
 shared.FirstSessionView=write('FirstSessionView',session);
 // Reuse the existing authenticated station prompts and Factory buy/plant/load/brew intents.
 let island=read(server.PersonalIslandWorld.$path);
@@ -132,19 +136,29 @@ island=replaceOnce(island,
  'prompt.ActionText="+"..tostring(profile.starter and not profile.starter.legacyGrant and self.config.economyV2.clickEssence or self.config.manualClickEssence).." Essence"',
  'prompt.ActionText="Источник Essence"',
  'crystal prompt update does not reintroduce manual click');
+island=replaceOnce(island,"\tLectern.ensure(plot,plot.anchors.crystal)",
+ "\t-- V1-01 QA: no old Spellbook Lectern, temporary extractor preview owns this location","replace outdated crystal lectern");
 server.PersonalIslandWorld=write('PersonalIslandWorld',island);
 server.AlchemyStarterProps={$path:path('qa/alchemy/Props.luau')};
 // The former click affordance is removed, not repurposed to award Essence on-device.
 let main=read(client.Main.$path);
 main=replaceOnce(main,
  '\t\tif stationId == "crystal" then\n\t\t\tlocal click=action("",function() send("click",{}) end)\n\t\t\tbindText(click,function() return "Собрать эссенцию +"..state.longTerm.manualClickEssence end)',
- '\t\tif stationId == "crystal" then\n\t\t\tif workspace:GetAttribute("AlchemyFirstQA")==true and state.starter and not state.starter.legacyGrant then\n\t\t\t\ttext("Источник Essence работает сам: +1 Essence в секунду на первом уровне. Улучшения увеличивают скорость.",76)\n\t\t\telse\n\t\t\t\tlocal click=action("",function() send("click",{}) end)\n\t\t\t\tbindText(click,function() return "Собрать эссенцию +"..state.longTerm.manualClickEssence end)\n\t\t\tend',
+ '\t\tif stationId == "crystal" then\n\t\t\tif workspace:GetAttribute("AlchemyFirstQA")==true and state.starter and not state.starter.legacyGrant then\n\t\t\t\ttext("Экстрактор производит +1 Essence в секунду на первом уровне. Улучшения увеличивают скорость.",76)\n\t\t\telse\n\t\t\t\tlocal click=action("",function() send("click",{}) end)\n\t\t\t\tbindText(click,function() return "Собрать эссенцию +"..state.longTerm.manualClickEssence end)\n\t\t\tend',
  'remove legacy crystal action from V2 panel');
+main=replaceOnce(main,"action(\"Назначить фамильяра\", function() petPicker = true; draw() end)",
+ "if not (workspace:GetAttribute(\"AlchemyFirstQA\")==true and state.starter and not state.starter.legacyGrant) then\n\t\t\taction(\"Назначить фамильяра\", function() petPicker = true; draw() end)\n\t\tend","hide assignment intent in V1");
+main=replaceOnce(main,"return \"Уровень: \" .. station.level .. \"\\nРабочий: \" .. work",
+ "if workspace:GetAttribute(\"AlchemyFirstQA\")==true and state.starter and not state.starter.legacyGrant then return \"Уровень: \" .. station.level .. \"\\nБез рабочих фамильяров\" end\n\t\t\treturn \"Уровень: \" .. station.level .. \"\\nРабочий: \" .. work","V1 info worker to equipment");
+main=replaceOnce(main,"text(\"Новый участок уже содержит храм и кристалл. Выбери ровно одного фамильяра у алтаря. Повторный выбор не создаст второго.\", 72)",
+ "text(workspace:GetAttribute(\"AlchemyFirstQA\")==true and \"На острове уже работает экстрактор. Выбери одного спутника у алтаря.\" or \"Новый участок уже содержит храм и кристалл. Выбери ровно одного фамильяра у алтаря. Повторный выбор не создаст второго.\", 72)","onboarding clarity");
+main=replaceOnce(main,"text(\"Действия доступны рядом с этим объектом на твоём участке. Питомца можно снять и назначить на другое место.\", 58)",
+ "text(workspace:GetAttribute(\"AlchemyFirstQA\")==true and \"Оборудование развивается отдельно от коллекционных спутников.\" or \"Действия доступны рядом с этим объектом на твоём участке. Питомца можно снять и назначить на другое место.\", 58)","no staffing hint");
 client.Main=write('Main.client',main);
 let arcade=read(client.ArcadeHUD.$path);
 arcade=replaceOnce(arcade,
  'subtitle.Text="Уровень "..data.level.." · Магия начинается здесь"; perTap.Text="+"..data.amount.." Essence за касание"',
- 'subtitle.Text="Уровень "..data.level.." · Магия начинается здесь"; perTap.Text=workspace:GetAttribute("AlchemyFirstQA")==true and "Essence: +1/с автоматически" or ("+"..data.amount.." Essence за касание")',
+ 'subtitle.Text="Уровень "..data.level.." · Магия начинается здесь"; perTap.Text=workspace:GetAttribute("AlchemyFirstQA")==true and "Экстрактор: +1 Essence/с" or ("+"..data.amount.." Essence за касание")',
  'arcade passive subtitle');
 arcade=replaceOnce(arcade,
  'collectText.Text="Собрать +"..data.amount; upgradeText.Text=data.upgradeText',
@@ -158,6 +172,8 @@ arcade=replaceOnce(arcade,
  'collect.BackgroundTransparency=data.canCollect and 0 or .45; upgrade.BackgroundTransparency=data.upgrade.enabled and 0 or .45',
  'collect.Visible=workspace:GetAttribute("AlchemyFirstQA")~=true; collect.BackgroundTransparency=data.canCollect and 0 or .45; upgrade.BackgroundTransparency=data.upgrade.enabled and 0 or .45',
  'arcade click hidden');
+arcade=replaceOnce(arcade,"reason.Text=(data.upgrade.enabled and \"Назначить рабочего\" or data.upgrade.reason..\" · Рабочие\")",
+ "reason.Text=workspace:GetAttribute(\"AlchemyFirstQA\")==true and \"Экстрактор производит Essence автоматически\" or (data.upgrade.enabled and \"Назначить рабочего\" or data.upgrade.reason..\" · Рабочие\")","no arcade worker hint");
 client.ArcadeHUD=write('ArcadeHUD',arcade);
 project.tree.StarterPlayer.StarterPlayerScripts.AlchemyPotionBook={$path:path('qa/alchemy/PotionBook.client.luau')};
 project.tree.Workspace.$attributes.AlchemyFirstQA=true;
