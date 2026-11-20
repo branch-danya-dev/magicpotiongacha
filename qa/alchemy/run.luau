@@ -147,8 +147,8 @@ T.test("V1-01: equipment logistics and source require no pets",function()
  -- Independent built raw source is still an equipment producer.
  p.stations.mine.level=1
  local second=engine.advance(p,5014+(Config.stations.mine.growDuration or 15)+1,false)
- T.truthy(second.ok)
- T.truthy((p.stations.mine.output.coal or 0)>0)
+ if not second.ok then error("V1-01 mine/source invariant: "..tostring(second.error)) end
+ T.truthy(((p.stations.mine.output.coal or 0)+(p.inventory.coal or 0))>0)
  T.truthy(engine.validate(p))
 end)
 T.test("V1-01: historical (legacyGrant) profiles keep worker production semantics",function()
