@@ -68,6 +68,36 @@ factory=replaceOnce(factory,
  'passive = { "crystal", "Улучши кристалл. Следующий уровень даёт пассивную Essence и держит цепочку без кликов." },',
  'passive = { "crystal", "Улучши кристалл, чтобы увеличить пассивный поток Essence и ускорить варку." },',
  'passive upgrade onboarding text');
+// V1-01: isolate old worker-based rules behind the Studio-only alchemy policy.
+// Keep pets, stats, contracts, saved assignments, provenance and legacy behavior intact.
+factory=replaceOnce(factory,"\tlocal function effectiveSkill(profile, stationId)\n\t\tlocal station = profile.stations[stationId]",
+ "\tlocal function effectiveSkill(profile, stationId)\n\t\tif AlchemyFirst.active(config,profile) then return 0 end\n\t\tlocal station = profile.stations[stationId]","workers no longer affect skill gains");
+factory=replaceOnce(factory,"if crystal.workerId then\n\t\t\t\tgain =",
+ "if crystal.workerId and not AlchemyFirst.active(config,profile) then\n\t\t\t\tgain =","familiar may not generate Essence");
+factory=replaceOnce(factory,"if definition.outputItem and station.workerId and not seededGarden and total(station.output) < config.sourceCapacity then",
+ "if definition.outputItem and (station.workerId or AlchemyFirst.active(config,profile)) and not seededGarden and total(station.output) < config.sourceCapacity then","built source runs without workers");
+factory=replaceOnce(factory,"if deployed[petId] and config.petSpecies[profile.pets[petId].species].slimeProducer then",
+ "if not AlchemyFirst.active(config,profile) and deployed[petId] and config.petSpecies[profile.pets[petId].species].slimeProducer then","no slime familiar income");
+factory=replaceOnce(factory,"if station.level == 0 or not station.workerId then\n\t\t\treturn\n\t\tend",
+ "if station.level == 0 or (not station.workerId and not AlchemyFirst.active(config,profile)) then\n\t\t\treturn\n\t\tend","equipment logistics no worker requirement");
+factory=replaceOnce(factory,"if not station.workerId then code = \"no_hauler\"",
+ "if not station.workerId and not AlchemyFirst.active(config,profile) then code = \"no_hauler\"","status logistics not blocked by pet");
+factory=replaceOnce(factory,"if job.automatic and not station.workerId and not automationOn(profile, \"brew\") then code = \"no_master\"",
+ "if job.automatic and not automationOn(profile, \"brew\") and (not station.workerId or AlchemyFirst.active(config,profile)) then code = \"no_master\"","status working auto job needs purchased auto");
+factory=replaceOnce(factory,"elseif station.auto and not station.workerId and not automationOn(profile, \"brew\") then code = \"no_master\"",
+ "elseif station.auto and not automationOn(profile, \"brew\") and (not station.workerId or AlchemyFirst.active(config,profile)) then code = \"no_master\"","status auto station needs purchased auto");
+factory=replaceOnce(factory,"if not config.items[itemId].fluid and not profile.stations.logistics.workerId then code = \"no_hauler\" end",
+ "if not config.items[itemId].fluid and not profile.stations.logistics.workerId and not AlchemyFirst.active(config,profile) then code = \"no_hauler\" end","status supplies use machine logistics");
+factory=replaceOnce(factory,"elseif not station.workerId then code = \"no_master\" end",
+ "elseif not station.workerId and not AlchemyFirst.active(config,profile) then code = \"no_master\" end","status source not blocked by pet");
+factory=replaceOnce(factory,"if job and (not job.automatic or station.workerId or automationOn(profile, \"brew\")) then",
+ "if job and (not job.automatic or automationOn(profile, \"brew\") or (station.workerId and not AlchemyFirst.active(config,profile))) then","purchased automation not pet processes auto brew");
+factory=replaceOnce(factory,"if not station.job and station.auto and (station.workerId or automationOn(profile, \"brew\")) then",
+ "if not station.job and station.auto and (automationOn(profile, \"brew\") or (station.workerId and not AlchemyFirst.active(config,profile))) then","purchased automation starts auto jobs");
+factory=replaceOnce(factory,"\t\telseif action == \"assign\" then",
+ "\t\telseif action == \"assign\" then\n\t\t\tif AlchemyFirst.active(config,profile) then return false, \"Familiars are companions in V1\" end","no worker assignments for new V1 profiles");
+factory=replaceOnce(factory,"if payload.enabled and not station.workerId and not automationOn(profile, \"brew\") then return false, \"Assign a brewer first\" end",
+ "if payload.enabled and AlchemyFirst.active(config,profile) and not automationOn(profile, \"brew\") then return false, \"Buy equipment automation first\" end\n\t\t\tif payload.enabled and not station.workerId and not automationOn(profile, \"brew\") then return false, \"Assign a brewer first\" end","equipment upgrade required for auto brewing");
 shared.Factory=write('Factory',factory);
 // Tutorial automatically advances once Essence is earned, without a false click.
 let session=read(shared.FirstSessionView.$path);
