@@ -238,7 +238,8 @@ T.test("V1-03: full owned capacity preserves already paid craft; sale frees a sl
  advance(p,8037,false)
  T.equal(state.job,nil);T.equal(state.xp,1)
  T.truthy(state.owned["v1p:7308:81"])
- T.equal(#(function()local ids={};for k in pairs(state.owned) do table.insert(ids,k) end;return ids end)(),catalog.maxOwned)
+ local total=0;for _ in pairs(state.owned) do total+=1 end
+ T.equal(total,catalog.maxOwned)
  T.truthy(engine.validate(p))
 end)
 T.test("V1-03: legacy instant-sale path is closed for modern profiles but existing jobs settle",function()
