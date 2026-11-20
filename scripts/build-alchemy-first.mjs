@@ -1,5 +1,6 @@
 // Dedicated Studio-only game variant. Inherited forest and all production source remain intact.
 import assert from 'node:assert/strict';
+import {applyGardenV1} from './apply-v1-garden.mjs';
 import {readFileSync, writeFileSync, mkdirSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {execFileSync} from 'node:child_process';
@@ -182,6 +183,7 @@ client.ArcadeHUD=write('ArcadeHUD',arcade);
 project.tree.StarterPlayer.StarterPlayerScripts.AlchemyPotionBook={$path:path('qa/alchemy/PotionBook.client.luau')};
 project.tree.StarterPlayer.StarterPlayerScripts.V1Companion={$path:path('qa/alchemy/Companion.client.luau')};
 project.tree.Workspace.$attributes.AlchemyFirstQA=true;
+applyGardenV1({project,read,write,path});
 project.name='PotionTycoon-Alchemy-First';
 const output='build/alchemy/game.project.json',artifact='build/PotionTycoon-Alchemy-First-QA.rbxlx';
 writeFileSync(path(output),JSON.stringify(project,null,2)+'\n');
