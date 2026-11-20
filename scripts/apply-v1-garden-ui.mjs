@@ -34,6 +34,17 @@ export function attachGardenUi({shared,client,read,write,swap}){
   "tutorial planting/irrigation/harvest intents");
  shared.FirstSessionView=write("FirstSessionView",session);
  let main=read(client.Main.$path);
+ main=swap(main,
+  '\t\t\tlocal output = text("", 44)\n\t\t\tbindText(output, function() return "У источника: " .. names(getStation().output) end)',
+  '\t\t\tif not (workspace:GetAttribute("GardenV1QA")==true and stationId=="garden") then\n'+
+  '\t\t\t\tlocal output = text("", 44)\n'+
+  '\t\t\t\tbindText(output, function() return "У источника: " .. names(getStation().output) end)\n'+
+  '\t\t\tend',"hide legacy station output on V1 garden");
+ main=swap(main,
+  '\t\t\taction("Забрать выращенное / добытое", function() send("collect", { stationId = stationId }) end)',
+  '\t\t\tif not (workspace:GetAttribute("GardenV1QA")==true and stationId=="garden") then\n'+
+  '\t\t\t\taction("Забрать выращенное / добытое", function() send("collect", { stationId = stationId }) end)\n'+
+  '\t\t\tend',"hide unused collect intent for V1 crop plots");
  const marker='\t\t\tif stationId == "garden" and state.firstSession and state.starter and not state.starter.legacyGrant then';
  const suffix='\n\t\t\tend\n\t\telseif stationId == "logistics" then';
  const from=main.indexOf(marker),end=main.indexOf(suffix,from);
