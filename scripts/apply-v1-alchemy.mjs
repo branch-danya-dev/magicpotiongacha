@@ -30,6 +30,7 @@ export function applyAlchemyV1({project,read,write,path}){
   "new saved state validation before any mutation");
  factory=swap(factory,
   '\t\tif GardenV1.active(config,profile) then\n\t\t\tGardenV1.tick',
+  '\t\tAlchemyV1.recoverLegacyBuffers(profile,config,function(itemId,_amount) return inventoryRoom(profile,itemId) end)\n'+
   '\t\tAlchemyV1.tick(profile,config,now)\n'+
   '\t\tif GardenV1.active(config,profile) then\n\t\t\tGardenV1.tick',
   "offline and online alchemy job processing");
