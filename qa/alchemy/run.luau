@@ -162,4 +162,24 @@ T.test("V1-01: historical (legacyGrant) profiles keep worker production semantic
  T.truthy(engine.gardenState(p).duration<baseline)
  T.truthy(engine.validate(p))
 end)
+T.test("V1-01: paid in-flight automatic brew completes, without restarting unfunded automation",function()
+ local p=engine.newProfile(5107,7000)
+ T.truthy(engine.act(p,"chooseStarter",{speciesId="brewer"},7000))
+ local station=p.stations.cauldron
+ station.level=1;station.recipeId="healing"
+ station.auto=true;p.discoveredRecipes.healing=true
+ station.job={kind="brew",recipeId="healing",automatic=true,duration=6,doubleChance=0,outputQuantity=1}
+ station.progress=0
+ T.truthy(engine.validate(p))
+ local first=engine.advance(p,7006,false)
+ T.truthy(first.ok);T.equal(first.sold.healing,1)
+ T.equal(p.gold,Config.economyV2.healing.goldValue)
+ T.equal(station.job,nil)
+ local second=engine.advance(p,7012,false)
+ T.truthy(second.ok)
+ T.equal(second.sold.healing or 0,0)
+ T.equal(p.gold,Config.economyV2.healing.goldValue)
+ T.equal(station.job,nil)
+ T.truthy(engine.validate(p))
+end)
 T.finish()
