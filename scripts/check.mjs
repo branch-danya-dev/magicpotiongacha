@@ -107,6 +107,9 @@ run(process.execPath, ['scripts/build-sky-depth.mjs', '--owner-user-id=-1', '--r
 run(process.execPath, ['scripts/build-landscape.mjs', '--owner-user-id=-1', '--reuse-r4']);
 run(process.execPath, ['scripts/build-forest.mjs', '--owner-user-id=-1', '--reuse-landscape']);
 run(tool('luau', 'luau-compile'), ['--null', ...await files('build/forest'), 'scripts/forest-stats.luau']);
+run(process.execPath, ['scripts/build-alchemy-first.mjs', '--owner-user-id=-1', '--reuse-forest']);
+run(tool('luau', 'luau'), ['qa/alchemy/run.luau']);
+run(tool('luau', 'luau-compile'), ['--null', ...await files('build/alchemy')]);
 run(tool('luau', 'luau-compile'), ['--null', 'build/landscape/art.luau', 'build/landscape/additions.client.luau', 'scripts/landscape-stats.luau']);
 run(tool('luau', 'luau-compile'), ['--null', 'build/landscape/Cliff.luau', 'build/landscape/VegetationTreeModel.luau', 'build/landscape/SkyDepthRenderer.luau']);
 run(tool('luau', 'luau-compile'), ['--null', 'build/sky-depth/renderer.luau', 'build/sky-depth/data.luau']);
