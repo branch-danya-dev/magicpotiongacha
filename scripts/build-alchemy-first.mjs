@@ -77,7 +77,7 @@ factory=replaceOnce(factory,"\tlocal function effectiveSkill(profile, stationId)
 factory=replaceOnce(factory,"if crystal.workerId then\n\t\t\t\tgain =",
  "if crystal.workerId and not AlchemyFirst.active(config,profile) then\n\t\t\t\tgain =","familiar may not generate Essence");
 factory=replaceOnce(factory,"if definition.outputItem and station.workerId and not seededGarden and total(station.output) < config.sourceCapacity then",
- "if definition.outputItem and (station.workerId or AlchemyFirst.active(config,profile)) and not seededGarden and total(station.output) < config.sourceCapacity then","built source runs without workers");
+ "if definition.outputItem and station.level>0 and (station.workerId or AlchemyFirst.active(config,profile)) and not seededGarden and total(station.output) < config.sourceCapacity then","built source runs without workers");
 factory=replaceOnce(factory,"if deployed[petId] and config.petSpecies[profile.pets[petId].species].slimeProducer then",
  "if not AlchemyFirst.active(config,profile) and deployed[petId] and config.petSpecies[profile.pets[petId].species].slimeProducer then","no slime familiar income");
 factory=replaceOnce(factory,"if station.level == 0 or not station.workerId then\n\t\t\treturn\n\t\tend",
