@@ -254,12 +254,22 @@ T.test("V1-03: legacy instant-sale path is closed for modern profiles but existi
   kind="brew",recipeId="healing",automatic=true,duration=6,
   doubleChance=0,outputQuantity=1}
  T.truthy(engine.validate(p))
+ p.inventory.mandrake=2;p.essence=15
+ supply(p,"water",1,9000)
+ local before=p.alchemyV1.supplies.water
+ local accepted,why=engine.act(p,"craftPotion",{recipeId="healing",optionalId=""},9000)
+ T.falsy(accepted);T.equal(why,"Cauldron is busy with previous batch")
+ T.equal(p.inventory.mandrake,2);T.equal(p.alchemyV1.supplies.water,before)
  local oldGold=p.gold
  local first=advance(p,9006,false)
  T.equal(first.sold.healing,1)
  T.equal(p.gold,oldGold+Config.economyV2.healing.goldValue)
+ action(p,"craftPotion",{recipeId="healing",optionalId=""},9006)
+ local goldAfterOld=p.gold
  local second=advance(p,9012,false)
  T.equal(second.sold.healing or 0,0)
+ T.equal(p.gold,goldAfterOld) -- new potion is owned, not automatically sold
+ T.truthy(p.alchemyV1.owned["v1p:7309:1"])
  T.equal(p.alchemyV1.job,nil)
  T.truthy(engine.validate(p))
  local legacy=engine.newProfile(7310,9100)
