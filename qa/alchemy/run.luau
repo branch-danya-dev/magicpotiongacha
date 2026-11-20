@@ -74,4 +74,112 @@ T.test("Alchemy First: early passive accrual cannot claim a starter or mint Gold
  T.equal(p.essence,10)
  T.truthy(engine.validate(p))
 end)
+T.test("V1-01: familiar collection survives while workforce assignments are denied",function()
+ local p=engine.newProfile(5101,1000)
+ T.truthy(engine.act(p,"chooseStarter",{speciesId="brewer"},1000))
+ local petId="5101:starter_brewer"
+ local pet=p.pets[petId]
+ T.truthy(pet);T.equal(pet.species,"brewer")
+ local original=pet.stats.Brewing
+ p.stations.cauldron.level=1;p.stations.cauldron.recipeId="healing"
+ local ok,reason=engine.act(p,"assign",{stationId="cauldron",petId=petId},1000)
+ T.falsy(ok);T.equal(reason,"Familiars are companions in V1")
+ T.equal(p.stations.cauldron.workerId,nil)
+ T.equal(p.pets[petId].stats.Brewing,original)
+ T.truthy(engine.validate(p))
+end)
+T.test("V1-01: legacy saved assignments do not increase passive Essence or slime byproducts",function()
+ local p=engine.newProfile(5102,2000)
+ T.truthy(engine.act(p,"chooseStarter",{speciesId="slime"},2000))
+ local petId="5102:starter_slime"
+ p.stations.crystal.workerId=petId -- Simulated pre-V1 saved assignment, not a new permission.
+ T.truthy(engine.validate(p))
+ local result=engine.advance(p,2070,false)
+ T.truthy(result.ok);T.equal(result.essenceEarned,70)
+ T.equal(p.essence,70)
+ T.equal(p.inventory.slime or 0,0)
+ T.truthy(p.pets[petId]);T.equal(p.stations.crystal.workerId,petId)
+ T.truthy(engine.validate(p))
+end)
+T.test("V1-01: growing and brewing speed ignore historical pet skill stats",function()
+ local p=engine.newProfile(5103,3000)
+ T.truthy(engine.act(p,"chooseStarter",{speciesId="brewer"},3000))
+ local petId="5103:starter_brewer"
+ p.stations.garden.level=1;p.stations.garden.workerId=petId
+ T.equal(engine.gardenState(p).duration,Config.economyV2.garden.growSeconds[1])
+ p.stations.garden.workerId=nil
+ p.stations.cauldron.level=1;p.stations.cauldron.workerId=petId
+ p.stations.cauldron.recipeId="healing"
+ p.stations.cauldron.essence=Config.economyV2.healing.essenceCost
+ p.stations.cauldron.input.mandrake=Config.economyV2.healing.mandrake
+ T.truthy(engine.validate(p))
+ T.truthy(engine.act(p,"brew",{stationId="cauldron"},3000))
+ T.equal(p.stations.cauldron.job.duration,Config.economyV2.cauldron.brewSeconds[1])
+ T.equal(p.stations.cauldron.job.doubleChance,0)
+ T.truthy(engine.validate(p))
+end)
+T.test("V1-01: equipment automation unlocks without a brewer",function()
+ local p=engine.newProfile(5104,4000)
+ T.truthy(engine.act(p,"chooseStarter",{speciesId="farmer"},4000))
+ p.stations.cauldron.level=1;p.stations.cauldron.recipeId="healing"
+ p.discoveredRecipes.healing=true
+ local ok,reason=engine.act(p,"setAuto",{stationId="cauldron",enabled=true},4000)
+ T.falsy(ok);T.equal(reason,"Buy equipment automation first")
+ p.automation.brew=true
+ T.truthy(engine.act(p,"setAuto",{stationId="cauldron",enabled=true},4000))
+ p.stations.cauldron.essence=Config.economyV2.healing.essenceCost
+ p.stations.cauldron.input.mandrake=Config.economyV2.healing.mandrake
+ local result=engine.advance(p,4001,false)
+ T.truthy(result.ok)
+ T.truthy(p.stations.cauldron.job)
+ T.truthy(p.stations.cauldron.job.automatic)
+ T.truthy(engine.validate(p))
+end)
+T.test("V1-01: equipment logistics and source require no pets",function()
+ local p=engine.newProfile(5105,5000)
+ T.truthy(engine.act(p,"chooseStarter",{speciesId="farmer"},5000))
+ p.stations.cauldron.level=1;p.stations.cauldron.recipeId="healing"
+ p.inventory.mandrake=3
+ T.equal(p.stations.logistics.workerId,nil)
+ local first=engine.advance(p,5014,false)
+ T.truthy(first.ok)
+ T.equal(p.stations.cauldron.input.mandrake,2)
+ -- Independent built raw source is still an equipment producer.
+ p.stations.mine.level=1
+ local second=engine.advance(p,5014+(Config.stations.mine.growDuration or 15)+1,false)
+ if not second.ok then error("V1-01 mine/source invariant: "..tostring(second.error)) end
+ T.truthy((second.produced.coal or 0)>0) -- includes raw output already in flight
+ T.truthy(engine.validate(p))
+end)
+T.test("V1-01: historical (legacyGrant) profiles keep worker production semantics",function()
+ local p=engine.newProfile(5106,6000)
+ engine.grantHistoricalStarters(p)
+ T.falsy(Policy.active(Config,p))
+ local baseline=engine.gardenState(p).duration
+ local petId="5106:starter_farmer"
+ T.truthy(p.pets[petId])
+ T.truthy(engine.act(p,"assign",{stationId="garden",petId=petId},6000))
+ T.truthy(engine.gardenState(p).duration<baseline)
+ T.truthy(engine.validate(p))
+end)
+T.test("V1-01: paid in-flight automatic brew completes, without restarting unfunded automation",function()
+ local p=engine.newProfile(5107,7000)
+ T.truthy(engine.act(p,"chooseStarter",{speciesId="brewer"},7000))
+ local station=p.stations.cauldron
+ station.level=1;station.recipeId="healing"
+ station.auto=true;p.discoveredRecipes.healing=true
+ station.job={kind="brew",recipeId="healing",automatic=true,duration=6,doubleChance=0,outputQuantity=1}
+ station.progress=0
+ T.truthy(engine.validate(p))
+ local first=engine.advance(p,7006,false)
+ T.truthy(first.ok);T.equal(first.sold.healing,1)
+ T.equal(p.gold,Config.economyV2.healing.goldValue)
+ T.equal(station.job,nil)
+ local second=engine.advance(p,7012,false)
+ T.truthy(second.ok)
+ T.equal(second.sold.healing or 0,0)
+ T.equal(p.gold,Config.economyV2.healing.goldValue)
+ T.equal(station.job,nil)
+ T.truthy(engine.validate(p))
+end)
 T.finish()
