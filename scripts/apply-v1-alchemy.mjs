@@ -31,7 +31,8 @@ export function applyAlchemyV1({project,read,write,path}){
  factory=swap(factory,
   '\t\tif GardenV1.active(config,profile) then\n\t\t\tGardenV1.tick',
   '\t\tAlchemyV1.recoverLegacyBuffers(profile,config,function(itemId,_amount) return inventoryRoom(profile,itemId) end)\n'+
-  '\t\tAlchemyV1.tick(profile,config,now)\n'+
+  '\t\tlocal finishedPotion=AlchemyV1.tick(profile,config,now)\n'+
+  '\t\tif finishedPotion and not isOffline then Dailies.record(config,profile,"brew",1,now) end\n'+
   '\t\tif GardenV1.active(config,profile) then\n\t\t\tGardenV1.tick',
   "offline and online alchemy job processing");
  factory=swap(factory,
