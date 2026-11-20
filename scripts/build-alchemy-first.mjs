@@ -60,6 +60,14 @@ factory=replaceOnce(factory,'\t\telseif action == "click" then',
 for(const module of ['Familiars','LegacyConfig','Progression','Trading','Epochs','Dailies','LongTerm','Monetization']) {
  factory=replaceOnce(factory,'or "./'+module+'"','or "../../src/shared/'+module+'"','portable '+module);
 }
+factory=replaceOnce(factory,
+ 'essence = { "crystal", "Собери Essence кликом. Для первого Healing нужно " .. healing.essenceCost .. "." },',
+ 'essence = { "crystal", "Essence накапливается сама (+1/с). Для первого Healing нужно " .. healing.essenceCost .. "." },',
+ 'passive Essence onboarding text');
+factory=replaceOnce(factory,
+ 'passive = { "crystal", "Улучши кристалл. Следующий уровень даёт пассивную Essence и держит цепочку без кликов." },',
+ 'passive = { "crystal", "Улучши кристалл, чтобы увеличить пассивный поток Essence и ускорить варку." },',
+ 'passive upgrade onboarding text');
 shared.Factory=write('Factory',factory);
 // Tutorial automatically advances once Essence is earned, without a false click.
 let session=read(shared.FirstSessionView.$path);
