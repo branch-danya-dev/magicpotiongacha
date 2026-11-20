@@ -277,4 +277,23 @@ T.test("V1-03: legacy instant-sale path is closed for modern profiles but existi
  T.truthy(engine.advance(legacy,9101,false).ok)
  T.equal(legacy.alchemyV1,nil)
 end)
+T.test("V1-03: previously loaded cauldron resources are conserved until storage has room",function()
+ local p=fresh(7311,10000)
+ local old=p.stations.cauldron
+ old.input.mandrake=2
+ old.essence=7
+ p.inventory.coal=Config.warehouse.rawCapacity[1]
+ T.truthy(engine.validate(p))
+ advance(p,10001,false)
+ T.equal(old.input.mandrake,2)
+ T.equal(p.inventory.mandrake or 0,0)
+ T.equal(old.essence,0)
+ T.equal(p.essence,8) -- seven previously loaded + one new passive Essence
+ p.inventory.coal-=2
+ advance(p,10002,false)
+ T.equal(old.input.mandrake or 0,0)
+ T.equal(p.inventory.mandrake,2)
+ T.equal(p.essence,9)
+ T.truthy(engine.validate(p))
+end)
 T.finish()
