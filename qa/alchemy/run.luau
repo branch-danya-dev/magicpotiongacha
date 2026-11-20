@@ -113,9 +113,21 @@ T.test("V1-01: growing and brewing speed ignore historical pet skill stats",func
  p.stations.cauldron.essence=Config.economyV2.healing.essenceCost
  p.stations.cauldron.input.mandrake=Config.economyV2.healing.mandrake
  T.truthy(engine.validate(p))
- T.truthy(engine.act(p,"brew",{stationId="cauldron"},3000))
- T.equal(p.stations.cauldron.job.duration,Config.economyV2.cauldron.brewSeconds[1])
- T.equal(p.stations.cauldron.job.doubleChance,0)
+ if Config.alchemyV1QA then
+  local accepted,reason=engine.act(p,"brew",{stationId="cauldron"},3000)
+  T.falsy(accepted);T.equal(reason,"Use the Potion Book for V1 brewing")
+  T.truthy(engine.claimStarterBudget(p))
+  p.inventory.mandrake=2
+  p.essence=Config.alchemyV1.recipes.healing.essence
+  T.truthy(engine.act(p,"buyAlchemySupply",{itemId="water",amount=1},3000))
+  T.truthy(engine.act(p,"craftPotion",{recipeId="healing",optionalId=""},3000))
+  T.equal(p.alchemyV1.job.duration,Config.alchemyV1.recipes.healing.duration)
+  T.equal(p.alchemyV1.job.quality,2)
+ else
+  T.truthy(engine.act(p,"brew",{stationId="cauldron"},3000))
+  T.equal(p.stations.cauldron.job.duration,Config.economyV2.cauldron.brewSeconds[1])
+  T.equal(p.stations.cauldron.job.doubleChance,0)
+ end
  T.truthy(engine.validate(p))
 end)
 T.test("V1-01: equipment automation unlocks without a brewer",function()
@@ -124,15 +136,27 @@ T.test("V1-01: equipment automation unlocks without a brewer",function()
  p.stations.cauldron.level=1;p.stations.cauldron.recipeId="healing"
  p.discoveredRecipes.healing=true
  local ok,reason=engine.act(p,"setAuto",{stationId="cauldron",enabled=true},4000)
- T.falsy(ok);T.equal(reason,"Buy equipment automation first")
- p.automation.brew=true
- T.truthy(engine.act(p,"setAuto",{stationId="cauldron",enabled=true},4000))
- p.stations.cauldron.essence=Config.economyV2.healing.essenceCost
- p.stations.cauldron.input.mandrake=Config.economyV2.healing.mandrake
- local result=engine.advance(p,4001,false)
- T.truthy(result.ok)
- T.truthy(p.stations.cauldron.job)
- T.truthy(p.stations.cauldron.job.automatic)
+ if Config.alchemyV1QA then
+  T.falsy(ok);T.equal(reason,"Use the Potion Book for V1 brewing")
+  -- The old equipment automation flags can persist, but may not initiate legacy
+  -- immediate-sale batches in the new manual potion inventory model.
+  p.automation.brew=true
+  p.stations.cauldron.auto=true
+  p.stations.cauldron.essence=Config.economyV2.healing.essenceCost
+  p.stations.cauldron.input.mandrake=Config.economyV2.healing.mandrake
+  T.truthy(engine.advance(p,4001,false).ok)
+  T.equal(p.stations.cauldron.job,nil)
+ else
+  T.falsy(ok);T.equal(reason,"Buy equipment automation first")
+  p.automation.brew=true
+  T.truthy(engine.act(p,"setAuto",{stationId="cauldron",enabled=true},4000))
+  p.stations.cauldron.essence=Config.economyV2.healing.essenceCost
+  p.stations.cauldron.input.mandrake=Config.economyV2.healing.mandrake
+  local result=engine.advance(p,4001,false)
+  T.truthy(result.ok)
+  T.truthy(p.stations.cauldron.job)
+  T.truthy(p.stations.cauldron.job.automatic)
+ end
  T.truthy(engine.validate(p))
 end)
 T.test("V1-01: equipment logistics and source require no pets",function()
