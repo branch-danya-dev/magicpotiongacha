@@ -93,6 +93,10 @@ local function render()
  if not state then label(list,"Ожидание серверных данных...",42,false,1);return end
  local current=state.alchemyV1
  if type(current)~="table" then label(list,"Алхимия готовится. Обнови состояние острова.",58,false,1);return end
+ local function stocked(id,n)
+  local available=book.supplies[id] and (current.supplies[id] or 0) or (state.inventory[id] or 0)
+  return requirement(id,n).." · есть "..tostring(available)
+ end
  local rank=tier(current)
  local order=0
  local function text(content,h,bold)
@@ -121,9 +125,9 @@ local function render()
     local locked=rank<recipe.class or (state.stations.cauldron and state.stations.cauldron.level or 0)<recipe.minCauldron
     local prefix=locked and "[Недоступно] " or ""
     text(prefix..recipe.name.." · "..recipe.duration.."с · "..recipe.essence.." Essence",46,true)
-    text("База: "..requirement(recipe.base.id,recipe.base.amount),27,false)
+    text("База: "..stocked(recipe.base.id,recipe.base.amount),34,false)
     local core={}
-    for itemId,n in pairs(recipe.core) do table.insert(core,requirement(itemId,n)) end
+    for itemId,n in pairs(recipe.core) do table.insert(core,stocked(itemId,n)) end
     table.sort(core)
     text("Основа: "..table.concat(core,", "),38,false)
     text("Котёл: уровень "..recipe.minCauldron.." · класс "..book.classes[recipe.class].name..
@@ -132,13 +136,18 @@ local function render()
      local selected=optionalChosen[id]==true
      order+=1
      button(list,(selected and "Дополнительно: ВКЛ · " or "Дополнительно: ВЫКЛ · ")..
-       requirement(recipe.optional.id,recipe.optional.amount),38,function()
+       stocked(recipe.optional.id,recipe.optional.amount),38,function()
         optionalChosen[id]=not selected;render()
        end,order)
     end
     if not locked then
+     local optionalId=optionalChosen[id] and recipe.optional and recipe.optional.id or ""
+     local quality=Alchemy.quality(Config,{stations=state.stations,alchemyV1=current},recipe,optionalId)
+     local subtitle=book.quality[quality].name.." "..recipe.name..
+      (optionalId~="" and " — "..recipe.optional.suffix or "")
+     text("Результат: "..subtitle.." · "..Alchemy.worth(Config,recipe,quality,optionalId).." Gold",56,false)
      command("Сварить: "..recipe.name,"craftPotion",{
-      recipeId=id,optionalId=optionalChosen[id] and recipe.optional and recipe.optional.id or "",
+      recipeId=id,optionalId=optionalId,
      })
     end
    end
