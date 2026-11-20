@@ -94,6 +94,14 @@ island=replaceOnce(island,
  '\tArt.attach(self.root,plot)\n\tLectern.ensure(plot,plot.anchors.crystal)',
  '\tArt.attach(self.root,plot)\n\trequire(script.Parent.AlchemyStarterProps).attach(plot)\n\tLectern.ensure(plot,plot.anchors.crystal)',
  'placeholder integration');
+island=replaceOnce(island,
+ 'if id~="crystal" then\\n\\t\\t\\tif station.level>0 and not plot.props[id] then',
+ 'if id~="crystal" and id~="cauldron" and id~="garden" then\\n\\t\\t\\tif station.level>0 and not plot.props[id] then',
+ 'retain placeholder art instead of overlapping station models');
+island=replaceOnce(island,
+ 'prompt.ActionText="+"..tostring(profile.starter and not profile.starter.legacyGrant and self.config.economyV2.clickEssence or self.config.manualClickEssence).." Essence"',
+ 'prompt.ActionText="Источник Essence"',
+ 'crystal prompt update does not reintroduce manual click');
 server.PersonalIslandWorld=write('PersonalIslandWorld',island);
 server.AlchemyStarterProps={$path:path('qa/alchemy/Props.luau')};
 // The former click affordance is removed, not repurposed to award Essence on-device.
