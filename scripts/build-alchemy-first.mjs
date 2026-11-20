@@ -113,7 +113,6 @@ arcade=replaceOnce(arcade,
  'collect.Visible=workspace:GetAttribute("AlchemyFirstQA")~=true; collect.BackgroundTransparency=data.canCollect and 0 or .45; upgrade.BackgroundTransparency=data.upgrade.enabled and 0 or .45',
  'arcade click hidden');
 client.ArcadeHUD=write('ArcadeHUD',arcade);
-project.tree.ServerScriptService.AlchemyFirstPropsGuard=undefined;
 project.tree.StarterPlayer.StarterPlayerScripts.AlchemyPotionBook={$path:path('qa/alchemy/PotionBook.client.luau')};
 project.tree.Workspace.$attributes.AlchemyFirstQA=true;
 project.name='PotionTycoon-Alchemy-First';
