@@ -85,7 +85,7 @@ factory=replaceOnce(factory,"if station.level == 0 or not station.workerId then\
 factory=replaceOnce(factory,"if not station.workerId then code = \"no_hauler\"",
  "if not station.workerId and not AlchemyFirst.active(config,profile) then code = \"no_hauler\"","status logistics not blocked by pet");
 factory=replaceOnce(factory,"if job.automatic and not station.workerId and not automationOn(profile, \"brew\") then code = \"no_master\"",
- "if job.automatic and not automationOn(profile, \"brew\") and (not station.workerId or AlchemyFirst.active(config,profile)) then code = \"no_master\"","status working auto job needs purchased auto");
+ "if job.automatic and not station.workerId and not automationOn(profile, \"brew\") and not AlchemyFirst.active(config,profile) then code = \"no_master\"","status working auto job needs purchased auto");
 factory=replaceOnce(factory,"elseif station.auto and not station.workerId and not automationOn(profile, \"brew\") then code = \"no_master\"",
  "elseif station.auto and not automationOn(profile, \"brew\") and (not station.workerId or AlchemyFirst.active(config,profile)) then code = \"no_master\"","status auto station needs purchased auto");
 factory=replaceOnce(factory,"if not config.items[itemId].fluid and not profile.stations.logistics.workerId then code = \"no_hauler\" end",
@@ -93,7 +93,7 @@ factory=replaceOnce(factory,"if not config.items[itemId].fluid and not profile.s
 factory=replaceOnce(factory,"elseif not station.workerId then code = \"no_master\" end",
  "elseif not station.workerId and not AlchemyFirst.active(config,profile) then code = \"no_master\" end","status source not blocked by pet");
 factory=replaceOnce(factory,"if job and (not job.automatic or station.workerId or automationOn(profile, \"brew\")) then",
- "if job and (not job.automatic or automationOn(profile, \"brew\") or (station.workerId and not AlchemyFirst.active(config,profile))) then","purchased automation not pet processes auto brew");
+ "if job and (not job.automatic or AlchemyFirst.active(config,profile) or automationOn(profile, \"brew\") or station.workerId) then","purchased automation not pet processes auto brew");
 factory=replaceOnce(factory,"if not station.job and station.auto and (station.workerId or automationOn(profile, \"brew\")) then",
  "if not station.job and station.auto and (automationOn(profile, \"brew\") or (station.workerId and not AlchemyFirst.active(config,profile))) then","purchased automation starts auto jobs");
 factory=replaceOnce(factory,"\t\telseif action == \"assign\" then",
