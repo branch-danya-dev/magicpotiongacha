@@ -133,6 +133,7 @@ function Alchemy.recipeState(profile,config,recipeId,optionalId)
  if not profile.stations.cauldron or profile.stations.cauldron.level<recipe.minCauldron then
   return nil,"Upgrade cauldron first"
  end
+ if profile.stations.cauldron.job then return nil,"Cauldron is busy with previous batch" end
  if optionalId~="" and (not recipe.optional or recipe.optional.id~=optionalId) then
   return nil,"Invalid optional ingredient"
  end
