@@ -235,6 +235,12 @@ function Alchemy.tick(profile,config,now)
  }
  state.nextSerial+=1
  state.discovered[job.recipeId]=true
+ -- Bridge compatible recipes into the original phase/Atlas gates. New V1-only
+ -- recipe IDs live solely in the new registry and never pollute legacy V8.
+ if config.recipes[job.recipeId] then
+  profile.discoveredRecipes[job.recipeId]=true
+  profile.atlas.discovered[job.recipeId]=true
+ end
  state.xp=math.min(config.maxBalance,state.xp+1)
  if job.recipeId=="healing" then
   profile.tutorial.brew=true;profile.tutorial.manual=true
