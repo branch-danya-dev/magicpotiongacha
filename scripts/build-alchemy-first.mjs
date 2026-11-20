@@ -176,6 +176,7 @@ arcade=replaceOnce(arcade,"reason.Text=(data.upgrade.enabled and \"Назнач�
  "reason.Text=workspace:GetAttribute(\"AlchemyFirstQA\")==true and \"Экстрактор производит Essence автоматически\" or (data.upgrade.enabled and \"Назначить рабочего\" or data.upgrade.reason..\" · Рабочие\")","no arcade worker hint");
 client.ArcadeHUD=write('ArcadeHUD',arcade);
 project.tree.StarterPlayer.StarterPlayerScripts.AlchemyPotionBook={$path:path('qa/alchemy/PotionBook.client.luau')};
+project.tree.StarterPlayer.StarterPlayerScripts.V1Companion={$path:path('qa/alchemy/Companion.client.luau')};
 project.tree.Workspace.$attributes.AlchemyFirstQA=true;
 project.name='PotionTycoon-Alchemy-First';
 const output='build/alchemy/game.project.json',artifact='build/PotionTycoon-Alchemy-First-QA.rbxlx';
@@ -183,13 +184,13 @@ writeFileSync(path(output),JSON.stringify(project,null,2)+'\n');
 execFileSync(path('.tools/rojo/rojo'+(process.platform==='win32'?'.exe':'')),
  ['build',path(output),'-o',path(artifact)],{cwd:root,stdio:'inherit'});
 const bytes=readFileSync(path(artifact));
-for(const marker of ['AlchemyFirstQA','Essence accumulates automatically','BrewingCube','HerbGarden','AlchemyPotionBook']){
+for(const marker of ['AlchemyFirstQA','Essence accumulates automatically','BrewingCube','HerbGarden','AlchemyPotionBook','V1Companion','ExtractorPlaceholder']){
  assert(bytes.includes(marker),'Missing from Studio artifact: '+marker);
 }
 const codeSHA256=hash(Buffer.from(generated.map(file=>file+'\n'+read(file)).join('\n')));
 const receipt={head,owner,artifact,bytes:bytes.length,sha256:hash(bytes),codeSHA256,
  inheritedForestSHA256:previous.sha256,firstLevelPassivePerSecond:1,
- prototype:{cauldronCube:true,garden:true,emptyPotionBook:true,clickDisabledForV2:true},
+ prototype:{cauldronCube:true,garden:true,extractorPlaceholder:true,companionVisual:true,emptyPotionBook:true,clickDisabledForV2:true,familiarBuffsDisabled:true,workerAssignmentsDisabled:true},
  mainOrLiveIntegrated:false,studioOnly:true,memoryOnly:true,uploads:0,paidFeatures:false,
  qaStatus:'CODE BUILD; NORMAL STUDIO F5 / OWNER REVIEW / MOBILE NOT RUN'};
 writeFileSync(path('build/alchemy/build.json'),JSON.stringify(receipt,null,2)+'\n');
