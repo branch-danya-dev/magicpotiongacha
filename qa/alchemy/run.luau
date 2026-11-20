@@ -148,7 +148,7 @@ T.test("V1-01: equipment logistics and source require no pets",function()
  p.stations.mine.level=1
  local second=engine.advance(p,5014+(Config.stations.mine.growDuration or 15)+1,false)
  if not second.ok then error("V1-01 mine/source invariant: "..tostring(second.error)) end
- T.truthy(((p.stations.mine.output.coal or 0)+(p.inventory.coal or 0))>0)
+ T.truthy((second.produced.coal or 0)>0) -- includes raw output already in flight
  T.truthy(engine.validate(p))
 end)
 T.test("V1-01: historical (legacyGrant) profiles keep worker production semantics",function()
