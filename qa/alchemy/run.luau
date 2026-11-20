@@ -167,7 +167,12 @@ T.test("V1-01: equipment logistics and source require no pets",function()
  T.equal(p.stations.logistics.workerId,nil)
  local first=engine.advance(p,5014,false)
  T.truthy(first.ok)
- T.equal(p.stations.cauldron.input.mandrake,2)
+ if Config.alchemyV1QA then
+  T.equal(p.stations.cauldron.input.mandrake or 0,0)
+  T.equal(p.inventory.mandrake,3) -- crop ingredients stay available to the recipe engine
+ else
+  T.equal(p.stations.cauldron.input.mandrake,2)
+ end
  -- Independent built raw source is still an equipment producer.
  p.stations.mine.level=1
  local second=engine.advance(p,5014+(Config.stations.mine.growDuration or 15)+1,false)
