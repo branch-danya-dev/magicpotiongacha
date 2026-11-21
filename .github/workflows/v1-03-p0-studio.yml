@@ -1,7 +1,7 @@
-name: V1-03 P0 owner Studio build
+name: V1-03 backdrop restored Studio build
 on:
   push:
-    branches: [fix/v1-03-studio-stability-p0]
+    branches: [fix/v1-03-studio-stability-p0, fix/v1-03-restore-sky-backdrop]
   workflow_dispatch:
 
 permissions:
@@ -24,6 +24,8 @@ jobs:
         run: node scripts/build-alchemy-first.mjs --owner-user-id=11924805007
       - name: Run stabilizer Lua regression tests
         run: .tools/luau/luau.exe qa/stability/run.luau
+      - name: Verify restored authored cloud background
+        run: node scripts/check-v1-sky-restore.mjs
       - name: Check owner stamp and stage local place
         shell: pwsh
         run: |
@@ -35,13 +37,13 @@ jobs:
           $gameOwner = [long]($project.tree.Workspace.'$attributes'.AG76QAOwnerUserId)
           if ($gameOwner -ne 11924805007 -or [long]$receipt.owner -ne 11924805007) { throw 'Studio project/receipt owner stamp is missing or wrong' }
           if ($xml -notmatch 'stabilitySkipStarterQA' -or $xml -notmatch 'V1PhysicalProxies' -or $xml -notmatch 'stableMoonTarget') { throw 'Missing stability overlay Lua code in Studio place' }
-          Copy-Item $inputFile 'build/PotionTycoon-V1-03-P0-User11924805007.rbxlx'
-          Get-FileHash 'build/PotionTycoon-V1-03-P0-User11924805007.rbxlx' -Algorithm SHA256 | Format-List
+          Copy-Item $inputFile 'build/PotionTycoon-V1-03-Backdrop-Restored-User11924805007.rbxlx'
+          Get-FileHash 'build/PotionTycoon-V1-03-Backdrop-Restored-User11924805007.rbxlx' -Algorithm SHA256 | Format-List
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: PotionTycoon-V1-03-P0-Owner11924805007
+          name: PotionTycoon-V1-03-Backdrop-Restored-Owner11924805007
           path: |
-            build/PotionTycoon-V1-03-P0-User11924805007.rbxlx
+            build/PotionTycoon-V1-03-Backdrop-Restored-User11924805007.rbxlx
             build/alchemy/build.json
             build/forest/build.json
             docs/V1_03_STUDIO_STABILITY_P0.md
