@@ -1,0 +1,48 @@
+name: V1-03 P0 owner Studio build
+on:
+  push:
+    branches: [fix/v1-03-studio-stability-p0]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  owner-preview:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Install pinned Luau and Rojo
+        run: npm run tools
+      - name: Build Studio-memory QA island for owner 11924805007
+        run: node scripts/build-alchemy-first.mjs --owner-user-id=11924805007
+      - name: Run stabilizer Lua regression tests
+        run: .tools/luau/luau.exe qa/stability/run.luau
+      - name: Check owner stamp and stage local place
+        shell: pwsh
+        run: |
+          $inputFile = 'build/PotionTycoon-Alchemy-First-QA.rbxlx'
+          if (-not (Test-Path $inputFile)) { throw 'Missing Rojo gameplay place' }
+          $xml = [System.IO.File]::ReadAllText((Resolve-Path $inputFile).Path)
+          $project = Get-Content 'build/alchemy/game.project.json' -Raw | ConvertFrom-Json
+          $receipt = Get-Content 'build/alchemy/build.json' -Raw | ConvertFrom-Json
+          $gameOwner = [long]($project.tree.Workspace.'$attributes'.AG76QAOwnerUserId)
+          if ($gameOwner -ne 11924805007 -or [long]$receipt.owner -ne 11924805007) { throw 'Studio project/receipt owner stamp is missing or wrong' }
+          if ($xml -notmatch 'stabilitySkipStarterQA' -or $xml -notmatch 'V1PhysicalProxies' -or $xml -notmatch 'stableMoonTarget') { throw 'Missing stability overlay Lua code in Studio place' }
+          Copy-Item $inputFile 'build/PotionTycoon-V1-03-P0-User11924805007.rbxlx'
+          Get-FileHash 'build/PotionTycoon-V1-03-P0-User11924805007.rbxlx' -Algorithm SHA256 | Format-List
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: PotionTycoon-V1-03-P0-Owner11924805007
+          path: |
+            build/PotionTycoon-V1-03-P0-User11924805007.rbxlx
+            build/alchemy/build.json
+            build/forest/build.json
+            docs/V1_03_STUDIO_STABILITY_P0.md
+          if-no-files-found: error
