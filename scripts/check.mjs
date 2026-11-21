@@ -111,6 +111,7 @@ run(process.execPath, ['scripts/build-alchemy-first.mjs', '--owner-user-id=-1', 
 run(tool('luau', 'luau'), ['qa/alchemy/run.luau']);
 run(tool('luau', 'luau'), ['qa/garden/run.luau']);
 run(tool('luau', 'luau'), ['qa/alchemy_v1/run.luau']);
+run(tool('luau', 'luau'), ['qa/stability/run.luau']);
 run(tool('luau', 'luau-compile'), ['--null', ...await files('build/alchemy')]);
 run(tool('luau', 'luau-compile'), ['--null', 'build/landscape/art.luau', 'build/landscape/additions.client.luau', 'scripts/landscape-stats.luau']);
 run(tool('luau', 'luau-compile'), ['--null', 'build/landscape/Cliff.luau', 'build/landscape/VegetationTreeModel.luau', 'build/landscape/SkyDepthRenderer.luau']);
