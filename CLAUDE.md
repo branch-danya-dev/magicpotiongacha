@@ -1,6 +1,6 @@
 # Claude Code — Potion Tycoon current development context
 
-**START HERE.** The canonical working branch for this handoff is `handoff/claude-code-v1-03`, forked from the latest owner-tested development line `fix/v1-03-restore-sky-backdrop` @ `49cc43e1c09ebe638647107506f457fc86d1675a` (Draft PR #71). It includes the entire stacked ancestry through V1-01, V1-02, V1-03 and Studio P0. **`main` is only the bootstrap repository, not the game.** Do not start from `main`, `integration/ag00-base` or an old C00/C01 branch.
+**START HERE.** The canonical working branch for this handoff is `handoff/claude-code-v1-03`, forked from the latest CI-verified Studio development line (owner's final visual acceptance remains open) `fix/v1-03-restore-sky-backdrop` @ `49cc43e1c09ebe638647107506f457fc86d1675a` (Draft PR #71). It includes the entire stacked ancestry through V1-01, V1-02, V1-03 and Studio P0. **`main` is only the bootstrap repository, not the game.** Do not start from `main`, `integration/ag00-base` or an old C00/C01 branch.
 
 Read `docs/CURRENT_V1_03_HANDOFF.md` before proposing or changing code. That document supersedes older *status claims* in `README.md`, `docs/PROJECT_AUDIT_2026-11-12.md`, `docs/RELEASE_ROADMAP_V2.md` and `docs/AGENT_WORK_QUEUE.md` for the **current V1-03 QA build only**. Historic technical contracts and security requirements in those files remain relevant.
 
