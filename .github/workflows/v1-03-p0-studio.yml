@@ -31,7 +31,7 @@ jobs:
           if (-not (Test-Path $inputFile)) { throw 'Missing Rojo gameplay place' }
           $xml = [System.IO.File]::ReadAllText((Resolve-Path $inputFile).Path)
           if ($xml -notmatch 'name="AG76QAOwnerUserId"[^>]*>\s*11924805007\s*</') { throw 'Studio owner stamp is missing or wrong' }
-          if ($xml -notmatch 'V1NoMandatoryStarter' -or $xml -notmatch 'V1PhysicalProxies' -or $xml -notmatch 'V1SkyCloudFallback') { throw 'Missing stability overlay in Studio place' }
+          if ($xml -notmatch 'stabilitySkipStarterQA' -or $xml -notmatch 'V1PhysicalProxies' -or $xml -notmatch 'stableMoonTarget') { throw 'Missing stability overlay Lua code in Studio place' }
           Copy-Item $inputFile 'build/PotionTycoon-V1-03-P0-User11924805007.rbxlx'
           Get-FileHash 'build/PotionTycoon-V1-03-P0-User11924805007.rbxlx' -Algorithm SHA256 | Format-List
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
