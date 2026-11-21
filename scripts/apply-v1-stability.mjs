@@ -119,7 +119,7 @@ export function applyStudioStability({project,read,write,path}){
   '\t\tif step<1/30 then return end; local elapsed=step; step=0',
   "render-frequency moon smoothing without extra frame connection");
  view=once(view,
-  'moon.attachment.Position=Vector3.new(table.unpack(State.moon(sample.phase)))*Config.celestial.distance',
+  'moon.attachment.Position=moonDirection*Config.celestial.distance',
   'stableMoonTarget=Vector3.new(table.unpack(State.moon(sample.phase)))*Config.celestial.distance',
   "moon moves toward continuously interpolated target");
  view=once(view,
