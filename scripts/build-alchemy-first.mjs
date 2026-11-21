@@ -194,7 +194,7 @@ writeFileSync(path(output),JSON.stringify(project,null,2)+'\n');
 execFileSync(path('.tools/rojo/rojo'+(process.platform==='win32'?'.exe':'')),
  ['build',path(output),'-o',path(artifact)],{cwd:root,stdio:'inherit'});
 const bytes=readFileSync(path(artifact));
-for(const name of ['V1NoMandatoryStarter','V1StableForest','V1SkyCloudFallback']) assert.equal(project.tree.Workspace.$attributes[name],true,'Missing Studio QA flag: '+name);
+for(const name of ['V1NoMandatoryStarter','V1StableForest','V1SkyBackdropRestored']) assert.equal(project.tree.Workspace.$attributes[name],true,'Missing Studio QA flag: '+name);
 for(const marker of ['stabilitySkipStarterQA','V1PhysicalProxies','stableMoonTarget','AlchemyV1QA','AlchemyCatalog','craftPotion','sellPotion','buyAlchemySupply','AlchemyFirstQA','GardenV1QA','GardenCropCatalog','waterCrop','buySprinkler','Essence accumulates automatically','BrewingCube','HerbGarden','AlchemyPotionBook','V1Companion','ExtractorPlaceholder']){
  assert(bytes.includes(marker),'Missing from Studio artifact: '+marker);
 }
@@ -206,6 +206,6 @@ const receipt={head,owner,artifact,bytes:bytes.length,sha256:hash(bytes),codeSHA
  qaStatus:'CODE BUILD; NORMAL STUDIO F5 / OWNER REVIEW / MOBILE NOT RUN'};
 receipt.gardenV1={cropSpecies:['mandrake','antarctic_biter'],independentBeds:3,manualWatering:true,optionalSprinkler:true,visualModelsImported:false};
 receipt.alchemyV1={classes:6,qualities:6,recipes:4,storedPotions:true,manualSale:true,optionalAdditives:true,visualEffects:'metadata-only',assetsImported:false};
-receipt.stabilityP0={noMandatoryStarter:true,physicalTreeColliders:true,persistentStaticForest:true,clouds:'native-only',moon:'interpolated',studioValidated:false};
+receipt.stabilityP0={noMandatoryStarter:true,physicalTreeColliders:true,persistentStaticForest:true,clouds:'restored R3 authored CloudOcean + haze + native',moon:'interpolated using original Lighting direction',backdropRestored:true,studioValidated:false};
 writeFileSync(path('build/alchemy/build.json'),JSON.stringify(receipt,null,2)+'\n');
 console.log(JSON.stringify(receipt,null,2));
