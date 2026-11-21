@@ -1,5 +1,22 @@
 # Potion Tycoon: Magic Clicker
 
+> **CURRENT DEVELOPMENT · 2026-11-21 · V1-03 / P0 / R3 sky restored.**
+> The current working source is **`handoff/claude-code-v1-03`**,
+> based on `fix/v1-03-restore-sky-backdrop` / Draft PR #71 (`49cc43e1`).
+> **`main` is bootstrap.** V1 features are in Studio QA overlays and are **not**
+> built by `default.project.json`.
+> For Claude Code or any new contributor start with **[CLAUDE.md](CLAUDE.md)** and
+> **[the current source-of-truth audit](docs/CURRENT_V1_03_HANDOFF.md)**.
+> For local V1 testing: `npm run tools && npm test`, then
+> `node scripts/build-alchemy-first.mjs --owner-user-id=<YOUR_ROBLOX_USER_ID>`
+> and open **`build/PotionTycoon-Alchemy-First-QA.rbxlx`** in Roblox Studio.
+> Until a versioned migration and owner's acceptance, no live DataStore/publish/merge.
+>
+> **Everything below this banner is retained as historical M0–M6/V2 documentation;**
+> its starter-pet requirement, clicker mechanics, older economy and integration
+> branch are **not the current V1-03 game**.
+
+
 > **Актуальный аудит (12.11.2026):** [состояние репозитория](docs/PROJECT_AUDIT_2026-11-12.md), [цель и Roadmap до релиза](docs/RELEASE_ROADMAP_V2.md), [очередь задач для агентов](docs/AGENT_WORK_QUEUE.md). Эта ветка содержит кандидаты V8/C01/UI-01/UI-02A/Spellbook Lectern; `main` остаётся bootstrap. C01 работает в portable-коде, но реальные Studio/мобильные/бэкенд-проверки ещё не дают готовности к релизу. Описанный ниже M6 — исторический базовый контракт, а не актуальный итог всей V2-разработки.
 
 Roblox-тайкун: магическая фабрика с фамильярами, производственными цепочками и логистикой.
