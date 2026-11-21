@@ -26,7 +26,7 @@ jobs:
           dirs=('assets','src','qa','scripts','docs')
           included=[]
           for folder in dirs:
-              included.extend(p for p in (root/folder).rglob('*') if p.is_file() and not p.is_symlink())
+              included.extend(p for p in (root/folder).rglob('*') if p.is_file() and not p.is_symlink() and not (folder=='docs' and p.relative_to(root).parts[:2]==('docs','evidence')))
           for name in ('default.project.json','package.json','package-lock.json'):
               p=root/name
               if p.is_file(): included.append(p)
@@ -49,6 +49,7 @@ jobs:
                   'assets_count':len(asset_files),
                   'assets_bytes':sum(p.stat().st_size for p in asset_files),
                   'files_count':len(included),
+                  'historical_video_evidence_excluded':True,
                   'note':'New Meshy prop exports not committed to this repository are not included. The source files are not magically imported in Studio; use the .rbxlx QA game place separately.'
               }
               z.writestr('SOURCE_ASSET_MANIFEST.json',json.dumps(manifest,ensure_ascii=False,indent=2))
