@@ -74,7 +74,8 @@ export function applyStudioStability({project,read,write,path}){
  workspace.AG75StarterCardsEnabled=false;
  workspace.V1NoMandatoryStarter=true;
  workspace.V1StableForest=true;
- workspace.V1SkyCloudFallback=true;
+ workspace.V1SkyCloudFallback=false;
+ workspace.V1SkyBackdropRestored=true;
 
  let island=read(server.PersonalIslandWorld.$path);
  island=once(island,
@@ -85,28 +86,11 @@ export function applyStudioStability({project,read,write,path}){
   "colliders added on server before owner activation");
  server.PersonalIslandWorld=write("PersonalIslandWorld",island);
 
- // Quality/debug feature flag does not erase rigs from the repository; it only
- // stabilizes the actual Studio scene. Every LOD tree has a visible static mesh.
- let sky=read(client.SkyLandmark.$path);
- sky=once(sky,
-  'for i,b in ipairs(Model.ocean(Config))do',
-  'for i,b in ipairs({})do -- P0: no overlapping huge billboard cloud sheets',
-  "suppress billboard sky ocean planes");
- sky=once(sky,
-  'local cloudAlpha=oceanEnabled and current.cloud*Config.cloud.density*Config.cloud.opacity or 0',
-  'local cloudAlpha=0 -- Native Terrain.Clouds owns cover; no black alpha gaps',
-  "native cloud fallback");
- sky=once(sky,
-  'set("AtmosphericHaze",current.haze*Config.haze.opacity*layered,oceanColor)',
-  'set("AtmosphericHaze",0,oceanColor)',
-  "avoid huge haze overlay at night");
- client.SkyLandmark=write("SkyLandmark",sky);
-
+ // Preserve the source R3 sky exactly. The previous P0 patch eliminated
+ // all seven CloudBank billboards, CloudOcclusion and AtmosphericHaze, leaving a
+ // black void behind the moon/world tree. Only the known-safe moon motion fix
+ // below remains. Do not suppress Model.ocean or reduce cloudAlpha to zero.
  let view=read(client.EnvironmentView.$path);
- view=once(view,
-  'local horizonMode="candidate"',
-  'local horizonMode="baseline" -- reported candidate caused horizon wedge',
-  "restore known atmosphere offset from QA candidate");
  view=once(view,
   'local moon=celestialSprite("Moon",Assets.uri("moon"),Vista.moonSize,Vector3.new(0,1,0))',
   'local moon=celestialSprite("Moon",Assets.uri("moon"),Vista.moonSize,Vector3.new(0,1,0))\n'+
@@ -120,13 +104,8 @@ export function applyStudioStability({project,read,write,path}){
   "render-frequency moon smoothing without extra frame connection");
  view=once(view,
   'moon.attachment.Position=moonDirection*Config.celestial.distance',
-  'stableMoonTarget=Vector3.new(table.unpack(State.moon(sample.phase)))*Config.celestial.distance',
+  'stableMoonTarget=moonDirection*Config.celestial.distance',
   "moon moves toward continuously interpolated target");
- view=once(view,
-  'clouds.Cover=sample.cover; clouds.Density=sample.cloudDensity; clouds.Color=color(sample.cloudColor)',
-  'clouds.Cover=sample.cover; clouds.Density=sample.cloudDensity\n'+
-  '\t\tclouds.Color=color(sample.cloudColor):Lerp(Color3.fromRGB(161,175,200),math.clamp(sample.night,0,1)*.55)',
-  "native clouds remain softly moonlit at night");
  client.EnvironmentView=write("EnvironmentView",view);
 
  // Collision for visual-only props while preserving the intentional walkable soil.
@@ -136,5 +115,5 @@ export function applyStudioStability({project,read,write,path}){
   'p.CanCollide=name=="ExtractorBoiler" or name=="BrewingCube";p.CanTouch=false;p.CanQuery=p.CanCollide;p.CastShadow=false',
   "non-colliding QA equipment becomes solid");
  server.AlchemyStarterProps=write("Props",props);
- project.name="PotionTycoon-V1-03-Stable-Studio";
+ project.name="PotionTycoon-V1-03-Backdrop-Restored-Studio";
 }
