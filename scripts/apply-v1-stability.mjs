@@ -57,6 +57,12 @@ export function applyStudioStability({project,read,write,path}){
   '\tfunction engine.claimStarterBudget(profile)',
   "server-only skip without pet grant");
  shared.Factory=write("Factory",factory);
+ let clientMain=read(client.Main.$path);
+ clientMain=once(clientMain,
+  'if game:GetService("RunService"):IsStudio() and not UserInputService.TouchEnabled then environment.setQuality("full") end',
+  'if game:GetService("RunService"):IsStudio() then environment.setQuality("reduced") end',
+  "reduced baseline quality prevents expensive desktop forced-high profile");
+ client.Main=write("Main.client",clientMain);
  let main=read(server.Main.$path);
  main=once(main,
   '\tFactory.claimStarterBudget(profile)',
