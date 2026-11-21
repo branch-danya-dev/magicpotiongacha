@@ -30,7 +30,10 @@ jobs:
           $inputFile = 'build/PotionTycoon-Alchemy-First-QA.rbxlx'
           if (-not (Test-Path $inputFile)) { throw 'Missing Rojo gameplay place' }
           $xml = [System.IO.File]::ReadAllText((Resolve-Path $inputFile).Path)
-          if ($xml -notmatch 'name="AG76QAOwnerUserId"[^>]*>\s*11924805007\s*</') { throw 'Studio owner stamp is missing or wrong' }
+          $project = Get-Content 'build/alchemy/game.project.json' -Raw | ConvertFrom-Json
+          $receipt = Get-Content 'build/alchemy/build.json' -Raw | ConvertFrom-Json
+          $gameOwner = [long]($project.tree.Workspace.'$attributes'.AG76QAOwnerUserId)
+          if ($gameOwner -ne 11924805007 -or [long]$receipt.owner -ne 11924805007) { throw 'Studio project/receipt owner stamp is missing or wrong' }
           if ($xml -notmatch 'stabilitySkipStarterQA' -or $xml -notmatch 'V1PhysicalProxies' -or $xml -notmatch 'stableMoonTarget') { throw 'Missing stability overlay Lua code in Studio place' }
           Copy-Item $inputFile 'build/PotionTycoon-V1-03-P0-User11924805007.rbxlx'
           Get-FileHash 'build/PotionTycoon-V1-03-P0-User11924805007.rbxlx' -Algorithm SHA256 | Format-List
